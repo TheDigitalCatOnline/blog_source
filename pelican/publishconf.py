@@ -10,7 +10,7 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'http://lgiordani.com'
+SITEURL = 'http://blog.thedigitalcatonline.com'
 RELATIVE_URLS = False
 
 FEED_ALL_ATOM = 'atom.xml'
