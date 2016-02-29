@@ -201,5 +201,5 @@ Remember that date-based views are CBVs, so they are based on `View`, just like 
 
 In this post we covered `DetailView` in deep and, more quickly, all the remaining base and data-based views. In the next post we will step into the rich (and strange) world of forms.
 
-Feel free to use [the blog Google+ page](https://plus.google.com/u/0/b/110554719587236016835/110554719587236016835/posts) to comment the post or to ask for an in-depth analysis of some topic. [GitHub issues](https://github.com/lgiordani/lgiordani.github.com/issues) is the best place to submit corrections.
+Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post or to ask for an in-depth analysis of some topic. [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) is the best place to submit corrections.
 
