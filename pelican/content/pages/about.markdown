@@ -30,7 +30,7 @@ Since computer science is our main occupation you will likely find every sort of
 
 Each error is a lesson... if someone corrects you. So please notify us any mistake or oversight.
 
-## Contact me
+## Contact us
 
 * <a href="https://plus.google.com/111444750762335924049" rel="me">Google+</a>
 * [Twitter](https://twitter.com/thedigicat)
