@@ -309,7 +309,7 @@ Nothing forbids us to define a custom `__call__()` method inside the instance an
 
 ## Final words
 
-There is still a lot to say about Python OOP. Just to name one topic, functions are a very interesting and wide subject. I would prefer now to update the current material to Python 3, so this is the last post in this small series. Stay tuned [on Twitter](https://twitter.com/tw_lgiordani/) if you want to get the latest news from the blog!
+There is still a lot to say about Python OOP. Just to name one topic, functions are a very interesting and wide subject. I would prefer now to update the current material to Python 3, so this is the last post in this small series. Stay tuned [on Twitter](https://twitter.com/thedigicat/) if you want to get the latest news from the blog!
 
 ## Movie Trivia
 

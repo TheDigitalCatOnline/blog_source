@@ -416,7 +416,7 @@ Remember that `__new__()` is not forced to return an instance of the class in wh
 
 ## Final words
 
-Next post will introduce Abstract Base Classes as the major topic. Slots are another topic which for many people is buried into the Tome of Python Secrets and is worth uncovering. Stay tuned! You can [follow me on Twitter](https://twitter.com/tw_lgiordani/) if you want to get the latest news from the blog.
+Next post will introduce Abstract Base Classes as the major topic. Slots are another topic which for many people is buried into the Tome of Python Secrets and is worth uncovering. Stay tuned! You can [follow us on Twitter](https://twitter.com/thedigicat/) if you want to get the latest news from the blog.
 
 ## Movie Trivia
 
