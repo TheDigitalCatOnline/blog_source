@@ -20,7 +20,7 @@ Arguments are declared (when the function is defined) as placeholders for actual
 
 Remember that Python variables are _references_, that is **memory addresses of actual variables**. This means that Python functions always work like being "passed by address" (using a C/C++ nomenclature). When you call a function you are not _copying_ the value of the arguments to the function placeholders. Instead, you are pointing the placeholder to the variable itself. This has a very important consequence: you may alter the value of the variable from inside the function. A good visual explanation of the reference mechanism in Python is [this](http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html#other-languages-have-variables).
 
-References play a very big role in Python, being the bare bones of its fully-polymorphic approach. Check [this link](/2014/08/21/python-3-oop-part-4-polymorphism) for a better explanation of this very important subject.
+References play a very big role in Python, being the bare bones of its fully-polymorphic approach. Check [this link](/blog/2014/08/21/python-3-oop-part-4-polymorphism) for a better explanation of this very important subject.
 
 To check your understanding of this basic behaviour of the language try to follow this simple code (where the variable _ph_ stands for "placeholder")
 

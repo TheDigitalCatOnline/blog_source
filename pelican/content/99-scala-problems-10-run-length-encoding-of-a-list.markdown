@@ -21,7 +21,7 @@ res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
 
 ## Initial thoughts
 
-The problem explicitly states "use the result of problem 09" ([here](/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/)) so I think it's time for me to learn how to make and import libraries. The problem itself seems to be rather simple to solve.
+The problem explicitly states "use the result of problem 09" ([here](/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/)) so I think it's time for me to learn how to make and import libraries. The problem itself seems to be rather simple to solve.
 
 ## The recursive solution
 

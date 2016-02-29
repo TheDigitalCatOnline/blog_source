@@ -21,7 +21,7 @@ res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
 
 ## Initial thoughts
 
-Obviously the issue shouldn't be solved just copying all stuff from [problem 09](/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/) and [problem 10](/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list) inside a single file. There shall be a way to build a single-function solution.
+Obviously the issue shouldn't be solved just copying all stuff from [problem 09](/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/) and [problem 10](/blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list) inside a single file. There shall be a way to build a single-function solution.
 
 ## Spanning
 

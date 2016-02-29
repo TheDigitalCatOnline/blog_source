@@ -96,7 +96,7 @@ Let us start with the `CreateView` class we used in our simple example, which is
 
 #### Processing GET and POST requests
 
-We already met the `get()` method in the [past article](/2013/12/11/digging-up-django-class-based-views-2) when we talked about the `dispatch()` method of the `View` class. A quick recap of its purpose: this method is called when the incoming HTTP request carries the GET verb and is used to process the request itself. Not surprisingly, the `post()` method is called when the incoming request is a POST one. The two methods are already defined by an ancestor of the `BaseCreateView` class, namely `ProcessFormView` ([views/generic/edit.py#L145](https://github.com/django/django/blob/stable/1.5.x/django/views/generic/edit.py#L145)). It is useful to take a peek at the source code of this last class:
+We already met the `get()` method in the [past article](/blog/2013/12/11/digging-up-django-class-based-views-2) when we talked about the `dispatch()` method of the `View` class. A quick recap of its purpose: this method is called when the incoming HTTP request carries the GET verb and is used to process the request itself. Not surprisingly, the `post()` method is called when the incoming request is a POST one. The two methods are already defined by an ancestor of the `BaseCreateView` class, namely `ProcessFormView` ([views/generic/edit.py#L145](https://github.com/django/django/blob/stable/1.5.x/django/views/generic/edit.py#L145)). It is useful to take a peek at the source code of this last class:
 
 ``` python
 class ProcessFormView(View):

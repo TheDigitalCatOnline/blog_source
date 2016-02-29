@@ -21,7 +21,7 @@ res0: List[Symbol] = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e
 
 ## Initial thoughts
 
-The problem is simple, being just a reverse version of the last two problems. The target is to build a list from another one, so it should be possible to find both a recursive and a functional solution. The only problem is that we may easily build a list for each element, but we shall end up with a flat list. So `flatMap()` from [problem 07](/2015/04/07/99-scala-problems-07-flatten/) will come in play again.
+The problem is simple, being just a reverse version of the last two problems. The target is to build a list from another one, so it should be possible to find both a recursive and a functional solution. The only problem is that we may easily build a list for each element, but we shall end up with a flat list. So `flatMap()` from [problem 07](/blog/2015/04/07/99-scala-problems-07-flatten/) will come in play again.
 
 ## The recursive solution
 
@@ -46,7 +46,7 @@ The last call is a mapping. Each element is mapped into a list by the `_expand()
 
 There is a simpler way that makes use of a function of the `List` object. Object and classes are two different entities in Scala, and objects are singletons that encapsulate constructor (and de-constructor) methods.
 
-The `fill()` method is documented [here](http://www.scala-lang.org/api/2.11.4/index.html#scala.collection.immutable.List$), and we are interested now in the one-dimensional version. As you can see from the documentation, this function is curried (see [problem 04](/2015/04/07/99-scala-problems-04-length/)) and accepts as first parameter the length of the list and as second parameter the element to put into the list itself.
+The `fill()` method is documented [here](http://www.scala-lang.org/api/2.11.4/index.html#scala.collection.immutable.List$), and we are interested now in the one-dimensional version. As you can see from the documentation, this function is curried (see [problem 04](/blog/2015/04/07/99-scala-problems-04-length/)) and accepts as first parameter the length of the list and as second parameter the element to put into the list itself.
 
 We are just interested in repeating an element this time, so the function invocation is very simple
 

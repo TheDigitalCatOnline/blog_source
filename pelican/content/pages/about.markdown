@@ -5,7 +5,9 @@ _“We are like dwarfs standing on the shoulders of giants, so that we can see m
 ## About us
 
 Call us software engineers, programmers, coders, geek, whatever.
+
 We love software design, we love architectures, we love methodologies.
+
 Cats are curious and inquisitive animals. We are digital cats.
 
 ## About this blog

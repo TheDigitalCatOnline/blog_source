@@ -36,7 +36,7 @@ Nothing special to highlight here.
 
 ## The recursive solution
 
-The recursive solution may mimic the procedural implementing a helper function that reverses the list. See [problem 05](/2015/04/07/99-scala-problems-05-reverse/) for an implementation of such a function.
+The recursive solution may mimic the procedural implementing a helper function that reverses the list. See [problem 05](/blog/2015/04/07/99-scala-problems-05-reverse/) for an implementation of such a function.
 
 A recursive solution for the palindrome check shall make use of functions to extract the head and tail elements from the list. Since pattern matching cannot separate the tail element, we have to use `List` type methods.
 
@@ -67,7 +67,7 @@ Scala version 2.10+ define an [extractor](https://issues.scala-lang.org/browse/S
 
 Since I am using Scala 2.9 I want to use this occasion to learn how to implement an operator for the pattern matching.
 
-First of all: I recommend reading the following pages [ Case Classes and Pattern Matching](http://www.artima.com/pins1ed/case-classes-and-pattern-matching.html), [List patterns](http://www.artima.com/pins1ed/working-with-lists.html#16.5), [Extractors](http://www.artima.com/pins1ed/extractors.html). They describe in a very simple and clear way everything you need to know at this point about pattern matching and further clarify what discussed in [problem 05](/2015/04/07/99-scala-problems-05-reverse/) about the `::` class.
+First of all: I recommend reading the following pages [ Case Classes and Pattern Matching](http://www.artima.com/pins1ed/case-classes-and-pattern-matching.html), [List patterns](http://www.artima.com/pins1ed/working-with-lists.html#16.5), [Extractors](http://www.artima.com/pins1ed/extractors.html). They describe in a very simple and clear way everything you need to know at this point about pattern matching and further clarify what discussed in [problem 05](/blog/2015/04/07/99-scala-problems-05-reverse/) about the `::` class.
 
 The version proposed in Issue 2575 works only on `List` types but is a good starting point for me
 

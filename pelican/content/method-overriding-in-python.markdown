@@ -79,7 +79,7 @@ dict_proxy({'__module__': '__main__',
 dict_proxy({'__module__': '__main__', '__doc__': None})
 ```
 
-This shows that the `Child` class does not actually contain the `get_value()` method and that a mechanism of automatical delegation is active under the hood. For an insight on this mechanism check [this post](/2014/03/05/oop-concepts-in-python-2-dot-x-part-1/).
+This shows that the `Child` class does not actually contain the `get_value()` method and that a mechanism of automatical delegation is active under the hood. For an insight on this mechanism check [this post](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1/).
 
 ## Method overriding in action
 

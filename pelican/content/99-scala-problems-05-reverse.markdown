@@ -20,7 +20,7 @@ res0: List[Int] = List(8, 5, 3, 2, 1, 1)
 
 ## Initial thoughts
 
-Another classical problem of computer science and functional languages. The solution will be straightforward. As happened with the `length()` function developed for [problem 04](/2015/04/07/99-scala-problems-04-length/), this one may help solving [problem 02](/2015/04/07/99-scala-problems-02-find-last-nth/) in a pure recursive way. Moreover this problem may be solved with folding like problem 04.
+Another classical problem of computer science and functional languages. The solution will be straightforward. As happened with the `length()` function developed for [problem 04](/blog/2015/04/07/99-scala-problems-04-length/), this one may help solving [problem 02](/blog/2015/04/07/99-scala-problems-02-find-last-nth/) in a pure recursive way. Moreover this problem may be solved with folding like problem 04.
 
 ## The procedural solution
 

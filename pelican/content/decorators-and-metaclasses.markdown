@@ -183,7 +183,7 @@ The following resources may be useful.
 #### Metaclasses
 
 * Python 3 official documentation: [customizing class creation](https://docs.python.org/3.4/reference/datamodel.html#customizing-class-creation).
-* Python 3 OOP Part 5 - Metaclasses [on this blog](/2014/09/01/python-3-oop-part-5-metaclasses).
+* Python 3 OOP Part 5 - Metaclasses [on this blog](/blog/2014/09/01/python-3-oop-part-5-metaclasses).
 * [Metaprogramming examples and patterns](http://python-3-patterns-idioms-test.readthedocs.org/en/latest/Metaprogramming.html) (still using some Python 2 code but useful).
 
 #### Decorators

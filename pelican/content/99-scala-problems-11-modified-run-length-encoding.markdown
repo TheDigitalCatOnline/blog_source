@@ -21,7 +21,7 @@ res0: List[Any] = List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e))
 
 ## Initial thoughts
 
-The solution shall be a modification of that of [problem 10](/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list), and the only difference is that this time we do not produce the same type of result for each element.
+The solution shall be a modification of that of [problem 10](/blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list), and the only difference is that this time we do not produce the same type of result for each element.
 
 ## Choices
 

@@ -66,7 +66,7 @@ STATIC_PATHS = ['images', 'code', 'notebooks', 'extra/CNAME']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
 TWITTER_USERNAME = 'thedigicat'
 
-THEME = "laces3"
+THEME = "../laces3"
 
 LACES_CONTENT_BOOTSWATCH_THEME = 'spacelab'
 

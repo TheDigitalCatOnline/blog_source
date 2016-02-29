@@ -12,7 +12,7 @@ This post is the result of a lot of personal research on Python decorators, meta
 
 Well, no. Python is a strong object-oriented programming language and is not really going to mix OOP and functional like, for example, Scala (which is a very good language, by the way).
 
-However, Python provides _some_ features taken from functional programming. [Generators and iterators](/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking) are one of them, and Python is not the only non pure functional programming language to have them in their toolbox.
+However, Python provides _some_ features taken from functional programming. [Generators and iterators](/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking) are one of them, and Python is not the only non pure functional programming language to have them in their toolbox.
 
 Perhaps the most distinguishing feature of [functional languages](http://en.wikipedia.org/wiki/Functional_programming) is that functions are first-class citizens (or first-class objects). This means that functions can be passed as an argument to other functions or can be returned by them. Functions, in functional languages, are just one of the data types available (even if this is a very rough simplification).
 
@@ -24,7 +24,7 @@ Python variables share a common nature: they are all references. This means that
 
 Python functions are thus ready to accept every type of data that can be referenced, and functions can.
 
-Read [this post](/2014/08/21/python-3-oop-part-4-polymorphism) to dive into delegation-based polymorphism and references in Python.
+Read [this post](/blog/2014/08/21/python-3-oop-part-4-polymorphism) to dive into delegation-based polymorphism and references in Python.
 
 ## Functions objects
 
@@ -71,7 +71,7 @@ In higher lever languages such as Python achieving metaprogramming is no more a 
 
 ## Decorators
 
-[Metaclasses](/2014/09/01/python-3-oop-part-5-metaclasses) are often perceived as a very tricky and dangerous thing to play with, and indeed they are seldom required in Python, with the most notable exception (no pun intended) being the [Abstract Base Classes](/2014/09/04/python-3-oop-part-6-abstract-base-classes) provided by the `collections` module.
+[Metaclasses](/blog/2014/09/01/python-3-oop-part-5-metaclasses) are often perceived as a very tricky and dangerous thing to play with, and indeed they are seldom required in Python, with the most notable exception (no pun intended) being the [Abstract Base Classes](/blog/2014/09/04/python-3-oop-part-6-abstract-base-classes) provided by the `collections` module.
 
 Decorators, on the other side, are a feature loved by many experienced programmers and after their introduction the community has developed a big set of very interesting use cases.
 
@@ -130,7 +130,7 @@ and to classes
 'a custom class attribute'
 ```
 
-As you can see adding attributes to a class correctly results in a class attribute, which is thus shared by any instance of that class (check [this post](/2014/08/20/python-3-oop-part-2-classes-and-members) for some explanations about class attributes and sharing).
+As you can see adding attributes to a class correctly results in a class attribute, which is thus shared by any instance of that class (check [this post](/blog/2014/08/20/python-3-oop-part-2-classes-and-members) for some explanations about class attributes and sharing).
 
 ## Class-based decorators without arguments
 

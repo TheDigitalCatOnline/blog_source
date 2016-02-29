@@ -47,7 +47,7 @@ As already mentioned, this mechanism works with methods too.
 <bound method Book.get_entry of <__main__.Book object at 0xb703952c>>
 ```
 
-Here I intentionally omitted the calling brackets (parentheses) to show what happens when accessing the method. For a in-depth explanation of the difference between functions and bound methods read [this post](/2014/08/20/python-3-oop-part-2-classes-and-members).
+Here I intentionally omitted the calling brackets (parentheses) to show what happens when accessing the method. For a in-depth explanation of the difference between functions and bound methods read [this post](/blog/2014/08/20/python-3-oop-part-2-classes-and-members).
 
 When an object does not contain the attribute we are looking for, Python raises an `AttributeError` exception
 
@@ -211,7 +211,7 @@ class Book(object):
 
 As you can see the `publisher` and `somename` attributes are correctly accessed even if they do not actually exist inside the object.
 
-To find a good use for `__getattr__()` and `getattr()` we need to step into something a bit more complex, which is the explicit delegation mechanism involved in a composition between objects. You may find more details on this topic in [this post](/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance). 
+To find a good use for `__getattr__()` and `getattr()` we need to step into something a bit more complex, which is the explicit delegation mechanism involved in a composition between objects. You may find more details on this topic in [this post](/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance). 
 
 Both `getattr()` and `__getattr__()` have their counterpart to manage writing access, namely `setattr()` and `__setattr__()`.
 

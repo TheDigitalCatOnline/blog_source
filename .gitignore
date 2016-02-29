@@ -5,3 +5,5 @@ laces3
 pelican-plugins
 pelican-themes
 venv
+*.pid
+pelican/output

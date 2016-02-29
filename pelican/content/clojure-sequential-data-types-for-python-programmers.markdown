@@ -33,7 +33,7 @@ An object that follows the sequence API in Python has the following traits, amon
 
 A derived feature which is provided by sequences is that they can be sliced, i.e. part of them can be extracted as a collection of the same type.
 
-These features are paramount because they allow Python to define a common interface for loops. This is obviously shared with mostly every programming language, but Clojure implements it in a slightly different way. A Python class shall implement some "magic" methods to expose the sequence API. To get a starting picture of the steps involved read [this post](/2015/05/13/python-oop-tdd-example-part1/), where I discuss the implementation of a binary number type in Python.
+These features are paramount because they allow Python to define a common interface for loops. This is obviously shared with mostly every programming language, but Clojure implements it in a slightly different way. A Python class shall implement some "magic" methods to expose the sequence API. To get a starting picture of the steps involved read [this post](/blog/2015/05/13/python-oop-tdd-example-part1/), where I discuss the implementation of a binary number type in Python.
 
 ## A matter of definitions
 
@@ -66,7 +66,7 @@ Let me first start with some details on mutability and persistence.
 
 Clojure's collections are **immutable**, which means that you cannot change the content of one of their instances. This is a feature provided in Python by means of the tuple data type only. As happens in other languages like Erlang, Clojure's immutability of collections is a trampoline to concurrency safety, something the language provides as a feature rather than a limitation.
 
-Clojure collections are also **persistent**. The original meaning of this word refers to the possibility of accessing the old version of a given structure after having changed it. Since structures in Clojure are immutable you are forced to create a new variable every time you want to change something, which implies that the "old version" is still available. That is, immutability implies persistence. In Clojure, moreover, structures share values as long as this is consistent, which is exactly what Python does with the references concept (see [this post](/2014/08/21/python-3-oop-part-4-polymorphism)).
+Clojure collections are also **persistent**. The original meaning of this word refers to the possibility of accessing the old version of a given structure after having changed it. Since structures in Clojure are immutable you are forced to create a new variable every time you want to change something, which implies that the "old version" is still available. That is, immutability implies persistence. In Clojure, moreover, structures share values as long as this is consistent, which is exactly what Python does with the references concept (see [this post](/blog/2014/08/21/python-3-oop-part-4-polymorphism)).
 
 ## Vectors in Clojure
 

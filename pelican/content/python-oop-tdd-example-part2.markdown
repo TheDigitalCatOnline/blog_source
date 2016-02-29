@@ -7,7 +7,7 @@ Slug: python-oop-tdd-example-part2
 Series: "Python OOP and TDD"
 Summary: The second part of the post about Object-oriented Programming and Test Driven Development
 
-In [the first part](/2015/05/13/python-oop-tdd-example-part1/) of this small series I introduced you to TDD with Python by means of the powerful `py.test` package. We developed together a simple library which provides a `Binary` class that is a bit more useful than the default binary representation that Python provides with the `bin()` builtin function.
+In [the first part](/blog/2015/05/13/python-oop-tdd-example-part1/) of this small series I introduced you to TDD with Python by means of the powerful `py.test` package. We developed together a simple library which provides a `Binary` class that is a bit more useful than the default binary representation that Python provides with the `bin()` builtin function.
 
 In this part I'll go on with the development of the library, discussing the implementation of a binary number with a fixed size, which is a very interesting and useful matter, being the foundation of the computer we are working with. Fixed-size binaries may also represent negative numbers with the two's complement technique, and this will be an important point to test.
 
@@ -159,7 +159,7 @@ class SizeBinary(Binary):
     pass
 ```
 
-and with this simple declaration I get 1 test passed and still 50 to go. We obviously may also create a new object that does not inherit from `Binary` but we would have to explicitly delegate a lot of functions to this latter class. So, in this case, better to stick to an automatic delegation mechanism like inheritance. To get a review of those two concepts read [this post](/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance).
+and with this simple declaration I get 1 test passed and still 50 to go. We obviously may also create a new object that does not inherit from `Binary` but we would have to explicitly delegate a lot of functions to this latter class. So, in this case, better to stick to an automatic delegation mechanism like inheritance. To get a review of those two concepts read [this post](/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance).
 
 Composition could be another viable solution, with a `Binary` value stored internally and accessed whenever we call `super()` in the inheritance version. In this case, however, inheritance and composition lead to very similar results, with the latter being somehow counterintuitive and thus not the best choice.
 
