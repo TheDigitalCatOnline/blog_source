@@ -128,7 +128,3 @@ The for construct receives here an **iterable** object and calls its `__iter__()
 
 This first post tried to summarize the loop protocol implemented by the for statement, which is in Python very different from many classic languages. Next post will explore the concept of generator and its Python implementation.
 
-## Next articles
-
-* [Python Generators - From Iterators to Cooperative Multitasking 2](/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2)
-* [Python Generators - From Iterators to Cooperative Multitasking 3](/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3)

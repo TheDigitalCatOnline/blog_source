@@ -217,6 +217,3 @@ You will find a lot of documentation in [this Reddit post](http://www.reddit.com
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/b/110554719587236016835/110554719587236016835/posts) to comment the post. The [GitHub issues](https://github.com/lgiordani/lgiordani.github.com/issues) page is the best place to submit corrections.
 
-## Next post
-
-[Python 3 OOP Part 2 - Classes and members](/blog/2014/08/20/python-3-oop-part-2-classes-and-members)

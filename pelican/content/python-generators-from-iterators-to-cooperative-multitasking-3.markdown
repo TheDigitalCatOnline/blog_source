@@ -267,8 +267,4 @@ A package that implements cooperative multitasking with generator based microthr
 
 2014-02-17: [Riccardo](https://twitter.com/entropiae) spotted an error in the example code after `mthread.py` and submitted the correct version. Thanks!
 
-## Past articles
-
-* [Python Generators - From Iterators to Cooperative Multitasking](/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking)
-* [Python Generators - From Iterators to Cooperative Multitasking 2](/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2)
 

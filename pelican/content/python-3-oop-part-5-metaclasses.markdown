@@ -9,10 +9,6 @@ Summary:
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_5__Metaclasses.ipynb)
 
-## Previous post
-
-[Python 3 OOP Part 4 - Polymorphism](/blog/2014/08/21/python-3-oop-part-4-polymorphism)
-
 ## The Type Brothers
 
 The first step into the most intimate secrets of Python objects comes from two components we already met in the first post: `class` and `object`. These two things are the very fundamental elements of Python OOP system, so it is worth spending some time to understand how they work and relate each other.
@@ -167,6 +163,3 @@ You will find a lot of documentation in [this Reddit post](http://www.reddit.com
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/b/110554719587236016835/110554719587236016835/posts) to comment the post. The [GitHub issues](https://github.com/lgiordani/lgiordani.github.com/issues) page is the best place to submit corrections.
 
-## Next post
-
-[Python 3 OOP Part 6 - Abstract Base Classes](/blog/2014/09/04/python-3-oop-part-6-abstract-base-classes)

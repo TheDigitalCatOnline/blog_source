@@ -365,7 +365,7 @@ class Binary:
 
 Running the tests I get `4 failed, 9 passed in 0.02 seconds`, which is a good score. The tests that still fail are `test_binary_eq`, `test_binary_bin`, `test_binary_str` and `test_binary_hex`. Since I still wrote no code for the conversions those failures were expected.
 
-Let us review the code I wrote. I make use of the `collections` module to tell apart sequences from plain values in a pythonic way. If you do not know what Abstract Base Classes are, please check [this post](/blog/2014/09/04/python-3-oop-part-6-abstract-base-classes) and the [`collections.abc` module documentation](https://docs.python.org/3/library/collections.abc.html).
+Let us review the code I wrote. I make use of the `collections` module to tell apart sequences from plain values in a pythonic way. If you do not know what Abstract Base Classes are, please check [this post](/2014/09/04/python-3-oop-part-6-abstract-base-classes) and the [`collections.abc` module documentation](https://docs.python.org/3/library/collections.abc.html).
 
 **WARNING**: if you are using Python 3.2 or less you will find those classes in the `collections` module instead of `collections.abc`, which has been introduced with Python 3.3
 

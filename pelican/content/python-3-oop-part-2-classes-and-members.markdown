@@ -9,10 +9,6 @@ Summary:
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_2__Classes_and_members.ipynb)
 
-## Previous post
-
-[Python 3 OOP Part 1 - Objects and types](/blog/2014/08/20/python-3-oop-part-1-objects-and-types)
-
 ## Python Classes Strike Again
 
 The Python implementation of classes has some peculiarities. The bare truth is that in Python the class of an object is an object itself. You can check this by issuing `type()` on the class
@@ -387,6 +383,3 @@ You will find a lot of documentation in [this Reddit post](http://www.reddit.com
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/b/110554719587236016835/110554719587236016835/posts) to comment the post. The [GitHub issues](https://github.com/lgiordani/lgiordani.github.com/issues) page is the best place to submit corrections.
 
-## Next post
-
-[Python 3 OOP Part 3 - Delegation: composition and inheritance](/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance)

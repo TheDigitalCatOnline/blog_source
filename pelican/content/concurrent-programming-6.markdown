@@ -531,6 +531,3 @@ This article ends by now this little series on concurrent programming in C and I
 
 There is much left to say about concurrent programming structures: atomicity, mutual exclusions, threads, monitors are just some of the most important. I will post new articles on such topics in the future, perhaps showing their implementation in other languages.
 
-## Previous article
-
-[Concurrent Programming 5](/blog/2013/02/28/concurrent-programming-5)

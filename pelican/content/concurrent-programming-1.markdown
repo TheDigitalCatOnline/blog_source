@@ -85,6 +85,3 @@ Next article will dig into the fundamental concept of process forking, both from
 
 Feel free to ask questions or point errors through comments or social networks.
 
-## Next article
-
-[Concurrent Programming 2](/blog/2013/02/04/concurrent-programming-2)

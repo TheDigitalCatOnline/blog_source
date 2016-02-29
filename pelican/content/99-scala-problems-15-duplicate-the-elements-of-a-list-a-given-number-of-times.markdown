@@ -24,7 +24,7 @@ Problem 12 already taught me to use `fill()` to build lists of repeated elements
 
 ## Solution
 
-This problem is a generalization of the previous [problem 14](/blog/2015/04/14/99-scala-problems-14-duplicate-the-elements-of-a-list) which required to duplicate the elements of a list. There we could build the list into an anonymous function with the `List(e, e)` syntax.
+This problem is a generalization of the previous [problem 14](/2015/04/14/99-scala-problems-14-duplicate-the-elements-of-a-list) which required to duplicate the elements of a list. There we could build the list into an anonymous function with the `List(e, e)` syntax.
 
 For this problem we have to use a more general solution, which is the `fill()` method of the `List` object (not class), already discovered in [problem 12]. This method is expressed in a curried form, thus the two argument applications.
 

@@ -9,9 +9,6 @@ Summary:
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_4__Polymorphism.ipynb)
 
-## Previous post
-
-[Python 3 OOP Part 3 - Delegation: composition and inheritance](/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance)
 
 ## Good Morning, Polymorphism
 
@@ -261,7 +258,7 @@ except AttributeError:
     [...]
 ```
 
-As you can see, the second snippet directly uses the method and deals with the possible `AttributeError` exception (by the way: managing exceptions is one of the top Black Magic Topics in Python, more on it in a future post. A very quick preview: I think we may learn something from Erlang - check [this](/blog/2013/05/30/error-handling-in-erlang-a-primer/)).
+As you can see, the second snippet directly uses the method and deals with the possible `AttributeError` exception (by the way: managing exceptions is one of the top Black Magic Topics in Python, more on it in a future post. A very quick preview: I think we may learn something from Erlang - check [this](/2013/05/30/error-handling-in-erlang-a-primer/)).
 
 Why is this coding style pushed so much in the Python community? I think the main reason is that through EAFP you _think_ polymorphically: you are not interested in knowing if the object _has_ the `open` attribute, you are interested in knowing if the object can satisfy your request, that is to perform the `open()` method call.
 
@@ -277,6 +274,3 @@ You will find a lot of documentation in [this Reddit post](http://www.reddit.com
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/b/110554719587236016835/110554719587236016835/posts) to comment the post. The [GitHub issues](https://github.com/lgiordani/lgiordani.github.com/issues) page is the best place to submit corrections.
 
-## Next post
-
-[Python 3 OOP Part 5 - Metaclasses](/blog/2014/09/01/python-3-oop-part-5-metaclasses)

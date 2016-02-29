@@ -20,7 +20,7 @@ res0: List[List[Symbol]] = List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), Li
 
 ## Initial thoughts
 
-This is similar to [problem 08](/blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/) but has an important difference: the result will be a list of lists. When dealing with multi-level structures like these, it is very easy to get lost, so I expect to find a recursive solution with a lot of cases or complex pattern guards.
+This is similar to [problem 08](/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/) but has an important difference: the result will be a list of lists. When dealing with multi-level structures like these, it is very easy to get lost, so I expect to find a recursive solution with a lot of cases or complex pattern guards.
 
 ## The recursive solution
 

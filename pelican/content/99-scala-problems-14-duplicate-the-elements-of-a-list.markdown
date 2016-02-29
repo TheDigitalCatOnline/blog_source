@@ -20,7 +20,7 @@ res0: List[Symbol] = List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd)
 
 ## Initial thoughts
 
-Once again (see [problem 12](/blog/2015/04/14/99-scala-problems-12-decode-a-run-length-encoded-list)) a perfect task for `flatMap()` since for each element a list must be produced, but the resulting list shall be flat.
+Once again (see [problem 12](/2015/04/14/99-scala-problems-12-decode-a-run-length-encoded-list)) a perfect task for `flatMap()` since for each element a list must be produced, but the resulting list shall be flat.
 
 ## Solution
 

@@ -9,7 +9,7 @@ Summary:
 
 ## Abstract
 
-Welcome to the third installment of this little series of posts about Python 2.x OOP implementation. The [first](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1) and [second](/blog/2014/03/10/oop-concepts-in-python-2-dot-x-part-2) issues introduced the most important concepts at the basis of Python as an object-oriented language.
+Welcome to the third installment of this little series of posts about Python 2.x OOP implementation. The [first](/2014/03/05/oop-concepts-in-python-2-dot-x-part-1) and [second](/2014/03/10/oop-concepts-in-python-2-dot-x-part-2) issues introduced the most important concepts at the basis of Python as an object-oriented language.
 
 This post will continue the discussion about metaclasses, introducing Abstract Base Classes, and give some insights on callable objects.
 
@@ -39,7 +39,7 @@ except AttributeError:
     [...]
 ```
 
-where the methods of the `list` type are accessed (not called) just to force the object to raise the `AttributeError` exception if they are not present. This code, however, is not only ugly but also wrong. If you recall the "Enter the Composition" section of the [first post](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1), you know that in Python you can always customize the `__getattr__()` method, which is called whenever the requested attribute is not found in the object. So I could write a class that passes the test but actually does not act like a list
+where the methods of the `list` type are accessed (not called) just to force the object to raise the `AttributeError` exception if they are not present. This code, however, is not only ugly but also wrong. If you recall the "Enter the Composition" section of the [first post](/2014/03/05/oop-concepts-in-python-2-dot-x-part-1), you know that in Python you can always customize the `__getattr__()` method, which is called whenever the requested attribute is not found in the object. So I could write a class that passes the test but actually does not act like a list
 
 ``` python
 class FakeList(object):
@@ -328,8 +328,4 @@ Some sources for the content of this post. Thank you authors!
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/b/110554719587236016835/110554719587236016835/posts) to comment the post. The [GitHub issues](https://github.com/lgiordani/lgiordani.github.com/issues) page is the best place to submit corrections.
 
-## Previous articles
-
-* [OOP Concepts in Python 2.x - Part 1](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1)
-* [OOP Concepts in Python 2.x - Part 2](/blog/2014/03/10/oop-concepts-in-python-2-dot-x-part-2)
 

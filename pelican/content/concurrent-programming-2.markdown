@@ -238,10 +238,3 @@ Starting from the knowledge of processes you stepped into the fundamental Unix c
 
 In the next article we will start to look after processes synchronization and data sharing between processes.
 
-## Previous article
-
-[Concurrent Programming 1](/blog/2013/01/31/concurrent-programming-1)
-
-## Next article
-
-[Concurrent Programming 3](/blog/2013/02/06/concurrent-programming-3)

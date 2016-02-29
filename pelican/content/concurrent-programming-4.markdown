@@ -414,10 +414,3 @@ Try to change the parameters such as the buffer length (on the command line) or 
 
 In the next article, we will introduce and deal with atomicity, which is a very important concept in concurrent programming and database systems. We will also introduce a new IPC structure, which has a broad use in distributed systems: message queues.
 
-## Previous article
-
-[Concurrent Programming 3](/blog/2013/02/06/concurrent-programming-3)
-
-## Next article
-
-[Concurrent Programming 5](/blog/2013/02/28/concurrent-programming-5)

@@ -207,10 +207,3 @@ since `dict()` accepts an iterable of `(key, value)` tuples, which is what the g
 
 Generators are a very powerful tool, not only because they simplify the creation of iterators, but also for the advantage of delaying the creation of the objects in a list and for the capability of generator functions to interrupt and resume the execution. As we will see in the third post this last feature is the foundation stone of an easy approach to cooperative multitasking.
 
-## Past articles
-
-* [Python Generators - From Iterators to Cooperative Multitasking](/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking)
-
-## Next articles
-
-* [Python Generators - From Iterators to Cooperative Multitasking 3](/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3)

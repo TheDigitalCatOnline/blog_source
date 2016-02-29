@@ -146,10 +146,3 @@ Last you met two new types of processes, orphans and zombies, and learned why th
 
 In the next article, we will study some classical synchronization problems and introduce the basic InterProcess Communication (IPC) structures and techniques Unix systems make available to programmers.
 
-## Previous article
-
-[Concurrent Programming 2](/blog/2013/02/04/concurrent-programming-2)
-
-## Next article
-
-[Concurrent Programming 4](/blog/2013/02/13/concurrent-programming-4)

@@ -9,10 +9,6 @@ Summary:
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_6__Abstract_Base_Classes.ipynb)
 
-## Previous post
-
-[Python 3 OOP Part 5 - Metaclasses](/blog/2014/09/01/python-3-oop-part-5-metaclasses)
-
 ## The Inspection Club
 
 As you know, Python leverages polymorphism at its maximum by dealing only with generic references to objects. This makes OOP not an addition to the language but part of its structure from the ground up. Moreover, Python pushes the EAFP appoach, which tries to avoid direct inspection of objects as much as possible.
@@ -37,7 +33,7 @@ except AttributeError:
     [...]
 ```
 
-where the methods of the `list` type are accessed (not called) just to force the object to raise the `AttributeError` exception if they are not present. This code, however, is not only ugly but also wrong. If you recall the "Enter the Composition" section of the [third post](/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance) of this series, you know that in Python you can always customize the `__getattr__()` method, which is called whenever the requested attribute is not found in the object. So I could write a class that passes the test but actually does not act like a list
+where the methods of the `list` type are accessed (not called) just to force the object to raise the `AttributeError` exception if they are not present. This code, however, is not only ugly but also wrong. If you recall the "Enter the Composition" section of the [third post](/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance) of this series, you know that in Python you can always customize the `__getattr__()` method, which is called whenever the requested attribute is not found in the object. So I could write a class that passes the test but actually does not act like a list
 
 ``` python
 class FakeList:

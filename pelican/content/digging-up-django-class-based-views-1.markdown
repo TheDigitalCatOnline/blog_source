@@ -220,8 +220,3 @@ Let me know if this post helped you in understanding the matter and feel free to
 
 2015-06-10: [meatypocket](http://www.reddit.com/user/meatypocket) spotted a missing `return` in the `dispatch()` override. Thank you!
 
-## Next articles
-
-* [Digging Up Django Class-based Views - 2](/blog/2013/12/11/digging-up-django-class-based-views-2)
-
-* [Digging Up Django Class-based Views - 3](/blog/2014/02/14/digging-up-django-class-based-views-3)
