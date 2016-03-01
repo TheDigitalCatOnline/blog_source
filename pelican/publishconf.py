@@ -13,16 +13,4 @@ from pelicanconf import *
 SITEURL = 'http://blog.thedigitalcatonline.com'
 RELATIVE_URLS = False
 
-FEED_ALL_ATOM = 'atom.xml'
-TAG_FEED_ATOM = 'categories/%s/atom.xml'
-CATEGORY_FEED_ATOM = 'category/%s/atom.xml'
-
 DELETE_OUTPUT_DIRECTORY = True
-
-DISPLAY_FEEDS_ON_SIDEBAR = True
-DISPLAY_TAGS_ON_SIDEBAR = False
-
-# Following items are often useful when publishing
-
-#DISQUS_SITENAME = ""
-#GOOGLE_ANALYTICS = ""
