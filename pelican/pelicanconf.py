@@ -115,9 +115,9 @@ LACES_LICENSE = {
 #     'show_user_link': True
 # }
 
-# LACES_ADDTHIS = {
-#     'profile': 'ra-552391e122c8506c'
-# }
+LACES_ADDTHIS = {
+    'profile': 'ra-56d7f22eee8b0ddf'
+}
 
 LACES_TWITTER_CARDS = True
 
