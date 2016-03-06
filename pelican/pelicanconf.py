@@ -20,7 +20,6 @@ TRANSLATION_FEED_ATOM = None
 DISPLAY_FEEDS_ON_SIDEBAR = True
 DISPLAY_TAGS_ON_SIDEBAR = False
 
-
 JINJA_EXTENSIONS = ['jinja2.ext.with_', 'jinja2.ext.do']
 
 ARTICLE_URL = 'blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
@@ -34,6 +33,9 @@ TAG_SAVE_AS = TAG_URL + 'index.html'
 
 ARCHIVES_URL = 'archives/'
 ARCHIVES_SAVE_AS = ARCHIVES_URL + 'index.html'
+
+AUTHOR_URL = 'authors/{slug}/'
+AUTHOR_SAVE_AS = AUTHOR_URL + 'index.html'
 
 PLUGIN_PATHS = ["../pelican-plugins"]
 PLUGINS = ['related_posts', 'series', 'sitemap', 'tag_cloud']
@@ -80,7 +82,7 @@ LACES_ARTICLE_INFO_LIST = {
 }
 
 LACES_ARTICLE_INFO_PAGE = {
-    'fields': ['date', 'tags', 'series']
+    'fields': ['date', 'tags', 'series', 'author']
 }
 
 LACES_SERIES = {
