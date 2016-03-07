@@ -69,3 +69,134 @@ Well, as you can see this class is somehow different from what you are accustome
 <Mock name='mock.some_attribute' id='140222043808432'>
 ```
 
+Mock objects are callables, which means that they may act both as attributes and as methods. If you try to call the mock it just returns you another mock with a name that includes parentheses to remarks its callable nature
+
+``` pycon
+>>> m.some_attribute()
+<Mock name='mock.some_attribute()' id='140247621475856'>
+```
+
+As you can understand, such objects are the perfect tool to mimic other objects or systems, since they may expose any API without raising exceptions. To use them in tests, however, we need them to behave just like the original, which implies returning sensible values or performing operations.
+ 
+## Return value
+
+The simplest thing a mock can do for you is to return a given value every time you call it. This is configured setting the `return_value` attribute of a mock object
+
+``` pycon
+>>> m.some attribute.return_value = 42
+>>> m.some attribute()
+42
+```
+
+Now the object does not return a mock object any more, instead it just returns the static value stored in the `return_value` attribute. Obviously you can also store a callable such as a function or an object, and the method will return it, but it will not run it. Let me give you an example
+
+``` pycon
+>>> def print_answer():
+...  print("42")
+... 
+>>> 
+>>> m.some_attribute.return_value = print_answer
+>>> m.some_attribute()
+<function print_answer at 0x7f8df1e3f400>
+```
+
+As you can see calling `some_attribute()` just returns the value stored in `return_value`, that is the function itself. To return values that come from a function we have to use a slightly more complex attribute of mock objects called `side_effect`.
+
+## Side effect
+
+The `side_effect` parameter of mock objects is a very powerful tool. It accepts three different flavours of objects, callables, iterables, and exceptions, and changes its behaviour accordingly.
+
+If you pass an exception the mock will raise it
+ 
+``` pycon
+>>> m.some_attribute.side_effect = ValueError('A custom value error')
+>>> m.some_attribute()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/lib/python3.4/unittest/mock.py", line 902, in __call__
+    return _mock_self._mock_call(*args, **kwargs)
+  File "/usr/lib/python3.4/unittest/mock.py", line 958, in _mock_call
+    raise effect
+ValueError: A custom value error
+```
+
+If you pass an iterable, such as for example a generator, or a plain list, tuple, or similar objects, the mock will yield the values of that iterable, i.e. return every value contained in the iterable on subsequent calls of the mock. Let me give you an example
+
+``` pycon
+>>> m.some_attribute.side_effect = range(3)
+>>> m.some_attribute()
+0
+>>> m.some_attribute()
+1
+>>> m.some_attribute()
+2
+>>> m.some_attribute()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/lib/python3.4/unittest/mock.py", line 902, in __call__
+    return _mock_self._mock_call(*args, **kwargs)
+  File "/usr/lib/python3.4/unittest/mock.py", line 961, in _mock_call
+    result = next(effect)
+StopIteration
+```
+
+As promised, the mock just returns every object found in the iterable (in this case a `range` object) once at a time until the generator is exhausted. According to the iterator protocol (see [this post](blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/)) once every item has been returned the object raises the `StopIteration` exception, which means that you can correctly use it in a loop.
+
+The last and perhaps most used case is that of passing a callable to `side_effect`, which shamelessly executes it with its own same parameters. This is very powerful, especially if you stop thinking about "functions" and start considering "callables". Indeed, `side_effect` also accepts a class and calls it, that is it can instantiate objects. Let us consider a simple example with a function without arguments
+
+``` pycon
+>>> def print_answer():
+...     print("42")       
+>>> m.some_attribute.side_effect = print_answer
+>>> m.some_attribute.side_effect()
+42
+```
+
+A slightly more complex example: a function with arguments
+
+``` pycon
+>>> def print_number(num):
+...     print("Number:", num)
+... 
+>>> m.some_attribute.side_effect = print_number
+>>> m.some_attribute.side_effect(5)
+Number: 5
+```
+
+And finally an example with a class
+
+``` pycon
+>>> class Number(object):
+...     def __init__(self, value):
+...         self._value = value
+...     def print_value(self):
+...         print("Value:", self._value)
+... 
+>>> m.some_attribute.side_effect = Number
+>>> n = m.some_attribute.side_effect(26)
+>>> n
+<__main__.Number object at 0x7f8df1aa4470>
+>>> n.print_value()
+Value: 26
+```
+
+## Testing with mocks
+
+Now we know how to build a mock and how to give it a static return value or make it call a callable object. It is time to see how to use a mock in a test and what facilities do mocks provide. I'm going to use [pytest](http://pytest.org) as a testing framework. You can find a quick introduction to pytest and TDD [here](categories/tdd/)).
+
+If you want to quickly setup a pytest playground, however, you may execute this 
+
+``` sh
+mkdir mockplayground
+cd mockplayground
+virtualenv venv3 -p python3
+source venv3/bin/activate
+pip install --upgrade pip
+pip install pytest
+echo "[pytest]" >> pytest.ini
+echo "norecursedirs=venv*" >> pytest.ini
+mkdir tests
+touch tests/test_mock.py
+py.test
+```
+
