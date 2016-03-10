@@ -6,11 +6,11 @@ Authors: Leonardo Giordani
 Slug: python-mocks-a-gentle-introduction-part-1
 Summary: 
 
-As already stressed in the two introductory posts on TDD (you can find them [here](categories/tdd/)) testing requires to write some code that uses the functions and objects you are going to develop. This means that you need to isolate a given (external) function, that is part of your public API, and demonstrate that it works with standard inputs and on edge cases.
+As already stressed in the two introductory posts on TDD (you can find them [here](/categories/tdd/)) testing requires to write some code that uses the functions and objects you are going to develop. This means that you need to isolate a given (external) function that is part of your public API and demonstrate that it works with standard inputs and in edge cases.
 
 For example, if you are going to develop an object that stores percentages (such as for example poll results), you should test the following conditions: the class can store a standard percentage such as 42%, the class shall give an error if you try to store a negative percentage, the class shall give an error if you store a percentage greater than 100%.
 
-Tests shall be idempotent, which in mathematics and computer science identifies a process that can be run multiple times without changing the status of the system, and isolated. A test shall not change its behaviour depending on previous executions of itself, nor depend on the previous execution (or missing execution) of other tests.
+Tests shall be _idempotent_ and _isolated_. Idempotent in mathematics and computer science identifies a process that can be run multiple times without changing the status of the system. Isolated means that a test shall not change its behaviour depending on previous executions of itself, nor depend on the previous execution (or missing execution) of other tests.
 
 Such restrictions, which guarantee that your tests are not passing due to a temporary configuration of the system or the order in which they are run, can raise big issues when dealing with external libraries and systems, or with intrinsically mutable concepts such as time. In the testing discipline, such issues are mostly faced using mocks, that is objects that pretend to be other objects.
  
@@ -26,7 +26,7 @@ You may find the official documentation [here](https://docs.python.org/dev/libra
 
 ## Basic concepts
 
-A mock, in the testing lingo, is an object that simulates the behaviour of another (more complex) object. When you (unit)test an object of your library you need sometimes other systems your object want to connect to, but you do not really want to be forced to run them, for several reasons.
+A mock, in the testing lingo, is an object that simulates the behaviour of another (more complex) object. When you (unit)test an object of your library you need sometimes to access other systems your object want to connect to, but you do not really want to be forced to run them, for several reasons.
 
 The first one is that connecting with external systems means having a complex testing environment, that is you are dropping the isolation requirement of you tests. If your object wants to connect with a website, for example, you are forced to have a running Internet connection, and if the remote website is down you cannot test your library.
 
@@ -34,10 +34,16 @@ The second reason is that the setup of an external system is usually slow in com
      
 The third reason is more subtle, and has to to with the mutable nature of an external system, thus I'll postpone the discussion of this issue for the moment.
 
-Let us try and work with a mock in Python and see what it can do. First of all fire up a Python shell or a [Jupyter Notebook](jupyter.org) and import the library (remember to install it if you are running Python 2.
+Let us try and work with a mock in Python and see what it can do. First of all fire up a Python shell or a [Jupyter Notebook](jupyter.org) and import the library 
 
 ``` python
 from unittest import mock
+```
+
+If you are using Python 2 you have to install it and use
+
+``` python
+import mock
 ```
 
 The main object that the library provides is `Mock` and you can instantiate it without any argument
@@ -53,7 +59,7 @@ This object has the peculiar property of creating methods and attributes on the 
 ['assert_any_call', 'assert_called_once_with', 'assert_called_with', 'assert_has_calls', 'attach_mock', 'call_args', 'call_args_list', 'call_count', 'called', 'configure_mock', 'method_calls', 'mock_add_spec', 'mock_calls', 'reset_mock', 'return_value', 'side_effect']
 ```
 
-As you can see there are some methods which are already defined into the `Mock` object. Let us read a non-existing attribute
+As you can see there are some methods which are already defined into the `Mock` object. Let us read a non-existent attribute
 
 ``` pycon
 >>> m.some_attribute
@@ -182,9 +188,11 @@ Value: 26
 
 ## Testing with mocks
 
-Now we know how to build a mock and how to give it a static return value or make it call a callable object. It is time to see how to use a mock in a test and what facilities do mocks provide. I'm going to use [pytest](http://pytest.org) as a testing framework. You can find a quick introduction to pytest and TDD [here](categories/tdd/)).
+Now we know how to build a mock and how to give it a static return value or make it call a callable object. It is time to see how to use a mock in a test and what facilities do mocks provide. I'm going to use [pytest](http://pytest.org) as a testing framework. You can find a quick introduction to pytest and TDD [here](/categories/tdd/)).
 
-If you want to quickly setup a pytest playground, however, you may execute this 
+### Setup
+
+If you want to quickly setup a pytest playground you may execute this code in a terminal (you need to have Python 3 and virtualenv installed in your system) 
 
 ``` sh
 mkdir mockplayground
@@ -196,7 +204,150 @@ pip install pytest
 echo "[pytest]" >> pytest.ini
 echo "norecursedirs=venv*" >> pytest.ini
 mkdir tests
+touch myobj.py
 touch tests/test_mock.py
-py.test
+PYTHONPATH="." py.test
 ```
 
+The `PYTHONPATH` environment variable is an easy way to avoid having to setup a whole Python project to just test some simple code.
+
+### The three test types 
+
+According to Sandy Metz we need to test only three types of messages (calls) between objects:
+
+* Incoming queries (assertion on result)
+* Incoming commands (assertion on direct public side effects)
+* Outgoing commands (expectation on call and arguments)
+
+You can see the original talk [here](https://www.youtube.com/watch?v=URSWYvyc42M) or read the slides [here](https://speakerdeck.com/skmetz/magic-tricks-of-testing-railsconf). The final table is shown in slide number 176.
+
+As you can see when dealing with external objects we are only interested in knowing IF a method was called and WHAT PARAMETERS the caller passed to the object. We are not testing if the remote object returns the correct result, this is faked by the mock, which indeed returns exactly the result we need.
+
+So the purpose of the methods provided by mock objects is to allow us to check what methods we called on the mock itself and what parameters we used in the call.
+
+
+### Asserting calls
+
+To show how to use Python mocks in testing I will follow the TDD methodology, writing tests first and then writing the code that makes the tests pass. In this post I want to give you a simple overview of the mock objects, so I will not implement a real world use case, and the code will be very trivial. In the second part of this series I will test and implement a real class, in order to show some more interesting use cases.
+
+The first thing we are usually interested in when dealing with an external object is to know that a given method has been called on it. Python mocks provide the `assert_called_with()` method to check this condition.
+
+The use case we are going to test is the following. _We instantiate the `myobj.MyObj` class, which requires an external object. The class shall call the `connect()` method of the external object without any parameter._
+ 
+``` python
+from unittest import mock
+import myobj
+
+def test_instantiation():
+    external_obj = mock.Mock()
+    myobj.MyObj(external_obj)
+    external_obj.connect.assert_called_with()
+```
+
+The `myobj.MyObj` class, in this simple example, needs to connect to an external object, for example a remote repository or a database. The only thing we need to know for testing purposes is if the class called the `connect()` method of the external object without any parameter.
+ 
+So the first thing we do in this test is to instantiate the mock object. This is a fake version of the external object, and its only purpose is to accept calls from the `MyObj` object under test and return sensible values. Then we instantiate the `MyObj` class passing the external object. We expect the class to call the `connect()` method so we express this expectation calling `external_obj.connect.assert_called_with()`.
+   
+What happens behind the scenes? The `MyObj` class receives the external object and somewhere is its initialization process calls the `connect()` method of the mock object and this creates the method itself as a mock object. This new mock records the parameters used to call it and the subsequent call to `assert_called_with()` checks that the method was called and that no parameters were passed.
+ 
+Running pytest the test obviously fails.
+
+``` sh
+$ PYTHONPATH="." py.test
+========================================== test session starts ==========================================
+platform linux -- Python 3.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
+rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
+collected 1 items 
+
+tests/test_mock.py F
+
+=============================================== FAILURES ================================================
+___________________________________________ test_instantiation __________________________________________
+
+    def test_instantiation():
+        external_obj = mock.Mock()
+>       myobj.MyObj(external_obj)
+E       AttributeError: 'module' object has no attribute 'MyObj'
+
+tests/test_mock.py:6: AttributeError
+======================================= 1 failed in 0.03 seconds ========================================
+$
+```
+
+Putting this code in `myobj.py` is enough to make the test pass
+
+``` python
+class MyObj():
+    def __init__(self, repo):
+        repo.connect()
+```
+
+As you can see, the `__init__()` method actually calls `repo.connect()`, where `repo` is expected to be a full-featured external object that provides a given API. In this case (for the moment) the API is just its `connect()` method. Calling `repo.connect()` when `repo` is a mock object silently creates the method as a mock object, as shown before.
+
+The `assert_called_with()` method also allows us to check the parameters we passed when calling. To show this let us pretend that we expect the `MyObj.setup()` method to call `setup(cache=True, max_connections=256)` on the external object. As you can see we pass a couple of arguments (namely `cache` and `max_connections`) to the called method, and we want to be sure that the call was exactly in this form. The new test is thus
+
+``` python
+def test_setup():
+    external_obj = mock.Mock()
+    obj = myobj.MyObj(external_obj)
+    obj.setup()
+    external_obj.setup.assert_called_with(cache=True, max_connections=256)
+```
+
+As usual the first run fails. Be sure to check this, it is part of the TDD methodology. You must have a test that DOES NOT PASS, then write some code that make it pass.
+
+``` sh
+$ PYTHONPATH="." py.test
+========================================== test session starts ==========================================
+platform linux -- Python 3.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
+rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
+collected 2 items 
+
+tests/test_mock.py .F
+
+=============================================== FAILURES ================================================
+______________________________________________ test_setup _______________________________________________
+                                                                   
+    def test_setup():
+        external_obj = mock.Mock()
+        obj = myobj.MyObj(external_obj)
+>       obj.setup()
+E       AttributeError: 'MyObj' object has no attribute 'setup'
+
+tests/test_mock.py:14: AttributeError
+================================== 1 failed, 1 passed in 0.03 seconds ===================================
+$
+```
+
+To show you what type of check the mock object provides let me implement a partially correct solution
+
+``` python
+class MyObj():
+    def __init__(self, repo):
+        self._repo = repo
+        repo.connect()
+
+    def setup(self):
+        self._repo.setup(cache=True)
+```
+
+As you can see the external object has been stored in `self._repo` and the call to `self._repo.setup()` is not exactly what the test expects, lacking the `max_connections` parameter. Running pytest we obtain the following result (I removed most of the pytest output)
+
+``` sh
+E           AssertionError: Expected call: setup(cache=True, max_connections=256)
+E           Actual call: setup(cache=True)
+```
+
+and you see that the error message is very clear about what we expected and what happened in our code.
+ 
+As you can read in the official documentation, the `Mock` object also provides the following methods and attributes: `assert_called_once_with`, `assert_any_call`, `assert_has_calls`, `assert_not_called`, `called`, `call_count`. Each of them explores a different aspect of the mock behaviour concerning calls, make sure to check their description and the examples provided along.
+
+## Final words
+
+In this first part of the series I described the behaviour of mock objects and the methods they provide to simulate return values and to test calls. They are a very powerful tool that allows you to avoid creating complex and slow tests that depend on external facilities to run, thus missing the main purpose of tests, which is that of _continuously_ helping you to check your code.
+
+In the next issue of the series I will explore the automatic creation of mock methods from a given object and the very important patching mechanism provided by the `patch` decorator and context manager.
+
+## Feedback
+
+Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
