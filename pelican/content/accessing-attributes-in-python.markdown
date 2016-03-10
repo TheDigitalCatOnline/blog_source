@@ -4,7 +4,7 @@ Category: Programming
 Tags: Python, Python3, OOP
 Authors: Leonardo Giordani
 Slug: accessing-attributes-in-python
-Summary: A comprehensive review of the attribute management techniques in Python
+Summary:
 
 Python is a language that tries to push the object-oriented paradigm to its maximum. This means that its object model is very powerful compared to that of other languages, but also that the behaviour of Python code may result surprising to new programmers.
 
