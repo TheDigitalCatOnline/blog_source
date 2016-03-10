@@ -4,7 +4,7 @@ Category: Programming
 Tags: Git
 Authors: Leonardo Giordani
 Slug: using-gitflow-with-github-a-simple-procedure
-Summary: A simple procedure to make gitflow and GitHub models work together
+Summary:
 
 Git is a very powerful version control system and much of its power comes from its very simple basic structures. Git is mostly a manager of blob trees and even the most complex operations are basically tree operations.
 

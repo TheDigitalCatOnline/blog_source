@@ -5,7 +5,7 @@ Tags: OOP, Python, Python3, TDD
 Authors: Leonardo Giordani
 Slug: python-oop-tdd-example-part1
 Series: "Python OOP and TDD"
-Summary: A simple implementation of binary numbers in Python to exemplify OOP and TDD
+Summary:
 
 If you are eager to learn some Python and do not know how to start, this post may give you some hints. I will develop a very simple Python package from scratch, exemplifying some Object-oriented Programming (OOP) techniques and concepts, and using a Test-Driven Development (TDD) approach.
 

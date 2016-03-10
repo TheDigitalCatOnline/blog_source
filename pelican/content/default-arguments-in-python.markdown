@@ -4,7 +4,7 @@ Category: Programming
 Tags: Python
 Authors: Leonardo Giordani
 Slug: default-arguments-in-python
-Summary: How to deal with default arguments in Python functions and methods
+Summary:
 
 Recently I found a nasty bug in some Python code due to a misuse of default arguments. If you already know everything about default arguments and just want to laugh at the funny error feel free to jump to the end of the article. Alas, the code was written by me, but I'm pretty sure that day I was replaced by an evil clone of myself. You know, it happens sometimes. =)
 
