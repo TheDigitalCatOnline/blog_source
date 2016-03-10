@@ -5,7 +5,7 @@ Tags: OOP, Python, Python3, TDD
 Authors: Leonardo Giordani
 Slug: python-oop-tdd-example-part2
 Series: "Python OOP and TDD"
-Summary: The second part of the post about Object-oriented Programming and Test Driven Development
+Summary:
 
 In [the first part](/blog/2015/05/13/python-oop-tdd-example-part1/) of this small series I introduced you to TDD with Python by means of the powerful `py.test` package. We developed together a simple library which provides a `Binary` class that is a bit more useful than the default binary representation that Python provides with the `bin()` builtin function.
 

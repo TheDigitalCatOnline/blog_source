@@ -4,7 +4,7 @@ Category: Programming
 Tags: Scala, functional programming
 Authors: Leonardo Giordani
 Slug: 99-scala-problems-index
-Summary: The updated index of posts about 99 Scala Problems
+Summary:
 
 I decided to learn [Scala](http://www.scala-lang.org/). I looked for some good exercises for Scala programmers and found [S-99: Ninety-Nine Scala Problems](http://aperiodic.net/phil/scala/s-99/), and since writing about things helps me learning them I am going to write a post for each problem I manage to solve.
 
