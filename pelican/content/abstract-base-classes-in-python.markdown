@@ -14,7 +14,7 @@ Many Python programmers overlooked Abstract Base Classes and the classes in the 
 
 ## EAFP
 
-Python is a dynamically-typed object-oriented language strongly based on delegation, so its approach to problems is intrinsically polymorphic. This means that Python deals mostly with the behavious of objects and not with their structure. The well-known EAFP protocol (it's Easier to Ask Forgiveness than Permission) comes from this approach. This code
+Python is a dynamically-typed object-oriented language strongly based on delegation, so its approach to problems is intrinsically polymorphic. This means that Python deals mostly with the behaviour of objects and not with their structure. The well-known EAFP protocol (it's Easier to Ask Forgiveness than Permission) comes from this approach. This code
 
 ``` python
 try:
@@ -180,7 +180,7 @@ I don't think so. As a matter of facts I definitely disagree with such position,
 
 First of all, if you are programming in Python its better for you to understand everything Python provides you, both the good and the bad parts. Programming languages are tools, and you shall know their strengths and their limitations. Most of the times what we call "limitations" are just features that become a restraint just because we are not aware of them. The C language, for example, is not object-oriented. Is this a strenght or a limitation? Python provides you a very powerful inspection mechanism. Is this a strength or a limitations? I could give countless other examples.
 
-Second, powerful features are the one you should know better. After all we use a language for the unique features it provides, not for the features it shares with other languages. I use Python because of its powerful polymorphism implementation, not because of loops and inheritance. Those are provided by Java and C++, too, for example. I write a device driver in C because of the closeness to the machine language and its speed, not because of the `int` and `float` types, which are provided by many other languages. So, since powerful features are what let the language do what others cannot, those are the ones you have to master.
+Second, powerful features are the one you should know better. After all, we use a language for the unique features it provides, not for the features it shares with other languages. I use Python because of its powerful polymorphism implementation, not because of loops and inheritance. Those are provided by Java and C++, too, for example. I write a device driver in C because of the closeness to the machine language and its speed, not because of the `int` and `float` types, which are provided by many other languages. So, since powerful features are what let the language do what others cannot, those are the ones you have to master.
 
 Third, if a feature of a language is a design error, and it can be, you need to understand why it is an error, and how you can avoid using it. Before ES6, JavaScript had some issues with scopes, given by the behaviour of the `var` keyword. You cannot afford being ignorant about those limitations, otherwise your software will be buggy. So, while studying the `for` loop in JavaScript took me a couple of minutes (it is a C-like for loop, after all), I spent a lot of time in dealing with `var`, which is the dangerous button of the whole device.
 
@@ -323,6 +323,16 @@ Now I can instantiate the class.
 ```
 
 Check the official documentation of Abstract Base Classes for a complete description of `@abstractmethod` and `@abstractproperty`.
+
+## What about the behaviour?
+
+So, what happened to the Python tenet "Check the behaviour and not the structure"? With collections, after all, we dropped the EAFP protocol, going back to a Look Before You Leap approach. Are we going against the philosophy at the very base of the language?
+
+It is very interesting to see what Guido van Rossum, creator of the Python language, says about this in [PEP 3119](http://legacy.python.org/dev/peps/pep-3119/): _Invocation means interacting with an object by invoking its methods. Usually this is combined with polymorphism, so that invoking a given method may run different code depending on the type of an object. Inspection means the ability for external code (outside of the object's methods) to examine the type or properties of that object, and make decisions on how to treat that object based on that information. [...] In classical OOP theory, invocation is the preferred usage pattern, and inspection is actively discouraged, being considered a relic of an earlier, procedural programming style. However, in practice this view is simply too dogmatic and inflexible, and leads to a kind of design rigidity that is very much at odds with the dynamic nature of a language like Python._
+
+So the point is that forcing the use of a pure polymorphic approach sometimes can lead to solutions that are too complex or even incorrect. The key words here, in my opinion, are "dogmatic", "inflexible", and "rigidity", opposed to "dynamic nature". I really like this flexibility in a language and in its author.
+
+Writing `if isinstance(obj, collections.Sequence)` is not EAFP, neither is any conditional test you may write. Nevertheless, no one would replace conditional tests with a pure EAFP approach, simply because sometimes those tests are more readable. This is the exact purpose of collections in Python and ABCs in general: to allow parts of the code to be simpler.
 
 ## Final words
 
