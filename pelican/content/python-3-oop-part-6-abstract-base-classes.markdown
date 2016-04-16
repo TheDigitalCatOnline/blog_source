@@ -85,7 +85,7 @@ The `isinstance()` function, however, does not completely solve the problem. If 
 False
 ```
 
-since `isinstance()` does not check the content of the class or its behaviour, it just consider the class and its ancestors.
+since `isinstance()` does not check the content of the class or its behaviour, it just considers the class and its ancestors.
 
 The problem, thus, may be summed up with the following question: what is the best way to test that an object exposes a given interface? Here, the word _interface_ is used for its natural meaning, without any reference to other programming solutions, which however address the same problem.
 
@@ -97,7 +97,7 @@ In the next sections I am going to try and describe this solution in its main bu
 
 #### Who Framed the Metaclasses
 
-As already described, Python provides two built-ins to inspect objects and classes, which are `isinstance()` and `issubclass()` and it would be desirable that a solution to the inspection problem allows the programmer to go on with using those two functions.
+As already described, Python provides two built-ins to inspect objects and classes, which are `isinstance()` and `issubclass()` and a solution to the inspection problem should allow the programmer to go on with using those two functions.
 
 This means that we need to find a way to inject the "behaviour promise" into both classes and instances. This is the reason why metaclasses come in play. Recall what we said about them in the fifth issue of this series: metaclasses are the classes used to build classes, which means that they are the preferred way to change the structure of a class, and, in consequence, of its instances.
 
@@ -139,7 +139,7 @@ assert issubclass(tuple, MyABC)
 assert isinstance((), MyABC)
 ```
 
-Here, the `MyABC` class is provided the `ABCMeta` metaclass. This puts the two `__isinstancecheck__()` and `__subclasscheck__()` methods inside `MyABC` so that, when issuing `isinstance()`, what Python actually ececutes is
+Here, the `MyABC` class is provided the `ABCMeta` metaclass. This puts the two `__instancecheck__()` and `__subclasscheck__()` methods inside `MyABC` so that, when issuing `isinstance()`, what Python actually ececutes is
 
 ``` pycon
 >>> d = {'a': 1}
