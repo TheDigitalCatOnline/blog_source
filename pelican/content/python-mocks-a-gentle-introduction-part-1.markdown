@@ -34,7 +34,7 @@ The second reason is that the setup of an external system is usually slow in com
      
 The third reason is more subtle, and has to to with the mutable nature of an external system, thus I'll postpone the discussion of this issue for the moment.
 
-Let us try and work with a mock in Python and see what it can do. First of all fire up a Python shell or a [Jupyter Notebook](jupyter.org) and import the library 
+Let us try and work with a mock in Python and see what it can do. First of all fire up a Python shell or a [Jupyter Notebook](http://jupyter.org) and import the library 
 
 ``` python
 from unittest import mock
