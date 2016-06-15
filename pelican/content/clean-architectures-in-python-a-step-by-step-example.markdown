@@ -32,33 +32,30 @@ The objects in the dataset are storage rooms for rent described by the following
 * A renting price in euros/day
 * Latitude and longitude
 
-As pushed by the clean architecture model, we are interested in separating the different layers of the system. The architecture is described by four layers, which however can be implemented by more than four different actual code layers. I will give here a brief description of those layers.
+As pushed by the clean architecture model, we are interested in separating the different layers of the system. The architecture is described by four layers, which however can be implemented by more than four actual code modules. I will give here a brief description of those layers.
 
 ## Entities
 
-This is the level in which the domain models are described. Since we work in Python I will put here the class that represent my storage rooms, with the data contained in the database, and whichever data I think is useful to perform the core business processing. In this case the model will also contain ranks coming from the ranking system (which depend on the search).
+This is the level in which the domain models are described. Since we work in Python, I will put here the class that represent my storage rooms, with the data contained in the database, and whichever data I think is useful to perform the core business processing. In this case the model will also contain ranks coming from the ranking system (which depend on the search).
+
+It is very important to understand that the models in this layer are different from the usual models of framework like Django. These models are not connected with a storage system, so they cannot be saved or queried using methods of their classes.
   
 ## Use cases
 
-This layer contains the use cases implemented by the system. In this simple example there will be only one use case, which is the list of storage rooms according to the given filters and weights. Here you would put for example a use case that shows the detail of a given storage room.
+This layer contains the use cases implemented by the system. In this simple example there will be only one use case, which is the list of storage rooms according to the given filters and weights. Here you would put for example a use case that shows the detail of a given storage room or every business process you want to implement, such as booking a storage room, filling it with goods, etcetera.
 
 ## Interface Adapters
 
-This layer corresponds to two different parts of the project. The first one is the data storage, or repository. This implements the access to the data storage according to a given API, which is common among repositories. For this example no database has been involved and a file based repository wil be developed. This allows to show a very simple and self contained repository that works without the need of external systems. Obviously such solution does not consider performance an issue, which would instead be a big concern in a production system.
+This layer corresponds to two different parts of the project. The first one is the data storage, or repository. This implements the access to the data storage according to a given API, which is common among repositories. For this example no database has been involved and a file based repository wil be developed. This allows to show a very simple and self-contained repository that works without the need of external systems. Obviously such solution does not consider performance an issue, which would instead be a big concern in a production system.
 
 The second part that belongs to this layer is the presentation, which in this case is implemented by a simple JSON serializer. 
 
+# API and shades of grey
 
-The second part that belongs to this layer is the presentation, which in this case is implemented with a simple REST API provided by a Flask installation. You could decide to implement a Web UI directly into this layer (making use of the same Flask process) or completely detach such a component and implement it with a different stack, for example Node.js and the Rect Framework. This shows that layers can be further split to meet specific needs.
+The word API is of uttermost importance in a clean architecture. Every layer may be accessed by an API, that is a fixed collection of entry points (methods or objects). Here "fixed" means "the same among every implementation", obviously an API may change with time. Every presentation layer, for example, will access the same use cases, and the same methods, to obtain a set of domain models, which are the output of that particular use case. It is up to the presentation layer, then to format data according to the specific presentation media, for example HTML, PDF, images, etcetera.
 
-
-
-
-
-Roughly speaking there will be four layers: domain, use cases, and interface adapters.
-
-
-the main layer will contain the business logic, which is the core of the system and that is unique. Two other layers will contain the data repository and the presentation. We will implement only one repository, but a production system could have more than one if there are more data sources or storage options. The same is true for the presentation layer, since this project will implement a simple REST interface, but other layers may be implemented to support other protocols or to implement user interface such as for example a native GUI.
-
-A word about the presentation layer. A REST interface allows to build a wide range of products that implement native interfaces and connect to the API through an HTTP connection, so implementing a REST layer is a very good idea that allows for an even greater separation of the layers. There can however be reasons to use different protocols, for example you could want to provide a direct rendering of HTML pages in lieu of a JSON output.
-
+The same concept is valid for the storage layer. Every storage implementation shall provide the same methods. When dealing with use cases you shall not be concerned with the actual system that stores data, it may be a MongoDB local installation, a cloud storage system or a trivial in-memory dictionary. You only need to know the API of that layer, which every implementation shall expose.
+   
+THe separation between layers, and the content of each layer, is not always fixed and immutable. A well-designed system shall also cope with practical world issues such as performances, for example, or other specific needs. When designing an architecture it is very important to know "what is where and why", and this is even more important when you "bend" the rules. Many issues do not have a black-or-white answer, and many decisions are "shades of grey", that is it is up to you to justify why you put something there.
+  
+The project we are going to implement shows one of these decisions, and I want to briefly discuss it. 
