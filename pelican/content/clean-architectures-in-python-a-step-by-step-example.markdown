@@ -6,9 +6,9 @@ Authors: Leonardo Giordani
 Slug: clean-architectures-in-python-a-step-by-step-example
 Summary: 
 
-I was recently being introduced by my collegue [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as called and strongly suggested by Robert Martin. The well-known Uncle Bob has been talking about this concept at conferences and wrote many posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
+I was recently being introduced by my collegue [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
 
-As he clearly states in a post aptly titled [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html), the idea behind this design is not new, being built on a set of concepts that have been pushed by many software engineers over the last 3 decades. One of the first implementations may be found in the Boundary-Control-Entity model proposed by Ivan Jacobson in his masterpiece "Object-Oriented Software Engineering: A Use Case Driven Approach" published in 1992, but Martin lists other more recent versions of this architecture.
+As he clearly states in a post aptly titled [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html), the idea behind this design is not new, being built on a set of concepts that have been pushed by many software engineers over the last 3 decades. One of the first implementations may be found in the Boundary-Control-Entity model proposed by Ivar Jacobson in his masterpiece "Object-Oriented Software Engineering: A Use Case Driven Approach" published in 1992, but Martin lists other more recent versions of this architecture.
 
 I will not repeat here what he had already explained better than I can do, so I will just point out some resources you may check to start exploring these concepts:
 
@@ -17,9 +17,7 @@ I will not repeat here what he had already explained better than I can do, so I 
 * Hakka Labs: Robert "Uncle Bob" Martin - [Architecture: The Lost Years](https://www.youtube.com/watch?v=HhNIttd87xs) a video of Robert Martin from Hakka Labs.
 * [DDD & Testing Strategy](http://www.taimila.com/blog/ddd-and-testing-strategy/) by Lauri Taimila
 
-The purpose of this series of posts is to show how to build a REST web service in Python from scratch using a clean architecture. One of the main advantages of this layered design is testability, so I will develop it following a TDD approach. This will also allow to show some limitations of the test-driven approach which you should be aware of.
-
-The idea for this project comes from an interview assignment I received from a company and has been slightly changed to avoid spoiling the fun of potential candidates =). Indeed the project was really interesting, and was developed from scratch in around 14 hours of work. Given the nature of the project (a code test) some choices have been made to simplify the resulting code. Whenever meaningful I will point out those simplifications and discuss them.  
+The purpose of this series of posts is to show how to build a REST web service in Python from scratch using a clean architecture. One of the main advantages of this layered design is testability, so I will develop it following a TDD approach. This will also allow to show some limitations of the test-driven approach which you should be aware of. The project was initially developed from scratch in around 14 hours of work. Given the toy nature of the project some choices have been made to simplify the resulting code. Whenever meaningful I will point out those simplifications and discuss them.
   
 # Project overview
 
@@ -38,7 +36,7 @@ As pushed by the clean architecture model, we are interested in separating the d
 
 This is the level in which the domain models are described. Since we work in Python, I will put here the class that represent my storage rooms, with the data contained in the database, and whichever data I think is useful to perform the core business processing. In this case the model will also contain ranks coming from the ranking system (which depend on the search).
 
-It is very important to understand that the models in this layer are different from the usual models of framework like Django. These models are not connected with a storage system, so they cannot be saved or queried using methods of their classes.
+It is very important to understand that the models in this layer are different from the usual models of framework like Django. These models are not connected with a storage system, so they cannot be saved or queried using methods of their classes. They may however contain helper methods that implement code related to the business rules.
   
 ## Use cases
 
@@ -46,16 +44,23 @@ This layer contains the use cases implemented by the system. In this simple exam
 
 ## Interface Adapters
 
-This layer corresponds to two different parts of the project. The first one is the data storage, or repository. This implements the access to the data storage according to a given API, which is common among repositories. For this example no database has been involved and a file based repository wil be developed. This allows to show a very simple and self-contained repository that works without the need of external systems. Obviously such solution does not consider performance an issue, which would instead be a big concern in a production system.
+This layer corresponds to the boundary between the business logic and external systems and implements the APIs used to exchange data with them. Both the storage system and the user interface are external systems that need to access the data produced by the use cases and this layer shall provide an interface for this data flow. In this project the presentation part of this layer is provided by a JSON serializer, on top of that an external web service may be built. The storage adapter shall define here the common API of the storage systems. 
 
-The second part that belongs to this layer is the presentation, which in this case is implemented by a simple JSON serializer. 
+## External interfaces
+
+This part of the architecture is made by external systems that implement the interfaces defined in the previous layer. Here for example you will find a web server that implements REST entry points, which access the data provided by use cases through the JSON serializer. You will also find here the storage system implementation, for example a given database such as MongoDB. In the current project a very simple file-based and read-only storage system has been developed, but a production system would rely on full-fledged systems.  
 
 # API and shades of grey
 
-The word API is of uttermost importance in a clean architecture. Every layer may be accessed by an API, that is a fixed collection of entry points (methods or objects). Here "fixed" means "the same among every implementation", obviously an API may change with time. Every presentation layer, for example, will access the same use cases, and the same methods, to obtain a set of domain models, which are the output of that particular use case. It is up to the presentation layer, then to format data according to the specific presentation media, for example HTML, PDF, images, etcetera.
+The word API is of uttermost importance in a clean architecture. Every layer may be accessed by an API, that is a fixed collection of entry points (methods or objects). Here "fixed" means "the same among every implementation", obviously an API may change with time. Every presentation tool, for example, will access the same use cases, and the same methods, to obtain a set of domain models, which are the output of that particular use case. It is up to the presentation layer to format data according to the specific presentation media, for example HTML, PDF, images, etcetera. If you understand plugin-based architectures you already grasped the main concept of a separate, API-driven component (or layer).
 
 The same concept is valid for the storage layer. Every storage implementation shall provide the same methods. When dealing with use cases you shall not be concerned with the actual system that stores data, it may be a MongoDB local installation, a cloud storage system or a trivial in-memory dictionary. You only need to know the API of that layer, which every implementation shall expose.
    
-THe separation between layers, and the content of each layer, is not always fixed and immutable. A well-designed system shall also cope with practical world issues such as performances, for example, or other specific needs. When designing an architecture it is very important to know "what is where and why", and this is even more important when you "bend" the rules. Many issues do not have a black-or-white answer, and many decisions are "shades of grey", that is it is up to you to justify why you put something there.
+The separation between layers, and the content of each layer, is not always fixed and immutable. A well-designed system shall also cope with practical world issues such as performances, for example, or other specific needs. When designing an architecture it is very important to know "what is where and why", and this is even more important when you "bend" the rules. Many issues do not have a black-or-white answer, and many decisions are "shades of grey", that is it is up to you to justify why you put something there.
+
+Keep in mind however, that you should not break the _structure_ of the clean architecture, in particular you shall be inflexible about the data flow (see the "Crossing boundaries" section in the original post of Robert Martin). If you break the data flow you are basically invalidating the whole structure. Let me stress it again: **never break the data flow**.
   
-The project we are going to implement shows one of these decisions, and I want to briefly discuss it. 
+The project we are going to implement shows one of these decisions, and I want to briefly discuss it. The service we are going to implement extracts data from a repository according to given filters and gives results a rank. Where shall the ranking system be implemented? Theoretically the ranking system is part of the business logic in this application, being the main purpose of the whole system. Here, however, some performance issues arise. If we implement ranking in the business logic, that is in the use cases layer, we miss the chance to leverage some storage system optimizations, which could give a dramatic improvement to the overall speed of the system. Obviously we could also decide to implement it in the use case layer and use an external optimized system to process data, but at that point you are already dealing with domain models and you have to pay the cost of converting your models to and from the specific data format used by that system.
+  
+As you can see a good architecture does not prevent you from taking decisions. It often allows you to delay commitments through the layered structure and the API paradigm, but the content of each layer is subject to change. Well structured code, moreover, shall be easy to be moved between layers. The code that implements the ranking system, for example, should be parametrized and abstracted to work with different data types, so that you may easily move it from the storage layer to the use case one. Here, performance consideration may drive us to write some specialized code, which however shall be as isolated as possible.
+ 
