@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: clean-architectures-in-python-a-step-by-step-example
 Summary: 
 
-I was recently being introduced by my collegue [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
+I have been recently introduced by my friend [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some very interesting posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
 
 As he clearly states in a post aptly titled [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html), the idea behind this design is not new, being built on a set of concepts that have been pushed by many software engineers over the last 3 decades. One of the first implementations may be found in the Boundary-Control-Entity model proposed by Ivar Jacobson in his masterpiece "Object-Oriented Software Engineering: A Use Case Driven Approach" published in 1992, but Martin lists other more recent versions of this architecture.
 
@@ -21,11 +21,11 @@ The purpose of this series of posts is to show how to build a REST web service i
   
 # Project overview
 
-The goal of the project is to realize a simple search engine on top of a dataset of objects which are described by some quantities. The search engine shall implement a ranking system that shows the best results first. The implementation of the ranking system is up to the programmer and could be subject to changes.
+The goal of the "Rent-o-matic" project (fans of Day of the Tentacle may get the reference) is to realize a simple search engine on top of a dataset of objects which are described by some quantities. The search engine shall implement a ranking system that shows the best results first. The implementation of the ranking system is up to the programmer and could be subject to changes.
  
 The objects in the dataset are storage rooms for rent described by the following quantities:
  
-* A unique code
+* An unique code
 * A size in square meters
 * A renting price in euros/day
 * Latitude and longitude
@@ -36,11 +36,11 @@ As pushed by the clean architecture model, we are interested in separating the d
 
 This is the level in which the domain models are described. Since we work in Python, I will put here the class that represent my storage rooms, with the data contained in the database, and whichever data I think is useful to perform the core business processing. In this case the model will also contain ranks coming from the ranking system (which depend on the search).
 
-It is very important to understand that the models in this layer are different from the usual models of framework like Django. These models are not connected with a storage system, so they cannot be saved or queried using methods of their classes. They may however contain helper methods that implement code related to the business rules.
+It is very important to understand that the models in this layer are different from the usual models of framework like Django. These models are not connected with a storage system, so they cannot be directly saved or queried using methods of their classes. They may however contain helper methods that implement code related to the business rules.
   
 ## Use cases
 
-This layer contains the use cases implemented by the system. In this simple example there will be only one use case, which is the list of storage rooms according to the given filters and weights. Here you would put for example a use case that shows the detail of a given storage room or every business process you want to implement, such as booking a storage room, filling it with goods, etcetera.
+This layer contains the use cases implemented by the system. In this simple example there will be only one use case, which is the list of storage rooms according to the given filters and weights. Here you would put for example a use case that shows the detail of a given storage room or every business process you want to implement, such as booking a storage room, filling it with goods, etc.
 
 ## Interface Adapters
 
@@ -52,15 +52,61 @@ This part of the architecture is made by external systems that implement the int
 
 # API and shades of grey
 
-The word API is of uttermost importance in a clean architecture. Every layer may be accessed by an API, that is a fixed collection of entry points (methods or objects). Here "fixed" means "the same among every implementation", obviously an API may change with time. Every presentation tool, for example, will access the same use cases, and the same methods, to obtain a set of domain models, which are the output of that particular use case. It is up to the presentation layer to format data according to the specific presentation media, for example HTML, PDF, images, etcetera. If you understand plugin-based architectures you already grasped the main concept of a separate, API-driven component (or layer).
+The word API is of uttermost importance in a clean architecture. Every layer may be accessed by an API, that is a fixed collection of entry points (methods or objects). Here "fixed" means "the same among every implementation", obviously an API may change with time. Every presentation tool, for example, will access the same use cases, and the same methods, to obtain a set of domain models, which are the output of that particular use case. It is up to the presentation layer to format data according to the specific presentation media, for example HTML, PDF, images, etc. If you understand plugin-based architectures you already grasped the main concept of a separate, API-driven component (or layer).
 
 The same concept is valid for the storage layer. Every storage implementation shall provide the same methods. When dealing with use cases you shall not be concerned with the actual system that stores data, it may be a MongoDB local installation, a cloud storage system or a trivial in-memory dictionary. You only need to know the API of that layer, which every implementation shall expose.
    
 The separation between layers, and the content of each layer, is not always fixed and immutable. A well-designed system shall also cope with practical world issues such as performances, for example, or other specific needs. When designing an architecture it is very important to know "what is where and why", and this is even more important when you "bend" the rules. Many issues do not have a black-or-white answer, and many decisions are "shades of grey", that is it is up to you to justify why you put something there.
 
-Keep in mind however, that you should not break the _structure_ of the clean architecture, in particular you shall be inflexible about the data flow (see the "Crossing boundaries" section in the original post of Robert Martin). If you break the data flow you are basically invalidating the whole structure. Let me stress it again: **never break the data flow**.
+Keep in mind however, that you should not break the _structure_ of the clean architecture, in particular you shall be inflexible about the data flow (see the "Crossing boundaries" section in the original post of Robert Martin). If you break the data flow you are basically invalidating the whole structure. Let me stress it again: **never break the data flow**. A simple example of breaking the data flow is to let a use case output a Python class instead of a _representation_ of that class such as a JSON string.
   
 The project we are going to implement shows one of these decisions, and I want to briefly discuss it. The service we are going to implement extracts data from a repository according to given filters and gives results a rank. Where shall the ranking system be implemented? Theoretically the ranking system is part of the business logic in this application, being the main purpose of the whole system. Here, however, some performance issues arise. If we implement ranking in the business logic, that is in the use cases layer, we miss the chance to leverage some storage system optimizations, which could give a dramatic improvement to the overall speed of the system. Obviously we could also decide to implement it in the use case layer and use an external optimized system to process data, but at that point you are already dealing with domain models and you have to pay the cost of converting your models to and from the specific data format used by that system.
   
 As you can see a good architecture does not prevent you from taking decisions. It often allows you to delay commitments through the layered structure and the API paradigm, but the content of each layer is subject to change. Well structured code, moreover, shall be easy to be moved between layers. The code that implements the ranking system, for example, should be parametrized and abstracted to work with different data types, so that you may easily move it from the storage layer to the use case one. Here, performance consideration may drive us to write some specialized code, which however shall be as isolated as possible.
  
+# Project structure
+
+Let us take a look at the final structure of the project
+
+<structure here>
+
+The global structure of the package has been built with Cookiecutter, and I will run fast through that part. The `rentomatic` directory contains the following subdirectories: `domain`, `repositories`, `rest`, `serializers`, `use_cases`, that reflect the layered structure introduced in the previous section. The structure of the `tests` directory mirrors this structure so that tests are easily found.
+
+# Creating the project
+
+I usually like maintaining a Python virtual environment inside the project, so I will create a temporary virtualenv to install cookiecutter and create the project
+
+``` bash
+virtualenv venv3 -p python3
+source venv3/bin/activate
+pip install cookiecutter
+cookiecutter https://github.com/audreyr/cookiecutter-pypackage
+[answer questions]
+deactivate
+rm -fR venv3
+cd <name of your project>
+virtualenv venv3 -p python3
+```
+
+I usually store virtualenv requirements in different hierarchical files to separate production, development and testing environments, so create the `requirements` directory and the relative files
+
+``` bash
+mkdir requirements
+touch requirements/prod.txt
+touch requirements/dev.txt
+touch requirements/test.txt
+```
+
+The `test.txt` file will contain specific packages used to test the project, and shall also install production packages, so it will contain
+
+``` text
+-t prod.txt
+```
+
+while the `dev.txt` file will contain packages used during the development process and shall install also test and production package
+
+``` text
+-t test.txt
+```
+
+(leveraging the fact that `test.txt` already includes `prod.txt`).
