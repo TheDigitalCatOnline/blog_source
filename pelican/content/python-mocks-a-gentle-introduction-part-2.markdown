@@ -29,66 +29,258 @@ This is exactly the case addressed by patching. Patching, in a testing framework
 
 ## A warm-up example
 
-Let me give you one of the most classic examples of patching: dates and time. Imagine you are developing a library that logs events on files, and those files are named according to a given time. When you initialize the system you instantiate the logger passing the current date and time, and the logger creates a suitable file in some directory previously configured. The focal point here is that the file name the logger uses is time-dependant, since every time you run the library, even during tests, the output out the naming function is going to be different.
- 
-Let us write some tests and then implement the actual code. I will run through the example following the TDD methodology, writing a test that exposes a missing feature and then changing the code to make it pass. You may use the `mockplayground` code given in the first post as boilerplate to set up a workspace for this example.
+Let us start with a very simple example. Patching can be complex to grasp at the beginning so it is better to learn it with trivial code. If you do not have it yet, create the testing environment `mockplayground` with the instruction given in the previous post.
 
-First of all I want the `DateTimeLogger` class to allow being called without parameters. This is the code of the `tests/test_datetimelogger.py` file 
- 
+I want to develop a simple class that returns information about a given file. The shall be instantiated with the filename, which can be a relative path.
+
+For the sake of brevity I will not show you every step of the TDD development of the class. Remember that TDD requires you to write a test and then implement the code. Sometimes this is too granular, so do not use the TDD rules without thinking. The tests for the initialization of the class are
+
 ``` python
-import date_time_logger as dtl
+from fileinfo import FileInfo
 
+def test_init():
+    filename = 'somefile.ext'
+    fi = FileInfo(filename)
+    assert fi.filename == filename
 
-def test_logger_initialization_no_arguments():
-    dtl.DateTimeLogger()
+def test_init():
+    filename = 'somefile.ext'
+    relative_path = '../{}'.format(filename)
+    fi = FileInfo(relative_path)
+    assert fi.filename == filename
+
 ```
 
-This is enough to get an `ImportError` from pytest. Usually I do not like tests that lack an explicit assert statement, but for the first initialization tests this is usually the case, so I will turn a blind eye to it.
-
-The code that makes this test pass is very simple, perhaps even trivial. Create the `date_time_logger.py` file with the following code
+You can put them into the `tests/test_fileinfo.py` file. The code that makes the tests pass could be something like
 
 ``` python
-class DateTimeLogger:
+import os
+
+
+class FileInfo:
+    def __init__(self, path):
+        self.original_path = path
+        self.filename = os.path.basename(path)
+```
+
+Up to now I didn't introduce any new feature. Now I want the `get_info()` function to return a tuple with the file name, the original path the class was instantiated with, and the absolute path of the file.
+
+You immediately realise that you have an issue in writing the test. There is no way to easily test something as "the absolute path", since the outcome of the function called in the test is supposed to vary with the path of the test itself. Let us write part of the test
+
+``` python
+def test_get_info():
+    filename = 'somefile.ext'
+    original_path = '../{}'.format(filename)
+    fi = FileInfo(original_path)
+    assert fi.get_info() == (filename, original_path, '???')
+```
+
+where I put the '???' string to highlight that I cannot put something sensible to test the absolute path of the file.
+
+Patching is the way to solve this problem. You know that the function will use some code to get the absolute path of the file. So in the scope of the test only you can replace that code with different code and perform the test. Since the replacement code has a known outcome writing the test is now possible.
+
+Patching, thus, means to inform Python that in some scope you want a globally accessible module/object replaced by a mock. Let's see how we can use it in our example
+
+``` python
+from unittest.mock import patch
+
+[...]
+
+def test_get_info():
+    filename = 'somefile.ext'
+    original_path = '../{}'.format(filename)
+
+    with patch('os.path.abspath') as abspath_mock:
+        test_abspath = 'some/abs/path'
+        abspath_mock.return_value = test_abspath
+        fi = FileInfo(original_path)
+        assert fi.get_info() == (filename, original_path, test_abspath)
+```
+
+Remember that if you are using Python 2 you installed the `mock` module with `pip`, so your import statement becomes `form mock import patch`.
+
+You clearly see the context in which the patching happens, as it is enclosed in a `with` statement. Inside this statement the module `os.path.abspath` will be replaced by a mock created by the function `patch` and called `abspath_mock`. We can now give the function a `return_value` as we did with standard mocks in the first post and run the test.
+
+The code that make the test pass is
+
+``` python
+class FileInfo:
+    [...]
+
+    def get_info(self):
+        return self.filename, self.original_path, os.path.abspath(self.filename)
+```
+
+Obviously to write the test you have to know that you are going to use the `os.path.abspath` function, so patching is somehow a "less pure" practice in TDD. In pure OOP/TDD you are only concerned with the external behaviour of the object, and not with its internal structure. This example, however, shows that you have to cope with some real world issues, and patching is a clean way to do it.
+
+# The patching decorator
+
+The `patch` function we imported from the `unittest.mock` module is very powerful, and can be used as a function decorator as well. When used in this fashion you need to change the decorated function to accept a mock as last argument.
+
+``` python
+@patch('os.path.abspath')
+def test_get_info(abspath_mock):
+    filename = 'somefile.ext'
+    original_path = '../{}'.format(filename)
+
+    test_abspath = 'some/abs/path'
+    abspath_mock.return_value = test_abspath
+    fi = FileInfo(original_path)
+    assert fi.get_info() == (filename, original_path, test_abspath)
+```
+
+As you can see the `patch` decorator works like a big `with` statement for the whole function. Obviously in this way you replace the target function `os.path.abspath` in the scope of the whole function. It is then up to you to decide if you need to use `patch` as a decorator or in a `with` block.
+
+# Multiple patches
+
+We can also patch more that one object. Say for example that we want to change the above test to check that the outcome of the `FileInfo.get_info()` method also contains the size of the file. To get the size of a file in Python we may use the `os.path.getsize()` function, which returns the size of the file in bytes.
+
+So now we have to patch `os.path.getsize` as well, and this can be done with another `patch` decorator.
+
+``` python
+@patch('os.path.getsize')
+@patch('os.path.abspath')
+def test_get_info(abspath_mock, getsize_mock):
+    filename = 'somefile.ext'
+    original_path = '../{}'.format(filename)
+
+    test_abspath = 'some/abs/path'
+    abspath_mock.return_value = test_abspath
+
+    test_size = 1234
+    getsize_mock.return_value = test_size
+
+    fi = FileInfo(original_path)
+    assert fi.get_info() == (filename, original_path, test_abspath, test_size)
+```
+
+Please notice that the decorator which is nearest to the function is applied first. Always remember that the decorator syntax with `@` is a shortcut to replace the function with the output of the decorator, so two decorators result in
+
+``` python
+@decorator1
+@decorator2
+def myfunction():
     pass
 ```
 
-Now I will add a test to check if the object can be initialized with a given time. For the purpose of just checking the initialization of the class we need no special features, it is enough to get the current datetime through `datetime.datetime.now()` and use it. The file becomes
+is a shorcut for
 
 ``` python
-import date_time_logger as dtl
+def myfunction():
+    pass
+myfunction = decorator1(decorator2(myfunction))
+```
+
+This explains why, in the test code, the function receives first `abspath_mock` and then `getsize_mock`. The first decorator applied to the function is the patch of `os.path.abspath`, which appends the mock that we call `abspath_mock`. Then the patch of `os.path.getsize` is applied and this appends its own mock.
+
+The code that makes the test pass is
+
+``` python
+class FileInfo:
+    [...]
+
+    def get_info(self):
+        return self.filename, self.original_path, os.path.abspath(self.filename), os.path.getsize(self.filename)
+```
+
+We can write the above test using two `with` statements as well
+
+``` python
+def test_get_info():
+    filename = 'somefile.ext'
+    original_path = '../{}'.format(filename)
+
+    with patch('os.path.abspath') as abspath_mock:
+        test_abspath = 'some/abs/path'
+        abspath_mock.return_value = test_abspath
+
+        with patch('os.path.getsize') as getsize_mock:
+            test_size = 1234
+            getsize_mock.return_value = test_size
+
+            fi = FileInfo(original_path)
+            assert fi.get_info() == (filename, original_path, test_abspath, test_size)
+```
+
+Using more than one `with` statement, however, makes the code difficult to read, in my opinion, so in general I prefer to avoid it if I do not need a limited scope of the patching.
+
+# Patching immutable objects
+
+The most widespread version of Python is CPython, which is written, as the name suggests, in C. Part of the standard library is also written in C, while the rest is written in Python itself.
+
+The objects (classes, modules, functions, etc) that are implemented in C are shared between interpreters, which is something that you can do embedding the Python interpreter in a C program, for example. This requires those objects to be immutable, so that you cannot alter them at runtime from a single interpreter.
+
+For an example of this immutability just check the following code
+
+``` pycon
+>>> a = 1
+>>> a.conjugate = 5
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'int' object attribute 'conjugate' is read-only
+```
+
+Here I'm trying to replace a method with an integer, which is pointless, but nevertheless shows the issue we are facing.
+
+What has this immutability to do with patching? What `patch` does is actually to temporarily replace an attibute of an object (method of a class, class of a module, etc), so if that object is immutable the patching action fails.
+
+A typical example of this problem is the `datetime` module, which is also one of the best candidates for patching, since the output of time functions is by definition time-varying.
+
+Let me show the problem with a simple class that logs operations. The class is the following (you can put it into a file called `logger.py`)
+
+``` python
 import datetime
 
+class Logger:
+    def __init__(self):
+        self.messages = []
 
-def test_logger_initialization_no_arguments():
-    dtl.DateTimeLogger()
-
-
-def test_logger_initialization_with_datetime_argument():
-    dtl.DateTimeLogger(datetime.datetime.now())
+    def log(self, message):
+        self.messages.append((datetime.datetime.now(), message))
 ```
 
-Which makes pytest exit with a `TypeError`, since `object` does not accept any parameter. To fix it we introduce a suitable `__init__()` method
+This is pretty simple, but testing such a class is problematic, because the `log()` method produces results that depend on the actual execution time.
+
+If we try to write a test patching `datetime.datetime.now` we have a bitter surprise. This is the test code, that you can put in `tests/test_logger.py`
 
 ``` python
-class DateTimeLogger:
-    def __init__(self, dt=None):
-        pass
+from unittest.mock import patch
+
+from logger import Logger
+
+def test_init():
+    l = Logger()
+    assert l.messages == []
+
+@patch('datetime.datetime.now')
+def test_log(mock_now):
+    test_now = 123
+    test_message = "A test message"
+    mock_now.return_value = test_now
+
+    l = Logger()
+    l.log(test_message)
+    assert l.messages == [(test_now, test_message)]
 ```
 
-which is enough to make the test pass. This shows however that the test is not really that rich, so perhaps (but it is a matter of taste) it could be a good idea to enrich it and test that the object correctly stores the initial date and time. So the test now becomes
+and the execution of pytest returns a `TypeError: can't set attributes of built-in/extension type 'datetime.datetime'`, which is exactly a problem of immutability.
+
+There are several ways to address this problem, but all of them leverage the fact that, when you import of subclass an immutable object what you get is a "copy" of that is now mutable.
+
+The easiest example in this case is the module `datetime` itself. In the `test_log` function we try to patch directly the `datetime.datetime.now` object, affecting the builtin module `datetime`. The file `logger.py`, however, does import `datetime`, so that this latter becomes a local symbol in the `logger` module. This is exactly the key for our patching. Let us change the code to
 
 ``` python
-def test_logger_initialization_with_datetime_argument():
-    now = datetime.datetime.now()
-    dt = dtl.DateTimeLogger(now)
+@patch('logger.datetime.datetime')
+def test_log(mock_datetime):
+    test_now = 123
+    test_message = "A test message"
+    mock_datetime.now.return_value = test_now
 
-    assert dt.initial_datetime == now
+    l = Logger()
+    l.log(test_message)
+    assert l.messages == [(test_now, test_message)]
 ```
 
-and the code to make it pass becomes
+As you see running the test now the patching works. What we did was to patch `logger.datetime.datetime` instead of `datetime.datetime.now`. Two things changed, thus, in our test. First, we are patching the module imported in the `logger.py` file and not the module provided globally by the Python interpreter. Second, we have to patch the whole module because this is what is imported by the `logger.py` file. If you try to patch `logger.datetime.datetime.now` you will find that it is still immutable.
 
-``` python
-class DateTimeLogger:
-    def __init__(self, dt=None):
-        self.initial_datetime = dt
-```
+Another possible solution to this problem is to create a function that invokes the immutable object and returns its value. This last function can be easily patched, because it just uses the builtin objects and thus is not immutable. This solution, however, requires to change the source code to allow testing, which is far from being desirable. Obviously it is better to introduce a small change in the code and have it tested than to leave it untested, but whenever is possible I avoid solutions that introduce code which wouldn't be required without tests.
