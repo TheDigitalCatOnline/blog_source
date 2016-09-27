@@ -1,23 +1,20 @@
 Title: Python Mocks: a gentle introduction - Part 2
-Date: 2016-04-12 17:00:00 +0100
+Date: 2016-09-27 09:00:00 +0000
 Category: Programming
-Tags: decorators, OOP, Python, Python2, Python3, TDD
+Tags: decorators, OOP, Python, Python2, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: python-mocks-a-gentle-introduction-part-2
 Summary: 
 
-In the first post I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the `return_value` and `side_effect` attributes, and the `assert_called_with()` method.
+In the [first post](/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1) I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the `return_value` and `side_effect` attributes, and the `assert_called_with()` method.
 
 In this post I will briefly review the remaining `assert_*` methods and some interesting attributes that allow to check the calls received by the mock object. Then I will introduce and exemplify patching, which is a very important topic in testing.
-
-Last, I will give you a complete example of a package that provides access to a data storage through a REST API written in Flask.
-
 
 ## Other assertions and attributes
 
 The [official documentation](https://docs.python.org/dev/library/unittest.mock.html) of the mock library lists many other assertion, namely `assert_called_once_with()`, `assert_any_call()`, `assert_has_calls()`, `assert_not_called()`. If you grasped how `assert_called_with()` works, you will have no troubles in understanding how those other behave. Be sure to check the documentation to get a full description of what mock object can assert about their history after being used by your code.
 
-Together with those methods, mock objects also provide some usefult attributes, two of them were already reviewd in the first post. The remaining attributes are as expected mostly call-related, and are `called`, `call_count`, `call_args`, `call_args_list`, `method_calls`, `mock_calls`. While these also are very well descripted in the official documentation, I want to point out the two `method_calls` and `mock_calls` attributes, that store the detailed list of methods which are called on the mock, and the `call_args_list` attribute that lists the parameters of every call.
+Together with those methods, mock objects also provide some useful attributes, two of which have been already reviewed in the first post. The remaining attributes are as expected mostly related to calls, and are `called`, `call_count`, `call_args`, `call_args_list`, `method_calls`, `mock_calls`. While these also are very well descripted in the official documentation, I want to point out the two `method_calls` and `mock_calls` attributes, that store the detailed list of methods which are called on the mock, and the `call_args_list` attribute that lists the parameters of every call.
 
 Do not forget that methods called on a mock object are mocks themselves, so you may first access the main mock object to get information about the called methods, and then access those methods to get the arguments they received.
 
@@ -31,9 +28,11 @@ This is exactly the case addressed by patching. Patching, in a testing framework
 
 Let us start with a very simple example. Patching can be complex to grasp at the beginning so it is better to learn it with trivial code. If you do not have it yet, create the testing environment `mockplayground` with the instruction given in the previous post.
 
-I want to develop a simple class that returns information about a given file. The shall be instantiated with the filename, which can be a relative path.
+I want to develop a simple class that returns information about a given file. The class shall be instantiated with the filename, which can be a relative path.
 
-For the sake of brevity I will not show you every step of the TDD development of the class. Remember that TDD requires you to write a test and then implement the code. Sometimes this is too granular, so do not use the TDD rules without thinking. The tests for the initialization of the class are
+For the sake of brevity I will not show you every step of the TDD development of the class. Remember that TDD requires you to write a test and then implement the code, but sometimes this could be too fine grained, so do not use the TDD rules without thinking.
+
+The tests for the initialization of the class are
 
 ``` python
 from fileinfo import FileInfo
@@ -75,7 +74,7 @@ def test_get_info():
     assert fi.get_info() == (filename, original_path, '???')
 ```
 
-where I put the '???' string to highlight that I cannot put something sensible to test the absolute path of the file.
+where the '???' string highlights that I cannot put something sensible to test the absolute path of the file.
 
 Patching is the way to solve this problem. You know that the function will use some code to get the absolute path of the file. So in the scope of the test only you can replace that code with different code and perform the test. Since the replacement code has a known outcome writing the test is now possible.
 
@@ -163,7 +162,7 @@ def myfunction():
     pass
 ```
 
-is a shorcut for
+which is a shorcut for
 
 ``` python
 def myfunction():
@@ -202,7 +201,7 @@ def test_get_info():
             assert fi.get_info() == (filename, original_path, test_abspath, test_size)
 ```
 
-Using more than one `with` statement, however, makes the code difficult to read, in my opinion, so in general I prefer to avoid it if I do not need a limited scope of the patching.
+Using more than one `with` statement, however, makes the code difficult to read, in my opinion, so in general I prefer to avoid complex `with` trees if I do not need a limited scope of the patching.
 
 # Patching immutable objects
 
@@ -239,7 +238,7 @@ class Logger:
         self.messages.append((datetime.datetime.now(), message))
 ```
 
-This is pretty simple, but testing such a class is problematic, because the `log()` method produces results that depend on the actual execution time.
+This is pretty simple, but testing this code is problematic, because the `log()` method produces results that depend on the actual execution time.
 
 If we try to write a test patching `datetime.datetime.now` we have a bitter surprise. This is the test code, that you can put in `tests/test_logger.py`
 
@@ -284,3 +283,13 @@ def test_log(mock_datetime):
 As you see running the test now the patching works. What we did was to patch `logger.datetime.datetime` instead of `datetime.datetime.now`. Two things changed, thus, in our test. First, we are patching the module imported in the `logger.py` file and not the module provided globally by the Python interpreter. Second, we have to patch the whole module because this is what is imported by the `logger.py` file. If you try to patch `logger.datetime.datetime.now` you will find that it is still immutable.
 
 Another possible solution to this problem is to create a function that invokes the immutable object and returns its value. This last function can be easily patched, because it just uses the builtin objects and thus is not immutable. This solution, however, requires to change the source code to allow testing, which is far from being desirable. Obviously it is better to introduce a small change in the code and have it tested than to leave it untested, but whenever is possible I avoid solutions that introduce code which wouldn't be required without tests.
+
+## Final words
+
+In this second part of this small series on Python testing we reviewd the patching mechanism and run through some of its subleties. Patching is a really effective technique, and patch-based tests can be found in many different packages. Take your time to become confident with mocks and patching, since they will be one of your main tools while working with Python and any other object-oriented language.
+
+As always, I strongly recommend finding some time to read the [official documentation](https://docs.python.org/dev/library/unittest.mock.html) of the mock library.
+
+## Feedback
+
+Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections
