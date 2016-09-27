@@ -1,7 +1,7 @@
 Title: A simple example of Python OOP development (with TDD) - Part 2 
 Date: 2015-09-10 20:00:00 +0100
 Category: Programming
-Tags: OOP, Python, Python3, TDD
+Tags: OOP, Python, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: python-oop-tdd-example-part2
 Series: "Python OOP and TDD"
