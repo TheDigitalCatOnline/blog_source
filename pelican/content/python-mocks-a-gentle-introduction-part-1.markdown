@@ -1,7 +1,7 @@
 Title: Python Mocks: a gentle introduction - Part 1
 Date: 2016-03-06 18:00:00 +0100
 Category: Programming
-Tags: decorators, OOP, Python, Python2, Python3, TDD
+Tags: decorators, OOP, Python, Python2, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: python-mocks-a-gentle-introduction-part-1
 Summary: 
@@ -18,7 +18,7 @@ In this series of posts I am going to review the Python `mock` library and exemp
 
 ## Installation
 
-First of all, mock is a Python library which development started around 2008. It was selected to be included in the standard library as of Python 3.3, which however does not prevent you to use other libraries if you prefer.
+First of all, `mock` is a Python library which development started around 2008. It was selected to be included in the standard library as of Python 3.3, which however does not prevent you to use other libraries if you prefer.
  
 Python 3 users, thus, are not required to take any step, while for Python 2 projects you are still required to issue a `pip install mock` to install it into the system or the current virtualenv.
 
@@ -75,7 +75,7 @@ Well, as you can see this class is somehow different from what you are accustome
 <Mock name='mock.some_attribute' id='140222043808432'>
 ```
 
-Mock objects are callables, which means that they may act both as attributes and as methods. If you try to call the mock it just returns you another mock with a name that includes parentheses to remarks its callable nature
+Mock objects are callables, which means that they may act both as attributes and as methods. If you try to call the mock it just returns you another mock with a name that includes parentheses to signal its callable nature
 
 ``` pycon
 >>> m.some_attribute()
