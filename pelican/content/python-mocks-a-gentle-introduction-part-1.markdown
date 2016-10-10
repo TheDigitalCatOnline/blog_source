@@ -146,7 +146,7 @@ Traceback (most recent call last):
 StopIteration
 ```
 
-As promised, the mock just returns every object found in the iterable (in this case a `range` object) once at a time until the generator is exhausted. According to the iterator protocol (see [this post](blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/)) once every item has been returned the object raises the `StopIteration` exception, which means that you can correctly use it in a loop.
+As promised, the mock just returns every object found in the iterable (in this case a `range` object) once at a time until the generator is exhausted. According to the iterator protocol (see [this post](/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/)) once every item has been returned the object raises the `StopIteration` exception, which means that you can correctly use it in a loop.
 
 The last and perhaps most used case is that of passing a callable to `side_effect`, which shamelessly executes it with its own same parameters. This is very powerful, especially if you stop thinking about "functions" and start considering "callables". Indeed, `side_effect` also accepts a class and calls it, that is it can instantiate objects. Let us consider a simple example with a function without arguments
 
