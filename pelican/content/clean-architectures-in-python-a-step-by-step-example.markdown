@@ -6,6 +6,12 @@ Authors: Leonardo Giordani
 Slug: clean-architectures-in-python-a-step-by-step-example
 Summary: 
 
+**TODOTODOTODOTODO**
+1. Where are the snippets supposed to be put? Put the file names
+2. Check again all the tests and code, some paths like models changed
+**TODOTODOTODOTODO**
+
+
 I have been recently introduced by my friend [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some very interesting posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
 
 As he clearly states in a post aptly titled [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html), the idea behind this design is not new, being built on a set of concepts that have been pushed by many software engineers over the last 3 decades. One of the first implementations may be found in the Boundary-Control-Entity model proposed by Ivar Jacobson in his masterpiece "Object-Oriented Software Engineering: A Use Case Driven Approach" published in 1992, but Martin lists other more recent versions of this architecture.
@@ -15,7 +21,7 @@ I will not repeat here what he had already explained better than I can do, so I 
 * [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) a post by Robert Martin that concisely describes the goals of the architecture. Also lists resources that describe similar architectures.
 * [The Open Closed Principle](https://blog.8thlight.com/uncle-bob/2014/05/12/TheOpenClosedPrinciple.html) a post by Robert Martin not strictly correlated with the Clean Architecture concept but important for the separation concept.
 * Hakka Labs: Robert "Uncle Bob" Martin - [Architecture: The Lost Years](https://www.youtube.com/watch?v=HhNIttd87xs) a video of Robert Martin from Hakka Labs.
-* [DDD & Testing Strategy](http://www.taimila.com/blog/ddd-and-testing-strategy/) by Lauri Taimila
+* [DDD & Testing Strategy](http://www.taimila.com/blog/ddd-and-resting-strategy/) by Lauri Taimila
 
 The purpose of this series of posts is to show how to build a REST web service in Python from scratch using a clean architecture. One of the main advantages of this layered design is testability, so I will develop it following a TDD approach. This will also allow to show some limitations of the test-driven approach which you should be aware of. The project was initially developed from scratch in around 14 hours of work. Given the toy nature of the project some choices have been made to simplify the resulting code. Whenever meaningful I will point out those simplifications and discuss them.
   
@@ -25,7 +31,7 @@ The goal of the "Rent-o-matic" project (fans of Day of the Tentacle may get the 
  
 The objects in the dataset are storage rooms for rent described by the following quantities:
  
-* An unique code
+* An unique identifier
 * A size in square meters
 * A renting price in euros/day
 * Latitude and longitude
@@ -72,23 +78,33 @@ Let us take a look at the final structure of the project
 
 The global structure of the package has been built with Cookiecutter, and I will run fast through that part. The `rentomatic` directory contains the following subdirectories: `domain`, `repositories`, `rest`, `serializers`, `use_cases`, that reflect the layered structure introduced in the previous section. The structure of the `tests` directory mirrors this structure so that tests are easily found.
 
-# Creating the project
+# Source code
 
-I usually like maintaining a Python virtual environment inside the project, so I will create a temporary virtualenv to install cookiecutter and create the project
+You can find the source code in [this GitHub repository](#TODO). Feel free to fork it and experiment, change it, and find better solutions to the problem I will discuss in this post. The source code contains tagged commits to allow you to follow the actual development as presented in the post. You can find the current tag in the **Git tag: `<tag name>`** label under the section titles. The label is actually a link to the tagged commit on GitHub, if you want to see the code without cloning it.
+
+# Project initialization
+
+**Git tag: [`step01`](https://github.com/lgiordani/rentomatic/tree/step01)**
+
+I usually like maintaining a Python virtual environment inside the project, so I will create a temporary virtualenv to install cookiecutter and create the project. Cookiecutter is going to ask you some questions about you and the project, to provide an initial file structure. We are going to build our own testing environment, so it is safe ot answer no to `use_pytest`. Since this is a demo project we are not going to need any publishing feature, so you can answer no to `use_pypi_deployment_with_travis` as well. The project does not have a command line interface, and you can safely create the author file and use any license.
 
 ``` bash
 virtualenv venv3 -p python3
 source venv3/bin/activate
 pip install cookiecutter
 cookiecutter https://github.com/audreyr/cookiecutter-pypackage
-[answer questions]
+```
+
+Now answer the questions, then finish creating the project with the following code
+
+``` bash
 deactivate
 rm -fR venv3
-cd <name of your project>
+cd rentomatic
 virtualenv venv3 -p python3
 ```
 
-I usually store virtualenv requirements in different hierarchical files to separate production, development and testing environments, so create the `requirements` directory and the relative files
+Get rid of the `requirements_dev.txt` file that Cookiecutter created for you. I usually store virtualenv requirements in different hierarchical files to separate production, development and testing environments, so create the `requirements` directory and the relative files
 
 ``` bash
 mkdir requirements
@@ -97,16 +113,1153 @@ touch requirements/dev.txt
 touch requirements/test.txt
 ```
 
-The `test.txt` file will contain specific packages used to test the project, and shall also install production packages, so it will contain
+The `test.txt` file will contain specific packages used to test the project. Since to test the project you also need to install the packages for the production environment the file will first include the production one.
 
 ``` text
--t prod.txt
+-r prod.txt
+
+pytest
+tox
+coverage
+pytest-cov
 ```
 
-while the `dev.txt` file will contain packages used during the development process and shall install also test and production package
+The `dev.txt` file will contain packages used during the development process and shall install also test and production package
 
 ``` text
--t test.txt
+-r test.txt
+
+pip
+wheel
+flake8
+Sphinx
 ```
 
 (leveraging the fact that `test.txt` already includes `prod.txt`).
+
+Obviously you are free to find the project structure that better suits your need or preferences. This is the structure we are going to use in this project but nothing forces you to follow it in your personal projects.
+
+This separation allows you to install a full-fledged development environment on your machine, while installing only testing tools in a testing environment like the Travis platform and to further reduce the amount of dependencies in the production case. 
+
+As you can see I am not using version tags in the requirements files. This is because this project is not going to be run in a production environment, so we do not need to freeze the environment.
+
+## Miscellaneous configuration
+
+The `pytest` testing library needs to be configured. This is the `pytest.ini` file that you can create in the root directory (where the `setup.py` file is located)
+
+``` text
+[pytest]
+minversion = 2.0
+norecursedirs = .git .tox venv* requirements*
+python_files = test*.py
+```
+
+I strongly suggest the use of the `flake8` package to check that your Python code is PEP8 compliant. This is the `flake8` configuration that you can put in your `setup.cfg` file
+
+``` text
+[flake8]
+ignore = D203
+exclude = .git, venv*, docs
+max-complexity = 10
+```
+
+# Domain models
+
+**Git tag: [`step02`](https://github.com/lgiordani/rentomatic/tree/step02)**
+
+Let us start with a simple definition of the `StorageRoom` model. As said before, the clean architecture models are very lightweight, or at least they are lighter than their counterparts in a framework.
+
+Following the TDD methodology the first thing that I write are the tests. Create the `tests/domain/test_storageroom.py` and put this code inside it
+
+``` python
+import uuid
+from rentomatic.domain import models as m
+
+
+def test_storageroom_model_init():
+    code = uuid.uuid4()
+    artist = m.StorageRoom(code, size=200, price=10,
+                           longitude='-0.09998975',
+                           latitude='51.75436293')
+    assert artist.code == code
+    assert artist.size == 200
+    assert artist.price == 10
+    assert artist.longitude == -0.09998975
+    assert artist.latitude == 51.75436293
+
+
+def test_storageroom_model_from_dict():
+    code = uuid.uuid4()
+    artist = m.StorageRoom.from_dict(
+        {
+            'code': code,
+            'size': 200,
+            'price': 10,
+            'longitude': '-0.09998975',
+            'latitude': '51.75436293'
+        }
+    )
+    assert artist.code == code
+    assert artist.size == 200
+    assert artist.price == 10
+    assert artist.longitude == -0.09998975
+    assert artist.latitude == 51.75436293
+```
+
+With these two tests we ensure that out model can be initialized with the correct values and that can be created from a dictionary. In this first version all the parameters of the model are required. Later we could want to make some of them optional, and in that case we will have to add the relevant tests.
+
+For the sake of simplicity I am not considering possible issues/features like accepting parameters in string and number form.
+
+Now let's write the `StorageRoom` class in the `rentomatic/domain/storageroom.py` file. Do not forget to create the `__init__.py` file in the subdirectories of the project, otherwise Python will not be able to import the modules.
+
+``` python
+from rentomatic.shared.domain_model import DomainModel
+
+
+class StorageRoom(object):
+
+    def __init__(self, code, size, price, latitude, longitude):
+        self.code = code
+        self.size = size
+        self.price = price
+        self.latitude = float(latitude)
+        self.longitude = float(longitude)
+
+    @classmethod
+    def from_dict(cls, adict):
+        room = StorageRoom(
+            code=adict['code'],
+            size=adict['size'],
+            price=adict['price'],
+            latitude=adict['latitude'],
+            longitude=adict['longitude'],
+        )
+
+        return room
+
+
+DomainModel.register(StorageRoom)
+```
+
+The model is very simple, and requires no further explanation. One of the benefits of a clean architecture is that each layer contains small pieces of code that, being isolated, shall perform simple tasks. In this case the model provides an initialization API and stores the information inside the class.
+
+The `from_dict` method comes in handy when we have to create a model from data coming from another layer (such as the database layer or the query string of the REsT layer).
+
+One could be tempted to try and simplify the `from_dict` function, abstracting it and providing it through a `Model` class. Given that a certain level of abstraction and generalization is possible and desirable, the initialization part of the models shall probably deal with various different cases, and thus is better off being implemented directly in the class.
+
+The `DomainModel` abstract base class is an easy way to categorize the model for future uses like checking if a class is a model in the system. For more information about this use of Abstract Base Classes in Python see [this post](/blog/2016/04/03/abstract-base-classes-in-python/).
+
+# Serializers
+
+**Git tag: [`step03`](https://github.com/lgiordani/rentomatic/tree/step03)**
+
+Our model needs to be serialized if we want to return it as a result of an API call. The typical serialization format is JSON, as this is a broadly accepted standard for web-based API. The serializer is not part of the model, but is an external specialized class that receivees the model instance and produces a representation of its structure and values.
+
+The JSON serialization test of our `StorageRoom` class shall be put in the `tests/serializers/test_storageroom_serializer.py` file
+
+``` python
+import json
+
+from rentomatic.serializers import storageroom_serializer as srs
+from rentomatic.domain import models
+
+
+def test_serialize_domain_storageroom():
+    room = models.StorageRoom('f853578c-fc0f-4e65-81b8-566c5dffa35a',
+                              size=200,
+                              price=10,
+                              longitude='-0.09998975',
+                              latitude='51.75436293')
+
+    expected_json = """
+        {
+            "code": "f853578c-fc0f-4e65-81b8-566c5dffa35a",
+            "size": 200,
+            "price": 10,
+            "longitude": -0.09998975,
+            "latitude": 51.75436293
+        }
+    """
+
+    assert json.loads(json.dumps(room, cls=srs.StorageRoomEncoder)) == json.loads(expected_json)
+```
+
+Put in the `rentomatic/serializers/storageroom_serializer.py` file the code that makes the test pass
+
+``` python
+import json
+
+
+class StorageRoomEncoder(json.JSONEncoder):
+
+    def default(self, o):
+        try:
+            to_serialize = {
+                'code': o.code,
+                'size': o.size,
+                'price': o.price,
+                "latitude": o.latitude,
+                "longitude": o.longitude,
+            }
+            return to_serialize
+        except AttributeError:
+            return super().default(o)
+```
+
+Providing a class that inherits from `json.JSONEncoder` let us use the `json.dumps(room, cls=StorageRoomEncoder)` syntax to serialize the model.
+
+There is a certain degree of repetition in the code we wrote, and this is the annoying part of a clean architecture. Since we want to isolate layers as much as possible and create lightweight classes we end up somehow repeating certain types of actions. For example the serialization code that assigns attributes of a `StorageRoom` to JSON attributes is very similar to that we use to create the object from a dictionary. Not exactly the same, obviously, but the two functions are very close.
+
+# Use cases (part 1)
+
+**Git tag: [`step04`](https://github.com/lgiordani/rentomatic/tree/step04)**
+
+It's time to implement the actual business logic our application wants to expose to the outside world. Use cases are the place where we implement classes that query the repository, apply business rules, logic, and whatever transformation we need for our data, and return the results.
+
+With those requirements in mind, let us start to build a use case step by step. The simplest use case we can create is one that fetches all the storage rooms from the repository and returns them. Please note that we did not implement any repository layer yet, so our tests will mock it.
+
+This is the skeleton for a basic test of a use case that lists all the storage rooms. Put this code in the `tests/use_cases/test_storageroom_list_use_case.py`
+
+``` python
+import pytest
+from unittest import mock
+
+from rentomatic.domain import models
+from rentomatic.use_cases import storageroom_use_cases as uc
+
+
+@pytest.fixture
+def domain_storagerooms():
+    storageroom_1 = models.StorageRoom(
+        code='f853578c-fc0f-4e65-81b8-566c5dffa35a',
+        size=215,
+        price=39,
+        longitude='-0.09998975',
+        latitude='51.75436293',
+    )
+
+    storageroom_2 = models.StorageRoom(
+        code='fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
+        size=405,
+        price=66,
+        longitude='0.18228006',
+        latitude='51.74640997',
+    )
+
+    storageroom_3 = models.StorageRoom(
+        code='913694c6-435a-4366-ba0d-da5334a611b2',
+        size=56,
+        price=60,
+        longitude='0.27891577',
+        latitude='51.45994069',
+    )
+
+    storageroom_4 = models.StorageRoom(
+        code='eed76e77-55c1-41ce-985d-ca49bf6c0585',
+        size=93,
+        price=48,
+        longitude='0.33894476',
+        latitude='51.39916678',
+    )
+
+    return [storageroom_1, storageroom_2, storageroom_3, storageroom_4]
+
+
+def test_storageroom_list_without_parameters(domain_storagerooms):
+    repo = mock.Mock()
+    repo.list.return_value = domain_storagerooms
+
+    storageroom_list_use_case = uc.StorageRoomListUseCase(repo)
+    result = storageroom_list_use_case.execute()
+
+    repo.list.assert_called_with()
+    assert result == domain_storagerooms
+```
+
+The test is straightforward. First we mock the repository so that is provides a `list()` method that returns the list of models we created above the test. Then we initialize the use case with the repo and execute it, collecting the result. The first thing we check is if the repository method was called without any parameter, and the second is the effective correctness of the result.
+
+This is the implementation of the use case that makes the test pass. Put the code in the `rentomatic/use_cases/storageroom_use_case.py`
+
+``` python
+class StorageRoomListUseCase(object):
+
+    def __init__(self, repo):
+        self.repo = repo
+
+    def execute(self):
+        return self.repo.list()
+```
+
+With such an implementation of the use case, however, we will soon experience issues. For starters, we do not have a standard way to transport the call parameters, which means that we do not have a standard way to check for their correctness either. The second problem is that we miss a standard way to return the call results and consequently we lack a way to communicate if the call was successful of if it failed, and in the latter case what are the reasons of the failure. This applies also to the case of bad parameters discussed in the previous point.
+
+We want thus to introduce some structures to wrap input and outputs of our use cases. Those structures are called request and response objects.
+
+# Requests and responses
+
+**Git tag: [`step05`](https://github.com/lgiordani/rentomatic/tree/step05)**
+
+Request and response objects are an important part of a clean architecture, as they transport call parameters, inputs and results from outside the application into the use cases layer.
+
+More specifically, requests are objects created from incoming API calls, thus they shall deal with things like incorrect values, missing parameters, wrong formats, etc. Responses, on the other hand, have to contain the actual results of the API calls, but shall also be able to represent error cases and to deliver rich information on what happened.
+
+The actual implementation of request and response objects is completely free, the clean architecture says nothing about them. The decision on how to pack and represent data is up to us.
+
+For the moment we just need a `StorageRoomListRequestObject` that can be initialized without parameters, so let us create the file `tests/use_cases/test_storageroom_list_request_objects.py` and put there a test for this object.
+
+``` python
+from rentomatic.use_cases import request_objects as ro
+
+
+def test_build_storageroom_list_request_object_without_parameters():
+    req = ro.StorageRoomListRequestObject()
+
+    assert bool(req) is True
+
+
+def test_build_file_list_request_object_from_empty_dict():
+    req = ro.StorageRoomListRequestObject.from_dict({})
+
+    assert bool(req) is True
+```
+
+While at the moment this request object is basically empty, it will come in handy as soon as we start having parameters for the list use case. The code of the `StorageRoomListRequestObject` is the following and goes into the `rentomatic/use_cases/request_objects.py` file
+
+``` python
+class StorageRoomListRequestObject(object):
+    @classmethod
+    def from_dict(cls, adict):
+        return StorageRoomListRequestObject()
+
+    def __nonzero__(self):
+        return True
+```
+
+The response object is also very simple, since for the moment we just need a successful response. Unlike the request, the response is not linked to any particular use case, so the test file can be named `tests/shared/test_response_object.py`
+
+``` python
+from rentomatic.shared import response_object as ro
+
+
+def test_response_success_is_true():
+    assert bool(ro.ResponseSuccess()) is True
+```
+
+and the actual response object is in the file `rentomatic/shared/response_object.py`
+
+``` python
+class ResponseSuccess(object):
+
+    def __init__(self, value=None):
+        self.value = value
+
+    def __nonzero__(self):
+        return True
+
+    __bool__ = __nonzero__
+```
+
+# Use cases (part 2)
+
+**Git tag: [`step06`](https://github.com/lgiordani/rentomatic/tree/step06)**
+
+Now that we have implemented the request and response object we can change the test code to include those structures. Change the `tests/use_cases/test_storageroom_list_use_case.py` to contain this code
+
+``` python
+import pytest
+from unittest import mock
+
+from rentomatic.domain import models
+from rentomatic.use_cases import request_objects as ro
+from rentomatic.use_cases import storageroom_use_cases as uc
+
+
+@pytest.fixture
+def domain_storagerooms():
+    storageroom_1 = models.StorageRoom(
+        code='f853578c-fc0f-4e65-81b8-566c5dffa35a',
+        size=215,
+        price=39,
+        longitude='-0.09998975',
+        latitude='51.75436293',
+    )
+
+    storageroom_2 = models.StorageRoom(
+        code='fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
+        size=405,
+        price=66,
+        longitude='0.18228006',
+        latitude='51.74640997',
+    )
+
+    storageroom_3 = models.StorageRoom(
+        code='913694c6-435a-4366-ba0d-da5334a611b2',
+        size=56,
+        price=60,
+        longitude='0.27891577',
+        latitude='51.45994069',
+    )
+
+    storageroom_4 = models.StorageRoom(
+        code='eed76e77-55c1-41ce-985d-ca49bf6c0585',
+        size=93,
+        price=48,
+        longitude='0.33894476',
+        latitude='51.39916678',
+    )
+
+    return [storageroom_1, storageroom_2, storageroom_3, storageroom_4]
+
+
+def test_storageroom_list_without_parameters(domain_storagerooms):
+    repo = mock.Mock()
+    repo.list.return_value = domain_storagerooms
+
+    storageroom_list_use_case = uc.StorageRoomListUseCase(repo)
+    request_object = ro.StorageRoomListRequestObject.from_dict({})
+
+    response_object = storageroom_list_use_case.execute(request_object)
+
+    assert bool(response_object) is True
+    repo.list.assert_called_with()
+
+    assert response_object.value == domain_storagerooms
+```
+
+The new version of the `rentomatic/use_case/storageroom_use_cases.py` file is the following
+
+``` python
+from rentomatic.shared import response_object as ro
+
+
+class StorageRoomListUseCase(object):
+
+    def __init__(self, repo):
+        self.repo = repo
+
+    def execute(self, request_object):
+        storage_rooms = self.repo.list()
+        return ResponseSuccess(storage_rooms)
+```
+
+Let us consider what we have achieved with our clean architecture up to this point. We have a very lightweight model that can be serialized to JSON and which is completely independent from other parts of the system. We have a use case that, given a repository that exposes a given API, extracts all the models and returns them contained in a structured object.
+
+We are missing some objects, however. For example we have not implemented any unsuccessful response object or validated the incoming request object.
+
+To explore these missing parts of the architecture let us improve the current use case to accept a `filters` parameter that represents some filters that we want to apply to the extracted list of models. This will generate some possible error conditions for the input, forcing us to introduce some validation for the incoming request object.
+
+# Requests and validation
+
+**Git tag: [`step07`](https://github.com/lgiordani/rentomatic/tree/step07)**
+
+I want to add a `filters` parameter to the request. Through that parameter the caller can add different filters by specifying a name and a value for each filter (for instance `{'price_lt': 100}` to get all results with a price lesser than 100).
+
+The first thing to do is to change the request object, starting from the test. The new version of the `tests/use_cases/test_storageroom_list_request_objects.py` file is the following
+
+``` python
+from rentomatic.use_cases import request_objects as ro
+
+
+def test_build_storageroom_list_request_object_without_parameters():
+    req = ro.StorageRoomListRequestObject()
+
+    assert req.filters is None
+    assert bool(req) is True
+
+
+def test_build_file_list_request_object_from_empty_dict():
+    req = ro.StorageRoomListRequestObject.from_dict({})
+
+    assert req.filters is None
+    assert bool(req) is True
+
+
+def test_build_storageroom_list_request_object_with_empty_filters():
+    req = ro.StorageRoomListRequestObject(filters={})
+
+    assert req.filters == {}
+    assert bool(req) is True
+
+
+def test_build_storageroom_list_request_object_from_dict_with_empty_filters():
+    req = ro.StorageRoomListRequestObject.from_dict({'filters': {}})
+
+    assert req.filters == {}
+    assert bool(req) is True
+
+
+def test_build_storageroom_list_request_object_with_filters():
+    req = ro.StorageRoomListRequestObject(filters={'a': 1, 'b': 2})
+
+    assert req.filters == {'a': 1, 'b': 2}
+    assert bool(req) is True
+
+
+def test_build_storageroom_list_request_object_from_dict_with_filters():
+    req = ro.StorageRoomListRequestObject.from_dict({'filters': {'a': 1, 'b': 2}})
+
+    assert req.filters == {'a': 1, 'b': 2}
+    assert bool(req) is True
+
+
+def test_build_storageroom_list_request_object_from_dict_with_invalid_filters():
+    req = ro.StorageRoomListRequestObject.from_dict({'filters': 5})
+
+    assert req.has_errors()
+    assert req.errors[0]['parameter'] == 'filters'
+    assert bool(req) is False
+```
+
+As you can see I added the `assert req.filters is None` check to the original two tests, then I added 5 tests to check if filters can be specified and to test the behaviour of the object with an invalid filter parameter.
+
+To make the tests pass we have to change our `StorageRoomListRequestObject` class. There are obviously multiple possible solutions that you can come up with, and I recommend you to try and find your own. This is the one I usually employ. The file `rentomatic/use_cases/request_object.py` becomes
+
+``` python
+import collections
+
+
+class InvalidRequestObject(object):
+
+    def __init__(self):
+        self.errors = []
+
+    def add_error(self, parameter, message):
+        self.errors.append({'parameter': parameter, 'message': message})
+
+    def has_errors(self):
+        return len(self.errors) > 0
+
+    def __nonzero__(self):
+        return False
+
+    __bool__ = __nonzero__
+
+
+class ValidRequestObject(object):
+
+    @classmethod
+    def from_dict(cls, adict):
+        raise NotImplementedError
+
+    def __nonzero__(self):
+        return True
+
+    __bool__ = __nonzero__
+
+
+class StorageRoomListRequestObject(ValidRequestObject):
+
+    def __init__(self, filters=None):
+        self.filters = filters
+
+    @classmethod
+    def from_dict(cls, adict):
+        invalid_req = InvalidRequestObject()
+        
+        if 'filters' in adict and not isinstance(adict['filters'], collections.Mapping):
+            invalid_req.add_error('filters', 'Is not iterable')
+
+        if invalid_req.has_errors():
+            return invalid_req
+
+        return StorageRoomListRequestObject(filters=adict.get('filters', None))
+```
+
+Let me review this new code bit by bit.
+
+First of all, two helper objects have been introduced, `ValidRequestObject` and `InvalidRequestObject`. They are different because an invalid request shall contain the validation errors, but both can be converted to booleans. 
+
+Second, the `StorageRoomListRequestObject` accepts an optional `filters` parameter when instantiated. There are no validation checks in the `__init__()` method because this is considered to be an internal method that gets called when the parameters have already been validated.
+
+Last, the `from_dict()` method performs the validation of the `filters` parameter, if it is present. I leverage the `collections.Mapping` abstract base class to check if the incoming parameter is a dictionary-like object and return either an `InvalidRequestObject` or a `ValidRequestObject` instance.
+
+Since we can now tell bad requests from good ones we need to introduce a new type of response as well, to manage bad requests or other errors in the use case.
+
+# Responses and failures
+
+**Git tag: [`step08`](https://github.com/lgiordani/rentomatic/tree/step08)**
+
+What happens if the use case encounter an error? Use cases can encounter a wide set of errors: validation errors, as we just discussed in the previous section, but also business logic errors or errors that come from the repository layer. Whatever the error, the use case shall always return an object with a known structure (the response), so we need a new object that provides a good support for different types of failures.
+
+As happened for the requests there is no unique way to provide such an object, and the following code is just one of the possible solutions.
+
+The first thing to do is to expand the `tests/shared/test_response_object.py` file, adding tests for failures.
+
+``` python
+import pytest
+
+from rentomatic.shared import response_object as res
+from rentomatic.use_cases import request_objects as req
+
+
+@pytest.fixture
+def response_value():
+    return {'key': ['value1', 'value2']}
+
+
+@pytest.fixture
+def response_type():
+    return 'ResponseError'
+
+
+@pytest.fixture
+def response_message():
+    return 'This is a response error'
+```
+
+This is some boilerplate code, basically pytest fixtures that we will use in the following tests.
+
+``` python
+def test_response_success_is_true(response_value):
+    assert bool(res.ResponseSuccess(response_value)) is True
+
+
+def test_response_failure_is_false(response_type, response_message):
+    assert bool(res.ResponseFailure(response_type, response_message)) is False
+```
+
+Two basic tests to check that both the old `ResponseSuccess` and the new `ResponseFailure` objects behave consistently when converted to boolean.
+
+``` python
+def test_response_success_contains_value(response_value):
+    response = res.ResponseSuccess(response_value)
+
+    assert response.value == response_value
+```
+
+The `ResponseSuccess` object contains the call result in the `value` attribute.
+
+``` python
+def test_response_failure_has_type_and_message(response_type, response_message):
+    response = res.ResponseFailure(response_type, response_message)
+
+    assert response.type == response_type
+    assert response.message == response_message
+
+
+def test_response_failure_contains_value(response_type, response_message):
+    response = res.ResponseFailure(response_type, response_message)
+
+    assert response.value == {'type': response_type, 'message': response_message}
+```
+
+These two tests ensure that the `ResponseFailure` object provides the same interface provided by the successful one and that the `type` and `message` parameter are accessible.
+
+``` python
+def test_response_failure_initialization_with_exception():
+    response = res.ResponseFailure(response_type, Exception('Just an error message'))
+
+    assert bool(response) is False
+    assert response.type == response_type
+    assert response.message == "Exception: Just an error message"
+
+
+def test_response_failure_from_invalid_request_object():
+    response = res.ResponseFailure.build_from_invalid_request_object(req.InvalidRequestObject())
+
+    assert bool(response) is False
+
+
+def test_response_failure_from_invalid_request_object_with_errors():
+    request_object = req.InvalidRequestObject()
+    request_object.add_error('path', 'Is mandatory')
+    request_object.add_error('path', "can't be blank")
+
+    response = res.ResponseFailure.build_from_invalid_request_object(request_object)
+
+    assert bool(response) is False
+    assert response.type == res.ResponseFailure.PARAMETERS_ERROR
+    assert response.message == "path: Is mandatory\npath: can't be blank"
+```
+
+We sometimes want to create responses from Python exceptions that can happen in the use case, so we test that `ResponseFailure` objects can be initialized with a generic exception.
+
+And last we have the tests for the `build_from_invalid_request_object()` method that automate the initialization of the response from an invalid request. If the request contains errors (remember that the request validates itself) we need to put them into the response message.
+
+The last test uses a class attribute to classify the error. The `ResponseFailure` class will contain three predefined errors that can happen when running the use case, namely `RESOURCE_ERROR`, `PARAMETERS_ERROR`, and `SYSTEM_ERROR`. This categorization is an attempt to capture the different types of issues that can happen when dealing with an external system through an API. `RESOURCE_ERROR` contains all those errors that are realted to the resources contained in the repository, for instance when you cannot find an entry given its unique id. `PARAMETERS_ERROR` describes all those errors that occur when the request parameters are wrong or missing. `SYSTEM_ERROR` encompass the errors that happen in the underlying system at operating system level, such as a failure in a filesystem operation, or a network connection error while fetching data from the database.
+
+The use case has the responsibility to manage the different error conditions arising from the Python code and to convert them into an error description made of one of the three types I just described and a message.
+
+Let's write the `ResponseFailure` class that makes the tests pass. This can be the initial definition of the class. Put it in `rentomatic/shared/response_object.py`
+
+``` python
+class ResponseFailure(object):
+    RESOURCE_ERROR = 'ResourceError'
+    PARAMETERS_ERROR = 'ParametersError'
+    SYSTEM_ERROR = 'SystemError'
+
+    def __init__(self, type_, message):
+        self.type = type_
+        self.message = self._format_message(message)
+
+    def _format_message(self, msg):
+        if isinstance(msg, Exception):
+            return "{}: {}".format(msg.__class__.__name__, "{}".format(msg))
+        return msg
+```
+
+Through the `_format_message()` method we enable the class to accept both string messages and Python exceptions, which is very handy when dealing with external libraries that can raise exceptions we do not know or do not want to manage.
+
+``` python
+    @property
+    def value(self):
+        return {'type': self.type, 'message': self.message}
+```
+
+This property makes the class comply with the `ResponseSuccess` API, providing the `value` attribute, which is an aptly formatted dictionary.
+
+```python
+    def __nonzero__(self):
+        return False
+
+    __bool__ = __nonzero__
+
+    @classmethod
+    def build_from_invalid_request_object(cls, invalid_request_object):
+        message = "\n".join(["{}: {}".format(err['parameter'], err['message'])
+                             for err in invalid_request_object.errors])
+        return cls(cls.PARAMETERS_ERROR, message)
+```
+
+As explained before, the `PARAMETERS_ERROR` type encompasses all those errors that come from an invalid set of parameters, which is the case of this function, that shall be called whenever the request is wrong, which means that some parameters contain errors or are missing.
+
+Since building failure responses is a common activity it is useful to have helper methods, so I add three tests for the building functions to the `tests/shared/test_response_object.py` file
+
+``` python
+def test_response_failure_build_resource_error():
+    response = res.ResponseFailure.build_resource_error("test message")
+
+    assert bool(response) is False
+    assert response.type == res.ResponseFailure.RESOURCE_ERROR
+    assert response.message == "test message"
+
+
+def test_response_failure_build_parameters_error():
+    response = res.ResponseFailure.build_parameters_error("test message")
+
+    assert bool(response) is False
+    assert response.type == res.ResponseFailure.PARAMETERS_ERROR
+    assert response.message == "test message"
+
+
+def test_response_failure_build_system_error():
+    response = res.ResponseFailure.build_system_error("test message")
+
+    assert bool(response) is False
+    assert response.type == res.ResponseFailure.SYSTEM_ERROR
+    assert response.message == "test message"
+```
+
+We add the relevant methods to the class and change the `build_from_invalid_request_object()` method to leverage the `build_parameters_error()` new method. Change the `rentomatic/shared/response_object.py` fiel to contain this code
+
+```python
+    @classmethod
+    def build_resource_error(cls, message=None):
+        return cls(cls.RESOURCE_ERROR, message)
+
+    @classmethod
+    def build_system_error(cls, message=None):
+        return cls(cls.SYSTEM_ERROR, message)
+
+    @classmethod
+    def build_parameters_error(cls, message=None):
+        return cls(cls.PARAMETERS_ERROR, message)
+
+    @classmethod
+    def build_from_invalid_request_object(cls, invalid_request_object):
+        message = "\n".join(["{}: {}".format(err['parameter'], err['message'])
+                             for err in invalid_request_object.errors])
+        return cls.build_parameters_error(message)
+```
+
+# Use cases (part 3)
+
+**Git tag: [`step09`](https://github.com/lgiordani/rentomatic/tree/step09)**
+
+Our implementation of responses and requests is finally complete, so now we can implement the last version of our use case. The use case correctly returns a `ResponseSuccess` object but is still missing a proper validation of the incoming request.
+
+Let's change the test in the `tests/use_cases/test_storageroom_list_use_case.py` file and add two more tests. The resulting set of tests (after the `domain_storagerooms` fixture) is the following
+
+``` python
+import pytest
+from unittest import mock
+
+from rentomatic.domain.storageroom import StorageRoom
+from rentomatic.shared import response_object as res
+from rentomatic.use_cases import request_objects as req
+from rentomatic.use_cases import storageroom_use_cases as uc
+
+
+@pytest.fixture
+def domain_storagerooms():
+    [...]
+
+
+def test_storageroom_list_without_parameters(domain_storagerooms):
+    repo = mock.Mock()
+    repo.list.return_value = domain_storagerooms
+
+    storageroom_list_use_case = uc.StorageRoomListUseCase(repo)
+    request_object = req.StorageRoomListRequestObject.from_dict({})
+
+    response_object = storageroom_list_use_case.execute(request_object)
+
+    assert bool(response_object) is True
+    repo.list.assert_called_with(filters=None)
+
+    assert response_object.value == domain_storagerooms
+```
+
+This is the test we already wrote, but the `assert_called_with()` method is called with `filters=None` to reflect the added parameter. The import line has slightly changed as well, given that we are now importing both `response_objects` and `request_objects`. The `domain_storagerooms` fixture has not changed and has been omitted from the code snippet to keep it short.
+
+``` python
+def test_storageroom_list_with_filters(domain_storagerooms):
+    repo = mock.Mock()
+    repo.list.return_value = domain_storagerooms
+
+    storageroom_list_use_case = uc.StorageRoomListUseCase(repo)
+    qry_filters = {'a': 5}
+    request_object = req.StorageRoomListRequestObject.from_dict({'filters': qry_filters})
+
+    response_object = storageroom_list_use_case.execute(request_object)
+
+    assert bool(response_object) is True
+    repo.list.assert_called_with(filters=qry_filters)
+    assert response_object.value == domain_storagerooms
+```
+
+This test checks that the value of the `filters` key in the dictionary used to create the request is actually used when calling the repository.
+
+``` python
+def test_storageroom_list_handles_generic_error():
+    repo = mock.Mock()
+    repo.list.side_effect = Exception('Just an error message')
+
+    storageroom_list_use_case = uc.StorageRoomListUseCase(repo)
+    request_object = req.StorageRoomListRequestObject.from_dict({})
+
+    response_object = storageroom_list_use_case.execute(request_object)
+
+    assert bool(response_object) is False
+    assert response_object.value == {
+        'type': res.ResponseFailure.SYSTEM_ERROR,
+        'message': "Exception: Just an error message"
+    }
+
+
+def test_storageroom_list_handles_bad_request():
+    repo = mock.Mock()
+
+    storageroom_list_use_case = uc.StorageRoomListUseCase(repo)
+    request_object = req.StorageRoomListRequestObject.from_dict({'filters': 5})
+
+    response_object = storageroom_list_use_case.execute(request_object)
+
+    assert bool(response_object) is False
+    assert response_object.value == {
+        'type': res.ResponseFailure.PARAMETERS_ERROR,
+        'message': "filters: Is not iterable"
+    }
+```
+
+This last two tests check the behaviour of the use case when the repository raises an exception or when the request is badly formatted.
+
+Change the file `rentomatic/use_cases/storageroom_use_cases.py` to contain the new use case implementation that makes all the test pass
+
+``` python
+from rentomatic.shared import response_object as res
+
+
+class StorageRoomListUseCase(object):
+
+    def __init__(self, repo):
+        self.repo = repo
+
+    def execute(self, request_object):
+        if not request_object:
+            return res.ResponseFailure.build_from_invalid_request_object(request_object)
+
+        try:
+            storage_rooms = self.repo.list(filters=request_object.filters)
+            return res.ResponseSuccess(storage_rooms)
+        except Exception as exc:
+            return res.ResponseFailure.build_system_error(
+                "{}: {}".format(exc.__class__.__name__, "{}".format(exc)))
+```
+
+As you can see the first thing that the `execute()` method does is to check if the request is valid, otherwise returns a `ResponseFailure` build with the same request object. Then the actual business logic is implemented, calling the repository and returning a success response. If something goes wrong in this phase the exception is caught and returned as an aptly formatted `ResponseFailure`.
+
+# Intermezzo: refactoring
+
+**Git tag: [`step10`](https://github.com/lgiordani/rentomatic/tree/step10)**
+
+A clean architecture is _not_ a framework, so it provides very few generic features, unlike products like for example Django, which provide models, ORM, and all sorts of structures and libraries. Nevertheless, some classes can be isolated from our code and provided as a library, so that we can reuse the code. In this section I will guide you through a refactoring of the code we already have, during which we will isolate common features for requests, responses, and use cases.
+
+We already isolated the response object. We can move the `test_valid_request_object_cannot_be_used` from `tests/use_cases/test_storageroom_list_request_objects.py` to `tests/shared/test_response_object.py` since it tests a generic behaviour and not something related to the `StorageRoom` model and use cases.
+
+Then we can move the `InvalidRequestObject` and `ValidRequestObject` classes from `rentomatic/use_cases/request_objects.py` to `rentomatic/shared/request_object.py`, makeing the necessary changes to the `StorageRoomListRequestObject` class that now inherits from an external class.
+
+The use case is the class that undergoes the major changes. The `UseCase` class is tested by the following code in the `tests/shared/test_use_case.py` file
+
+``` python
+from unittest import mock
+
+from rentomatic.shared import request_object as req, response_object as res
+from rentomatic.shared import use_case as uc
+
+
+def test_use_case_cannot_process_valid_requests():
+    valid_request_object = mock.MagicMock()
+    valid_request_object.__bool__.return_value = True
+
+    use_case = uc.UseCase()
+    response = use_case.execute(valid_request_object)
+
+    assert not response
+    assert response.type == res.ResponseFailure.SYSTEM_ERROR
+    assert response.message == \
+        'NotImplementedError: process_request() not implemented by UseCase class'
+```
+
+This test checks that the `UseCase` class cannot be actually used to process incoming requests.
+
+``` python
+def test_use_case_can_process_invalid_requests_and_returns_response_failure():
+    invalid_request_object = req.InvalidRequestObject()
+    invalid_request_object.add_error('someparam', 'somemessage')
+
+    use_case = uc.UseCase()
+    response = use_case.execute(invalid_request_object)
+
+    assert not response
+    assert response.type == res.ResponseFailure.PARAMETERS_ERROR
+    assert response.message == 'someparam: somemessage'
+```
+
+This test runs the use case with an invalid request and check if the response is correct. Since the request is wrong the response type is `PARAMETERS_ERROR`, as this represents an issue in the request parameters.
+
+``` python
+def test_use_case_can_manage_generic_exception_from_process_request():
+    use_case = uc.UseCase()
+
+    class TestException(Exception):
+        pass
+
+    use_case.process_request = mock.Mock()
+    use_case.process_request.side_effect = TestException('somemessage')
+    response = use_case.execute(mock.Mock)
+
+    assert not response
+    assert response.type == res.ResponseFailure.SYSTEM_ERROR
+    assert response.message == 'TestException: somemessage'
+```
+
+This test makes the use case raise an exception. This type of error is categorized as `SYSTEM_ERROR`, which is a generic name for an exception which is not related to request parameters or actual entities.
+
+As you can see in this last test the idea is that of exposing the `execute()` method in the `UseCase` class and to call the `process_request()` method defined by each child class, which is the actual use case we are implementing.
+
+The `rentomatic/shared/use_case.py` file contains the following code that makes the test pass
+
+``` python
+from rentomatic.shared import response_object as res
+
+
+class UseCase(object):
+
+    def execute(self, request_object):
+        if not request_object:
+            return res.ResponseFailure.build_from_invalid_request_object(request_object)
+        try:
+            return self.process_request(request_object)
+        except Exception as exc:
+            return res.ResponseFailure.build_system_error(
+                "{}: {}".format(exc.__class__.__name__, "{}".format(exc)))
+
+    def process_request(self, request_object):
+        raise NotImplementedError(
+            "process_request() not implemented by UseCase class")
+```
+
+While the `rentomatic/use_cases/storageroom_use_cases.py` now contains the following code
+
+``` python
+from rentomatic.shared import use_case as uc
+from rentomatic.shared import response_object as res
+
+
+class StorageRoomListUseCase(uc.UseCase):
+
+    def __init__(self, repo):
+        self.repo = repo
+
+    def process_request(self, request_object):
+        domain_artists = self.repo.list(filters=request_object.filters)
+        return res.ResponseSuccess(domain_artists)
+```
+
+# The repository layer
+
+The repository layer is the one in which we run the data storage system. As you saw when we implemented the use case we access the data storage through an API, in this case the `list()` method of the repository. The level of abstraction provided by a repository level is higher than that provided by an ORM or by a tool like SQLAlchemy. The repository layer provides only the endpoints that the application needs, with an interface which is taylored on the specific business problems the application implements.
+
+To clarify the matter in terms of concrete technologies, SQLAlchemy is a wonderful tool to abstract the access to an SQL database, so the internal implementation of the repository layer could use it to access a PostgreSQL database. But the external API of the layer is not that provided by SQLAlchemy. The API is a (usually reduced) set of functions that the use cases call to get the data, and indeed the internal implementation could also use raw SQL queries on a proprietay network interface. The repository does not even need to be based on a database. We can have a repository layer that fetches data from a ReST service, for example, or that makes remote procedure calls through a RabbitMQ network.
+
+A very important feature of the repository layer is that it always returns domain models, and this is in line with what framework ORMs usually do.
+
+I will not deploy a real database in this post. I will address that part of the application in a future post, where there will be enough space to implement two different solutions and show how the repository API can mask the actual implementation.
+
+Instead, I am going to create a very simple memory storage system with some predefined data. I think this is be enough for the moment to demonstrate the repository concept.
+
+The first thing to do is to write some tests that document the public API of the repository. The file containing the tests is `tests/repository/test_memrepo.py`.
+
+First we add some data that we will be using in the tests. We import the domain model to check if the results of the API calls have the correct type
+
+``` python
+import pytest
+
+from rentomatic.shared.domain_model import DomainModel
+
+from rentomatic.repository import memrepo
+
+
+storageroom1 = {
+    'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
+    'size': 215,
+    'price': 39,
+    'longitude': '-0.09998975',
+    'latitude': '51.75436293',
+}
+
+storageroom2 = {
+    'code': 'fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
+    'size': 405,
+    'price': 66,
+    'longitude': '0.18228006',
+    'latitude': '51.74640997',
+}
+
+storageroom3 = {
+    'code': '913694c6-435a-4366-ba0d-da5334a611b2',
+    'size': 56,
+    'price': 60,
+    'longitude': '0.27891577',
+    'latitude': '51.45994069',
+}
+
+storageroom4 = {
+    'code': 'eed76e77-55c1-41ce-985d-ca49bf6c0585',
+    'size': 93,
+    'price': 48,
+    'longitude': '0.33894476',
+    'latitude': '51.39916678',
+}
+
+
+@pytest.fixture
+def storagerooms():
+    return [storageroom1, storageroom2, storageroom3, storageroom4]
+```
+
+Since the repository object will return domain models we need an helper function to check the correctness of the results. The following function checks the length of the two lists, ensures that all the returned elements are domain models and compares the codes. Note that we can safely employ the `isinstance()` built-in function since `DomainModel` is an abstract base class and our models are registered (see the `rentomatic/domain/storagerooms.py`)
+
+``` python
+def _check_results(domain_models_list, data_list):
+    assert len(domain_models_list) == len(data_list)
+    assert all([isinstance(dm, DomainModel) for dm in domain_models_list])
+    assert set([dm.code for dm in domain_models_list]) == set([d['code'] for d in data_list])
+```
+
+We need to be able to initialize the repository with a list of dictionaries, and the `list()` method without any parameter shall return the same list of entries.
+
+``` python
+def test_repository_list_without_parameters(storagerooms):
+    repo = memrepo.MemRepo(storagerooms)
+
+    assert repo.list() == storagerooms
+```
+
+The `list()` method shall accept a `filters` parameter, which is a dictionary. The dictionary keys shall be in the form `<attribute>__<operator>`, similar to the syntax used by the Django ORM. So to express that the price shall be less than 65 we can write `filters={'price__lt': 60}`.
+
+A couple of error conditions shall be checked: using an unknown key shall raise a `KeyError` exception, and using a wrong operator shall raise a `ValueError` exception.
+
+``` python
+def test_repository_list_with_filters_unknown_key(storagerooms):
+    repo = memrepo.MemRepo(storagerooms)
+
+    with pytest.raises(KeyError):
+        repo.list(filters={'name': 'aname'})
+
+
+def test_repository_list_with_filters_unknown_operator(storagerooms):
+    repo = memrepo.MemRepo(storagerooms)
+
+    with pytest.raises(ValueError):
+        repo.list(filters={'price__in': [20, 30]})
+```
+
+Let us then test that the filtering mechanism actually works. We want the default operator to be `__eq`, which means that if we do not put any operator an equality check shall be performed.
+
+``` python
+def test_repository_list_with_filters_price(storagerooms):
+    repo = memrepo.MemRepo(storagerooms)
+
+    _check_results(repo.list(filters={'price': 60}), [storageroom3])
+    _check_results(repo.list(filters={'price__eq': 60}), [storageroom3])
+    _check_results(repo.list(filters={'price__lt': 60}), [storageroom1, storageroom4])
+    _check_results(repo.list(filters={'price__gt': 60}), [storageroom2])
+
+
+def test_repository_list_with_filters_size(storagerooms):
+    repo = memrepo.MemRepo(storagerooms)
+
+    _check_results(repo.list(filters={'size': 93}), [storageroom4])
+    _check_results(repo.list(filters={'size__eq': 93}), [storageroom4])
+    _check_results(repo.list(filters={'size__lt': 60}), [storageroom3])
+    _check_results(repo.list(filters={'size__gt': 400}), [storageroom2])
+
+
+def test_repository_list_with_filters_code(storagerooms):
+    repo = memrepo.MemRepo(storagerooms)
+
+    _check_results(
+        repo.list(filters={'code': '913694c6-435a-4366-ba0d-da5334a611b2'}), [storageroom3])
+```
+
+The implementation of the `MemRepo` class is pretty simple, and I will not dive into it line by line.
+
+``` python
+from rentomatic.domain import storageroom as sr
+
+
+class MemRepo:
+
+    def __init__(self, entries=None):
+        self._entries = []
+        if entries:
+            self._entries.extend(entries)
+
+    def _check(self, element, key, value):
+        if '__' not in key:
+            key = key + '__eq'
+
+        key, operator = key.split('__')
+
+        if operator not in ['eq', 'lt', 'gt']:
+            raise ValueError('Operator {} is not supported'.format(operator))
+
+        operator = '__{}__'.format(operator)
+
+        return getattr(element[key], operator)(value)
+
+    def list(self, filters=None):
+        if not filters:
+            return self._entries
+
+        result = []
+        result.extend(self._entries)
+
+        for key, value in filters.items():
+            result = [e for e in result if self._check(e, key, value)]
+
+        return [sr.StorageRoom.from_dict(r) for r in result]
+```
+
+# 
