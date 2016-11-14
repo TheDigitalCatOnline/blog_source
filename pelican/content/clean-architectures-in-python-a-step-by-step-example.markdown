@@ -6,28 +6,25 @@ Authors: Leonardo Giordani
 Slug: clean-architectures-in-python-a-step-by-step-example
 Summary: 
 
-**TODOTODOTODOTODO**
-1. Where are the snippets supposed to be put? Put the file names
-2. Check again all the tests and code, some paths like models changed
-**TODOTODOTODOTODO**
-
-
-I have been recently introduced by my friend [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some very interesting posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
+One year ago I was introduced by my friend [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some very interesting posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
 
 As he clearly states in a post aptly titled [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html), the idea behind this design is not new, being built on a set of concepts that have been pushed by many software engineers over the last 3 decades. One of the first implementations may be found in the Boundary-Control-Entity model proposed by Ivar Jacobson in his masterpiece "Object-Oriented Software Engineering: A Use Case Driven Approach" published in 1992, but Martin lists other more recent versions of this architecture.
 
 I will not repeat here what he had already explained better than I can do, so I will just point out some resources you may check to start exploring these concepts:
 
-* [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) a post by Robert Martin that concisely describes the goals of the architecture. Also lists resources that describe similar architectures.
+* [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) a post by Robert Martin that concisely describes the goals of the architecture. It also lists resources that describe similar architectures.
 * [The Open Closed Principle](https://blog.8thlight.com/uncle-bob/2014/05/12/TheOpenClosedPrinciple.html) a post by Robert Martin not strictly correlated with the Clean Architecture concept but important for the separation concept.
 * Hakka Labs: Robert "Uncle Bob" Martin - [Architecture: The Lost Years](https://www.youtube.com/watch?v=HhNIttd87xs) a video of Robert Martin from Hakka Labs.
-* [DDD & Testing Strategy](http://www.taimila.com/blog/ddd-and-resting-strategy/) by Lauri Taimila
+* [DDD & Testing Strategy](http://www.taimila.com/blog/ddd-and-testing-strategy/) by Lauri Taimila
+* (upcoming) [Clean Architecture](https://www.amazon.co.uk/Clean-Architecture-Robert-C-Martin-x/dp/0134494164/ref=la_B000APG87E_1_3?s=books&ie=UTF8&qid=1479146201&sr=1-3) by Robert Martin, published by Prentice Hall.
 
-The purpose of this series of posts is to show how to build a REST web service in Python from scratch using a clean architecture. One of the main advantages of this layered design is testability, so I will develop it following a TDD approach. This will also allow to show some limitations of the test-driven approach which you should be aware of. The project was initially developed from scratch in around 14 hours of work. Given the toy nature of the project some choices have been made to simplify the resulting code. Whenever meaningful I will point out those simplifications and discuss them.
+The purpose of this post is to show how to build a web service in Python from scratch using a clean architecture. One of the main advantages of this layered design is testability, so I will develop it following a TDD approach. The project was initially developed from scratch in around 3 hours of work. Given the toy nature of the project some choices have been made to simplify the resulting code. Whenever meaningful I will point out those simplifications and discuss them.
+
+If you want to know more about TDD in Python read the posts in [this category](/categories/tdd/).
   
 # Project overview
 
-The goal of the "Rent-o-matic" project (fans of Day of the Tentacle may get the reference) is to realize a simple search engine on top of a dataset of objects which are described by some quantities. The search engine shall implement a ranking system that shows the best results first. The implementation of the ranking system is up to the programmer and could be subject to changes.
+The goal of the "Rent-o-matic" project (fans of Day of the Tentacle may get the reference) is to create a simple search engine on top of a dataset of objects which are described by some quantities. The search engine shall allow to set some filters to narrow the search.
  
 The objects in the dataset are storage rooms for rent described by the following quantities:
  
@@ -40,53 +37,49 @@ As pushed by the clean architecture model, we are interested in separating the d
 
 ## Entities
 
-This is the level in which the domain models are described. Since we work in Python, I will put here the class that represent my storage rooms, with the data contained in the database, and whichever data I think is useful to perform the core business processing. In this case the model will also contain ranks coming from the ranking system (which depend on the search).
+This is the level in which the domain models are described. Since we work in Python, I will put here the class that represent my storage rooms, with the data contained in the database, and whichever data I think is useful to perform the core business processing.
 
 It is very important to understand that the models in this layer are different from the usual models of framework like Django. These models are not connected with a storage system, so they cannot be directly saved or queried using methods of their classes. They may however contain helper methods that implement code related to the business rules.
   
 ## Use cases
 
-This layer contains the use cases implemented by the system. In this simple example there will be only one use case, which is the list of storage rooms according to the given filters and weights. Here you would put for example a use case that shows the detail of a given storage room or every business process you want to implement, such as booking a storage room, filling it with goods, etc.
+This layer contains the use cases implemented by the system. In this simple example there will be only one use case, which is the list of storage rooms according to the given filters. Here you would put for example a use case that shows the detail of a given storage room or every business process you want to implement, such as booking a storage room, filling it with goods, etc.
 
 ## Interface Adapters
 
-This layer corresponds to the boundary between the business logic and external systems and implements the APIs used to exchange data with them. Both the storage system and the user interface are external systems that need to access the data produced by the use cases and this layer shall provide an interface for this data flow. In this project the presentation part of this layer is provided by a JSON serializer, on top of that an external web service may be built. The storage adapter shall define here the common API of the storage systems. 
+This layer corresponds to the boundary between the business logic and external systems and implements the APIs used to exchange data with them. Both the storage system and the user interface are external systems that need to exchange data with the use cases and this layer shall provide an interface for this data flow. In this project the presentation part of this layer is provided by a JSON serializer, on top of which an external web service may be built. The storage adapter shall define here the common API of the storage systems. 
 
 ## External interfaces
 
-This part of the architecture is made by external systems that implement the interfaces defined in the previous layer. Here for example you will find a web server that implements REST entry points, which access the data provided by use cases through the JSON serializer. You will also find here the storage system implementation, for example a given database such as MongoDB. In the current project a very simple file-based and read-only storage system has been developed, but a production system would rely on full-fledged systems.  
+This part of the architecture is made by external systems that implement the interfaces defined in the previous layer. Here for example you will find a web server that implements (REST) entry points, which access the data provided by use cases through the JSON serializer. You will also find here the storage system implementation, for example a given database such as MongoDB.
 
 # API and shades of grey
 
 The word API is of uttermost importance in a clean architecture. Every layer may be accessed by an API, that is a fixed collection of entry points (methods or objects). Here "fixed" means "the same among every implementation", obviously an API may change with time. Every presentation tool, for example, will access the same use cases, and the same methods, to obtain a set of domain models, which are the output of that particular use case. It is up to the presentation layer to format data according to the specific presentation media, for example HTML, PDF, images, etc. If you understand plugin-based architectures you already grasped the main concept of a separate, API-driven component (or layer).
 
-The same concept is valid for the storage layer. Every storage implementation shall provide the same methods. When dealing with use cases you shall not be concerned with the actual system that stores data, it may be a MongoDB local installation, a cloud storage system or a trivial in-memory dictionary. You only need to know the API of that layer, which every implementation shall expose.
+The same concept is valid for the storage layer. Every storage implementation shall provide the same methods. When dealing with use cases you shall not be concerned with the actual system that stores data, it may be a MongoDB local installation, a cloud storage system or a trivial in-memory dictionary.
    
-The separation between layers, and the content of each layer, is not always fixed and immutable. A well-designed system shall also cope with practical world issues such as performances, for example, or other specific needs. When designing an architecture it is very important to know "what is where and why", and this is even more important when you "bend" the rules. Many issues do not have a black-or-white answer, and many decisions are "shades of grey", that is it is up to you to justify why you put something there.
+The separation between layers, and the content of each layer, is not always fixed and immutable. A well-designed system shall also cope with practical world issues such as performances, for example, or other specific needs. When designing an architecture it is very important to know "what is where and why", and this is even more important when you "bend" the rules. Many issues do not have a black-or-white answer, and many decisions are "shades of grey", that is it is up to you to justify why you put something in a given place.
 
-Keep in mind however, that you should not break the _structure_ of the clean architecture, in particular you shall be inflexible about the data flow (see the "Crossing boundaries" section in the original post of Robert Martin). If you break the data flow you are basically invalidating the whole structure. Let me stress it again: **never break the data flow**. A simple example of breaking the data flow is to let a use case output a Python class instead of a _representation_ of that class such as a JSON string.
-  
-The project we are going to implement shows one of these decisions, and I want to briefly discuss it. The service we are going to implement extracts data from a repository according to given filters and gives results a rank. Where shall the ranking system be implemented? Theoretically the ranking system is part of the business logic in this application, being the main purpose of the whole system. Here, however, some performance issues arise. If we implement ranking in the business logic, that is in the use cases layer, we miss the chance to leverage some storage system optimizations, which could give a dramatic improvement to the overall speed of the system. Obviously we could also decide to implement it in the use case layer and use an external optimized system to process data, but at that point you are already dealing with domain models and you have to pay the cost of converting your models to and from the specific data format used by that system.
-  
-As you can see a good architecture does not prevent you from taking decisions. It often allows you to delay commitments through the layered structure and the API paradigm, but the content of each layer is subject to change. Well structured code, moreover, shall be easy to be moved between layers. The code that implements the ranking system, for example, should be parametrized and abstracted to work with different data types, so that you may easily move it from the storage layer to the use case one. Here, performance consideration may drive us to write some specialized code, which however shall be as isolated as possible.
- 
+Keep in mind however, that you should not break the _structure_ of the clean architecture, in particular you shall be inflexible about the data flow (see the "Crossing boundaries" section in the original post of Robert Martin). If you break the data flow, you are basically invalidating the whole structure. Let me stress it again: **never break the data flow**. A simple example of breaking the data flow is to let a use case output a Python class instead of a _representation_ of that class such as a JSON string.
+
 # Project structure
 
 Let us take a look at the final structure of the project
 
 <structure here>
 
-The global structure of the package has been built with Cookiecutter, and I will run fast through that part. The `rentomatic` directory contains the following subdirectories: `domain`, `repositories`, `rest`, `serializers`, `use_cases`, that reflect the layered structure introduced in the previous section. The structure of the `tests` directory mirrors this structure so that tests are easily found.
+The global structure of the package has been built with Cookiecutter, and I will run quickly through that part. The `rentomatic` directory contains the following subdirectories: `domain`, `repositories`, `REST`, `serializers`, `use_cases`. Those directories reflect the layered structure introduced in the previous section, and the structure of the `tests` directory mirrors this structure so that tests are easily found.
 
 # Source code
 
-You can find the source code in [this GitHub repository](#TODO). Feel free to fork it and experiment, change it, and find better solutions to the problem I will discuss in this post. The source code contains tagged commits to allow you to follow the actual development as presented in the post. You can find the current tag in the **Git tag: `<tag name>`** label under the section titles. The label is actually a link to the tagged commit on GitHub, if you want to see the code without cloning it.
+You can find the source code in [this GitHub repository](https://github.com/lgiordani/rentomatic). Feel free to fork it and experiment, change it, and find better solutions to the problem I will discuss in this post. The source code contains tagged commits to allow you to follow the actual development as presented in the post. You can find the current tag in the **Git tag: `<tag name>`** label under the section titles. The label is actually a link to the tagged commit on GitHub, if you want to see the code without cloning it.
 
 # Project initialization
 
 **Git tag: [`step01`](https://github.com/lgiordani/rentomatic/tree/step01)**
 
-I usually like maintaining a Python virtual environment inside the project, so I will create a temporary virtualenv to install cookiecutter and create the project. Cookiecutter is going to ask you some questions about you and the project, to provide an initial file structure. We are going to build our own testing environment, so it is safe ot answer no to `use_pytest`. Since this is a demo project we are not going to need any publishing feature, so you can answer no to `use_pypi_deployment_with_travis` as well. The project does not have a command line interface, and you can safely create the author file and use any license.
+I usually like maintaining a Python virtual environment inside the project, so I will create a temporary virtualenv to install cookiecutter, create the project, and remove the virtualenv. Cookiecutter is going to ask you some questions about you and the project, to provide an initial file structure. We are going to build our own testing environment, so it is safe to answer no to `use_pytest`. Since this is a demo project we are not going to need any publishing feature, so you can answer no to `use_pypi_deployment_with_travis` as well. The project does not have a command line interface, and you can safely create the author file and use any license.
 
 ``` bash
 virtualenv venv3 -p python3
@@ -135,13 +128,19 @@ flake8
 Sphinx
 ```
 
-(leveraging the fact that `test.txt` already includes `prod.txt`).
+(taking advantage of the fact that `test.txt` already includes `prod.txt`).
+
+Last, the main `requirements.txt` file of the project will just import `requirements/prod.txt`
+
+``` text
+-r prod.txt
+```
 
 Obviously you are free to find the project structure that better suits your need or preferences. This is the structure we are going to use in this project but nothing forces you to follow it in your personal projects.
 
 This separation allows you to install a full-fledged development environment on your machine, while installing only testing tools in a testing environment like the Travis platform and to further reduce the amount of dependencies in the production case. 
 
-As you can see I am not using version tags in the requirements files. This is because this project is not going to be run in a production environment, so we do not need to freeze the environment.
+As you can see, I am not using version tags in the requirements files. This is because this project is not going to be run in a production environment, so we do not need to freeze the environment.
 
 ## Miscellaneous configuration
 
@@ -154,6 +153,20 @@ norecursedirs = .git .tox venv* requirements*
 python_files = test*.py
 ```
 
+To run the tests during the development of the project just execute
+
+``` sh
+$ py.test -sv
+```
+
+If you want to check the coverage, i.e. the amount of code which is run by your tests or "covered", execute
+
+``` sh
+$ py.test --cov-report term-missing --cov=rentomatic
+```
+
+If you want to know more about test coverage check the official documentation of the [Coverage.py](http://coverage.readthedocs.io/en/latest/) and the [pytest-cov](http://pytest-cov.readthedocs.io/en/latest/index.html) packages.
+
 I strongly suggest the use of the `flake8` package to check that your Python code is PEP8 compliant. This is the `flake8` configuration that you can put in your `setup.cfg` file
 
 ``` text
@@ -162,6 +175,16 @@ ignore = D203
 exclude = .git, venv*, docs
 max-complexity = 10
 ```
+
+To check the compliance of your code with the PEP8 standard execute
+
+``` sh
+$ flake8
+```
+
+Flake8 documentation is available [here](http://flake8.pycqa.org/en/latest/).
+
+Note that every step in this post produces tested code and a of coverage of 100%. One of the benefits of a clean architecture is the separation between layers, and this guarantees a great degree of testability. Note however that in this tutorial, in particular in the REST sections, some tests have been omitted in favour of a simpler description of the architecture. 
 
 # Domain models
 
@@ -206,9 +229,7 @@ def test_storageroom_model_from_dict():
     assert artist.latitude == 51.75436293
 ```
 
-With these two tests we ensure that out model can be initialized with the correct values and that can be created from a dictionary. In this first version all the parameters of the model are required. Later we could want to make some of them optional, and in that case we will have to add the relevant tests.
-
-For the sake of simplicity I am not considering possible issues/features like accepting parameters in string and number form.
+With these two tests we ensure that our model can be initialized with the correct values and that can be created from a dictionary. In this first version all the parameters of the model are required. Later we could want to make some of them optional, and in that case we will have to add the relevant tests.
 
 Now let's write the `StorageRoom` class in the `rentomatic/domain/storageroom.py` file. Do not forget to create the `__init__.py` file in the subdirectories of the project, otherwise Python will not be able to import the modules.
 
@@ -243,9 +264,9 @@ DomainModel.register(StorageRoom)
 
 The model is very simple, and requires no further explanation. One of the benefits of a clean architecture is that each layer contains small pieces of code that, being isolated, shall perform simple tasks. In this case the model provides an initialization API and stores the information inside the class.
 
-The `from_dict` method comes in handy when we have to create a model from data coming from another layer (such as the database layer or the query string of the REsT layer).
+The `from_dict` method comes in handy when we have to create a model from data coming from another layer (such as the database layer or the query string of the REST layer).
 
-One could be tempted to try and simplify the `from_dict` function, abstracting it and providing it through a `Model` class. Given that a certain level of abstraction and generalization is possible and desirable, the initialization part of the models shall probably deal with various different cases, and thus is better off being implemented directly in the class.
+One could be tempted to try to simplify the `from_dict` function, abstracting it and providing it through a `Model` class. Given that a certain level of abstraction and generalization is possible and desirable, the initialization part of the models shall probably deal with various different cases, and thus is better off being implemented directly in the class.
 
 The `DomainModel` abstract base class is an easy way to categorize the model for future uses like checking if a class is a model in the system. For more information about this use of Abstract Base Classes in Python see [this post](/blog/2016/04/03/abstract-base-classes-in-python/).
 
@@ -253,9 +274,9 @@ The `DomainModel` abstract base class is an easy way to categorize the model for
 
 **Git tag: [`step03`](https://github.com/lgiordani/rentomatic/tree/step03)**
 
-Our model needs to be serialized if we want to return it as a result of an API call. The typical serialization format is JSON, as this is a broadly accepted standard for web-based API. The serializer is not part of the model, but is an external specialized class that receivees the model instance and produces a representation of its structure and values.
+Our model needs to be serialized if we want to return it as a result of an API call. The typical serialization format is JSON, as this is a broadly accepted standard for web-based API. The serializer is not part of the model, but is an external specialized class that receives the model instance and produces a representation of its structure and values.
 
-The JSON serialization test of our `StorageRoom` class shall be put in the `tests/serializers/test_storageroom_serializer.py` file
+To test the JSON serialization of our `StorageRoom` class put in the `tests/serializers/test_storageroom_serializer.py` file the following code
 
 ``` python
 import json
@@ -541,9 +562,9 @@ class StorageRoomListUseCase(object):
         return ResponseSuccess(storage_rooms)
 ```
 
-Let us consider what we have achieved with our clean architecture up to this point. We have a very lightweight model that can be serialized to JSON and which is completely independent from other parts of the system. We have a use case that, given a repository that exposes a given API, extracts all the models and returns them contained in a structured object.
+Let us consider what we have achieved with our clean architecture up to this point. We have a very lightweight model that can be serialized to JSON and which is completely independent from other parts of the system. The code also contains a use case that, given a repository that exposes a given API, extracts all the models and returns them contained in a structured object.
 
-We are missing some objects, however. For example we have not implemented any unsuccessful response object or validated the incoming request object.
+We are missing some objects, however. For example, we have not implemented any unsuccessful response object or validated the incoming request object.
 
 To explore these missing parts of the architecture let us improve the current use case to accept a `filters` parameter that represents some filters that we want to apply to the extracted list of models. This will generate some possible error conditions for the input, forcing us to introduce some validation for the incoming request object.
 
@@ -611,7 +632,7 @@ def test_build_storageroom_list_request_object_from_dict_with_invalid_filters():
 
 As you can see I added the `assert req.filters is None` check to the original two tests, then I added 5 tests to check if filters can be specified and to test the behaviour of the object with an invalid filter parameter.
 
-To make the tests pass we have to change our `StorageRoomListRequestObject` class. There are obviously multiple possible solutions that you can come up with, and I recommend you to try and find your own. This is the one I usually employ. The file `rentomatic/use_cases/request_object.py` becomes
+To make the tests pass we have to change our `StorageRoomListRequestObject` class. There are obviously multiple possible solutions that you can come up with, and I recommend you to try to find your own. This is the one I usually employ. The file `rentomatic/use_cases/request_object.py` becomes
 
 ``` python
 import collections
@@ -773,9 +794,9 @@ def test_response_failure_from_invalid_request_object_with_errors():
 
 We sometimes want to create responses from Python exceptions that can happen in the use case, so we test that `ResponseFailure` objects can be initialized with a generic exception.
 
-And last we have the tests for the `build_from_invalid_request_object()` method that automate the initialization of the response from an invalid request. If the request contains errors (remember that the request validates itself) we need to put them into the response message.
+And last we have the tests for the `build_from_invalid_request_object()` method that automate the initialization of the response from an invalid request. If the request contains errors (remember that the request validates itself), we need to put them into the response message.
 
-The last test uses a class attribute to classify the error. The `ResponseFailure` class will contain three predefined errors that can happen when running the use case, namely `RESOURCE_ERROR`, `PARAMETERS_ERROR`, and `SYSTEM_ERROR`. This categorization is an attempt to capture the different types of issues that can happen when dealing with an external system through an API. `RESOURCE_ERROR` contains all those errors that are realted to the resources contained in the repository, for instance when you cannot find an entry given its unique id. `PARAMETERS_ERROR` describes all those errors that occur when the request parameters are wrong or missing. `SYSTEM_ERROR` encompass the errors that happen in the underlying system at operating system level, such as a failure in a filesystem operation, or a network connection error while fetching data from the database.
+The last test uses a class attribute to classify the error. The `ResponseFailure` class will contain three predefined errors that can happen when running the use case, namely `RESOURCE_ERROR`, `PARAMETERS_ERROR`, and `SYSTEM_ERROR`. This categorization is an attempt to capture the different types of issues that can happen when dealing with an external system through an API. `RESOURCE_ERROR` contains all those errors that are related to the resources contained in the repository, for instance when you cannot find an entry given its unique id. `PARAMETERS_ERROR` describes all those errors that occur when the request parameters are wrong or missing. `SYSTEM_ERROR` encompass the errors that happen in the underlying system at operating system level, such as a failure in a filesystem operation, or a network connection error while fetching data from the database.
 
 The use case has the responsibility to manage the different error conditions arising from the Python code and to convert them into an error description made of one of the three types I just described and a message.
 
@@ -849,7 +870,7 @@ def test_response_failure_build_system_error():
     assert response.message == "test message"
 ```
 
-We add the relevant methods to the class and change the `build_from_invalid_request_object()` method to leverage the `build_parameters_error()` new method. Change the `rentomatic/shared/response_object.py` fiel to contain this code
+We add the relevant methods to the class and change the `build_from_invalid_request_object()` method to leverage the `build_parameters_error()` new method. Change the `rentomatic/shared/response_object.py` file to contain this code
 
 ```python
     @classmethod
@@ -996,7 +1017,7 @@ A clean architecture is _not_ a framework, so it provides very few generic featu
 
 We already isolated the response object. We can move the `test_valid_request_object_cannot_be_used` from `tests/use_cases/test_storageroom_list_request_objects.py` to `tests/shared/test_response_object.py` since it tests a generic behaviour and not something related to the `StorageRoom` model and use cases.
 
-Then we can move the `InvalidRequestObject` and `ValidRequestObject` classes from `rentomatic/use_cases/request_objects.py` to `rentomatic/shared/request_object.py`, makeing the necessary changes to the `StorageRoomListRequestObject` class that now inherits from an external class.
+Then we can move the `InvalidRequestObject` and `ValidRequestObject` classes from `rentomatic/use_cases/request_objects.py` to `rentomatic/shared/request_object.py`, making the necessary changes to the `StorageRoomListRequestObject` class that now inherits from an external class.
 
 The use case is the class that undergoes the major changes. The `UseCase` class is tested by the following code in the `tests/shared/test_use_case.py` file
 
@@ -1098,15 +1119,17 @@ class StorageRoomListUseCase(uc.UseCase):
 
 # The repository layer
 
-The repository layer is the one in which we run the data storage system. As you saw when we implemented the use case we access the data storage through an API, in this case the `list()` method of the repository. The level of abstraction provided by a repository level is higher than that provided by an ORM or by a tool like SQLAlchemy. The repository layer provides only the endpoints that the application needs, with an interface which is taylored on the specific business problems the application implements.
+**Git tag: [`step11`](https://github.com/lgiordani/rentomatic/tree/step11)**
 
-To clarify the matter in terms of concrete technologies, SQLAlchemy is a wonderful tool to abstract the access to an SQL database, so the internal implementation of the repository layer could use it to access a PostgreSQL database. But the external API of the layer is not that provided by SQLAlchemy. The API is a (usually reduced) set of functions that the use cases call to get the data, and indeed the internal implementation could also use raw SQL queries on a proprietay network interface. The repository does not even need to be based on a database. We can have a repository layer that fetches data from a ReST service, for example, or that makes remote procedure calls through a RabbitMQ network.
+The repository layer is the one in which we run the data storage system. As you saw when we implemented the use case we access the data storage through an API, in this case the `list()` method of the repository. The level of abstraction provided by a repository level is higher than that provided by an ORM or by a tool like SQLAlchemy. The repository layer provides only the endpoints that the application needs, with an interface which is tailored on the specific business problems the application implements.
+
+To clarify the matter in terms of concrete technologies, SQLAlchemy is a wonderful tool to abstract the access to an SQL database, so the internal implementation of the repository layer could use it to access a PostgreSQL database. But the external API of the layer is not that provided by SQLAlchemy. The API is a (usually reduced) set of functions that the use cases call to get the data, and indeed the internal implementation could also use raw SQL queries on a proprietary network interface. The repository does not even need to be based on a database. We can have a repository layer that fetches data from a REST service, for example, or that makes remote procedure calls through a RabbitMQ network.
 
 A very important feature of the repository layer is that it always returns domain models, and this is in line with what framework ORMs usually do.
 
 I will not deploy a real database in this post. I will address that part of the application in a future post, where there will be enough space to implement two different solutions and show how the repository API can mask the actual implementation.
 
-Instead, I am going to create a very simple memory storage system with some predefined data. I think this is be enough for the moment to demonstrate the repository concept.
+Instead, I am going to create a very simple memory storage system with some predefined data. I think this is enough for the moment to demonstrate the repository concept.
 
 The first thing to do is to write some tests that document the public API of the repository. The file containing the tests is `tests/repository/test_memrepo.py`.
 
@@ -1158,7 +1181,7 @@ def storagerooms():
     return [storageroom1, storageroom2, storageroom3, storageroom4]
 ```
 
-Since the repository object will return domain models we need an helper function to check the correctness of the results. The following function checks the length of the two lists, ensures that all the returned elements are domain models and compares the codes. Note that we can safely employ the `isinstance()` built-in function since `DomainModel` is an abstract base class and our models are registered (see the `rentomatic/domain/storagerooms.py`)
+Since the repository object will return domain models, we need a helper function to check the correctness of the results. The following function checks the length of the two lists, ensures that all the returned elements are domain models and compares the codes. Note that we can safely employ the `isinstance()` built-in function since `DomainModel` is an abstract base class and our models are registered (see the `rentomatic/domain/storagerooms.py`)
 
 ``` python
 def _check_results(domain_models_list, data_list):
@@ -1262,4 +1285,465 @@ class MemRepo:
         return [sr.StorageRoom.from_dict(r) for r in result]
 ```
 
-# 
+
+# The REST layer (part1)
+
+**Git tag: [`step12`](https://github.com/lgiordani/rentomatic/tree/step12)**
+
+This is the last step of our journey into the clean architecture. We created the domain models, the serializers, the use cases and the repository. We are actually missing an interface that glues everything together, that is gets the call parameters from the user, initializes a use case with a repository, runs the use case that fetches the domain models from the repository and converts them to a standard format. This layer can be represented by a wide number of interfaces and technologies. For example a command line interface (CLI) can implement exactly those steps, getting the parameters via command line switches, and returning the results as plain text on the console. The same underlying system, however, can be leveraged by a web page that gets the call parameters from a set of widgets, perform the steps described above, and parses the returned JSON data to show the result on the same page.
+
+Whatever technology we want to use to interact with the user to collect inputs and provide results we need to interface with the clean architecture we just built, so now we will create a layer to expose an HTTP API. This can be done with a server that exposes a set of HTTP addresses (API endpoints) that once accessed return some data. Such a layer is commonly called a REST layer, because usually the semantic of the addresses comes from the REST recommendations.
+
+Flask is a lightweight web server with a modular structure that provides just the parts that the user needs. In particular, we will not use any database/ORM, since we already implemented our own repository layer.
+
+Please keep in mind that this part of the project, together with the repository layer, is usually implemented as a separate package, and I am keeping them together just for the sake of this introductory tutorial.
+
+Let us start updating the requirements files. The `prod.txt` file shall contain Flask
+
+```text
+Flask
+```
+
+The `dev.txt` file will contain the [Flask-Script extension](https://flask-script.readthedocs.io/en/latest/)
+
+``` text
+-r test.txt
+
+pip
+wheel
+flake8
+Sphinx
+Flask-Script
+```
+
+And the `test.txt` file will contain the pytest extension to work with Flask (more on this later)
+
+``` text
+-r prod.txt
+
+pytest
+tox
+coverage
+pytest-cov
+pytest-flask
+```
+
+Remember to run `pip install -r requirements/dev.txt` again after those changes to actually install the new packages in your virtual environment.
+
+The setup of a Flask application is not complex, but a lot of concepts are involved, and since this is not a tutorial on Flask I will run quickly through these steps. I will however provide links to the Flask documentation for every concept.
+
+I usually define different configurations for my testing, development, and production environments. Since the Flask application can be configured using a plain Python object ([documentation](http://flask.pocoo.org/docs/latest/api/#flask.Config.from_object)), I create the file `rentomatic/settings.py` to host those objects
+
+``` python
+import os
+
+
+class Config(object):
+    """Base configuration."""
+
+    APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory
+    PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
+
+
+class ProdConfig(Config):
+    """Production configuration."""
+    ENV = 'prod'
+    DEBUG = False
+
+
+class DevConfig(Config):
+    """Development configuration."""
+    ENV = 'dev'
+    DEBUG = True
+
+
+class TestConfig(Config):
+    """Test configuration."""
+    ENV = 'test'
+    TESTING = True
+    DEBUG = True
+```
+
+Read [this page](http://flask.pocoo.org/docs/latest/config/) to know more about Flask configuration parameters. Now we need a function that initializes the Flask application ([documentation](http://flask.pocoo.org/docs/latest/patterns/appfactories/)), configures it and registers the blueprints ([documentation](http://flask.pocoo.org/docs/latest/blueprints/)). The file `rentomatic/app.py` contains the following code
+
+```
+from flask import Flask
+
+from rentomatic.rest import storageroom
+from rentomatic.settings import DevConfig
+
+
+def create_app(config_object=DevConfig):
+    app = Flask(__name__)
+    app.config.from_object(config_object)
+    app.register_blueprint(storageroom.blueprint)
+    return app
+```
+
+The application endpoints need to return a Flask `Response` object, with the actual results and an HTTP status. The content of the response, in this case, is the JSON serialization of the use case response.
+
+Let us write a test step by step, so that you can perfectly understand what is going to happen in the REST endpoint. The basic structure of the test is
+
+``` text
+[SOME PREPARATION]
+[CALL THE API ENDPOINT]
+[CHECK RESPONSE DATA]
+[CHECK RESPONDSE STATUS CODE]
+[CHECK RESPONSE MIMETYPE]
+```
+
+So our first test `tests/rest/test_get_storagerooms_list.py` is made of the following parts
+
+``` python
+@mock.patch('rentomatic.use_cases.storageroom_use_cases.StorageRoomListUseCase')
+def test_get(mock_use_case, client):
+    mock_use_case().execute.return_value = res.ResponseSuccess(storagerooms)
+```
+
+Remember that we are not testing the use case here, so we can safely mock it. Here we make the use case return a `ResponseSuccess` instance containing a list of domain models (that we didn't define yet).
+
+``` python
+    http_response = client.get('/storagerooms')
+```
+
+This is the actual API call. We are exposing the endpoint at the `/storagerooms` address. Note the use of the `client` fixture provided by `pytest-flask`.
+
+``` python
+    assert json.loads(http_response.data.decode('UTF-8')) == [storageroom1_dict]
+    assert http_response.status_code == 200
+    assert http_response.mimetype == 'application/json'
+```
+
+These are the three checks previously mentioned. The second and the third ones are pretty straightforward, while the first one needs some explanations. We want to compare `http_response.data` with `[storageroom1_dict]`, which is a list with a Python dictionary containing the data of the `storageroom1_domain_model` object. Flask `Response` objects contain a binary representation of the data, so first we decode the bytes using UTF-8, then convert them in a Python object. It is much more convenient to compare Python objects, since pytest can deal with issues like the unordered nature of dictionaries, while this is not possible when comparing two strings.  
+
+The final test file, with the test domain model and its dictionary is
+
+``` python
+import json
+from unittest import mock
+
+from rentomatic.domain.storageroom import StorageRoom
+from rentomatic.shared import response_object as res
+
+storageroom1_dict = {
+    'code': '3251a5bd-86be-428d-8ae9-6e51a8048c33',
+    'size': 200,
+    'price': 10,
+    'longitude': -0.09998975,
+    'latitude': 51.75436293
+}
+
+storageroom1_domain_model = StorageRoom.from_dict(storageroom1_dict)
+
+storagerooms = [storageroom1_domain_model]
+
+
+@mock.patch('rentomatic.use_cases.storageroom_use_cases.StorageRoomListUseCase')
+def test_get(mock_use_case, client):
+    mock_use_case().execute.return_value = res.ResponseSuccess(storagerooms)
+
+    http_response = client.get('/storagerooms')
+
+    assert json.loads(http_response.data.decode('UTF-8')) == [storageroom1_dict]
+    assert http_response.status_code == 200
+    assert http_response.mimetype == 'application/json'
+
+```
+
+It's time to write the endpoint, where we will finally see all the pieces of the architecture working together. 
+
+The minimal Flask endpoint we can put in `rentomatic/rest/storageroom.py` is something like
+
+``` python
+blueprint = Blueprint('storageroom', __name__)
+
+
+@blueprint.route('/storagerooms', methods=['GET'])
+def storageroom():
+    [LOGIC]
+    return Response([JSON DATA],
+                    mimetype='application/json',
+                    status=[STATUS])
+```
+
+The first part of our logic is the creation of a `StorageRoomListRequestObject`. For the moment we can ignore the optional querystring parameters and use an empty dictionary
+
+``` python
+def storageroom():
+    request_object = ro.StorageRoomListRequestObject.from_dict({})
+```
+
+As you can see I'm creating the object from an empty dictionary, so querystring parameters are not taken into account for the moment. The second thing to do is to initialize the repository
+
+``` python
+    repo = mr.MemRepo()
+```
+
+The third thing the endpoint has to do is the initialization of the use case
+
+``` python
+    use_case = uc.StorageRoomListUseCase(repo)
+```
+
+And finally we run the use case passing the request object
+
+``` python
+    response = use_case.execute(request_object)
+```
+
+This response, however, is not yet an HTTP response, and we have to explicitly build it. The HTTP response will contain the JSON representation of the `response.value` attribute.
+
+``` python
+    return Response(json.dumps(response.value, cls=ser.StorageRoomEncoder),
+                    mimetype='application/json',
+                    status=200)
+```
+
+Note that this function is obviously still incomplete, as it returns always a successful response (code 200). It is however enough to pass the test we wrote. The whole file is the following
+
+``` python
+import json
+from flask import Blueprint, Response
+
+from rentomatic.use_cases import request_objects as req
+from rentomatic.repository import memrepo as mr
+from rentomatic.use_cases import storageroom_use_cases as uc
+from rentomatic.serializers import storageroom_serializer as ser
+
+blueprint = Blueprint('storageroom', __name__)
+
+
+@blueprint.route('/storagerooms', methods=['GET'])
+def storageroom():
+    request_object = req.StorageRoomListRequestObject.from_dict({})
+
+    repo = mr.MemRepo()
+    use_case = uc.StorageRoomListUseCase(repo)
+
+    response = use_case.execute(request_object)
+
+    return Response(json.dumps(response.value, cls=ser.StorageRoomEncoder),
+                    mimetype='application/json',
+                    status=200)
+
+```
+
+This code demonstrates how the clean architecture works in a nutshell. The function we wrote is however not complete, as it doesn't consider querystring parameters and error cases.
+
+# The server in action
+
+**Git tag: [`step13`](https://github.com/lgiordani/rentomatic/tree/step13)**
+
+Before I fix the missing parts of the endpoint let us see the server in action, so we can finally enjoy the product we have been building during this long post.
+
+To actually see some results when accessing the endpoint we need to fill the repository with some data. This part is obviously required only because of the ephemeral nature of the repository we are using. A real repository would wrap a persistent source of data and providing data at this point wouldn't be necessary. To initialize the repository we have to define some data
+
+``` python
+storageroom1 = {
+    'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
+    'size': 215,
+    'price': 39,
+    'longitude': '-0.09998975',
+    'latitude': '51.75436293',
+}
+
+storageroom2 = {
+    'code': 'fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
+    'size': 405,
+    'price': 66,
+    'longitude': '0.18228006',
+    'latitude': '51.74640997',
+}
+
+storageroom3 = {
+    'code': '913694c6-435a-4366-ba0d-da5334a611b2',
+    'size': 56,
+    'price': 60,
+    'longitude': '0.27891577',
+    'latitude': '51.45994069',
+}
+```
+
+And them feed them into the repository
+
+``` python
+    repo = mr.MemRepo([storageroom1, storageroom2, storageroom3])
+```
+
+Now we can run the Flask `manage.py` file to check the exposed URLs
+
+``` sh
+$ python manage.py urls
+Rule                     Endpoint               
+------------------------------------------------
+/static/<path:filename>  static                 
+/storagerooms            storageroom.storageroom
+```
+
+and run the development server
+
+``` sh
+$ python manage.py server
+```
+
+If you open your browser and navigate to [http://127.0.0.1:5000/storagerooms](http://127.0.0.1:5000/storagerooms), you can see the API call results. I recommend installing a formatter extension for the browser to better check the output. If you are using Chrome try [JSON Formatter](https://github.com/callumlocke/json-formatter).
+
+# The REST layer (part2)
+
+**Git tag: [`step14`](https://github.com/lgiordani/rentomatic/tree/step14)**
+
+Let us cover the two missing cases in the endpoint. First I introduce a test to check if the endpoint correctly handles querystring parameters
+
+``` python
+@mock.patch('rentomatic.use_cases.storageroom_use_cases.StorageRoomListUseCase')
+def test_get_failed_response(mock_use_case, client):
+    mock_use_case().execute.return_value = res.ResponseFailure.build_system_error('test message')
+
+    http_response = client.get('/storagerooms')
+
+    assert json.loads(http_response.data.decode('UTF-8')) == {'type': 'SYSTEM_ERROR',
+                                                              'message': 'test message'}
+    assert http_response.status_code == 500
+    assert http_response.mimetype == 'application/json'
+```
+
+This makes the use case return a failed response and check that the HTTP response contains a formatted version of the error. To make this test pass we have to introduce a proper mapping between domain responses codes and HTTP codes
+
+``` python
+from rentomatic.shared import response_object as res
+
+STATUS_CODES = {
+    res.ResponseSuccess.SUCCESS: 200,
+    res.ResponseFailure.RESOURCE_ERROR: 404,
+    res.ResponseFailure.PARAMETERS_ERROR: 400,
+    res.ResponseFailure.SYSTEM_ERROR: 500
+}
+
+```
+
+Then we need to create the Flask response with the correct code
+
+``` python
+    return Response(json.dumps(response.value, cls=ser.StorageRoomEncoder),
+                    mimetype='application/json',
+                    status=STATUS_CODES[response.type])
+```
+
+The second and last test is a bit more complex. As before we will mock the use case, but this time we will also patch `StorageRoomListRequestObject`. We need in fact to know if the request object is initialized with the correct parameters from the command line. So, step by step
+
+``` python
+@mock.patch('rentomatic.use_cases.storageroom_use_cases.StorageRoomListUseCase')
+def test_request_object_initialisation_and_use_with_filters(mock_use_case, client):
+    mock_use_case().execute.return_value = res.ResponseSuccess([])
+```
+
+This is, like, beforse, a patch of the use case class that ensures the use case will return a `ResponseSuccess` instance.
+
+``` python
+    internal_request_object = mock.Mock()
+```
+
+The request object will be internally created with `StorageRoomListRequestObject.from_dict`, and we want that function to return a known mock object, which is the one we initialized here.
+
+``` python
+    request_object_class = 'rentomatic.use_cases.request_objects.StorageRoomListRequestObject'
+    with mock.patch(request_object_class) as mock_request_object:
+        mock_request_object.from_dict.return_value = internal_request_object
+        client.get('/storagerooms?filter_param1=value1&filter_param2=value2')
+```
+
+Here we patch `StorageRoomListRequestObject` and we assign a known output to the `from_dict()` method. Then we call the endpoint with some querystring parameters. What should happen is that the `from_dict()` method of the request is called with the filter parameters and that the `execute()` method of the use case instance is called with the `internal_request_object`.
+
+``` python
+    mock_request_object.from_dict.assert_called_with(
+        {'filters': {'param1': 'value1', 'param2': 'value2'}}
+    )
+    mock_use_case().execute.assert_called_with(internal_request_object)
+```
+
+The endpoint function shall be changed somehow to reflect this new behaviour and to make the test pass. The whole code of the new `storageroom()` Flask method is the following
+
+``` python
+import json
+from flask import Blueprint, request, Response
+
+from rentomatic.use_cases import request_objects as req
+from rentomatic.shared import response_object as res
+from rentomatic.repository import memrepo as mr
+from rentomatic.use_cases import storageroom_use_cases as uc
+from rentomatic.serializers import storageroom_serializer as ser
+
+blueprint = Blueprint('storageroom', __name__)
+
+STATUS_CODES = {
+    res.ResponseSuccess.SUCCESS: 200,
+    res.ResponseFailure.RESOURCE_ERROR: 404,
+    res.ResponseFailure.PARAMETERS_ERROR: 400,
+    res.ResponseFailure.SYSTEM_ERROR: 500
+}
+
+storageroom1 = {
+    'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
+    'size': 215,
+    'price': 39,
+    'longitude': '-0.09998975',
+    'latitude': '51.75436293',
+}
+
+storageroom2 = {
+    'code': 'fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
+    'size': 405,
+    'price': 66,
+    'longitude': '0.18228006',
+    'latitude': '51.74640997',
+}
+
+storageroom3 = {
+    'code': '913694c6-435a-4366-ba0d-da5334a611b2',
+    'size': 56,
+    'price': 60,
+    'longitude': '0.27891577',
+    'latitude': '51.45994069',
+}
+
+
+@blueprint.route('/storagerooms', methods=['GET'])
+def storageroom():
+    qrystr_params = {
+        'filters': {},
+    }
+
+    for arg, values in request.args.items():
+        if arg.startswith('filter_'):
+            qrystr_params['filters'][arg.replace('filter_', '')] = values
+
+    request_object = req.StorageRoomListRequestObject.from_dict(qrystr_params)
+
+    repo = mr.MemRepo([storageroom1, storageroom2, storageroom3])
+    use_case = uc.StorageRoomListUseCase(repo)
+
+    response = use_case.execute(request_object)
+
+    return Response(json.dumps(response.value, cls=ser.StorageRoomEncoder),
+                    mimetype='application/json',
+                    status=STATUS_CODES[response.type])
+```
+
+Note that we extract the querystring parameters from the global `request` object provided by Flask. Once the querystring parameters are in a dictionary, we just need to create the request object from it.
+
+## Conclusions
+
+Well, that's all! Some tests are missing in the REST part, but as I said I just wanted to show a working implementation of a clean architecture and not a fully developed project. I suggest that you try to implement some changes, for example:
+
+* another endpoint like the access to a single resource (`/storagerooms/<code>`)
+* a different repository, connected to a real DB (you can use [SQLite](https://sqlite.org/), for example)
+* implement a new querystring parameter, for example the distance from a given point on the map (use [geopy](https://github.com/geopy/geopy) to easily compute distances)
+
+While you develop your code always try to work following the TDD approach. Testability is one of the main features of a clean architecture, so don't ignore it.
+
+Whether you decide to use a clean architecture or not, I really hope this post helped you to get a fresh view on software architectures, as happened to me when I first discovered the concepts exemplified here.
+
+## Feedback
+
+Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+
