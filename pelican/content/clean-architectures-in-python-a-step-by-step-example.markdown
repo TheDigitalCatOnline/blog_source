@@ -95,6 +95,7 @@ deactivate
 rm -fR venv3
 cd rentomatic
 virtualenv venv3 -p python3
+source venv3/bin/activate
 ```
 
 Get rid of the `requirements_dev.txt` file that Cookiecutter created for you. I usually store virtualenv requirements in different hierarchical files to separate production, development and testing environments, so create the `requirements` directory and the relative files
@@ -141,6 +142,12 @@ Obviously you are free to find the project structure that better suits your need
 This separation allows you to install a full-fledged development environment on your machine, while installing only testing tools in a testing environment like the Travis platform and to further reduce the amount of dependencies in the production case. 
 
 As you can see, I am not using version tags in the requirements files. This is because this project is not going to be run in a production environment, so we do not need to freeze the environment.
+
+Remember at this point to install the development requirements in your virtualenv
+
+``` sh
+$ pip install -r requirements/dev.txt
+```
 
 ## Miscellaneous configuration
 
@@ -201,19 +208,19 @@ from rentomatic.domain import models as m
 
 def test_storageroom_model_init():
     code = uuid.uuid4()
-    artist = m.StorageRoom(code, size=200, price=10,
+    storageroom = m.StorageRoom(code, size=200, price=10,
                            longitude='-0.09998975',
                            latitude='51.75436293')
-    assert artist.code == code
-    assert artist.size == 200
-    assert artist.price == 10
-    assert artist.longitude == -0.09998975
-    assert artist.latitude == 51.75436293
+    assert storageroom.code == code
+    assert storageroom.size == 200
+    assert storageroom.price == 10
+    assert storageroom.longitude == -0.09998975
+    assert storageroom.latitude == 51.75436293
 
 
 def test_storageroom_model_from_dict():
     code = uuid.uuid4()
-    artist = m.StorageRoom.from_dict(
+    storageroom = m.StorageRoom.from_dict(
         {
             'code': code,
             'size': 200,
@@ -222,11 +229,11 @@ def test_storageroom_model_from_dict():
             'latitude': '51.75436293'
         }
     )
-    assert artist.code == code
-    assert artist.size == 200
-    assert artist.price == 10
-    assert artist.longitude == -0.09998975
-    assert artist.latitude == 51.75436293
+    assert storageroom.code == code
+    assert storageroom.size == 200
+    assert storageroom.price == 10
+    assert storageroom.longitude == -0.09998975
+    assert storageroom.latitude == 51.75436293
 ```
 
 With these two tests we ensure that our model can be initialized with the correct values and that can be created from a dictionary. In this first version all the parameters of the model are required. Later we could want to make some of them optional, and in that case we will have to add the relevant tests.
@@ -1113,8 +1120,8 @@ class StorageRoomListUseCase(uc.UseCase):
         self.repo = repo
 
     def process_request(self, request_object):
-        domain_artists = self.repo.list(filters=request_object.filters)
-        return res.ResponseSuccess(domain_artists)
+        domain_storageroom = self.repo.list(filters=request_object.filters)
+        return res.ResponseSuccess(domain_storageroom)
 ```
 
 # The repository layer
@@ -1742,6 +1749,10 @@ Well, that's all! Some tests are missing in the REST part, but as I said I just 
 While you develop your code always try to work following the TDD approach. Testability is one of the main features of a clean architecture, so don't ignore it.
 
 Whether you decide to use a clean architecture or not, I really hope this post helped you to get a fresh view on software architectures, as happened to me when I first discovered the concepts exemplified here.
+
+## Updates
+
+2016-11-15: Two tests contained variables with a wrong name (artist), which came from an initial version of the project. The name did not affect the tests. Added some instructions on the virtual environment and the development requirements.
 
 ## Feedback
 
