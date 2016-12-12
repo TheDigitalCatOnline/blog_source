@@ -79,6 +79,8 @@ You can find the source code in [this GitHub repository](https://github.com/lgio
 
 **Git tag: [`step01`](https://github.com/lgiordani/rentomatic/tree/step01)**
 
+_Update_: [this](https://github.com/ardydedase/cookiecutter-pypackage) Cookiecutter package creates an environment like the one I am creating in this section. I will keep the following explanation so that you can see how to manage requirements and configurations, but for your next project consider using this automated tool.
+
 I usually like maintaining a Python virtual environment inside the project, so I will create a temporary virtualenv to install cookiecutter, create the project, and remove the virtualenv. Cookiecutter is going to ask you some questions about you and the project, to provide an initial file structure. We are going to build our own testing environment, so it is safe to answer no to `use_pytest`. Since this is a demo project we are not going to need any publishing feature, so you can answer no to `use_pypi_deployment_with_travis` as well. The project does not have a command line interface, and you can safely create the author file and use any license.
 
 ``` bash
@@ -566,7 +568,7 @@ class StorageRoomListUseCase(object):
 
     def execute(self, request_object):
         storage_rooms = self.repo.list()
-        return ResponseSuccess(storage_rooms)
+        return ro.ResponseSuccess(storage_rooms)
 ```
 
 Let us consider what we have achieved with our clean architecture up to this point. We have a very lightweight model that can be serialized to JSON and which is completely independent from other parts of the system. The code also contains a use case that, given a repository that exposes a given API, extracts all the models and returns them contained in a structured object.
@@ -1753,6 +1755,8 @@ Whether you decide to use a clean architecture or not, I really hope this post h
 ## Updates
 
 2016-11-15: Two tests contained variables with a wrong name (artist), which came from an initial version of the project. The name did not affect the tests. Added some instructions on the virtual environment and the development requirements.
+
+2016-12-12: Thanks to [Marco Beri](https://twitter.com/Taifu) who spotted a typo in the code of step 6, which was already correct in the GitHub repository. He also suggested using the Cookiecutter package by [Ardy Dedase](https://github.com/ardydedase). Thanks to Marco and to Ardy!
 
 ## Feedback
 
