@@ -438,7 +438,6 @@ def test_binary_get_bit():
     binary = Binary('0101110001')
     assert binary[0] == '1'
     assert binary[5] == '1'
-    assert binary[9] == '0'
 
 def test_binary_not():
     assert ~Binary('1101') == Binary('10')
@@ -599,6 +598,9 @@ In the next post I will guide you through the addition of the `SizeBinary` class
 2015-05-15 As suggested by [Jacob Zimmerman](https://plus.google.com/u/0/b/110554719587236016835/+JacobZimmermanCrapEDM/posts) in [this comment](https://plus.google.com/110554719587236016835/posts/F7TrsivP94B) the class lacks some methods to be a complete numeric class, most notably `__radd__` and `__rsub__`. Indeed, my first goal was to show TDD so I did not add the whole series of reflected arithmetic operations. You will find all those methods [here](https://docs.python.org/3/reference/datamodel.html#object.__radd__) and try to implement them following the methodology shown in the post. Jacob also suggested to shorten the `__str__()` implementation, and I fixed it. Thanks Jacob!
 
 2015-09-22 [Christopher McCormack](https://github.com/cmccormack) spotted an error about binary indexing: "starts from the leftmost element" should be "starts from the rightmost element". Now it has been fixed. Thanks Christopher!
+
+2016-12-20 [dndln](https://github.com/dndln) found an error in the 'Binary operations' section. The `test_binary_get_bit()` test included the assertion `assert binary[9] == '0'` which cannot be successful, since leading zeros are stripped, as stated in the previous section 'My Solution'. The attached code files were already correct. Thanks a lot for pointing it out!
+`
 
 ## Feedback
 
