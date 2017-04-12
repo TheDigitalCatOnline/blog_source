@@ -4,6 +4,7 @@ Category: Programming
 Tags: decorators, OOP, Python, Python2, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: python-mocks-a-gentle-introduction-part-1
+Series: "Python Mocks: a gentle introduction"
 Summary: 
 
 As already stressed in the two introductory posts on TDD (you can find them [here](/categories/tdd/)) testing requires to write some code that uses the functions and objects you are going to develop. This means that you need to isolate a given (external) function that is part of your public API and demonstrate that it works with standard inputs and in edge cases.

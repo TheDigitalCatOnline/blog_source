@@ -4,6 +4,7 @@ Category: Programming
 Tags: decorators, OOP, Python, Python2, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: python-mocks-a-gentle-introduction-part-2
+Series: "Python Mocks: a gentle introduction"
 Summary: 
 
 In the [first post](/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1) I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the `return_value` and `side_effect` attributes, and the `assert_called_with()` method.
