@@ -239,11 +239,11 @@ class TextBuffer:
 
 As for the `Token` class you can read the tests to understand how to use the class. Basically, however, the class can `load()` an input text and extract the `current_line()`, the `current_char()`, and the `next_char()`. You can also `skip()` a given number of characters, `goto()` a given position, extract the current `position()` and read the `tail()`, which is the remaining text from the current position on.
 
-This class has not been optimized or designed to manage big files or continuous streams of text. This is perfectly fine for our current project, bu be aware that for a real compiler you should implement a better file/memory management.
+This class has not been optimized or designed to manage big files or continuous streams of text. This is perfectly fine for our current project, but be aware that for a real compiler you should implement a better file/memory management.
 
 # CLI
 
-The third element we will need for the first part of the tutorial (that is, while we will deal with a simple calculator), is a simple Command Line Interface. For the moment is just echoes any text we will input, and gracefully exit when we press Ctrl+D. There are and there will be no tests for the CLI. Testing endpoints like this is complex and not always worth the effort, as in this case.
+The third element we will need for the first part of the tutorial (that is, while we will deal with a simple calculator), is a simple Command Line Interface. For the moment is just echoes any text you will input, and gracefully exit when we press Ctrl+D. There are and there will be no tests for the CLI. Testing endpoints like this is complex and not always worth the effort, as in this case.
 
 The command line can be run from the project main directory with
 
@@ -251,7 +251,9 @@ The command line can be run from the project main directory with
 python cli.py
 ```
 
-# Start with the end
+# Level 1 - End of file
+
+"End? No, the journey doesn't end here."
 
 The first thing a Lexer shall be able to do is to load and process an empty text. This should return an `EOF` token (which stands for "End of File"). `EOF` is used to signal that the input buffer has ended and that there is no more text to process.
 
@@ -295,7 +297,9 @@ The `EOF` constant can be a simple string with the `'EOF` value.
 
 It is worth executing the test suite with coverage (check the command line above), which will tell you if you overengineered your code. You should aim for 100% coverage, always.
 
-# Recognise integers
+# Level 2 - Single digit integers
+
+"You're missing just a couple of digits there."
 
 ``` txt
 # The only accepted value for the input is one single digit between 0 and 9
@@ -429,7 +433,9 @@ smallcalc :> 3
 
 Let me recap what we just created. We wrote a lexer, which is a component that splits the input text in different tokens with a meaning, and we instructed it to react to single-digits integers. Then, we created a parser, which is the component that tries to make sense of several tokens put together, applying syntactical rules. Last, the visitor runs through the output of the parser and actually performs the actions that the grammar describes. All this to just print out an integer? Seems overkill! It is, actually, but there is a lot to come, and this separation of levels will come handy.
 
-# Addition
+# Level 3 - Binary operations: addition
+
+"You're about to become a permanent addition to this archaeological find."
 
 ``` txt
 integer: [0-9]
@@ -561,7 +567,9 @@ Everything? Well, not exactly. If I type just a single integer in the CLI the wh
 
 Why do we have an error? Because we now parse the input with `parse_expression()` and this method expects its input to be a full-formed expression, not a single integer. Generally speaking, our parser's entry point should be able to parse different syntax structures. We will improve this behaviour later, when we will address the problem of nested expressions.
 
-# Multidigit integers
+# Level 4 - Multi-digit integers
+
+"So many."
 
 ``` txt
 # An integer is a sequence of digits, + here means `one or more`
@@ -591,7 +599,9 @@ If you do not know how to use regular expressions do yourself a favour and learn
 
 After this test the CLI should be able to handle expressions like `123+456`. We don't need any change in the parser and in the visitor, can you tell why?
 
-# Whitespaces
+# Level 5 - Whitespaces
+
+"Follow the white rabbit."
 
 ```
 integer: [0-9]+
@@ -620,7 +630,9 @@ def test_get_tokens_ignores_spaces():
 
 While you change the `CalcLexer` class to make it pass this test, ask yourself if the current structure of the class satisfies you or if it is the right time to refactor it, possibly even heavily rewriting some parts of it. You have a good test suite, now, so you can be sure that what you implemented is correct, at least according to the current requirements.
 
-# Subtraction
+# Level 6 - Subtraction
+
+"I can add, subtract. I can make coffee. I can shuffle cards."
 
 ``` txt
 integer: [0-9]+
@@ -722,7 +734,9 @@ smallcalc :> 4 - 6
 
 and since we rely on Python to perform the actual subtraction we get negative numbers for free. Pay attention: we can have negative numbers in the results, but we cannot input negative numbers. This is something that we will have to add later.
 
-# Multiple operations
+# Level 7 - Multiple operations
+
+"The machine simply does not operate as expected."
 
 ``` txt
 integer: [0-9]+
@@ -885,6 +899,10 @@ Grammars
 * [Backus-Naur form on Wikipedia](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form)
 * [Extended Backus-Naur form on Wikipedia](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form)
 * [The language of languages](http://matt.might.net/articles/grammars-bnf-ebnf/)
+
+# Titles
+
+The section quotes comes from some good movies, the complete list is: "The Lord of the Rings - The Return of the King" (2003), "Iron Man" (2008), "Raiders of the Lost Ark" (1981), "Braveheart" (1995), "The Matrix" (1999), "The Bourne Identity" (2002), "The Prestige" (2006).
 
 ## Feedback
 
