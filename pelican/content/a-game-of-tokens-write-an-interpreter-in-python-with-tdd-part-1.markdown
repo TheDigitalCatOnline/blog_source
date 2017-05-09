@@ -20,7 +20,7 @@ Compilers have been the subject of academic research since the 50s, with the wor
 
 In this series of posts I want to try an experiment. I want to guide you through the creation of a simple interpreter in Python using a pure TDD (Test-Driven Development) approach. The posts will be structured like a game, where every level is represented by a new test that I will add to the suite. If you are not confident with TDD, you will find more on it in the specific section.
 
-Following this series you will learn about Python, compilers, interpreters, parsers, lexers, test-driven development, refactoring, coverage, regular expressions, classes, context managers. TODO
+Following this series you will learn about Python, compilers, interpreters, parsers, lexers, test-driven development, refactoring, coverage, regular expressions, classes, context managers. 
 
 Are you ready to start?
 
@@ -38,7 +38,7 @@ At the time of writing the language we are going to implement is a simple calcul
 
 The name **smallcalc** is a homage to one of the most innovative and influential languages ever conceived: [Smalltalk](https://en.wikipedia.org/wiki/Smalltalk).
 
-I do not know if the final version will be something richer, I suppose it will depend on how much fun you will find in the series. So, if you are interested, just ask!
+I do not know if the final version will be something richer, it depends on how much fun you will find in the series. So, if you are interested, just ask! You can drop a line of appreciation [on Twitter](https://twitter.com/thedigicat).
 
 At the time of writing, then, the language grammar is
 
@@ -253,7 +253,7 @@ python cli.py
 
 # Level 1 - End of file
 
-"End? No, the journey doesn't end here."
+*"End? No, the journey doesn't end here."*
 
 The first thing a Lexer shall be able to do is to load and process an empty text. This should return an `EOF` token (which stands for "End of File"). `EOF` is used to signal that the input buffer has ended and that there is no more text to process.
 
@@ -299,7 +299,7 @@ It is worth executing the test suite with coverage (check the command line above
 
 # Level 2 - Single digit integers
 
-"You're missing just a couple of digits there."
+*"You're missing just a couple of digits there."*
 
 ``` txt
 # The only accepted value for the input is one single digit between 0 and 9
@@ -435,7 +435,7 @@ Let me recap what we just created. We wrote a lexer, which is a component that s
 
 # Level 3 - Binary operations: addition
 
-"You're about to become a permanent addition to this archaeological find."
+*"You're about to become a permanent addition to this archaeological find."*
 
 ``` txt
 integer: [0-9]
@@ -569,7 +569,7 @@ Why do we have an error? Because we now parse the input with `parse_expression()
 
 # Level 4 - Multi-digit integers
 
-"So many."
+*"So many."*
 
 ``` txt
 # An integer is a sequence of digits, + here means `one or more`
@@ -601,7 +601,7 @@ After this test the CLI should be able to handle expressions like `123+456`. We 
 
 # Level 5 - Whitespaces
 
-"Follow the white rabbit."
+*"Follow the white rabbit."*
 
 ```
 integer: [0-9]+
@@ -632,7 +632,7 @@ While you change the `CalcLexer` class to make it pass this test, ask yourself i
 
 # Level 6 - Subtraction
 
-"I can add, subtract. I can make coffee. I can shuffle cards."
+*"I can add, subtract. I can make coffee. I can shuffle cards."*
 
 ``` txt
 integer: [0-9]+
@@ -736,7 +736,7 @@ and since we rely on Python to perform the actual subtraction we get negative nu
 
 # Level 7 - Multiple operations
 
-"The machine simply does not operate as expected."
+*"The machine simply does not operate as expected."*
 
 ``` txt
 integer: [0-9]+
@@ -888,11 +888,12 @@ Some links on compilers history
 * [GCC history](http://gcc.gnu.org/wiki/History)
 * [History of compiler construction on Wikipedia](https://en.wikipedia.org/wiki/History_of_compiler_construction)
 
-Some tutorials on compiler construction
+Tutorials and analysis of compilers and parsers
 
 * The beautiful ["Let’s Build A Simple Interpreter"](https://ruslanspivak.com/lsbasi-part1/) series by Ruslan Spivak. Thanks Ruslan!
-* How to implement a programming language in JavaScript: http://lisperator.net/pltut/
+* How to implement a programming language in JavaScript [on Lisperator.net](http://lisperator.net/pltut/) by Mihai Bazon.
 * [Build Your Own Lisp](http://www.buildyourownlisp.com/)
+* [LL and LR Parsing Demystified](http://blog.reverberate.org/2013/07/ll-and-lr-parsing-demystified.html) by Josh Haberman.
 
 Grammars
 
