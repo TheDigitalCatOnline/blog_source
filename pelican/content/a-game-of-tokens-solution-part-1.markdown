@@ -4,9 +4,10 @@ Category: Programming
 Tags: Python, Python3, TDD, testing, compilers
 Authors: Leonardo Giordani
 Slug: a-game-of-tokens-solution-part-1
+Series: "A game of tokens"
 Summary:
 
-This is my solution of the challenge posted [here](). As I stressed in that post, this is just **one** possible solution, and not even necessarily the best one. I provide it to show how I managed to solve the tests and how I worked in a TDD way.
+This is my solution of the challenge posted [here](/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/). As I stressed in that post, this is just **one** possible solution, and not even necessarily the best one. I provide it to show how I managed to solve the tests and how I worked in a TDD way.
 
 Speaking of TDD I realised that I hadn't followed it very strictly, as sometimes I wrote more code than needed, usually forecasting future changes. I do not believe in a inflexible and uncompromising application of rules, so I do not consider this a big issue, as long as the result is a working code that is not blatantly overengineered.
 
