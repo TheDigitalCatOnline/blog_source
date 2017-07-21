@@ -1,5 +1,5 @@
 Title: Refactoring with tests in Python: a practical example
-Date: 2017-07-14 16:00:00 +0100
+Date: 2017-07-21 09:30:00 +0100
 Category: Programming
 Tags: OOP, Python, Python3, refactoring, TDD, testing
 Authors: Leonardo Giordani
@@ -8,15 +8,15 @@ Summary:
 
 This post contains a step-by-step example of a refactoring session guided by tests. When dealing with untested or legacy code refactoring is dangerous and tests can help us do it the right way, minimizing the amount of bugs we introduce, and possibly completely avoiding them.
 
-Refactoring is not easy. It requires a double effort to understand code that others wrote, or that we wrote in the past, and moving around parts of it, simplifying it, in one word **improving** it, is by no means something for the faint-hearted. Like programming, refactoring has its rules and best prectices, but it can be describeda as a mixture of technique, intuition, experience, risk.
+Refactoring is not easy. It requires a double effort to understand code that others wrote, or that we wrote in the past, and moving around parts of it, simplifying it, in one word **improving** it, is by no means something for the faint-hearted. Like programming, refactoring has its rules and best practices, but it can be described as a mixture of technique, intuition, experience, risk.
 
-Programming, after all, is a craftmanship.
+Programming, after all, is craftsmanship.
 
 # The starting point
 
 The simple use case I will use for this post is that of a service API that we can access, and that produces data in JSON format, namely a **list** of elements like the one shown here
 
-``` json
+``` python
 {
     'age': 20,
     'surname': 'Frazier',
@@ -25,7 +25,7 @@ The simple use case I will use for this post is that of a service API that we ca
 }
 ```
 
-Once we convert this to a Python data sturcture we obtain a list of dictionaries, where `'age'` is an integer, and the remaining fields are strings.
+Once we convert this to a Python data structure we obtain a list of dictionaries, where `'age'` is an integer, and the remaining fields are strings.
 
 Someone then wrote a class that computes some statistics on the input data. This class, called `DataStats`, provides a single method `stats()`, whose inputs are the data returned by the service (in JSON format), and two integers called `iage` and `isalary`. Those, according to the short documentation of the class, are the initial age and the initial salary used to compute the average yearly increase of the salary on the whole dataset.
 
@@ -96,23 +96,23 @@ Once you have you unit test you can go and modify the code, knowing that the beh
 
 Two remarks before we start our first refactoring. The first is that such a class could easily be refactored to some functional code. As you will be able to infer from the final result there is no real reason to keep an object-oriented approach for this code. I decided to go that way, however, as it gave me the possibility to show a design pattern called wrapper, and the refactoring technique that leverages it.
 
-The second remark is that in pure TDD it is strongly adviced not to test internal methods, that is those methods that do not form the public API of the object. In general, we identify such methods in Python by prefixing their name with an underscore, and the reason not to test them is that TDD wants you to shape objects according to the object-oriented programming methodology, which considers objects as **behaviours** and not as **structures**. Thus, we are only interested in testing public methods.
+The second remark is that in pure TDD it is strongly advised not to test internal methods, that is those methods that do not form the public API of the object. In general, we identify such methods in Python by prefixing their name with an underscore, and the reason not to test them is that TDD wants you to shape objects according to the object-oriented programming methodology, which considers objects as **behaviours** and not as **structures**. Thus, we are only interested in testing public methods.
 
-It is also tru, however, that sometimes even tough we do not want to make a method public, that method contains some complex logic that we want to test. So, in my opinion the TDD advice should sound like "Test internal methods only when they contain some non-trivial logic".
+It is also true, however, that sometimes even tough we do not want to make a method public, that method contains some complex logic that we want to test. So, in my opinion the TDD advice should sound like "Test internal methods only when they contain some non-trivial logic".
 
 When it comes to refactoring, however, we are somehow deconstructing a previously existing structure, and usually we end up creating a lot of private methods to help extracting and generalising parts of the code. My advice in this case is to test those methods, as this gives you a higher degree of confidence in what you are doing. With experience you will then learn which tests are required and which are not.
 
 # Setup of the testing environment
 
-Clone [this repository](TODO) and create a virtual environment. Activate it and install the required packages with 
+Clone [this repository](https://github.com/lgiordani/datastats) and create a virtual environment. Activate it and install the required packages with 
 
 ``` sh
 pip install -r requirements.txt
 ```
 
-The repository alredy contains a configuration file for pytest and you should customise it to avoid entering your virtual environment directory. SO go and fix the `norecursedirs` parameter in that file, adding the name of the virtual environment you just created.
+The repository already contains a configuration file for pytest and you should customise it to avoid entering your virtual environment directory. Go and fix the `norecursedirs` parameter in that file, adding the name of the virtual environment you just created; I usually name my virtual environments with a `venv` prefix, and this is why that variable contains the entry `venv*`.
 
-At this point you should be able to run `pytest -svv` in the parent directory of the repository (the one that contains `pytest.ini`), and obtain a result similar to the folowing
+At this point you should be able to run `pytest -svv` in the parent directory of the repository (the one that contains `pytest.ini`), and obtain a result similar to the following
 
 ``` sh
 ========================== test session starts ==========================
@@ -125,9 +125,13 @@ collected 0 items
 ====================== no tests ran in 0.00 seconds ======================
 ```
 
+The given repository contains two branches. `master` is the one that you are into, and contains the initial setup, while `develop` points to the last step of the whole refactoring process. Every step of this post contains a reference to the commit that contains the changes introduced in that section.
+
 # Step 1 - Testing the endpoints
 
-When you start refactoring a system, regardless of the size, you have to test the endpoints. This means that you consider the system as a black box (i.e. you do not know what is inside) and just check the external behaviour. In this case we can write a test that intializes the class and runs the `stats()` method with some test data, possibly **real** data, and checks the output. Obviously we will write the test with the actual output returned by the method, so this test is automatically passing.
+Commit: [27a1d8c](https://github.com/lgiordani/datastats/commit/27a1d8ccd5b0a57fa6d9d5f3bd80874538f14ed2)
+
+When you start refactoring a system, regardless of the size, you have to test the endpoints. This means that you consider the system as a black box (i.e. you do not know what is inside) and just check the external behaviour. In this case we can write a test that initialises the class and runs the `stats()` method with some test data, possibly **real** data, and checks the output. Obviously we will write the test with the actual output returned by the method, so this test is automatically passing.
 
 Querying the server we get the following data
 
@@ -247,6 +251,8 @@ Well, this test is very important! Now we know that if we change something insid
 
 # Step 2 - Getting rid of the JSON format
 
+Commit: [65e2997](https://github.com/lgiordani/datastats/commit/65e2997d71ade752633229186c6669803a46f185)
+
 The method returns its output in JSON format, and looking at the class it is pretty evident that the conversion is done by `json.dumps()`.
 
 The structure of the code is the following
@@ -351,9 +357,11 @@ and we have two tests that check the correctness of it.
 
 # Step 3 - Refactoring the tests
 
+Commit: [d619017](https://github.com/lgiordani/datastats/commit/d61901754b83ccc36fa25bcebf88da7cace28ff2)
+
 It is pretty clear that the `test_data` list of dictionaries is bound to be used in every test we will perform, so it is high time we moved that to a global variable. There is no point now in using a fixture, as the test data is just static data.
 
-We could also move the output data to a global variable, but the upcoming tests are not using the whole output dictionary anymore, so we can postpone the decision.
+We could also move the output data to a global variable, but the upcoming tests are not using the whole output dictionary any more, so we can postpone the decision.
 
 The test suite now looks like 
 
@@ -442,6 +450,8 @@ def test__stats():
 
 # Step 4 - Isolate the average age algorithm
 
+Commit: [9db1803](https://github.com/lgiordani/datastats/commit/9db18036eee2f6712384195fcd970303387291f6)
+
 Isolating independent features is a key target of software design. Thus, our refactoring shall aim to disentangle the code dividing it into small separated functions.
 
 The output dictionary contains five keys, and each of them corresponds to a value computed either on the fly (for `avg_age` and `avg_salary`) or by the method's code (for `avg_yearly_increase`, `max_salary`, and `min_salary`). We can start replacing the code that computes the value of each key with dedicated methods, trying to isolate the algorithms.
@@ -482,6 +492,8 @@ Checking after that that no test is failing. Well done! We isolated the first fe
 
 # Step 5 - Isolate the average salary algorithm
 
+Commit: [4122201](https://github.com/lgiordani/datastats/commit/412220145ea4d7ef846b1d1f289b4ddefc4fb24b)
+
 The `avg_salary` key works exactly like the `avg_age`, with different code. Thus, the refactoring process is the same as before, and the result should be a new `test__avg_salary()` test
 
 ``` python
@@ -512,6 +524,8 @@ and a new version of the final return value
 ```
 
 # Step 6 - Isolate the average yearly increase algorithm
+
+Commit: [4005145](https://github.com/lgiordani/datastats/commit/4005145f39d36fda0519127d57e1b4099d24e72b)
 
 The remaining three keys are computed with algorithms that, being longer than one line, couldn't be squeezed directly in the definition of the dictionary. The refactoring process, however, does not really change; as before, we first test a helper method, then we define it duplicating the code, and last we call the helper removing the code duplication.
 
@@ -569,6 +583,8 @@ and a new version of the `_stats()` method
 Please note that we are not solving any code duplication but the ones that we introduce to refactor. The first achievement we should aim to is to completely isolate independent features.
 
 # Step 7 - Isolate max and min salary algorithms
+
+Commit: [17b2413](https://github.com/lgiordani/datastats/commit/17b24138e712f9174b072a579a2dfc9e2800e6ac)
 
 When refactoring we shall always do one thing at a time, but for the sake of conciseness, I'll show here the result of two refactoring steps at once. I'll recommend the reader to perform them as independent steps, as I did when I wrote the code that I am posting below.
 
@@ -634,6 +650,8 @@ and the `_stats()` method is now really tiny
 
 # Step 8 - Reducing code duplication
 
+Commit: [b559a5c](https://github.com/lgiordani/datastats/commit/b559a5c91ef58e1e734ac97b676468d09a460a45)
+
 Now that we have the main tests in place we can start changing the code of the various helper methods. These are now small enough to allow us to change the code without further tests. While this can be true in this case, however, in general there is no definition of what "small enough" means, as there is no real definition of what "unit test" is. Generally speaking you should be confident that the change that you are doing is covered by the tests that you have. Weren't this the case, you'd better add one or more tests until you feel confident enough.
 
 The two methods `_max_salary()` and `_min_salary()` share a great deal of code, even though the second one is more concise
@@ -654,7 +672,7 @@ The two methods `_max_salary()` and `_min_salary()` share a great deal of code, 
 
 ```
 
-I'll start by TODO by? making explicit the `threshold` variable in the second function. As soon as I change something, I'll run the tests to check that the external behaviour did not change.
+I'll start by making explicit the `threshold` variable in the second function. As soon as I change something, I'll run the tests to check that the external behaviour did not change.
 
 ``` python
     def _max_salary(self, data):
@@ -672,7 +690,7 @@ I'll start by TODO by? making explicit the `threshold` variable in the second fu
         return [e for e in data if e['salary'] == threshold]
 ```
 
-Now, it is pretty evident that the two functions are the same but for the `min()` and `max()` functions. They still use different variable names and different code to format the threshold, so I'll start with TODO with? uniforming them, copying the code of `_min_salary()` to `_max_salary()` and changing `min()` to `max()`
+Now, it is pretty evident that the two functions are the same but for the `min()` and `max()` functions. They still use different variable names and different code to format the threshold, so my first action is to even out them, copying the code of `_min_salary()` to `_max_salary()` and changing `min()` to `max()`
 
 ``` python
     def _max_salary(self, data):
@@ -690,7 +708,7 @@ Now, it is pretty evident that the two functions are the same but for the `min()
         return [e for e in data if e['salary'] == threshold]
 ```
 
-Now I can create another helper called `_select_salary()` that duplicates that code and accepts a function, used instad of `min()` or `max()`. As I did before, first I duplicate the code, and then remove the duplication by callling the new function.
+Now I can create another helper called `_select_salary()` that duplicates that code and accepts a function, used instead of `min()` or `max()`. As I did before, first I duplicate the code, and then remove the duplication by calling the new function.
 
 After some passages, the code looks like this
 
@@ -787,11 +805,13 @@ Speaking of `_avg_yearly_increase()`, the code of that method contains the code 
 
 # Step 9 - Advanced refactoring
 
+Commit: [cc0b0a1](https://github.com/lgiordani/datastats/commit/cc0b0a105ebc882cb73831b177e881bb65f4b491)
+
 The initial class didn't have any `__init__()` method, and was thus missing the encapsulation part of the object-oriented paradigm. There was no reason to keep the class, as the `stats()` method could have easily been extracted and provided as a plain function.
 
 This is much more evident now that we refactored the method, because we have 10 methods that accept `data` as a parameter. I would be nice to load the input data into the class at instantiation time, and then access it as `self.data`. This would greatly improve the readability of the class, and also justify its existence.
 
-If we introduce a `__init__()` method that requires a parameter, however, we will change the class's API, breaking the compatibility with every other code that imports and uses it. Since we want to keep it, we have to devise a way to provide both the advantages of a new, clean class and of a stable API. This is not always perfectly achievable, but in this case the wrapper TODO design pattern can perfectly solve the issue.
+If we introduce a `__init__()` method that requires a parameter, however, we will change the class's API, breaking the compatibility with every other code that imports and uses it. Since we want to keep it, we have to devise a way to provide both the advantages of a new, clean class and of a stable API. This is not always perfectly achievable, but in this case the [Adapter design pattern](https://en.wikipedia.org/wiki/Adapter_pattern) (also known as Wrapper) can perfectly solve the issue.
 
 The goal is to change the current class to match the new API, and then build a class that wraps the first one and provides the old API. The strategy is not that different from what we did previously, only this time we will deal with classes instead of methods. With a stupendous effort of my imagination I named the new class `NewDataStats`. Sorry, but sometimes you just have to get the job done.
 
@@ -896,7 +916,7 @@ class DataStats:
 
 ## Final words
 
-I hope this little tour of a refactoring session didn't result too trivial, and helped you to grasp the basic concepts of this technique. If you are interested in the subject I'd strongly recommend the classic "Refctoring" book by TODO, which is a collection of refactoring patterns. The reference language is Java, but the concepts are easily adapted to Python.
+I hope this little tour of a refactoring session didn't result too trivial, and helped you to grasp the basic concepts of this technique. If you are interested in the subject I'd strongly recommend the classic book by Martin Fowler "Refactoring: Improving the Design of Existing Code", which is a collection of refactoring patterns. The reference language is Java, but the concepts are easily adapted to Python.
 
 ## Feedback
 
