@@ -30,7 +30,7 @@ The objects in the dataset are storage rooms for rent described by the following
  
 * An unique identifier
 * A size in square meters
-* A renting price in euros/day
+* A renting price in Euro/day
 * Latitude and longitude
 
 As pushed by the clean architecture model, we are interested in separating the different layers of the system. The architecture is described by four layers, which however can be implemented by more than four actual code modules. I will give here a brief description of those layers.
@@ -1646,7 +1646,7 @@ def test_request_object_initialisation_and_use_with_filters(mock_use_case, clien
     mock_use_case().execute.return_value = res.ResponseSuccess([])
 ```
 
-This is, like, beforse, a patch of the use case class that ensures the use case will return a `ResponseSuccess` instance.
+This is, like, before, a patch of the use case class that ensures the use case will return a `ResponseSuccess` instance.
 
 ``` python
     internal_request_object = mock.Mock()

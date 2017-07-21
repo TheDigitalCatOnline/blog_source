@@ -13,11 +13,11 @@ In this part I'll go on with the development of the library, discussing the impl
 
 You may happen to dislike some decisions about the interface or the behaviour of the resulting class. Since this post is just a way to show you a concrete TDD session you are totally free to change the tests and to come up with a better solution than mine. Feel free to get in touch and submit better ideas, I'm always looking for something new to learn.
 
-As already suggested in the first installment try to follow the post up to the section where I write the tests. Then move on implementing your own class and try to make it pass all the tests: this is the best way for you to learn TDD, actually applying it.
+As already suggested in the first instalment try to follow the post up to the section where I write the tests. Then move on implementing your own class and try to make it pass all the tests: this is the best way for you to learn TDD, actually applying it.
 
 ## Fixed-size binaries
 
-As soon as you build an electronic circuic to store information (a flip-flop, for example) you start dealing with binary numbers and with fixed-size quantities. Limiting the number of digits brings immediately the limitation of having a maximum number that can be represented and requires to decide what to do with bigger numbers. Another issue that arises is that of the representation of negative numbers. Since we can only use two symbols (one and zero) we have to decide a "syntax" for negative values.
+As soon as you build an electronic circuit to store information (a flip-flop, for example) you start dealing with binary numbers and with fixed-size quantities. Limiting the number of digits brings immediately the limitation of having a maximum number that can be represented and requires to decide what to do with bigger numbers. Another issue that arises is that of the representation of negative numbers. Since we can only use two symbols (one and zero) we have to decide a "syntax" for negative values.
 
 You will find a lot of information about some of those issues in the following Wikipedia articles: [Integer overflow](https://en.wikipedia.org/wiki/Integer_overflow) and [signed number representations](https://en.wikipedia.org/wiki/Signed_number_representations). Check also this page on [bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation) as some of them will be implemented.
 
@@ -161,7 +161,7 @@ class SizeBinary(Binary):
 
 and with this simple declaration I get 1 test passed and still 50 to go. We obviously may also create a new object that does not inherit from `Binary` but we would have to explicitly delegate a lot of functions to this latter class. So, in this case, better to stick to an automatic delegation mechanism like inheritance. To get a review of those two concepts read [this post](/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance).
 
-Composition could be another viable solution, with a `Binary` value stored internally and accessed whenever we call `super()` in the inheritance version. In this case, however, inheritance and composition lead to very similar results, with the latter being somehow counterintuitive and thus not the best choice.
+Composition could be another viable solution, with a `Binary` value stored internally and accessed whenever we call `super()` in the inheritance version. In this case, however, inheritance and composition lead to very similar results, with the latter being somehow counter-intuitive and thus not the best choice.
 
 We need to reimplement many of the special methods already implemented in the `Binary` class. This because Python resolves magic methods through a dedicated channel that avoids the `__getattr__()` and `__getattribute__()` methods, making the whole thing faster. This makes impossible to automatically delegate magic methods, except by means of metaclasses, which are however too complex to be a useful addition to this post.
 
@@ -188,7 +188,7 @@ The initialization function shall store the bit length and initialize a flag to 
 
 I'm not that happy to poke into the `Binary` class implementation setting the `_value` attribute, but this is the only way to change the value of the underlying `Binary` class. If the `Binary` class had a `set()` method we could call it through `super()`, and I cannot directly set it through `__init__()` because I need to check the overflow condition.
 
-With this code I get a surprising result of 37 passed tests, while 14 still refuse to let me call it a day. This is however misleading, as many tests assume the `SizeBinary` object correctly performs comparision, which is not the case, as shown by the failure of the `test_binary_equality_checks_bits` test.
+With this code I get a surprising result of 37 passed tests, while 14 still refuse to let me call it a day. This is however misleading, as many tests assume the `SizeBinary` object correctly performs comparison, which is not the case, as shown by the failure of the `test_binary_equality_checks_bits` test.
 
 This was done on purpose, to show you that writing tests is not something that automatically guarantees you to have correct code. As a matter of fact, in this case tests like
 

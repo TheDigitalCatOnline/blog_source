@@ -15,7 +15,7 @@ In this post I will briefly review the remaining `assert_*` methods and some int
 
 The [official documentation](https://docs.python.org/dev/library/unittest.mock.html) of the mock library lists many other assertion, namely `assert_called_once_with()`, `assert_any_call()`, `assert_has_calls()`, `assert_not_called()`. If you grasped how `assert_called_with()` works, you will have no troubles in understanding how those other behave. Be sure to check the documentation to get a full description of what mock object can assert about their history after being used by your code.
 
-Together with those methods, mock objects also provide some useful attributes, two of which have been already reviewed in the first post. The remaining attributes are as expected mostly related to calls, and are `called`, `call_count`, `call_args`, `call_args_list`, `method_calls`, `mock_calls`. While these also are very well descripted in the official documentation, I want to point out the two `method_calls` and `mock_calls` attributes, that store the detailed list of methods which are called on the mock, and the `call_args_list` attribute that lists the parameters of every call.
+Together with those methods, mock objects also provide some useful attributes, two of which have been already reviewed in the first post. The remaining attributes are as expected mostly related to calls, and are `called`, `call_count`, `call_args`, `call_args_list`, `method_calls`, `mock_calls`. While these also are very well described in the official documentation, I want to point out the two `method_calls` and `mock_calls` attributes, that store the detailed list of methods which are called on the mock, and the `call_args_list` attribute that lists the parameters of every call.
 
 Do not forget that methods called on a mock object are mocks themselves, so you may first access the main mock object to get information about the called methods, and then access those methods to get the arguments they received.
 
@@ -29,7 +29,7 @@ This is exactly the case addressed by patching. Patching, in a testing framework
 
 Let us start with a very simple example. Patching can be complex to grasp at the beginning so it is better to learn it with trivial code. If you do not have it yet, create the testing environment `mockplayground` with the instruction given in the previous post.
 
-I want to develop a simple class that returns information about a given file. The class shall be instantiated with the filename, which can be a relative path.
+I want to develop a simple class that returns information about a given file. The class shall be instantiated with the file name, which can be a relative path.
 
 For the sake of brevity I will not show you every step of the TDD development of the class. Remember that TDD requires you to write a test and then implement the code, but sometimes this could be too fine grained, so do not use the TDD rules without thinking.
 
@@ -287,7 +287,7 @@ Another possible solution to this problem is to create a function that invokes t
 
 ## Final words
 
-In this second part of this small series on Python testing we reviewd the patching mechanism and run through some of its subleties. Patching is a really effective technique, and patch-based tests can be found in many different packages. Take your time to become confident with mocks and patching, since they will be one of your main tools while working with Python and any other object-oriented language.
+In this second part of this small series on Python testing we reviewed the patching mechanism and run through some of its subtleties. Patching is a really effective technique, and patch-based tests can be found in many different packages. Take your time to become confident with mocks and patching, since they will be one of your main tools while working with Python and any other object-oriented language.
 
 As always, I strongly recommend finding some time to read the [official documentation](https://docs.python.org/dev/library/unittest.mock.html) of the mock library.
 

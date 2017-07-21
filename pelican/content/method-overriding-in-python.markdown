@@ -15,7 +15,7 @@ Overriding is a very important part of OOP since it is the feature that makes in
 
 As for most OOP languages, in Python inheritance works through implicit delegation: when the object cannot satisfy a request, it first tries to forward the request to its ancestors, following the specific language rules in the case of multiple inheritance.
 
-An exemple:
+An example:
 
 ``` python
 class Parent(object):
@@ -29,7 +29,7 @@ class Child(Parent):
     pass
 ```
 
-As you can see the `Child` class is empty, but since it inherits from `Parent` Python takes charge of routing all method calls. So you may use the `get_value()` method of `Child` objects and exerything works as expected.
+As you can see the `Child` class is empty, but since it inherits from `Parent` Python takes charge of routing all method calls. So you may use the `get_value()` method of `Child` objects and everything works as expected.
 
 ``` pycon
 >>> c = Child()
@@ -79,11 +79,11 @@ dict_proxy({'__module__': '__main__',
 dict_proxy({'__module__': '__main__', '__doc__': None})
 ```
 
-This shows that the `Child` class does not actually contain the `get_value()` method and that a mechanism of automatical delegation is active under the hood. For an insight on this mechanism check [this post](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1/).
+This shows that the `Child` class does not actually contain the `get_value()` method and that a mechanism of automatic delegation is active under the hood. For an insight on this mechanism check [this post](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1/).
 
 ## Method overriding in action
 
-In Python method overriding occours simply defining in the child class a method with the same name of a method in the parent class. When you define a method in the object you make this latter able to satisfy that method call, so the implementations of its ancestors do not come in play.
+In Python method overriding occurs simply defining in the child class a method with the same name of a method in the parent class. When you define a method in the object you make this latter able to satisfy that method call, so the implementations of its ancestors do not come in play.
 
 ``` python
 class Parent(object):
