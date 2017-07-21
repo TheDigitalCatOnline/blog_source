@@ -24,7 +24,7 @@ except TypeError:
 	...
 ```
 
-does not check if the object is a `list` or a `dictionary` (both would allow the `[1]` notation), but if the object can be accessed by key (or index). When you accept a parameter in a function Python does not specify the type (leaving aside type hints) because you are not interestend in accepting a given type or one of its derived types. You are interested in accepting something that provides the methods you will use.
+does not check if the object is a `list` or a `dictionary` (both would allow the `[1]` notation), but if the object can be accessed by key (or index). When you accept a parameter in a function Python does not specify the type (leaving aside type hints) because you are not interested in accepting a given type or one of its derived types. You are interested in accepting something that provides the methods you will use.
 
 The behaviour, in an object-oriented environment, is the run-time interface of the object. This is different from the static interface, which is the collection of the methods provided by the object. The run-time interface is the actual interface the object shows when it is used, and this encompasses the methods provided by its class, but also methods provided by parent classes, the metaclass and other entry points provided by `__getattr__`.
 
@@ -83,7 +83,7 @@ This is very natural because, after all, `someclass` is the best source of judge
 
 ## A new type of subclass
 
-With the introduction of delegation-based instance and sublcass checks, Python provides a new type of subclass, and thus a new way to relate classes together. Now a subclass may be a real subclass, obtained using inheritance
+With the introduction of delegation-based instance and subclass checks, Python provides a new type of subclass, and thus a new way to relate classes together. Now a subclass may be a real subclass, obtained using inheritance
 
 ``` python
 class ChildClass(ParentClass):
@@ -142,7 +142,7 @@ True
 
 As you can see, the `MyClass` class is initially not recognized as a subclass of `collections.Sequence`, but after the registration `issubclass()` returns `True`, even if the class is still empty.
 
-## Hot to create ABCs
+## How to create ABCs
 
 The example given by the official documentation is very simple and clear
 
@@ -178,7 +178,7 @@ Metaclasses are a strange topic in Python. Most of the times the advice given to
 
 I don't think so. As a matter of facts I definitely disagree with such position, for many reasons.
 
-First of all, if you are programming in Python its better for you to understand everything Python provides you, both the good and the bad parts. Programming languages are tools, and you shall know their strengths and their limitations. Most of the times what we call "limitations" are just features that become a restraint just because we are not aware of them. The C language, for example, is not object-oriented. Is this a strenght or a limitation? Python provides you a very powerful inspection mechanism. Is this a strength or a limitations? I could give countless other examples.
+First of all, if you are programming in Python its better for you to understand everything Python provides you, both the good and the bad parts. Programming languages are tools, and you shall know their strengths and their limitations. Most of the times what we call "limitations" are just features that become a restraint just because we are not aware of them. The C language, for example, is not object-oriented. Is this a strength or a limitation? Python provides you a very powerful inspection mechanism. Is this a strength or a limitations? I could give countless other examples.
 
 Second, powerful features are the one you should know better. After all, we use a language for the unique features it provides, not for the features it shares with other languages. I use Python because of its powerful polymorphism implementation, not because of loops and inheritance. Those are provided by Java and C++, too, for example. I write a device driver in C because of the closeness to the machine language and its speed, not because of the `int` and `float` types, which are provided by many other languages. So, since powerful features are what let the language do what others cannot, those are the ones you have to master.
 
@@ -190,7 +190,7 @@ Metaclasses are part of the language. And they are not complex to understand.
 
 ## Why metaclasses for ABCs?
 
-If you program in Python you should be somehow familiar with classes and instances. You know that when you build an instance you usa a class (like a blueprint) and that the class can put things into the instance. For example
+If you program in Python you should be somehow familiar with classes and instances. You know that when you build an instance you use a class (like a blueprint) and that the class can put things into the instance. For example
 
 ``` python
 # Class definition
@@ -234,7 +234,7 @@ This is all you need to understand metaclasses. When you build a class you need 
 
 ## Metaclasses and MRO
 
-A slightly advanced annotation: when I say that the metaclass _puts_ the methods into the class I'm simplifiying the whole thing. As a matter of fact, like a class provides methods to the instance at runtime through the `__class__` attribute and the MRO protocol, the metaclass provides methods for the class. Attributes, instead, are put inside the class by the `__new__` or `__init__` methods of the metaclass.
+A slightly advanced annotation: when I say that the metaclass _puts_ the methods into the class I'm simplifying the whole thing. As a matter of fact, like a class provides methods to the instance at runtime through the `__class__` attribute and the MRO protocol, the metaclass provides methods for the class. Attributes, instead, are put inside the class by the `__new__` or `__init__` methods of the metaclass.
 
 Let us review the MRO mechanism for instances and classes first. When you call a method on an instance Python automatically looks for that method in the instance first, then in the parent class and in every class in its hierarchy.
 
@@ -340,7 +340,7 @@ I hope this post helped you understand that Abstract Base Classes, and in partic
 
 ## Sources
 
-The official documentation of the `abc` module is very well written. [Here](https://docs.python.org/3.5/library/abc.html) you find the version for Python 3.5. I also suggest to read the original [PEP 3119](https://www.python.org/dev/peps/pep-3119) and the realated [PEP 3141](https://www.python.org/dev/peps/pep-3141) for a deeper undestanding of the topic.
+The official documentation of the `abc` module is very well written. [Here](https://docs.python.org/3.5/library/abc.html) you find the version for Python 3.5. I also suggest to read the original [PEP 3119](https://www.python.org/dev/peps/pep-3119) and the related [PEP 3141](https://www.python.org/dev/peps/pep-3141) for a deeper understanding of the topic.
 
 ## Feedback
 

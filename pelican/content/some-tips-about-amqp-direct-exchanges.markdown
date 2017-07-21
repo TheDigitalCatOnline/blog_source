@@ -58,7 +58,7 @@ Given this configuration an obvious requirement is to be able to reach programs 
 
 * All programs on a given host. This is useful for example when you are going to reset that machine, and you need to previously signal each program running on it.
 * All programs running with a given name. This can be leveraged, for example, because you updated the executable or some plugins and you want them to refresh the code.
-* A single program, given its unique key `pid@host`. This comes in handy when you have to address a specific process, for example to gracefuly terminate it or to collect output.
+* A single program, given its unique key `pid@host`. This comes in handy when you have to address a specific process, for example to gracefully terminate it or to collect output.
 
 All these requirements can be fulfilled by a single direct exchange and multiple queues with suitable routing keys.
 

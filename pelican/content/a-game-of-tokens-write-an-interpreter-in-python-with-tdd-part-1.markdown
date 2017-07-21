@@ -74,8 +74,8 @@ The main components of our interpreter are the following:
 
 * **Token**: a token is the minimal element of the language syntax, like an integer (not a digit, but a group of them), a name (not a letter but a group of them), or a symbol (like the mathematical operations).
 * **Buffer**: the input text (the program) has to be managed by a specific component. Parsing the input text has many requirements, among them being able to read upcoming parts of the text and to move back, or to move to specific locations.
-* **Lexer**: this is the first component of standard interpreters. Its job is to divide the stream of input charachters into meaningful chunks called tokens. It will process a string like "123 + x" and output three tokens: an integer, a symbol and a variable name.
-* **Parser**: the second component of standard interpreters. It analyses the stream of tokens produced by the lexer and produces a data structure that representes the whole program.
+* **Lexer**: this is the first component of standard interpreters. Its job is to divide the stream of input characters into meaningful chunks called tokens. It will process a string like "123 + x" and output three tokens: an integer, a symbol and a variable name.
+* **Parser**: the second component of standard interpreters. It analyses the stream of tokens produced by the lexer and produces a data structure that represents the whole program.
 * **Visitor**: the output of the parser is processed by a component that will either write the equivalent in another language or execute it.
 * **Command Line Interface (CLI)**: the whole stack can be directly used by a REPL (Read, Evaluate, Print Loop), a command line interface similar to the one Python provides. There each line is lexed, parsed, and visited, and the result is printed immediately.
 
@@ -363,9 +363,9 @@ def test_parse_integer():
     }
 ```
 
-The `node` variable is an instance of a specific class that contains integers, `IntegerNode` (but you are free to name it as you want, as this is not tested). Please note that this class doesn't consider the value as a string anymore, but as a proper (Python) integer. Now edit the file `smallcalc/calc_parser.py` and write some code that passes the test.
+The `node` variable is an instance of a specific class that contains integers, `IntegerNode` (but you are free to name it as you want, as this is not tested). Please note that this class doesn't consider the value as a string any more, but as a proper (Python) integer. Now edit the file `smallcalc/calc_parser.py` and write some code that passes the test.
 
-Does it work? Well, you just wrote your first parser! Congratulations! From here to somethings that understands C++ or Python the journey is pretty long, but the initial steps are promising.
+Does it work? Well, you just wrote your first parser! Congratulations! From here to something that understands C++ or Python the journey is pretty long, but the initial steps are promising.
 
 ## Visitor
 
@@ -493,7 +493,7 @@ def test_parse_expression():
     }
 ```
 
-I want to resume here the discussion about methematical operators and the role of the visitor that I started in the previous section. As you can see the expression is a generic binary operator, with a `left` term, a `right` term, and an `operator`. The operator, furthermore, is just a literal which value is the symbol we use for that binary operation.
+I want to resume here the discussion about mathematical operators and the role of the visitor that I started in the previous section. As you can see the expression is a generic binary operator, with a `left` term, a `right` term, and an `operator`. The operator, furthermore, is just a literal which value is the symbol we use for that binary operation.
 
 This parser, thus, is pretty ignorant of the different operations we can perform, giving the whole responsibility to the visitor. We could, however, implement the parser to make it produce something more specific, like for example a `binary_sum` or `addition` node, which represents only the addition, and which wouldn't need the `'operator'` key, as it is implicit in the node type.
 
@@ -612,7 +612,7 @@ expression: integer addsymbol integer
 
 The second limitation that our language has at the moment is that it cannot handle whitespaces. If you try to input an expression like `3 + 4` in the CLI the program will crash with an exception (why?). Traditionally, whitespaces are completely ignored by programming languages: in Python, as well as in C and many other languages, writing `3+4`, `3 + 4`, `3+ 4`, or `3   +   4` doesn't change the meaning at all.
 
-How can we put such a behavious in our language? Again, the lexer is the component in charge, as it should just skip whitespaces. So add this test to `tests/test_calc_lexer.py`
+How can we put such a behaviour in our language? Again, the lexer is the component in charge, as it should just skip whitespaces. So add this test to `tests/test_calc_lexer.py`
 
 ``` python
 def test_get_tokens_ignores_spaces():
@@ -752,7 +752,7 @@ Since this tutorial is a practical approach to the construction of an interprete
 
 For instance: the expression `3 + 4 - 5` gives `2` as a result. The result is the same if we perform `(3 + 4) - 5 = 7 - 5 = 2` or `3 + (4 - 5) = 3 - 1 = 2`, where the expressions between parenthesis are executed first.
 
-From the interpreter's point of view, then, we can process a chain of additions and subtractions without being concerned about precedence, which greatly simplyfies our job. As the output of the parser is a tree, however, we need to find a way to represent such a chain of operations in that form. One way is to nest expressions, which means that each operation is a single `binary` node, with the left term containing an integer and the right one the rest of the expression. In the previous example `3 + 4 - 5` is represented by an addition between `3` and `4 - 5`. `4 - 5`, in turn, is another binary node, asubtraction between `4` and `5`.
+From the interpreter's point of view, then, we can process a chain of additions and subtractions without being concerned about precedence, which greatly simplifies our job. As the output of the parser is a tree, however, we need to find a way to represent such a chain of operations in that form. One way is to nest expressions, which means that each operation is a single `binary` node, with the left term containing an integer and the right one the rest of the expression. In the previous example `3 + 4 - 5` is represented by an addition between `3` and `4 - 5`. `4 - 5`, in turn, is another binary node, a subtraction between `4` and `5`.
 
 Let us start checking if the lexer understand multiple operations
 
