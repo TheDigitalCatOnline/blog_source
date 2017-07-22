@@ -165,17 +165,17 @@ and calling the `stats()` method with that output, with `iage` set to `20`, and 
 
 ``` json
 {
-    'avg_age': 62,
-    'avg_salary': 55165,
-    'avg_yearly_increase': 837,
-    'max_salary': [{
+    "avg_age": 62,
+    "avg_salary": 55165,
+    "avg_yearly_increase": 837,
+    "max_salary": [{
         "id": 3,
         "name": "Garth",
         "surname": "Fields",
         "age": 70,
         "salary": "£70472"
     }],
-    'min_salary': [{
+    "min_salary": [{
         "id": 1,
         "name": "Laith",
         "surname": "Simmons",
