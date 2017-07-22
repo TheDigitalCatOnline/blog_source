@@ -16,12 +16,12 @@ Programming, after all, is craftsmanship.
 
 The simple use case I will use for this post is that of a service API that we can access, and that produces data in JSON format, namely a **list** of elements like the one shown here
 
-``` python
+``` json
 {
-    'age': 20,
-    'surname': 'Frazier',
-    'name': 'John',
-    'salary': '£28943'
+    "age": 20,
+    "surname": "Frazier",
+    "name": "John",
+    "salary": "£28943"
 }
 ```
 
