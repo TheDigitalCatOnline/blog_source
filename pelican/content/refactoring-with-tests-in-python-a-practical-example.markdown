@@ -867,7 +867,7 @@ class NewDataStats:
 Now I can start an iterative process:
 
 1. I will copy one of the tests of `DataStats` and adapt it to `NewDataStats`
-2. I will copy come code from `DataStats` to `NewDataStats`, adapting it to the new API and making it pass the test.
+2. I will copy some code from `DataStats` to `NewDataStats`, adapting it to the new API and making it pass the test.
 
 At this point iteratively removing methods from `DataStats` and replacing them with a call to `NewDataStats` would be overkill. I'll show you in the next section why, and what we can do to avoid  that.
 
@@ -896,7 +896,7 @@ Once finished, I noticed that, as now methods like `_ages()` do not require an i
         return [d['age'] for d in self.data]
 ```
 
-It is time to replace the methods of `DataStats` with calls to `NewDataStats`. We could do it method by method, bu actually the only thing that we really need is to replace `stats()`. So the new code is
+It is time to replace the methods of `DataStats` with calls to `NewDataStats`. We could do it method by method, but actually the only thing that we really need is to replace `stats()`. So the new code is
 
 ``` python
     def stats(self, data, iage, isalary):
