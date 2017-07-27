@@ -904,7 +904,7 @@ It is time to replace the methods of `DataStats` with calls to `NewDataStats`. W
         return nds.stats(iage, isalary)
 ```
 
-And since all the other methods are no more used we can safely delete them, checking that the tests do not fail. Speaking of tests, removing method will make many tests of `DataStats` fail, so we need to remove them.
+And since all the other methods are no more used we can safely delete them, checking that the tests do not fail. Speaking of tests, removing methods will make many tests of `DataStats` fail, so we need to remove them.
 
 ``` python
 class DataStats:
@@ -917,6 +917,10 @@ class DataStats:
 ## Final words
 
 I hope this little tour of a refactoring session didn't result too trivial, and helped you to grasp the basic concepts of this technique. If you are interested in the subject I'd strongly recommend the classic book by Martin Fowler "Refactoring: Improving the Design of Existing Code", which is a collection of refactoring patterns. The reference language is Java, but the concepts are easily adapted to Python.
+
+## Updates
+
+2017-07-28: [delirious-lettuce](https://github.com/delirious-lettuce) and [Matt Beck](https://github.com/superbeckgit) did a very serious proofread and spotted many typos. Thank you both for reading the post and for taking the time to submit the issues!
 
 ## Feedback
 
