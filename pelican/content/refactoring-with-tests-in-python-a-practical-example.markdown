@@ -16,12 +16,12 @@ Programming, after all, is craftsmanship.
 
 The simple use case I will use for this post is that of a service API that we can access, and that produces data in JSON format, namely a **list** of elements like the one shown here
 
-``` python
+``` json
 {
-    'age': 20,
-    'surname': 'Frazier',
-    'name': 'John',
-    'salary': '£28943'
+    "age": 20,
+    "surname": "Frazier",
+    "name": "John",
+    "salary": "£28943"
 }
 ```
 
@@ -165,17 +165,17 @@ and calling the `stats()` method with that output, with `iage` set to `20`, and 
 
 ``` json
 {
-    'avg_age': 62,
-    'avg_salary': 55165,
-    'avg_yearly_increase': 837,
-    'max_salary': [{
+    "avg_age": 62,
+    "avg_salary": 55165,
+    "avg_yearly_increase": 837,
+    "max_salary": [{
         "id": 3,
         "name": "Garth",
         "surname": "Fields",
         "age": 70,
         "salary": "£70472"
     }],
-    'min_salary': [{
+    "min_salary": [{
         "id": 1,
         "name": "Laith",
         "surname": "Simmons",
