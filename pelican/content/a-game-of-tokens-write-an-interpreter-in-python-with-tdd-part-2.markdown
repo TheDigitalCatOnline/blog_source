@@ -1,5 +1,5 @@
 Title: A game of tokens: write an interpreter in Python with TDD - Part 2
-Date: 2017-06-07 23:00:00 +0100
+Date: 2017-10-01 15:00:00 +0100
 Category: Programming
 Tags: Python, Python3, TDD, testing, compilers
 Authors: Leonardo Giordani
