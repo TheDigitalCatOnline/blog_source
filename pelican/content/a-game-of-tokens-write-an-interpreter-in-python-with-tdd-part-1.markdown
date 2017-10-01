@@ -902,6 +902,10 @@ Grammars
 * [Extended Backus-Naur form on Wikipedia](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form)
 * [The language of languages](http://matt.might.net/articles/grammars-bnf-ebnf/)
 
+# Solution
+
+You can find my solution to this part [here](/blog/2017/07/12/a-game-of-tokens-solution-part-1/).
+
 # Titles
 
 The section quotes comes from some good movies, the complete list is: "The Lord of the Rings - The Return of the King" (2003), "Iron Man" (2008), "Raiders of the Lost Ark" (1981), "Braveheart" (1995), "The Matrix" (1999), "The Bourne Identity" (2002), "The Prestige" (2006).
