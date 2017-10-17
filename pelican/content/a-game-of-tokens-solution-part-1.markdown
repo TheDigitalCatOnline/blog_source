@@ -11,6 +11,8 @@ This is my solution of the challenge posted [here](/blog/2017/05/09/a-game-of-to
 
 Speaking of TDD I realised that I hadn't followed it very strictly, as sometimes I wrote more code than needed, usually forecasting future changes. I do not believe in a inflexible and uncompromising application of rules, so I do not consider this a big issue, as long as the result is a working code that is not blatantly overengineered.
 
+You can find the code for this part in [this repository](https://github.com/lgiordani/smallcalc). The branch called `part1` contains all the commits explained in this post, and every commit contains both the test(s) and the code that makes the test(s) pass.
+
 # Level 1 - End of file
 
 The base class to pass the test leverages the provided `text_buffer.TextBuffer` class, that exposes a `load()` method, directly composed here to `CalcLexer.load()`. As the test is not providing a text the easiest solution is just to return the tested token. I extracted `get_token()` from `get_tokens()` to have a method that is specifically focused on dealing with the current token.
