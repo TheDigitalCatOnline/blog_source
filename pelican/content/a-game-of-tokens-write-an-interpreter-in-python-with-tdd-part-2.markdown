@@ -474,7 +474,7 @@ That's all for this time. If you feel brave or do not like to wait for the next 
 
 # Titles
 
-The section quotes comes from some good films: "Aliens" (1986), "Ghostbusters" (1984), "Return of the Jedi" (1983), "Guardians of the Galaxy" (2014), "Highlander" (1986).
+The section quotes come from some good films: "Aliens" (1986), "Ghostbusters" (1984), "Return of the Jedi" (1983), "Guardians of the Galaxy" (2014), "Highlander" (1986).
 
 ## Feedback
 
