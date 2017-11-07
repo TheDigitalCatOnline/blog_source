@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Leonardo Giordani'
 SITENAME = u'The Digital Cat'
+SITESUBTITLE = "Adventures of a curious cat in the land of programming"
+SITEDESCRIPTION = "Bla bla bla"
 SITEURL = ''
 
 PATH = 'content'
@@ -69,7 +71,7 @@ STATIC_PATHS = ['images', 'code', 'notebooks', 'extra/CNAME']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
 TWITTER_USERNAME = 'thedigicat'
 
-THEME = "../laces3"
+THEME = "../editorial"
 
 LACES_CONTENT_BOOTSWATCH_THEME = 'spacelab'
 
