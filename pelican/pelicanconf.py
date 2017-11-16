@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 AUTHOR = u'Leonardo Giordani'
 SITENAME = u'The Digital Cat'
 SITESUBTITLE = "Adventures of a curious cat in the land of programming"
-SITEDESCRIPTION = "Bla bla bla"
 SITEURL = ''
 
 PATH = 'content'
@@ -58,7 +57,7 @@ SOCIAL = (
         ('GitHub', 'https://github.com/TheDigitalCatOnline'),
     )
 
-DEFAULT_PAGINATION = 10
+DEFAULT_PAGINATION = 9
 PAGINATION_PATTERNS = (
     (1, '{base_name}/', '{base_name}/index.html'),
     (2, '{base_name}/page/{number}/', '{base_name}/page/{number}/index.html'),
@@ -73,60 +72,4 @@ TWITTER_USERNAME = 'thedigicat'
 
 THEME = "../editorial"
 
-LACES_CONTENT_BOOTSWATCH_THEME = 'spacelab'
-
-LACES_PYGMENTS_STYLE = 'monokai'
-
-LACES_FAVICON = 'images/TheDigitalCat_favicon_32.png'
-
-LACES_ARTICLE_INFO_LIST = {
-    'fields': ['date', 'tags']
-}
-
-LACES_ARTICLE_INFO_PAGE = {
-    'fields': ['date', 'tags', 'series', 'author']
-}
-
-LACES_SERIES = {
-    'display_on_header': True,
-    'display_on_footer': True
-}
-
-LACES_BANNER = {
-    'file': 'images/TheDigitalCat_favicon_32.png',
-    'all_pages': False,
-    'subtitle': "Adventures of a curious cat in the land of programming"
-}
-
-LACES_NAVBAR_BRAND = {
-    'title': SITENAME,
-    'icon': 'paw'
-}
-
-LACES_SIDEBAR = {
-    'fields': ['tags', 'tags_inline', 'series', 'social', 'feeds'],
-    'recent': True,
-    'recent_num': 4,
-}
-
-LACES_LICENSE = {
-    'cc_short': 'CC-BY-SA'
-}
-
-# LACES_GITHUB = {
-#     'user': 'lgiordani',
-#     'repo_count': 4,
-#     'show_user_link': True
-# }
-
-LACES_ADDTHIS = {
-    'profile': 'ra-56d7f22eee8b0ddf'
-}
-
-LACES_TWITTER_CARDS = True
-
-LACES_OPEN_GRAPH = {
-    'image': 'images/TheDigitalCat_logo_200.jpg'    
-}
-
-LACES_COOKIECONSENT = True
+FAVICON = 'images/TheDigitalCat_favicon_32.png'
