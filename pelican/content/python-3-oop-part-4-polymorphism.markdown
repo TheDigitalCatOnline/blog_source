@@ -4,6 +4,7 @@ Category: Programming
 Tags: Python, Python3, OOP
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-4-polymorphism
+Image: python-3-oop
 Series: "Python 3 OOP"
 Summary:
 

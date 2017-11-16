@@ -4,6 +4,7 @@ Category: Projects
 Tags: Python, Pika, RabbitMQ, Postage
 Authors: Leonardo Giordani
 Slug: postage-a-rabbitmq-based-component-python-library
+Image: postage-a-rabbitmq-based-component-python-library
 Summary:
 
 

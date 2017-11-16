@@ -4,6 +4,7 @@ Category: Programming
 Tags: decorators, functional programming, metaprogramming, OOP, Python
 Authors: Leonardo Giordani
 Slug: python-decorators-metaprogramming-with-style
+Image: python-decorators-metaprogramming-with-style
 Summary:
 
 This post is the result of a lot of personal research on Python decorators, meta- and functional programming. I want however to thank Bruce Eckel and the people behind the open source book "Python 3 Patterns, Recipes and Idioms" for a lot of precious information on the subject. See the Resources section at the end of the post to check their work.

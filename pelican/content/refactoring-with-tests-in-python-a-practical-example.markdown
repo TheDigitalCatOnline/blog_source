@@ -4,6 +4,7 @@ Category: Programming
 Tags: OOP, Python, Python3, refactoring, TDD, testing
 Authors: Leonardo Giordani
 Slug: refactoring-with-test-in-python-a-practical-example
+Image: refactoring-with-tests-in-python
 Summary: 
 
 This post contains a step-by-step example of a refactoring session guided by tests. When dealing with untested or legacy code refactoring is dangerous and tests can help us do it the right way, minimizing the amount of bugs we introduce, and possibly completely avoiding them.

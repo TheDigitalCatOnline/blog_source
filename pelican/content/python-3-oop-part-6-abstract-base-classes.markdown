@@ -4,6 +4,7 @@ Category: Programming
 Tags: Python, Python3, OOP, metaprogramming, metaclasses
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-6-abstract-base-classes
+Image: python-3-oop
 Series: "Python 3 OOP"
 Summary:
 

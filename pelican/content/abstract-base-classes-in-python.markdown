@@ -4,6 +4,7 @@ Category: Programming
 Tags: decorators, metaclasses, metaprogramming, Notebook, OOP, Python, Python2, Python3
 Authors: Leonardo Giordani
 Slug: abstract-base-classes-in-python
+Image: abstract-base-classes
 Summary: 
 
 With the introduction of Abstract Base Classes, Python once again shows its nature of a very innovative and flexible language. It is interesting to see how such a remarkable feature has been introduced into the language by a pure Python module. This demonstrates that Python is built in a way that is very open to changes, thanks to its foundations in pure polymorphism based on delegation.

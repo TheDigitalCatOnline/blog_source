@@ -4,6 +4,7 @@ Category: Programming
 Tags: versioning
 Authors: Leonardo Giordani
 Slug: versioning-an-underrated-discipline
+Image: versioning-an-underrated-discipline
 Version: 2
 Summary:
 

@@ -4,6 +4,7 @@ Category: Programming
 Tags: OOP, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
 Slug: clean-architectures-in-python-a-step-by-step-example
+Image: clean-architectures
 Summary: 
 
 One year ago I was introduced by my friend [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some very interesting posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
@@ -77,7 +78,7 @@ You can find the source code in [this GitHub repository](https://github.com/lgio
 
 # Project initialization
 
-**Git tag: [`step01`](https://github.com/lgiordani/rentomatic/tree/step01)**
+#### **Git tag: [step01](https://github.com/lgiordani/rentomatic/tree/step01)**
 
 _Update_: [this](https://github.com/ardydedase/cookiecutter-pypackage) Cookiecutter package creates an environment like the one I am creating in this section. I will keep the following explanation so that you can see how to manage requirements and configurations, but for your next project consider using this automated tool.
 
@@ -197,7 +198,7 @@ Note that every step in this post produces tested code and a of coverage of 100%
 
 # Domain models
 
-**Git tag: [`step02`](https://github.com/lgiordani/rentomatic/tree/step02)**
+**Git tag: [step02](https://github.com/lgiordani/rentomatic/tree/step02)**
 
 Let us start with a simple definition of the `StorageRoom` model. As said before, the clean architecture models are very lightweight, or at least they are lighter than their counterparts in a framework.
 
@@ -281,7 +282,7 @@ The `DomainModel` abstract base class is an easy way to categorize the model for
 
 # Serializers
 
-**Git tag: [`step03`](https://github.com/lgiordani/rentomatic/tree/step03)**
+**Git tag: [step03](https://github.com/lgiordani/rentomatic/tree/step03)**
 
 Our model needs to be serialized if we want to return it as a result of an API call. The typical serialization format is JSON, as this is a broadly accepted standard for web-based API. The serializer is not part of the model, but is an external specialized class that receives the model instance and produces a representation of its structure and values.
 
@@ -342,7 +343,7 @@ There is a certain degree of repetition in the code we wrote, and this is the an
 
 # Use cases (part 1)
 
-**Git tag: [`step04`](https://github.com/lgiordani/rentomatic/tree/step04)**
+**Git tag: [step04](https://github.com/lgiordani/rentomatic/tree/step04)**
 
 It's time to implement the actual business logic our application wants to expose to the outside world. Use cases are the place where we implement classes that query the repository, apply business rules, logic, and whatever transformation we need for our data, and return the results.
 
@@ -426,7 +427,7 @@ We want thus to introduce some structures to wrap input and outputs of our use c
 
 # Requests and responses
 
-**Git tag: [`step05`](https://github.com/lgiordani/rentomatic/tree/step05)**
+**Git tag: [step05](https://github.com/lgiordani/rentomatic/tree/step05)**
 
 Request and response objects are an important part of a clean architecture, as they transport call parameters, inputs and results from outside the application into the use cases layer.
 
@@ -490,7 +491,7 @@ class ResponseSuccess(object):
 
 # Use cases (part 2)
 
-**Git tag: [`step06`](https://github.com/lgiordani/rentomatic/tree/step06)**
+**Git tag: [step06](https://github.com/lgiordani/rentomatic/tree/step06)**
 
 Now that we have implemented the request and response object we can change the test code to include those structures. Change the `tests/use_cases/test_storageroom_list_use_case.py` to contain this code
 
@@ -579,7 +580,7 @@ To explore these missing parts of the architecture let us improve the current us
 
 # Requests and validation
 
-**Git tag: [`step07`](https://github.com/lgiordani/rentomatic/tree/step07)**
+**Git tag: [step07](https://github.com/lgiordani/rentomatic/tree/step07)**
 
 I want to add a `filters` parameter to the request. Through that parameter the caller can add different filters by specifying a name and a value for each filter (for instance `{'price_lt': 100}` to get all results with a price lesser than 100).
 
@@ -706,7 +707,7 @@ Since we can now tell bad requests from good ones we need to introduce a new typ
 
 # Responses and failures
 
-**Git tag: [`step08`](https://github.com/lgiordani/rentomatic/tree/step08)**
+**Git tag: [step08](https://github.com/lgiordani/rentomatic/tree/step08)**
 
 What happens if the use case encounter an error? Use cases can encounter a wide set of errors: validation errors, as we just discussed in the previous section, but also business logic errors or errors that come from the repository layer. Whatever the error, the use case shall always return an object with a known structure (the response), so we need a new object that provides a good support for different types of failures.
 
@@ -903,7 +904,7 @@ We add the relevant methods to the class and change the `build_from_invalid_requ
 
 # Use cases (part 3)
 
-**Git tag: [`step09`](https://github.com/lgiordani/rentomatic/tree/step09)**
+**Git tag: [step09](https://github.com/lgiordani/rentomatic/tree/step09)**
 
 Our implementation of responses and requests is finally complete, so now we can implement the last version of our use case. The use case correctly returns a `ResponseSuccess` object but is still missing a proper validation of the incoming request.
 
@@ -1020,7 +1021,7 @@ As you can see the first thing that the `execute()` method does is to check if t
 
 # Intermezzo: refactoring
 
-**Git tag: [`step10`](https://github.com/lgiordani/rentomatic/tree/step10)**
+**Git tag: [step10](https://github.com/lgiordani/rentomatic/tree/step10)**
 
 A clean architecture is _not_ a framework, so it provides very few generic features, unlike products like for example Django, which provide models, ORM, and all sorts of structures and libraries. Nevertheless, some classes can be isolated from our code and provided as a library, so that we can reuse the code. In this section I will guide you through a refactoring of the code we already have, during which we will isolate common features for requests, responses, and use cases.
 
@@ -1128,7 +1129,7 @@ class StorageRoomListUseCase(uc.UseCase):
 
 # The repository layer
 
-**Git tag: [`step11`](https://github.com/lgiordani/rentomatic/tree/step11)**
+**Git tag: [step11](https://github.com/lgiordani/rentomatic/tree/step11)**
 
 The repository layer is the one in which we run the data storage system. As you saw when we implemented the use case we access the data storage through an API, in this case the `list()` method of the repository. The level of abstraction provided by a repository level is higher than that provided by an ORM or by a tool like SQLAlchemy. The repository layer provides only the endpoints that the application needs, with an interface which is tailored on the specific business problems the application implements.
 
@@ -1297,7 +1298,7 @@ class MemRepo:
 
 # The REST layer (part1)
 
-**Git tag: [`step12`](https://github.com/lgiordani/rentomatic/tree/step12)**
+**Git tag: [step12](https://github.com/lgiordani/rentomatic/tree/step12)**
 
 This is the last step of our journey into the clean architecture. We created the domain models, the serializers, the use cases and the repository. We are actually missing an interface that glues everything together, that is gets the call parameters from the user, initializes a use case with a repository, runs the use case that fetches the domain models from the repository and converts them to a standard format. This layer can be represented by a wide number of interfaces and technologies. For example a command line interface (CLI) can implement exactly those steps, getting the parameters via command line switches, and returning the results as plain text on the console. The same underlying system, however, can be leveraged by a web page that gets the call parameters from a set of widgets, perform the steps described above, and parses the returned JSON data to show the result on the same page.
 
@@ -1541,7 +1542,7 @@ This code demonstrates how the clean architecture works in a nutshell. The funct
 
 # The server in action
 
-**Git tag: [`step13`](https://github.com/lgiordani/rentomatic/tree/step13)**
+**Git tag: [step13](https://github.com/lgiordani/rentomatic/tree/step13)**
 
 Before I fix the missing parts of the endpoint let us see the server in action, so we can finally enjoy the product we have been building during this long post.
 
@@ -1599,7 +1600,7 @@ If you open your browser and navigate to [http://127.0.0.1:5000/storagerooms](ht
 
 # The REST layer (part2)
 
-**Git tag: [`step14`](https://github.com/lgiordani/rentomatic/tree/step14)**
+**Git tag: [step14](https://github.com/lgiordani/rentomatic/tree/step14)**
 
 Let us cover the two missing cases in the endpoint. First I introduce a test to check if the endpoint correctly handles querystring parameters
 
