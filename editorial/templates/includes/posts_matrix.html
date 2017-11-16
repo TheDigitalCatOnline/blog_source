@@ -1,0 +1,64 @@
+<div class="posts">
+    {% if articles_page and articles_paginator.num_pages > 1 %}
+    <ul class="pagination">
+        {% if articles_page.has_previous() %}
+        {% set num = articles_page.previous_page_number() %}
+        <li><a class="button" href="{{ SITEURL }}/{{ articles_previous_page.url }}">&laquo;</a></li>
+        {% else %}
+        <li><span class="button disabled">&laquo;</span></li>
+        {% endif %}
+        
+        {% for num in range( 1, 1 + articles_paginator.num_pages ) %}
+        {% set page = articles_paginator.page(num) %}
+        <li><a href="{{ SITEURL }}/{{ page.url }}" class="page {{ 'active' if num == articles_page.number else '' }}">{{ num }}</a></li>
+        {% endfor %}
+        
+        {% if articles_page.has_next() %}
+        <li><a class="button" href="{{ SITEURL }}/{{ articles_next_page.url }}">&raquo;</a></li>
+        {% else %}
+        <li><span class="button disabled">&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+<div class="posts">
+    {% for article in (articles_page.object_list if articles_page else articles) %}
+    <article>
+        <h4 class="date"><time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time></h4>
+        <a href="{{ SITEURL }}/{{ article.url }}" class="image">
+            <img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="" />
+            <div>
+                <h3>{{ article.title }}</h3>
+            </div>
+        </a>
+        <p class="tags">
+        {% for tag in article.tags %}
+        <a class="button special small" href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}{% endif %}
+        {% endfor %}
+        </p>
+    </article>
+    {% endfor %}
+</div>
+<div class="posts">
+    {% if articles_page and articles_paginator.num_pages > 1 %}
+    <ul class="pagination">
+        {% if articles_page.has_previous() %}
+        {% set num = articles_page.previous_page_number() %}
+        <li><a class="button" href="{{ SITEURL }}/{{ articles_previous_page.url }}">&laquo;</a></li>
+        {% else %}
+        <li><span class="button disabled">&laquo;</span></li>
+        {% endif %}
+        
+        {% for num in range( 1, 1 + articles_paginator.num_pages ) %}
+        {% set page = articles_paginator.page(num) %}
+        <li><a href="{{ SITEURL }}/{{ page.url }}" class="page {{ 'active' if num == articles_page.number else '' }}">{{ num }}</a></li>
+        {% endfor %}
+        
+        {% if articles_page.has_next() %}
+        <li><a class="button" href="{{ SITEURL }}/{{ articles_next_page.url }}">&raquo;</a></li>
+        {% else %}
+        <li><span class="button disabled">&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>

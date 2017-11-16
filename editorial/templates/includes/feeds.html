@@ -1,0 +1,18 @@
+<section>
+    <header class="major">
+        <h2>Feeds</h2>
+    </header>
+    <ul class="list-clean">
+        {% if FEED_ALL_ATOM %}
+        <li><a href="{{ SITEURL }}/{{ FEED_ALL_ATOM }}"><i class="fa fa-rss"></i> All posts</a></li>
+        {% endif %}
+
+        {% if tag and TAG_FEED_ATOM %}
+        <li><a href="{{ SITEURL }}/{{ TAG_FEED_ATOM|format(tag.slug) }}"><i class="fa fa-rss"></i> All posts tagged with: {{ tag }}</a></li>
+        {% endif %}
+
+        {% if category and CATEGORY_FEED_ATOM %}
+        <li><a href="{{ SITEURL }}/{{ CATEGORY_FEED_ATOM|format(category.slug) }}"><i class="fa fa-rss"></i> All posts in category: {{ category }}</a></li>
+        {% endif %}
+    </ul>
+</section>

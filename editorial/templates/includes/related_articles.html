@@ -1,0 +1,10 @@
+<section id="related-posts">
+    <h2>Related Posts</h2>
+    <div class="box">
+        <ul>
+            {% for related_post in article.related_posts %}
+            <li><a href="{{ SITEURL }}/{{ related_post.url }}">{{ related_post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
