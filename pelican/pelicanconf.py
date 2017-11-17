@@ -21,7 +21,7 @@ TRANSLATION_FEED_ATOM = None
 DISPLAY_FEEDS_ON_SIDEBAR = True
 DISPLAY_TAGS_ON_SIDEBAR = False
 
-JINJA_EXTENSIONS = ['jinja2.ext.with_', 'jinja2.ext.do']
+JINJA_ENVIRONMENT = {'extensions': ['jinja2.ext.with_', 'jinja2.ext.do']}
 
 ARTICLE_URL = 'blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
 ARTICLE_SAVE_AS = ARTICLE_URL + 'index.html'

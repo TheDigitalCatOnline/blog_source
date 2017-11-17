@@ -2,12 +2,7 @@
     <header class="major">
         <h2>Tags</h2>
     </header>
-    {% if 'tags_inline' in LACES_SIDEBAR.fields %}
-        {% set tags = tag_cloud | sort(attribute='0') %}
-    {% else %}
-        {% set tags = tag_cloud | sort(attribute='1') %}
-    {% endif %}
-
+    {% set tags = tag_cloud | sort(attribute='0') %}
     <ul class="list-inline list-clean" id="tags-side">
         {% for tag in tags %}
         <li class="tag-{{ tag.1 }}">
