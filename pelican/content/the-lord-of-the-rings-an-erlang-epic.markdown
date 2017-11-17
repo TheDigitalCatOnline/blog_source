@@ -4,6 +4,7 @@ Category: Programming
 Tags: Erlang, concurrent programming
 Authors: Leonardo Giordani
 Slug: the-lord-of-the-rings-an-erlang-epic
+Image: the-lord-of-the-rings-an-erlang-epic
 Summary:
 
 ## Abstract

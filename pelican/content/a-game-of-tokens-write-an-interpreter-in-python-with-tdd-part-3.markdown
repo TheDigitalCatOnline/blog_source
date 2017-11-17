@@ -4,7 +4,8 @@ Category: Programming
 Tags: Python, Python3, TDD, testing, compilers
 Authors: Leonardo Giordani
 Slug: a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3
-Series: "A game of tokens"
+Series: A game of tokens
+Image: a-game-of-tokens
 Summary:
 
 This is the third instalment of a series of posts on how to write an interpreter in Python. In the [first part](/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1) we developed together a small command line calculator that could sum and subtract numbers, while in the [second part](/blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2) we went further adding multiplication, division and unary plus and minus. Both parts give only the tests your code is supposed to pass, and my personal solution can be found [here](/blog/2017/07/12/a-game-of-tokens-solution-part-1) for the first part, and [here](/blog/2017/10/17/a-game-of-tokens-solution-part-2) for the second.

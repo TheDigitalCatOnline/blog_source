@@ -4,7 +4,8 @@ Category: Programming
 Tags: Python, Python3, TDD, testing, compilers
 Authors: Leonardo Giordani
 Slug: a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2
-Series: "A game of tokens"
+Series: A game of tokens
+Image: a-game-of-tokens
 Summary:
 
 My solution to the [first part](/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1) can be found [here](https://github.com/lgiordani/smallcalc/tree/part1), and a discussion about the code has been published [here](/blog/2017/07/12/a-game-of-tokens-solution-part-1) Remember that this is only one possible solution, and that giving you the tests I already biased the whole project towards my implementation of choice, so feel free to experiment on your own!

@@ -1,0 +1,39 @@
+<div class="inner">
+    <!-- Menu -->
+    <nav id="menu">
+        <header class="major">
+            <h2>Menu</h2>
+        </header>
+        <ul>
+            <li><a href="{{ SITEURL }}/">Homepage</a></li>
+            <li><a href="{{ SITEURL }}/pages/about.html">About</a></li>
+            <li><a href="{{ SITEURL }}/archives/">Archives</a></li>
+        </ul>
+    </nav>
+
+    <!-- Feeds -->
+    {% if 'feeds' in LACES_SIDEBAR.fields %}
+    {% include 'includes/feeds.html' %}
+    {% endif %}
+
+    <!-- Recent posts -->
+    {% if LACES_SIDEBAR.recent %}
+    {% include 'includes/recent.html' %}
+    {% endif %}
+
+    <!-- Tags -->
+    {% if 'tag_cloud' in PLUGINS and 'tags' in LACES_SIDEBAR.fields %}
+    {% include 'includes/tags.html' %}
+    {% endif %}
+
+    <!-- Section -->
+    {% if 'social' in LACES_SIDEBAR.fields and SOCIAL %}
+    {% include 'includes/social.html' %}
+    {% endif %}
+
+    <!-- Footer -->
+    <footer id="footer">
+        <p class="copyright">Editorial theme by: <a href="https://html5up.net">HTML5 UP</a>.</p>
+    </footer>
+
+</div>

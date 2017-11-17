@@ -4,7 +4,8 @@ Category: Programming
 Tags: Python, Python3, TDD, testing, compilers
 Authors: Leonardo Giordani
 Slug: a-game-of-tokens-solution-part-2
-Series: "A game of tokens"
+Series: A game of tokens
+Image: a-game-of-tokens-solutions
 Summary: 
 
 Here we are, with my solution to the second part of "A Game of Tokens", aka how to write a simple interpreter in Python and survive to tell the tale. The second part of the challenge can be found [here](/blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2/). Again, it is never repeated too many times, this is my personal solution. Your solution can be different, and if all the test pass it is correct!

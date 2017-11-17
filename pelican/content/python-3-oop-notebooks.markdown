@@ -4,6 +4,7 @@ Category: Programming
 Tags: Python, Python3, OOP, Notebook
 Authors: Leonardo Giordani
 Slug: python-3-oop-notebooks
+Image: python-3-oop-notebooks
 Summary:
 
 The _Python 3 OOP_ series of posts that you can find [here](/blog/2014/08/20/python-3-oop-part-1-objects-and-types/) is now available as a series of **IPython Notebooks**.
