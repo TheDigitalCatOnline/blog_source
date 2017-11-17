@@ -12,24 +12,18 @@
     </nav>
 
     <!-- Feeds -->
-    {% if 'feeds' in LACES_SIDEBAR.fields %}
     {% include 'includes/feeds.html' %}
-    {% endif %}
 
     <!-- Recent posts -->
-    {% if LACES_SIDEBAR.recent %}
     {% include 'includes/recent.html' %}
-    {% endif %}
 
     <!-- Tags -->
-    {% if 'tag_cloud' in PLUGINS and 'tags' in LACES_SIDEBAR.fields %}
+    {% if 'tag_cloud' in PLUGINS %}
     {% include 'includes/tags.html' %}
     {% endif %}
 
     <!-- Section -->
-    {% if 'social' in LACES_SIDEBAR.fields and SOCIAL %}
     {% include 'includes/social.html' %}
-    {% endif %}
 
     <!-- Footer -->
     <footer id="footer">
