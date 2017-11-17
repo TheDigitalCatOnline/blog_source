@@ -5,6 +5,7 @@ Tags: Scala, functional programming
 Authors: Leonardo Giordani
 Slug: 99-scala-problems-09-pack-consecutive-duplicates
 Series: "99 Scala Problems"
+Image: 99-scala-problems
 Summary: 
 
 ## The problem

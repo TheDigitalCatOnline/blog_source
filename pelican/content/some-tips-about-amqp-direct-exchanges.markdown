@@ -4,6 +4,7 @@ Category: Programming
 Tags: RabbitMQ, AMQP
 Authors: Leonardo Giordani
 Slug: some-tips-about-amqp-direct-exchanges
+Image: some-tips-about-amqp-direct-exchanges
 Summary:
 
 _EDIT: thanks to Alvaro Videla that pointed out that a queue can be connected to more than one exchange; sorry for the wrong information._

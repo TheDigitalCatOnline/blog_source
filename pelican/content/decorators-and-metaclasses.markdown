@@ -4,6 +4,7 @@ Category: Programming
 Tags: Python3, Python, OOP, decorators, metaclasses, metaprogramming
 Authors: Leonardo Giordani
 Slug: decorators-and-metaclasses
+Image: decorators-and-metaclasses
 Summary:
 
 ## Abstract

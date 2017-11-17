@@ -4,6 +4,7 @@ Category: Programming
 Tags: Python, Django
 Authors: Leonardo Giordani
 Slug: digging-up-django-class-based-views-3
+Image: digging-up-django-class-based-views
 Series: "Digging up Django class-based views"
 Summary:
 

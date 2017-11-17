@@ -1,0 +1,24 @@
+<section>
+    <header class="major">
+        <h2>Get in touch</h2>
+    </header>
+    <ul class="list-clean" id="social">
+        {% for s in SOCIAL %}
+        
+        {% if s[2] %}
+        {% set name_sanitized = s[2]|lower|replace('+','-plus')|replace(' ','-') %}
+        {% else %}
+        {% set name_sanitized = s[0]|lower|replace('+','-plus')|replace(' ','-') %}
+        {% endif %}
+        
+        {% if name_sanitized in ['500px', 'instagram', 'flickr', 'spotify', 'stack-overflow', 'weibo'] %}
+        {% set iconattributes = '"fa fa-' ~ name_sanitized ~ ' fa-lg"' %}
+        {% else %}
+        {% set iconattributes = '"fa fa-' ~ name_sanitized ~ '-square fa-lg"' %}
+        {% endif %}
+        
+        <li class="list-item-spaced"><a href="{{ s[1] }}"><i class={{ iconattributes }}></i> {{ s[0] }}</a></li>
+        
+        {% endfor %}
+    </ul>
+</section>

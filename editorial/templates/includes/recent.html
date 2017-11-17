@@ -1,0 +1,18 @@
+<section>
+    <header class="major">
+        <h2>Recent posts</h2>
+    </header>
+    {% if LACES_SIDEBAR.recent_num is not defined %}
+        {% set _recent_num = 5 %}
+    {% else %}
+        {% set _recent_num = LACES_SIDEBAR.recent_num %}
+    {% endif %}
+    <div class="mini-posts">
+        {% for article in articles[:_recent_num] %}
+        <article>
+            {{ article.title }}
+            <a href="{{ SITEURL }}/{{ article.url }}"> Read</a>
+        </article>
+        {% endfor %}
+    </div>
+</section>

@@ -4,6 +4,7 @@ Category: Programming
 Tags: Erlang, concurrent programming
 Authors: Leonardo Giordani
 Slug: error-handling-in-erlang-a-primer
+Image: error-handling-in-erlang-a-primer
 Summary:
 
 ## Abstract

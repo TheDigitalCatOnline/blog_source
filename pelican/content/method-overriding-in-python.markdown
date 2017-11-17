@@ -4,6 +4,7 @@ Category: Programming
 Tags: Python, OOP
 Authors: Leonardo Giordani
 Slug: method-overriding-in-python
+Image: method-overriding-in-python
 Summary:
 
 What is overriding? Overriding is the ability of a class to change the implementation of a method provided by one of its ancestors.

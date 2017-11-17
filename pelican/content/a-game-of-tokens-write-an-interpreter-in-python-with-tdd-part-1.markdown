@@ -4,7 +4,8 @@ Category: Programming
 Tags: Python, Python3, TDD, testing, compilers
 Authors: Leonardo Giordani
 Slug: a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1
-Series: "A game of tokens"
+Series: A game of tokens
+Image: a-game-of-tokens
 Summary: 
 
 # Introduction

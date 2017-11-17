@@ -4,6 +4,7 @@ Category: Programming
 Tags: functional programming, Python, Python2, Python3, Clojure
 Authors: Leonardo Giordani
 Slug: clojure-sequential-data-types-for-python-programmers
+Image: sequential-data-types
 Summary:
 
 I have been working with Python for more than fifteen years and I developed very big systems with this language, learning to know and love both its power and its weaknesses, admiring its gorgeous object-oriented system and exploring some of its darkest corners.
