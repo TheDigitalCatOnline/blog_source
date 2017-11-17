@@ -8,7 +8,7 @@ fi
 
 source venv/bin/activate
 pip install --upgrade pip
-pip install fabric pelican markdown bumpversion
+pip install pelican markdown punch.py
 
 if [[ ! -d .git ]]; then
     git init
@@ -25,10 +25,6 @@ fi
 
 if [[ ! -d pelican-themes ]]; then
     git clone https://github.com/getpelican/pelican-themes.git pelican-themes
-fi
-
-if [[ ! -d laces3 ]]; then
-    git clone https://github.com/lgiordani/laces3.git laces3
 fi
 
 if [[ ! -d deploy ]]; then
