@@ -3,7 +3,7 @@
 # This script sets up the blog development environment
 
 if [[ ! -d venv ]]; then
-    virtualenv venv -p python2
+    virtualenv venv3 -p python3
 fi
 
 source venv/bin/activate
