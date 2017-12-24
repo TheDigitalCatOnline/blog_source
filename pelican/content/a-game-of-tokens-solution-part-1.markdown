@@ -16,7 +16,7 @@ You can find the code for this part in [this repository](https://github.com/lgio
 
 # Level 1 - End of file
 
-The base class to pass the test leverages the provided `text_buffer.TextBuffer` class, that exposes a `load()` method, directly composed here to `CalcLexer.load()`. As the test is not providing a text the easiest solution is just to return the tested token. I extracted `get_token()` from `get_tokens()` to have a method that is specifically focused on dealing with the current token.
+The base class to pass the test leverages the provided `text_buffer.TextBuffer` class, that exposes a `load()` method, directly composed here to `CalcLexer.load()`. As the test is not providing a text the easiest solution is just to return the tested token. I extracted `get_token()` from `get_tokens()` to have a method that is specifically focused on dealing with the current token. The file `smallcalc/calc_lexer.py` is then
 
 ``` python
 from smallcalc import text_buffer
@@ -128,10 +128,19 @@ The helper to process the end of file, `_process_eof()` is exactly like `_proces
 
 At this point of the development the incoming token can only be `EOL`, `EOF`, or an integer. So the `_process_integer()` function doesn't need to return `None`. So I just create an integer token with the current char and return it.
 
+``` python    
     def _process_integer(self):
         return self._set_current_token_and_skip(
             token.Token(INTEGER, self._current_char)
         )
+```
+
+The above methods use two new global variables `EOL` and `INTEGER` that are defined at the beginning of the file along with `EOF`
+
+``` python
+EOL = 'EOL'
+INTEGER = 'INTEGER'
+```
 
 ## Parser
 
@@ -183,6 +192,10 @@ class CalcVisitor:
 ## Lexer
 
 The `_process_literal()` helper does what `_process_integer()` did before, which is to blindly return a token, this time with the `LITERAL` type.
+
+``` python
+LITERAL = 'LITERAL'
+```
 
 ``` python
     def _process_literal(self):
@@ -329,12 +342,16 @@ class CalcVisitor:
             lvalue, ltype = self.visit(node['left'])
             rvalue, rtype = self.visit(node['right'])
 
-            return lvalue + rvalue, ltype
+            return lvalue + rvalue, rtype
 ```
 
 # Level 4 - Multi-digit integers
 
 To provide support for multi-digit integers we just need to change the `_process_integer()` method of the lexer. The new version makes use of a very simple regular expressions.
+
+``` python
+import re
+```
 
 ``` python
     def _process_integer(self):
@@ -413,9 +430,9 @@ class CalcVisitor:
             operator = node['operator']['value']
 
             if operator == '+':
-                return lvalue + rvalue, ltype
+                return lvalue + rvalue, rtype
             else:
-                return lvalue - rvalue, ltype
+                return lvalue - rvalue, rtype
 ```
 
 # Level 7 - Multiple operations
@@ -469,19 +486,25 @@ Finally, `peek_token()` allows me to add support for multiple expressions in the
 
         next_token = self.lexer.peek_token()
 
-        if next_token.type == clex.LITERAL:
+        while next_token.type == clex.LITERAL:
             operator = self.parse_addsymbol()
-            right = self.parse_expression()
+            right = self.parse_integer()
 
-            return BinaryNode(left, operator, right)
-        else:
-            return IntegerNode(left.value)
+            left = BinaryNode(left, operator, right)
+
+            next_token = self.lexer.peek_token()
+
+        return left
 ```
 
-## Final words
+# Final words
 
 Again, it is worth mentioning that this solution of mine is just one of the possible ones, not the **correct** one. If your code passes the tests it is correct; it can be ugly, overengineered, slow, but definitely correct. I hope that reading my solution helped you better understand the underlying concepts of lexer, parser, and visitor. Feel free to get in touch if you want to discuss your solution or if you have questions about the code I posted here.
 
-## Feedback
+# Updates
+
+2017-12-24: As mentioned in the updates section of the previous post, Victor Uriarte spotted an error in `parse_expression()`. The previous version was building a right-growing tree instead of a left-growing one. The current version is correct and corretly handles cases like the one that Victor pointed out in the [issue](https://github.com/lgiordani/smallcalc/issues/4) he posted. Thanks Victor!
+
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

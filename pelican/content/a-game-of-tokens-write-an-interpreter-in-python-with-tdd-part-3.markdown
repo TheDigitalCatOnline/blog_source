@@ -294,7 +294,7 @@ In the next issue I will face with you the task of adding the power operator, su
 
 The section quotes come from some good films: "Up" (2009), "The Lord of the Rings: The Fellowship of the Ring" (2001).
 
-## Feedback
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

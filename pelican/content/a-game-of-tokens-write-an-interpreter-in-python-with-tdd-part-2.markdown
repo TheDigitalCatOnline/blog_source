@@ -90,27 +90,27 @@ def test_parse_term_with_multiple_operations():
     assert node.asdict() == {
         'type': 'binary',
         'left': {
-            'type': 'integer',
-            'value': 2
-        },
-        'right': {
             'type': 'binary',
             'left': {
                 'type': 'integer',
-                'value': 3
+                'value': 2
             },
             'right': {
                 'type': 'integer',
-                'value': 4
+                'value': 3
             },
             'operator': {
                 'type': 'literal',
-                'value': '/'
+                'value': '*'
             }
+        },
+        'right': {
+            'type': 'integer',
+            'value': 4
         },
         'operator': {
             'type': 'literal',
-            'value': '*'
+            'value': '/'
         }
     }
 ```
@@ -173,30 +173,30 @@ Ok, it's time to do some serious math. What happens if you mix sums and multipli
 ``` python
 def test_parse_expression_with_term():
     p = cpar.CalcParser()
-    p.lexer.load("2 * 3 + 4")
+    p.lexer.load("2 + 3 * 4")
 
     node = p.parse_expression()
 
     assert node.asdict() == {
         'type': 'binary',
         'left': {
+            'type': 'integer',
+            'value': 2
+        },
+        'right': {
             'type': 'binary',
             'left': {
                 'type': 'integer',
-                'value': 2
+                'value': 3
             },
             'right': {
                 'type': 'integer',
-                'value': 3
+                'value': 4
             },
             'operator': {
                 'type': 'literal',
                 'value': '*'
             }
-        },
-        'right': {
-            'type': 'integer',
-            'value': 4
         },
         'operator': {
             'type': 'literal',
@@ -477,6 +477,10 @@ That's all for this time. If you feel brave or do not like to wait for the next 
 
 The section quotes come from some good films: "Aliens" (1986), "Ghostbusters" (1984), "Return of the Jedi" (1983), "Guardians of the Galaxy" (2014), "Highlander" (1986).
 
-## Feedback
+# Updates
+
+2017-12-24: `test_parse_term_with_multiple_operations` has been changed after Victor Uriarte spotted an error in the tree construction. See the updates section of the first post in the series for a full explanation of the issue.
+
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
