@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: introduction-to-hashing
 Summary: 
 
-Have you ever used dictionaries or maps in your language of choice, or you met a mysterious MD5 code while downloading a file from a server. Maybe you are a programmer, and using Git to manage your code you ended up using strange numbers called SHA1, and surely you heard at least a couple of time the term _cache_, which probably needed to be emptied in your browser.
+Have you ever used dictionaries or maps in your language of choice, or you met a mysterious MD5 code while downloading a file from a server. Maybe you are a programmer, and using Git to manage your code you ended up dealing with strange numbers called SHA1, and surely you heard at least a couple of time the term _cache_, which probably needed to be emptied in your browser.
 
 What do all these concept have in common?
 
@@ -24,7 +24,7 @@ The reason behind the invention of hashing techniques is the need of uniquely id
 
 This is a problem that we have, for example, when we want to double check the integrity of something that we downloaded from Internet, like a Linux distribution. The ISO file is very big, and we cannot manually compare the content provided by the server (say for example a page with the hexadecimal dump of the file) with the content we downloaded. With an image of 4 GB, comparing 10 bytes per second, it would take almost 14 years of work, night and day without eating or sleeping. Not that intriguing, right?
 
-Is it possible to "label" that string of bytes with somethign that is both **unique** and **short**?
+PERHAPS THIS GOES LATER ---> Is it possible to "label" that string of bytes with somethign that is both **unique** and **short**?
 
 # The naked truth
 
@@ -62,7 +62,7 @@ We may also convert it to binary numbers, which are what the computer really dea
 
 Mind that this is not _THE_ representation of the string in binary, but _A_ representation of the string in binary, or *the representation of the string in binary according to the ASCII encoding*. I want to stress here that I could come up with a different code and get a completely different binary number starting with the same input.
 
-This is basically what we do with every type of content from the real world. We set up a standard, which is called _encoding_ that maps measurable values to integers and, ultimately, to binary numbers. The _decoding_ process, in turn, converts back the binary number into something that can be experienced in the real world.
+This is basically what we do with every type of content from the real world. We set up a table, which is called _encoding_ that maps measurable values to integers and, ultimately, to binary numbers. The _decoding_ process, in turn, converts back the binary number into something that can be experienced in the real world.
 
 When we capture a picture and divide it in a matrix of N pixels, and assign to each pixel a value of R(ed), G(reen) and B(lue) we are encoding the picture in RBG. There are other encodings for colours, like for example CMYK, that give completely different binary numbers for the same input pixel.
 
@@ -101,13 +101,71 @@ This is not that true in the physical world. If the library was several kilomete
 
 We represent the concept of _constant time_ saying that such an algorithm is `O(1)`, which means that in the _worst case_ the performances of the algorithm do not increase with the size of the data set.
 
+Let's consider a concrete example of indexing. Consider the following set of strings:
+
+```
+ReplaceWithAString1
+ReplaceWithAString2
+ReplaceWithAString3
+ReplaceWithAString4
+ReplaceWithAString5
+ReplaceWithAString6
+```
+
+In a computer program you could replicate them every time you need them, using a variable amount of space according to the size of the string itself, or you can store them in variables and reference the latter. In particular you can store them in an array `strings`
+
+```
+strings[0] = "ReplaceWithAString1"
+strings[1] = "ReplaceWithAString2"
+strings[2] = "ReplaceWithAString3"
+strings[3] = "ReplaceWithAString4"
+strings[4] = "ReplaceWithAString5"
+strings[5] = "ReplaceWithAString6"
+```
+
+At this point what you need is only a number form `0` to `6`, which can be represented with 3 bits.
+
+What we obtained is actually a **compression** of the strings, that now need _always_ just 3 bits to be represented. Accessing `strings[0]` or `strings[5]` requires the same amount of time (this is a specific feature guaranteeed by the hardware we use) so we achieved our goal.
+
+If we want to **hash** a string, that is find its index, we just need ot compare the string with each string in the array until they match. At that point we have the string's index, or its _hash_.
+
 ## Sometitle
+
+The above example shows a potential issue. To find the hash of a string in that scheme we need ot access a sort of global repository with all the strings. We then need to match the string we have with the ones that are stored to find the index. We _cannot obtain the index from the data only_.
+
+
+
+
+
+
+
+
+
+
+
+Let's go back to our set of all possible strings.
+
+When we manage generic data we cannot just list the possible values as we did before and give each of them a predefined index. Now we consider _all_ possible strings, and we want to devise a method that gives an index to each of them. Since we do
+
 
 Let's go back to our set of all possible strings. As we said this set is infinite, because there is no limit to the size of the strings contained. If we want to organise this set in the smart way we described in the previous section we have to come up with a unique numeric index for each contained element.
 
 The strict requirement, here, is that the index has to be unique, which means that two different elements of the set cannot have the same index. We can achieve this simply ordering alphabetically all possible lists and assignign them a progressive number: 1, 2, 3 ...
 
 Unfortunately, since the possibile size of the set is infinite, the number of indexes we will use will be infinite as well. We cannot represent infinitely big numbers in a computer, so we have a problem.
+
+Furthermore, we don't want the indexes that can be represented to be too long. A system that indexes a very simple string of 100 characters (100 bytes) with an index that requires several gigabytes to be represented is definitely not a good one.
+
+
+
+
+
+
+
+
+
+
+
 
 STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK how can I explain that the size of the universe is infinite so we need to compress it to a smaller one?
 
