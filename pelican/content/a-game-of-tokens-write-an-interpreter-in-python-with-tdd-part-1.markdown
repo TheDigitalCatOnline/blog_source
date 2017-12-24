@@ -819,27 +819,27 @@ def test_parse_expression_with_multiple_operations():
     assert node.asdict() == {
         'type': 'binary',
         'left': {
-            'type': 'integer',
-            'value': 2
-        },
-        'right': {
             'type': 'binary',
             'left': {
                 'type': 'integer',
-                'value': 3
+                'value': 2
             },
             'right': {
                 'type': 'integer',
-                'value': 4
+                'value': 3
             },
             'operator': {
                 'type': 'literal',
-                'value': '-'
+                'value': '+'
             }
+        },
+        'right': {
+            'type': 'integer',
+            'value': 4
         },
         'operator': {
             'type': 'literal',
-            'value': '+'
+            'value': '-'
         }
     }
 ```
@@ -853,10 +853,6 @@ def test_visitor_expression_with_multiple_operations():
     ast = {
         'type': 'binary',
         'left': {
-            'type': 'integer',
-            'value': 200
-        },
-        'right': {
             'type': 'binary',
             'left': {
                 'type': 'integer',
@@ -870,6 +866,10 @@ def test_visitor_expression_with_multiple_operations():
                 'type': 'literal',
                 'value': '-'
             }
+        },
+        'right': {
+            'type': 'integer',
+            'value': 200
         },
         'operator': {
             'type': 'literal',
@@ -911,7 +911,11 @@ You can find my solution to this part [here](/blog/2017/07/12/a-game-of-tokens-s
 
 The section quotes come from some good movies, the complete list is: "The Lord of the Rings - The Return of the King" (2003), "Iron Man" (2008), "Raiders of the Lost Ark" (1981), "Braveheart" (1995), "The Matrix" (1999), "The Bourne Identity" (2002), "The Prestige" (2006).
 
-## Feedback
+# Updates
+
+2017-12-24: Victor Uriarte ([vmuriart](https://github.com/vmuriart)) spotted an important issue in a previous version of the post. The last two tests (`test_parse_expression_with_multiple_operations` and `test_visitor_expression_with_multiple_operations`) used a right-growing tree instead of a left-growing one. The problem with a right-growing tree is that an operator affects _everything_ is on the right side, that is the whole rest of the operation. Thus, an operation like `10 - 1 + 1` would become `10 - (1 + 1)`, and the result is obviously different. I fixed the tests and the solution I give in the next posts. You can read Victor's issue [here](https://github.com/lgiordani/smallcalc/issues/4). Thanks Victor for spotting it!
+
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

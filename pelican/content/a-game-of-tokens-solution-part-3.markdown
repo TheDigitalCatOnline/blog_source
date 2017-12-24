@@ -275,13 +275,13 @@ class CalcVisitor:
             operator = node['operator']['value']
 
             if operator == '+':
-                return lvalue + rvalue, ltype
+                return lvalue + rvalue, rtype
             elif operator == '-':
-                return lvalue - rvalue, ltype
+                return lvalue - rvalue, rtype
             elif operator == '*':
-                return lvalue * rvalue, ltype
+                return lvalue * rvalue, rtype
             elif operator == '/':
-                return lvalue // rvalue, ltype
+                return lvalue // rvalue, rtype
 
         if node['type'] == 'assignment':
             right_value, right_type = self.visit(node['value'])
@@ -319,13 +319,13 @@ To pass the second test we need only to change the `visit()` method adding an `i
             operator = node['operator']['value']
 
             if operator == '+':
-                return lvalue + rvalue, ltype
+                return lvalue + rvalue, rtype
             elif operator == '-':
-                return lvalue - rvalue, ltype
+                return lvalue - rvalue, rtype
             elif operator == '*':
-                return lvalue * rvalue, ltype
+                return lvalue * rvalue, rtype
             elif operator == '/':
-                return lvalue // rvalue, ltype
+                return lvalue // rvalue, rtype
 
         if node['type'] == 'assignment':
             right_value, right_type = self.visit(node['value'])
@@ -371,10 +371,14 @@ At the same time `parse_assignment()` has to be changed. The current code parses
 
 where I explicitly discard a literal `=` sign.
 
-## Final words
+# Final words
 
 Amazing job! We have now a calculator with variables, which is a good first step towards a full-fledged programming language. Try something new while you wait for the next post, like adding mathematical operations or, if you dare, functions!
 
-## Feedback
+# Updates
+
+2017-12-24: The tuple returned by the `Visitor` class now uses `rtype` instead of `ltype`. This has been changed to be coherent with a change made in the tree construction mechanism. See the updates section of the first post in the series for a full explanation of the issue.
+
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

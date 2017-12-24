@@ -47,26 +47,30 @@ class CalcParser:
 
         next_token = self.lexer.peek_token()
 
-        if next_token.type == clex.LITERAL:
+        while next_token.type == clex.LITERAL:
             operator = self.parse_addsymbol()
-            right = self.parse_term()
+            right = self.parse_integer()
 
-            return BinaryNode(left, operator, right)
-        else:
-            return IntegerNode(left.value)
+            left = BinaryNode(left, operator, right)
+
+            next_token = self.lexer.peek_token()
+
+        return left
 
     def parse_expression(self):
         left = self.parse_integer()
 
         next_token = self.lexer.peek_token()
 
-        if next_token.type == clex.LITERAL:
+        while next_token.type == clex.LITERAL:
             operator = self.parse_addsymbol()
-            right = self.parse_expression()
+            right = self.parse_integer()
 
-            return BinaryNode(left, operator, right)
-        else:
-            return IntegerNode(left.value)
+            left = BinaryNode(left, operator, right)
+
+            next_token = self.lexer.peek_token()
+
+        return left
 ```
 
 ## Visitor
@@ -87,13 +91,13 @@ class CalcVisitor:
             operator = node['operator']['value']
 
             if operator == '+':
-                return lvalue + rvalue, ltype
+                return lvalue + rvalue, rtype
             elif operator == '-':
-                return lvalue - rvalue, ltype
+                return lvalue - rvalue, rtype
             elif operator == '*':
-                return lvalue * rvalue, ltype
+                return lvalue * rvalue, rtype
             elif operator == '/':
-                return lvalue // rvalue, ltype
+                return lvalue // rvalue, rtype
 ```
 
 Now we have a pretty simple but working calculator! Enjoy the `cli.py`, as YOU did it this time! I rememberI was pretty excited the first time I run a command line calculator done by me. But hold tight, because you are going to learn and implement much more!
@@ -102,38 +106,38 @@ Now we have a pretty simple but working calculator! Enjoy the `cli.py`, as YOU d
 
 Ouch! It looks like putting multiplications and sums in the same line is not really working. As you may recall we didn't link `parse_term()` with the other methods, and we use a generic function to treat literals. This works in principle, but doesn't consider operator precedence.
 
-The current output of the parser is
+When we try to evaluate `2 + 3 * 4` the output of the parser is
 
 ``` python
 {
+  "type": "binary",
   "left": {
-    "type": "integer",
-    "value": 2
-  },
-  "operator": {
-    "type": "literal",
-    "value": "*"
-  },
-  "right": {
+    "type": "binary",
     "left": {
+      "type": "integer",
+      "value": 2
+    },
+    "right": {
       "type": "integer",
       "value": 3
     },
     "operator": {
       "type": "literal",
       "value": "+"
-    },
-    "right": {
-      "type": "integer",
-      "value": 4
-    },
-    "type": "binary"
+    }
   },
-  "type": "binary"
+  "right": {
+    "type": "integer",
+    "value": 4
+  },
+  "operator": {
+    "type": "literal",
+    "value": "*"
+  }
 }
 ```
 
-As you can clearly see the parser recognised the multiplication operator, but then returns a nested sum (the oputput of a recursive call of `parse_term()`). This gives the sum a greater precedence that that of the sum, which is against the mathematical rules we want to follow here. `2 * 3 + 4` shall be considered `(2 * 3) + 4` and not `2 + (3 * 4)`.
+As you can clearly see the parser recognised the multiplication operator, but then returns a nested sum (the oputput of a recursive call of `parse_term()`). This gives the sum a greater precedence that that of the sum, which is against the mathematical rules we want to follow here. `2 + 3 * 4` shall be considered `2 + (3 + 4)` and not `(2 + 3) * 4`.
 
 To fix this we have to rework `parse_term()`. First of all it shall accept only the `*` and `/` operators, then it shall return the left part if it finds a different literal. Even `parse_expression()` shall change a bit: the first thing to do is to call `parse_term()` instead of `parse_integer()` and then to return the left part.
 
@@ -145,11 +149,14 @@ The new code is then
 
         next_token = self.lexer.peek_token()
 
-        if next_token.type == clex.LITERAL and next_token.value in ['*', '/']:
+        while next_token.type == clex.LITERAL\
+                and next_token.value in ['*', '/']:
             operator = self.parse_addsymbol()
-            right = self.parse_term()
+            right = self.parse_integer()
 
-            return BinaryNode(left, operator, right)
+            left = BinaryNode(left, operator, right)
+
+            next_token = self.lexer.peek_token()
 
         return left
 
@@ -158,11 +165,13 @@ The new code is then
 
         next_token = self.lexer.peek_token()
 
-        if next_token.type == clex.LITERAL:
+        while next_token.type == clex.LITERAL:
             operator = self.parse_addsymbol()
-            right = self.parse_expression()
+            right = self.parse_term()
 
-            return BinaryNode(left, operator, right)
+            left = BinaryNode(left, operator, right)
+
+            next_token = self.lexer.peek_token()
 
         return left
 ```
@@ -211,11 +220,14 @@ Then `parse_term()` method now has to call `parse_factor()`
 
         next_token = self.lexer.peek_token()
 
-        if next_token.type == clex.LITERAL and next_token.value in ['*', '/']:
+        while next_token.type == clex.LITERAL\
+                and next_token.value in ['*', '/']:
             operator = self.parse_addsymbol()
-            right = self.parse_term()
+            right = self.parse_integer()
 
-            return BinaryNode(left, operator, right)
+            left = BinaryNode(left, operator, right)
+
+            next_token = self.lexer.peek_token()
 
         return left
 ```
@@ -228,11 +240,14 @@ And last we need to slightly change `parse_expression()` introducing a check on 
 
         next_token = self.lexer.peek_token()
 
-        if next_token.type == clex.LITERAL and next_token.value in ['+', '-']:
+        while next_token.type == clex.LITERAL\
+                and next_token.value in ['+', '-']:
             operator = self.parse_addsymbol()
-            right = self.parse_expression()
+            right = self.parse_term()
 
-            return BinaryNode(left, operator, right)
+            left = BinaryNode(left, operator, right)
+
+            next_token = self.lexer.peek_token()
 
         return left
 ```
@@ -322,13 +337,13 @@ class CalcVisitor:
             operator = node['operator']['value']
 
             if operator == '+':
-                return lvalue + rvalue, ltype
+                return lvalue + rvalue, rtype
             elif operator == '-':
-                return lvalue - rvalue, ltype
+                return lvalue - rvalue, rtype
             elif operator == '*':
-                return lvalue * rvalue, ltype
+                return lvalue * rvalue, rtype
             elif operator == '/':
-                return lvalue // rvalue, ltype
+                return lvalue // rvalue, rtype
 ```
 
 Now the unary plus is easy to sort out, as we just need to take it into account in `parse_factor()` along with the unary minus.
@@ -364,10 +379,10 @@ And the visitor is missing a single return after the `if` statement that deals w
             return cvalue, ctype
 ```
 
-## Final words
+# Final words
 
 Well, we have a pretty decent calculator now, don't we? Stay tuned, as in the next instalment we will explore variables and postfix operators. Get in touch if you want to discuss your solution or if you have questions about the code I posted here.
 
-## Feedback
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
