@@ -1,189 +1,174 @@
 Title: Introduction to hashing
-Date: 2017-10-18 19:00:00 +0100
+Date: 2018-04-05 17:00:00 +0100
 Category: Programming
 Tags: algorithms, Python, Python3
 Authors: Leonardo Giordani
 Slug: introduction-to-hashing
 Summary: 
 
-Have you ever used dictionaries or maps in your language of choice, or you met a mysterious MD5 code while downloading a file from a server. Maybe you are a programmer, and using Git to manage your code you ended up dealing with strange numbers called SHA1, and surely you heard at least a couple of time the term _cache_, which probably needed to be emptied in your browser.
+Have you ever used dictionaries or maps in your language of choice, or have you ever met a mysterious MD5 code while downloading a file from a server? Maybe you are a programmer, and using Git to manage your code you ended up dealing with strange numbers called SHA1, and surely you heard at least a couple of times the term _cache_, which probably needed to be emptied in your browser.
 
 What do all these concept have in common?
 
-In this post I want to introduce you to the concept of _hashing_, which is one of the basic topics a good programmer shall know. Hashes are such an important topic in computer science that lacking knowledge in this field means being confused about a wide range of other subjects, like cryptography and security. Just to name some of the players you could be interested in your future career as a programmer: Bitcoin and blockchains, HTTPS and SSL, public/private key. All these topics have hashing as one of their building blocks, so as you can see it is worth mastering the concept.
+In this post I want to introduce you to the concept of _hashing_, which is one of the basic topics a good programmer shall know. Hashes are such an important topic in computer science that lacking knowledge in this field means being confused about a wide range of other subjects, like cryptography and security. Just to name some of the players you could be interested in your future career as a programmer: data structures, Bitcoin and blockchains, HTTPS. All these topics have hashing as one of their building blocks. As you can see, it is worth mastering the concept.
 
-This will obviously be only a humble introduction to the subject matter, as the whole concept is too broad for a single post. You will find many resources at the end of the post for you to start a serious study of this important part of computer science.
+This will obviously be only a humble introduction to the subject matter, as the whole concept is too broad for a single post. You can start a serious study of this important part of computer science reading the Wikipedia articles liked at the bottom of the page and reading a good book (or taking a course) in either cryptography or data structures.
 
-The main problem that hashing helps to solve is that of efficiently store and retrieve information. With _information_ here I mean a string of bits, which can represent anything that can be represented digitally, like music, video, text, programs, scientific data, etc. I will give some examples taken from the physical world, but always keep in mind that the objects we are dealing with are bits, thus "just numbers".
+# A practical example
 
-When we talk about algorithms, the word _efficient_ can have multiple meanings and actually different solutions can be considered _good_ depending on the target we have. When dealing with data structures we usually consider three main parameters, which are storage size, insertion speed and retrieval speed.
+Let me give you a concrete example of hashing before we analyse the matter in depth.
 
-# Rationale
+I want to download a big file from Internet, like a Linux distribution. I already downloaded it in the past, but I'm not sure if the version I have is the same available for download now. The file has been renamed, so the original name has been lost. I might obviously just download it again, install it and manually check the version.
 
-The reason behind the invention of hashing techniques is the need of uniquely identifying content. The problem pops up in very different areas, but eventually it can be expressed as: how can we take an input string of bytes of any length and assign to it an unique identifier?
+I wonder if there is a simpler solution, one that can possibly be automated. Downloading an ISO file from Internet is nowadays very cheap, but manually checking for the version isn't, at least in terms of time. I might also download it and compare all the files contained in both the new and the old ISO images, but then again, this process is not very fast.
 
-This is a problem that we have, for example, when we want to double check the integrity of something that we downloaded from Internet, like a Linux distribution. The ISO file is very big, and we cannot manually compare the content provided by the server (say for example a page with the hexadecimal dump of the file) with the content we downloaded. With an image of 4 GB, comparing 10 bytes per second, it would take almost 14 years of work, night and day without eating or sleeping. Not that intriguing, right?
+The best solution would be for the server to provide a sort of label that depends only on the data in a mathematical and deterministic way. I might then run the same algorithm on the file I already downloaded and get a label that can be easily compared with the one provided by the server. If the process of computing the label is fast enough this might be the perfect solution.
 
-PERHAPS THIS GOES LATER ---> Is it possible to "label" that string of bytes with somethign that is both **unique** and **short**?
+A typical algorithm used for this purpose is MD5, and the label computed by the server could be something like `ef67d799b71de37423202c587662c87f`. Computing the MD5 of a 600 MB file takes less than a couple of seconds on a modern computer, so I can check if the file I own is the same the server provides in a very short time.
 
-# The naked truth
+You can test MD5 on your own using the `md5sum` program that comes with all Linux distributions or other Unix-based systems. Open a terminal and run the following command
 
-Let's enjoy some mathematical theory before diving into the practical solutions that we are currently using.
-
-## Strings of bytes
-
-First of all, I introduced the problem speaking about a string of bytes, or in other words, a sequence of numbers. You know that everything that can be represented in a computer is a sequence of binary digits, which is the meaning of the term _digital_. When we can transform something from the real world into a sequence of binary digits we say that we _digitalised_ it, and we can consider it as a number.
-
-This means that we already _mapped_ real objects to numbers. What does mapping mean? Let's consider a sentence like
-
-``` txt
-The Magic Words are Squeamish Ossifrage
+``` sh
+echo "This is a simple input string" | md5sum
 ```
 
-Back in 1963 someone in the US came up with a code called ASCII which was used to convert characters of the English alphabet into numbers. ASCII is a (very small) subset of Unicode UTF-8, which is the standard that we use nowadays, so it is still valid, and I will shamelessly use it for this example.
+and the result will be `8a7cc3b47880b5ef880ac6ef30785a1a`, independently of your operating system.
 
-Mapping the previous string with ASCII means to assign to each letter the numeric code given by the standard. In this case the result is
+MD5 is one of many _hash functions_ that have been invented to deal with problems like the one I exemplified. Recently I had the need to synchronise daily two AWS S3 buckets containing more than 60 gigabytes of files. Without hash functions it would be impossible to quickly identify the files that need to be copied.
 
-``` txt
-84 104 101 32 77 97 103 105 99 32 87 111 114 100 115 32 97 114 101 32 83 113 117 101 97 109 105 115 104 32 79 115 115 105 102 114 97 103 101
-```
+The rest of the post is dedicated to the exploration of such an important and intriguing part of contemporary technology.
 
-Please note that it is custom to use hexadecimal notation, which allows to represent each symbol in the ASCII (one byte) with exactly two digits. So the string becomes
+# Hash functions
 
-``` txt
-54 68 65 20 4d 61 67 69 63 20 57 6f 72 64 73 20 61 72 65 20 53 71 75 65 61 6d 69 73 68 20 4f 73 73 69 66 72 61 67 65
-```
+Let's start from the formal definition of hash function:
 
-We may also convert it to binary numbers, which are what the computer really deal with
+_A hash function is any function that can be used to map data of arbitrary size to data of fixed size_
 
-``` txt
-1010100 1101000 1100101 100000 1001101 1100001 1100111 1101001 1100011 100000 1010111 1101111 1110010 1100100 1110011 100000 1100001 1110010 1100101 100000 1010011 1110001 1110101 1100101 1100001 1101101 1101001 1110011 1101000 100000 1001111 1110011 1110011 1101001 1100110 1110010 1100001 1100111 1100101
-```
+This description may sound intimidating at first, but it is actually pretty simple. Let's consider a dictionary where you want to look up a word that you don't know, like for example "quagmire". What you do is to jump directly to a section labelled "Q" in the dictionary, then quickly identify the part of the section where words that start with "QU" are, and promptly find the word. Congratulations, you just used a hash function! 
 
-Mind that this is not _THE_ representation of the string in binary, but _A_ representation of the string in binary, or *the representation of the string in binary according to the ASCII encoding*. I want to stress here that I could come up with a different code and get a completely different binary number starting with the same input.
+Getting the first letter of the word is, as a matter of fact, _a function_ (an operation) _that maps_ (connects) _data of arbitrary size_ (words) _to data of fixed size_ (a single letter of the alphabet). Using this method we can connect any word (also invented ones!) to a letter of the alphabet.
 
-This is basically what we do with every type of content from the real world. We set up a table, which is called _encoding_ that maps measurable values to integers and, ultimately, to binary numbers. The _decoding_ process, in turn, converts back the binary number into something that can be experienced in the real world.
+Before we move on, I want to stress one aspect that is clear from the previous example. Through a hash function we can connect a set of potentially infinite values (all the words that we can create) with a finite set (the letters of an alphabet). This is the most important concept we have to keep in mind when dealing with hashing.
 
-When we capture a picture and divide it in a matrix of N pixels, and assign to each pixel a value of R(ed), G(reen) and B(lue) we are encoding the picture in RBG. There are other encodings for colours, like for example CMYK, that give completely different binary numbers for the same input pixel.
+# Uniqueness
 
-When dealing with computer data, then, we are accessing a _universe_ of possible values, which is made by all possible binary strings. In this universe **U** we can find every binary string of any TODO size. What is the size of this universe of data? Well, given that it contains _all_ strings of _any_ TODO size its size is infinite.
+The result of a hash function is not unique, which means that two different inputs may give the same output. This is pretty easy to understand in the dictionary example, where multiple words can give as a result the same letter, as multiple words begin with that letter.
 
-IS THIS TRUE? VVV
-Remember that this is not the actual size of the set, but its _possible_ size. In other words, I'm not planning to actually store all the possible strings, but I have to be aware of the fact that the strings I will store may come from this infinite set. This will be very important later.
+It is also evident both from the dictionary example and from the definition that hash functions cannot produce unique results by design. The goal of a hash function is to map an infinite set with a finite set, so it is obvious that multiple elements of the infinite set will map to the same element in the finite one.
 
-## Performances
-
-Let's discuss now how we can store and retrieve the content of set.
-
-If we store it in an unordered way (picture a room with objects everywhere), to retrieve it we need to look at each element. This can result in a lucky find (if the element we are looking for is one of the first we consider), or can end up being a very unlucky chance TODO if the element is one of the last ones.
-
-When considering algorithms we always take into account the **worst case** as we cannot hope to be lucky every time. If the objects are unordered, thus, the worst case is that our element is the last one, so we need to look at all of them. We represent this concept with the the notation `O(N)`, where N represents the size of the whole set. We also say that the algorithm performs in a **linear** way.
-
-Let's look at an example to clarify this very important concept.
-
-We are given the task to find a book in a library. The library contains `2^12` books (4096 in decimal) but unfortunately the librarian isnt' a very organised person, and the books are not in alphabetical order by title, nor ordered by author. They are stored in random order. This means that unfortunately we need to get each one of them, open it, read the title and the author and compare them with the ones of the book we want to find. if the book is not the right one, we have to put it back and proceed to the next one.
-
-If we work very quickly we might achieve to spend 10 seconds to take a book, look at the title and put it back. In the worst case we have to look at every book in the library, and with `2^12` books this means 40960 seconds, that is 11 hours 22 minutes and 40 seconds.
-
-If we double the size of the library the time to find a book doubles as well (in the worst case), and this is why we call this type of algorithms linear.
-
-Are there better ways to organise a library?
-
-## Indexing
-
-It turns out we could give each book a progressive index (a code) and store the books in rooms and shelves that have the codes printed on them. When someone wants a book and has the relative code we just need to go and fetch the book from the right shelf. No need to scan the entire collection or to open books and check for the content.
-
-The biggest improvement, however, is that _the amount of time we need to retrieve a book doesn't change with the size of the library_.
-
-Let me state again this very important concept. If we know in advance the exact position of a book through its code, it doesn't matter how big the library is. It will always take the same time to get a book.
-
-This is not that true in the physical world. If the library was several kilometers long, it would obviously take more time to reach the last room than to get a book from the first one. We assume here that we are working with a type of storage called *random access memory* (RAM). Such a storage provides access to all its parts in the same amount of time, and this is why our assumption is valid.
-
-We represent the concept of _constant time_ saying that such an algorithm is `O(1)`, which means that in the _worst case_ the performances of the algorithm do not increase with the size of the data set.
-
-Let's consider a concrete example of indexing. Consider the following set of strings:
+Let me give you a very simple example. Let's create a hash function that returns the first 32 bits (4 bytes) of the input, padding them with zeros if the input is shorter that 32 bits. I will use the ASCII standard to convert strings of characters into hexadecimal numbers, so every letter is represented by 1 byte.
 
 ```
-ReplaceWithAString1
-ReplaceWithAString2
-ReplaceWithAString3
-ReplaceWithAString4
-ReplaceWithAString5
-ReplaceWithAString6
+"This is a string" == 54 68 69 73 20 69 73 20 61 20 73 74 72 69 6e 67 => 54 68 69 73
+"One" == 4f 6e 65 =>  4f 6e 65 00
+"The quick brown fox" == 54 68 65 20 71 75 69 63 6b 20 62 72 6f 77 6e 20 66 6f 78 => 54 68 65 20
+"The lazy dog" == 54 68 65 20 6c 61 7a 79 20 64 6f 67 => 54 68 65 20
 ```
 
-In a computer program you could replicate them every time you need them, using a variable amount of space according to the size of the string itself, or you can store them in variables and reference the latter. In particular you can store them in an array `strings`
+As you can see we have multiple input strings with different lengths, and while the first three produce different output values the last one produces the same value as the third one. This is straightforward, as the two strings start with the same four characters and our hash function considers only those to compute its result.
+
+Such an event is called _collision_ and it is a direct effect of the non-uniqueness of hash values. **It will always happen, with hash functions, that different values produce the same output**, and it is important to understand that this is not because our hash function is trivial, but this is in _the very nature of hash functions_, for strict mathematical reasons.
+
+Collisions are not intrinsically bad, but we have to be aware they can happen when we develop algorithms that use hash functions. If we are writing a dictionary for a human language where 80% of the words starts with "A" it is pointless to use the first letter to partition the book because the first section would be almost as big as the whole tome. This may seem too imaginative an example, but when we manage data structures problems such this arise at every corner.
+
+In this last example avoiding collisions is easy. We just need to increase the number of characters that we consider until the size of the book sections becomes reasonable. When the the hash function becomes more complex, especially when it has the diffusion property (explained later), avoiding the clustering in the output data might not be so simple.
+
+# Digital hash functions
+
+As we saw the definition of hash functions involves functions, which are mappings. In other words we just need to describe a process that couples objects from the source infinite set to the destination finite set. Taking the fist letter of a word is such a process, but other examples may be grouping people according to the colour of the eyes or cataloguing films by production year. Among the various processes that we can use a big role is played by digital processes, that is functions that involve some operation on binary numbers.
+
+When we _digitalise_ something we represent it with a sequence of bits, and once this is done there is no real difference between strings, images, videos, sounds, programs. Everything in a computer is ultimately a sequence of bits, and those sequences can be sliced and changed with pure numerical functions such as additions and multiplications.
+
+# Cryptographic hash functions
+
+Hash functions play a decisive role in security and in cryptography, and they can mostly be found in algorithms that provide authentication, i.e. secure ways to demonstrate the authenticity of some data. While the actual cryptographic techniques are not in the scope of this article, it is important to know that hash functions used for cryptographic purposes are not different from hash functions used for other tasks that do not require any degree of security. Cryptographic hash functions, however, must have some specific properties that give the function a certain degree of "robustness". Being able to find the input of a hash function given the output, for example, would be catastrophic for some security algorithms that rely on the infeasibility of such an operation.
+
+# "Good" hash functions
+
+While the definition of hash function is pretty inclusive, stating that the only required property is that of returning a fixed-length output, hash functions used in practice may have other properties. Such properties may be desirable or mandatory depending on the application, so functions that are extremely good for cryptography may be a poor choice as a base for data structures like dictionaries. 
+
+Let me briefly describe some of the most important ones that you should be aware of.
+
+## Determinism
+
+Given the algorithm (with its parameters), the hash number of some data **must always be the same**. The result of the hashing function depends only on the data itself, and not on other external factors like for example time or computer system.
+
+Pay attention to the fact that this definition considers the algorithm and its parameters. This means that we can include external factors in the computation, but they have to be fixed for the whole life of the result itself.
+
+Let's consider a system that uses a hash to speed up searches in some arrays. For several reasons the hashing algorithm employs an initial random seed that is derived from the boot time. As long as the system is running (i.e. it is not rebooted), the algorithm is consistent, and we may consider the random seed as a constant parameter. We may also persist the hashes on a storage, because when we load them they are still perfectly valid. As soon as the system is rebooted, however, the whole set of hashes created during the previous execution becomes invalid and meaningless. This is not the case, though, if the hashing function bases its computation on the actual data only.
+
+## Diffusion
+
+Changing one single bit of the source data shall results in a **complete change** of the hash number. Compare for example the MD5 hash values of two similar strings
 
 ```
-strings[0] = "ReplaceWithAString1"
-strings[1] = "ReplaceWithAString2"
-strings[2] = "ReplaceWithAString3"
-strings[3] = "ReplaceWithAString4"
-strings[4] = "ReplaceWithAString5"
-strings[5] = "ReplaceWithAString6"
+The quick brown fox jumps over the lazy dog => 37c4b87edffc5d198ff5a185cee7ee09
+The quick brown fox jumps over the lazy cog => 15546a0bcace46fd5e12ec29adca5e70
 ```
 
-At this point what you need is only a number form `0` to `6`, which can be represented with 3 bits.
+As you can see when a single input byte is different (the letter `d` becomes a `c`), the whole result changes.
 
-What we obtained is actually a **compression** of the strings, that now need _always_ just 3 bits to be represented. Accessing `strings[0]` or `strings[5]` requires the same amount of time (this is a specific feature guaranteeed by the hardware we use) so we achieved our goal.
+This implies that every part of the hash function's output is computed considering all the bits of the input. A function that returns the first `n` bits of the input does not have a good diffusion, as two different strings may return exactly the same hash if they have the same first `n` bits (see the example given above when I spoke about uniqueness). This property is important for cryptographic hash function.
 
-If we want to **hash** a string, that is find its index, we just need ot compare the string with each string in the array until they match. At that point we have the string's index, or its _hash_.
+## Minimal change (continuity)
 
-## Sometitle
+An interesting property of some hash functions is that **similar input values map to similar hash values**. The exact definition of "similar" may vary, but in general we might associate it with the number of changes from the first output to the second. This behaviour is handy in some searching algorithms, where it is important that similar objects are stored near each other.
 
-The above example shows a potential issue. To find the hash of a string in that scheme we need ot access a sort of global repository with all the strings. We then need to match the string we have with the ones that are stored to find the index. We _cannot obtain the index from the data only_.
+Note that this property is somehow the opposite of diffusion, thus demonstrating that not all these properties might be found in a single hash function.
 
+## Uniformity
 
+A hash function has a given finite number of possible outputs, because the output has a finite length. When a hash function is uniform, producing the output for each possible input produces a **uniform distribution of outputs**, that is there is no output value that is used more often than others. When designing data structures this is often the desirable behaviour, since it leads to an uniform use of resources, for example memory, leading to an uniform behaviour of other algorithms that work on the same structure, like search. 
 
+Uniformity is obviously linked to the number of collisions produced by a hash function, and a perfectly uniform hash function will have the same number of collisions for each output value. Increasing the number of possible output values, thus, results in a uniform reduction of collisions.
 
+## Non-invertible
 
+Inverting a function means to create a function that returns the original input given the output. For example multiplication by 2 is an invertible function, as given the result we may easily divide by 2 and retrieve the original input.
 
+With non-injective functions the only caveat is that there are multiple inputs that return the same output, but this doesn't prevent the creation of an inverse function. For example, 3 squared gives 9 and since the inverse of the square function is the square root, we can apply it to the result and retrieve the possible inputs, that is +3 and -3.
 
+With non-invertible functions **there is no simple way to find the input given the output**. Mathematically we speak of _one-way functions_, as computing the inverse is either impossible of infeasible. Mind that "infeasible" has a well-defined meaning in mathematics, but I will not go deeper into it in this article. It will be sufficient to consider it as "too hard to compute in a reasonable time with the current state of technology". Cryptographic hash functions must be non-invertible.
 
+## Collisions-resistant
 
+A hash function is said to be collision-resistant when **it is hard to find two different inputs that produce the same hash value**. Mind that the definition of "hard" here is the same as that of "infeasible" in the previous section. This property is very important in cryptography, where collisions can be exploited to crack a cipher.
 
+# Theoretical and practical inputs
 
-Let's go back to our set of all possible strings.
+It is important to understand that the analysis of a hash function can be made considering either theoretical or practical inputs. Theoretical inputs are all the possible inputs, like "all the possible strings", while a set of practical inputs might be "the names of a group of people". This latter might be very large but it is not infinite. 
 
-When we manage generic data we cannot just list the possible values as we did before and give each of them a predefined index. Now we consider _all_ possible strings, and we want to devise a method that gives an index to each of them. Since we do
+Obviously, a hash function that provides interesting properties when dealing with theoretical inputs will show the same properties when applied to practical inputs, but often such functions are complex and slow. Not to mention that it is very difficult to create them.
 
+Let me show you an example. As we saw above, a hash function that returns the first letter of a string is not a very good one. It lacks the diffusion property, for instance, an its uniformity is questionable, as all the strings that begin with the same letter will produce the same hash, leading to a large number of collisions. This is bad for data structures, so such a function is in theory not optimal.
 
-Let's go back to our set of all possible strings. As we said this set is infinite, because there is no limit to the size of the strings contained. If we want to organise this set in the smart way we described in the previous section we have to come up with a unique numeric index for each contained element.
+However, if we are working on a set of strings like
 
-The strict requirement, here, is that the index has to be unique, which means that two different elements of the set cannot have the same index. We can achieve this simply ordering alphabetically all possible lists and assignign them a progressive number: 1, 2, 3 ...
+```
+A poor workman blames his tool
+Barking dogs seldom bite
+Common sense ain't common
+Doctors make the worst patients
+...
+You can't teach an old dog new tricks
+```
 
-Unfortunately, since the possibile size of the set is infinite, the number of indexes we will use will be infinite as well. We cannot represent infinitely big numbers in a computer, so we have a problem.
+where it is known (or evident) that each string begins with a different letter, suddenly our hash function becomes a perfect choice to build a searchable data structure, because **given this input set** there are no collisions. So, an analysis of the practical inputs is always paramount when we consider hash functions, as theoretically poor functions may perform very well on specific sets of inputs.
 
-Furthermore, we don't want the indexes that can be represented to be too long. A system that indexes a very simple string of 100 characters (100 bytes) with an index that requires several gigabytes to be represented is definitely not a good one.
+A very good example of such an analysis can be found in the source code of the Python language. The implementation of dictionaries contains an in-depth discussion of the choices made when implementing the hashing mechanism behind those structures. You can find it [here](https://github.com/python/cpython/blob/v3.6.5/Objects/dictobject.c#L132). 
 
+# Final words
 
+As I said this is just a very quick and humble introduction to hashing. I think you cannot call yourself a programmer nowadays without knowing something about hashing, and what I summarized in this post is enough to understand hash uses like Bitcoin or SSL. If you want to study the topic in depth, however, I recommend taking a course or reading a book on data structures.
 
+# Resources
 
+* [Hash function](https://en.wikipedia.org/wiki/Hash_function)  on Wikipedia
+* [Cryptographic hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function) on Wikipedia
+* [A lesson on hash functions](https://www.youtube.com/watch?v=tLkHk__-M6Q) by Prof. Christof Paar
+* MIT Professor Srinivas Devadas on [Cryptographic hash functions](https://www.youtube.com/watch?v=KqqOXndnvic)
 
+# Feedback
 
-
-
-
-
-
-
-STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK STUCK how can I explain that the size of the universe is infinite so we need to compress it to a smaller one?
-
-
-
-
-Then we fill a document with all the books in alphabetical order (by title and author) and the relative index.
-
-When we need to find a book we just open the document, find the book we need in the list (which is easy because of the alphabetical order) and go directly to the correct room and shelf. 
-
-
-We now want to index the content of this universe, which means that we want to assign to each element a unique number, so that we can refer to the number instead of the element. The idea is that if instead of mentioning a very long binary string like a whole book or the digitalised content of a picture we could mention an index, we would achieve a tremendous improvement. When content is _indexed_ we can go straight to its position in the storage instead of reading every single element to find the one we are looking for.
-
-DRAWING LINKED LIST VS ARRAY
-
-Let's then say that we devise some mathematical way to assign a _unique numeric index_ to each element of the universe **U**. We can order all the elements according to this index and store them.
-
-When we store some content we just need to compute the index and keep it. When later we want to retrieve that same content we can directly go to the slot at that index and retrieve the value.
-
-DRAWING STORING AND RETRIEVING CONTENT
+Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post or reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 
