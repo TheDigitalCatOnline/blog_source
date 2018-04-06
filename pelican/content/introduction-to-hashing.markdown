@@ -1,7 +1,7 @@
 Title: Introduction to hashing
 Date: 2018-04-05 17:00:00 +0100
 Category: Programming
-Tags: algorithms, Python, Python3
+Tags: algorithms
 Authors: Leonardo Giordani
 Slug: introduction-to-hashing
 Summary: 
@@ -46,6 +46,8 @@ _A hash function is any function that can be used to map data of arbitrary size 
 
 This description may sound intimidating at first, but it is actually pretty simple. Let's consider a dictionary where you want to look up a word that you don't know, like for example "quagmire". What you do is to jump directly to a section labelled "Q" in the dictionary, then quickly identify the part of the section where words that start with "QU" are, and promptly find the word. Congratulations, you just used a hash function! 
 
+![Image 01](/images/introduction_to_hashing/hash1.jpg)
+
 Getting the first letter of the word is, as a matter of fact, _a function_ (an operation) _that maps_ (connects) _data of arbitrary size_ (words) _to data of fixed size_ (a single letter of the alphabet). Using this method we can connect any word (also invented ones!) to a letter of the alphabet.
 
 Before we move on, I want to stress one aspect that is clear from the previous example. Through a hash function we can connect a set of potentially infinite values (all the words that we can create) with a finite set (the letters of an alphabet). This is the most important concept we have to keep in mind when dealing with hashing.
@@ -71,6 +73,8 @@ Such an event is called _collision_ and it is a direct effect of the non-uniquen
 
 Collisions are not intrinsically bad, but we have to be aware they can happen when we develop algorithms that use hash functions. If we are writing a dictionary for a human language where 80% of the words starts with "A" it is pointless to use the first letter to partition the book because the first section would be almost as big as the whole tome. This may seem too imaginative an example, but when we manage data structures problems such this arise at every corner.
 
+![Image 02](/images/introduction_to_hashing/hash2.jpg)
+
 In this last example avoiding collisions is easy. We just need to increase the number of characters that we consider until the size of the book sections becomes reasonable. When the the hash function becomes more complex, especially when it has the diffusion property (explained later), avoiding the clustering in the output data might not be so simple.
 
 # Digital hash functions
@@ -94,6 +98,8 @@ Let me briefly describe some of the most important ones that you should be aware
 Given the algorithm (with its parameters), the hash number of some data **must always be the same**. The result of the hashing function depends only on the data itself, and not on other external factors like for example time or computer system.
 
 Pay attention to the fact that this definition considers the algorithm and its parameters. This means that we can include external factors in the computation, but they have to be fixed for the whole life of the result itself.
+
+![Image 03](/images/introduction_to_hashing/hash3.jpg)
 
 Let's consider a system that uses a hash to speed up searches in some arrays. For several reasons the hashing algorithm employs an initial random seed that is derived from the boot time. As long as the system is running (i.e. it is not rebooted), the algorithm is consistent, and we may consider the random seed as a constant parameter. We may also persist the hashes on a storage, because when we load them they are still perfectly valid. As soon as the system is rebooted, however, the whole set of hashes created during the previous execution becomes invalid and meaningless. This is not the case, though, if the hashing function bases its computation on the actual data only.
 
@@ -120,6 +126,8 @@ Note that this property is somehow the opposite of diffusion, thus demonstrating
 
 A hash function has a given finite number of possible outputs, because the output has a finite length. When a hash function is uniform, producing the output for each possible input produces a **uniform distribution of outputs**, that is there is no output value that is used more often than others. When designing data structures this is often the desirable behaviour, since it leads to an uniform use of resources, for example memory, leading to an uniform behaviour of other algorithms that work on the same structure, like search. 
 
+![Image 04](/images/introduction_to_hashing/hash4.jpg)
+
 Uniformity is obviously linked to the number of collisions produced by a hash function, and a perfectly uniform hash function will have the same number of collisions for each output value. Increasing the number of possible output values, thus, results in a uniform reduction of collisions.
 
 ## Non-invertible
@@ -129,6 +137,8 @@ Inverting a function means to create a function that returns the original input 
 With non-injective functions the only caveat is that there are multiple inputs that return the same output, but this doesn't prevent the creation of an inverse function. For example, 3 squared gives 9 and since the inverse of the square function is the square root, we can apply it to the result and retrieve the possible inputs, that is +3 and -3.
 
 With non-invertible functions **there is no simple way to find the input given the output**. Mathematically we speak of _one-way functions_, as computing the inverse is either impossible of infeasible. Mind that "infeasible" has a well-defined meaning in mathematics, but I will not go deeper into it in this article. It will be sufficient to consider it as "too hard to compute in a reasonable time with the current state of technology". Cryptographic hash functions must be non-invertible.
+
+![Image 05](/images/introduction_to_hashing/hash5.jpg)
 
 ## Collisions-resistant
 
@@ -155,7 +165,7 @@ You can't teach an old dog new tricks
 
 where it is known (or evident) that each string begins with a different letter, suddenly our hash function becomes a perfect choice to build a searchable data structure, because **given this input set** there are no collisions. So, an analysis of the practical inputs is always paramount when we consider hash functions, as theoretically poor functions may perform very well on specific sets of inputs.
 
-A very good example of such an analysis can be found in the source code of the Python language. The implementation of dictionaries contains an in-depth discussion of the choices made when implementing the hashing mechanism behind those structures. You can find it [here](https://github.com/python/cpython/blob/v3.6.5/Objects/dictobject.c#L132). 
+A very good example of such an analysis can be found in the source code of the Python language. The implementation of dictionaries contains an in-depth discussion of the choices made when implementing the hashing mechanism behind those structures. You can find it [here](https://github.com/python/cpython/blob/v3.6.5/Objects/dictobject.c#L132). If you never approached data structures I recommend starting from a simpler explanation, however, as you might be intimidated by that discussion. You will find a good basic tutorial on hash tables in any data structures course or textbook.
 
 # Final words
 
@@ -167,6 +177,8 @@ As I said this is just a very quick and humble introduction to hashing. I think 
 * [Cryptographic hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function) on Wikipedia
 * [A lesson on hash functions](https://www.youtube.com/watch?v=tLkHk__-M6Q) by Prof. Christof Paar
 * MIT Professor Srinivas Devadas on [Cryptographic hash functions](https://www.youtube.com/watch?v=KqqOXndnvic)
+* Wiley & Sons publishes a book on [Data Structures and Algorithms in Python](https://www.amazon.co.uk/Structures-Algorithms-Python-Michael-Goodrich/dp/1118290275)
+* O'Reilly publishes a book on [Mastering Algorithms with C: Useful Techniques from Sorting to Encryption](https://www.amazon.com/Mastering-Algorithms-Techniques-Sorting-Encryption/dp/1565924533/ref=sr_1_1?s=books&ie=UTF8&qid=1523009383&sr=1-1&keywords=Mastering+Algorithms+with+C)
 
 # Feedback
 
