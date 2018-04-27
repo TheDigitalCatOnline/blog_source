@@ -4,7 +4,7 @@ Category: Programming
 Tags: algorithms
 Authors: Leonardo Giordani
 Slug: introduction-to-hashing
-Image: introduction_to_hashing
+Image: introduction-to-hashing
 Summary: 
 
 Have you ever used dictionaries or maps in your language of choice, or have you ever met a mysterious MD5 code while downloading a file from a server? Maybe you are a programmer, and using Git to manage your code you ended up dealing with strange numbers called SHA1, and surely you heard at least a couple of times the term _cache_, which probably needed to be emptied in your browser.
