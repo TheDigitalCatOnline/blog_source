@@ -1,6 +1,6 @@
 Title: Public key cryptography: RSA keys
 Date: 2018-04-25 13:00:00 +0100
-Category: Programming, Projects
+Category: Programming
 Tags: algorithms, cryptography, SSL, SSH, RSA
 Authors: Leonardo Giordani
 Slug: rsa-keys
