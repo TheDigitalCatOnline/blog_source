@@ -360,6 +360,8 @@ vectors:
     address3 - vectors
 ```
 
+TODO how did I find the vector table?
+
 For example, if we consider the Kickstart 1.3 ROM (`exec` 34.2) we find the functions table at `0x1a7c`. The first value is `0x08a0`, and if we sum this value to the address of the table itself we get `0x1a7c + 0x08a0 = 0x231c`. At this address we will find the first function defined in the jump table, in the first reserved slot, namely `Open()`.
 
 The code is the following
