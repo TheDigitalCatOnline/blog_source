@@ -4,7 +4,7 @@ Category: Programming
 Tags: algorithms
 Authors: Leonardo Giordani
 Slug: introduction-to-hashing
-Image: introduction_to_hashing
+Image: introduction-to-hashing
 Summary: 
 
 Have you ever used dictionaries or maps in your language of choice, or have you ever met a mysterious MD5 code while downloading a file from a server? Maybe you are a programmer, and using Git to manage your code you ended up dealing with strange numbers called SHA1, and surely you heard at least a couple of times the term _cache_, which probably needed to be emptied in your browser.
@@ -180,6 +180,10 @@ As I said this is just a very quick and humble introduction to hashing. I think 
 * MIT Professor Srinivas Devadas on [Cryptographic hash functions](https://www.youtube.com/watch?v=KqqOXndnvic)
 * Wiley & Sons publishes a book on [Data Structures and Algorithms in Python](https://www.amazon.co.uk/Structures-Algorithms-Python-Michael-Goodrich/dp/1118290275)
 * O'Reilly publishes a book on [Mastering Algorithms with C: Useful Techniques from Sorting to Encryption](https://www.amazon.com/Mastering-Algorithms-Techniques-Sorting-Encryption/dp/1565924533/ref=sr_1_1?s=books&ie=UTF8&qid=1523009383&sr=1-1&keywords=Mastering+Algorithms+with+C)
+
+## Updates
+
+2018-04-28 [gixslayer](https://www.reddit.com/user/gixslayer) and [SevenGlass](https://www.reddit.com/user/SevenGlass) discussed on reddit the right command line for the `md5sum` example on Windows. See https://www.reddit.com/r/programming/comments/8fbepo/introduction_to_hashing/dy316go
 
 # Feedback
 
