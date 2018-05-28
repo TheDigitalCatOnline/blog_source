@@ -57,6 +57,7 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
+        white-space: normal;
     }
 
 /* Grid */
@@ -2218,7 +2219,7 @@
     blockquote {
         border-left: solid 3px rgba(210, 215, 217, 0.75);
         font-style: italic;
-        margin: 0 0 2em 0;
+        margin: 1em 0 1em 0;
         padding: 0.5em 0 0.5em 2em;
     }
 
@@ -2625,8 +2626,9 @@
 
     ol {
         list-style: decimal;
-        margin: 0 0 2em 0;
+        margin: 1em 0 1em 0;
         padding-left: 1.25em;
+        font-size: 1.3em;
     }
 
         ol li {
@@ -2635,8 +2637,9 @@
 
     ul {
         list-style: disc;
-        margin: 0 0 2em 0;
+        margin: 1em 0 1em 0;
         padding-left: 1em;
+        font-size: 1.3em;
     }
 
         ul li {
@@ -4159,6 +4162,7 @@
     article.post p {
         padding: 0;
         margin: 0.4em 0 0 0;
+        font-size: 1.3em;
     }
 
     article.post ul {
@@ -4174,6 +4178,8 @@
     article.post pre {
         margin: 1.5em 0;
         padding: 1em;
+        font-size: 1.1em;
+        white-space: pre;
     }
 
     article.post section#tags {
