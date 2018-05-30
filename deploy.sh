@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source venv/bin/activate
+source venv3/bin/activate
 
 cd pelican
 pelican content -s publishconf.py
