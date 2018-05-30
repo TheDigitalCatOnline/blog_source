@@ -293,3 +293,12 @@ SOFFSET     SET     (SOFFSET+1)&$fffffffe
 ```
 
 This can be seen in action in the `CardHandle` structure defined in `include_i/resources/card.i`.
+
+# Resources
+
+* Amiga System Programmers Guide, Abacus ([pdf here](https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus))
+* [AmigaOS Developer Docs](http://amigadev.elowar.com)
+
+# Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
