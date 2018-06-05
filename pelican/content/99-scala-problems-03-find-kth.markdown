@@ -50,7 +50,7 @@ which probably states more clearly that the main job of the function is to repla
 
 ## The recursive solution
 
-A recursive solution is pretty straightforward. We just repeatedly remove the first element until and decrease the given index until it reaches 0. Using a couple of methods from the `List` type the solution is
+A recursive solution is pretty straightforward. We just repeatedly remove the first element and decrease the given index until it reaches 0. Using a couple of methods from the `List` type the solution is
 
 ``` scala
 def findKth[A](k:Int, l:List[A]):A = k match {

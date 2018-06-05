@@ -32,7 +32,7 @@ def length[A](l:List[A]):Int = {
 }
 ```
 
-No special things to high light here. The `length()` method works with empty lists too, returning 0, so everything should be fine. As already shown in [problem 01](/blog/2015/04/07/99-scala-problems-01-find-last-element/) the function may be also reduced to one single line
+No special things to highlight here. The `length()` method works with empty lists too, returning 0, so everything should be fine. As already shown in [problem 01](/blog/2015/04/07/99-scala-problems-01-find-last-element/) the function may be also reduced to one single line
 
 ``` scala
 def length[A](l:List[A]):Int = l.length
@@ -52,7 +52,7 @@ def length[A](l:List[A]):Int = {
 }
 ```
 
-which works fine. I create an helper function that for each element in the list calls itself passing an incremented accumulator and the remaining elements of the list. Then I call it passing an empty accumulator and the whole list.
+which works fine. I create an helper function that calls itself on each element in the list passing an incremented accumulator and the remaining elements of the list. Then I call it passing an empty accumulator and the whole list.
 
 There is a simpler way to express the same algorithm, which is
 
