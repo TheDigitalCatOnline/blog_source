@@ -1,6 +1,6 @@
 Title: Clean architectures in Python: a step-by-step example
 Date: 2016-11-14 19:00:00 +0000
-Modified: 2018-06-02 13:00:00 +0000
+Modified: 2018-06-05 11:00:00 +0000
 Category: Programming
 Tags: OOP, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
@@ -1281,7 +1281,7 @@ class MemRepo:
 
         operator = '__{}__'.format(operator)
 
-        return getattr(element[key], operator)(int(value))
+        return getattr(element[key], operator)(value)
 
     def list(self, filters=None):
         if not filters:
@@ -1295,21 +1295,6 @@ class MemRepo:
 
         return [sr.StorageRoom.from_dict(r) for r in result]
 ```
-
-_Update_: the original version of this class had a bug in the `_check()` method, probably a punishment since I stated that the implementation is pretty simple =) The code
-
-``` python
-        return getattr(element[key], operator)(int(value))
-```
-was originally
-
-``` python
-        return getattr(element[key], operator)(value)
-```
-
-and this wasn't working as the REST layer passes a string, coming from the parse of the query string.
-
-The `_check()` method is not tested, being an internal method. Is this reasonable? Well, in a simple implementation it might be. A proper repository implementation, however, should be tested very well, and such an error would be spotted immediately.
 
 # The REST layer (part1)
 
@@ -1774,8 +1759,6 @@ Whether you decide to use a clean architecture or not, I really hope this post h
 
 2016-12-12: Thanks to [Marco Beri](https://twitter.com/Taifu) who spotted a typo in the code of step 6, which was already correct in the GitHub repository. He also suggested using the Cookiecutter package by [Ardy Dedase](https://github.com/ardydedase). Thanks to Marco and to Ardy!
 
-2018-06-03: Thanks to [mikus](https://github.com/mikus) that spotted the bug in the `_check()` method of the `MemRepo` class. The reason why the bug wasn't spotted before has been clarified in the post, and both the post and the `rentomatic` repository have been updated. Thanks!
- 
 ## Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
