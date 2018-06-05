@@ -1,6 +1,6 @@
 Title: Clean architectures in Python: a step-by-step example
 Date: 2016-11-14 19:00:00 +0000
-Modified: 2018-06-02 13:00:00 +0000
+Modified: 2018-06-05 11:00:00 +0000
 Category: Programming
 Tags: OOP, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
