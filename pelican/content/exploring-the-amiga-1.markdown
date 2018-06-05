@@ -41,7 +41,7 @@ cd ..
 
 ## Install a disassembler
 
-The vbcc suite written by Volker Barthelmann contains a disassembler for the M68k architecture that you can find [here](TODO).
+The vbcc suite written by Volker Barthelmann contains a disassembler for the M68k architecture that you can find [here](http://sun.hasenbraten.de/~frank/projects/).
 
 A disassembler is a handy tool that can reveal a lot about how a program works. You can install it with the following code
 
