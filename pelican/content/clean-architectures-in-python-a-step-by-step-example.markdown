@@ -1281,6 +1281,11 @@ class MemRepo:
 
         operator = '__{}__'.format(operator)
 
+        if key in ['size', 'price']:
+            return getattr(element[key], operator)(int(value))
+        elif key in ['latitude', 'longitude']:
+            return getattr(element[key], operator)(float(value))
+
         return getattr(element[key], operator)(value)
 
     def list(self, filters=None):
