@@ -1,5 +1,5 @@
 Title: Exploring the Amiga - Part 4
-Date:
+Date: 2018-06-14 14:30:00 +0100
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
@@ -19,23 +19,23 @@ We found the Kickstart 1.3 (`exec` 34.2) vector table at address `0x1a7c`, and t
 00001a82: 08ac
 ```
 
-If we translate these relative values into absolute addresses, summing the address of the table itself, we discover the address of the 4 base functions that every Amiga library has to provide, namely `Open()`, `Close()`, `Expunge()`, and a reserved slot that should contain a function that returns 0.
+If we translate these relative values into absolute addresses, summing the address of the table itself, we discover the address of the 4 base functions that every Amiga library has to provide, namely `Open`, `Close`, `Expunge`, and a reserved slot that should contain a function that returns 0.
 
-## Open
+## `Open`
 
-The first value is `0x08a0`, and if we sum this value to the address of the table itself we get `0x1a7c + 0x08a0 = 0x231c`. At this address we will find the first function defined in the jump table, that is `Open()`.
+The first value is `0x08a0`, and if we sum this value to the address of the table itself we get `0x1a7c + 0x08a0 = 0x231c`. At this address we will find the first function defined in the jump table, that is `Open`.
 
 The code is the following
 
 ``` m68k
-; Open()
+; Open
 
 0000231c: 200e      move.l  a6,d0
 0000231e: 526e 0020 addq.w  #0x1,0x20(a6)
 00002322: 4e75      rts
 ```
 
-The `Open()` routine expects the address of the library to be in the `a6` register, and returns the same value in `d0`. It then adds 1 to the number contained 32 bytes (`0x20`) after the address of the library itself and then returns. To find out what this number is we can go back again to the NDK and its include files.
+The `Open` routine expects the address of the library to be in the `a6` register, and returns the same value in `d0`. It then adds 1 to the number contained 32 bytes (`0x20`) after the address of the library itself and then returns. To find out what this number is we can go back again to the NDK and its include files.
 
 From a previous investigation we know that, once the library has been installed in memory, there are two structures defined one after the other. The first is the `LN` structure that represents a linked list node, and the second is the `LIB` structure that represents the library.
 
@@ -69,30 +69,30 @@ and the definition of `LIB` in `include_i/exewc/libraries.i`
 
 As you can see this latter mentions the former reserving space for it at the beginning (`LN_SIZE`).
 
-`LABEL` is a macro that creates the definition `LN_SIZE EQU 14` using the actual offset inside the structure, so it is not part of the structure itself. 
+`LABEL` is a macro that creates an alias for the current size of the structure, and you can find its definition in `include_i/exec/types.i`. It works in conjunction with the type macros, which increment the global variable `SOFFSET`. The code `LABEL LN_SIZE` in the `LN` structure produces the definition `LN_SIZE EQU 14`, which is thus a simple marker and does not contribute to the size of the structure itself.
 
 The comment after the `LABEL` macro in the `LN` structure says that the structure is word aligned, and indeed its size is a multiple of a word (2 bytes): 2 `APTR` (8 bytes) + 1 `UBYTE` (1 byte) + 1 `BYTE` (1 byte) + 1 `APTR` (4 byte) = 14 bytes.
 
-To find the field updated by `Open()` we need to skip 32 bytes, so we still have 18 bytes to skip into the `LIB` structure. At that offset we find the `LIB_OPENCNT` field (remember that `UBYTE` is 1 byte, `UWORD` 2 bytes, and `APTR` and `ULONG` 4 bytes). This field is, as the comment reads, the "number of current opens".
+To find the field updated by `Open` we need to skip 32 bytes. So, after we skip the whole `LN` structure, we still have 18 bytes to skip into the `LIB` structure. At that offset we find the `LIB_OPENCNT` field (remember that `UBYTE` is 1 byte, `UWORD` 2 bytes, and `APTR` and `ULONG` 4 bytes). This field is, as the comment reads, the "number of current opens".
 
-The last instruction of the `Open()` function is `rts` (`ReTurn from Subroutine`) that returns to the instruction after the `jsr` that called the function.
+The last instruction of the `Open` function is `rts` (`r`e`t`urn from `s`ubroutine) that returns to the instruction after the `jsr` that called the function.
 
-## Close(), Expunge(), and the reserved slot
+## `Close`, `Expunge`, and the reserved slot
 
-Immediately after the definition of the `Open()` function, we find the definition of `Close()`, listed in the vector table as `0x08a8`, which becomes `0x1a7c + 0x08a8 = 0x2324`. The next two entries in the vector table contain the same value `0x08ac`, which translates to the absolute address `0x1a7c + 0x08ac = 0x2328`. This address is then the location of both the `Expunge()` function and the reserved function that must return 0.
+Immediately after the definition of the `Open` function, we find the definition of `Close`, listed in the vector table as `0x08a8`, which becomes `0x1a7c + 0x08a8 = 0x2324`. The next two entries in the vector table contain the same value `0x08ac`, which translates to the absolute address `0x1a7c + 0x08ac = 0x2328`. This address is then the location of both the `Expunge` function and the reserved function that must return 0.
 
-The code of the `Close()` function is very simple, it just decrements the open counter (`0x20` in the library). There is no explicit `rts` as `Close()` uses the adjacent `Expunge()` code for that. Since it's impossible to remove the Exec library in the Amiga system, the `Expunge()` function of the Exec library just returns 0, which is exactly what the reserved function has to do (thus the same address in the vector table), and what `Close()` does after having decremented the open counter.
+The code of the `Close` function is very simple, it just decrements the open counter (`0x20` in the library). There is no explicit `rts` as `Close` uses the adjacent `Expunge` code for that. Since it's impossible to remove the Exec library in the Amiga system, the `Expunge` function of the Exec library just returns 0, which is exactly what the reserved function has to do (thus the same address in the vector table), and what `Close` does after having decremented the open counter.
 
 ``` m68k
-; Close()
+; Close
 00002324: 536e 0020 subq.w  #0x1,0x20(a6)
 
-; Expunge()
+; Expunge
 00002328: 7000      moveq   #0,d0
 0000232a: 4e75      rts     
 ```
 
-# MakeFunctions
+# `MakeFunctions`
 
 The `MakeFunctions` routine is used by Exec to create the vector table at the beginning of the library when it is loaded in memory. You might recall that the vector table is created backward from the beginning of the library, thus allowing to use a simpler addressing scheme.
 
@@ -174,14 +174,14 @@ Setup:
 000015b8: 6716                      beq.b   Absolute
 ```
 
-The first thing this code does is to save the `a3` resister in the stack because it will be changed during the routine.
+The first thing this code does is to save the `a3` register in the stack because it will be changed during the routine.
 
 ``` m68k
 Setup:
 000015b2: 2f0b                      move.l  a3,-(sp)
 ```
 
-In Assembly variables are provided by registers and thus are not namespaced, as the registers are the same through the whole program. This is why you should save and restore them and document which one you will change, for instance to return values.
+In Assembly, variables are provided by registers and thus are not namespaced, as the registers are the same through the whole program. This is why you should save and restore them and document which one you will change, for instance to return values.
 
 Secondly, the code sets the `d0` register to 0.
 
@@ -225,7 +225,7 @@ Relative:
 
 then compares it with `0xffff` (or `#-0x1`) to see if we reached the end of the table. In that case the code jumps to the fourth section (`0x15e4`, labelled `Cleanup`), otherwise the execution continues with the next instruction
 
-```txt
+``` m68k
 000015bc: 0c41 ffff                 cmpi.w  #-0x1,d1
 000015c0: 6722                      beq.b   Cleanup
 ```
@@ -236,7 +236,7 @@ The routine then loads the effective address of the relative vector using `a2` a
 000015c2: 47f2 1000                 lea     (0,a2,d1.w),a3
 ```
 
-Since the address of the jump table is contained in `a0`, the resulting absolute vector is stored there, then the code stores the value `0x4ef9` which is the code for the `jmp` instruction
+Since the address of the jump table is contained in `a0`, the resulting absolute vector is stored there, then the code stores the value `0x4ef9` which is the code for the `jmp` instruction (more on this later)
 
 ``` m68k
 000015c6: 210b                      move.l  a3,-(a0)
@@ -283,15 +283,15 @@ The basic idea of homoiconicity is that the language doesn't consider data and c
 
 Homoiconicity is a feature rarely provided by languages. It is very powerful, but it basically forces to keep the language at the level of its own AST (Abstract Syntax Tree), which in turn means that you cannot add a proper abstraction, or, if you prefer, a proper high level language, if we identify with this term a computer language that is similar to the human language.
 
-Famous examples of higher level languages that are homoiconic are Lisp and Prolog. Lisp is a language that manages lists and its syntax is based on... lists. This means that you can pass Lisp code to a function and transform it like you would do with standard data.
+Famous examples of high level languages that are homoiconic are Lisp and Prolog. Lisp is a language that manages lists and its syntax is based on... lists. This means that you can pass Lisp code to a function and transform it like you would do with standard data.
 
-Back to the Amiga code, the line we are interested in is 
+Back to the Motorola Assembly code, the line we are interested in is 
 
 ``` m68k
 000015c8: 313c 4ef9                 move.w  #0x4ef9,-(a0)
 ```
 
-This stores at the address contained in `a0` the hexadecimal number `0x4ef9`, before decrementing the address itself for the purpose of the algorithm.
+This decrements the address contained in `a0` by 2 bytes, then stores at the resulting address the hexadecimal number `0x4ef9`.
 
 The interesting part is that the number `0x4ef9` has a specific meaning for the Motorola 68000 processor, and namely that of the `jmp` instruction. This is clearly shown by the tables in the Programmer's Reference Manual (Section 8, Instruction Format Summary, 8-15).
 
