@@ -162,7 +162,7 @@ libname:
 
 As we saw, the Amiga system reserves 4 vectors at the beginning of the jump table of a library. These 4 spaces host 3 standard functions that shall be provided by any library, `Open()`, `Close()`, and `Expunge()`. The fourth slot is kept for possible future expansions and must contain a function that returns 0.
 
-The offsets of these functions are contained in the `exec/libraries.i` file
+The offsets of these functions are contained in the `include_i/exec/libraries.i` file
 
 ``` m68k
 *----------------------------------------------------------------

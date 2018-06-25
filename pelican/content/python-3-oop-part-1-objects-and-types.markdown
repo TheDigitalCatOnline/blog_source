@@ -1,5 +1,6 @@
 Title: Python 3 OOP Part 1 - Objects and types
 Date: 2014-08-20 13:00:00 +0200
+Modified: 2018-06-25 12:30:00 +0000
 Category: Programming
 Tags: Python, Python3, OOP
 Authors: Leonardo Giordani

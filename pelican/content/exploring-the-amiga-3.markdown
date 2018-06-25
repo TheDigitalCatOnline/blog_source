@@ -1,5 +1,6 @@
 Title: Exploring the Amiga - Part 3
 Date: 2018-06-08 12:30:00 +0100
+Modified: 2018-06-24 22:30:00 +0000
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
@@ -108,7 +109,7 @@ vda68k Kickstart1.3.rom > Kickstart1.3.asm
 
 Inside this code we can see a practical implementation of the mechanism described above.
 
-The mandatory disclaimer: **to legally use the Amiga Kickstart ROM images you must own the specific Amiga model.** This website is against piracy of dead and discontinued systems.
+The mandatory disclaimer: **to use the Amiga Kickstart ROM images you must own a license.** (see the Resources section). This website is against piracy of dead and discontinued systems ;)
 
 When you disassemble some binary code, however, you don't get some nice source code written in a high level language. Well, not with a simple disassembler like vdasm, anyway. What you get is the one to one interpretation of the binary values according to the processor's conventions, and this includes parts of the binary file that are pure data. The disassembler has no way to know if some binary number represents an instruction or a pure number. Moreover, there is no trace of the original labels used by the author(s) of the code, as they are lost in the translation to machine language, when they are converted to pure addresses.
 
@@ -146,7 +147,7 @@ In the Amiga system all libraries have a specific structure when loaded in memor
 
 First of all all libraries in memory are nodes of a linked list, so we expect to find the structure of the node itself. Then, inside the node, we expect to find the actual library structure.
 
-The include file `exec/nodes.i` tells us that a standard linked list node has the following structure
+The include file `include_i/exec/nodes.i` tells us that a standard linked list node has the following structure
 
 ``` m68k
    STRUCTURE    LN,0    ; List Node
@@ -158,7 +159,7 @@ The include file `exec/nodes.i` tells us that a standard linked list node has th
     LABEL   LN_SIZE ; Note: word aligned
 ```
 
-The two 32-bit pointers `LN_SUCC` and `LN_PRED` are created when the node is loaded in memory, so we need to look for the rest of the structure, namely 1 byte with `LN_TYPE`, 1 byte with `LN_PRI` and 4 bytes with `LN_NAME`. From the same file `exec/nodes.i` we know that the note type for a library is `09`
+The two 32-bit pointers `LN_SUCC` and `LN_PRED` are created when the node is loaded in memory, so we need to look for the rest of the structure, namely 1 byte with `LN_TYPE`, 1 byte with `LN_PRI` and 4 bytes with `LN_NAME`. From the same file `include_i/exec/nodes.i` we know that the note type for a library is `09`
 
 ``` m68k
 NT_LIBRARY  EQU 9
@@ -170,7 +171,7 @@ In the Kickstart 1.3 code this pattern can be found at offset `0x030c`.
 
 ![Search library pattern](/images/exploring-the-amiga-3/search-library-pattern.png)
 
-If this is the correct position of the node structure, we expect to find just after it the structure of the library as described in the include file `exec/libraries.i`
+If this is the correct position of the node structure, we expect to find just after it the structure of the library as described in the include file `include_i/exec/libraries.i`
 
 ``` m68k
  STRUCTURE LIB,LN_SIZE     
@@ -258,7 +259,7 @@ We extracted two useful information from this code. First, the vector table is a
 
 After `MakeFunctions` has been executed the code returns and the next instruction stores the final size of the jump table 16 bytes after the address contained in `a6`. With the help of the structures shown above we know that at that offset we can find the `LIB_NEGSIZE` field, that contains the size of the jump table (number of bytes before the library).
 
-It's time to check if what we found is correct. There should be a table at address `0x1a7c` that contains function addresses in the order listed by the include file `exec/exec_lib.i`. As `MakeFunctions` in that file is listed at the 11th place we can check if the table is consistent. That address should point a function at `0x15b2`, according to the previous code.
+It's time to check if what we found is correct. There should be a table at address `0x1a7c` that contains function addresses in the order listed by the include file `include_i/exec/exec_lib.i`. As `MakeFunctions` in that file is listed at the 11th place we can check if the table is consistent. That address should point a function at `0x15b2`, according to the previous code.
 
 The values at `0x1a7c` are the following 
 
@@ -282,7 +283,7 @@ The values at `0x1a7c` are the following
 [...]
 ```
 
-The file `exec/exec_lib.i` doesn't contain the first 4 reserved vectors (the functions `Open`, `Close`, `Expunge`, and the reserved space), so considering that those are in the vector table we should check the 15th, were we find `0xfb36`. This is an offset relative to the beginning of the table, so the function is at `0x1a7c + 0xfb36 = 0x15b2` (addresses are 16 bits numbers), as we already discovered.
+The file `include_i/exec/exec_lib.i` doesn't contain the first 4 reserved vectors (the functions `Open`, `Close`, `Expunge`, and the reserved space), so considering that those are in the vector table we should check the 15th, were we find `0xfb36`. This is an offset relative to the beginning of the table, so the function is at `0x1a7c + 0xfb36 = 0x15b2` (addresses are 16 bits numbers), as we already discovered.
 
 This shows that our investigation is correct. The Kickstart 1.3 vector table is at address `0x1a7c` and from there we can reach and analyse all the functions contained in the base Amiga library.
 
@@ -290,6 +291,11 @@ This shows that our investigation is correct. The Kickstart 1.3 vector table is 
 
 * Amiga System Programmers Guide, Abacus ([pdf here](https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus))
 * [AmigaOS Developer Docs](http://amigadev.elowar.com)
+* Amiga Forever package sold by Cloanto [here](www.amigaforever.com)
+
+# Updates
+
+2018-06-23: As [Malor](https://new.reddit.com/user/Malor) pointed out on Reddit ([here](https://new.reddit.com/r/programming/comments/8pkgk0/exploring_the_amiga_part_1/e0cifax)) there is no need to own the original hardware, as licenses are still sold by Cloanto. Thanks Malor!
 
 # Feedback
 
