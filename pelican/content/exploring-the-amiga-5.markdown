@@ -1,5 +1,5 @@
 Title: Exploring the Amiga - Part 5
-Date: 2018-06-25 13:00:00 +0100
+Date: 2018-06-25 12:00:00 +0100
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
@@ -348,8 +348,8 @@ And the same happens for the remaining 7 lists from `ResourceList` to `TaskWait`
 
 # Resources
 
-* Microprocessor-based system design - Ricardo Gutierrez-Osuna [slides](
-http://courses.cs.tamu.edu/rgutier/ceg411_f01/), in particular [lesson9](http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf) on "Exception processing"
+* Microprocessor-based system design by Ricardo Gutierrez-Osuna ([slides](
+http://courses.cs.tamu.edu/rgutier/ceg411_f01/)), in particular [Lesson 9 - Exception processing](http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf)
 * Motorola M68000 Family Programmer's Reference Manual [PDF here](https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf)
 
 # Feedback

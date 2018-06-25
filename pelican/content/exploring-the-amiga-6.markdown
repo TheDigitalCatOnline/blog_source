@@ -349,8 +349,8 @@ The Exec base address, however, is not `0x400` but `0x676`. As we already know t
 
 # Resources
 
-* Microprocessor-based system design - Ricardo Gutierrez-Osuna [slides](
-http://courses.cs.tamu.edu/rgutier/ceg411_f01/), in particular [lesson9](http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf) on "Exception processing"
+* Microprocessor-based system design by Ricardo Gutierrez-Osuna ([slides](
+http://courses.cs.tamu.edu/rgutier/ceg411_f01/)), in particular [Lesson 9 - Exception processing](http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf)
 * Motorola M68000 Family Programmer's Reference Manual [PDF here](https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf)
 * Amiga System Programmers Guide, Abacus ([pdf here](https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus))
 
