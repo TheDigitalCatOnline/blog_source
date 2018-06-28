@@ -73,3 +73,15 @@ TWITTER_USERNAME = 'thedigicat'
 THEME = "../editorial"
 
 FAVICON = 'images/TheDigitalCat_favicon_32.png'
+
+MARKDOWN = {
+    'extension_configs': {
+        'markdown.extensions.codehilite': {'css_class': 'highlight'},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+        'markdown.extensions.toc': {
+            'permalink': True
+        },
+    },
+    'output_format': 'html5',
+}
