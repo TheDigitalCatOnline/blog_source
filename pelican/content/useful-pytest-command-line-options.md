@@ -31,7 +31,7 @@ $ pytest -svv tests/test_calc.py
 
 # Skipping tests
 
-Sometimes it is useful to skip tests. The reason might be that some new code broke too many tests, and we want to face them one at a time, or that a specific feature had to be temporarily disabled. In all those cases the `pytest.mask,skip` decorator is your friend. Remember that a decorator is something that changes the way the decorated function works (for the skilled reader: it's a function wrapper). Assuming we are working on a `tests/test_calc.py` file the code might be
+Sometimes it is useful to skip tests. The reason might be that some new code broke too many tests, and we want to face them one at a time, or that a specific feature had to be temporarily disabled. In all those cases the `pytest.mark.skip` decorator is your friend. Remember that a decorator is something that changes the way the decorated function works (for the skilled reader: it's a function wrapper). Assuming we are working on a `tests/test_calc.py` file the code might be
 
 ``` python
 @pytest.mark.skip
@@ -224,6 +224,10 @@ TOTAL                            26      2    92%
 ```
 
 Here I commented some of the tests to force the coverage percentage to drop. As you can see the report tells us that lines 6 and 11 of the `mypymodule/calc.py` file are not covered by any test.
+
+# Updates
+
+2017-12-24: pytest.org (such an honour!) spotted a misspelled `pytest.mark.skip`. Thanks!
 
 # Feedback
 
