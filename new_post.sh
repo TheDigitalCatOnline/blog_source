@@ -2,7 +2,7 @@
 
 if [[ $# != 1 ]]; then echo "$0 <article-slug>"; exit 1; fi
 
-source venv/bin/activate
+source venv3/bin/activate
 cd pelican/content
 
 article_slug=$1
