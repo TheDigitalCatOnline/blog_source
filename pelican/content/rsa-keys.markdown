@@ -1,7 +1,8 @@
 Title: Public key cryptography: RSA keys
 Date: 2018-04-25 13:00:00 +0100
+Modified: 2018-10-14 23:00:00 +0000
 Category: Programming
-Tags: algorithms, cryptography, SSL, SSH, RSA
+Tags: algorithms, cryptography, SSL, SSH, RSA, Python
 Authors: Leonardo Giordani
 Slug: rsa-keys
 Image: rsa-keys
@@ -11,15 +12,15 @@ I bet you created at least once an RSA key pair, usually because you needed to c
 
 But do you know what you actually did?
 
-Do you know what the `~/.ssh/id_rsa` file really contains, or why that strange file that begins with `ssh-rsa` pairs with another that begins with `-----BEGIN RSA PRIVATE KEY-----`. Or why does sometimes that same header miss the `RSA` part and just say `BEGIN PRIVATE KEY`?
+Do you know what the `~/.ssh/id_rsa` file really contains, or why that strange file that begins with `ssh-rsa` pairs with another that begins with `-----BEGIN RSA PRIVATE KEY-----`. Or why sometimes that same header misses the `RSA` part and just says `BEGIN PRIVATE KEY`?
 
 I think a minimum knowledge of the various formats of RSA keys is mandatory for every developer nowadays, not to mention the importance of understanding them deeply if you want to pursue a career in the infrastructure management world.
 
 # RSA algorithm and key pairs
 
-Since the invention of public-key cryptography various systems have been devised to create the key pair. One of the first ones is RSA, the creation of three brilliant cryptographers, that dates back to 1977. The story of RSA is quite interesting, as it was first invented by an English mathematician, Clifford Cocks, who was however forced to keep it secret by the British intelligence office he was working for.
+Since the invention of public-key cryptography, various systems have been devised to create the key pair. One of the first ones is RSA, the creation of three brilliant cryptographers, that dates back to 1977. The story of RSA is quite interesting, as it was first invented by an English mathematician, Clifford Cocks, who was however forced to keep it secret by the British intelligence office he was working for.
 
-Keeping in mind that RSA is not a synonym for public-key cryptography, the former being only one of the possible implementations, I wanted to write a post on it because it is still, more than 40 years after its publication, one of the most widespread algorithms. In particular it is the standard algorithm used to generate SSH key pairs, and since nowadays every developer has their public key on GitHub, BitBucket, or similar systems, we may arguably say that RSA is pretty ubiquitous.
+Keeping in mind that RSA is not a synonym for public-key cryptography but only one of the possible implementations, I wanted to write a post on it because it is still, more than 40 years after its publication, one of the most widespread algorithms. In particular it is the standard algorithm used to generate SSH key pairs, and since nowadays every developer has their public key on GitHub, BitBucket, or similar systems, we may arguably say that RSA is pretty ubiquitous.
 
 I will not cover the internals of the RSA algorithm in this article, however. If you are interested in the gory details of the mathematical framework you may find plenty of resources both on Internet and in the textbooks. The theory behind it is not trivial, but it is definitely worth the time if you want to be serious about the mathematical part of cryptography.
 
@@ -341,23 +342,23 @@ The fields are the same we found in the ASN.1 structure, this being only a diffe
 The first version of the PKCS standard (PKCS #1) was specifically tailored to contain an RSA key. Its ASN.1 definition can be found in [RFC 8017](https://tools.ietf.org/html/rfc8017) ("PKCS #1: RSA Cryptography Specifications Version 2.2")
 
 ``` txt
-   RSAPublicKey ::= SEQUENCE {
-       modulus           INTEGER,  -- n
-       publicExponent    INTEGER   -- e
-   }
+RSAPublicKey ::= SEQUENCE {
+    modulus           INTEGER,  -- n
+    publicExponent    INTEGER   -- e
+}
 
-   RSAPrivateKey ::= SEQUENCE {
-       version           Version,
-       modulus           INTEGER,  -- n
-       publicExponent    INTEGER,  -- e
-       privateExponent   INTEGER,  -- d
-       prime1            INTEGER,  -- p
-       prime2            INTEGER,  -- q
-       exponent1         INTEGER,  -- d mod (p-1)
-       exponent2         INTEGER,  -- d mod (q-1)
-       coefficient       INTEGER,  -- (inverse of q) mod p
-       otherPrimeInfos   OtherPrimeInfos OPTIONAL
-   }
+RSAPrivateKey ::= SEQUENCE {
+    version           Version,
+    modulus           INTEGER,  -- n
+    publicExponent    INTEGER,  -- e
+    privateExponent   INTEGER,  -- d
+    prime1            INTEGER,  -- p
+    prime2            INTEGER,  -- q
+    exponent1         INTEGER,  -- d mod (p-1)
+    exponent2         INTEGER,  -- d mod (q-1)
+    coefficient       INTEGER,  -- (inverse of q) mod p
+    otherPrimeInfos   OtherPrimeInfos OPTIONAL
+}
 ```
 
 Subsequently, as the need to describe new types of algorithms increased, the PKCS #8 standard was developed. This can contain different types of keys, and defines a specific field for the algorithm identifier. Its ASN.1 definition can be found in [RFC 5958](https://tools.ietf.org/html/rfc5958) ("Asymmetric Key Packages")
@@ -372,6 +373,7 @@ OneAsymmetricKey ::= SEQUENCE {
      [[2: publicKey        [1] PublicKey OPTIONAL ]],
      ...
    }
+
 PrivateKey ::= OCTET STRING
                      -- Content varies based on type of key. The
                      -- algorithm identifier dictates the format of
@@ -396,7 +398,7 @@ If it uses PKCS #1, however, there has to be an external identification of the a
 -----END RSA PRIVATE KEY-----
 ```
 
-The structure of PKCS #8 is the reason why previously we had to parse the field at offset 22 (`openssl asn1parse -inform pem -in private.pem -strparse 22`) to access the RSA parameters. If you are parsing a PKCS #1 key in PEM format you don't need this second step.
+The structure of PKCS #8 is the reason why previously we had to parse the field at offset 22 to access the RSA parameters. If you are parsing a PKCS #1 key in PEM format you don't need this second step.
 
 # Private and public key
 
@@ -600,9 +602,53 @@ if you need to use in SSH a key pair created with another system.
 ssh-keygen -i -f public.pem
 ```
 
+# Reading RSA keys in Python
+
+In Python you can use the `pycrypto` package to access a PEM file containing an RSA key with the `RSA.importKey` function. Now you can hopefully understand the [documentation](https://www.dlitz.net/software/pycrypto/api/current/Crypto.PublicKey.RSA-module.html) that says
+
+``` txt
+externKey (string) - The RSA key to import, encoded as a string.
+
+An RSA public key can be in any of the following formats:
+    * X.509 subjectPublicKeyInfo DER SEQUENCE (binary or PEM encoding)
+    * PKCS#1 RSAPublicKey DER SEQUENCE (binary or PEM encoding)
+    * OpenSSH (textual public key only)
+
+An RSA private key can be in any of the following formats:
+    * PKCS#1 RSAPrivateKey DER SEQUENCE (binary or PEM encoding)
+    * PKCS#8 PrivateKeyInfo DER SEQUENCE (binary or PEM encoding)
+    * OpenSSH (textual public key only)
+
+For details about the PEM encoding, see RFC1421/RFC1423.
+
+In case of PEM encoding, the private key can be encrypted with DES or 3TDES
+according to a certain pass phrase. Only OpenSSL-compatible pass phrases are
+supported.
+```
+
+In practice what you can do with a `private.pem` file is
+
+``` python
+from Crypto.PublicKey import RSA
+
+f = open('private.pem', 'r')
+key = RSA.importKey(f.read())
+```
+
+and the `key` variable will contain an instance of `_RSAobj` (not a very pythonic name, to be honest). This instance contains the RSA parameters as attributes as stated in the [documentation](https://www.dlitz.net/software/pycrypto/api/current/Crypto.PublicKey.RSA._RSAobj-class.html)
+
+``` python
+modulus = key.n
+public_exponent = key.e
+private_exponent = key.d
+first_prime_number = key.p
+second_prime_number = key.q
+q_inv_crt = key.u
+```
+
 # Final words
 
-I hope this post helped you to get a better understanding of RSA public and private keys. I keep finding on StackOverflow and on other boards messages of users that are confused by the output of the various tools and by the subtle but important differences between the formats.
+I keep finding on StackOverflow (and on other boards) messages of users that are confused by RSA keys, the output of the various tools, and by the subtle but important differences between the formats, so I hope this post helped you to get a better understanding of the matter.
 
 # Resources
 
@@ -616,6 +662,7 @@ I hope this post helped you to get a better understanding of RSA public and priv
 * [RFC 5958 - Asymmetric Key Packages](https://tools.ietf.org/html/rfc5958)
 * [RFC 7468 - Textual Encodings of PKIX, PKCS, and CMS Structures](https://tools.ietf.org/html/rfc7468)
 * [RFC 8017 - PKCS #1: RSA Cryptography Specifications Version 2.2](https://tools.ietf.org/html/rfc8017)
+* [PyCrypto](https://www.dlitz.net/software/pycrypto/) - The Python Cryptography Toolkit
 
 # Feedback
 
