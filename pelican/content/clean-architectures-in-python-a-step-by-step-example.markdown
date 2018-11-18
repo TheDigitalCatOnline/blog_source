@@ -1,6 +1,6 @@
 Title: Clean architectures in Python: a step-by-step example
 Date: 2016-11-14 19:00:00 +0000
-Modified: 2018-06-05 11:00:00 +0000
+Modified: 2018-11-18 20:00:00 +0000
 Category: Programming
 Tags: OOP, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
@@ -207,14 +207,14 @@ Following the TDD methodology the first thing that I write are the tests. Create
 
 ``` python
 import uuid
-from rentomatic.domain import models as m
+from rentomatic.domain.storageroom import StorageRoom
 
 
 def test_storageroom_model_init():
     code = uuid.uuid4()
-    storageroom = m.StorageRoom(code, size=200, price=10,
-                           longitude='-0.09998975',
-                           latitude='51.75436293')
+    storageroom = StorageRoom(code, size=200, price=10,
+                              longitude=-0.09998975,
+                              latitude=51.75436293)
     assert storageroom.code == code
     assert storageroom.size == 200
     assert storageroom.price == 10
@@ -224,13 +224,13 @@ def test_storageroom_model_init():
 
 def test_storageroom_model_from_dict():
     code = uuid.uuid4()
-    storageroom = m.StorageRoom.from_dict(
+    storageroom = StorageRoom.from_dict(
         {
             'code': code,
             'size': 200,
             'price': 10,
-            'longitude': '-0.09998975',
-            'latitude': '51.75436293'
+            'longitude': -0.09998975,
+            'latitude': 51.75436293
         }
     )
     assert storageroom.code == code
@@ -254,8 +254,8 @@ class StorageRoom(object):
         self.code = code
         self.size = size
         self.price = price
-        self.latitude = float(latitude)
-        self.longitude = float(longitude)
+        self.latitude = latitude
+        self.longitude = longitude
 
     @classmethod
     def from_dict(cls, adict):
@@ -281,6 +281,55 @@ One could be tempted to try to simplify the `from_dict` function, abstracting it
 
 The `DomainModel` abstract base class is an easy way to categorize the model for future uses like checking if a class is a model in the system. For more information about this use of Abstract Base Classes in Python see [this post](/blog/2016/04/03/abstract-base-classes-in-python/).
 
+Since we have a method creates an object form a dictionary it is useful to have a method that returns a dictionary version of the object. This allows us to easily write a comparison operator between objects, that we will use later in some tests.
+
+The new tests in `tests/domain/test_storageroom.py` are
+
+``` python
+def test_storageroom_model_to_dict():
+    storageroom_dict = {
+        'code': uuid.uuid4(),
+        'size': 200,
+        'price': 10,
+        'longitude': -0.09998975,
+        'latitude': 51.75436293
+    }
+
+    storageroom = StorageRoom.from_dict(storageroom_dict)
+
+    assert storageroom.to_dict() == storageroom_dict
+
+
+def test_storageroom_model_comparison():
+    storageroom_dict = {
+        'code': uuid.uuid4(),
+        'size': 200,
+        'price': 10,
+        'longitude': -0.09998975,
+        'latitude': 51.75436293
+    }
+    storageroom1 = StorageRoom.from_dict(storageroom_dict)
+    storageroom2 = StorageRoom.from_dict(storageroom_dict)
+
+    assert storageroom1 == storageroom2
+```
+
+and the new methods of the object in `rentomatic/domain/storageroom.py` are
+
+``` python
+    def to_dict(self):
+        return {
+            'code': self.code,
+            'size': self.size,
+            'price': self.price,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+        }
+
+    def __eq__(self, other):
+        return self.to_dict() == other.to_dict()
+```
+
 # Serializers
 
 **Git tag: [step03](https://github.com/lgiordani/rentomatic/tree/step03)**
@@ -290,30 +339,45 @@ Our model needs to be serialized if we want to return it as a result of an API c
 To test the JSON serialization of our `StorageRoom` class put in the `tests/serializers/test_storageroom_serializer.py` file the following code
 
 ``` python
+import datetime
 import json
+import uuid
+
+import pytest
 
 from rentomatic.serializers import storageroom_serializer as srs
-from rentomatic.domain import models
+from rentomatic.domain.storageroom import StorageRoom
 
 
 def test_serialize_domain_storageroom():
-    room = models.StorageRoom('f853578c-fc0f-4e65-81b8-566c5dffa35a',
-                              size=200,
-                              price=10,
-                              longitude='-0.09998975',
-                              latitude='51.75436293')
+    code = uuid.uuid4()
+
+    room = StorageRoom(
+        code=code,
+        size=200,
+        price=10,
+        longitude=-0.09998975,
+        latitude=51.75436293
+    )
 
     expected_json = """
-        {
-            "code": "f853578c-fc0f-4e65-81b8-566c5dffa35a",
+        {{
+            "code": "{}",
             "size": 200,
             "price": 10,
             "longitude": -0.09998975,
             "latitude": 51.75436293
-        }
-    """
+        }}
+    """.format(code)
 
-    assert json.loads(json.dumps(room, cls=srs.StorageRoomEncoder)) == json.loads(expected_json)
+    json_storageroom = json.dumps(room, cls=srs.StorageRoomEncoder)
+
+    assert json.loads(json_storageroom) == json.loads(expected_json)
+
+
+def test_serialize_domain_storageruum_wrong_type():
+    with pytest.raises(TypeError):
+        json.dumps(datetime.datetime.now(), cls=srs.StorageRoomEncoder)
 ```
 
 Put in the `rentomatic/serializers/storageroom_serializer.py` file the code that makes the test pass
@@ -327,7 +391,7 @@ class StorageRoomEncoder(json.JSONEncoder):
     def default(self, o):
         try:
             to_serialize = {
-                'code': o.code,
+                'code': str(o.code),
                 'size': o.size,
                 'price': o.price,
                 "latitude": o.latitude,
@@ -336,6 +400,7 @@ class StorageRoomEncoder(json.JSONEncoder):
             return to_serialize
         except AttributeError:
             return super().default(o)
+
 ```
 
 Providing a class that inherits from `json.JSONEncoder` let us use the `json.dumps(room, cls=StorageRoomEncoder)` syntax to serialize the model.
@@ -353,45 +418,47 @@ With those requirements in mind, let us start to build a use case step by step. 
 This is the skeleton for a basic test of a use case that lists all the storage rooms. Put this code in the `tests/use_cases/test_storageroom_list_use_case.py`
 
 ``` python
+import uuid
+
 import pytest
 from unittest import mock
 
-from rentomatic.domain import models
+from rentomatic.domain.storageroom import StorageRoom
 from rentomatic.use_cases import storageroom_use_cases as uc
 
 
 @pytest.fixture
 def domain_storagerooms():
-    storageroom_1 = models.StorageRoom(
-        code='f853578c-fc0f-4e65-81b8-566c5dffa35a',
+    storageroom_1 = StorageRoom(
+        code=uuid.uuid4(),
         size=215,
         price=39,
-        longitude='-0.09998975',
-        latitude='51.75436293',
+        longitude=-0.09998975,
+        latitude=51.75436293,
     )
 
-    storageroom_2 = models.StorageRoom(
-        code='fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
+    storageroom_2 = StorageRoom(
+        code=uuid.uuid4(),
         size=405,
         price=66,
-        longitude='0.18228006',
-        latitude='51.74640997',
+        longitude=0.18228006,
+        latitude=51.74640997,
     )
 
-    storageroom_3 = models.StorageRoom(
-        code='913694c6-435a-4366-ba0d-da5334a611b2',
+    storageroom_3 = StorageRoom(
+        code=uuid.uuid4(),
         size=56,
         price=60,
-        longitude='0.27891577',
-        latitude='51.45994069',
+        longitude=0.27891577,
+        latitude=51.45994069,
     )
 
-    storageroom_4 = models.StorageRoom(
-        code='eed76e77-55c1-41ce-985d-ca49bf6c0585',
+    storageroom_4 = StorageRoom(
+        code=uuid.uuid4(),
         size=93,
         price=48,
-        longitude='0.33894476',
-        latitude='51.39916678',
+        longitude=0.33894476,
+        latitude=51.39916678,
     )
 
     return [storageroom_1, storageroom_2, storageroom_3, storageroom_4]
@@ -497,46 +564,48 @@ class ResponseSuccess(object):
 Now that we have implemented the request and response object we can change the test code to include those structures. Change the `tests/use_cases/test_storageroom_list_use_case.py` to contain this code
 
 ``` python
+import uuid
+
 import pytest
 from unittest import mock
 
-from rentomatic.domain import models
+from rentomatic.domain.storageroom import StorageRoom
 from rentomatic.use_cases import request_objects as ro
 from rentomatic.use_cases import storageroom_use_cases as uc
 
 
 @pytest.fixture
 def domain_storagerooms():
-    storageroom_1 = models.StorageRoom(
-        code='f853578c-fc0f-4e65-81b8-566c5dffa35a',
+    storageroom_1 = StorageRoom(
+        code=uuid.uuid4(),
         size=215,
         price=39,
-        longitude='-0.09998975',
-        latitude='51.75436293',
+        longitude=-0.09998975,
+        latitude=51.75436293,
     )
 
-    storageroom_2 = models.StorageRoom(
-        code='fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
+    storageroom_2 = StorageRoom(
+        code=uuid.uuid4(),
         size=405,
         price=66,
-        longitude='0.18228006',
-        latitude='51.74640997',
+        longitude=0.18228006,
+        latitude=51.74640997,
     )
 
-    storageroom_3 = models.StorageRoom(
-        code='913694c6-435a-4366-ba0d-da5334a611b2',
+    storageroom_3 = StorageRoom(
+        code=uuid.uuid4(),
         size=56,
         price=60,
-        longitude='0.27891577',
-        latitude='51.45994069',
+        longitude=0.27891577,
+        latitude=51.45994069,
     )
 
-    storageroom_4 = models.StorageRoom(
-        code='eed76e77-55c1-41ce-985d-ca49bf6c0585',
+    storageroom_4 = StorageRoom(
+        code=uuid.uuid4(),
         size=93,
         price=48,
-        longitude='0.33894476',
-        latitude='51.39916678',
+        longitude=0.33894476,
+        latitude=51.39916678,
     )
 
     return [storageroom_1, storageroom_2, storageroom_3, storageroom_4]
@@ -555,6 +624,7 @@ def test_storageroom_list_without_parameters(domain_storagerooms):
     repo.list.assert_called_with()
 
     assert response_object.value == domain_storagerooms
+
 ```
 
 The new version of the `rentomatic/use_case/storageroom_use_cases.py` file is the following
@@ -1149,47 +1219,44 @@ First we add some data that we will be using in the tests. We import the domain 
 ``` python
 import pytest
 
+from rentomatic.domain.storageroom import StorageRoom
 from rentomatic.shared.domain_model import DomainModel
 
 from rentomatic.repository import memrepo
 
 
-storageroom1 = {
-    'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
-    'size': 215,
-    'price': 39,
-    'longitude': '-0.09998975',
-    'latitude': '51.75436293',
-}
-
-storageroom2 = {
-    'code': 'fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
-    'size': 405,
-    'price': 66,
-    'longitude': '0.18228006',
-    'latitude': '51.74640997',
-}
-
-storageroom3 = {
-    'code': '913694c6-435a-4366-ba0d-da5334a611b2',
-    'size': 56,
-    'price': 60,
-    'longitude': '0.27891577',
-    'latitude': '51.45994069',
-}
-
-storageroom4 = {
-    'code': 'eed76e77-55c1-41ce-985d-ca49bf6c0585',
-    'size': 93,
-    'price': 48,
-    'longitude': '0.33894476',
-    'latitude': '51.39916678',
-}
-
-
 @pytest.fixture
-def storagerooms():
-    return [storageroom1, storageroom2, storageroom3, storageroom4]
+def storageroom_dicts():
+    return [
+        {
+            'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
+            'size': 215,
+            'price': 39,
+            'longitude': -0.09998975,
+            'latitude': 51.75436293,
+        },
+        {
+            'code': 'fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
+            'size': 405,
+            'price': 66,
+            'longitude': 0.18228006,
+            'latitude': 51.74640997,
+        },
+        {
+            'code': '913694c6-435a-4366-ba0d-da5334a611b2',
+            'size': 56,
+            'price': 60,
+            'longitude': 0.27891577,
+            'latitude': 51.45994069,
+        },
+        {
+            'code': 'eed76e77-55c1-41ce-985d-ca49bf6c0585',
+            'size': 93,
+            'price': 48,
+            'longitude': 0.33894476,
+            'latitude': 51.39916678,
+        }
+    ]
 ```
 
 Since the repository object will return domain models, we need a helper function to check the correctness of the results. The following function checks the length of the two lists, ensures that all the returned elements are domain models and compares the codes. Note that we can safely employ the `isinstance()` built-in function since `DomainModel` is an abstract base class and our models are registered (see the `rentomatic/domain/storagerooms.py`)
@@ -1198,16 +1265,20 @@ Since the repository object will return domain models, we need a helper function
 def _check_results(domain_models_list, data_list):
     assert len(domain_models_list) == len(data_list)
     assert all([isinstance(dm, DomainModel) for dm in domain_models_list])
-    assert set([dm.code for dm in domain_models_list]) == set([d['code'] for d in data_list])
+    assert set([dm.code for dm in domain_models_list]
+               ) == set([d['code'] for d in data_list])
 ```
 
 We need to be able to initialize the repository with a list of dictionaries, and the `list()` method without any parameter shall return the same list of entries.
 
 ``` python
-def test_repository_list_without_parameters(storagerooms):
-    repo = memrepo.MemRepo(storagerooms)
+def test_repository_list_without_parameters(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
 
-    assert repo.list() == storagerooms
+    _check_results(
+        repo.list(),
+        storageroom_dicts
+    )
 ```
 
 The `list()` method shall accept a `filters` parameter, which is a dictionary. The dictionary keys shall be in the form `<attribute>__<operator>`, similar to the syntax used by the Django ORM. So to express that the price shall be less than 65 we can write `filters={'price__lt': 60}`.
@@ -1215,15 +1286,15 @@ The `list()` method shall accept a `filters` parameter, which is a dictionary. T
 A couple of error conditions shall be checked: using an unknown key shall raise a `KeyError` exception, and using a wrong operator shall raise a `ValueError` exception.
 
 ``` python
-def test_repository_list_with_filters_unknown_key(storagerooms):
-    repo = memrepo.MemRepo(storagerooms)
+def test_repository_list_with_filters_unknown_key(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
 
     with pytest.raises(KeyError):
         repo.list(filters={'name': 'aname'})
 
 
-def test_repository_list_with_filters_unknown_operator(storagerooms):
-    repo = memrepo.MemRepo(storagerooms)
+def test_repository_list_with_filters_unknown_operator(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
 
     with pytest.raises(ValueError):
         repo.list(filters={'price__in': [20, 30]})
@@ -1232,29 +1303,80 @@ def test_repository_list_with_filters_unknown_operator(storagerooms):
 Let us then test that the filtering mechanism actually works. We want the default operator to be `__eq`, which means that if we do not put any operator an equality check shall be performed.
 
 ``` python
-def test_repository_list_with_filters_price(storagerooms):
-    repo = memrepo.MemRepo(storagerooms)
-
-    _check_results(repo.list(filters={'price': 60}), [storageroom3])
-    _check_results(repo.list(filters={'price__eq': 60}), [storageroom3])
-    _check_results(repo.list(filters={'price__lt': 60}), [storageroom1, storageroom4])
-    _check_results(repo.list(filters={'price__gt': 60}), [storageroom2])
-
-
-def test_repository_list_with_filters_size(storagerooms):
-    repo = memrepo.MemRepo(storagerooms)
-
-    _check_results(repo.list(filters={'size': 93}), [storageroom4])
-    _check_results(repo.list(filters={'size__eq': 93}), [storageroom4])
-    _check_results(repo.list(filters={'size__lt': 60}), [storageroom3])
-    _check_results(repo.list(filters={'size__gt': 400}), [storageroom2])
-
-
-def test_repository_list_with_filters_code(storagerooms):
-    repo = memrepo.MemRepo(storagerooms)
+def test_repository_list_with_filters_price(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
 
     _check_results(
-        repo.list(filters={'code': '913694c6-435a-4366-ba0d-da5334a611b2'}), [storageroom3])
+        repo.list(filters={'price': 60}),
+        [storageroom_dicts[2]]
+    )
+
+
+def test_repository_list_with_filters_price_eq(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
+
+    _check_results(
+        repo.list(filters={'price__eq': 60}),
+        [storageroom_dicts[2]]
+    )
+
+
+def test_repository_list_with_filters_price_lt(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
+
+    _check_results(
+        repo.list(filters={'price__lt': 60}),
+        [storageroom_dicts[0], storageroom_dicts[3]])
+
+
+def test_repository_list_with_filters_price_gt(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
+    _check_results(
+        repo.list(filters={'price__gt': 60}),
+        [storageroom_dicts[1]]
+    )
+
+
+def test_repository_list_with_filters_size(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
+
+    _check_results(
+        repo.list(filters={'size': 93}),
+        [storageroom_dicts[3]]
+    )
+
+
+def test_repository_list_with_filters_size_eq(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
+    _check_results(
+        repo.list(filters={'size__eq': 93}),
+        [storageroom_dicts[3]]
+    )
+
+
+def test_repository_list_with_filters_size_lt(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
+    _check_results(
+        repo.list(filters={'size__lt': 60}),
+        [storageroom_dicts[2]]
+    )
+
+
+def test_repository_list_with_filters_size_gt(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
+    _check_results(
+        repo.list(filters={'size__gt': 400}),
+        [storageroom_dicts[1]]
+    )
+
+
+def test_repository_list_with_filters_code(storageroom_dicts):
+    repo = memrepo.MemRepo(storageroom_dicts)
+
+    _check_results(
+        repo.list(filters={'code': '913694c6-435a-4366-ba0d-da5334a611b2'}),
+        [storageroom_dicts[2]]
+    )
 ```
 
 The implementation of the `MemRepo` class is pretty simple, and I will not dive into it line by line.
@@ -1290,15 +1412,16 @@ class MemRepo:
 
     def list(self, filters=None):
         if not filters:
-            return self._entries
+            result = self._entries
+        else:
+            result = []
+            result.extend(self._entries)
 
-        result = []
-        result.extend(self._entries)
-
-        for key, value in filters.items():
-            result = [e for e in result if self._check(e, key, value)]
+            for key, value in filters.items():
+                result = [e for e in result if self._check(e, key, value)]
 
         return [sr.StorageRoom.from_dict(r) for r in result]
+
 ```
 
 # The REST layer (part1)
@@ -1313,13 +1436,7 @@ Flask is a lightweight web server with a modular structure that provides just th
 
 Please keep in mind that this part of the project, together with the repository layer, is usually implemented as a separate package, and I am keeping them together just for the sake of this introductory tutorial.
 
-Let us start updating the requirements files. The `prod.txt` file shall contain Flask
-
-```text
-Flask
-```
-
-The `dev.txt` file will contain the [Flask-Script extension](https://flask-script.readthedocs.io/en/latest/)
+Let us start updating the requirements files. The `dev.txt` file shall contain Flask
 
 ``` text
 -r test.txt
@@ -1328,7 +1445,7 @@ pip
 wheel
 flake8
 Sphinx
-Flask-Script
+Flask
 ```
 
 And the `test.txt` file will contain the pytest extension to work with Flask (more on this later)
@@ -1347,7 +1464,7 @@ Remember to run `pip install -r requirements/dev.txt` again after those changes 
 
 The setup of a Flask application is not complex, but a lot of concepts are involved, and since this is not a tutorial on Flask I will run quickly through these steps. I will however provide links to the Flask documentation for every concept.
 
-I usually define different configurations for my testing, development, and production environments. Since the Flask application can be configured using a plain Python object ([documentation](http://flask.pocoo.org/docs/latest/api/#flask.Config.from_object)), I create the file `rentomatic/settings.py` to host those objects
+I usually define different configurations for my testing, development, and production environments. Since the Flask application can be configured using a plain Python object ([documentation](http://flask.pocoo.org/docs/latest/api/#flask.Config.from_object)), I created the file `rentomatic/settings.py` to host those objects
 
 ``` python
 import os
@@ -1381,7 +1498,7 @@ class TestConfig(Config):
 
 Read [this page](http://flask.pocoo.org/docs/latest/config/) to know more about Flask configuration parameters. Now we need a function that initializes the Flask application ([documentation](http://flask.pocoo.org/docs/latest/patterns/appfactories/)), configures it and registers the blueprints ([documentation](http://flask.pocoo.org/docs/latest/blueprints/)). The file `rentomatic/app.py` contains the following code
 
-```
+``` python
 from flask import Flask
 
 from rentomatic.rest import storageroom
@@ -1462,7 +1579,21 @@ def test_get(mock_use_case, client):
     assert json.loads(http_response.data.decode('UTF-8')) == [storageroom1_dict]
     assert http_response.status_code == 200
     assert http_response.mimetype == 'application/json'
+```
 
+If you run pytest you'll notice that the test suite fails because of the `app` fixture, which is missing. The `pytest-flask` plugin provides the `client` fixture, but relies on the `app` fixture which has to be provided. The best place to define it is in `tests/conftest.py`
+
+``` python
+import pytest
+
+
+from rentomatic.app import create_app
+from rentomatic.settings import TestConfig
+
+
+@pytest.yield_fixture(scope='function')
+def app():
+    return create_app(TestConfig)
 ```
 
 It's time to write the endpoint, where we will finally see all the pieces of the architecture working together. 
@@ -1540,7 +1671,6 @@ def storageroom():
     return Response(json.dumps(response.value, cls=ser.StorageRoomEncoder),
                     mimetype='application/json',
                     status=200)
-
 ```
 
 This code demonstrates how the clean architecture works in a nutshell. The function we wrote is however not complete, as it doesn't consider querystring parameters and error cases.
@@ -1551,78 +1681,79 @@ This code demonstrates how the clean architecture works in a nutshell. The funct
 
 Before I fix the missing parts of the endpoint let us see the server in action, so we can finally enjoy the product we have been building during this long post.
 
-To actually see some results when accessing the endpoint we need to fill the repository with some data. This part is obviously required only because of the ephemeral nature of the repository we are using. A real repository would wrap a persistent source of data and providing data at this point wouldn't be necessary. To initialize the repository we have to define some data
+To actually see some results when accessing the endpoint we need to fill the repository with some data. This part is obviously required only because of the ephemeral nature of the repository we are using. A real repository would wrap a persistent source of data and providing data at this point wouldn't be necessary. To initialize the repository we have to define some data, so add these dictionaries to the `rentomatic/rest/storageroom.py` file
 
 ``` python
 storageroom1 = {
     'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
     'size': 215,
     'price': 39,
-    'longitude': '-0.09998975',
-    'latitude': '51.75436293',
+    'longitude': -0.09998975,
+    'latitude': 51.75436293,
 }
 
 storageroom2 = {
     'code': 'fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
     'size': 405,
     'price': 66,
-    'longitude': '0.18228006',
-    'latitude': '51.74640997',
+    'longitude': 0.18228006,
+    'latitude': 51.74640997,
 }
 
 storageroom3 = {
     'code': '913694c6-435a-4366-ba0d-da5334a611b2',
     'size': 56,
     'price': 60,
-    'longitude': '0.27891577',
-    'latitude': '51.45994069',
+    'longitude': 0.27891577,
+    'latitude': 51.45994069,
 }
 ```
 
-And them feed them into the repository
+And then use them to initialise the repository
 
 ``` python
     repo = mr.MemRepo([storageroom1, storageroom2, storageroom3])
 ```
 
-Now we can run the Flask `manage.py` file to check the exposed URLs
+To run the web server we need to create a `wsgi.py` file in the main project folder (the folder where `setup.py` is stored)
 
-``` sh
-$ python manage.py urls
-Rule                     Endpoint               
-------------------------------------------------
-/static/<path:filename>  static                 
-/storagerooms            storageroom.storageroom
+``` python
+from rentomatic.app import create_app
+
+
+app = create_app()
 ```
 
-and run the development server
+Now we can run the Flask development server
 
 ``` sh
-$ python manage.py server
+$ flask run
 ```
 
-If you open your browser and navigate to [http://127.0.0.1:5000/storagerooms](http://127.0.0.1:5000/storagerooms), you can see the API call results. I recommend installing a formatter extension for the browser to better check the output. If you are using Chrome try [JSON Formatter](https://github.com/callumlocke/json-formatter).
+At this point, if you open your browser and navigate to [http://localhost:5000/storagerooms](http://localhost:5000/storagerooms), you can see the API call results. I recommend installing a formatter extension for the browser to better check the output. If you are using Chrome try [JSON Formatter](https://github.com/callumlocke/json-formatter).
 
 # The REST layer (part2)
 
 **Git tag: [step14](https://github.com/lgiordani/rentomatic/tree/step14)**
 
-Let us cover the two missing cases in the endpoint. First I introduce a test to check if the endpoint correctly handles querystring parameters
+Let us cover the two missing cases in the endpoint. First I introduce a test to check if the endpoint correctly handles querystring parameters. Add it to the `tests/rest/test_get_storagerooms_list.py` file
 
 ``` python
-@mock.patch('rentomatic.use_cases.storageroom_use_cases.StorageRoomListUseCase')
+@mock.patch(
+    'rentomatic.use_cases.storageroom_use_cases.StorageRoomListUseCase')
 def test_get_failed_response(mock_use_case, client):
-    mock_use_case().execute.return_value = res.ResponseFailure.build_system_error('test message')
+    mock_use_case().execute.return_value = \
+        res.ResponseFailure.build_system_error('test message')
 
     http_response = client.get('/storagerooms')
 
-    assert json.loads(http_response.data.decode('UTF-8')) == {'type': 'SYSTEM_ERROR',
-                                                              'message': 'test message'}
+    assert json.loads(http_response.data.decode('UTF-8')) == \
+        {'type': 'SYSTEM_ERROR', 'message': 'test message'}
     assert http_response.status_code == 500
     assert http_response.mimetype == 'application/json'
 ```
 
-This makes the use case return a failed response and check that the HTTP response contains a formatted version of the error. To make this test pass we have to introduce a proper mapping between domain responses codes and HTTP codes
+This makes the use case return a failed response and check that the HTTP response contains a formatted version of the error. To make this test pass we have to introduce a proper mapping between domain responses codes and HTTP codes in the `rentomatic/rest/storageroom.py` file
 
 ``` python
 from rentomatic.shared import response_object as res
@@ -1633,10 +1764,9 @@ STATUS_CODES = {
     res.ResponseFailure.PARAMETERS_ERROR: 400,
     res.ResponseFailure.SYSTEM_ERROR: 500
 }
-
 ```
 
-Then we need to create the Flask response with the correct code
+Then we need to create the Flask response with the correct code in the definition of the endpoint
 
 ``` python
     return Response(json.dumps(response.value, cls=ser.StorageRoomEncoder),
@@ -1644,7 +1774,7 @@ Then we need to create the Flask response with the correct code
                     status=STATUS_CODES[response.type])
 ```
 
-The second and last test is a bit more complex. As before we will mock the use case, but this time we will also patch `StorageRoomListRequestObject`. We need in fact to know if the request object is initialized with the correct parameters from the command line. So, step by step
+The second and last test is a bit more complex. As before we will mock the use case, but this time we will also patch `StorageRoomListRequestObject`. We do this because we need to know if the request object is initialized with the correct parameters from the command line. So, step by step
 
 ``` python
 @mock.patch('rentomatic.use_cases.storageroom_use_cases.StorageRoomListUseCase')
@@ -1763,6 +1893,8 @@ Whether you decide to use a clean architecture or not, I really hope this post h
 2016-11-15: Two tests contained variables with a wrong name (artist), which came from an initial version of the project. The name did not affect the tests. Added some instructions on the virtual environment and the development requirements.
 
 2016-12-12: Thanks to [Marco Beri](https://twitter.com/Taifu) who spotted a typo in the code of step 6, which was already correct in the GitHub repository. He also suggested using the Cookiecutter package by [Ardy Dedase](https://github.com/ardydedase). Thanks to Marco and to Ardy!
+
+2018-11-18 Two years have passed since I wrote this post and I found some errors that I fixed, like `longitude` and `latitude` passed as string instead of floats. I also moved the project from Flask-script to the Flask development server and added a couple of clarifications here and there.
 
 ## Feedback
 
