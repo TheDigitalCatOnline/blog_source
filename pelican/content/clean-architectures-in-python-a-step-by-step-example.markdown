@@ -1520,7 +1520,7 @@ Let us write a test step by step, so that you can perfectly understand what is g
 [SOME PREPARATION]
 [CALL THE API ENDPOINT]
 [CHECK RESPONSE DATA]
-[CHECK RESPONDSE STATUS CODE]
+[CHECK RESPONSE STATUS CODE]
 [CHECK RESPONSE MIMETYPE]
 ```
 
