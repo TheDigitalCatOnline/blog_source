@@ -1,6 +1,6 @@
 Title: Clean architectures in Python: a step-by-step example
 Date: 2016-11-14 19:00:00 +0000
-Modified: 2018-11-18 20:00:00 +0000
+Modified: 2018-11-28 00:50:00 +0000
 Category: Programming
 Tags: OOP, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
@@ -1895,6 +1895,8 @@ Whether you decide to use a clean architecture or not, I really hope this post h
 2016-12-12: Thanks to [Marco Beri](https://twitter.com/Taifu) who spotted a typo in the code of step 6, which was already correct in the GitHub repository. He also suggested using the Cookiecutter package by [Ardy Dedase](https://github.com/ardydedase). Thanks to Marco and to Ardy!
 
 2018-11-18 Two years have passed since I wrote this post and I found some errors that I fixed, like `longitude` and `latitude` passed as string instead of floats. I also moved the project from Flask-script to the Flask development server and added a couple of clarifications here and there.
+
+2018-11-28 Fixed a typo. Thanks [Seth Mason](https://github.com/slackorama)!
 
 ## Feedback
 
