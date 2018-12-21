@@ -264,7 +264,7 @@ As you can see, the second snippet directly uses the method and deals with the p
 
 Why is this coding style pushed so much in the Python community? I think the main reason is that through EAFP you _think_ polymorphically: you are not interested in knowing if the object _has_ the `open` attribute, you are interested in knowing if the object can satisfy your request, that is to perform the `open()` method call.
 
-# Updates
+## Updates
 
 2018-12-21: [Adriaan Beiertz](https://github.com/adriaanbd) spotted an error in the `BooleanDoor` class. As the default status of the `Door` class is `closed`, the `BooleanDoor` should reflect this with a `False` status instead of a `True` one. Thanks Adriaan!
 
