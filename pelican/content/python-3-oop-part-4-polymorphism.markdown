@@ -1,5 +1,6 @@
 Title: Python 3 OOP Part 4 - Polymorphism
 Date: 2014-08-21 10:00:00 +0200
+Modified: 2018-12-21 10:40:00 +0000
 Category: Programming
 Tags: Python, Python3, OOP
 Authors: Leonardo Giordani
@@ -179,7 +180,7 @@ class Door:
 
 class BooleanDoor:
     def __init__(self):
-        self.status = True
+        self.status = False
 
     def open(self):
         self.status = True
@@ -262,6 +263,10 @@ except AttributeError:
 As you can see, the second snippet directly uses the method and deals with the possible `AttributeError` exception (by the way: managing exceptions is one of the top Black Magic Topics in Python, more on it in a future post. A very quick preview: I think we may learn something from Erlang - check [this](/blog/2013/05/30/error-handling-in-erlang-a-primer/)).
 
 Why is this coding style pushed so much in the Python community? I think the main reason is that through EAFP you _think_ polymorphically: you are not interested in knowing if the object _has_ the `open` attribute, you are interested in knowing if the object can satisfy your request, that is to perform the `open()` method call.
+
+# Updates
+
+2018-12-21: [Adriaan Beiertz](https://github.com/adriaanbd) spotted an error in the `BooleanDoor` class. As the default status of the `Door` class is `closed`, the `BooleanDoor` should reflect this with a `False` status instead of a `True` one. Thanks Adriaan!
 
 ## Movie Trivia
 
