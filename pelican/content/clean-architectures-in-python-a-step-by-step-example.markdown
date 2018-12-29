@@ -1,12 +1,14 @@
 Title: Clean architectures in Python: a step-by-step example
 Date: 2016-11-14 19:00:00 +0000
-Modified: 2018-11-28 00:50:00 +0000
+Modified: 2018-12-29 08:50:00 +0000
 Category: Programming
 Tags: OOP, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
 Slug: clean-architectures-in-python-a-step-by-step-example
 Image: clean-architectures
 Summary: 
+
+**Update**: an expanded version of this post may be found in "Clean Architectures in Python", a book I published on LeanPub. The book features 3 chapters on TDD with pytest, mocks and unit testing in general, and 4 chapters on clean architectures. Those chapters are very similar to this post, but they include a discussion and examples of integration between the architecture and real-world databases. The book is free and can be downloaded [here](https://leanpub.com/clean-architectures-in-python).
 
 In 2015 I was introduced by my friend [Roberto Ciatti](https://github.com/gekorob) to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some very interesting posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
 
