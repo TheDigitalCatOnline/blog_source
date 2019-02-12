@@ -210,7 +210,7 @@ From this I know that the version of `exec` contained in this Kickstart is 34 (`
 
 ## Step 3
 
-What we are really interested in, at this point, is where the address of this structure is mentioned in the code, as it will be used to create the library structure. Since after creating the library structure the `MakeFunctions` routine will be invoked we can know from here where this latter is defined.
+What we are really interested in, at this point, is where the address of this structure is mentioned in the code, as it will be used to create the library structure. Since after creating the library structure the `MakeFunctions` routine will be invoked we can know from here where the latter is defined.
 
 The structure is at address `0x030c` and we are looking for and instruction like `lea 0x30c(pc),ax`, where `ax` is one of the address registers `a0`-`a7`. Loading the address of a table in a register is the standard way to loop on the table to modify it or to copy the bytes somewhere. 
 
@@ -255,7 +255,7 @@ So the first line stores in `a0` the content of `a6`, which is the ExecBase addr
 
 ## Step 4
 
-We extracted two useful information from this code. First, the vector table is at address `0x1a7c`, and second the `MakeFunctions` subroutine is at address `0x15b2`. This latter will be useful to double check the content of the vector table.
+We extracted two useful information from this code. First, the vector table is at address `0x1a7c`, and second the `MakeFunctions` subroutine is at address `0x15b2`. The latter will be useful to double check the content of the vector table.
 
 After `MakeFunctions` has been executed the code returns and the next instruction stores the final size of the jump table 16 bytes after the address contained in `a6`. With the help of the structures shown above we know that at that offset we can find the `LIB_NEGSIZE` field, that contains the size of the jump table (number of bytes before the library).
 

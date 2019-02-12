@@ -200,7 +200,7 @@ Time to use effectively the semaphore: the function that allows to performs oper
 int semop(int semid, struct sembuf *sops, unsigned nsops);
 ```
 
-where `semid` is the set identifier, `sops` an array of operations and `nsops` the length of this latter. Each operation is declared through a `struct sembuf`
+where `semid` is the set identifier, `sops` an array of operations and `nsops` the length of the latter. Each operation is declared through a `struct sembuf`
 
 ``` c
 struct sembuf {
@@ -224,7 +224,7 @@ Since we did not yet talk about shared memory we have to simulate read and write
 
 As already stated, we need 3 semaphores: the first acts as access controller and its maximum value is 1 while the other two manage overflow and underflow conditions. A single semaphore could not handle both conditions, since `semop()` acts one-way only.
 
-Let's clarify this latter statement before looking at the code. Say we have a single semaphore to manage over- and underflow conditions, with a value equal to the number of empty spaces in the buffer. Each time a W process fills the buffer it can decrease the semaphore value by one unit until the value reaches 0, which represents the condition of full buffer. This way however the empty buffer condition cannot be managed since the R process can increment the value of the semaphore without any limit. Semaphores, indeed, just control the lower boundary and not the upper one.
+Let's clarify the latter statement before looking at the code. Say we have a single semaphore to manage over- and underflow conditions, with a value equal to the number of empty spaces in the buffer. Each time a W process fills the buffer it can decrease the semaphore value by one unit until the value reaches 0, which represents the condition of full buffer. This way however the empty buffer condition cannot be managed since the R process can increment the value of the semaphore without any limit. Semaphores, indeed, just control the lower boundary and not the upper one.
 
 ``` c
 #include <stdio.h>

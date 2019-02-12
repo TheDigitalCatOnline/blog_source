@@ -124,8 +124,8 @@ The code then loads two effective addresses. The first one is the first free loc
 The purpose of the code is to call the `AddMemList` routine, which adds the memory to the system free memory pool. It has the following prototype
 
 ``` c
-;   error = AddMemList( size, attributes, pri, base, name )
-;   D0                  D0    D1          D2   A0    A1
+; size = AddMemList(size, attributes, pri, base, name)
+; D0                D0    D1          D2   A0    A1
 ```
 
 where `size` is the size of the memory (bytes), `attributes` contains flags that identify memory attributes, `pri` is the priority of the memory, `base` is the base address of the new area and `name` is a name for this list.
@@ -146,7 +146,7 @@ The code then prepares the registers for the `AddMemList` call. It gives this me
 
 The expansion memory base address is copied in `d0` (this is actually an unneeded repetition of what the code did 6 lines before, I think). It then subtracts the address of the first free location (because if this is not 0 it means that something is already stored in memory) and the size of the stack, that was initialised previously by Kickstart to 6 KBytes (hardcoded). After that the code jumps to `AddMemList` (`0x1a26`).
 
-When the routine returns the code has to move on initialising the chip memory. The chip memory has to be initialised in two different ways depending on the presence of the expansion memory, as this latter is preferably used by the CPU.
+When the routine returns the code has to move on initialising the chip memory. The chip memory has to be initialised in two different ways depending on the presence of the expansion memory, as the latter is preferably used by the CPU.
 
 ```
 000003a0: 41f8 0400                 lea     0x400.w,a0
@@ -215,7 +215,7 @@ The first free location, according to this code is `0x24c` (588) bytes after the
 
 It's easy to calculate this number. Here you find the annotated version of the `ExecBase` structure that I already used in the previous instalment.
 
-The structure is described in the `include_i/exec/execbase.i` include file, and I added the displacement in bytes of each field. The first column is the displacement in the `ExecBase` structure, while the second starts from `0x22`. This latter comes from the fact that the structure follows an `LN` structure and a `LIB` structure, described in the fourth instalment of this series.
+The structure is described in the `include_i/exec/execbase.i` include file, and I added the displacement in bytes of each field. The first column is the displacement in the `ExecBase` structure, while the second starts from `0x22`. The latter comes from the fact that the structure follows an `LN` structure and a `LIB` structure, described in the fourth instalment of this series.
 
 ``` m68k
 0000 0022    UWORD   SoftVer ; kickstart release number (obs.)

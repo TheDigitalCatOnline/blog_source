@@ -59,7 +59,7 @@ I state in advance that this list is not complete, but let us concentrate oursel
 Let us leave out for the moment the information about TIME and TTY and let us look at PID, the Process IDentifier. The pid is a strictly positive number (not zero) the operating system assigns univocally to each running process; once the process terminated the pid can be reused, but the OS guarantees that the pid of a process remains the same during its execution and that it is unique. All this implies that the output each of you will
 obtain from the ps command will probably be different from that in the above example.
 
-Just to check this latter sentence, let us open another shell without closing the first one and type the ps command: this time the output gives the same list of processes but with
+Just to check the latter sentence, let us open another shell without closing the first one and type the ps command: this time the output gives the same list of processes but with
 different pid numbers, showing that they are two different processes even if the program they executes is the same.
 
 We can also obtain a list of all processes running on a Linux box: the ps command man page says that the switch -e means "select all processes". Let us type "ps -e" in a terminal and ps will print out a long list formatted as previously seen. In order to analyze in a comfortable way this list we can redirect the output of ps in the ps.log file:

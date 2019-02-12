@@ -119,7 +119,7 @@ while 1:
 	some_code
 ```
 
-The for construct receives here an **iterable** object and calls its `__iter__()` method, obtaining an **iterator** object; then it calls the `next()` method of this latter until the `StopIteration` exception is raised. The actual code is a little different, here simplified for clarity’s sake; if you want to learn more about it check the following addresses
+The for construct receives here an **iterable** object and calls its `__iter__()` method, obtaining an **iterator** object; then it calls the `next()` method of the latter until the `StopIteration` exception is raised. The actual code is a little different, here simplified for clarity’s sake; if you want to learn more about it check the following addresses
 
 * [Python Glossary](http://docs.python.org/2/glossary.html)
 * [Built-in iter()](http://docs.python.org/2/library/functions.html#iter)

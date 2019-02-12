@@ -231,7 +231,7 @@ class XMLReader(object):
 [...]
 ```
 
-The class works well until your application shall be modified to receive XML content from a network stream. To use the class without modifying it you shall write the stream in a temporary file and load this latter, but this sounds a little overkill. So you plan to change the class to accept a string, but this way you shall change every single code that uses the class to read a file, since now you shall open, read and close the file on your own, outside the class.
+The class works well until your application shall be modified to receive XML content from a network stream. To use the class without modifying it you shall write the stream in a temporary file and load the latter, but this sounds a little overkill. So you plan to change the class to accept a string, but this way you shall change every single code that uses the class to read a file, since now you shall open, read and close the file on your own, outside the class.
 
 Polymorphism offers a better way. Why not store the incoming stream inside an object that _acts like_ a file, even if it is not an actual one? If you check the StringIO module you will find that such an object has been already invented and provided in the standard Python library.
 
@@ -289,7 +289,7 @@ First of all recall that in Python _everything is an object_, that is everything
 ()
 ```
 
-The variable `a` is an instance of the `int` class, and this latter inherits from `object`, which inherits from nothing. This demonstrates that `object` is at the top of the class hierarchy. However, as you can see, both `int` and `object` are called _types_ (`<type 'int'>`, `<type 'object'>`), which in Python is a pure alias of the word _class_. Indeed, while `a` is an instance of the `int` class, `int` itself is an instance of another class, _a class that is instanced to build classes_
+The variable `a` is an instance of the `int` class, and the latter inherits from `object`, which inherits from nothing. This demonstrates that `object` is at the top of the class hierarchy. However, as you can see, both `int` and `object` are called _types_ (`<type 'int'>`, `<type 'object'>`), which in Python is a pure alias of the word _class_. Indeed, while `a` is an instance of the `int` class, `int` itself is an instance of another class, _a class that is instanced to build classes_
 
 ``` pycon
 >>> type(a)
@@ -326,7 +326,7 @@ Hint: type is a class (i.e. a type). =)
 
 ## The Metaclasses Take Python
 
-You are now familiar with Python classes. You know that a class is used to create an instance, and that the structure of this latter is ruled by the source class and all its parent classes (until you reach `object`).
+You are now familiar with Python classes. You know that a class is used to create an instance, and that the structure of the latter is ruled by the source class and all its parent classes (until you reach `object`).
 
 Since classes are objects too, you know that a class itself is an instance of a (super)class, and this class is `type`. That is, as already stated, `type` is the class that is used to build classes.
 

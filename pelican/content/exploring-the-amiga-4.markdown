@@ -67,7 +67,7 @@ and the definition of `LIB` in `include_i/exewc/libraries.i`
     LABEL   LIB_SIZE    ;Warning: Size is not a longword multiple!
 ```
 
-As you can see this latter mentions the former reserving space for it at the beginning (`LN_SIZE`).
+As you can see the latter mentions the former reserving space for it at the beginning (`LN_SIZE`).
 
 `LABEL` is a macro that creates an alias for the current size of the structure, and you can find its definition in `include_i/exec/types.i`. It works in conjunction with the type macros, which increment the global variable `SOFFSET`. The code `LABEL LN_SIZE` in the `LN` structure produces the definition `LN_SIZE EQU 14`, which is thus a simple marker and does not contribute to the size of the structure itself.
 
@@ -264,7 +264,7 @@ The third section is very similar to the second one, because it performs the sam
 000015e2: 60ec                      bra.b   Absolute
 ```
 
-The only difference with the previous section is that there is no need to load the effective address, as the vale contained in `d1` is already absolute, so this latter can be stored directly.
+The only difference with the previous section is that there is no need to load the effective address, as the vale contained in `d1` is already absolute, so the latter can be stored directly.
 
 ## Cleanup
 

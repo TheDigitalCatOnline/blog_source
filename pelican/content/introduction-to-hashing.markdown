@@ -147,7 +147,7 @@ A hash function is said to be collision-resistant when **it is hard to find two 
 
 # Theoretical and practical inputs
 
-It is important to understand that the analysis of a hash function can be made considering either theoretical or practical inputs. Theoretical inputs are all the possible inputs, like "all the possible strings", while a set of practical inputs might be "the names of a group of people". This latter might be very large but it is not infinite. 
+It is important to understand that the analysis of a hash function can be made considering either theoretical or practical inputs. Theoretical inputs are all the possible inputs, like "all the possible strings", while a set of practical inputs might be "the names of a group of people". The latter might be very large but it is not infinite. 
 
 Obviously, a hash function that provides interesting properties when dealing with theoretical inputs will show the same properties when applied to practical inputs, but often such functions are complex and slow. Not to mention that it is very difficult to create them.
 

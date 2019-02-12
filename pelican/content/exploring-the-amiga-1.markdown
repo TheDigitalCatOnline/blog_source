@@ -26,7 +26,7 @@ As this is not the only project I am following at the moment, I created a direct
 
 ## Install vasm
 
-On Linux you can both use the GCC compiler or install vasm. This latter uses the same syntax as the standard Amiga assemblers, especially for compiler directives like `macro` and `include`, thus making it easier to pick up and use code published in books and in magazines during the 80s.
+On Linux you can both use the GCC compiler or install vasm. The latter uses the same syntax as the standard Amiga assemblers, especially for compiler directives like `macro` and `include`, thus making it easier to pick up and use code published in books and in magazines during the 80s.
 
 To install the latest vasm you can run the following code
 
@@ -56,7 +56,7 @@ which will create the `vda/M68k/vda68k` that you can use to disassemble Amiga pr
 
 ## Install the NDK
 
-The Native Development Kit (the Amiga SDK) contains include files that can be very helpful (though not strictly necessary) when developing. Unfortunately the NDK is still copyrighted by some of the guys that are trying to resurrect the Amiga. This latter idea is nice, but I really do not understand how preventing distribution of development documentation about a platform dead more than 20 years ago might help such a project.
+The Native Development Kit (the Amiga SDK) contains include files that can be very helpful (though not strictly necessary) when developing. Unfortunately the NDK is still copyrighted by some of the guys that are trying to resurrect the Amiga. The latter idea is nice, but I really do not understand how preventing distribution of development documentation about a platform dead more than 20 years ago might help such a project.
 
 Whatever, you can get an old version of the Amiga Developer CD [here](https://archive.org/details/amiga-developer-cd-v1_1). This contains the NDK version 3.1 which is enough for what we are going to learn in this series.
 

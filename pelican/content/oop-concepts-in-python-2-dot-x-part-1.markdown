@@ -386,7 +386,7 @@ so by default Python considers methods as functions that shall operate on instan
 
 Python does not complain here, and the method works as expected. So `Door.open(door1)` is the same as `door1.open()`. Again, under the hood, `__getattribute__()` is working to make everything work and when we call `door1.open()`, Python actually calls `door1.__class__.open(door1)`. However, `door1.__class__.open` is an unbound method, so there is something more that converts it into a bound method that Python can safely call.
 
-When you access a member of an object, Python calls `__getattribute__()` to satisfy the request. This magic method, however, conforms to a procedure known as _descriptor protocol_. For the read access `__getattribute__()` checks if the object has a `__get__()` method and calls this latter. So for function the conversion from an unbound into a bound method is made by such a mechanism. Let us review it by means of an example.
+When you access a member of an object, Python calls `__getattribute__()` to satisfy the request. This magic method, however, conforms to a procedure known as _descriptor protocol_. For the read access `__getattribute__()` checks if the object has a `__get__()` method and calls the latter. So for function the conversion from an unbound into a bound method is made by such a mechanism. Let us review it by means of an example.
 
 ``` pycon
 >>> door1.__class__.__dict__['open']

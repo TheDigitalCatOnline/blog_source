@@ -27,7 +27,7 @@ Class-based views are, indeed, (Django) views based on (Python) classes. Until h
 A Django view is a piece of code that processes an HTTP request and returns an HTTP response. Oh yes, nothing more, nothing less.
 A Python class is the implementation of the Object-Oriented concept of class in the Python language.
 
-So a view just need to be a [callable](http://docs.python.org/2/library/functions.html#callable), and this includes functions and classes. Thus, to understand the advantages of class-based views over function-based views we shall discuss the merits of classes over functions. This latter sentence could be the title of a 10 volumes book on programming (followed by another 10 volumes book titled "Merits of functions over classes"), so I am just going to scratch the surface of the matter.
+So a view just need to be a [callable](http://docs.python.org/2/library/functions.html#callable), and this includes functions and classes. Thus, to understand the advantages of class-based views over function-based views we shall discuss the merits of classes over functions. The latter sentence could be the title of a 10 volumes book on programming (followed by another 10 volumes book titled "Merits of functions over classes"), so I am just going to scratch the surface of the matter.
 
 ## Starting off with Python classes
 
@@ -135,7 +135,7 @@ class ArticleListView(ListView):
 
 the class does not change its behaviour. What we did was to override the `dispatch()` method with a call to the parent's method, i.e. we explicitly wrote what Python does by default. You can find detailed information about `super()` [here](http://docs.python.org/2/library/functions.html#super). Please be also sure to understand the star and double star notation to define variable number of arguments; the official documentation is [here](http://docs.python.org/2.7/tutorial/controlflow.html#more-on-defining-functions).
 
-Since views are automatically called by the framework, this latter expects them to comply with a very specific API, so when overriding a method you have to obey its signature. The signature of `dispatch()` can be found [here](https://docs.djangoproject.com/en/1.5/ref/class-based-views/base/#django.views.generic.base.View.dispatch); by the way, this documentation of `dispatch()` gives you good hints about the internal working mechanism of CBVs.
+Since views are automatically called by the framework, the latter expects them to comply with a very specific API, so when overriding a method you have to obey its signature. The signature of `dispatch()` can be found [here](https://docs.djangoproject.com/en/1.5/ref/class-based-views/base/#django.views.generic.base.View.dispatch); by the way, this documentation of `dispatch()` gives you good hints about the internal working mechanism of CBVs.
 
 The `dispatch()` method receives a `request` argument, which type is `HttpRequest` ([documentation](https://docs.djangoproject.com/en/1.5/ref/request-response/#httprequest-objects)), and we can print it on the console with the standard `print()` function
 

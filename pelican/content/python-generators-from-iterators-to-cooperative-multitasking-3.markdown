@@ -42,7 +42,7 @@ class MicroThread(object):
 			yield 1
 ```
 
-An instance of this object exposes a `main()` method that, when called, returns a generator. This latter, at each call of its `next()` method simply returns `1`, freezing at the same time its execution just after the `yield` statement, still inside the infinite while loop.
+An instance of this object exposes a `main()` method that, when called, returns a generator. The latter, at each call of its `next()` method simply returns `1`, freezing at the same time its execution just after the `yield` statement, still inside the infinite while loop.
 
 The object can be directly tested
 
@@ -141,7 +141,7 @@ class Scheduler(object):
 ```
 [source code](/code/python-generators/scheduler.py)
 
-The `__init__()` method initializes the two internal lists we talked about above. The `add_microthread()` method allows us to add a microthread to the scheduler; the method calls `main()` on each microthread we add to obtain its generator, then calls `next()` once on this latter to initialize it and finally adds it to the list of scheduled tasks.
+The `__init__()` method initializes the two internal lists we talked about above. The `add_microthread()` method allows us to add a microthread to the scheduler; the method calls `main()` on each microthread we add to obtain its generator, then calls `next()` once on the latter to initialize it and finally adds it to the list of scheduled tasks.
 
 The scheduler logic is then implemented in the `run()` method, which executes the above core code in an infinite while loop.
 
