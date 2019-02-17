@@ -34,7 +34,7 @@ Let's start the discussion about key pairs with the format used to store them. N
 
 An example private key in PEM format is the following
 
-``` txt
+``` text
 -----BEGIN PRIVATE KEY-----
 MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCy9f0/nwkXESzk
 L4v4ftZ24VJYvkQ/Nt6vsLab3iSWtJXqrRsBythCcbAU6W95OGxjbTSFFtp0poqM
@@ -71,7 +71,7 @@ The PEM format specifies that the the body of the content (the part between the 
 
 If the private key has been encrypted with a password the header and the footer are different
 
-``` txt
+``` text
 -----BEGIN ENCRYPTED PRIVATE KEY-----
 MIIFHzBJBgkqhkiG9w0BBQ0wPDAbBgkqhkiG9w0BBQwwDgQIf75rXIakuSICAggA
 MB0GCWCGSAFlAwQBKgQQf8HMdJ9FZJjwHkMQjkNA3gSCBNClWB7cJ5f8ThrQtmoA
@@ -341,7 +341,7 @@ The fields are the same we found in the ASN.1 structure, this being only a diffe
 
 The first version of the PKCS standard (PKCS #1) was specifically tailored to contain an RSA key. Its ASN.1 definition can be found in [RFC 8017](https://tools.ietf.org/html/rfc8017) ("PKCS #1: RSA Cryptography Specifications Version 2.2")
 
-``` txt
+``` text
 RSAPublicKey ::= SEQUENCE {
     modulus           INTEGER,  -- n
     publicExponent    INTEGER   -- e
@@ -363,7 +363,7 @@ RSAPrivateKey ::= SEQUENCE {
 
 Subsequently, as the need to describe new types of algorithms increased, the PKCS #8 standard was developed. This can contain different types of keys, and defines a specific field for the algorithm identifier. Its ASN.1 definition can be found in [RFC 5958](https://tools.ietf.org/html/rfc5958) ("Asymmetric Key Packages")
 
-``` txt
+``` text
 OneAsymmetricKey ::= SEQUENCE {
      version                   Version,
      privateKeyAlgorithm       PrivateKeyAlgorithmIdentifier,
@@ -384,7 +384,7 @@ The definition of the `PrivateKey` field for the RSA algorithm is the same used 
 
 If the PEM format uses PKCS #8 its header and footer are
 
-``` txt
+``` text
 -----BEGIN PRIVATE KEY-----
 [...]
 -----END PRIVATE KEY-----
@@ -392,7 +392,7 @@ If the PEM format uses PKCS #8 its header and footer are
 
 If it uses PKCS #1, however, there has to be an external identification of the algorithm, so the header and footer are
 
-``` txt
+``` text
 -----BEGIN RSA PRIVATE KEY-----
 [...]
 -----END RSA PRIVATE KEY-----
@@ -485,7 +485,7 @@ This tool creates two files. One is the private key file, named as requested, an
 
 OpenSSH private keys are generated using the PKCS #1 format, so the key will be in the form
 
-``` txt
+``` text
 -----BEGIN RSA PRIVATE KEY-----
 [...]
 -----END RSA PRIVATE KEY-----
@@ -535,7 +535,7 @@ ef 93 8c 61 ca a6 0d
 
 The structure of this binary file is pretty simple, and is described in two different RFCs. [RFC 4253](https://tools.ietf.org/html/rfc4253) ("SSH Transport Layer Protocol") states in section 6.6 that
 
-``` txt
+``` text
 The "ssh-rsa" key format has the following specific encoding:
 
       string    "ssh-rsa"
@@ -561,7 +561,7 @@ mpint
 
 This means that the above sequence of bytes is interpreted as 4 bytes of length (32 bits of the `uint32` type) followed by that number of bytes of content.
 
-``` txt
+``` text
 (4 bytes)   00 00 00 07          = 7
 (7 bytes)   73 73 68 2d 72 73 61 = "ssh-rsa" (US-ASCII)
 (4 bytes)   00 00 00 03          = 3
@@ -606,7 +606,7 @@ ssh-keygen -i -f public.pem
 
 In Python you can use the `pycrypto` package to access a PEM file containing an RSA key with the `RSA.importKey` function. Now you can hopefully understand the [documentation](https://www.dlitz.net/software/pycrypto/api/current/Crypto.PublicKey.RSA-module.html) that says
 
-``` txt
+``` text
 externKey (string) - The RSA key to import, encoded as a string.
 
 An RSA public key can be in any of the following formats:

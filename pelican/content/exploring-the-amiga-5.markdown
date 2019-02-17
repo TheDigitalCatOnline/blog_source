@@ -1,5 +1,6 @@
 Title: Exploring the Amiga - Part 5
 Date: 2018-06-25 12:00:00 +0100
+Modified: 2019-02-12 20:00:00 +0000
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
@@ -54,8 +55,6 @@ Exec manages memory and resources using [linked lists](https://en.wikipedia.org/
 The Exec library provides a nice structure to manage lists, `LH`. The structure is defined in `include_i/exec/lists.i`
 
 ``` m68k
-* Full featured list header
-*
    STRUCTURE    LH,0
     APTR    LH_HEAD
     APTR    LH_TAIL
@@ -195,7 +194,7 @@ It is not surprise indeed that the function `AllocMem` mentions it. This functio
 000017da: 2401                      move.l  d1,d2
 000017dc: 45ee 0142                 lea     0x142(a6),a2
 000017e0: 2452                      movea.l (a2),a2
-[...]
+; ...
 ```
 
 and in this initial part of the function we can clearly see the code that loads the effective address of `0x142(a6)`. Remember that `a6` is always supposed to contain the Exec base address.
@@ -236,9 +235,9 @@ The displacement `0x142` is also mentioned in a table towards the beginning of t
 0000030a: 0000
 ```
 
-As you can see I formatted the code to show that the values after `02d2` are data and not code. The disassembler will obviously show you some instructions but they are just misinterpretations of the binary data.
+As you can see I formatted the code to show that the values after `02d2` are data and not code. The disassembler will obviously show you some instructions but they are just misinterpretations of the binary data. AS it is usual in the Kickstart code, we have some procedure working on a set of data and the data is stored immediately after the code itself. The purpose of this procedure is that of creating the initial headers for the linked lists that Exec will use to manage the system resources.
 
-This table is immediately followed by the table we found in the third post, when we were looking at the values of the `LIB` structure.
+This table is immediately followed by the table we found in the [third post]({filename}exploring-the-amiga-3.markdown) of this series, when we were looking at the values of the `LIB` structure.
 
 Let's comment line by line the code at `02b0`
 
@@ -301,29 +300,29 @@ The code then fetches the next word from the table (`000a`) and puts it into a f
 ``` m68k
 ;------ Node Types for LN_TYPE
 
-NT_UNKNOWN  EQU 0
-NT_TASK EQU 1   ; Exec task
+NT_UNKNOWN      EQU 0
+NT_TASK         EQU 1   ; Exec task
 NT_INTERRUPT    EQU 2
-NT_DEVICE   EQU 3
-NT_MSGPORT  EQU 4
-NT_MESSAGE  EQU 5   ; Indicates message currently pending
-NT_FREEMSG  EQU 6
-NT_REPLYMSG EQU 7   ; Message has been replied
-NT_RESOURCE EQU 8
-NT_LIBRARY  EQU 9
-NT_MEMORY   EQU 10
-NT_SOFTINT  EQU 11  ; Internal flag used by SoftInts
-NT_FONT EQU 12
-NT_PROCESS  EQU 13  ; AmigaDOS Process
+NT_DEVICE       EQU 3
+NT_MSGPORT      EQU 4
+NT_MESSAGE      EQU 5   ; Indicates message currently pending
+NT_FREEMSG      EQU 6
+NT_REPLYMSG     EQU 7   ; Message has been replied
+NT_RESOURCE     EQU 8
+NT_LIBRARY      EQU 9
+NT_MEMORY       EQU 10
+NT_SOFTINT      EQU 11  ; Internal flag used by SoftInts
+NT_FONT         EQU 12
+NT_PROCESS      EQU 13  ; AmigaDOS Process
 NT_SEMAPHORE    EQU 14
 NT_SIGNALSEM    EQU 15  ; signal semaphores
-NT_BOOTNODE EQU 16
-NT_KICKMEM  EQU 17
-NT_GRAPHICS EQU 18
+NT_BOOTNODE     EQU 16
+NT_KICKMEM      EQU 17
+NT_GRAPHICS     EQU 18
 NT_DEATHMESSAGE EQU 19
 
-NT_USER     EQU 254 ; User node types work down from here
-NT_EXTENDED EQU 255
+NT_USER         EQU 254 ; User node types work down from here
+NT_EXTENDED     EQU 255
 ```
 
 There is only one instruction left
@@ -341,10 +340,33 @@ The final content of the memory at `0142` will be
 00000146: 0000 0000 ; LH_TAIL
 0000014a: 0000 0146 ; LH_TAILPRED
 0000014d: 0a        ; LH_TYPE
-0000014e: [...]
 ```
 
 And the same happens for the remaining 7 lists from `ResourceList` to `TaskWait`. After this the Exec lists are initialised.
+
+According to the values of `LN_TYPE` the list headers table is the following
+
+``` m68k
+000002d2: 0142 000a ; MemList (NT_MEMORY)
+000002d6: 0150 0008 ; ResourceList (NT_RESOURCE)
+000002da: 015e 0003 ; DeviceList (NT_DEVICE)
+000002de: 017a 0009 ; LibList (NT_LIBRARY)
+000002e2: 0188 0004 ; PortList (NT_MSGPORT)
+000002e6: 0196 0001 ; TaskReady (NT_TASK)
+000002ea: 01a4 0001 ; TaskWait (NT_TASK)
+000002ee: 016c 0002 ; IntrList (NT_INTERRUPT)
+000002f2: 01b2 000b ; SoftInts[0] (NT_SOFTINT)
+000002f6: 01c2 000b ; SoftInts[1] (NT_SOFTINT)
+000002fa: 01d2 000b ; SoftInts[2] (NT_SOFTINT)
+000002fe: 01e2 000b ; SoftInts[3] (NT_SOFTINT)
+00000302: 01f2 000b ; SoftInts[4] (NT_SOFTINT)
+00000306: 0214 000f ; SemaphoreList (NT_SIGNALSEM)
+0000030a: 0000
+```
+
+# What's next
+
+The next instalment of the series will cover the initial part of the system memory initialisation, both the standard one and potential expansions, introducing `AddMemList` for the first time. It will also discuss the origin of some important numbers used in the Kickstart code, `0x24c`, `0x400`, and `0x676`.
 
 # Resources
 

@@ -1,5 +1,6 @@
 Title: Exploring the Amiga - Part 4
 Date: 2018-06-14 14:30:00 +0100
+Modified: 2019-02-12 20:00:00 +0000
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
@@ -10,7 +11,7 @@ Summary:
 
 # The Exec base functions
 
-We found the Kickstart 1.3 (`exec` 34.2) vector table at address `0x1a7c`, and the first 4 entries read
+We found the Kickstart 1.3 (Exec 34.2) vector table at address `0x1a7c`, and the first 4 entries read
 
 ``` m68k
 00001a7c: 08a0
@@ -28,11 +29,9 @@ The first value is `0x08a0`, and if we sum this value to the address of the tabl
 The code is the following
 
 ``` m68k
-; Open
-
-0000231c: 200e      move.l  a6,d0
-0000231e: 526e 0020 addq.w  #0x1,0x20(a6)
-00002322: 4e75      rts
+0000231c: 200e          move.l  a6,d0
+0000231e: 526e 0020     addq.w  #0x1,0x20(a6)
+00002322: 4e75          rts
 ```
 
 The `Open` routine expects the address of the library to be in the `a6` register, and returns the same value in `d0`. It then adds 1 to the number contained 32 bytes (`0x20`) after the address of the library itself and then returns. To find out what this number is we can go back again to the NDK and its include files.
@@ -55,27 +54,27 @@ and the definition of `LIB` in `include_i/exewc/libraries.i`
 
 ``` m68k
  STRUCTURE LIB,LN_SIZE
-    UBYTE   LIB_FLAGS           ; see below
+    UBYTE   LIB_FLAGS       ; see below
     UBYTE   LIB_pad         ; must be zero
     UWORD   LIB_NEGSIZE     ; number of bytes before LIB
     UWORD   LIB_POSSIZE     ; number of bytes after LIB
     UWORD   LIB_VERSION     ; major
-    UWORD   LIB_REVISION        ; minor
-    APTR    LIB_IDSTRING        ; ASCII identification
+    UWORD   LIB_REVISION    ; minor
+    APTR    LIB_IDSTRING    ; ASCII identification
     ULONG   LIB_SUM         ; the system-calculated checksum
     UWORD   LIB_OPENCNT     ; number of current opens
-    LABEL   LIB_SIZE    ;Warning: Size is not a longword multiple!
+    LABEL   LIB_SIZE        ; Warning: Size is not a longword multiple!
 ```
 
 As you can see the latter mentions the former reserving space for it at the beginning (`LN_SIZE`).
 
 `LABEL` is a macro that creates an alias for the current size of the structure, and you can find its definition in `include_i/exec/types.i`. It works in conjunction with the type macros, which increment the global variable `SOFFSET`. The code `LABEL LN_SIZE` in the `LN` structure produces the definition `LN_SIZE EQU 14`, which is thus a simple marker and does not contribute to the size of the structure itself.
 
-The comment after the `LABEL` macro in the `LN` structure says that the structure is word aligned, and indeed its size is a multiple of a word (2 bytes): 2 `APTR` (8 bytes) + 1 `UBYTE` (1 byte) + 1 `BYTE` (1 byte) + 1 `APTR` (4 byte) = 14 bytes.
+The comment after the `LABEL` macro in the `LN` structure says that the structure is word aligned, and indeed its size is a multiple of a word (2 bytes): 2 `APTR` (8 bytes) + 1 `UBYTE` (1 bytes) + 1 `BYTE` (1 byte) + 1 `APTR` (4 bytes) = 14 bytes.
 
 To find the field updated by `Open` we need to skip 32 bytes. So, after we skip the whole `LN` structure, we still have 18 bytes to skip into the `LIB` structure. At that offset we find the `LIB_OPENCNT` field (remember that `UBYTE` is 1 byte, `UWORD` 2 bytes, and `APTR` and `ULONG` 4 bytes). This field is, as the comment reads, the "number of current opens".
 
-The last instruction of the `Open` function is `rts` (`r`e`t`urn from `s`ubroutine) that returns to the instruction after the `jsr` that called the function.
+The last instruction of the `Open` function is `rts` (ReTurn from Subroutine) that returns to the instruction after the `jsr` that called the function.
 
 ## `Close`, `Expunge`, and the reserved slot
 
@@ -85,11 +84,11 @@ The code of the `Close` function is very simple, it just decrements the open cou
 
 ``` m68k
 ; Close
-00002324: 536e 0020 subq.w  #0x1,0x20(a6)
+00002324: 536e 0020     subq.w  #0x1,0x20(a6)
 
 ; Expunge
-00002328: 7000      moveq   #0,d0
-0000232a: 4e75      rts     
+00002328: 7000          moveq   #0,d0
+0000232a: 4e75          rts     
 ```
 
 # `MakeFunctions`
@@ -98,7 +97,7 @@ The `MakeFunctions` routine is used by Exec to create the vector table at the be
 
 The prototype of the `MakeFunctions` routine is
 
-``` c
+``` text
 size = MakeFunctions(addess, vectors, offset)
 d0                   a0      a1       a2
 ```
@@ -264,7 +263,7 @@ The third section is very similar to the second one, because it performs the sam
 000015e2: 60ec                      bra.b   Absolute
 ```
 
-The only difference with the previous section is that there is no need to load the effective address, as the vale contained in `d1` is already absolute, so the latter can be stored directly.
+The only difference with the previous section is that there is no need to load the effective address, as the value contained in `d1` is already absolute, so the latter can be stored directly.
 
 ## Cleanup
 
@@ -275,9 +274,9 @@ The last section simply restores the stack pointer, popping the value of the `a3
 000015e6: 4e75                      rts     
 ```
 
-# Self modifying code
+# Self-modifying code
 
-The creation of the jump table performed by the `MakeFunctions` routine leverages a very powerful feature of any assembly language, that is being able to produce code that self modifies. This feature comes from a property of machine languages called [homoiconicity](https://en.wikipedia.org/wiki/Homoiconicity).
+The creation of the jump table performed by the `MakeFunctions` routine leverages a very powerful feature of any assembly language, that is being able to produce code that self-modifies. This feature comes from a property of machine languages called [homoiconicity](https://en.wikipedia.org/wiki/Homoiconicity).
 
 The basic idea of homoiconicity is that the language doesn't consider data and code two different things, thus allowing to use the code as an input for routines and to change it programmatically. Pay attention that self-modifying code is just one of the implications of homoiconicity, and not its definition.
 
@@ -304,6 +303,10 @@ First we have to convert the number in binary, and we get
 The first 10 bits (`0100 1110 11`) already identify a `jmp` instruction. The following 6 bits (`111 001`) identify the addressing mode, which in this case is `Absolute Long` or `(xxx).L` (Programmer's Reference Manual, 4-108). This instruction shall then be followed by a 4 bytes absolute address.
 
 With that `move.w`, then, the code writes in memory some Assembly code. Techniques like this have been and are used by games and viruses to obfuscate the code, as a static analysis of the binary will not reveal what will be there only at runtime!
+
+# What's next
+
+The next article will discuss the reason behind the address `0x4` used for the Exec base address, and then will move on discussing linked lists and how Exec manages system resources using them.
 
 # Resources
 

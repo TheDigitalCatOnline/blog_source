@@ -1,6 +1,6 @@
 Title: Exploring the Amiga - Part 3
 Date: 2018-06-08 12:30:00 +0100
-Modified: 2018-06-24 22:30:00 +0000
+Modified: 2019-02-12 20:00:00 +0000
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
@@ -19,7 +19,7 @@ This is one of the powers of the Assembly language. The property of treating the
 
 Back to our vector table, we have to find a way to use the Exec library to install in memory the Exec library itself. The concept is not that complex, actually. The pseudocode is something like this:
 
-``` txt
+``` text
 vectors:
     function1-vectors
     function2-vectors
@@ -35,11 +35,11 @@ function3:
     [...]
 ```
 
-In this situation we have 3 functions defined at the addresses `function1`, `function2`, and `function3`. Somewhere in the code at the address `vectors` there is a plain list that containes the addresses of those functions. Since the code can be relocated this list contains offsets relative to the `vectors` table itself. So the first element of the table will be `function1-vectors`, that is the subtraction between the two addresses, and so on.
+In this situation we have 3 functions defined at the addresses `function1`, `function2`, and `function3`. Somewhere in the code at the address `vectors` there is a plain list that contains the addresses of those functions. Since the code can be relocated this list contains offsets relative to the `vectors` table itself. So the first element of the table will be `function1-vectors`, that is the subtraction between the two addresses, and so on.
 
 For example we might have
 
-``` txt
+``` text
 0042 0122
 0044 01b8
 0046 02d1
@@ -57,7 +57,7 @@ Where the entry of the table are `0x164-0x42 = 0x122`, `0x1fa-0x42 = 0x1b8`, and
 The vectors table, thus, is the source from which we can calculate the jump table. The code to perform this, however, is contained in one of the functions itself, let's say the number 2
 
 
-``` txt
+``` text
 function1:
     code
     [...]
@@ -75,7 +75,7 @@ vectors:
 
 As you can see the function at `function2` (in this example) depends on a `<table>` and a `<start>` parameters which will be contained in some register. At this point, since the address `function2` is known, there can be some code that runs the function on the table contained in the code itself
 
-``` txt
+``` text
 setup:
     run <function2> on <vectors_offset> and <setup>
 function1:
@@ -104,12 +104,12 @@ An actual example of the vector table mechanism can be found in the Kickstart co
 The code of Kickstart 1.3 can be found [here](https://www.romcollector.com/emulators-firmware-i-29.html) and you can easily disassemble it with vdasm
 
 ``` sh
-vda68k Kickstart1.3.rom > Kickstart1.3.asm
+$ vda68k Kickstart1.3.rom > Kickstart1.3.asm
 ```
 
 Inside this code we can see a practical implementation of the mechanism described above.
 
-The mandatory disclaimer: **to use the Amiga Kickstart ROM images you must own a license.** (see the Resources section). This website is against piracy of dead and discontinued systems ;)
+The mandatory disclaimer: **to use the Amiga Kickstart ROM images you must own a license.** (see the Resources section).
 
 When you disassemble some binary code, however, you don't get some nice source code written in a high level language. Well, not with a simple disassembler like vdasm, anyway. What you get is the one to one interpretation of the binary values according to the processor's conventions, and this includes parts of the binary file that are pure data. The disassembler has no way to know if some binary number represents an instruction or a pure number. Moreover, there is no trace of the original labels used by the author(s) of the code, as they are lost in the translation to machine language, when they are converted to pure addresses.
 
@@ -175,16 +175,16 @@ If this is the correct position of the node structure, we expect to find just af
 
 ``` m68k
  STRUCTURE LIB,LN_SIZE     
-    UBYTE   LIB_FLAGS           ; see below
+    UBYTE   LIB_FLAGS       ; see below
     UBYTE   LIB_pad         ; must be zero
     UWORD   LIB_NEGSIZE     ; number of bytes before LIB
     UWORD   LIB_POSSIZE     ; number of bytes after LIB
     UWORD   LIB_VERSION     ; major
-    UWORD   LIB_REVISION        ; minor
-    APTR    LIB_IDSTRING        ; ASCII identification
+    UWORD   LIB_REVISION    ; minor
+    APTR    LIB_IDSTRING    ; ASCII identification
     ULONG   LIB_SUM         ; the system-calculated checksum
     UWORD   LIB_OPENCNT     ; number of current opens
-    LABEL   LIB_SIZE    ;Warning: Size is not a longword multiple!
+    LABEL   LIB_SIZE        ; Warning: Size is not a longword multiple!
 ```
 
 The binary code of Kickstart 1.3 from address `0xfc030c` is indeed the following
@@ -204,7 +204,7 @@ The binary code of Kickstart 1.3 from address `0xfc030c` is indeed the following
 00000324: 0001        ; LIB_OPENCNT
 ```
 
-From this I know that the version of `exec` contained in this Kickstart is 34 (`0x22`) revision 2 (`0x02`), and this is confirmed byt the ID string at address `0xfc0018`, which is `exec 34.2 (28 Oct 1987)`.
+From this I know that the version of `exec` contained in this Kickstart is 34 (`0x22`) revision 2 (`0x02`), and this is confirmed by the ID string at address `0xfc0018`, which is `exec 34.2 (28 Oct 1987)`.
 
 ![Exec version string](/images/exploring-the-amiga-3/exec-version-string.png)
 
@@ -214,16 +214,18 @@ What we are really interested in, at this point, is where the address of this st
 
 The structure is at address `0x030c` and we are looking for and instruction like `lea 0x30c(pc),ax`, where `ax` is one of the address registers `a0`-`a7`. Loading the address of a table in a register is the standard way to loop on the table to modify it or to copy the bytes somewhere. 
 
-(The 68000 does not allow you to execute a MOVE instruction with a destination relative to the program counter (PC). In the view of the 68000 designers, code should not patch itself. If you must change a table in the middle of code, you must point to it with an instruction like LEA TABLE(PC),An and then alter it through An. (Self-modifying code is especially bad for 68000 programs that may someday run on the 68020, because the 68020's instruction cache normally assumes that code is pure.) from http://www.easy68k.com/paulrsm/doc/trick68k.htm)
+> The 68000 does not allow you to execute a MOVE instruction with a destination relative to the program counter (PC). In the view of the 68000 designers, code should not patch itself. If you must change a table in the middle of code, you must point to it with an instruction like LEA TABLE(PC),An and then alter it through An. (Self-modifying code is especially bad for 68000 programs that may someday run on the 68020, because the 68020's instruction cache normally assumes that code is pure.
+
+(from http://www.easy68k.com/paulrsm/doc/trick68k.htm)
 
 At address `0x0364` we find the following code
 
 ``` m68k
-0360: 43ee 0008                 lea     0x8(a6),a1
-0364: 41fa ffa6                 lea     0x30c(pc),a0
-0368: 700c                      moveq   #0xc,d0
-036a: 32d8                      move.w  (a0)+,(a1)+
-036c: 51c8 fffc                 dbf     d0,0x36a
+00000360: 43ee 0008                 lea     0x8(a6),a1
+00000364: 41fa ffa6                 lea     0x30c(pc),a0
+00000368: 700c                      moveq   #0xc,d0
+0000036a: 32d8                      move.w  (a0)+,(a1)+
+0000036c: 51c8 fffc                 dbf     d0,0x36a
 ```
 
 which actually installs in memory the exec library. Let's analyse this code instruction by instruction.
@@ -235,16 +237,16 @@ The loop is performed on 26 bytes. The number 12 (`0xc`) is copied  into `d0`, b
 The next 5 instructions are
 
 ``` m68k
-0370: 204e                      movea.l a6,a0
-0372: 43fa 1708                 lea     0x1a7c(pc),a1
-0376: 2449                      movea.l a1,a2
-0378: 6100 1238                 bsr.w   0x15b2
-037c: 3d40 0010                 move.w  d0,0x10(a6)
+00000370: 204e                      movea.l a6,a0
+00000372: 43fa 1708                 lea     0x1a7c(pc),a1
+00000376: 2449                      movea.l a1,a2
+00000378: 6100 1238                 bsr.w   0x15b2
+0000037c: 3d40 0010                 move.w  d0,0x10(a6)
 ```
 
 From the [documentation](http://amigadev.elowar.com/read/ADCD_2.1/Includes_and_Autodocs_3._guide/node021A.html) we know that `MakeFunctions` has the following prototype
 
-``` c
+``` text
 size = MakeFunctions(address, vectors, offset)
 d0                   a0       a1       a2
 ```
@@ -280,12 +282,16 @@ The values at `0x1a7c` are the following
 00001a96: faac
 00001a98: fb36
 00001a9a: f080
-[...]
+; ...
 ```
 
 The file `include_i/exec/exec_lib.i` doesn't contain the first 4 reserved vectors (the functions `Open`, `Close`, `Expunge`, and the reserved space), so considering that those are in the vector table we should check the 15th, were we find `0xfb36`. This is an offset relative to the beginning of the table, so the function is at `0x1a7c + 0xfb36 = 0x15b2` (addresses are 16 bits numbers), as we already discovered.
 
 This shows that our investigation is correct. The Kickstart 1.3 vector table is at address `0x1a7c` and from there we can reach and analyse all the functions contained in the base Amiga library.
+
+# What's next
+
+In the next article I will show the code of the 4 Exec base functions and discuss `MakeFunctions` in depth. I will also briefly discuss self-modifying code, as `MakeFunctions` has a good example of it.
 
 # Resources
 

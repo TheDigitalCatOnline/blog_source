@@ -57,7 +57,7 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
-        white-space: normal;
+        /*white-space: normal;*/
     }
 
 /* Grid */

@@ -44,7 +44,7 @@ I do not know if the final version will be something richer, it depends on how m
 
 At the time of writing, then, the language grammar is
 
-``` txt
+``` text
 factor : ('+' | '-') factor | '(' expression ')' | variable | number
 power : factor [ '^' power ]*
 term : power [ ('*' | '/') term ]*
@@ -303,7 +303,7 @@ It is worth executing the test suite with coverage (check the command line above
 
 *"You're missing just a couple of digits there."*
 
-``` txt
+``` text
 # The only accepted value for the input is one single digit between 0 and 9
 integer: [0-9]
 ```
@@ -439,7 +439,7 @@ Let me recap what we just created. We wrote a lexer, which is a component that s
 
 *"You're about to become a permanent addition to this archaeological find."*
 
-``` txt
+``` text
 integer: [0-9]
 # Label the symbol '+'' with the name 'addsymbol'
 addsymbol: '+'
@@ -573,7 +573,7 @@ Why do we have an error? Because we now parse the input with `parse_expression()
 
 *"So many."*
 
-``` txt
+``` text
 # An integer is a sequence of digits, + here means `one or more`
 integer: [0-9]+
 addsymbol: '+'
@@ -636,7 +636,7 @@ While you change the `CalcLexer` class to make it pass this test, ask yourself i
 
 *"I can add, subtract. I can make coffee. I can shuffle cards."*
 
-``` txt
+``` text
 integer: [0-9]+
 # An addsymbol can be the symbol '+' or the symbol '-'
 addsymbol: '+' | '-'
@@ -740,7 +740,7 @@ and since we rely on Python to perform the actual subtraction we get negative nu
 
 *"The machine simply does not operate as expected."*
 
-``` txt
+``` text
 integer: [0-9]+
 addsymbol: '+' | '-'
 # A expression starts with a single integer and optionally contains and addsymbol and another expression (this is a recursive definition) 
