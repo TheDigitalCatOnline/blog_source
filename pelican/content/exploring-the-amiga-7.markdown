@@ -126,7 +126,7 @@ The **Relative offset** column contains the offset of the function in the jump t
 
 Before we dig into the code of the `AddMemList` function to see how the memory space is added to the free memory list, let's have a look at the status of the memory list itself, as we need to be familiar with its structure to understand the rest of the process.
 
-You might recall from TODO that the `MemList` structure is created `0x142` bytes after ExecBase, and that the structure is the following
+You might recall from the [fifth article]({filename}exploring-the-amiga-5.markdown) that the `MemList` structure is created `0x142` bytes after ExecBase, and that the structure is the following
 
 ``` c
     0xe +-------+ 0x150

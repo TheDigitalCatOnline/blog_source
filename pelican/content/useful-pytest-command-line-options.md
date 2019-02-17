@@ -171,7 +171,7 @@ def pytest_runtest_setup(item):
         pytest.skip("need --runslow option to run")
 ```
 
-Here `item` is the single test, so `item.keywords` is the set of tags attached to the test, and `item.config` is the configuration after the parser run on the command line. This results in the previous code match TODO(ing?) all the tests that are decorated with `@pytest.mark.slow` and only when the `--runslow` option has been specified on the command line. If both those conditions are satisfied the `pytest.skip` function is run, which skips the current test adding the specified string as a reason.
+Here `item` is the single test, so `item.keywords` is the set of tags attached to the test, and `item.config` is the configuration after the parser run on the command line. This makes the previous code match all the tests that are decorated with `@pytest.mark.slow` and only when the `--runslow` option has been specified on the command line. If both those conditions are satisfied the `pytest.skip` function is run, which skips the current test adding the specified string as a reason.
 
 # Coverage
 
