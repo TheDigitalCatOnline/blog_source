@@ -15,8 +15,8 @@ DEFAULT_LANG = u'en'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = 'atom.xml'
-TAG_FEED_ATOM = 'categories/%s/atom.xml'
-CATEGORY_FEED_ATOM = 'category/%s/atom.xml'
+TAG_FEED_ATOM = 'categories/{slug}/atom.xml'
+CATEGORY_FEED_ATOM = "category/{slug}/atom.xml"
 TRANSLATION_FEED_ATOM = None
 DISPLAY_FEEDS_ON_SIDEBAR = True
 DISPLAY_TAGS_ON_SIDEBAR = False
@@ -45,7 +45,9 @@ SITEMAP = {
     'format': 'xml',
 }
 
-SLUG_SUBSTITUTIONS = [("c++","cpp")]
+SLUG_REGEX_SUBSTITUTIONS = [
+    (r'c\+\+', 'cpp')
+]
 
 DEFAULT_DATE_FORMAT = '%d/%m/%Y'
 
