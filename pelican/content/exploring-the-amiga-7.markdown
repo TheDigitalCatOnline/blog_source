@@ -1,5 +1,5 @@
 Title: Exploring the Amiga - Part 7
-Date: 2019-02-11 14:00:00 +0100
+Date: 2019-02-19 13:00:00 +0100
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
