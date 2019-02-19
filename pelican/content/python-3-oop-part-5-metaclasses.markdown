@@ -28,7 +28,7 @@ First of all recall that in Python _everything is an object_, that is everything
 ()
 ```
 
-The variable `a` is an instance of the `int` class, and this latter inherits from `object`, which inherits from nothing. This demonstrates that `object` is at the top of the class hierarchy. However, as you can see, both `int` and `object` are called _classes_ (`<class 'int'>`, `<class 'object'>`). Indeed, while `a` is an instance of the `int` class, `int` itself is an instance of another class, _a class that is instanced to build classes_
+The variable `a` is an instance of the `int` class, and the latter inherits from `object`, which inherits from nothing. This demonstrates that `object` is at the top of the class hierarchy. However, as you can see, both `int` and `object` are called _classes_ (`<class 'int'>`, `<class 'object'>`). Indeed, while `a` is an instance of the `int` class, `int` itself is an instance of another class, _a class that is instanced to build classes_
 
 ``` pycon
 >>> type(a)
@@ -63,7 +63,7 @@ When you think you grasped the `type`/`object` matter read this and start thinki
 
 ## The Metaclasses Take Python
 
-You are now familiar with Python classes. You know that a class is used to create an instance, and that the structure of this latter is ruled by the source class and all its parent classes (until you reach `object`).
+You are now familiar with Python classes. You know that a class is used to create an instance, and that the structure of the latter is ruled by the source class and all its parent classes (until you reach `object`).
 
 Since classes are objects too, you know that a class itself is an instance of a (super)class, and this class is `type`. That is, as already stated, `type` is the class that is used to build classes.
 

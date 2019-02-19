@@ -139,7 +139,7 @@ SyntaxError: non-default argument follows default argument
 
 ## Default arguments evaluation
 
-Default arguments may be provided as plain values or as the result of a function call, but this latter technique need a **very big warning**.
+Default arguments may be provided as plain values or as the result of a function call, but the latter technique need a **very big warning**.
 
 While plain values are hardcoded, thus needing no evaluation except that made at compilation time, function calls are expected to be executed at run time (check [this comment on Reddit](http://www.reddit.com/r/Python/comments/2viygh/default_arguments_in_python/coii8bn?context=3) for a better explanation of this matter). So we could write
 
@@ -161,7 +161,7 @@ expecting the `log_time()` function to correctly provide the current time each t
 2015-02-10T21:20:32.998647: message 3
 ```
 
-If you set the default value to a class instance the result may be even stranger, as you can read in [The Hitchhiker’s Guide to Python!](http://docs.python-guide.org/en/latest/writing/gotchas/). As suggested by this latter resource the usual solution is to replace the default value with `None` and to check the value of the argument inside the function
+If you set the default value to a class instance the result may be even stranger, as you can read in [The Hitchhiker’s Guide to Python!](http://docs.python-guide.org/en/latest/writing/gotchas/). As suggested by the latter resource the usual solution is to replace the default value with `None` and to check the value of the argument inside the function
 
 ``` python
 import datetime as dt

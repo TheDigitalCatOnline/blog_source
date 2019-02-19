@@ -61,7 +61,7 @@ def dec(num):
 
 When executed, the `dec()` function returns a **generator object** and no lines of code have been executed (i.e. `x` has not yet been initialized).
 
-As soon as `next()` is called for the first time `x` will be initialized with the value passed to the function (8 in the example above) and the infinite loop will start. Inside it the local variable `x` will be decremented and returned to the caller by `yield`. This latter will also freeze again the code, holding the internal state, in this case the value of the variable `x`.
+As soon as `next()` is called for the first time `x` will be initialized with the value passed to the function (8 in the example above) and the infinite loop will start. Inside it the local variable `x` will be decremented and returned to the caller by `yield`. The latter will also freeze again the code, holding the internal state, in this case the value of the variable `x`.
 
 ``` pycon
 >>> g.next()
@@ -170,7 +170,7 @@ Could we take advantage of generators in this case? Yes, with **generator expres
 object_generator = (MyObject() for i in range(100))
 ```
 
-where `object_generator` is a generator like one of those returned by a generator function. This latter form of the code would be
+where `object_generator` is a generator like one of those returned by a generator function. The latter form of the code would be
 
 ``` python
 def object_generator_function():

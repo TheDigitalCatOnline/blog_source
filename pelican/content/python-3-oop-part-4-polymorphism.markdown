@@ -231,7 +231,7 @@ class XMLReader:
 [...]
 ```
 
-The class works well until your application shall be modified to receive XML content from a network stream. To use the class without modifying it you shall write the stream in a temporary file and load this latter, but this sounds a little overkill. So you plan to change the class to accept a string, but this way you shall change every single code that uses the class to read a file, since now you shall open, read and close the file on your own, outside the class.
+The class works well until your application shall be modified to receive XML content from a network stream. To use the class without modifying it you shall write the stream in a temporary file and load the latter, but this sounds a little overkill. So you plan to change the class to accept a string, but this way you shall change every single code that uses the class to read a file, since now you shall open, read and close the file on your own, outside the class.
 
 Polymorphism offers a better way. Why not storing the incoming stream inside an object that _acts like_ a file, even if it is not an actual one? If you check the [`io`](https://docs.python.org/3/library/io.html) module you will find that such an object has been already invented and provided in the standard Python library.
 

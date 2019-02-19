@@ -158,7 +158,7 @@ tests/test_binary.py::test_first PASSED
 
 By default py.test looks for Python files which name starts with `test_`, and this is why it processes our file `tests/test_binary.py`. For each file it runs all functions which name, again, starts with `test_`, and this is why `test_first()` has been executed.
 
-This latter does nothing, so it runs without raising any exception and the test passes. Let us try to raise an exception
+The latter does nothing, so it runs without raising any exception and the test passes. Let us try to raise an exception
 
 ``` python
 def test_first():

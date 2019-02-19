@@ -56,7 +56,7 @@ First of all our producer inherits from `GenericProducer`, a rich object that ma
 
 The `eks` class attribute is a list of exchange/routing key couples (tuples); we list here all the exchanges that will receive our messages when the object will send them and for each exchange we give a routing key. Recall that routing keys are used to label messages so that the exchange can route them to the subscribing queues (according to the rules of the exchange type). Here, we declare that the messages of our producer are going to be sent to the `PingExchange` exchange with the `ping_rk` routing key.
 
-Then we declare a `build_message_ping()` method, which simply builds a new message and returns it. This latter is a command message that in Postage lingo means a message that contains an action the receiver shall execute (a fire-and-forget call).
+Then we declare a `build_message_ping()` method, which simply builds a new message and returns it. The latter is a command message that in Postage lingo means a message that contains an action the receiver shall execute (a fire-and-forget call).
 
 #### The producer
 
@@ -111,7 +111,7 @@ receiver = PingReceiver(fingerprint.as_dict(), eqks,
                         None, messaging.global_vhost)
 ```
 
-To start the receiver we have to connect it to an exchange; recall that the AMQP mechanism requires you to declare a queue and to connect it to an exchange through a key, which format depends on the exchange type. Being the `PingExchange` a direct exchange we want to connect to it with the exact routing key we want to match, that is `ping_rk`. The `eqks` structure is rather complex and may result overblown in such a simple context: it is a list of tuples in the form `(exchange_class, qk_list)` that links the given exchange class to a list of queues; this latter list contains tuples in the form `(queue_name, key)`. Each queue listed here connects to the exchange and fetches messages that match the linked key.
+To start the receiver we have to connect it to an exchange; recall that the AMQP mechanism requires you to declare a queue and to connect it to an exchange through a key, which format depends on the exchange type. Being the `PingExchange` a direct exchange we want to connect to it with the exact routing key we want to match, that is `ping_rk`. The `eqks` structure is rather complex and may result overblown in such a simple context: it is a list of tuples in the form `(exchange_class, qk_list)` that links the given exchange class to a list of queues; the latter list contains tuples in the form `(queue_name, key)`. Each queue listed here connects to the exchange and fetches messages that match the linked key.
 
 In this case, we simply subscribe the `facilities.PingExchange` exchange with a `ping_queue` queue receiving messages routed with the `ping_rk` key.
 
@@ -263,7 +263,7 @@ class PingProducer(messaging.GenericProducer):
 
 Things are not very different from the previous cases here: we use the `build_rpc_NAME()` form of the method then we return an RpcCommand, instead of a MessageCommand. Beware that, alas!, nomenclature here is a little misleading: both are messages in the sense of "something that will be sent on the AMQP network", but while MessageCommand does not expect an answer, RpcCommand does.
 
-I want to point out that the name of the message is `ping` just like the previous one; Postage tells the two messages apart using the name (`ping`), the type (`command`) and the category (`rpc` or `message`), although this latter is somewhat concealed.
+I want to point out that the name of the message is `ping` just like the previous one; Postage tells the two messages apart using the name (`ping`), the type (`command`) and the category (`rpc` or `message`), although the latter is somewhat concealed.
 
 The receiver needs a new handler to process the incoming RPC `ping` message:
 
@@ -276,7 +276,7 @@ class PingReceiver(messaging.MessageProcessor):
         reply_func(messaging.MessageResult('Pong'))
 ```
 
-Accordingly, there is an RPC version of `MessageHandler`, `RpcHandler`. The method has to accept an additional parameter that is a reply function; this latter can be called at any time from the method, allowing it to perform some cleanup after answering if needed. In this case, it simply sends a `MessageResult` object back with `'Pong'` as value.
+Accordingly, there is an RPC version of `MessageHandler`, `RpcHandler`. The method has to accept an additional parameter that is a reply function; the latter can be called at any time from the method, allowing it to perform some cleanup after answering if needed. In this case, it simply sends a `MessageResult` object back with `'Pong'` as value.
 
 In `send_ping.py` you can now make a remote call:
 

@@ -41,8 +41,6 @@ AUTHOR_SAVE_AS = AUTHOR_URL + 'index.html'
 PLUGIN_PATHS = ["../pelican-plugins"]
 PLUGINS = ['related_posts', 'series', 'sitemap', 'tag_cloud']
 
-GOOGLE_ANALYTICS_UNIVERSAL = 'UA-74364524-1'
-
 SITEMAP = {
     'format': 'xml',
 }

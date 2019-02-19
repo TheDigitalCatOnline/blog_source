@@ -44,7 +44,7 @@ Before we can switch to implement message queues in C language, it is necessary 
 
 A **protocol** is a set of rules which control the interaction of elements in a set. Every time you must regulate the exchange of information between two or more actors in a scenario you need a protocol, even when dealing with humans and not computers.
 
-In [the past article](/blog/2013/02/13/concurrent-programming-4) we implemented a very simple protocol when instructing processes to access a resource according to the status of a semaphore. This latter is also modified as part of the protocol itself.
+In [the past article](/blog/2013/02/13/concurrent-programming-4) we implemented a very simple protocol when instructing processes to access a resource according to the status of a semaphore. The latter is also modified as part of the protocol itself.
 
 As already stated in a past article, there is no difference between interprocess communication on the same machine or in a distributed environment (multiple machines): indeed, every network protocol (TCP/IP, DNS, SMTP, just to cite some of the most famous) is built on a message exchange architecture.
 

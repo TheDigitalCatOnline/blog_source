@@ -264,7 +264,7 @@ def test_parse_expression_with_parentheses():
     }
 ```
 
-To make this test pass my suggestion is to introduce a `parse_factor()` method, where the term _factor_ encompasses both the integers and the expressions between parentheses. In this latter case obviously, you will need to call `parse_expression()`, which somehow breaks the hierarchical structure of methods in the parser.
+To make this test pass my suggestion is to introduce a `parse_factor()` method, where the term _factor_ encompasses both the integers and the expressions between parentheses. In the latter case obviously, you will need to call `parse_expression()`, which somehow breaks the hierarchical structure of methods in the parser.
 
 # Level 11 - Priorities
 

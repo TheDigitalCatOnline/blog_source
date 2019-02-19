@@ -268,7 +268,7 @@ and the execution of pytest returns a `TypeError: can't set attributes of built-
 
 There are several ways to address this problem, but all of them leverage the fact that, when you import of subclass an immutable object what you get is a "copy" of that is now mutable.
 
-The easiest example in this case is the module `datetime` itself. In the `test_log` function we try to patch directly the `datetime.datetime.now` object, affecting the builtin module `datetime`. The file `logger.py`, however, does import `datetime`, so that this latter becomes a local symbol in the `logger` module. This is exactly the key for our patching. Let us change the code to
+The easiest example in this case is the module `datetime` itself. In the `test_log` function we try to patch directly the `datetime.datetime.now` object, affecting the builtin module `datetime`. The file `logger.py`, however, does import `datetime`, so that the latter becomes a local symbol in the `logger` module. This is exactly the key for our patching. Let us change the code to
 
 ``` python
 @patch('logger.datetime.datetime')

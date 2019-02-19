@@ -154,7 +154,7 @@ void usage(char *argv[])
 }
 ```
 
-The `random_number()` function is used to extract a random number between 0 and a maximum `max`; `RAND_MAX` is a define of the standard library and represents the maximum number the `random()` function can return and in the GNU C library it is 2^31 (2147483647); here it is used to calculate a proportion with the maximum value given by the caller. The `usage()` function helps the user remembering the command line arguments; as you can see, the program receives 3 mandatory input values: the number of users that the switch can spawn; the probability that the switch requests a service to a user when this latter sends a message; the probability that a user sends a text message to another user.
+The `random_number()` function is used to extract a random number between 0 and a maximum `max`; `RAND_MAX` is a define of the standard library and represents the maximum number the `random()` function can return and in the GNU C library it is 2^31 (2147483647); here it is used to calculate a proportion with the maximum value given by the caller. The `usage()` function helps the user remembering the command line arguments; as you can see, the program receives 3 mandatory input values: the number of users that the switch can spawn; the probability that the switch requests a service to a user when the latter sends a message; the probability that a user sends a text message to another user.
 
 ``` c
 int main(int argc, char *argv[])
@@ -478,7 +478,7 @@ Here, the switch checks the queue for incoming text messages users send to other
     }
 ```
 
-Each user that sends a message through the switch can be selected as the destination of a service request. Here, the switch tests a random number against the probability given on the command line, ensuring that the users is not already unreachable. The probability of a termination service is hardcoded (40%), the other case being the timing service; when this latter is requested, the switch sends a message to the user recording the dispatch time so that it can be later compared with the user answer.
+Each user that sends a message through the switch can be selected as the destination of a service request. Here, the switch tests a random number against the probability given on the command line, ensuring that the users is not already unreachable. The probability of a termination service is hardcoded (40%), the other case being the timing service; when the latter is requested, the switch sends a message to the user recording the dispatch time so that it can be later compared with the user answer.
 
 ``` c
     else{

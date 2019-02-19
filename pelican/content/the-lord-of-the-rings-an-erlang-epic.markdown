@@ -17,7 +17,7 @@ I try here to give an in-depth analysis of the matter, to point out some of the 
 
 ## Linking processes
 
-The aim of the exercise is to build a chain of processes that exchange messages. This latter specification is important since we are required to connect our processes with the only purpose of sending messages and we know that, in Erlang, a process may send a message to another process simply by knowing its pid.
+The aim of the exercise is to build a chain of processes that exchange messages. The latter specification is important since we are required to connect our processes with the only purpose of sending messages and we know that, in Erlang, a process may send a message to another process simply by knowing its pid.
 
 Actual linking between processes, in Erlang, has the aim of making them exchange _exit signals_; links are thus a mean to control the way the system collapses (or not) when a process crashes. The processes in the ring will thus be linked to ensure that when one of them exits all other processes will be terminated, but this has nothing to do with the ring itself.
 
@@ -187,7 +187,7 @@ loop(NextProcess) ->
 ```
 [source code](/code/erlang-rings/ring_master_single_message.erl)
 
-Beware that a subtle mechanism conceals here: in Erlang, you can always send a message to a pid, even if it the relative process does not exist; in this latter case the message is simply discarded. This feature allows us to make the first process send the message and terminate without having the last process crash by sending a message to it. Remember that you cannot do this with registered processes alias, only with pids.
+Beware that a subtle mechanism conceals here: in Erlang, you can always send a message to a pid, even if it the relative process does not exist; in the latter case the message is simply discarded. This feature allows us to make the first process send the message and terminate without having the last process crash by sending a message to it. Remember that you cannot do this with registered processes alias, only with pids.
 
 #### Sending multiple messages
 

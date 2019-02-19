@@ -1,5 +1,6 @@
 Title: Exploring the Amiga - Part 2
 Date: 2018-05-28 15:00:00 +0100
+Modified: 2019-02-12 20:00:00 +0000
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
@@ -14,7 +15,7 @@ As already mentioned when a library is loaded in memory a jump table is created 
 
 The jump table functions order for the Exec library is specified in one of the include files provided by the NDK, namely `include_i/exec/exec_lib.i`.
 
-``` m68k
+``` text
     FUNCDEF Supervisor
     FUNCDEF execPrivate1
     FUNCDEF execPrivate2
@@ -26,7 +27,7 @@ The jump table functions order for the Exec library is specified in one of the i
 
 As you can see this file makes use of the `FUNCDEF` macro, which is not provided and has to be implemented by the coder. The idea of the macro is very simple: as the order of the jump table does not change we can just replace the first `FUNCDEF` with the offset of the first function in the library and then increment this offset with the default size of the jump address. The expected output of the macro is
 
-``` m68k
+``` text
     _LVOSupervisor     EQU     -30
     _LVOexecPrivate1   EQU     -36
     _LVOexecPrivate2   EQU     -42
@@ -36,49 +37,49 @@ As you can see this file makes use of the `FUNCDEF` macro, which is not provided
     ...
 ```
 
-Please note that the name of the function has been replaced by another string prepending `_LVO` to avoid clashes with the actual function definition (`LVO` stands for Library Vector Offset).
+Please note that the name of the function has been replaced by another string prepending `_LVO` to avoid clashes with the actual function definition (LVO stands for Library Vector Offset).
 
-The above figures come from the Special Constants contained in the `include_i/exec/libraries.i` file
+The above figures come from the "Special Constants" section contained in the `include_i/exec/libraries.i` file
 
 ``` m68k
 *------ Special Constants ---------------------------------------
 LIB_VECTSIZE    EQU 6       ;Each library entry takes 6 bytes
 LIB_RESERVED    EQU 4       ;Exec reserves the first 4 vectors
-LIB_BASE    EQU -LIB_VECTSIZE
-LIB_USERDEF EQU LIB_BASE-(LIB_RESERVED*LIB_VECTSIZE) ;First user func
-LIB_NONSTD  EQU LIB_USERDEF
+LIB_BASE        EQU -LIB_VECTSIZE
+LIB_USERDEF     EQU LIB_BASE-(LIB_RESERVED*LIB_VECTSIZE) ;First user func
+LIB_NONSTD      EQU LIB_USERDEF
 ```
 
 AS you can see from the comments, Exec reserves the first 4 vectors, so the first function's address is `LIB_USERDEF`. To understand why the addresses are negative and how the offset is computed let's get a snapshot of the library once it has been loaded in memory
 
-``` txt
-                              HIGHER MEMORY ADDRESSES
-                            +-------------------------+
-Last byte of the            | End of the library      |
-library loaded in --------->+-------------------------+
-memory                      | [...]                   |
-                            +-------------------------+
-                            | Content of the library  |
-                            +-------------------------+
-                            | Library structure       |
-Library base address ------>+-------------------------+
-                            | 1st reserved vector     |
-                            +-------------------------+<--- LIB_BASE
-                            | 2nd reserved vector     |
-                            +-------------------------+<--+
-                            | 3rd reserved vector     |   | LIB_VECTSIZE
-                            +-------------------------+<--+
-                            | 4th reserved vector     |
-                            +-------------------------+
-                            | 1st defined function    |
-                            +-------------------------+<--- LIB_USERDEF
-                            | 2nd defined function    |
-                            +-------------------------+
-                            | [...]                   |
-                            +-------------------------+
-First byte of the           | End of the jump table   |
-library loaded in --------->+-------------------------+
-memory                        LOWER MEMORY ADDRESSES
+``` c
+                               HIGHER MEMORY ADDRESSES
+                             +-------------------------+
+Last byte of the             | End of the library      |
+library loaded in ---------> +-------------------------+
+memory                       | [...]                   |
+                             +-------------------------+
+                             | Content of the library  |
+                             +-------------------------+
+                             | Library structure       |
+Library base address ------> +-------------------------+
+                             | 1st reserved vector     | 
+                             +-------------------------+ <--- LIB_BASE
+                             | 2nd reserved vector     | 
+                             +-------------------------+ <--+
+                             | 3rd reserved vector     |    | LIB_VECTSIZE
+                             +-------------------------+ <--+
+                             | 4th reserved vector     | 
+                             +-------------------------+ 
+                             | 1st defined function    | 
+                             +-------------------------+ <--- LIB_USERDEF
+                             | 2nd defined function    |
+                             +-------------------------+
+                             | [...]                   |
+                             +-------------------------+
+First byte of the            | End of the jump table   |
+library loaded in ---------> +-------------------------+
+memory                         LOWER MEMORY ADDRESSES
 ```
 
 You can find an official version of this in the [documentation](http://amigadev.elowar.com/read/ADCD_2.1/AmigaMail_Vol2_guide/node0189.html
@@ -198,13 +199,13 @@ When working with data structures in Assembly, everything is expressed in terms 
 
 ``` m68k
 STRUCT1         EQU     0
-OFFSET          SET     0
-FIELD1          EQU     OFFSET
-OFFSET          EQU     OFFSET+SIZE_OF_FIELD1
-FIELD2          EQU     OFFSET
-OFFSET          EQU     OFFSET+SIZE_OF_FIELD2
-[...]
-STRUCT1_SIZE    EQU     OFFSET
+OFFS            SET     0
+FIELD1          EQU     OFFS
+OFFS            EQU     OFFS+SIZE_OF_FIELD1
+FIELD2          EQU     OFFS
+OFFS            EQU     OFFS+SIZE_OF_FIELD2
+; ...
+STRUCT1_SIZE    EQU     OFFS
 ```
 
 which, once run through the macro expansion, creates the following code
@@ -214,7 +215,7 @@ STRUCT1         EQU     0
 FIELD1          EQU     0
 FIELD2          EQU     SIZE_OF_FIELD1
 FIIELD3         EQU     SIZE_OF_FIELD1+SIZE_OF_FIELD2
-[...]
+; ...
 STRUCT1_SIZE    EQU     SIZE_OF_FIELD1+...+SIZE_OF_FIELDn
 ```
 
@@ -284,7 +285,16 @@ If we need to align the bytes however we can use a little binary trick. If you i
 >>> '0b1100'
 ```
 
-and even numbers are separated exactly by two positions. So if we get the current offset, we increase it by one and round down to the nearest integer we are aligning the offset to multiples of a word (2 bytes). The `ALIGNWORD` macro in the `include_i/exec/types.i` file implements exactly this algorithm
+You can ignore the least significant bits with a simple bitwise AND
+
+``` python
+>>> bin(14)
+'0b1110'
+>>> 14&0b1100
+12
+```
+
+So if we get the current offset, we increase it by one and round down to the nearest integer we are aligning the offset to multiples of a word (2 bytes). The `ALIGNWORD` macro in the `include_i/exec/types.i` file implements exactly this algorithm
 
 ``` m68k
 ALIGNWORD   MACRO       ; Align structure offset to nearest word
@@ -292,7 +302,11 @@ SOFFSET     SET     (SOFFSET+1)&$fffffffe
             ENDM
 ```
 
-This can be seen in action in the `CardHandle` structure defined in `include_i/resources/card.i`.
+This can be seen in action in the `CardHandle` structure defined in `include_i/resources/card.i`. The same algorithm is implemented in other parts of the Kickstart code, for example in the `AddMemList` function that adds memory space to the free memory pool.
+
+# What's next
+
+The next article will describe in depth how the jump table of the Exec library is created through the `MakeFunctions` routine. This will be shown step by step discussing the reverse engineering method followed to discover the mechanism and the relevant code.
 
 # Resources
 

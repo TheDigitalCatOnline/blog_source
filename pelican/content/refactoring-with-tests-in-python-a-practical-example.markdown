@@ -271,7 +271,7 @@ class DataStats:
 
 Where obviously `code_part_2` depends on `code_part_1`. The first refactoring, then, will follow this procedure
 
-1. We write a test called `test__stats()` for a `_stats()` method that is supposed to return the data as a Python structure. We can infer this latter manually from the JSON or running `json.loads()` from a Python shell. The test fails.
+1. We write a test called `test__stats()` for a `_stats()` method that is supposed to return the data as a Python structure. We can infer the latter manually from the JSON or running `json.loads()` from a Python shell. The test fails.
 2. We **duplicate** the code of the `stats()` method that produces the data, putting it in the new `_stats()` method. The test passes.
 
 ``` python

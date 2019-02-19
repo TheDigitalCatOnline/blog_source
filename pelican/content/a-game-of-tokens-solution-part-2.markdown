@@ -176,7 +176,7 @@ The new code is then
         return left
 ```
 
-Let's see what happens parsing `2 * 3 + 4`. The test calls `parse_expression()` which tries immediately to run `parse_term()`. This latter recognises `2` and `*`, so it calls itself recursively just before the `3` and returns the binary node. This means that the multiplication is the first operation we return, the one with higher precedence. The recursive call recognises `3` but then doesn't know what to do with `+` as we specifically consider only `*` and `/`, so it just returns the integer value. Back to `parse_expression()`, then the variable `left` will contain the binary node that represents `2 * 3`. The function will then finish adding the binary node for the sum.
+Let's see what happens parsing `2 * 3 + 4`. The test calls `parse_expression()` which tries immediately to run `parse_term()`. The latter recognises `2` and `*`, so it calls itself recursively just before the `3` and returns the binary node. This means that the multiplication is the first operation we return, the one with higher precedence. The recursive call recognises `3` but then doesn't know what to do with `+` as we specifically consider only `*` and `/`, so it just returns the integer value. Back to `parse_expression()`, then the variable `left` will contain the binary node that represents `2 * 3`. The function will then finish adding the binary node for the sum.
 
 Take your time to understand the mechanism, perhaps trying with different operations like `2 + 4 * 6 - 8`, which should return `18`.
 

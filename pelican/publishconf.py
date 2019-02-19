@@ -14,3 +14,6 @@ SITEURL = 'http://blog.thedigitalcatonline.com'
 RELATIVE_URLS = False
 
 DELETE_OUTPUT_DIRECTORY = True
+
+GOOGLE_ANALYTICS_UNIVERSAL = 'UA-74364524-1'
+

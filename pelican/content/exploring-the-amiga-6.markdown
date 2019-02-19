@@ -1,5 +1,6 @@
 Title: Exploring the Amiga - Part 6
 Date: 2018-06-25 13:00:00 +0100
+Modified: 2019-02-12 20:00:00 +0000
 Category: Retro
 Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
@@ -83,24 +84,38 @@ Add_chip:
 
 The two addresses `0x326` and `0x332` mentioned in the code contain the two zero-terminated strings `Chip Memory` and `Fast Memory`
 
-```
-; "Chip Memory"
+``` m68k
+; ################################################################
+; 'Chip Memory' string
 
-00000326: 4368 ; Ch
-00000328: 6970 ; ip
-0000032a: 204d ;  M
-0000032c: 656d ; em
-0000032e: 6f72 ; or
-00000330: 7900 ; y\0
+00000326: 43 ; C
+00000327: 68 ; h
+00000328: 69 ; i
+00000329: 70 ; p
+0000032a: 20 ; SP
+0000032b: 4d ; M
+0000032c: 65 ; e
+0000032d: 6d ; m
+0000032e: 6f ; o
+0000032f: 72 ; r
+00000330: 79 ; y
+00000331: 00 ; NUL
 
-; "Fast Memory"
+; ################################################################
+; 'Fast Memory' string
 
-00000332: 4661 ; Fa
-00000334: 7374 ; st
-00000336: 204d ;  M
-00000338: 656d ; em
-0000033a: 6f72 ; or
-0000033c: 7900 ; y\0
+00000332: 46 ; F
+00000333: 61 ; a
+00000334: 73 ; s
+00000335: 74 ; t
+00000336: 20 ; SP
+00000337: 4d ; M 
+00000338: 65 ; e
+00000339: 6d ; m
+0000033a: 6f ; o
+0000033b: 72 ; r
+0000033c: 79 ; y
+0000033d: 00 ; NUL
 ```
 
 Let's analyse the code line by line.
@@ -119,13 +134,13 @@ Add_expansion:
 00000388: 43fa ffa8                 lea     0x332(pc),a1
 ```
 
-The code then loads two effective addresses. The first one is the first free location (`0x24c`) and the second one is the string `Fast Memory`. The reason behind the address `0x24c` is explained in a later section in detail.
+The code then loads two effective addresses. The first one is the first free memory location (`0x24c`) and the second one is the string `Fast Memory`. The reason behind the address `0x24c` is explained in a later section in detail.
 
 The purpose of the code is to call the `AddMemList` routine, which adds the memory to the system free memory pool. It has the following prototype
 
-``` c
-;   error = AddMemList( size, attributes, pri, base, name )
-;   D0                  D0    D1          D2   A0    A1
+``` text
+size = AddMemList(size, attributes, pri, base, name)
+D0                D0    D1          D2   A0    A1
 ```
 
 where `size` is the size of the memory (bytes), `attributes` contains flags that identify memory attributes, `pri` is the priority of the memory, `base` is the base address of the new area and `name` is a name for this list.
@@ -146,9 +161,9 @@ The code then prepares the registers for the `AddMemList` call. It gives this me
 
 The expansion memory base address is copied in `d0` (this is actually an unneeded repetition of what the code did 6 lines before, I think). It then subtracts the address of the first free location (because if this is not 0 it means that something is already stored in memory) and the size of the stack, that was initialised previously by Kickstart to 6 KBytes (hardcoded). After that the code jumps to `AddMemList` (`0x1a26`).
 
-When the routine returns the code has to move on initialising the chip memory. The chip memory has to be initialised in two different ways depending on the presence of the expansion memory, as this latter is preferably used by the CPU.
+When the routine returns the code begins the initialisation of the chip memory. The chip memory has to be initialised in two different ways depending on the presence of the expansion memory, as the latter is preferably used by the CPU.
 
-```
+``` m68k
 000003a0: 41f8 0400                 lea     0x400.w,a0
 000003a4: 7000                      moveq   #0,d0
 000003a6: 600a                      bra.b   Add_chip
@@ -215,24 +230,24 @@ The first free location, according to this code is `0x24c` (588) bytes after the
 
 It's easy to calculate this number. Here you find the annotated version of the `ExecBase` structure that I already used in the previous instalment.
 
-The structure is described in the `include_i/exec/execbase.i` include file, and I added the displacement in bytes of each field. The first column is the displacement in the `ExecBase` structure, while the second starts from `0x22`. This latter comes from the fact that the structure follows an `LN` structure and a `LIB` structure, described in the fourth instalment of this series.
+The structure is described in the `include_i/exec/execbase.i` include file, and I added the displacement in bytes of each field. The first column is the displacement in the `ExecBase` structure, while the second starts from `0x22`. The latter comes from the fact that the structure follows an `LN` structure and a `LIB` structure, described in the fourth instalment of this series.
 
 ``` m68k
-0000 0022    UWORD   SoftVer ; kickstart release number (obs.)
-0002 0024    WORD    LowMemChkSum    ; checksum of 68000 trap vectors
-0004 0026    ULONG   ChkBase ; system base pointer complement
-0008 002a    APTR    ColdCapture ; coldstart soft capture vector
-000c 002e    APTR    CoolCapture ; coolstart soft capture vector
-0010 0032    APTR    WarmCapture ; warmstart soft capture vector
-0014 0036    APTR    SysStkUpper ; system stack base   (upper bound)
-0018 003a    APTR    SysStkLower ; top of system stack (lower bound)
-001c 003e    ULONG   MaxLocMem   ; top of chip memory
-0020 0042    APTR    DebugEntry  ; global debugger entry point
-0024 0046    APTR    DebugData   ; global debugger data segment
-0028 004a    APTR    AlertData   ; alert data segment
-002c 004e    APTR    MaxExtMem   ; top of extended mem, or null if none
+0000 0022    UWORD   SoftVer
+0002 0024    WORD    LowMemChkSum
+0004 0026    ULONG   ChkBase
+0008 002a    APTR    ColdCapture
+000c 002e    APTR    CoolCapture
+0010 0032    APTR    WarmCapture
+0014 0036    APTR    SysStkUpper
+0018 003a    APTR    SysStkLower
+001c 003e    ULONG   MaxLocMem
+0020 0042    APTR    DebugEntry
+0024 0046    APTR    DebugData
+0028 004a    APTR    AlertData
+002c 004e    APTR    MaxExtMem
 
-0030 0052    WORD    ChkSum      ; for all of the above (minus 2)
+0030 0052    WORD    ChkSum
 
 
 ******* Interrupt Related ********************************************
@@ -258,25 +273,25 @@ The structure is described in the `include_i/exec/execbase.i` include file, and 
 
 ******* Dynamic System Variables *************************************
 
-00f2 0114    APTR    ThisTask    ; pointer to current task (readable)
+00f2 0114    APTR    ThisTask
 
-00f6 0118    ULONG   IdleCount   ; idle counter
-00fa 011c    ULONG   DispCount   ; dispatch counter
-00fe 0120    UWORD   Quantum ; time slice quantum
-0100 0122    UWORD   Elapsed ; current quantum ticks
-0102 0124    UWORD   SysFlags    ; misc internal system flags
-0104 0126    BYTE    IDNestCnt   ; interrupt disable nesting count
-0105 0127    BYTE    TDNestCnt   ; task disable nesting count
+00f6 0118    ULONG   IdleCount
+00fa 011c    ULONG   DispCount
+00fe 0120    UWORD   Quantum
+0100 0122    UWORD   Elapsed
+0102 0124    UWORD   SysFlags
+0104 0126    BYTE    IDNestCnt
+0105 0127    BYTE    TDNestCnt
 
-0106 0128    UWORD   AttnFlags   ; special attention flags (readable)
+0106 0128    UWORD   AttnFlags
 
-0108 012a    UWORD   AttnResched ; rescheduling attention
-010a 012c    APTR    ResModules  ; pointer to resident module array
-010e 0130    APTR    TaskTrapCode    ; default task trap routine
-0112 0134    APTR    TaskExceptCode  ; default task exception code
-0116 0138    APTR    TaskExitCode    ; default task exit code
-011a 013c    ULONG   TaskSigAlloc    ; preallocated signal mask
-011e 0140    UWORD   TaskTrapAlloc   ; preallocated trap mask
+0108 012a    UWORD   AttnResched
+010a 012c    APTR    ResModules
+010e 0130    APTR    TaskTrapCode
+0112 0134    APTR    TaskExceptCode
+0116 0138    APTR    TaskExitCode
+011a 013c    ULONG   TaskSigAlloc
+011e 0140    UWORD   TaskTrapAlloc
 
 
 ******* System List Headers (private!) ********************************
@@ -293,17 +308,17 @@ The structure is described in the `include_i/exec/execbase.i` include file, and 
 
 01e0 0202    STRUCT  LastAlert,4*4
 
-01f0 0212    UBYTE   VBlankFrequency     ;(readable)
-01f1 0213    UBYTE   PowerSupplyFrequency    ;(readable)
+01f0 0212    UBYTE   VBlankFrequency
+01f1 0213    UBYTE   PowerSupplyFrequency
 
 01f2 0214    STRUCT  SemaphoreList,LH_SIZE
 
-0200 0222    APTR    KickMemPtr  ; ptr to queue of mem lists
-0204 0226    APTR    KickTagPtr  ; ptr to rom tag queue
-0208 022a    APTR    KickCheckSum    ; checksum for mem and tags
+0200 0222    APTR    KickMemPtr
+0204 0226    APTR    KickTagPtr
+0208 022a    APTR    KickCheckSum
 
-020c 022e    UBYTE ExecBaseReserved[10];
-0216 0238    UBYTE ExecBaseNewReserved[20];
+020c 022e    UBYTE   ExecBaseReserved[10];
+0216 0238    UBYTE   ExecBaseNewReserved[20];
 022a 024c    LABEL   SYSBASESIZE
 ```
 
@@ -315,9 +330,9 @@ As you can see the final address is `0x24c`, which is exactly where the free mem
 
 The Motorola 68000 architecture forces to reserve the first 1024 bytes (`0x400`) for the exception vectors. The table of these vectors can be found in the Programmer's Reference Manual, page B-2, and this is the source for the magic number used when adding the chip memory to the system lists in case an expansion memory is installed.
 
-The Exec base address, however, is not `0x400` but `0x676`. As we already know the library is preceded by the jump table, and since Exec exports 105 functions we use `105*6 = 630` bytes (`0x676`) for the jump vectors.
+The Exec base address, however, is not `0x400` but `0x676`. As we already know the library is preceded by the jump table, and since Exec exports 105 functions we use `105*6 = 630` bytes for the jump vectors. Adding these 630 bytes to the first 1024 reserved for the exception vectors gives 1654 (`0x676`) as the base address of the library.
 
-```
+``` c
         +---------------------------------------+
         | First free address                    |
    2242 +---------------------------------------+ 0x8c2 <-+
@@ -346,6 +361,10 @@ The Exec base address, however, is not `0x400` but `0x676`. As we already know t
         | Reset Initial Interrupt Stack Pointer |         |
       0 +---------------------------------------+ 0x0   <-+
 ```
+
+# What's next
+
+It's time to show the complete Exec vector table, as we are going to use and analyse all the functions defined there. I will then discuss the structure of the memory list header and its relationship with linked lists. Last I will dissect the code of `AddMemList` and thus show in detail how the chip and expansion memory areas are added to to free memory pool.
 
 # Resources
 
