@@ -45,29 +45,25 @@ SITEMAP = {
     'format': 'xml',
 }
 
-SLUG_REGEX_SUBSTITUTIONS = [
-    (r'c\+\+', 'cpp')
-]
-
 DEFAULT_DATE_FORMAT = '%d/%m/%Y'
 
 SOCIAL = (
-        ('Twitter', 'https://twitter.com/thedigicat'),
-        ('Google+', 'https://plus.google.com/u/0/111444750762335924049'),
-        ('GitHub', 'https://github.com/TheDigitalCatOnline'),
-    )
+    ('Twitter', 'https://twitter.com/thedigicat'),
+    ('Google+', 'https://plus.google.com/u/0/111444750762335924049'),
+    ('GitHub', 'https://github.com/TheDigitalCatOnline'),
+)
 
 DEFAULT_PAGINATION = 9
 PAGINATION_PATTERNS = (
     (1, '{base_name}/', '{base_name}/index.html'),
     (2, '{base_name}/page/{number}/', '{base_name}/page/{number}/index.html'),
-    )
+)
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# RELATIVE_URLS = True
 
 STATIC_PATHS = ['images', 'code', 'notebooks', 'files', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
 TWITTER_USERNAME = 'thedigicat'
 
 THEME = "../editorial"
