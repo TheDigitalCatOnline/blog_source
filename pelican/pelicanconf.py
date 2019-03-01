@@ -65,7 +65,7 @@ STATIC_PATHS = ['images', 'code', 'notebooks', 'files']
 # EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
 TWITTER_USERNAME = 'thedigicat'
 
-THEME = "../editorial2"
+THEME = "../editorial"
 
 FAVICON = 'images/TheDigitalCat_favicon_32.png'
 

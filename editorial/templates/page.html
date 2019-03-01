@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Content -->
-<section class="page">
-    <header class="major">
-        <h2>About</h2>
-    </header>
+    <section id="header">
+        <header class="main">
+            <h1>{{ page.title }}</h1>
+        </header>
+    </section>
 
-    {{ page.content }}
-    
-</section>
+    <section id="content">
+        {{ page.content }}
+    </section>
 {% endblock %}
