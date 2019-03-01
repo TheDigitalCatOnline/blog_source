@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<!--
+    Editorial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+    <head>
+        <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <!--[if lte IE 8]><script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/main.css" />
+
+        <!-- Pygments CSS START -->
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/pygments/monokai.css">
+        <!-- Pygments CSS END -->
+
+        <link href="{{ SITEURL }}/{{ FAVICON }}" rel="icon">
+
+        <!--[if lte IE 9]><link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/ie9.css" /><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/ie8.css" /><![endif]-->
+
+        <!-- Google Analytics Universal -->
+            <script type="text/javascript">
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                ga('create', '{{ GOOGLE_ANALYTICS_UNIVERSAL }}', '{{ GOOGLE_ANALYTICS_UNIVERSAL_PROPERTY|default("auto") }}');
+                ga('send', 'pageview');
+            </script>
+        <!-- End Google Analytics Universal Code -->
+    </head>
+    <body>
+
+        <!-- Wrapper -->
+            <div id="wrapper">
+
+                <!-- Main -->
+                    <div id="main">
+                        <div class="inner {% block div_type %}{% endblock %}">
+
+                            {% block content %}
+                            {% endblock %}
+
+                        </div>
+                    </div>
+
+                <!-- Sidebar -->
+                    <div id="sidebar">
+                        {% include 'sidebar.html' %}
+                    </div>
+
+            </div>
+
+        <!-- Scripts -->
+            <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/jquery.min.js"></script>
+            <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/skel.min.js"></script>
+            <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/util.js"></script>
+            <!--[if lte IE 8]><script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/ie/respond.min.js"></script><![endif]-->
+            <script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/main.js"></script>
+
+    </body>
+</html>

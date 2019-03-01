@@ -7,6 +7,7 @@ Authors: Leonardo Giordani
 Slug: exploring-the-amiga-4
 Series: Exploring the Amiga
 Image: exploring-the-amiga
+Style: retro
 Summary: 
 
 # The Exec base functions

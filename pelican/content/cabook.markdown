@@ -12,11 +12,13 @@ Summary: A practical approach to better software design
 
 **UPDATE**: version 1.0.3 is out! Some readers unsurprisingly spotted typos and bad grammar and were so kind to submit fixes.
 
-I'm excited to announce that the success of [the post on clean architectures](/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/) encouraged me to expand the subject and to write a book that I titled "Clean Architectures in Python. A practical approach to better software design".
+I'm excited to announce that the success of [the post on clean architectures]({filename}clean-architectures-in-python-a-step-by-step-example.markdown) encouraged me to expand the subject and to write a book that I titled "Clean Architectures in Python. A practical approach to better software design".
 
 The book contains a complete introduction to TDD and clean architectures, two topics that I believe are strictly interconnected. The book is 170 pages long and it is complete, at least for a first edition, but I am already planning to add content that could not fit in this release for several reasons (mostly because still unclear in my mind).
 
-![Cover](/images/cabook/cover.jpg)
+<div class="center-image">
+<img src="/images/cabook/cover.jpg" alt="Cover" />
+</div>
 
 The book is available for free [on Leanpub](https://leanpub.com/clean-architectures-in-python). If you enjoy it, please tweet about it with the `#pycabook` hashtag.
 
@@ -28,6 +30,8 @@ The book will soon be translated into Russian by Алексей Пыльцын (
 
 Alexey is a web developer and maintainer of the official PHP documentation in Russian. His website is https://lex111.ru/.
 
-![Cover](/images/cabook/cover_ru.jpg)
+<div class="center-image">
+<img src="/images/cabook/cover_ru.jpg" alt="Russian cover" />
+</div>
 
 If you are interested you can show you support [on the Leanpub page](https://leanpub.com/clean-architectures-in-python-russian)

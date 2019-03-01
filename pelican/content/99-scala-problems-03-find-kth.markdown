@@ -1,14 +1,15 @@
 Title: 99 Scala Problems 03 - Find the Kth element of a list
 Date: 2015-04-07 09:10:00 +0100
+Modified: 2019-02-28 10:00:00 +0000
 Category: Programming
 Tags: Scala, functional programming
 Authors: Leonardo Giordani
 Slug: 99-scala-problems-03-find-kth
-Series: "99 Scala Problems"
+Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: 
 
-## The problem
+# The problem
 
 **P03** (*) Find the Kth element of a list.
 By convention, the first element in the list is element 0.
@@ -20,11 +21,11 @@ scala> nth(2, List(1, 1, 2, 3, 5, 8))
 res0: Int = 2
 ```
 
-## Initial thoughts
+# Initial thoughts
 
 I expect the solution to be trivial using the indexing capabilities of `List` types, such as in any language that supports indexed lists. The functional solution cannot use indexing and shall reduce the list element by element.
 
-## The procedural solution
+# The procedural solution
 
 ``` scala
 def findKth[A](k:Int, l:List[A]):A = {
@@ -48,7 +49,7 @@ def findKth[A](k:Int, l:List[A]):A = {
 
 which probably states more clearly that the main job of the function is to replace one exception with another one.
 
-## The recursive solution
+# The recursive solution
 
 A recursive solution is pretty straightforward. We just repeatedly remove the first element until and decrease the given index until it reaches 0. Using a couple of methods from the `List` type the solution is
 
@@ -74,10 +75,10 @@ The "new" thing here is that we are pattern matching a tuple of values (which is
 
 The first case is the exit case, where the counter reached 0 and the list has an head to return, which is the nth element. Otherwise the first element of the list is removed and the function called with a decremented index. The last line covers the empty list case.
 
-## Final considerations
+# Final considerations
 
 The procedural approach made me learn how to **catch exceptions** in Scala and how to perform **logical comparisons**. The recursive solution taught me **pattern matching of multiple values**.
 
-## Feedback
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

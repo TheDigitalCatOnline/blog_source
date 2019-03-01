@@ -8,7 +8,7 @@ Series: A game of tokens
 Image: a-game-of-tokens
 Summary:
 
-In the first three parts of this series of posts we developed together a calculator using a pure TDD methodology. In the [previous post](/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/) we added support for variables.
+In the first three parts of this series of posts we developed together a calculator using a pure TDD methodology. In the [previous post]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3.markdown) we added support for variables.
 
 In this new post we will first add the exponentiation operation. The operator will be challenging because it has a high priority, so we will need to spice up the peek functions to look at multiple tokens.
 

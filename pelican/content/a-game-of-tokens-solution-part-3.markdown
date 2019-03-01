@@ -8,7 +8,7 @@ Series: A game of tokens
 Image: a-game-of-tokens-solutions
 Summary: 
 
-This is my solution to the third part of "A Game of Tokens", where we try to implement a programming language with Python. The description of this third part of the challenge can be found [here](/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/).
+This is my solution to the third part of "A Game of Tokens", where we try to implement a programming language with Python. The description of this third part of the challenge can be found [here]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3.markdown).
 
 You can find the tests and the code presented here in [this repository](https://github.com/lgiordani/smallcalc) in the branch called `part3`.
 

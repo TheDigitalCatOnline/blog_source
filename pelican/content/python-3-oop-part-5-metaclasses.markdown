@@ -5,7 +5,7 @@ Tags: Python, Python3, OOP, metaprogramming, metaclasses
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-5-metaclasses
 Image: python-3-oop
-Series: "Python 3 OOP"
+Series: Python 3 OOP
 Summary:
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_5__Metaclasses.ipynb)

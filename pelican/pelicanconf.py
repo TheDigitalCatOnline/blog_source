@@ -49,7 +49,6 @@ DEFAULT_DATE_FORMAT = '%d/%m/%Y'
 
 SOCIAL = (
     ('Twitter', 'https://twitter.com/thedigicat'),
-    ('Google+', 'https://plus.google.com/u/0/111444750762335924049'),
     ('GitHub', 'https://github.com/TheDigitalCatOnline'),
 )
 
@@ -60,10 +59,10 @@ PAGINATION_PATTERNS = (
 )
 
 # Uncomment following line if you want document-relative URLs when developing
-# RELATIVE_URLS = True
+RELATIVE_URLS = True
 
-STATIC_PATHS = ['images', 'code', 'notebooks', 'files', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
+STATIC_PATHS = ['images', 'code', 'notebooks', 'files']
+# EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
 TWITTER_USERNAME = 'thedigicat'
 
 THEME = "../editorial"
@@ -81,3 +80,23 @@ MARKDOWN = {
     },
     'output_format': 'html5',
 }
+
+QUOTES = [
+    {
+        'quote': "I've seen things you people wouldn't believe. Attack ships"
+        " on fire off the shoulder of Orion. I watched C-beams glitter in the"
+        " dark near the Tannhäuser Gate. All those moments will be lost in"
+        " time, like tears in rain. Time to die.",
+        'source': 'Blade Runner, 1982'
+    },
+    {
+        'quote': "Look at this. It’s worthless — ten dollars from a vendor in"
+        " the street. But I take it, I bury it in the sand for a thousand"
+        " years, it becomes priceless.",
+        'source': 'Raiders of the Lost Ark, 1981'
+    },
+    {
+        'quote': "Roads? Where we're going, we don't need... roads.",
+        'source': 'Back to the Future, 1985'
+    },
+]

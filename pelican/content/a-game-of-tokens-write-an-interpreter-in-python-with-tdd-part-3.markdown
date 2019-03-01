@@ -8,7 +8,7 @@ Series: A game of tokens
 Image: a-game-of-tokens
 Summary:
 
-This is the third instalment of a series of posts on how to write an interpreter in Python. In the [first part](/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1) we developed together a small command line calculator that could sum and subtract numbers, while in the [second part](/blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2) we went further adding multiplication, division and unary plus and minus. Both parts give only the tests your code is supposed to pass, and my personal solution can be found [here](/blog/2017/07/12/a-game-of-tokens-solution-part-1) for the first part, and [here](/blog/2017/10/17/a-game-of-tokens-solution-part-2) for the second.
+This is the third instalment of a series of posts on how to write an interpreter in Python. In the [first part]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1.markdown) we developed together a small command line calculator that could sum and subtract numbers, while in the [second part]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2.markdown) we went further adding multiplication, division and unary plus and minus. Both parts give only the tests your code is supposed to pass, and my personal solution can be found [here]({filename}a-game-of-tokens-solution-part-1.markdown) for the first part, and [here]({filename}a-game-of-tokens-solution-part-2.markdown) for the second.
 
 In this third part we wil start adding variables to our calculator, moving towards a real programming language.
 

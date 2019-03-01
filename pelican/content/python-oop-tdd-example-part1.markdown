@@ -4,7 +4,7 @@ Category: Programming
 Tags: OOP, Python, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: python-oop-tdd-example-part1
-Series: "Python OOP and TDD"
+Series: Python OOP and TDD
 Image: python-oop-tdd
 Summary:
 
@@ -21,6 +21,7 @@ The package we are going to write will provide a class that represents binary nu
 A quick example of what the package shall do:
 
 ``` pycon
+0123456789
 >>> b = Binary('0101110001')
 >>> hex(b)
 '0x171'
@@ -280,7 +281,7 @@ def test_binary_str():
 
 ### Project structure
 
-I warmly suggest to check [this page](https://pytest.org/latest/goodpractises.html) for a project layout that allows py.test to work flawlessly. To avoid putting too many things in this post I am going to run `py.test` with a custom `PYTHONPATH` to make it correctly import the code. However, please remember that this setup is just a trick for simplicity's sake. Check [this detailed post](http://www.jeffknupp.com/blog/2013/08/16/open-sourcing-a-python-project-the-right-way/) by Jeff Knupp to learn a lot about Python packaging and project layouts.
+I warmly suggest to check [this page](https://docs.pytest.org/en/latest/goodpractices.html) for a project layout that allows py.test to work flawlessly. To avoid putting too many things in this post I am going to run `py.test` with a custom `PYTHONPATH` to make it correctly import the code. However, please remember that this setup is just a trick for simplicity's sake. Check [this detailed post](http://www.jeffknupp.com/blog/2013/08/16/open-sourcing-a-python-project-the-right-way/) by Jeff Knupp to learn a lot about Python packaging and project layouts.
 
 ### Writing the class
 
@@ -366,7 +367,7 @@ class Binary:
 
 Running the tests I get `4 failed, 9 passed in 0.02 seconds`, which is a good score. The tests that still fail are `test_binary_eq`, `test_binary_bin`, `test_binary_str` and `test_binary_hex`. Since I still wrote no code for the conversions those failures were expected.
 
-Let us review the code I wrote. I make use of the `collections` module to tell apart sequences from plain values in a pythonic way. If you do not know what Abstract Base Classes are, please check [this post](/blog/2014/09/04/python-3-oop-part-6-abstract-base-classes) and the [`collections.abc` module documentation](https://docs.python.org/3/library/collections.abc.html).
+Let us review the code I wrote. I make use of the `collections` module to tell apart sequences from plain values in a pythonic way. If you do not know what Abstract Base Classes are, please check [this post]({filename}python-3-oop-part-6-abstract-base-classes.markdown) and the [`collections.abc` module documentation](https://docs.python.org/3/library/collections.abc.html).
 
 **WARNING**: if you are using Python 3.2 or less you will find those classes in the `collections` module instead of `collections.abc`, which has been introduced with Python 3.3
 

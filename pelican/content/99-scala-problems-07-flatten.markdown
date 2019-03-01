@@ -1,14 +1,15 @@
 Title: 99 Scala Problems 07 - Flatten a nested list structure
 Date: 2015-04-07 09:30:00 +0100
+Modified: 2019-02-28 10:00:00 +0000
 Category: Programming
 Tags: Scala, functional programming
 Authors: Leonardo Giordani
 Slug: 99-scala-problems-07-flatten
-Series: "99 Scala Problems"
+Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: 
 
-## The problem
+# The problem
 
 **P07** (**) Flatten a nested list structure.
 
@@ -19,11 +20,11 @@ scala> flatten(List(List(1, 1), 2, List(3, List(5, 8))))
 res0: List[Any] = List(1, 1, 2, 3, 5, 8)
 ```
 
-## Initial thoughts
+# Initial thoughts
 
 Flattening lists is a perfect application for recursive functions, and the algorithm shouldn't be too complex. The key point in flattening is the possibility to tell apart a list from a non-list element, to rule the call of another recursion. To solve this I will probably have to deal with typed patterns.
 
-## The recursive solution
+# The recursive solution
 
 The `flatten()` method of `List` objects works only if the list contains "traversable collections".
 
@@ -57,8 +58,6 @@ This code gives nevertheless problems when compiled. The following warning was p
 
 Well [this page](http://www.artima.com/pins1ed/case-classes-and-pattern-matching.html) talks a lot about _typed patterns_ and _type erasure_ in Scala. The short story is that Scala compiles for the JVM, which does not keep type information for collections (this is a complex matter, and not knowing Java I don't fully grasp the whole thing now).
 
-Another interesting resource about type erasure is [this Scalafied post](http://www.scalafied.com/60/lightweight-type-erasure-matching).
-
 This version seems to be correct
 
 ``` scala
@@ -85,7 +84,7 @@ def flatten(l: List[Any]): List[Any] = {
 }
 ```
 
-## Flatmap
+# Flatmap
 
 `List` objects provide a very interesting method, `flatMap()` that, just like `map()`, applies a given function to all elements of the list. While `map()` builds the resulting collection concatenating the results of each application, `flatMap()` concatenates the elements of the collection that results from each application.
 
@@ -114,11 +113,11 @@ def flatten(l: List[Any]): List[Any] = l flatMap {
 
 Pay attention to the fact that this function has to drop the type check just like the first one.
 
-## Final considerations
+# Final considerations
 
 **Type erasure** is a new concept, and one shall be aware of it. **Partial functions as case sequences** are really handy, and so are the `map()` and `flatMap()` methods.
 
-## Feedback
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

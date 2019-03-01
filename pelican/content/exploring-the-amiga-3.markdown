@@ -7,6 +7,7 @@ Authors: Leonardo Giordani
 Slug: exploring-the-amiga-3
 Series: Exploring the Amiga
 Image: exploring-the-amiga
+Style: retro
 Summary: 
 
 # Exec and the vector table
@@ -216,7 +217,7 @@ The structure is at address `0x030c` and we are looking for and instruction like
 
 > The 68000 does not allow you to execute a MOVE instruction with a destination relative to the program counter (PC). In the view of the 68000 designers, code should not patch itself. If you must change a table in the middle of code, you must point to it with an instruction like LEA TABLE(PC),An and then alter it through An. (Self-modifying code is especially bad for 68000 programs that may someday run on the 68020, because the 68020's instruction cache normally assumes that code is pure.
 
-(from http://www.easy68k.com/paulrsm/doc/trick68k.htm)
+> (from http://www.easy68k.com/paulrsm/doc/trick68k.htm)
 
 At address `0x0364` we find the following code
 
@@ -297,7 +298,7 @@ In the next article I will show the code of the 4 Exec base functions and discus
 
 * Amiga System Programmers Guide, Abacus ([pdf here](https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus))
 * [AmigaOS Developer Docs](http://amigadev.elowar.com)
-* Amiga Forever package sold by Cloanto [here](www.amigaforever.com)
+* Amiga Forever package sold by Cloanto [here](https://www.amigaforever.com)
 
 # Updates
 

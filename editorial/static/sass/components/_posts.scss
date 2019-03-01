@@ -58,7 +58,7 @@
 			}
 		}
 
-		@include breakpoint(xlarge-to-max) {
+		@include breakpoint('xlarge-to-max') {
 			article {
 				&:nth-child(3n + 1) {
 					&:before {
@@ -86,7 +86,7 @@
 			}
 		}
 
-		@include breakpoint(xlarge) {
+		@include breakpoint('<=xlarge') {
 			article {
 				width: calc(50% - #{$gutter});
 
@@ -96,7 +96,7 @@
 			}
 		}
 
-		@include breakpoint(small-to-xlarge) {
+		@include breakpoint('small-to-xlarge') {
 			article {
 				&:nth-child(2n + 1) {
 					&:before {
@@ -123,7 +123,7 @@
 			}
 		}
 
-		@include breakpoint(small) {
+		@include breakpoint('<=small') {
 			$gutter: _size(gutter) * 1.5;
 
 			margin: 0 0 _size(element-margin) ($gutter * -1);
@@ -149,7 +149,7 @@
 			}
 		}
 
-		@include breakpoint(xsmall) {
+		@include breakpoint('<=xsmall') {
 			$gutter: _size(gutter) * 1.5;
 
 			margin: 0 0 _size(element-margin) 0;

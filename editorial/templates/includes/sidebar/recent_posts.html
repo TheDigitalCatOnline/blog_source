@@ -1,0 +1,9 @@
+{% set _recent_num = 3 %}
+<div class="mini-posts">
+    {% for article in articles[:_recent_num] %}
+    <article>
+        <a href="{{ SITEURL }}/{{ article.url }}" class="image"><img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="" /></a>
+        <p><strong>{{ article.title }}</strong> <a href="{{ SITEURL }}/{{ article.url }}">Read</a></p> 
+    </article>
+    {% endfor %}
+</div>

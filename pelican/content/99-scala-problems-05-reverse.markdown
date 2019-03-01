@@ -1,14 +1,15 @@
 Title: 99 Scala Problems 05 - Reverse a list
 Date: 2015-04-07 09:20:00 +0100
+Modified: 2019-02-28 10:00:00 +0000
 Category: Programming
 Tags: Scala, functional programming
 Authors: Leonardo Giordani
 Slug: 99-scala-problems-05-reverse
-Series: "99 Scala Problems"
+Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: 
 
-## The problem
+# The problem
 
 **P05** (*) Reverse a list.
 
@@ -19,11 +20,11 @@ scala> reverse(List(1, 1, 2, 3, 5, 8))
 res0: List[Int] = List(8, 5, 3, 2, 1, 1)
 ```
 
-## Initial thoughts
+# Initial thoughts
 
-Another classical problem of computer science and functional languages. The solution will be straightforward. As happened with the `length()` function developed for [problem 04](/blog/2015/04/07/99-scala-problems-04-length/), this one may help solving [problem 02](/blog/2015/04/07/99-scala-problems-02-find-last-nth/) in a pure recursive way. Moreover this problem may be solved with folding like problem 04.
+Another classical problem of computer science and functional languages. The solution will be straightforward. As happened with the `length()` function developed for [problem 04]({filename}99-scala-problems-04-length.markdown), this one may help solving [problem 02]({filename}99-scala-problems-02-find-last-nth.markdown) in a pure recursive way. Moreover this problem may be solved with folding like problem 04.
 
-## The procedural solution
+# The procedural solution
 
 `List` type provides a suitable built-in method `reverse()` to return a reversed copy of the list. Pay attention to the fact that this method does not reverse the list in place, but returns a new list.
 
@@ -31,7 +32,7 @@ Another classical problem of computer science and functional languages. The solu
 def reverse[A](ls: List[A]) = ls.reverse
 ```
 
-## The recursive solution
+# The recursive solution
 
 ``` scala
 def reverse[A](l: List[A]): List[A] = l match {
@@ -111,7 +112,7 @@ def reverse[A](l: List[A]): List[A] = {
 
 Here we use an helper function in which we pick the first element of the remainder list `rem` and add it at the beginning of a list built from scratch. As you can see there is no computation left on the stack when we do the recursive call. The first solution, conversely, gave the result of the recursion as input to the `:::()` method.
 
-## Folding
+# Folding
 
 Folding may greatly simplify the solution. Remember that `foldLeft()` is a method of `List` objects that visits each element in the list, applying a given function. The first use of the function receives the initial value passed to `foldLeft()`, while successive calls receive the result of the previous call.
 
@@ -122,7 +123,7 @@ def reverse[A](ls: List[A]): List[A] =
 
 The function passed to `foldLeft()` accepts the previous result and the current element. Since the initial value is an empty list we may apply the `::` operator just like we did in the tail recursive solution.
 
-## Last nth element
+# Last nth element
 
 ``` scala
 def lastNth[A](n: Int, l:List[A]): A = {
@@ -147,10 +148,10 @@ def lastNth[A](n: Int, l:List[A]): A = {
 
 Instead of computing the actual index of the last-nth element using the `length()` function, we may just reverse the list and get the (n - 1)-th element (the subtraction of 1 comes from the fact that last-nth elements are indexed from 1, while list indexes start from 0).
 
-## Final considerations
+# Final considerations
 
 This problem led me into the **list concatenation operators** and the discovery of the `::` class that allows **list decomposition** in pattern matching.
 
-## Feedback
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

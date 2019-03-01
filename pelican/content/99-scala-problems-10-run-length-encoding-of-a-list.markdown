@@ -1,14 +1,15 @@
 Title: 99 Scala Problems 10 - Run-length encoding of a list.
 Date: 2015-04-14 10:00:00 +0100
+Modified: 2019-02-28 10:00:00 +0000
 Category: Programming
 Tags: Scala, functional programming
 Authors: Leonardo Giordani
 Slug: 99-scala-problems-10-run-length-encoding-of-a-list
-Series: "99 Scala Problems"
+Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: 
 
-## The problem
+# The problem
 
 **P10** (*) Run-length encoding of a list.
 Use the result of problem P09 to implement the so-called run-length encoding data compression method. Consecutive duplicates of elements are encoded as tuples (N, E) where N is the number of duplicates of the element E.
@@ -20,11 +21,11 @@ scala> encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
 res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
 ```
 
-## Initial thoughts
+# Initial thoughts
 
-The problem explicitly states "use the result of problem 09" ([here](/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/)) so I think it's time for me to learn how to make and import libraries. The problem itself seems to be rather simple to solve.
+The problem explicitly states "use the result of problem 09" ([here]({filename}99-scala-problems-09-pack-consecutive-duplicates.markdown)) so I think it's time for me to learn how to make and import libraries. The problem itself seems to be rather simple to solve.
 
-## The recursive solution
+# The recursive solution
 
 Given the availability of the `pack()` function from problem 09 the recursive solution just has to walk the packed list and convert each element (a list of equal elements) into a tuple. This is the tail recursive version
 
@@ -78,7 +79,7 @@ packer$.class
 
 This package may be directly used by any file in the same directory (e.g. through `scala program.scala`). If you plan to use it from another directory use the `-classpath` switch to include the right directory where the `utils` package may be found. (As an UNIX programmer, I hate single-dash Java long options, but they are here to stay)
 
-## Mapping
+# Mapping
 
 Mapping is, just like folding, a _functional_ technique, because it applies a function to the elements of some collection. In Scala, the `map()` function of the `List` type produces a new list processing each element of the original list with the given function.
 
@@ -94,10 +95,10 @@ def encode[A](l: List[A]):List[(Int, A)] = {
 
 The expression `e => (e.length, e.head)` is an anonymous function that maps an element into a tuple.
 
-## Final considerations
+# Final considerations
 
 With this problem I met **packages** for the first time, learned how to **compile** and add paths through **classpath**. The functional solution introduced me to **mapping**.
 
-## Feedback
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

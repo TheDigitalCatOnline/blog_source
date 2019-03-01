@@ -28,11 +28,11 @@
 			text-align: right;
 		}
 
-		@include breakpoint(xlarge) {
+		@include breakpoint('<=xlarge') {
 			padding-top: 5em;
 		}
 
-		@include breakpoint(small) {
+		@include breakpoint('<=small') {
 			padding-top: 6.5em;
 
 			.logo {
