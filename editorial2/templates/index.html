@@ -5,8 +5,19 @@
 <!-- Header -->
     <header id="header">
         <ul class="icons">
-            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="icon fa-github"><span class="label">Facebook</span></a></li>
+            {% for s in SOCIAL %}
+            
+            {% if s[2] %}
+            {% set name_sanitized = s[2]|lower|replace('+','-plus')|replace(' ','-') %}
+            {% else %}
+            {% set name_sanitized = s[0]|lower|replace('+','-plus')|replace(' ','-') %}
+            {% endif %}
+            
+            {% set iconclass = '"fa-' ~ name_sanitized ~ '"' %}
+            
+            <li><a href="{{ s[1] }}" class="icon fa-{{ name_sanitized }}"><span class="label">{{ s[0] }}</span></a></li>
+            
+            {% endfor %}
         </ul>
     </header>
 
