@@ -17,12 +17,10 @@
                 <h1>The Digital Cat</h1>
                 <p>Adventures of a curious cat in the land of programming</p>
             </header>
-            <p class="quote"><i class="fa fa-quote-right"></i> I've seen things you people wouldn't believe. Attack ships on fire off the shoulder of Orion. I watched C-beams glitter in the dark near the Tannhäuser Gate. All those moments will be lost in time, like tears in rain. Time to die. <i class="fa fa-quote-left"></i></p>
-            <p class="quote-source">Blade Runner, 1982</p>
-            <p class="quote"><i class="fa fa-quote-right"></i> Look at this. It’s worthless — ten dollars from a vendor in the street. But I take it, I bury it in the sand for a thousand years, it becomes priceless. <i class="fa fa-quote-left"></i></p>
-            <p class="quote-source">Raiders of the Lost Ark, 1981</p>
-            <p class="quote"><i class="fa fa-quote-right"></i> Roads? Where we're going, we don't need... roads. <i class="fa fa-quote-left"></i></p>
-            <p class="quote quote-source">Back to the Future, 1985</p>
+            {% for q in QUOTES %}
+            <p class="quote"><i class="fa fa-quote-right"></i> {{ q.quote }} <i class="fa fa-quote-left"></i></p>
+            <p class="quote-source">{{ q.source }}</p>
+            {% endfor %}
         </div>
         <span class="image object">
             <img src="/images/global/cover.jpg" alt="" />
@@ -96,6 +94,27 @@
                     <p class="card-text">Is it worth unearthing old architectures? Is it worth understanding how a computer system from the 80s worked? I believe old architectures can teach us a lot, so let's explore "the computer that wouldn’t die"!</p>
                     <ul class="actions">
                         <li><a href="{{ SITEURL }}/{{ article.url }}" class="button">Start</a></li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    </section>
+<!-- Section -->
+    <section>
+        <header class="major">
+            <h2>My books</h2>
+        </header>
+        <div class="posts">
+            <article class="card">
+                {% set article = series['Python 3 OOP'].first %}
+                <a href="https://leanpub.com/clean-architectures-in-python" class="image">
+                    <img src="{{ SITEURL }}/images/book-clean-architectures.jpg" alt="" />
+                </a>
+                <div class="card-body">
+                    <a href="https://leanpub.com/clean-architectures-in-python"><h1 class="card-title">Clean Architectures in Python</h1></a>
+                    <p class="card-text">The clean architecture is the opposite of spaghetti code, where everything is interlaced and there are no single elements that can be easily detached from the rest and replaced without the whole system collapsing. The main point of the clean architecture is to make clear "what is where and why", and this should be your first concern while you design and implement a software system, whatever architecture or development methodology you want to follow.</p>
+                    <ul class="actions">
+                        <li><a href="https://leanpub.com/clean-architectures-in-python" class="button">Get it</a></li>
                     </ul>
                 </div>
             </article>
