@@ -5,7 +5,7 @@ Tags: Python, Python3, OOP
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-2-classes-and-members
 Image: python-3-oop
-Series: "Python 3 OOP"
+Series: Python 3 OOP
 Summary:
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_2__Classes_and_members.ipynb)

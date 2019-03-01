@@ -59,7 +59,7 @@ The syntax of the grammar is pretty self-explanatory if you have some programmin
 
 If you already know what TDD is feel free to skip this section.
 
-**TDD** means **Test-Driven Development**, and in short it is a programming methodology that requires you to write a test for a feature before implementing the feature itself. Much has been said on the benefits of TDD elsewhere. I personally think it is one of the most effective ways to work on a programming task, and something that every programmer should know. I wrote a post on TDD with Python that you can find [here](/blog/2015/05/13/python-oop-tdd-example-part1).
+**TDD** means **Test-Driven Development**, and in short it is a programming methodology that requires you to write a test for a feature before implementing the feature itself. Much has been said on the benefits of TDD elsewhere. I personally think it is one of the most effective ways to work on a programming task, and something that every programmer should know. I wrote a post on TDD with Python that you can find [here]({filename}python-oop-tdd-example-part1.markdown).
 
 A **test**, in TDD, is code that uses the code you are going to develop. You will start with a project skeleton and add the tests I will present in the posts one at a time. Once you add the test, you have to write the code that passes the test. Your code doesn't need to be beautiful or smart, it just needs to pass the test. Then you can move to the following test and start the cycle again.
 
@@ -283,7 +283,7 @@ This is our first test, and if you run the test suite now you will see that it f
 ``` sh
 $ py.test -svv  --cov-report term-missing --cov=smallcalc
 ================================== FAILURES ===================================
-______________________________________________________________________________ test_get_tokens_understands_eof ______________________________________________________________________________
+_______________________ test_get_tokens_understands_eof _______________________
 
     def test_get_tokens_understands_eof():
 >       l = clex.CalcLexer()
@@ -905,7 +905,7 @@ Grammars
 
 # Solution
 
-You can find my solution to this part [here](/blog/2017/07/12/a-game-of-tokens-solution-part-1/).
+You can find my solution to this part [here]({filename}a-game-of-tokens-solution-part-1.markdown).
 
 # Titles
 

@@ -5,7 +5,7 @@ Tags: Python, Python3, OOP, metaprogramming, metaclasses
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-6-abstract-base-classes
 Image: python-3-oop
-Series: "Python 3 OOP"
+Series: Python 3 OOP
 Summary:
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_6__Abstract_Base_Classes.ipynb)
@@ -34,7 +34,7 @@ except AttributeError:
     [...]
 ```
 
-where the methods of the `list` type are accessed (not called) just to force the object to raise the `AttributeError` exception if they are not present. This code, however, is not only ugly but also wrong. If you recall the "Enter the Composition" section of the [third post](/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance) of this series, you know that in Python you can always customize the `__getattr__()` method, which is called whenever the requested attribute is not found in the object. So I could write a class that passes the test but actually does not act like a list
+where the methods of the `list` type are accessed (not called) just to force the object to raise the `AttributeError` exception if they are not present. This code, however, is not only ugly but also wrong. If you recall the "Enter the Composition" section of the [third post]({filename}python-3-oop-part-3-delegation-composition-and-inheritance.markdown) of this series, you know that in Python you can always customize the `__getattr__()` method, which is called whenever the requested attribute is not found in the object. So I could write a class that passes the test but actually does not act like a list
 
 ``` python
 class FakeList:

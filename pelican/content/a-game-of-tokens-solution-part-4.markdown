@@ -8,7 +8,7 @@ Series: A game of tokens
 Image: a-game-of-tokens-solutions
 Summary: 
 
-This is my solution to the fourth part of "A Game of Tokens", which can be found [here](/blog/2018/06/02/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-4/).
+This is my solution to the fourth part of "A Game of Tokens", which can be found [here]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-4.markdown).
 
 You can find the tests and the code presented here in [this repository](https://github.com/lgiordani/smallcalc) in the branch called `part4`.
 

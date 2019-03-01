@@ -6,6 +6,7 @@ Authors: Leonardo Giordani
 Slug: exploring-the-amiga-7
 Series: Exploring the Amiga
 Image: exploring-the-amiga
+Style: retro
 Summary: 
 
 # The complete Exec vector table

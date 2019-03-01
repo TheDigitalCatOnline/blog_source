@@ -8,7 +8,7 @@ Series: A game of tokens
 Image: a-game-of-tokens
 Summary:
 
-My solution to the [first part](/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1) can be found [here](https://github.com/lgiordani/smallcalc/tree/part1), and a discussion about the code has been published [here](/blog/2017/07/12/a-game-of-tokens-solution-part-1) Remember that this is only one possible solution, and that giving you the tests I already biased the whole project towards my implementation of choice, so feel free to experiment on your own!
+My solution to the [first part]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1.markdown) can be found [here](https://github.com/lgiordani/smallcalc/tree/part1), and a discussion about the code has been published [here]({filename}a-game-of-tokens-solution-part-1.markdown) Remember that this is only one possible solution, and that giving you the tests I already biased the whole project towards my implementation of choice, so feel free to experiment on your own!
 
 In this instalment I'll give you new tests that will guide you through the implementation of a decent calculator, with multiplication, division, parenthesis, and unary operators. I will reference the structure I used in my solution, but you mileage may vary, so feel free to ignore the comments or the suggested solutions in case your code is different.
 

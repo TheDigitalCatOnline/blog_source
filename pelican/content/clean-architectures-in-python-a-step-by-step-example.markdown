@@ -281,7 +281,7 @@ The `from_dict` method comes in handy when we have to create a model from data c
 
 One could be tempted to try to simplify the `from_dict` function, abstracting it and providing it through a `Model` class. Given that a certain level of abstraction and generalization is possible and desirable, the initialization part of the models shall probably deal with various different cases, and thus is better off being implemented directly in the class.
 
-The `DomainModel` abstract base class is an easy way to categorize the model for future uses like checking if a class is a model in the system. For more information about this use of Abstract Base Classes in Python see [this post](/blog/2016/04/03/abstract-base-classes-in-python/).
+The `DomainModel` abstract base class is an easy way to categorize the model for future uses like checking if a class is a model in the system. For more information about this use of Abstract Base Classes in Python see [this post]({filename}abstract-base-classes-in-python.markdown).
 
 Since we have a method creates an object form a dictionary it is useful to have a method that returns a dictionary version of the object. This allows us to easily write a comparison operator between objects, that we will use later in some tests.
 

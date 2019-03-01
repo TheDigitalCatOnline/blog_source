@@ -1,14 +1,15 @@
 Title: 99 Scala Problems 06 - Find out whether a list is a palindrome
 Date: 2015-04-07 09:25:00 +0100
+Modified: 2019-02-28 10:00:00 +0000
 Category: Programming
 Tags: Scala, functional programming
 Authors: Leonardo Giordani
 Slug: 99-scala-problems-06-palindome
-Series: "99 Scala Problems"
+Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: 
 
-## The problem
+# The problem
 
 **P06** (*) Find out whether a list is a palindrome.
 
@@ -19,13 +20,13 @@ scala> isPalindrome(List(1, 2, 3, 2, 1))
 res0: Boolean = true
 ```
 
-## Initial thoughts
+# Initial thoughts
 
 The algorithm is pretty simple. A list is palindrome when it is equal to its reversed version. So both a procedural and a recursive solution may get a reversed version of the list and then compare the two.
 
 For long lists this could be a performance issue, so a recursive solution could be interesting. It is sufficient to check if head and tail are equal, then remove them and recursively check the remaining list. The last step will either check a list of one element or an empty list (depending on the length of the list being odd or even), which are both palindrome by definition.
 
-## The procedural solution
+# The procedural solution
 
 ``` scala
 def isPalindrome[A](l: List[A]):Boolean = {
@@ -35,9 +36,9 @@ def isPalindrome[A](l: List[A]):Boolean = {
 
 Nothing special to highlight here.
 
-## The recursive solution
+# The recursive solution
 
-The recursive solution may mimic the procedural implementing a helper function that reverses the list. See [problem 05](/blog/2015/04/07/99-scala-problems-05-reverse/) for an implementation of such a function.
+The recursive solution may mimic the procedural implementing a helper function that reverses the list. See [problem 05]({filename}99-scala-problems-05-reverse.markdown) for an implementation of such a function.
 
 A recursive solution for the palindrome check shall make use of functions to extract the head and tail elements from the list. Since pattern matching cannot separate the tail element, we have to use `List` type methods.
 
@@ -62,13 +63,13 @@ def isPalindrome[A](l: List[A]):Boolean = {
 }
 ```
 
-## A custom operator
+# A custom operator
 
 Scala version 2.10+ define an [extractor](https://issues.scala-lang.org/browse/SI-2575) for pattern matching last element of a list, which is `:+`. The souce code can be found [here](https://github.com/scala/scala/blob/v2.11.6/src/library/scala/collection/SeqExtractors.scala#L5)-
 
 Since I am using Scala 2.9 I want to use this occasion to learn how to implement an operator for the pattern matching.
 
-First of all: I recommend reading the following pages [ Case Classes and Pattern Matching](http://www.artima.com/pins1ed/case-classes-and-pattern-matching.html), [List patterns](http://www.artima.com/pins1ed/working-with-lists.html#16.5), [Extractors](http://www.artima.com/pins1ed/extractors.html). They describe in a very simple and clear way everything you need to know at this point about pattern matching and further clarify what discussed in [problem 05](/blog/2015/04/07/99-scala-problems-05-reverse/) about the `::` class.
+First of all: I recommend reading the following pages [ Case Classes and Pattern Matching](http://www.artima.com/pins1ed/case-classes-and-pattern-matching.html), [List patterns](http://www.artima.com/pins1ed/working-with-lists.html#16.5), [Extractors](http://www.artima.com/pins1ed/extractors.html). They describe in a very simple and clear way everything you need to know at this point about pattern matching and further clarify what discussed in [problem 05]({filename}99-scala-problems-05-reverse.markdown) about the `::` class.
 
 The version proposed in Issue 2575 works only on `List` types but is a good starting point for me
 
@@ -155,11 +156,11 @@ def isPalindrome[A](l: List[A]):Boolean = {
 }
 ```
 
-## Final considerations
+# Final considerations
 
 The palindrome problem was straightforward, but this time I had the occasion to understand **pattern matching operators** and **extractors**.
 
-## Feedback
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

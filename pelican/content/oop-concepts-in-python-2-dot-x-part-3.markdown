@@ -5,12 +5,12 @@ Tags: Python2, Python, OOP
 Authors: Leonardo Giordani
 Slug: oop-concepts-in-python-2-dot-x-part-3
 Image: oop-concepts-in-python-2-dot-x
-Series: "OOP concepts in Python 2.x"
+Series: OOP concepts in Python 2.x
 Summary:
 
 ## Abstract
 
-Welcome to the third installment of this little series of posts about Python 2.x OOP implementation. The [first](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1) and [second](/blog/2014/03/10/oop-concepts-in-python-2-dot-x-part-2) issues introduced the most important concepts at the basis of Python as an object-oriented language.
+Welcome to the third installment of this little series of posts about Python 2.x OOP implementation. The [first]({filename}oop-concepts-in-python-2-dot-x-part-1.markdown) and [second]({filename}oop-concepts-in-python-2-dot-x-part-2.markdown) issues introduced the most important concepts at the basis of Python as an object-oriented language.
 
 This post will continue the discussion about metaclasses, introducing Abstract Base Classes, and give some insights on callable objects.
 
@@ -40,7 +40,7 @@ except AttributeError:
     [...]
 ```
 
-where the methods of the `list` type are accessed (not called) just to force the object to raise the `AttributeError` exception if they are not present. This code, however, is not only ugly but also wrong. If you recall the "Enter the Composition" section of the [first post](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1), you know that in Python you can always customize the `__getattr__()` method, which is called whenever the requested attribute is not found in the object. So I could write a class that passes the test but actually does not act like a list
+where the methods of the `list` type are accessed (not called) just to force the object to raise the `AttributeError` exception if they are not present. This code, however, is not only ugly but also wrong. If you recall the "Enter the Composition" section of the [first post]({filename}oop-concepts-in-python-2-dot-x-part-1.markdown), you know that in Python you can always customize the `__getattr__()` method, which is called whenever the requested attribute is not found in the object. So I could write a class that passes the test but actually does not act like a list
 
 ``` python
 class FakeList(object):

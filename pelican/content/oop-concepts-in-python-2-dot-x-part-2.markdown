@@ -5,12 +5,12 @@ Tags: Python2, Python, OOP
 Authors: Leonardo Giordani
 Slug: oop-concepts-in-python-2-dot-x-part-2
 Image: oop-concepts-in-python-2-dot-x
-Series: "OOP concepts in Python 2.x"
+Series: OOP concepts in Python 2.x
 Summary:
 
 ## Abstract
 
-This post continues the analysis of the Python OOP implementation started with [this post](/blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1), which I recommend reading before taking on this new one.
+This post continues the analysis of the Python OOP implementation started with [this post]({filename}oop-concepts-in-python-2-dot-x-part-1.markdown), which I recommend reading before taking on this new one.
 
 This second post discusses the following OOP features in Python:
 
@@ -261,7 +261,7 @@ except AttributeError:
     [...]
 ```
 
-As you can see, the second snippet directly uses the method and deals with the possible `AttributeError` exception (by the way: managing exceptions is one of the top Black Magic Topics in Python, more on it in a future post. A very quick preview: I think we may learn something from Erlang - check [this](/blog/2013/05/30/error-handling-in-erlang-a-primer/)).
+As you can see, the second snippet directly uses the method and deals with the possible `AttributeError` exception (by the way: managing exceptions is one of the top Black Magic Topics in Python, more on it in a future post. A very quick preview: I think we may learn something from Erlang - check [this]({filename}error-handling-in-erlang-a-primer.markdown)).
 
 Why is this coding style pushed so much in the Python community? I think the main reason is that through EAFP you _think_ polymorphically: you are not interested in knowing if the object _has_ the `open` attribute, you are interested in knowing if the object can satisfy your request, that is to perform the `open()` method call.
 
@@ -428,7 +428,6 @@ This time section titles come from the following movies: _Good Morning, Vietnam_
 Some sources for the content of this post. Thank you authors!
 
 * [The official Python documentation](http://docs.python.org/2/tutorial/classes.html) and the Python source code.
-* [Python Types and Objects - by Shalabh Chaturvedi](http://www.cafepy.com/article/python_types_and_objects/)
 * [Python in a Nutshell - by Alex Martelli](http://www.amazon.com/Python-Nutshell-Second-Edition-In/dp/0596100469/)
 * [Design Patterns: Elements of Reusable Object-Oriented Software - by Gamma, Helm, Johnson, Vlissides](http://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/)
 * [Python 3 Patterns, Recipes and Idioms](http://python-3-patterns-idioms-test.readthedocs.org/en/latest/)

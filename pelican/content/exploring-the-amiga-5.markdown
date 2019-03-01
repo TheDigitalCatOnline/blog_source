@@ -7,6 +7,7 @@ Authors: Leonardo Giordani
 Slug: exploring-the-amiga-5
 Series: Exploring the Amiga
 Image: exploring-the-amiga
+Style: retro
 Summary: 
 
 Memory management is always one of the most rich and complex parts of an architecture, mainly because the available amount of memory is always less than what you would like to have. [Always](https://users.ece.cmu.edu/~koopman/titan/rules.html).

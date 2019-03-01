@@ -5,7 +5,7 @@ Tags: C, operating systems, concurrent programming
 Authors: Leonardo Giordani
 Slug: concurrent-programming-6
 Image: concurrent-programming
-Series: "Concurrent programming"
+Series: Concurrent programming
 Summary:
 
 ## Abstract

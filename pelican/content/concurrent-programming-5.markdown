@@ -5,7 +5,7 @@ Tags: C, operating systems, concurrent programming
 Authors: Leonardo Giordani
 Slug: concurrent-programming-5
 Image: concurrent-programming
-Series: "Concurrent programming"
+Series: Concurrent programming
 Summary:
 
 ## Abstract
@@ -44,7 +44,7 @@ Before we can switch to implement message queues in C language, it is necessary 
 
 A **protocol** is a set of rules which control the interaction of elements in a set. Every time you must regulate the exchange of information between two or more actors in a scenario you need a protocol, even when dealing with humans and not computers.
 
-In [the past article](/blog/2013/02/13/concurrent-programming-4) we implemented a very simple protocol when instructing processes to access a resource according to the status of a semaphore. The latter is also modified as part of the protocol itself.
+In [the past article]({filename}concurrent-programming-4.markdown) we implemented a very simple protocol when instructing processes to access a resource according to the status of a semaphore. The latter is also modified as part of the protocol itself.
 
 As already stated in a past article, there is no difference between interprocess communication on the same machine or in a distributed environment (multiple machines): indeed, every network protocol (TCP/IP, DNS, SMTP, just to cite some of the most famous) is built on a message exchange architecture.
 
@@ -69,7 +69,7 @@ This protocol is extensible ina simple way to the case of n processes: every pro
 
 ## System V Message Queues
 
-Now it is the time to speak about implementing these concepts in a Linux operating system environment. As already said we have a set of primitives that allow us to manage the structures related to message queues, and they are very similar to those dedicated to semaphore management, already described in [the past article](/blog/2013/02/13/concurrent-programming-4).
+Now it is the time to speak about implementing these concepts in a Linux operating system environment. As already said we have a set of primitives that allow us to manage the structures related to message queues, and they are very similar to those dedicated to semaphore management, already described in [the past article]({filename}concurrent-programming-4.markdown).
 
 The structure used to describe a message is `msgbuf` and is declared in `linux/msg.h`
 
@@ -114,7 +114,7 @@ To create a new queue a process should call the `msgget()` function
 int msgget(key_t key, int msgflg)
 ```
 
-which receives as arguments an IPC key (see [issue 4](/blog/2013/02/13/concurrent-programming-4)) and some flags, which by now can be set to `IPC_CREAT | 0660` (create the queue if it does not exist
+which receives as arguments an IPC key (see [issue 4]({filename}concurrent-programming-4.markdown)) and some flags, which by now can be set to `IPC_CREAT | 0660` (create the queue if it does not exist
 and grant access to the owner and group users). The returned integer is called queue identifier and is unique in the system.
 
 #### Send messages
@@ -246,7 +246,7 @@ int main()
 ```
 [source code](/code/queues1.c)
 
-Now we can create two processes and let them communicate through a message queue. Remembering forking concepts explained in the [issue 2](/blog/2013/02/04/concurrent-programming-2) you can recall that the child process, when created, receives a copy of the memory of its parent. This means that creating the queue before the fork operation results in both the parent and the child knowing the right queue identifier and thus capable of access it.
+Now we can create two processes and let them communicate through a message queue. Remembering forking concepts explained in the [issue 2]({filename}concurrent-programming-2.markdown) you can recall that the child process, when created, receives a copy of the memory of its parent. This means that creating the queue before the fork operation results in both the parent and the child knowing the right queue identifier and thus capable of access it.
 
 The following code creates a queue, then forks the execution. The child generates a random number, prints it on the standard output and sends them to the parent, which in turn prints it on the screen.
 

@@ -5,7 +5,7 @@ Tags: Python, generators
 Authors: Leonardo Giordani
 Slug: python-generators-from-iterators-to-cooperative-multitasking
 Image: python-generators-from-iterators-to-cooperative-multitasking
-Series: "Python generators - from iterators to cooperative multitasking"
+Series: Python generators - from iterators to cooperative multitasking
 Summary:
 
 ## Introduction

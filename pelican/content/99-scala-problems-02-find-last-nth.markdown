@@ -1,14 +1,15 @@
 Title: 99 Scala Problems 02 - Find the last but one element of a list
 Date: 2015-04-07 09:05:00 +0100
+Modified: 2019-02-28 10:00:00 +0000
 Category: Programming
 Tags: Scala, functional programming
 Authors: Leonardo Giordani
 Slug: 99-scala-problems-02-find-last-nth
-Series: "99 Scala Problems"
+Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: 
 
-## The problem
+# The problem
 
 **P02** (*) Find the last but one element of a list.
 
@@ -19,7 +20,7 @@ scala> penultimate(List(1, 1, 2, 3, 5, 8))
 res0: Int = 5
 ```
 
-## Initial thoughts
+# Initial thoughts
 
 This problem come in the same form as the first one, so most of the syntax issues have already been solved. The challenge here is to find a good algorithm to extract the penultimate element and, as done for the first problem, it can probably be solved both in a procedural and in a recursive way.
 
@@ -33,7 +34,7 @@ There are two edge cases this time, but both give the same result. When the list
 
 The general function to extract the last-nth element shall also check that no negative indexes are provided.
 
-## The procedural solution
+# The procedural solution
 
 A smart way to solve the problem is to consider that the penultimate element of a list of n elements is the last element of the first (n - 1) elements. Scala provides a method called [`init()`](http://www.scala-lang.org/api/2.11.4/index.html#scala.collection.immutable.List) which returns all elements except the last. Documentation says that if the given list is empty the method throws the `UnsupportedOperationException`, so if we want to imitate the previous `last()` function we shall cover the empty list case.
 
@@ -56,7 +57,7 @@ def lastNth[A](n: Int, l: List[A]): A = {
 }
 ```
 
-## The recursive solution
+# The recursive solution
 
 The recursive solution takes advantage of the power of pattern matching. The exit case is when the list is composed by a head element and a tail made by a list of one single element. The pattern matching syntax can express this situation with the `h :: List(t)` syntax. The standard case is when the tail is still a generic list and the last case covers all edge cases.
 
@@ -84,12 +85,12 @@ def lastNth[A](n: Int, l:List[A]): A = l match {
 
 The function is very simple. If the length of the list is `n` the element we are looking for is the first (here the pattern guard does the job). Otherwise if the list has still some tail just call the function recursively on it and last, that is if the list is empty, throw the exception.
 
-## Final considerations
+# Final considerations
 
 This time I learned digging into the **Scala documentation** and paying attention to **exceptions** which are an important matter in a robust API.
 
 Working on the recursive solution I learned that **patterns** can be very expressive and how to use **pattern guards**.
 
-## Feedback
+# Feedback
 
 Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post. The [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

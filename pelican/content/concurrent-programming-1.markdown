@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: concurrent-programming-1
 Image: concurrent-programming
 Version: 2
-Series: "Concurrent programming"
+Series: Concurrent programming
 Summary:
 
 ## Abstract

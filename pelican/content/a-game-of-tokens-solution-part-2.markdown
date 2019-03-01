@@ -8,7 +8,7 @@ Series: A game of tokens
 Image: a-game-of-tokens-solutions
 Summary: 
 
-Here we are, with my solution to the second part of "A Game of Tokens", aka how to write a simple interpreter in Python and survive to tell the tale. The second part of the challenge can be found [here](/blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2/). Again, it is never repeated too many times, this is my personal solution. Your solution can be different, and if all the test pass it is correct!
+Here we are, with my solution to the second part of "A Game of Tokens", aka how to write a simple interpreter in Python and survive to tell the tale. The second part of the challenge can be found [here]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2.markdown). Again, it is never repeated too many times, this is my personal solution. Your solution can be different, and if all the test pass it is correct!
 
 You can find the code for this part in [this repository](https://github.com/lgiordani/smallcalc). The branch called `part2` contains all the commits explained in this post, and every commit contains both the test(s) and the code that makes the test(s) pass.
 

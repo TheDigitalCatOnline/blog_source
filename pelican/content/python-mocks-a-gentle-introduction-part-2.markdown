@@ -4,11 +4,11 @@ Category: Programming
 Tags: decorators, OOP, Python, Python2, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: python-mocks-a-gentle-introduction-part-2
-Series: "Python Mocks: a gentle introduction"
+Series: Python Mocks: a gentle introduction
 Image: python-mocks
 Summary: 
 
-In the [first post](/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1) I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the `return_value` and `side_effect` attributes, and the `assert_called_with()` method.
+In the [first post]({filename}python-mocks-a-gentle-introduction-part-1.markdown) I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the `return_value` and `side_effect` attributes, and the `assert_called_with()` method.
 
 In this post I will briefly review the remaining `assert_*` methods and some interesting attributes that allow to check the calls received by the mock object. Then I will introduce and exemplify patching, which is a very important topic in testing.
 
@@ -98,7 +98,7 @@ def test_get_info():
         assert fi.get_info() == (filename, original_path, test_abspath)
 ```
 
-Remember that if you are using Python 2 you installed the `mock` module with `pip`, so your import statement becomes `form mock import patch`.
+Remember that if you are using Python 2 you installed the `mock` module with `pip`, so your import statement becomes `from mock import patch`.
 
 You clearly see the context in which the patching happens, as it is enclosed in a `with` statement. Inside this statement the module `os.path.abspath` will be replaced by a mock created by the function `patch` and called `abspath_mock`. We can now give the function a `return_value` as we did with standard mocks in the first post and run the test.
 
