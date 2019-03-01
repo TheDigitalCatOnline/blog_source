@@ -1,0 +1,16 @@
+<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+<ul class="contact">
+    {% for s in SOCIAL %}
+    
+    {% if s[2] %}
+    {% set name_sanitized = s[2]|lower|replace('+','-plus')|replace(' ','-') %}
+    {% else %}
+    {% set name_sanitized = s[0]|lower|replace('+','-plus')|replace(' ','-') %}
+    {% endif %}
+    
+    {% set iconclass = '"fa-' ~ name_sanitized ~ '"' %}
+    
+    <li class="fa-{{ name_sanitized }}"><a href="{{ s[1] }}">{{ s[0] }}</a></li>
+    
+    {% endfor %}
+</ul>

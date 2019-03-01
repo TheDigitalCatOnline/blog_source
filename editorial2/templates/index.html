@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Header -->
+    <header id="header">
+        <ul class="icons">
+            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon fa-github"><span class="label">Facebook</span></a></li>
+        </ul>
+    </header>
+
+<!-- Banner -->
+    <section id="banner">
+        <div class="content">
+            <header>
+                <h1>The Digital Cat</h1>
+                <p>Adventures of a curious cat in the land of programming</p>
+            </header>
+            <p class="quote"><i class="fa fa-quote-right"></i> I've seen things you people wouldn't believe. Attack ships on fire off the shoulder of Orion. I watched C-beams glitter in the dark near the Tannhäuser Gate. All those moments will be lost in time, like tears in rain. Time to die. <i class="fa fa-quote-left"></i></p>
+            <p class="quote-source">Blade Runner, 1982</p>
+            <p class="quote"><i class="fa fa-quote-right"></i> Look at this. It’s worthless — ten dollars from a vendor in the street. But I take it, I bury it in the sand for a thousand years, it becomes priceless. <i class="fa fa-quote-left"></i></p>
+            <p class="quote-source">Raiders of the Lost Ark, 1981</p>
+            <p class="quote"><i class="fa fa-quote-right"></i> Roads? Where we're going, we don't need... roads. <i class="fa fa-quote-left"></i></p>
+            <p class="quote quote-source">Back to the Future, 1985</p>
+        </div>
+        <span class="image object">
+            <img src="/images/global/cover.jpg" alt="" />
+        </span>
+    </section>
+
+<!-- Section -->
+    <section>
+        <header class="major">
+            <h2>Sections</h2>
+        </header>
+        <div class="features">
+            <article>
+                <span class="icon fa-desktop"></span>
+                <div class="content">
+                    <h3>Programming</h3>
+                    <p>Articles about programming in various languages, mainly Python but also Scala, Erlang, C. Other topics I discuss are algorithms, compilers, architectures, operating systems, testing.</p>
+                    <a href="{{ SITEURL }}/category/programming" class="button">More</a>
+                </div>
+            </article>
+            <article>
+                <span class="icon fa-save"></span>
+                <div class="content">
+                    <h3>Retro</h3>
+                    <p>All my retroprogramming articles, bits and bytes, and low level investigations. Home of the "Exploring the Amiga" series. Beware of the dragons!</p>
+                    <a href="{{ SITEURL }}/category/retro" class="button">More</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+<!-- Section -->
+    <section>
+        <header class="major">
+            <h2>Top series</h2>
+        </header>
+        <div class="posts">
+            <article class="card">
+                {% set article = series['Python 3 OOP'].first %}
+                <a href="{{ SITEURL }}/{{ article.url }}" class="image">
+                    <img src="{{ SITEURL }}/images/python-3-oop.jpg" alt="" />
+                </a>
+                <div class="card-body">
+                    <a href="{{ SITEURL }}/{{ article.url }}"><h1 class="card-title">Python 3 Object-oriented Programming</h1></a>
+                    <p class="card-text">A series of posts that dig into the Python implementation of the Object-oriented paradigm. No previous knowledge of the topic is required, but an initial knowledge of the Python syntax is useful.</p>
+                    <ul class="actions">
+                        <li><a href="{{ SITEURL }}/{{ article.url }}" class="button">Start</a></li>
+                    </ul>
+                </div>
+            </article>
+            <article class="card">
+                {% set article = series['A game of tokens'].first %}
+                <a href="{{ SITEURL }}/{{ article.url }}" class="image">
+                    <img src="{{ SITEURL }}/images/a-game-of-tokens.jpg" alt="" />
+                </a>
+                <div class="card-body">
+                    <a href="{{ SITEURL }}/{{ article.url }}"><h1 class="card-title">A game of tokens</h1></a>
+                    <p class="card-text">Python, Ruby, Javascript, C, Erlang, how many different languages. But how does a compiler work? How si the source code converted into something that works? Let's write a simple language interpreter using TDD!</p>
+                    <ul class="actions">
+                        <li><a href="{{ SITEURL }}/{{ article.url }}" class="button">Start</a></li>
+                    </ul>
+                </div>
+            </article>
+            <article class="card">
+                {% set article = series['Exploring the Amiga'].first %}
+                <a href="{{ SITEURL }}/{{ article.url }}" class="image">
+                    <img src="{{ SITEURL }}/images/exploring-the-amiga.jpg" alt="" />
+                </a>
+                <div class="card-body">
+                    <a href="{{ SITEURL }}/{{ article.url }}"><h1 class="card-title">Exploring the Amiga</h1></a>
+                    <p class="card-text">Is it worth unearthing old architectures? Is it worth understanding how a computer system from the 80s worked? I believe old architectures can teach us a lot, so let's explore "the computer that wouldn’t die"!</p>
+                    <ul class="actions">
+                        <li><a href="{{ SITEURL }}/{{ article.url }}" class="button">Start</a></li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    </section>
+
+<!-- Section -->
+    <section>
+        <header class="major">
+            <h2>All posts</h2>
+        </header>
+
+        {% include 'includes/paginated_posts.html' %}
+
+    </section>
+{% endblock %}

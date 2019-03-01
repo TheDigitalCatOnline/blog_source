@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section>
+        <header class="major">
+            <h2>{% block header %}{% endblock %}</h1>
+        </header>
+        
+        {% include 'includes/paginated_posts.html' %}
+
+    </section>
+{% endblock content %}

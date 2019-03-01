@@ -1,0 +1,138 @@
+#main .inner section#content * {
+    font-family: "Courier New", monospace;
+    background-color: transparent;
+    border: 0;
+    color: rgb(127, 136, 143);
+    font-size: 17px!important;
+    font-weight: inherit!important;
+}
+
+#main .inner section#content p, #main .inner section#content ul {
+    margin: 0 0 1rem 0;
+    padding: 0;
+}
+
+#main .inner section#content ul {
+    list-style-type: none;
+}
+
+#main .inner section#content ul li {
+    margin: 0;
+    padding: 0;
+}
+
+#main .inner section#content ul li:before {
+    content: "\002a";
+    margin-right: 0.5rem;
+}
+
+#main .inner section#content ol {
+    list-style-position: inside;
+    margin: 0 0 1rem 0;
+    padding: 0;
+}
+
+#main .inner section#content ol li {
+    margin: 0;
+    padding: 0;
+}    
+
+#main .inner section#content table {
+    margin: 0 0 1rem 0;
+    padding: 0;
+}
+
+#main .inner section#content th {
+    margin: 0;
+    padding: 0 1rem 1rem 0;
+}
+
+#main .inner section#content td {
+    margin: 0;
+    padding: 0 1rem 0 0;
+}
+
+#main .inner section#content div.highlight {
+    margin: 0 0 1rem 0;
+    padding: 0;
+}
+
+#main .inner section#content div.highlight pre {
+    margin: 0;
+    padding: 0 0 0 2rem;
+}
+
+#main .inner section#content em {
+    font-style: normal;
+}
+
+#main .inner section#content em:before, 
+#main .inner section#content em:after {
+    content: "\005f";
+}
+
+#main .inner section#content strong {
+    font-style: normal;
+    font-weight: inherit;
+}
+
+#main .inner section#content strong:before, 
+#main .inner section#content strong:after {
+    content: "\002a";
+}
+
+#main .inner section#content .highlight pre * {
+    background-color: transparent;
+    color: inherit;
+    font-style: normal;
+    font-weight: normal;
+}
+
+#main .inner section#content a:hover {
+    color: inherit!important;
+}
+
+#main .inner section#content a:after {
+    content: "\005e";
+}
+
+#main .inner section#content blockquote {
+    margin: 0;
+    padding: 0 0 0 2rem;
+    font-style: normal;
+}
+
+#main .inner section#content h1,
+#main .inner section#content h2,
+#main .inner section#content h3,
+#main .inner section#content h4,
+#main .inner section#content h5,
+#main .inner section#content h6 {
+    margin: 2em 0 1rem 0;
+    font-weight: inherit;
+    color: inherit!important;
+}
+
+#main .inner section#content h1:before {
+    content: "\0023\0020";
+}
+
+#main .inner section#content h2:before {
+    content: "\0023\0023\0020";
+}
+
+#main .inner section#content h3:before {
+    content: "\0023\0023\0023\0020";
+}
+
+#main .inner section#content h4:before {
+    content: "\0023\0023\0023\0023\0020";
+}
+
+#main .inner section#content h5:before {
+    content: "\0023\0023\0023\0023\0023\0020";
+}
+
+#main .inner section#content h6:before {
+    content: "\0023\0023\0023\0023\0023\0023\0020";
+}

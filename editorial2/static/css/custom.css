@@ -1,0 +1,210 @@
+div#wrapper div#main {
+    overflow-x: hidden;
+}
+
+#footer p.copyright {
+    margin: 0;
+}
+
+#main .inner section#header h1 {
+    font-size: 3em;
+    max-width: 70%;
+}
+
+#banner .image img {
+    height: initial;
+}
+
+ul.list-clean {
+    list-style: none;
+}
+
+ul.list-clean li {
+    padding-left: 0;
+}
+
+ul.list-clean li.list-item-spaced {
+    margin-bottom: 1em;
+}
+
+ul.list-inline {
+    padding-left: 0;
+}
+
+ul.list-inline li {
+    display: inline-block;
+}
+
+.font-size-1 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.font-size-2 {
+    font-size: 1.2em;
+}
+
+.font-size-3 {
+    font-size: 1em;
+}
+
+.font-size-4 {
+    font-size: 0.8em;
+}
+
+.tag a {
+    border: 0;
+    padding: 0 0.2em 0 0.2em;
+}
+
+.tag a:hover {
+    background-color: #ddd;
+}
+
+#header a {
+    border: 0;
+}
+
+#main .inner section#header {
+    padding: 4em 0 1em 0;
+    border: 0;
+}
+
+#main .inner section#post-info {
+    padding: 0;
+    border: 0;
+    margin-bottom: 3em;
+}
+
+#main .inner section#post-info div {
+    margin-bottom: 1em;
+}
+
+#main .inner section#content {
+    padding: 0;
+    border: 0;
+    margin-bottom: 3em;
+}
+
+#main .inner section#content p {
+    margin-bottom: 0.4em;
+}
+
+#main .inner section#content h1,
+#main .inner section#content h2,
+#main .inner section#content h3,
+#main .inner section#content h4,
+#main .inner section#content h5,
+#main .inner section#content h6 {
+    margin: 1em 0 0.5em 0;
+}
+
+#main .inner section#content h1 {
+    font-size: 2em;
+}
+
+#main .inner section#content h2 {
+    font-size: 1.8em;
+}
+
+#main .inner section#content h3 {
+    font-size: 1.6em;
+}
+
+#main .inner section#content h4 {
+    font-size: 1.4em;
+}
+
+#main .inner section#content h5 {
+    font-size: 1.2em;
+}
+
+#main .inner section#content h6 {
+    font-size: 1em;
+}
+
+#main .inner section#related {
+    padding: 2em 0 0 0;
+    margin-bottom: 3em;
+}
+
+#main .inner section#related h1 {
+    font-size: 1.5em;
+}
+
+a.headerlink {
+    font-size: 0.8em;
+    margin-left: 0.4em;
+}
+
+code {
+    background-color: rgba(212, 218, 220, 0.25);
+    border-radius: 0;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+div.highlight {
+    margin: 1em 0;
+}
+
+div.highlight pre {
+    padding: 1em 0 1em 1em;
+    margin: 0;
+    overflow-x: auto;
+}
+
+article.card a.image {
+    margin: 0;
+}
+
+article.card div.card-body {
+    margin-top: 0.6em;
+}
+
+article.card div.card-body h1 {
+    font-size: 1.5em;
+}
+
+article.card div.card-body h1:hover {
+    color: inherit;
+}
+
+article.card div.card-body p.card-text time {
+    font-size: 0.8em;
+}
+
+article.card div.card-body p.card-text span {
+    margin-left: 0.5em;
+}
+
+article.card div.card-body p.card-text a.tag {
+    font-size: 0.7em;
+    border-radius: 0.25em;
+    background-color: #f6f6f6;
+    border: 0;
+    padding: 0 0.3em 0 0.3em;
+    color: #999;
+    font-weight: 1000;
+}
+
+article.card div.card-body p.card-text a.tag:hover {
+    background-color: #ddd;
+    color: #999!important;
+}
+
+#main .inner section#content div.center-image {
+    text-align: center;
+}
+
+#main .inner section#banner p.quote {
+    margin: 0;
+    font-style: italic;
+}
+
+#main .inner section#banner p.quote-source {
+    text-align: right;
+}
