@@ -200,6 +200,10 @@ article.card div.card-body p.card-text a.tag:hover {
     text-align: center;
 }
 
+#main .inner section#content div.big-image {
+    overflow-x: scroll;
+}
+
 #main .inner section#banner p.quote {
     margin: 0;
     font-style: italic;
