@@ -81,6 +81,11 @@
     content: "\002a";
 }
 
+#main .inner section#content code:before, 
+#main .inner section#content code:after {
+    content: "\0060";
+}
+
 #main .inner section#content .highlight pre * {
     background-color: transparent;
     color: inherit;
