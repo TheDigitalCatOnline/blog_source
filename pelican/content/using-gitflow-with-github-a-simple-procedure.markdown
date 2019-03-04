@@ -37,7 +37,9 @@ The concept that allows to use both workflows is very simple: gitflow, when used
 
 Given this consideration we may create a local branch that tracks a remote one with the same name, and make it our GitHub feature branch, i.e. the branch that will be used to create a Pull Request. Locally, we create a Git symbolic reference to that branch and we call the reference `develop`, thus enabling the use of the gitflow workflow and tools.
 
-![The resulting structure](/images/github_gitflow/structure.png)
+<div class="big-image">
+<img src="/images/github_gitflow/structure.png" alt="The resulting structure" />
+</div>
 
 When we finish adding features to the local feature branch (`develop`) we may squash the commits as usual and perform a forced push to the GitHub repository.
 

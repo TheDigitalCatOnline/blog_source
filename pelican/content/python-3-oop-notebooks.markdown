@@ -30,4 +30,6 @@ As everything on this blog, notebooks are released under [Creative Commons Attri
 
 This is a preview of the notebooks in action
 
-![Notebook](/images/python_3_oop_notebooks/notebook.jpg)
+<div class="big-image">
+<img src="/images/python_3_oop_notebooks/notebook.jpg" alt="Notebook" />
+</div>
