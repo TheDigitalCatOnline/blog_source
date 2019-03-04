@@ -6,7 +6,7 @@ Tags: assembly, amiga, retroprogramming
 Authors: Leonardo Giordani
 Slug: exploring-the-amiga-3
 Series: Exploring the Amiga
-Image: exploring-the-amiga
+Image: exploring-the-amiga-3
 Style: retro
 Summary: 
 
