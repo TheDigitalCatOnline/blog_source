@@ -196,7 +196,7 @@ cmpi.w  #0x1111,0x140(a1)
                           0xfc1e6c  |         |
 ```
 
-Please note that the displacement is fixed to 16-bit, so its value limited in the range `(-32767,32768)`; the displacement is however sign-extended to 32-bit before being added to the base address.
+Please note that the displacement is fixed to 16-bit, so its value limited in the range `(-32768,32767)`; the displacement is however sign-extended to 32-bit before being added to the base address.
 
 Note: this mode is sometimes called "Register Indirect with Offset".
 
@@ -455,6 +455,10 @@ The thing that can be easily overlooked is that the PC points to the extension w
 * Motorola M68000 Family Programmer's Reference Manual [PDF here](https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf)
 * M68000 Microprocessors User's Manual [PDF here](https://www.nxp.com/docs/en/reference-manual/MC68000UM.pdf)
 * The 68000 Principles and Programming, Leo J. Scanion, 1981
+
+# Updates
+
+2017-12-24: Reddit user [SpaceShrimp](https://new.reddit.com/user/SpaceShrimp) pointed out the rage of a signed 16-bit number is `(-32768,32767)` and not `(-32767,32768)`. Thanks!
 
 # Feedback
 
