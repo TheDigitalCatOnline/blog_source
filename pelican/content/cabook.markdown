@@ -1,6 +1,6 @@
 Title: Clean Architectures in Python: the book
 Date: 2018-12-20 08:00:00 +0100
-Modified: 2019-01-21 13:00:00 +0000
+Modified: 2019-03-15 09:30:00 +0000
 Category: Projects
 Tags: OOP, Python, Python2, Python3, TDD, testing, architectures
 Authors: Leonardo Giordani
@@ -10,7 +10,7 @@ Summary: A practical approach to better software design
 
 **UPDATE**: a Russian translation is in the works!
 
-**UPDATE**: version 1.0.3 is out! Some readers unsurprisingly spotted typos and bad grammar and were so kind to submit fixes.
+**UPDATE**: version 1.0.7 is out, the book reached 7,400 downloads. Thanks!
 
 I'm excited to announce that the success of [the post on clean architectures]({filename}clean-architectures-in-python-a-step-by-step-example.markdown) encouraged me to expand the subject and to write a book that I titled "Clean Architectures in Python. A practical approach to better software design".
 
@@ -22,7 +22,7 @@ The book contains a complete introduction to TDD and clean architectures, two to
 
 The book is available for free [on Leanpub](https://leanpub.com/clean-architectures-in-python). If you enjoy it, please tweet about it with the `#pycabook` hashtag.
 
-So far more than 3,100 readers downloaded the book. Thank you all!
+So far more than 7,400 readers downloaded the book. Thank you all!
 
 ---
 
