@@ -5,7 +5,7 @@ Tags: Python, Python2, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: useful-pytest-command-line-options
 Image: useful-pytest-command-line-options
-Summary: 
+Summary: A curated list of useful command line options of the Python unit testing framework pytest
 
 I recently gave a workshop on "TDD in Python with pytest", where I developed a very simple Python project together with the attendees following a TDD approach. It's a good way to introduce TDD, I think. I wrote each test together with the attendees, and then I left them the task of writing the Python code that passes the test. This way I could show TDD in action, introducing pytest features like the `pytest.raises` context manager or the use of `assert` while they become useful for the actual tests.
 

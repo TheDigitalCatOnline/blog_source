@@ -29,11 +29,20 @@
     "name" : "{{ article.author }}"
   },
   {% endif %}
+  "publisher" : {
+    "@type" : "Organization",
+    "name" : "The Digital Cat"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ SITEURL }}/{{ article.url }}"
+  },
   "datePublished" : "{{ article.locale_date }}",
-  "dateModified" : "{{ article.locale_modified }}",
+  "dateModified" : "{% if article.locale_modified %}{{ article.locale_modified }}{% else %}{{ article.locale_date }}{% endif %}",
   "image" : "{{ SITEURL }}/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg",
   {% if article.summary %}
-  "description" : {{ article.summary }},
+  "description" : "{{ article.summary|striptags }}",
+  "headline" : "{{ article.summary|striptags|truncate(110, False, '') }}",
   {% endif %}
   "url" : "{{ SITEURL }}/{{ article.url }}"
 }
