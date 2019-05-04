@@ -32,10 +32,10 @@
   "datePublished" : "{{ article.locale_date }}",
   "dateModified" : "{{ article.locale_modified }}",
   "image" : "{{ SITEURL }}/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg",
-  "url" : "{{ SITEURL }}/{{ article.url }}",
   {% if article.summary %}
-  "description" : {{ article.summary }}
+  "description" : {{ article.summary }},
   {% endif %}
+  "url" : "{{ SITEURL }}/{{ article.url }}"
 }
 </script>
 {% endblock %}
