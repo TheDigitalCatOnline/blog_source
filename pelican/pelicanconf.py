@@ -61,8 +61,14 @@ PAGINATION_PATTERNS = (
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
-STATIC_PATHS = ['images', 'code', 'notebooks', 'files', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
+STATIC_PATHS = [
+    'images', 'code', 'notebooks', 'files', 'extra/CNAME', 'extra/robots.txt'
+]
+EXTRA_PATH_METADATA = {
+    'extra/CNAME': {'path': 'CNAME'},
+    'extra/robots.txt': {'path': 'robots.txt'},
+}
+
 TWITTER_USERNAME = 'thedigicat'
 
 THEME = "../editorial"
