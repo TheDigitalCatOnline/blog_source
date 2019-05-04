@@ -11,6 +11,25 @@
 {% endif %}
 {% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Article",
+  "name" : "{{ article.title|striptags }}",
+  {% if article.author %}
+  "author" : {
+    "@type" : "Person",
+    "name" : "{{ article.author }}"
+  },
+  {% endif %}
+  "datePublished" : "{{ article.locale_date }}",
+  "image" : "{{ SITEURL }}/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg",
+  "url" : "{{ SITEURL }}/{{ article.url }}"
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
     <header id="header">
