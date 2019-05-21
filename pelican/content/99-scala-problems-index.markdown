@@ -12,7 +12,7 @@ I decided to learn [Scala](http://www.scala-lang.org/). I looked for some good e
 
 The official site provides solutions for the problems, so my solutions will obviously be influenced by those, when not the same.
 
-**CAVEAT**: I am a beginner so what I state in the following posts may be inaccurate and sometimes wrong. Please submit an issue on the blog [GitHub issues](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page.
+**CAVEAT**: I am a beginner so what I state in the following posts may be inaccurate and sometimes wrong. Please submit an issue on the blog [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page.
 
 This is the index of the problems I already discussed. I kept the original title and difficulty ranking (asterisks)
 

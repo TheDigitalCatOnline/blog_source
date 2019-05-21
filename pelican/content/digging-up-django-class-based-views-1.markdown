@@ -18,7 +18,7 @@ This change, however, has not been harmless for Django novices: the django-users
 
 I want to thank all Django developers for their work. Despite the previous criticism on documentation, this post wants to be a thanksgiving for their efforts.
 
-Feel free to comment [here](https://plus.google.com/u/0/111444750762335924049) or to submit issues [here](http://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues).
+Feel free to comment [here](https://plus.google.com/u/0/111444750762335924049) or to submit issues [here](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues).
 
 ## What are CBVs?
 
