@@ -1,12 +1,13 @@
-Title: Python 3 OOP Part 6 - Abstract Base Classes
+Title: Object-Oriented Programming in Python 3 - Abstract Base Classes
 Date: 2014-09-04 10:00:00 +0200
+Modified: 2019-05-22 23:30:00 +0000
 Category: Programming
 Tags: Python, Python3, OOP, metaprogramming, metaclasses
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-6-abstract-base-classes
 Image: python-3-oop
 Series: Python 3 OOP
-Summary:
+Summary: Fundamentals of object-oriented programming in Python - abstract base classes
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_6__Abstract_Base_Classes.ipynb)
 
