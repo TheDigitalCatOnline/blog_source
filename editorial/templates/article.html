@@ -2,7 +2,7 @@
 
 {% block meta_description %}
 {% if article.summary %}
-<meta name="description" content="{{ article.summary }}">
+<meta name="description" content="{{ article.summary|striptags }}">
 {% endif %}
 {% endblock %}
 
@@ -95,7 +95,7 @@
 
         <div class="align-center">
         {% if article.author %}
-            By <a href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a>
+            By {{ article.author }}
             <span class="separator">•</span>
         {% endif %}
 

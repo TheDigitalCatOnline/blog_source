@@ -1,13 +1,13 @@
-Title: Python 3 OOP Part 1 - Objects and types
+Title: Object-Oriented Programming in Python 3 - Objects and types
 Date: 2014-08-20 13:00:00 +0200
-Modified: 2018-06-25 12:30:00 +0000
+Modified: 2019-05-22 23:30:00 +0000
 Category: Programming
 Tags: Python, Python3, OOP
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-1-objects-and-types
 Image: python-3-oop
 Series: Python 3 OOP
-Summary:
+Summary: Fundamentals of object-oriented programming in Python - objects and types
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_1__Objects_and_types.ipynb)
 
