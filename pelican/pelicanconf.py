@@ -73,7 +73,7 @@ TWITTER_USERNAME = 'thedigicat'
 
 THEME = "../editorial"
 
-FAVICON = 'images/TheDigitalCat_favicon_32.png'
+FAVICON = 'images/global/favicon.jpg'
 
 MARKDOWN = {
     'extension_configs': {
