@@ -12,7 +12,7 @@ The Digital Cat [Youtube channel](https://www.youtube.com/channel/UCJ70w0WzWjWer
 The channel will host workshops and tutorial on Python and other languages, on operating systems, cryptography, and other topics that you can find here on this blog. I just finished recording the first part of my workshop "TDD in Python with pytest", which was successfully presented at PyCon UK, PyCon IT, PyCon Ireland, EuroPython and PyLadies London, and the 4 videos are already available on the channel.
 
 <div class="big-image">
-<img src="/images/global/banner.jpg" alt="Youtube Channel banner" />
+<img src="/images/global/banner_large.jpg" alt="Youtube Channel banner" />
 </div>
 
 You can subscribe to the channel at [this link](https://www.youtube.com/channel/UCJ70w0WzWjWerpk3utRcAKA)
