@@ -8,7 +8,7 @@ fi
 
 source venv/bin/activate
 pip install --upgrade pip
-pip install pelican markdown punch.py
+pip install -r requirements.txt
 
 if [[ ! -d .git ]]; then
     git init
