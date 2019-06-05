@@ -1,0 +1,6 @@
+pelican
+markdown
+punch.py
+webassets
+cssmin
+jsmin

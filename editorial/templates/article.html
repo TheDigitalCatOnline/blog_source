@@ -12,7 +12,9 @@
 {% if article.style %}
 {% set styles = article.style.split(',') %}
 {% for style in styles %}
-<link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/{{ style }}.css" />
+{% assets filters="cssmin", output="css/" + style + ".min.css", "css/" + style + ".css" %}
+<link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
+{% endassets %}
 {% endfor %}
 {% endif %}
 {% endblock %}
