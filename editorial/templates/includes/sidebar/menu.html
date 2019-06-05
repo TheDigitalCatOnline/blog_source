@@ -1,12 +1,12 @@
 <ul>
-    <li><a href="{{ SITEURL }}/index.html">Homepage</a></li>
-    <li><a href="{{ SITEURL }}/pages/about.html">About</a></li>
-    <li><a href="{{ SITEURL }}/archives/">Archives</a></li>
+    <li><a href="/index.html">Homepage</a></li>
+    <li><a href="/pages/about.html">About</a></li>
+    <li><a href="/archives/index.html">Archives</a></li>
     <li>
         <span class="opener">Categories</span>
         <ul>
             {% for category in categories %}
-            <li><a href="{{ SITEURL }}/{{ category.0.url }}">{{ category.0 }}</a></li>
+            <li><a href="/{{ category.0.url }}">{{ category.0 }}</a></li>
             {% endfor %}
         </ul>
     </li>

@@ -14,12 +14,12 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700">
 
         {% assets filters="cssmin", output="css/main.min.css", "css/main.css", "css/custom.css", "css/pygments/default.css" %}
-        <link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
+        <link rel="stylesheet" href="/{{ ASSET_URL }}">
         {% endassets %}
 
         {% block custom_css %}{% endblock %}
         
-        <link href="{{ SITEURL }}/{{ FAVICON }}" rel="icon">
+        <link href="/{{ FAVICON }}" rel="icon">
 
         {% if GOOGLE_ANALYTICS_UNIVERSAL %}
         <!-- Google Analytics Universal -->
@@ -57,11 +57,11 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/jquery.min.js"></script>
-			<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/browser.min.js"></script>
-			<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/breakpoints.min.js"></script>
+			<script src="/{{ THEME_STATIC_DIR }}/js/jquery.min.js"></script>
+			<script src="/{{ THEME_STATIC_DIR }}/js/browser.min.js"></script>
+			<script src="/{{ THEME_STATIC_DIR }}/js/breakpoints.min.js"></script>
         {% assets filters="jsmin", output="js/packed.js", "js/util.js", "js/main.js" %}
-            <script src="{{ SITEURL }}/{{ ASSET_URL }}"></script>
+            <script src="/{{ ASSET_URL }}"></script>
         {% endassets %}
 
 	</body>
