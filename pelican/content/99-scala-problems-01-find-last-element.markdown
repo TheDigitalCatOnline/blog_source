@@ -96,7 +96,7 @@ def last[A](l:List[A]):A = l match {
 }
 ```
 
-The value returned by the function is `l match {}`, that the execution of the pattern matching block on the input variable `l`.
+The value returned by the function is `l match {}`, that is the execution of the pattern matching block on the input variable `l`.
 
 The first pattern divides the list in two parts: one head element (`h`) and a tail formed by nothing. This is the case in which the input list has only one element.
 
