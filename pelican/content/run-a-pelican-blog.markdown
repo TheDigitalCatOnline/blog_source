@@ -1,5 +1,5 @@
 Title: Run a blog with pelican
-Date: 2018-07-12 09:00:00 +0100
+Date: 2019-06-07 15:30:00 +0100
 Category: Projects
 Tags: Python, Python3, pelican
 Authors: Leonardo Giordani
