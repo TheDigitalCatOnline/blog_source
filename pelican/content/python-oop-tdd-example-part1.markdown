@@ -14,7 +14,7 @@ The package will provide some classes to deal with binary numbers (see the Ratio
 
 ## Rationale
 
-Binary numbers are rather easy to understand, even if becoming familiar with them requires some time. I expect you to have knowledge of the binary numeral system. If you need to review them just take a look at the [Wikipedia entry](http://en.wikipedia.org/wiki/Binary_number) or one of the countless resources on Internet.
+Binary numbers are rather easy to understand, even if becoming familiar with them requires some time. I expect you to have knowledge of the binary numeral system. If you need to review them just take a look at the [Wikipedia entry](https://en.wikipedia.org/wiki/Binary_number) or one of the countless resources on Internet.
 
 The package we are going to write will provide a class that represents binary numbers (`Binary`) and a class that represents binary numbers with a given bit size (`SizeBinary`). They shall provide basic binary operations like logical (and, or, xor), arithmetic (addition, subtraction, multiplication, division), shifts and indexing.
 
@@ -577,7 +577,7 @@ def split(self, bits):
 
 ## Resources
 
-* [Wikipedia entry](http://en.wikipedia.org/wiki/Binary_number) on binary numbers.
+* [Wikipedia entry](https://en.wikipedia.org/wiki/Binary_number) on binary numbers.
 * [Context managers](https://www.python.org/dev/peps/pep-0343/) in Python.
 * [Py.test project layouts](https://pytest.org/latest/goodpractises.html).
 * Jeff Knupp on [open sourcing a Python project](http://www.jeffknupp.com/blog/2013/08/16/open-sourcing-a-python-project-the-right-way/).

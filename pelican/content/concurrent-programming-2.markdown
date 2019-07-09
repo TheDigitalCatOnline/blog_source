@@ -19,7 +19,7 @@ The C standard library, nicknamed libc, is a collection of functions for the C l
 
 In the GNU ecosystem, which Linux distributions are grounded on, the library is implemented by glibc (GNU libc). The library reached version 2.17 in December 2012 and is free software released under LGPL, a less restrictive version of the GPL which most notably allows the use of the library by non-GPL software, even proprietary one.
 
-You can find and navigate glibc sources [here](http://sourceware.org/git/?p=glibc.git;a=summary)
+You can find and navigate glibc sources [here](https://sourceware.org/git/?p=glibc.git;a=summary)
 
 ## C language and PIDs 
 
@@ -27,7 +27,7 @@ Processes, like every resource in a computer, are managed by the kernel. This is
 
 Let us start with the simple concept of PID, the Process IDentifier we described in the past issue of this series. In the libc, the `pid_t` type is defined as an integer capable of containing a pid. To show this we will now take a little tour of the glibc source code: we will cover the whole path this time only, just to highlight both the chances given us by the source code and the complexity of a project like glibc.
 
-We can find the initial definition of `pid_t` [here](http://sourceware.org/git/?p=glibc.git;a=blob;f=posix/sys/types.h;h=33c2176d0f0b38f1a81bf8c76d38f08d2ab38675;hb=HEAD)
+We can find the initial definition of `pid_t` [here](https://sourceware.org/git/?p=glibc.git;a=blob;f=posix/sys/types.h;h=33c2176d0f0b38f1a81bf8c76d38f08d2ab38675;hb=HEAD)
 
 ``` c
 #ifndef __pid_t_defined
@@ -36,7 +36,7 @@ typedef __pid_t pid_t;
 #endif
 ```
 
-As you can see the definition of the type is protected by multiple header inclusion, as usual in the C world. The underlying `__pid_t` type is then defined [here](http://sourceware.org/git/?p=glibc.git;a=blob;f=bits/types.h;h=dc7b784f965749c44257bf030508d6642c07dec7;hb=HEAD)
+As you can see the definition of the type is protected by multiple header inclusion, as usual in the C world. The underlying `__pid_t` type is then defined [here](https://sourceware.org/git/?p=glibc.git;a=blob;f=bits/types.h;h=dc7b784f965749c44257bf030508d6642c07dec7;hb=HEAD)
 
 ``` c
 #define __STD_TYPE typedef
@@ -46,7 +46,7 @@ __STD_TYPE __PID_T_TYPE __pid_t; /* Type of process identifications.  */
 
 Notice that even the typedef keyword is defined by a macro (remember that the C preprocessor is a little more than a text macro replacement tool); this definition in particular avoids compiler warning when using the `long long` type which is not supported by all versions of the C standard. `S32` stands for “signed 32 bits” as you can read in the code documentation.
 
-The last macro `__PID_T_TYPE` can be found [here](http://sourceware.org/git/?p=glibc.git;a=blob;f=bits/typesizes.h;h=8268b90276700a382db37331be1d8ef5a516403d;hb=HEAD)
+The last macro `__PID_T_TYPE` can be found [here](https://sourceware.org/git/?p=glibc.git;a=blob;f=bits/typesizes.h;h=8268b90276700a382db37331be1d8ef5a516403d;hb=HEAD)
 
 ``` c
 #define __PID_T_TYPE            __S32_TYPE

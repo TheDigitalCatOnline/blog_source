@@ -27,7 +27,7 @@ Class-based views are, indeed, (Django) views based on (Python) classes. Until h
 A Django view is a piece of code that processes an HTTP request and returns an HTTP response. Oh yes, nothing more, nothing less.
 A Python class is the implementation of the Object-Oriented concept of class in the Python language.
 
-So a view just need to be a [callable](http://docs.python.org/2/library/functions.html#callable), and this includes functions and classes. Thus, to understand the advantages of class-based views over function-based views we shall discuss the merits of classes over functions. The latter sentence could be the title of a 10 volumes book on programming (followed by another 10 volumes book titled "Merits of functions over classes"), so I am just going to scratch the surface of the matter.
+So a view just need to be a [callable](https://docs.python.org/2/library/functions.html#callable), and this includes functions and classes. Thus, to understand the advantages of class-based views over function-based views we shall discuss the merits of classes over functions. The latter sentence could be the title of a 10 volumes book on programming (followed by another 10 volumes book titled "Merits of functions over classes"), so I am just going to scratch the surface of the matter.
 
 ## Starting off with Python classes
 
@@ -65,7 +65,7 @@ Well, despite the very simple example the point is: by converting the procedure 
 
 ## Playing with genetics
 
-The real power of classes used as finite-state machines lies in the concept of [inheritance](http://en.wikipedia.org/wiki/Inheritance_%28object-oriented_programming%29). Inheritance is a mechanism through which a class can copy another class and then change only the parts that have to behave differently. Please note that here we talk about classes and not instances, so the copy action here refers to the structure of the class, not the actual data contained in it. Inheritance is a mean to mimic the behaviour of a class.
+The real power of classes used as finite-state machines lies in the concept of [inheritance](https://en.wikipedia.org/wiki/Inheritance_%28object-oriented_programming%29). Inheritance is a mechanism through which a class can copy another class and then change only the parts that have to behave differently. Please note that here we talk about classes and not instances, so the copy action here refers to the structure of the class, not the actual data contained in it. Inheritance is a mean to mimic the behaviour of a class.
 
 (Sidenote: *I am a strong supporter of an OO design principle that states "Favour composition over inheritance" (and favor "favor" over "favour" for US audience). I read too many OOP introductions that stress too much the inheritance mechanism and leave composition aside, raising a generation of OOP programmers that, instead of building systems populated by many small collaborating objects create nightmares infested by giant all-purpose things that sometimes resemble an operating system more than a system component. Given that, inheritance plays an important role in OOP, and here we find a very good example of its real benefit.*)
 
@@ -88,7 +88,7 @@ class OddExtractor(EvenExtractor):
         return [i for i in self.l if i%2 != 0]
 ```
 
-and call it a day. Indeed, through the inheritance mechanism expressed by that `(EvenExtractor)` signature of the new class, we defined something that is exactly the same thing as `EvenExtractor`, with the same methods and attributes, but with a different name. Then we changed the behaviour of the new class but only for the extraction part by [overriding the method](http://en.wikipedia.org/wiki/Method_overriding).
+and call it a day. Indeed, through the inheritance mechanism expressed by that `(EvenExtractor)` signature of the new class, we defined something that is exactly the same thing as `EvenExtractor`, with the same methods and attributes, but with a different name. Then we changed the behaviour of the new class but only for the extraction part by [overriding the method](https://en.wikipedia.org/wiki/Method_overriding).
 
 To summarize the lesson: using classes and inheritance you can build finite-state machines that are easily customizable to suit your exact needs. This obviously is just one of the many points of view under which you can consider classes, but it is the one we need to understand Django CBVs.
 
@@ -133,7 +133,7 @@ class ArticleListView(ListView):
 		return super(ArticleListView, self).dispatch(request, *args, **kwargs)
 ```
 
-the class does not change its behaviour. What we did was to override the `dispatch()` method with a call to the parent's method, i.e. we explicitly wrote what Python does by default. You can find detailed information about `super()` [here](http://docs.python.org/2/library/functions.html#super). Please be also sure to understand the star and double star notation to define variable number of arguments; the official documentation is [here](http://docs.python.org/2.7/tutorial/controlflow.html#more-on-defining-functions).
+the class does not change its behaviour. What we did was to override the `dispatch()` method with a call to the parent's method, i.e. we explicitly wrote what Python does by default. You can find detailed information about `super()` [here](https://docs.python.org/2/library/functions.html#super). Please be also sure to understand the star and double star notation to define variable number of arguments; the official documentation is [here](https://docs.python.org/2.7/tutorial/controlflow.html#more-on-defining-functions).
 
 Since views are automatically called by the framework, the latter expects them to comply with a very specific API, so when overriding a method you have to obey its signature. The signature of `dispatch()` can be found [here](https://docs.djangoproject.com/en/1.5/ref/class-based-views/base/#django.views.generic.base.View.dispatch); by the way, this documentation of `dispatch()` gives you good hints about the internal working mechanism of CBVs.
 
@@ -155,7 +155,7 @@ This prints the content of the `request` object on the standard output of the Py
 
 This, in a nutshell, is the standard way of dealing with framework classes, and thus with Django's CBGVs: inherit from a predefined class, identify which methods you need to change, override them complying with their signature and calling the parent's code somewhere in the new code.
 
-The full list of methods `ListView` uses when processing incoming requests is listed on its [official documentation page](https://docs.djangoproject.com/en/1.5/ref/class-based-views/generic-display/#listview) in the "Method Flowchart" section; in the "Ancestors (MRO)" section you can see that `ListView` itself inherits from a good number of other classes. MRO stands for Method Resolution Order and has to deal with multiple inheritance: if you are eager to deal with one of the most intricate Python topics feel free to read [here](http://docs.python.org/2/tutorial/classes.html#multiple-inheritance).
+The full list of methods `ListView` uses when processing incoming requests is listed on its [official documentation page](https://docs.djangoproject.com/en/1.5/ref/class-based-views/generic-display/#listview) in the "Method Flowchart" section; in the "Ancestors (MRO)" section you can see that `ListView` itself inherits from a good number of other classes. MRO stands for Method Resolution Order and has to deal with multiple inheritance: if you are eager to deal with one of the most intricate Python topics feel free to read [here](https://docs.python.org/2/tutorial/classes.html#multiple-inheritance).
 
 #### Incoming GET requests
 
@@ -213,11 +213,11 @@ Let me know if this post helped you in understanding the matter and feel free to
 
 ## Updates
 
-2013-10-29: As pointed out by [mbrochh](http://www.reddit.com/user/mbrochh) on Reddit, there is a very useful resource for Django programmers: [Classy Class-Based Views](http://ccbv.co.uk/). It is a comprensive index of all CBGVs with ancestors and method signatures. Make sure to have it in you Django bookmarks!
+2013-10-29: As pointed out by [mbrochh](https://www.reddit.com/user/mbrochh) on Reddit, there is a very useful resource for Django programmers: [Classy Class-Based Views](http://ccbv.co.uk/). It is a comprensive index of all CBGVs with ancestors and method signatures. Make sure to have it in you Django bookmarks!
 
 2013-10-29: I fixed a couple of typos when overriding `dispatch()`. Thanks to Tom Evans for spotting them.
 
-2013-10-30: Fixed the `__init__()` method of `EvenExtractor`, that was missing the `self` parameter. Thanks [meatypocket](http://www.reddit.com/user/meatypocket).
+2013-10-30: Fixed the `__init__()` method of `EvenExtractor`, that was missing the `self` parameter. Thanks [meatypocket](https://www.reddit.com/user/meatypocket).
 
-2015-06-10: [meatypocket](http://www.reddit.com/user/meatypocket) spotted a missing `return` in the `dispatch()` override. Thank you!
+2015-06-10: [meatypocket](https://www.reddit.com/user/meatypocket) spotted a missing `return` in the `dispatch()` override. Thank you!
 

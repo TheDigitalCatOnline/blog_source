@@ -213,7 +213,7 @@ Section titles come from the following movies: _Back to the Future (1985)_ , _Wh
 
 ## Sources
 
-You will find a lot of documentation in [this Reddit post](http://www.reddit.com/r/Python/comments/226ahl/some_links_about_python_oop/). Most of the information contained in this series come from those sources.
+You will find a lot of documentation in [this Reddit post](https://www.reddit.com/r/Python/comments/226ahl/some_links_about_python_oop/). Most of the information contained in this series come from those sources.
 
 ## Feedback
 

@@ -1,6 +1,6 @@
 # strproc.py
 # This file implements the technique explained at
-# http://lgiordani.com/blog/2014/10/14/decorators-and-metaclasses/
+# https://www.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses/
 
 import collections
 

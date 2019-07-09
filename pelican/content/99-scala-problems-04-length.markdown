@@ -88,7 +88,7 @@ So basically the `foldLeft()` method visits each element of the list from left t
 
 The first strange thing that I see here is that the function is defined with two sets of brackets, the first encompassing "the start value" `z` and the second what seems the definition of a function.
 
-This has to do with the concepts of partially applied functions (NOT *partial functions*) and currying. I recommend two readings from Stackoverflow: [this answer](http://stackoverflow.com/questions/8650549/using-partial-functions-in-scala-how-does-it-work/8650639#8650639) about the meaning of partial function, partially applied function and currying, and [this answer](http://stackoverflow.com/questions/14309501/scala-currying-vs-partially-applied-functions) (which also links the first one) that explores the difference between partially applied and currying. I consider that two answers to be exhaustive so I will not add any explanation about this topic.
+This has to do with the concepts of partially applied functions (NOT *partial functions*) and currying. I recommend two readings from Stackoverflow: [this answer](https://stackoverflow.com/questions/8650549/using-partial-functions-in-scala-how-does-it-work/8650639#8650639) about the meaning of partial function, partially applied function and currying, and [this answer](https://stackoverflow.com/questions/14309501/scala-currying-vs-partially-applied-functions) (which also links the first one) that explores the difference between partially applied and currying. I consider that two answers to be exhaustive so I will not add any explanation about this topic.
 
 There is another thing to note in the folding solution, however, which is the way Scala defines anonymous functions. The Scala tour has a [good explanation](https://www.scala-lang.org/old/node/133) of anonymous functions, which are pretty simple.
 
@@ -104,7 +104,7 @@ def length[A](l:List[A]):Int = l.foldLeft(0) { count }
 
 which should be clear. The count function accepts an `Int` and a value of the generic type `A` and returns `c + 1`. This function is applied on each element of the list by the `foldLeft()` method, passing the result of the previous application as the first parameter `c`.
 
-The `count()` function may however be simplified to an anonymous function due to its simplicity. Making use of [type inference](http://stackoverflow.com/questions/4899320/when-does-scala-need-parameter-types-for-anonymous-and-expanded-functions) and [placeholder syntax](http://www.codecommit.com/blog/scala/quick-explanation-of-scalas-syntax) we may reduce it to the given form.
+The `count()` function may however be simplified to an anonymous function due to its simplicity. Making use of [type inference](https://stackoverflow.com/questions/4899320/when-does-scala-need-parameter-types-for-anonymous-and-expanded-functions) and [placeholder syntax](http://www.codecommit.com/blog/scala/quick-explanation-of-scalas-syntax) we may reduce it to the given form.
 
 # Last nth element
 

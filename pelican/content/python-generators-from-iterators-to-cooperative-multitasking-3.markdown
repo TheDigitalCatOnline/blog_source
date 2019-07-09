@@ -262,7 +262,7 @@ Obviously this sort of multitasking cannot provide an interactive execution like
 
 Another interesting scenario is that of a real multitasking system (ruled by threaded code or by the OS itself) where each task is made of small cooperating components. This way putting multiple functionalities inside a single component becomes a breeze; the code of each functionality could also be splitted in several plugins and loaded on demand.
 
-A package that implements cooperative multitasking with generator based microthreads is [Kamaelia](http://www.kamaelia.org), and this article has been heavily inspired by it. Other solutions you can find interesting are [greenlet](http://pypi.python.org/pypi/greenlet), presently the most used microthread Python library that runs on the standard unmodified Python interpreter and [Stackless Python](http://www.stackless.com/), a fork of Python that natively implements microthreads.
+A package that implements cooperative multitasking with generator based microthreads is [Kamaelia](http://www.kamaelia.org), and this article has been heavily inspired by it. Other solutions you can find interesting are [greenlet](https://pypi.python.org/pypi/greenlet), presently the most used microthread Python library that runs on the standard unmodified Python interpreter and [Stackless Python](http://www.stackless.com/), a fork of Python that natively implements microthreads.
 
 ## Updates
 

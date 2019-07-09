@@ -165,7 +165,7 @@ That's it!
 
 There are obviously other ways to accomplish the same task, and this post wanted just to give a practical example of what metaclasses are good for, and why I think that they should be part of any Python programmer's arsenal.
 
-[Update] Some developers [on Reddit](http://www.reddit.com/r/Python/comments/2jbi2f/advanced_use_of_python_decorators_and_metaclasses/) and Linkedin raised objections to the content of the post mainly about the fact that the example may be perfectly implemented without metaclasses and about the dangerous nature of metaclasses. Since I try to learn from everyone, I thank them for their suggestions.
+[Update] Some developers [on Reddit](https://www.reddit.com/r/Python/comments/2jbi2f/advanced_use_of_python_decorators_and_metaclasses/) and Linkedin raised objections to the content of the post mainly about the fact that the example may be perfectly implemented without metaclasses and about the dangerous nature of metaclasses. Since I try to learn from everyone, I thank them for their suggestions.
 
 It is especially interesting to know that some developers consider the use of metaclasses a risky business, because they hide a lot of the structure of the class and the underlying machinery. This is true, so (as you should do for other technologies), think carefully about the reasons that drive you to use metaclasses, and be sure you know them well.
 
@@ -201,7 +201,7 @@ The following resources may be useful.
 
 2014-10-17: [Matthew Dillon](https://github.com/thermokarst) and [Damon McDougall](https://github.com/dmcdougall) spotted two typos. Thank you!
 
-2014-10-17: [ionelmc](http://www.reddit.com/user/ionelmc) suggested two corrections [here](http://www.reddit.com/r/Python/comments/2jbi2f/advanced_use_of_python_decorators_and_metaclasses/cla696y) and [here](http://www.reddit.com/r/Python/comments/2jbi2f/advanced_use_of_python_decorators_and_metaclasses/cla6o77). Both are correct so I implemented them. The second one is more about style, but fits well the introductory purpose of the post. Thanks!
+2014-10-17: [ionelmc](https://www.reddit.com/user/ionelmc) suggested two corrections [here](https://www.reddit.com/r/Python/comments/2jbi2f/advanced_use_of_python_decorators_and_metaclasses/cla696y) and [here](https://www.reddit.com/r/Python/comments/2jbi2f/advanced_use_of_python_decorators_and_metaclasses/cla6o77). Both are correct so I implemented them. The second one is more about style, but fits well the introductory purpose of the post. Thanks!
 
 ## Feedback
 
