@@ -44,7 +44,7 @@ def name_of_the_function(paramA:typeA, paramB:typeB, ...):type = {
 }
 ```
 
-The equal sign has an important meaning, if I remember correctly. Omitting the equal sign makes the function automatically return a `Unit` type (that is, no output), so the point seems to be: ask yourself if your function shall return something or not. The `Unit` return type may be also explicitly stated, in which case you have to add the equal sign. And interesting clarification (with two different points of view) may be found [here](http://stackoverflow.com/questions/944111/when-to-use-the-equals-sign-in-a-scala-method-declaration). As a beginner, I prefer to be explicit.
+The equal sign has an important meaning, if I remember correctly. Omitting the equal sign makes the function automatically return a `Unit` type (that is, no output), so the point seems to be: ask yourself if your function shall return something or not. The `Unit` return type may be also explicitly stated, in which case you have to add the equal sign. And interesting clarification (with two different points of view) may be found [here](https://stackoverflow.com/questions/944111/when-to-use-the-equals-sign-in-a-scala-method-declaration). As a beginner, I prefer to be explicit.
 
 # Type variables
 

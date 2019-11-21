@@ -323,7 +323,7 @@ Some sources for the content of this post. Thank you authors!
 * [PEP 3119](http://legacy.python.org/dev/peps/pep-3119/) and the [ABC module documentation](https://docs.python.org/2/library/abc.html#module-abc)
 * [Understanding Python's Execution Model](http://www.jeffknupp.com/blog/2013/02/14/drastically-improve-your-python-understanding-pythons-execution-model/) and [Python Classes and Object Oriented Programming](http://jeffknupp.com/blog/2014/06/18/improve-your-python-python-classes-and-object-oriented-programming/) by Jeff Knupp
 * [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html) by Rafe Kettler
-* Many [Stackoverflow](http://stackoverflow.com/questions/tagged/python) questions and answers
+* Many [Stackoverflow](https://stackoverflow.com/questions/tagged/python) questions and answers
 
 ## Feedback
 

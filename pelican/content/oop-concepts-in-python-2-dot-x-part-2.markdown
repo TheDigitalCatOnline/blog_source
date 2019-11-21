@@ -128,7 +128,7 @@ AttributeError: 'int' object has no attribute '__len__'
 
 but the `'int' object` does not define any `__len__()` method.
 
-So, to sum up what we discovered until here, I would say that _Python polymorphism is based on delegation_. In the following sections we will talk about the [EAFP](http://docs.python.org/2/glossary.html#term-eafp) Python principle, and you will see that the delegation principle is somehow ubiquitous in this language.
+So, to sum up what we discovered until here, I would say that _Python polymorphism is based on delegation_. In the following sections we will talk about the [EAFP](https://docs.python.org/2/glossary.html#term-eafp) Python principle, and you will see that the delegation principle is somehow ubiquitous in this language.
 
 ## Type Hard
 
@@ -427,12 +427,12 @@ This time section titles come from the following movies: _Good Morning, Vietnam_
 
 Some sources for the content of this post. Thank you authors!
 
-* [The official Python documentation](http://docs.python.org/2/tutorial/classes.html) and the Python source code.
+* [The official Python documentation](https://docs.python.org/2/tutorial/classes.html) and the Python source code.
 * [Python in a Nutshell - by Alex Martelli](http://www.amazon.com/Python-Nutshell-Second-Edition-In/dp/0596100469/)
 * [Design Patterns: Elements of Reusable Object-Oriented Software - by Gamma, Helm, Johnson, Vlissides](http://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/)
 * [Python 3 Patterns, Recipes and Idioms](http://python-3-patterns-idioms-test.readthedocs.org/en/latest/)
 * [Singleton and Borg patterns - by Alex Martelli](http://www.aleax.it/5ep.html)
-* Many [Stackoverflow](http://stackoverflow.com/questions/tagged/python) questions and answers
+* Many [Stackoverflow](https://stackoverflow.com/questions/tagged/python) questions and answers
 
 ## Feedback
 

@@ -707,11 +707,11 @@ If you are wondering why section titles are so weird, chances are that you misse
 
 Some sources for the content of this post. Thank you authors!
 
-* [The official Python documentation](http://docs.python.org/2/tutorial/classes.html) and the Python source code.
+* [The official Python documentation](https://docs.python.org/2/tutorial/classes.html) and the Python source code.
 * [Python Types and Objects - by Shalabh Chaturvedi](http://www.cafepy.com/article/python_types_and_objects/)
 * [Python’s super() considered super! - by Raymond Hettinger](http://rhettinger.wordpress.com/2011/05/26/super-considered-super/)
 * [Design Patterns in Python - by Alex Martelli](http://www.aleax.it/gdd_pydp.pdf)
-* Many [Stackoverflow](http://stackoverflow.com/questions/tagged/python) questions and answers
+* Many [Stackoverflow](https://stackoverflow.com/questions/tagged/python) questions and answers
 
 ## Updates
 
@@ -719,7 +719,7 @@ Some sources for the content of this post. Thank you authors!
 
 2014-03-10: Fixed link to Alex Martelli's presentation.
 
-2014-04-07: A typo when discussing `door1.colour` has been fixed. Thanks to [pujuma](http://www.reddit.com/user/pujuma).
+2014-04-07: A typo when discussing `door1.colour` has been fixed. Thanks to [pujuma](https://www.reddit.com/user/pujuma).
 
 ## Feedback
 

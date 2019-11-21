@@ -1466,7 +1466,7 @@ Remember to run `pip install -r requirements/dev.txt` again after those changes 
 
 The setup of a Flask application is not complex, but a lot of concepts are involved, and since this is not a tutorial on Flask I will run quickly through these steps. I will however provide links to the Flask documentation for every concept.
 
-I usually define different configurations for my testing, development, and production environments. Since the Flask application can be configured using a plain Python object ([documentation](http://flask.pocoo.org/docs/latest/api/#flask.Config.from_object)), I created the file `rentomatic/settings.py` to host those objects
+I usually define different configurations for my testing, development, and production environments. Since the Flask application can be configured using a plain Python object ([documentation](https://flask.pocoo.org/docs/latest/api/#flask.Config.from_object)), I created the file `rentomatic/settings.py` to host those objects
 
 ``` python
 import os
@@ -1498,7 +1498,7 @@ class TestConfig(Config):
     DEBUG = True
 ```
 
-Read [this page](http://flask.pocoo.org/docs/latest/config/) to know more about Flask configuration parameters. Now we need a function that initializes the Flask application ([documentation](http://flask.pocoo.org/docs/latest/patterns/appfactories/)), configures it and registers the blueprints ([documentation](http://flask.pocoo.org/docs/latest/blueprints/)). The file `rentomatic/app.py` contains the following code
+Read [this page](https://flask.pocoo.org/docs/latest/config/) to know more about Flask configuration parameters. Now we need a function that initializes the Flask application ([documentation](https://flask.pocoo.org/docs/latest/patterns/appfactories/)), configures it and registers the blueprints ([documentation](https://flask.pocoo.org/docs/latest/blueprints/)). The file `rentomatic/app.py` contains the following code
 
 ``` python
 from flask import Flask

@@ -204,7 +204,7 @@ Shall we *always* call the original method implementation? In theory a well desi
 
 ## Updates
 
-2014-05-21 As suggested by [caseyweb](http://www.reddit.com/user/caseyweb) in [this comment](http://www.reddit.com/r/Python/comments/25y4hu/method_overriding_in_python/chn5v1q) the conclusions of the post were too strong, so I updated the post with a new section ("Always call super()?") and the summary. Many thanks caseyweb!
+2014-05-21 As suggested by [caseyweb](https://www.reddit.com/user/caseyweb) in [this comment](https://www.reddit.com/r/Python/comments/25y4hu/method_overriding_in_python/chn5v1q) the conclusions of the post were too strong, so I updated the post with a new section ("Always call super()?") and the summary. Many thanks caseyweb!
 
 ## Links
 
