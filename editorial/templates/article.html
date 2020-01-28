@@ -90,7 +90,7 @@
         <div class="align-center">
         {% if article.tags %}
             {% for tag in article.tags %}
-            <a class="button special small" href="/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}{% endif %}
+            <a class="button small" href="/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}{% endif %}
             {% endfor %}
         {% endif %}
         </div>
