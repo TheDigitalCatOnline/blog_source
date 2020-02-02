@@ -4,3 +4,4 @@ punch.py
 webassets
 cssmin
 jsmin
+mdx_video
