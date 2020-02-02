@@ -83,6 +83,7 @@ MARKDOWN = {
         'markdown.extensions.toc': {
             'permalink': True
         },
+        'mdx_video': {},
     },
     'output_format': 'html5',
 }
