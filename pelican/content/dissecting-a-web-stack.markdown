@@ -4,9 +4,11 @@ Category: Programming
 Tags: architectures, concurrent programming, cryptography, infrastructure, Flask, Django, Python, SSL, HTTP, WWW, AWS
 Authors: Leonardo Giordani
 Slug: dissecting-a-web-stack
+Image: dissecting-a-web-stack
 Summary: 
 
 > It was gross. They wanted me to dissect a frog.
+> 
 > (Beetlejuice, 1988)
 
 # Introduction
@@ -19,7 +21,7 @@ In this post, I want to review all the words mentioned above (and a couple more)
 
 As the focus of the post is the global architecture and the reasons behind the presence of specific components, the example service I will use will be a basic HTML web page. The reference language will be Python but the overall discussion applies to any language or framework.
 
-My approach will be that of first stating a goal, and then suggesting, discussing, and implementing a possible solution. After this, I will point out missing pieces or unresolved issues and move on with the next layer. At the end of the process, the reader should have a clear picture of why each component has been added to the system.
+My approach will be that of first stating the rationale and then implementing a possible solution. After this, I will point out missing pieces or unresolved issues and move on with the next layer. At the end of the process, the reader should have a clear picture of why each component has been added to the system.
 
 # The perfect architecture
 
