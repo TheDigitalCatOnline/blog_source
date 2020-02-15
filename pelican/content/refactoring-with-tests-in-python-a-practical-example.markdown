@@ -915,6 +915,37 @@ class DataStats:
         return nds.stats(iage, isalary)
 ```
 
+## Step 10 - Still room for improvement
+
+As refactoring is an iterative process it will often happen that you think you did everything was possible, just to spot later that you missed something. In this case the missing step was spotted by Harun Yasar, who noticed another small code duplication.
+
+The two functions
+
+``` python
+    def _avg_salary(self):
+        return math.floor(sum(self._salaries)/len(self.data))
+
+    def _avg_age(self):
+        return math.floor(sum(self._ages)/len(self.data))
+```
+
+share the same logic, so we can definitely isolate that and call the common code in each function
+
+``` python
+    def _floor_avg(self, sum_of_numbers):
+        return math.floor(sum_of_numbers / len(self.data))
+    
+    def _avg_salary(self):
+        return self._floor_avg(sum(self._salaries))
+    
+    def _avg_age(self):
+        return self._floor_avg(sum(self._ages))
+```
+
+Which passes all the tests and is thus correct.
+
+Whenever I get corrected by someone who read one of my posts and just learned something new I feel so happy, because it means that the message is clear.
+
 ## Final words
 
 I hope this little tour of a refactoring session didn't result too trivial, and helped you to grasp the basic concepts of this technique. If you are interested in the subject I'd strongly recommend the classic book by Martin Fowler "Refactoring: Improving the Design of Existing Code", which is a collection of refactoring patterns. The reference language is Java, but the concepts are easily adapted to Python.
@@ -922,6 +953,7 @@ I hope this little tour of a refactoring session didn't result too trivial, and 
 ## Updates
 
 2017-07-28: [delirious-lettuce](https://github.com/delirious-lettuce) and [Matt Beck](https://github.com/superbeckgit) did a very serious proofread and spotted many typos. Thank you both for reading the post and for taking the time to submit the issues!
+2020-02-15: [Harun Yasar](https://github.com/harunyasar) spotted a missing refactoring in two functions. Thanks!
 
 ## Feedback
 
