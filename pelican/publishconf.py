@@ -12,6 +12,7 @@ from pelicanconf import *
 
 SITEURL = 'https://www.thedigitalcatonline.com'
 RELATIVE_URLS = False
+DEBUG = False
 
 FEED_MAX_ITEMS = 10
 

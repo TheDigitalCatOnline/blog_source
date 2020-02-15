@@ -98,7 +98,7 @@ def test_parse_assignment():
     }
 ```
 
-This test tries to assign the value `5` to the variable `x`, but in general we want to support assignment with expressions, so we should test this behaviour as well
+This test tries to assign the value `5` to the variable `x`, but in general we want to support assignment with expressions, so we should test this behaviour as well, including the presence of variables
 
 ``` python
 def test_parse_assignment_with_expression():
@@ -135,6 +135,33 @@ def test_parse_assignment_with_expression():
                     'value': 5
                 }
             }
+        }
+    }
+
+
+def test_parse_assignment_expression_with_variables():
+    p = cpar.CalcParser()
+    p.lexer.load("x = y + 4")
+
+    node = p.parse_assignment()
+
+    assert node.asdict() == {
+        "type": "assignment",
+        "variable": "x",
+        'value': {
+            'type': 'binary',
+            'operator': {
+                'type': 'literal',
+                'value': '+'
+            },
+            'left': {
+                'type': 'variable',
+                'value': 'y'
+            },
+            'right': {
+                'type': 'integer',
+                'value': 4
+            },
         }
     }
 ```
@@ -199,7 +226,7 @@ We are missing a final step. The CLI uses `parse_expression()` as its default en
 ``` python
 def test_parse_line_supports_expression():
     p = cpar.CalcParser()
-    p.lexer.load("2 * 3 + 4")
+    p.lexer.load("2 * x + 4")
 
     node = p.parse_line()
 
@@ -212,8 +239,8 @@ def test_parse_line_supports_expression():
                 'value': 2
             },
             'right': {
-                'type': 'integer',
-                'value': 3
+                'type': 'variable',
+                'value': 'x'
             },
             'operator': {
                 'type': 'literal',

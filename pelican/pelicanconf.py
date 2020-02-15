@@ -6,6 +6,7 @@ AUTHOR = u'Leonardo Giordani'
 SITENAME = u'The Digital Cat'
 SITESUBTITLE = "Adventures of a curious cat in the land of programming"
 SITEURL = ''
+DEBUG = True
 
 PATH = 'content'
 
