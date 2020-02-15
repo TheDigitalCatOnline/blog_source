@@ -18,8 +18,6 @@ This change, however, has not been harmless for Django novices: the django-users
 
 I want to thank all Django developers for their work. Despite the previous criticism on documentation, this post wants to be a thanksgiving for their efforts.
 
-Feel free to comment [here](https://plus.google.com/u/0/111444750762335924049) or to submit issues [here](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues).
-
 ## What are CBVs?
 
 Class-based views are, indeed, (Django) views based on (Python) classes. Until here, it makes sense, hopefully. This means that, to master them, you need to understand both Django views and Python classes, so let's give a quick definition of them.
@@ -221,3 +219,6 @@ Let me know if this post helped you in understanding the matter and feel free to
 
 2015-06-10: [meatypocket](https://www.reddit.com/user/meatypocket) spotted a missing `return` in the `dispatch()` override. Thank you!
 
+# Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
