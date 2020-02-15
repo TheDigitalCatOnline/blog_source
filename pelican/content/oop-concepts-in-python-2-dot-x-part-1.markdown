@@ -715,7 +715,7 @@ Some sources for the content of this post. Thank you authors!
 
 ## Updates
 
-2014-03-08: "When methods met classes" section had a typo: the sentence "The class method is bound to the class itself, while the instance method is bound to the class of the instance." is "while the instance method is bound to instance of the class.". Thanks [Mohcin Shah](https://plus.google.com/u/0/116309787480950087834/posts) for spotting it!
+2014-03-08: "When methods met classes" section had a typo: the sentence "The class method is bound to the class itself, while the instance method is bound to the class of the instance." is "while the instance method is bound to instance of the class.". Thanks Mohcin Shah for spotting it!
 
 2014-03-10: Fixed link to Alex Martelli's presentation.
 

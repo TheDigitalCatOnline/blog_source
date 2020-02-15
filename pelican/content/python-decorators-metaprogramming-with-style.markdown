@@ -384,7 +384,7 @@ Decorators are a very powerful tool, and they are worth learning. This may be fo
 
 ## Resources
 
-Many thanks to Bruce Eckel for [his three posts](http://www.artima.com/weblogs/viewpost.jsp?thread=240808) which have been (I think) the source for the page on [Python 3 Patterns, Recipes and Idioms](http://python-3-patterns-idioms-test.readthedocs.org/en/latest/PythonDecorators.html) (the latter is still work in progress). Update: as Bruce stated in a comment [here](https://plus.google.com/110554719587236016835/posts/MKoPaxEvkxq) "the Python3 Patterns book is kind of a failed project". So beware that information contained there is not going to be updated. It is however still a good starting point for Python studies and investigations.
+Many thanks to Bruce Eckel for [his three posts](http://www.artima.com/weblogs/viewpost.jsp?thread=240808) which have been (I think) the source for the page on [Python 3 Patterns, Recipes and Idioms](http://python-3-patterns-idioms-test.readthedocs.org/en/latest/PythonDecorators.html) (the latter is still work in progress). Update: as Bruce stated "the Python3 Patterns book is kind of a failed project". So beware that information contained there is not going to be updated. It is however still a good starting point for Python studies and investigations.
 
 A good source of advanced decorators can be found at the [Python Decorator Library](https://wiki.python.org/moin/PythonDecoratorLibrary), and a lot of stuff may be found on Stackoverflow under the [python-decorators tag](https://stackoverflow.com/questions/tagged/python-decorators).
 

@@ -209,5 +209,6 @@ When performing special actions that fall outside the standard CUD operations yo
 
 This post ends the series "Digging Up Django Class-based Views". Stay tuned for other [upcoming articles on Django](/categories/django/)!
 
-Feel free to use [the blog Google+ page](https://plus.google.com/u/0/111444750762335924049) to comment the post or to ask for an in-depth analysis of some topic. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+# Feedback
 
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
