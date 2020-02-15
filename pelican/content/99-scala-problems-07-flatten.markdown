@@ -84,6 +84,36 @@ def flatten(l: List[Any]): List[Any] = {
 }
 ```
 
+This initially seemed to be a good solution. but one of the readers of the blog spotted that it doesn't work properly. For example
+
+``` scala
+scala> flatten(List(List(4, List(5,6)), 5))
+res5: List[Any] = List(4, List(5, 6), 5)
+```
+
+This happens because the line `case (h:List[_])::tail => _flatten(res:::h, tail)` appends the head of the list directly to `res` without checking if it is a list itself. This can be solved by calling `flatten` on `h` before appending it
+
+``` scala
+def flatten(l: List[Any]): List[Any] = {
+    def _flatten(res: List[Any], rem: List[Any]):List[Any] = rem match {
+        case Nil => res
+        case (h:List[_])::Nil => _flatten(res, h)
+        case (h:List[_])::tail => _flatten(res:::flatten(h), tail)
+        case h::tail => _flatten(res:::List(h), tail)
+    }
+    _flatten(List(), l)
+}
+```
+
+which this time works properly
+
+``` scala
+scala> flatten(List(List(4, List(5,6)), 5))
+res5: List[Any] = List(4, 5, 6, 5)
+```
+
+At this point I understand that I need to learn how to write unit tests in Scala, I miss TDD!!
+
 # Flatmap
 
 `List` objects provide a very interesting method, `flatMap()` that, just like `map()`, applies a given function to all elements of the list. While `map()` builds the resulting collection concatenating the results of each application, `flatMap()` concatenates the elements of the collection that results from each application.
@@ -112,6 +142,10 @@ def flatten(l: List[Any]): List[Any] = l flatMap {
 ```
 
 Pay attention to the fact that this function has to drop the type check just like the first one.
+
+# Updates
+
+2020-02-15: Thanks [Raja](https://github.com/mighty-raj) for spotting the error with nested lists. You can see his considerations [here](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues/15)
 
 # Final considerations
 
