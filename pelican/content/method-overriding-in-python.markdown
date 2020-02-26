@@ -1,7 +1,7 @@
 Title: Method overriding in Python
 Date: 2014-05-19 13:51:26 +0200
 Category: Programming
-Tags: Python, OOP
+Tags: Python, Python3, OOP
 Authors: Leonardo Giordani
 Slug: method-overriding-in-python
 Image: method-overriding-in-python
@@ -80,7 +80,7 @@ dict_proxy({'__module__': '__main__',
 dict_proxy({'__module__': '__main__', '__doc__': None})
 ```
 
-This shows that the `Child` class does not actually contain the `get_value()` method and that a mechanism of automatic delegation is active under the hood. For an insight on this mechanism check [this post]({filename}oop-concepts-in-python-2-dot-x-part-1.markdown).
+This shows that the `Child` class does not actually contain the `get_value()` method and that a mechanism of automatic delegation is active under the hood. For an insight on this mechanism check [this post]({filename}python-3-oop-part-3-delegation-composition-and-inheritance.markdown).
 
 ## Method overriding in action
 
@@ -109,7 +109,7 @@ Now `Child` objects behave differently
 
 and taking a look inside the class we spot a difference
 
-```
+``` pycon
 >>> Parent.__dict__
 dict_proxy({'__module__': '__main__',
             'get_value': <function get_value at 0xb69a656c>,

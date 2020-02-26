@@ -123,13 +123,14 @@ ul.list-inline li {
     font-size: 0.8em;
 }
 
-#main .inner section#related {
+#main .inner section.footer {
     padding: 2em 0 0 0;
     margin-bottom: 3em;
 }
 
-#main .inner section#related h1 {
+#main .inner section.footer h1 {
     font-size: 1.5em;
+    line-height: 4em;
 }
 
 a.headerlink {
@@ -194,6 +195,19 @@ article.card div.card-body p.card-text a.tag {
 article.card div.card-body p.card-text a.tag:hover {
     background-color: #ddd;
     color: #999!important;
+}
+
+.mini article.card {
+    margin: 0 0 1em 6em;
+    width: calc(20% - 6em);
+}
+
+.mini article.card div.card-body h2 {
+    font-size: 1em;
+}
+
+.mini article.card div.card-body h2:hover {
+    color: inherit;
 }
 
 #main .inner section#content div.center-image {
