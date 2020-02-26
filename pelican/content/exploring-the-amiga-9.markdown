@@ -8,14 +8,15 @@ Series: Exploring the Amiga
 Image: exploring-the-amiga
 Summary: 
 
-At the end of the previous instalment we left Exec at the very end of the `AddLibrary` function. Before this function returns to the caller the system computes a checksum, which in this case is just the arithmetic sum of all the addresses in the jump table of the library we installed. This algorithm, simple as it may be TODO, has several advantages. First of all it is fast, consisting in as many 16 bits sums (`add.w`) as functions in the library. Exec contains 104 functions, which results in TODO clock cycles 104 * TODO, TODO seconds on a BLA TODO
+
+At the end of the previous instalment we left Exec after the execution of the `AddLibrary` function. Before this function returns to the caller the system computes a checksum, which in this case is just the arithmetic sum of all the addresses in the jump table of the library we installed. This algorithm, simple as it may be TODO, has several advantages. First of all it is fast, consisting in as many 16 bits sums (`add.w`) as functions in the library. Exec contains 104 functions, which results in TODO clock cycles 104 * TODO, TODO seconds on a BLA TODO
 It is also independent from TODO the order of the functions in the library: this is generally speaking not a concern, but since it is a property of this type of sum, it is worth mentioning it. The real concern we have with checksums is how easy it is to create a collision, that is to mistake a set of values for another, based on the fact that they have the same checksum. In this case are we really concerned? I don't believe so. TODO
 
 # `SumLibrary`
 
 To understand how `SumLibrary` works we have to recall the structure of a library node. The library we are going to process is contained in a linked list, thus it starts with a structure `LN`, which is followed ("contains") a structure `LIB`. TODO USEFUL?
 
-In particular we are interested in a field the structure `LIB`, that is `LIB_FLAGS` t. This is the first field of the structure and it is actually a mask of bits, each one representing an on/off (flag) condition. The file `include_i/exec/libraries.i` contains the following definition of `LIB_FLAGS`
+In particular we are interested in a field the structure `LIB`, that is `LIB_FLAGS`. This is the first field of the structure and it is actually a mask of bits, each one representing an on/off (flag) condition. The file `include_i/exec/libraries.i` contains the following definition of `LIB_FLAGS`
 
 ``` m68k
 *------ LIB_FLAGS bit definitions (all others are system reserved)
@@ -54,7 +55,7 @@ In particular we are interested in a field the structure `LIB`, that is `LIB_FLA
 00001526: 4e75                      rts
 ```
 
-Since there are some internal jumps it is worth splitting the function in several parts
+Since there are some internal jumps it is worth splitting the function into several parts
 
 ``` m68k
 000014d4: 0829 0002 000e            btst    #0x2,0xe(a1)

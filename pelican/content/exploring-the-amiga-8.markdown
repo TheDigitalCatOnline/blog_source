@@ -148,7 +148,7 @@ With this structure in mind, let's dive into the source code of `Enqueue`. The f
 0000168c: 2340 0004                 move.l  d0,0x4(a1)
 00001690: 2040                      movea.l d0,a0
 00001692: 2089                      move.l  a1,(a0)
-00001694: 4e75                      rts     
+00001694: 4e75                      rts
 ```
 
 And it can be roughly divided into three sections, according to the internal jumps.
@@ -218,7 +218,7 @@ InsertNode:
 0000168c: 2340 0004                 move.l  d0,0x4(a1)
 00001690: 2040                      movea.l d0,a0
 00001692: 2089                      move.l  a1,(a0)
-00001694: 4e75                      rts     
+00001694: 4e75                      rts
 ```
 
 In either case, when we reach the tail or when the priority of the next node is lower than the one of the new node, we reach `InsertNode`. At this point `a0` points to `Next` and we can access `Pred` through `0x4(a0)` (that is `LN_SUCC` of `Next`).
@@ -240,7 +240,7 @@ This moves `a0`, the address of `Next`, into the first field of `Ins`, that is `
 ``` m68k
 00001690: 2040                      movea.l d0,a0
 00001692: 2089                      move.l  a1,(a0)
-00001694: 4e75                      rts     
+00001694: 4e75                      rts 
 ```
 
 Last, the address of `Ins` becomes the `LN_SUCC` of `Pred`, so we move `d0` into `a0` because, as I already mentioned, the Address Register Indirect Mode can be used only with `An` registers. After this the function returns to the caller.
