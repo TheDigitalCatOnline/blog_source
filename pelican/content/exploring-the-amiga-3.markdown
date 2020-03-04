@@ -18,7 +18,7 @@ The trick here is that Exec is the library used to load in memory other librarie
 
 This is one of the powers of the Assembly language. The property of treating the code as if it was pure data is called homoiconicity, and is something that can be rarely found in other languages. Lisp is a good example of a higher level homoiconic language.
 
-Back to our vector table, we have to find a way to use the Exec library to install in memory the Exec library itself. The concept is not that complex, actually. The pseudocode is something like this:
+Back to our vector table, we have to find a way to use the Exec library to install in memory the Exec library itself. The concept is not that complex, actually. The final structure we are trying to achieve is something like this:
 
 ``` text
 vectors:
@@ -55,7 +55,7 @@ For example we might have
 
 Where the entry of the table are `0x164-0x42 = 0x122`, `0x1fa-0x42 = 0x1b8`, and `0x313-0x42 = 0x2d1`.
 
-The vectors table, thus, is the source from which we can calculate the jump table. The code to perform this, however, is contained in one of the functions itself, let's say the number 2
+The vectors table, thus, is the source from which we can calculate the jump table. The code to perform this, however, is contained in one of the functions itself, let's assume it's function number 2
 
 
 ``` text
@@ -144,9 +144,9 @@ We know that Kickstart is loaded at address 0xfc0000 (Amiga System Programmer's 
 
 ## Step 2
 
-In the Amiga system all libraries have a specific structure when loaded in memory. Apart from the prefixed jump table, the library code itself has a fixed structure that allows us to read and use it.
+In the Amiga system all libraries have a specific structure when loaded in memory. Apart from the prefixed jump table, the library code itself is wrapped in a fixed structure that allows us to read and use it.
 
-First of all all libraries in memory are nodes of a linked list, so we expect to find the structure of the node itself. Then, inside the node, we expect to find the actual library structure.
+Libraries in memory are nodes of a linked list, so the dist thing we expect to find is the structure of the node itself. Then, inside the node, we expect to find the actual library structure.
 
 The include file `include_i/exec/nodes.i` tells us that a standard linked list node has the following structure
 
@@ -160,13 +160,13 @@ The include file `include_i/exec/nodes.i` tells us that a standard linked list n
     LABEL   LN_SIZE ; Note: word aligned
 ```
 
-The two 32-bit pointers `LN_SUCC` and `LN_PRED` are created when the node is loaded in memory, so we need to look for the rest of the structure, namely 1 byte with `LN_TYPE`, 1 byte with `LN_PRI` and 4 bytes with `LN_NAME`. From the same file `include_i/exec/nodes.i` we know that the note type for a library is `09`
+The two 32-bit pointers `LN_SUCC` and `LN_PRED` are created when the node is loaded in memory, so we need to look for the rest of the structure, namely 1 byte with `LN_TYPE`, 1 byte with `LN_PRI` and 4 bytes with `LN_NAME`. From the same file `include_i/exec/nodes.i` we know that the node type for a library is `09`
 
 ``` m68k
 NT_LIBRARY  EQU 9
 ```
 
-So the pattern we are looking for is `09XX 00fc 00a8`, respectively the node type (`09`), an unknown priority (`XX`), and the library name pointer `00fc 00a8`. We also know that the pattern is likely to be stored towards the beginning of the whole ROM, as one of the first things the library will do is to create its own structure in memory. This last assumption is not to be taken for granted, but it's a reasonable one.
+So the pattern we are looking for is `09XX 00fc 00a8`, respectively the node type (`09`), an unknown priority (`XX`), and the library name pointer `00fc 00a8`. We also know that the pattern is likely to be stored towards the beginning of the whole ROM, as one of the first things the library will do is to create its own structure in memory. This last assumption is not to be taken for granted, as the code could easily jump around, but it's a reasonable one.
 
 In the Kickstart 1.3 code this pattern can be found at offset `0x030c`.
 
@@ -175,7 +175,7 @@ In the Kickstart 1.3 code this pattern can be found at offset `0x030c`.
 If this is the correct position of the node structure, we expect to find just after it the structure of the library as described in the include file `include_i/exec/libraries.i`
 
 ``` m68k
- STRUCTURE LIB,LN_SIZE     
+ STRUCTURE LIB,LN_SIZE
     UBYTE   LIB_FLAGS       ; see below
     UBYTE   LIB_pad         ; must be zero
     UWORD   LIB_NEGSIZE     ; number of bytes before LIB
@@ -211,9 +211,9 @@ From this I know that the version of `exec` contained in this Kickstart is 34 (`
 
 ## Step 3
 
-What we are really interested in, at this point, is where the address of this structure is mentioned in the code, as it will be used to create the library structure. Since after creating the library structure the `MakeFunctions` routine will be invoked we can know from here where the latter is defined.
+What we are really interested in, at this point, is where the address of this structure is mentioned in the code, as it will be used to create the library structure. Since the `MakeFunctions` routine will be invoked after creating the library structure, we can know from here where the former is defined.
 
-The structure is at address `0x030c` and we are looking for and instruction like `lea 0x30c(pc),ax`, where `ax` is one of the address registers `a0`-`a7`. Loading the address of a table in a register is the standard way to loop on the table to modify it or to copy the bytes somewhere. 
+The structure is at address `0x030c` and we are looking for and instruction like `lea 0x30c(pc),ax`, where `ax` is one of the address registers `a0`-`a7`. Loading the address of a table in a register is the standard way to loop on the table to modify it or to copy the bytes somewhere. It was interesting to discover why this is the preferred way to do it
 
 > The 68000 does not allow you to execute a MOVE instruction with a destination relative to the program counter (PC). In the view of the 68000 designers, code should not patch itself. If you must change a table in the middle of code, you must point to it with an instruction like LEA TABLE(PC),An and then alter it through An. (Self-modifying code is especially bad for 68000 programs that may someday run on the 68020, because the 68020's instruction cache normally assumes that code is pure.
 
@@ -252,7 +252,7 @@ size = MakeFunctions(address, vectors, offset)
 d0                   a0       a1       a2
 ```
 
-where `address` is the address where the jump table will be constructed, `vectors` is a table that lists the function addresses (the onewe are looking for) and `offset` tells the function if the function addresses are absolute (if value is `0`) or relative (in which case offset is the base for the displacement). The list of addresses has to be -1-terminated (`0xffff`).
+where `address` is the address where the jump table will be constructed, `vectors` is a table that lists the function addresses (the one we are looking for) and `offset` tells the function if the function addresses are absolute (value is `0`) or relative (in which case offset is the base for the displacement). The list of addresses has to be terminated with -1 (`0xffff`).
 
 So the first line stores in `a0` the content of `a6`, which is the ExecBase address. This is where we want to install the library. The second line loads the address of the vectors table in `a1` and the same value is stored in `a2`. Then the code branches to the subroutine at `0x15b2` which at this point we know is the address of `MakeFunctions`.
 
@@ -260,9 +260,9 @@ So the first line stores in `a0` the content of `a6`, which is the ExecBase addr
 
 We extracted two useful information from this code. First, the vector table is at address `0x1a7c`, and second the `MakeFunctions` subroutine is at address `0x15b2`. The latter will be useful to double check the content of the vector table.
 
-After `MakeFunctions` has been executed the code returns and the next instruction stores the final size of the jump table 16 bytes after the address contained in `a6`. With the help of the structures shown above we know that at that offset we can find the `LIB_NEGSIZE` field, that contains the size of the jump table (number of bytes before the library).
+After `MakeFunctions` has been executed, the code returns and the next instruction stores the final size of the jump table 16 bytes after the address contained in `a6`. With the help of the structures shown above we know that at that offset we can find the `LIB_NEGSIZE` field, that contains the size of the jump table (number of bytes before the library).
 
-It's time to check if what we found is correct. There should be a table at address `0x1a7c` that contains function addresses in the order listed by the include file `include_i/exec/exec_lib.i`. As `MakeFunctions` in that file is listed at the 11th place we can check if the table is consistent. That address should point a function at `0x15b2`, according to the previous code.
+It's time to double-check what we found. There should be a table at address `0x1a7c` that contains function addresses in the order listed by the include file `include_i/exec/exec_lib.i`. As `MakeFunctions` itself is listed in that file at the 11th place we can check if the table is consistent. That address should point a function at `0x15b2`, according to the previous code.
 
 The values at `0x1a7c` are the following 
 

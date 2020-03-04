@@ -102,7 +102,7 @@ test: AmigaOS loadseg()ble executable/binary
 
 # LEA, the PC and the relative offset
 
-In Assembly you can manage memory cells using either their content or the address, as you can do with pointers in C or similar concepts in other high-level languages. You can also set labels that the assembler will convert in instruction addresses, but these are (almost) always relative to the beginning of the code itself, as the code may be loaded anywhere in memory.
+In Assembly, you can manage memory cells using either their content or the address, as you can do with pointers in C or similar concepts in other high-level languages. You can also set labels that the assembler will convert into instruction addresses, but these are (almost) always relative to the beginning of the code itself, as the code may be loaded anywhere in memory.
 
 This means that, generally speaking, all the addresses we use when we branch to other parts of the code should be relative to the current instruction.
 
@@ -124,7 +124,7 @@ Pay attention: since your code starts always at address `0x0`, you might be temp
 
 ## Relative offset encoding
 
-A question may arise, then: why does the code show the address `0x30` if the displacement is relative?
+A question may arise, then: why does the code show the address `0x30c`, which is the effective address, if the displacement is relative?
 
 In the example, the syntax `0x30c(pc)` doesn't mean "the line at `0x30c` from the current line", but "the line at `0x30c` *considering that* the current line is `0x0364`". Let's dig into the binary representation of the instruction to see how the processor receives it. The value `0x41faffa6` in binary form is 
 
@@ -148,7 +148,7 @@ The fact that the PC is pointing at the address might be overlooked. The manual 
 > The value in the PC is the address of the extension word.
 > 2.2.11 (2-13)
 
-So, while the Assembly code uses the absolute value, the actual opcode contains a true displacement from the current position.
+So, while the Assembly code uses the absolute value, the actual opcode contains a true displacement from the current position. The disassembler formats the value so that it is easy for us to understand the effective address (`0x30c`), but also telling us that there is more going on behind the scenes using the `(pc)`suffix.
 
 # How to open a library
 
@@ -160,14 +160,14 @@ When the Amiga OS loads a library in memory the Exec master library analyses its
 
 The Exec master library is not different, but this library is loaded as part of the bootstrap process, and the base address is always stored in memory location `0x4`. To use one of Exec's functions, then, we just need to issue a `jsr <address>` (Jump to SubRoutine), where `<address>` is the current position in memory of the function we want to call. Since we don't know the absolute address, being the library dynamically loaded, we use the library's jump table to retrieve the base address and get the function address as a fixed offset from the former.
 
-Many Amiga programmers knew (and know) the addresses by heart, which is fine since the Amiga OS promises not to change them among different versions. So, for example, the `OpenLibrary` function can be found at address `-552` relative to the library base, while `CloseLibrary` is at `-414`. To call the `OpenLibrary` function, then, you need the following code
+Many Amiga programmers knew (and know) the addresses by heart, which is fine since the Amiga OS promises not to change the orderof the jump table among different versions of Exec. So, for example, the address of the `OpenLibrary` function can be found at `-552` bytes before the library base address, while `CloseLibrary` is at `-414`. To call the `OpenLibrary` function, then, you need the following code
 
 ``` m68k
     move.l 4.w,a6   ; a6 = base address of Exec
     jsr -552(a6)    ; OpenLibrary()
 ```
 
-The first instruction moves the value contained at address `0x4` into the `a6` register. This way the register will contain the base address of Exec. Then it jumps to the subroutine which address is 552 bytes before that base address. So, if `a6` contains an address like `0x20000` the code jumps to `0x1fdd8` (`0x20000 - 552`).
+The first instruction moves the value contained at address `0x4` into the `a6` register. This way the register will contain the base address of Exec. Then it jumps to the subroutine which address is 552 bytes before that base address. So, if `a6` contains an address like `0x20000` the code jumps to `0x1fdd8` (`0x20000 - 552`). This also shows us that the jump table is actually a proper list of jump instructionss, not just addressess.
 
 The `OpenLibrary` function, however, expects some parameters, as you can see on the documentation page `exec.library/OpenLibrary` ([here](http://amigadev.elowar.com/read/ADCD_2.1/Includes_and_Autodocs_3._guide/node0222.html)).
 

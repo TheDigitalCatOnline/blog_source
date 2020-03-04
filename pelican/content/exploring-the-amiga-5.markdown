@@ -18,7 +18,7 @@ The Amiga originally run on a Motorola 68k, which doesn't provide any memory man
 
 The Motorola 68k is a 32-bit processor, thus registers and the address bus have that size. The memory, however, is connected to only 24 of the 32 lines of the bus, which means that the total memory space addressable by the processor is a 24-bit space, that gives 16 Megabytes instead of the possible 4 Gigabytes. That amount of memory was however enough for the period when the Amiga was designed. Consider that the most successful model of Amiga, the Amiga 500, had 500 KBytes of memory, sometimes increased to 1 Megabyte through a memory expansion.
 
-The lack of a memory scheme enforced by the processor means that at boot time the memory is just a flat area that can be addressed directly. As we saw in the previous instalments Exec creates its own structure in memory, generating the library node and creating the library jump table. This happens in the bigger picture of the machine initialisation, and one of the tasks performed during this initialisation is the setup of the memory management structures.
+The lack of a memory scheme enforced by the processor means that at boot time the memory is just a flat area that can be addressed directly. As we saw in the previous instalments, Exec creates its own structure in memory, generating the library node and creating the library jump table. This happens in the bigger picture of the machine initialisation, and one of the tasks performed during this initialisation is the setup of the memory management structures.
 
 # The Exec base address
 

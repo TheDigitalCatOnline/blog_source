@@ -73,7 +73,7 @@ As you can see the latter mentions the former reserving space for it at the begi
 
 The comment after the `LABEL` macro in the `LN` structure says that the structure is word aligned, and indeed its size is a multiple of a word (2 bytes): 2 `APTR` (8 bytes) + 1 `UBYTE` (1 bytes) + 1 `BYTE` (1 byte) + 1 `APTR` (4 bytes) = 14 bytes.
 
-To find the field updated by `Open` we need to skip 32 bytes. So, after we skip the whole `LN` structure, we still have 18 bytes to skip into the `LIB` structure. At that offset we find the `LIB_OPENCNT` field (remember that `UBYTE` is 1 byte, `UWORD` 2 bytes, and `APTR` and `ULONG` 4 bytes). This field is, as the comment reads, the "number of current opens".
+To find the field updated by `Open` we need to skip 32 bytes. So, after we skip the whole `LN` structure, we still have 18 bytes to skip into the `LIB` structure. At that offset we find the `LIB_OPENCNT` field (remember that `UBYTE` is 1 byte, `UWORD` 2 bytes, and `APTR` and `ULONG` 4 bytes). This field is, as the comment reads, the "number of current opens". The system counts the number of times a library has been opened because a library with zero active users can safely be removed from memory.
 
 The last instruction of the `Open` function is `rts` (ReTurn from Subroutine) that returns to the instruction after the `jsr` that called the function.
 
@@ -223,7 +223,7 @@ Relative:
 000015ba: 3219                      move.w  (a1)+,d1
 ```
 
-then compares it with `0xffff` (or `#-0x1`) to see if we reached the end of the table. In that case the code jumps to the fourth section (`0x15e4`, labelled `Cleanup`), otherwise the execution continues with the next instruction
+then compares it with `0xffff` (or `#-0x1`) to see if we reached the end of the table. In that case the code jumps to the fourth section (`0x15e4`, labelled `Cleanup` here), otherwise the execution continues with the next instruction
 
 ``` m68k
 000015bc: 0c41 ffff                 cmpi.w  #-0x1,d1
@@ -272,7 +272,7 @@ The last section simply restores the stack pointer, popping the value of the `a3
 
 ``` m68k
 000015e4: 265f                      movea.l (sp)+,a3
-000015e6: 4e75                      rts     
+000015e6: 4e75                      rts
 ```
 
 # Self-modifying code
@@ -301,7 +301,7 @@ First we have to convert the number in binary, and we get
 0x4ef9 -> 0100 1110 1111 1001
 ```
 
-The first 10 bits (`0100 1110 11`) already identify a `jmp` instruction. The following 6 bits (`111 001`) identify the addressing mode, which in this case is `Absolute Long` or `(xxx).L` (Programmer's Reference Manual, 4-108). This instruction shall then be followed by a 4 bytes absolute address.
+The first 10 bits (`0100 1110 11`) already identify a `jmp` instruction. The following 6 bits (`111 001`) identify the addressing mode, which in this case is `Absolute Long` or `(xxx).L` (Programmer's Reference Manual, 4-108). This instruction shall then be followed by a 4 bytes absolute address. Please note that the function is a `jmp` and not a `jsr`, which will then not alter the address stored in the stack; a later `rts` will thus return to the proper called of the function and not to the jump table.
 
 With that `move.w`, then, the code writes in memory some Assembly code. Techniques like this have been and are used by games and viruses to obfuscate the code, as a static analysis of the binary will not reveal what will be there only at runtime!
 

@@ -295,7 +295,7 @@ You can ignore the least significant bits with a simple bitwise AND
 12
 ```
 
-So if we get the current offset, we increase it by one and round down to the nearest integer we are aligning the offset to multiples of a word (2 bytes). The `ALIGNWORD` macro in the `include_i/exec/types.i` file implements exactly this algorithm
+So, given the current offset, if we increase it by one and round down to the nearest integer we are aligning the offset to multiples of a word (2 bytes). The `ALIGNWORD` macro in the `include_i/exec/types.i` file implements exactly this algorithm
 
 ``` m68k
 ALIGNWORD   MACRO       ; Align structure offset to nearest word
