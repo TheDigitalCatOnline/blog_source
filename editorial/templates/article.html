@@ -4,6 +4,15 @@
 {% if article.summary %}
 <meta name="description" content="{{ article.summary|striptags }}">
 {% endif %}
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="{{ article.title|striptags }}" />
+{% if article.summary %}
+<meta name="twitter:description" content="{{ article.summary|striptags }}" />
+{% else %}
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+{% endif %}
+<meta name="twitter:image" content="{{ article.image }}" />
 {% endblock %}
 
 {% block title %}{{ article.title|striptags }} - {{ SITENAME }}{% endblock %}
