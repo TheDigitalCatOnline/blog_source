@@ -8,7 +8,7 @@ Slug: exploring-the-amiga-4
 Series: Exploring the Amiga
 Image: exploring-the-amiga-4
 Style: retro
-Summary: 
+Summary: The base functions of the Exec library and the MakeFunctions procedure
 
 # The Exec base functions
 

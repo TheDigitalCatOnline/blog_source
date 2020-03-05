@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-12-decode-a-run-length-encoded-list
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to implement run-length encoding in Scala
 
 # The problem
 

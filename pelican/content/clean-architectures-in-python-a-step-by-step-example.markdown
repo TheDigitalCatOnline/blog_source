@@ -6,7 +6,7 @@ Tags: OOP, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
 Slug: clean-architectures-in-python-a-step-by-step-example
 Image: clean-architectures
-Summary: 
+Summary: How to create software that can be easily changed and adapted, following the clean architecture principles
 
 **Update**: _an expanded version of this post may be found in "Clean Architectures in Python", a book I published on LeanPub. The book features 3 chapters on TDD with pytest, mocks and unit testing in general, and 4 chapters on clean architectures. Those chapters are very similar to this post, but they include a discussion and examples of integration between the architecture and real-world databases. The book is free and can be downloaded [here](https://leanpub.com/clean-architectures-in-python)._
 

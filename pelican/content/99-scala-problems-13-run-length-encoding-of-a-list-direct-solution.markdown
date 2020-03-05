@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-13-run-length-encoding-of-a-list-direct-solution
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to process a whole list through the run-length encoding in Scala
 
 # The problem
 

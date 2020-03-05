@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-11-modified-run-length-encoding
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing a variant of the run-length encoding in Scala
 
 # The problem
 

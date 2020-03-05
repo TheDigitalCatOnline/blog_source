@@ -8,7 +8,7 @@ Slug: exploring-the-amiga-2
 Series: Exploring the Amiga
 Image: exploring-the-amiga-2
 Style: retro
-Summary: 
+Summary: The jump table of libraries in the Amiga system, types and structures of Kickstart 1.3
 
 # The library jump table
 

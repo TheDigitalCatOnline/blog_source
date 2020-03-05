@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-16-20
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing more list management in Scala (dropping elements, splitting the, etc.)
 
 # Problem 16
 

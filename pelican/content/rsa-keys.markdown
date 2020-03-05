@@ -6,7 +6,7 @@ Tags: algorithms, cryptography, SSL, SSH, RSA, Python
 Authors: Leonardo Giordani
 Slug: rsa-keys
 Image: rsa-keys
-Summary: 
+Summary: An in-depth discussion of the format of RSA keys, the PEM format, ASN, and PKCS
 
 I bet you created at least once an RSA key pair, usually because you needed to connect to GitHub and you wanted to avoid typing your password every time. You diligently followed the documentation on how to create SSH keys and after a couple of minutes your setup was complete.
 

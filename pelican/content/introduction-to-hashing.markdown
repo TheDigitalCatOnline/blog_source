@@ -5,7 +5,7 @@ Tags: algorithms
 Authors: Leonardo Giordani
 Slug: introduction-to-hashing
 Image: introduction-to-hashing
-Summary: 
+Summary: What is hashing and why is it important? What are hash functions and how can we define a good one?
 
 Have you ever used dictionaries or maps in your language of choice, or have you ever met a mysterious MD5 code while downloading a file from a server? Maybe you are a programmer, and using Git to manage your code you ended up dealing with strange numbers called SHA1, and surely you heard at least a couple of times the term _cache_, which probably needed to be emptied in your browser.
 

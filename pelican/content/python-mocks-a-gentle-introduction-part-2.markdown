@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: python-mocks-a-gentle-introduction-part-2
 Series: Python Mocks: a gentle introduction
 Image: python-mocks
-Summary: 
+Summary: Second part of the series on Python mocks: how to patch code
 
 In the [first post]({filename}python-mocks-a-gentle-introduction-part-1.markdown) I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the `return_value` and `side_effect` attributes, and the `assert_called_with()` method.
 

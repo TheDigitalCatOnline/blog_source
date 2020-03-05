@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-10-run-length-encoding-of-a-list
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to compress a list in Scala using run-length encoding
 
 # The problem
 

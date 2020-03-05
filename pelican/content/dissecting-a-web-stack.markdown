@@ -5,7 +5,7 @@ Tags: architectures, concurrent programming, cryptography, infrastructure, Flask
 Authors: Leonardo Giordani
 Slug: dissecting-a-web-stack
 Image: dissecting-a-web-stack
-Summary: 
+Summary: A layer-by-layer review of the components of a web stack and the reasons behind them
 
 > It was gross. They wanted me to dissect a frog.
 > 
