@@ -14,7 +14,7 @@ But do you know what you actually did?
 
 Do you know what the `~/.ssh/id_rsa` file really contains, or why that strange file that begins with `ssh-rsa` pairs with another that begins with `-----BEGIN RSA PRIVATE KEY-----`. Or why sometimes that same header misses the `RSA` part and just says `BEGIN PRIVATE KEY`?
 
-I belive that a minimum level of knowledge regarding the various formats of RSA keys is mandatory for every developer nowadays, not to mention the importance of understanding them deeply if you want to pursue a career in the infrastructure management world.
+I believe that a minimum level of knowledge regarding the various formats of RSA keys is mandatory for every developer nowadays, not to mention the importance of understanding them deeply if you want to pursue a career in the infrastructure management world.
 
 # RSA algorithm and key pairs
 
