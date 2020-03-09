@@ -8,7 +8,7 @@ Slug: exploring-the-amiga-3
 Series: Exploring the Amiga
 Image: exploring-the-amiga-3
 Style: retro
-Summary: 
+Summary: Exec and the Kickstart 1.3 vector table
 
 # Exec and the vector table
 

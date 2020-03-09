@@ -7,7 +7,7 @@ Slug: exploring-the-amiga-8
 Series: Exploring the Amiga
 Image: exploring-the-amiga-8
 Style: retro
-Summary: 
+Summary: Branching in the M68k Assembly, memory list management in Kickstart 1.3
 
 # Branching
 

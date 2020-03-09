@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-14-duplicate-the-elements-of-a-list
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to duplicate elements of a list in Scala
 
 # The problem
 

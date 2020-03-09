@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: a-game-of-tokens-solution-part-3
 Series: A game of tokens
 Image: a-game-of-tokens-solutions
-Summary: 
+Summary: How to create a language in Python with TDD - solutions for part 3
 
 This is my solution to the third part of "A Game of Tokens", where we try to implement a programming language with Python. The description of this third part of the challenge can be found [here]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3.markdown).
 

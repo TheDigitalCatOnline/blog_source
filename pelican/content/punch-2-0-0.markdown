@@ -1,6 +1,6 @@
 Title: Punch 2.0.0 is out
 Date: 2019-11-21 16:00:00 +0100
-Category: Programming
+Category: Projects
 Tags: Git, Python, Python3, versioning
 Authors: Leonardo Giordani
 Slug: punch-2-0-0

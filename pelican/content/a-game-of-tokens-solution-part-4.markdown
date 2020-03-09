@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: a-game-of-tokens-solution-part-4
 Series: A game of tokens
 Image: a-game-of-tokens-solutions
-Summary: 
+Summary: Solutions to the 4th part of the series on how to write a language in Python with TDD
 
 This is my solution to the fourth part of "A Game of Tokens", which can be found [here]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-4.markdown).
 

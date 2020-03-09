@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-08-eliminate-consecutive-duplicates
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing strategies to clean up lists in Scala
 
 # The problem
 

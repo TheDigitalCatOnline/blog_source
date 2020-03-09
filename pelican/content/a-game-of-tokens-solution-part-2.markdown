@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: a-game-of-tokens-solution-part-2
 Series: A game of tokens
 Image: a-game-of-tokens-solutions
-Summary: 
+Summary: Second part of the series on how to write a simple interpreter in Python with TDD
 
 Here we are, with my solution to the second part of "A Game of Tokens", aka how to write a simple interpreter in Python and survive to tell the tale. The second part of the challenge can be found [here]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2.markdown). Again, it is never repeated too many times, this is my personal solution. Your solution can be different, and if all the test pass it is correct!
 
