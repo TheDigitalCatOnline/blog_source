@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-15-duplicate-the-elements-of-a-list-a-given-number-of-times
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to replicate elements in a Scala list
 
 # The problem
 

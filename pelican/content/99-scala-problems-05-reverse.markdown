@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-05-reverse
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to reverse a list in Scala
 
 # The problem
 

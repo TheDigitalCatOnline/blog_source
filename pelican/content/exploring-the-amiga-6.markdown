@@ -8,7 +8,7 @@ Slug: exploring-the-amiga-6
 Series: Exploring the Amiga
 Image: exploring-the-amiga-6
 Style: retro
-Summary: 
+Summary: A review of the functions that perform memory management in Kickstart 1.3 
 
 # Memory initialisation
 

@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1
 Series: A game of tokens
 Image: a-game-of-tokens
-Summary: 
+Summary: How to write a programming language in Python, a TDD game
 
 # Introduction
 

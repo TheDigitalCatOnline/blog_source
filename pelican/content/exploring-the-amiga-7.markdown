@@ -7,7 +7,7 @@ Slug: exploring-the-amiga-7
 Series: Exploring the Amiga
 Image: exploring-the-amiga-7
 Style: retro
-Summary: 
+Summary: The complete Exec vector table, list management in Kickstart 1.3
 
 # The complete Exec vector table
 

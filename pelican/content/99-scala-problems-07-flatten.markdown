@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-07-flatten
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to flatten nested lists in Scala
 
 # The problem
 

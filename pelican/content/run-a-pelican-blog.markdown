@@ -5,7 +5,7 @@ Tags: Python, Python3, pelican
 Authors: Leonardo Giordani
 Slug: run-a-pelican-blog
 Image: run-a-pelican-blog
-Summary: 
+Summary: How to set up a static blog with Pelican, a step-by-step guide
 
 One of the biggest piece of advice I can give to beginner developers is: write a blog.
 

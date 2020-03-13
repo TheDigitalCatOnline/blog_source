@@ -8,7 +8,7 @@ Slug: exploring-the-amiga-1
 Series: Exploring the Amiga
 Image: exploring-the-amiga-1
 Style: retro
-Summary: 
+Summary: How to disassemble Amiga binaries and a discussion of the LEA instruction and relative offsets
 
 Recently I decided to give some time to retroprogramming, and in particular to explore the architecture of some famous microcomputer and consoles of the 80s and 90s. Glorious 8-bit systems like the ZX Spectrum, the Commodore 64, or the Nintendo Entertainment System. 16-bits giants the likes of the Amiga, its (eventually winning) MS-DOS-based counterparts running on the early x86 architectures, the immortal Nintendo Super Famicom and SEGA Genesis.
 
