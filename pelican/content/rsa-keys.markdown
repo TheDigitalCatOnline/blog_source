@@ -166,7 +166,7 @@ This that you see in the code snippet is then the private key in ASN.1 format. R
 
 Note that the ASN.1 structure contains the type of the object (`rsaEncryption`, in this case). You can further decode the `OCTET STRING` field, which is the actual key, specifying the offset
 
-```
+``` bash
 $ openssl asn1parse -inform pem -in private.pem -strparse 22
     0:d=0  hl=4 l=1188 cons: SEQUENCE          
     4:d=1  hl=2 l=   1 prim: INTEGER           :00
@@ -209,7 +209,7 @@ Being this an RSA key the fields represent specific components of the algorithm.
 
 If the key has been encrypted there are fields with information about the cipher, and the `OCTET STRING` fields cannot be further parsed because of the encryption.
 
-``` sh
+``` bash
 $ openssl asn1parse -inform pem -in private-enc.pem
     0:d=0  hl=4 l=1311 cons: SEQUENCE          
     4:d=1  hl=2 l=  73 cons: SEQUENCE          
@@ -256,7 +256,7 @@ $ openssl asn1parse -inform pem -in private-enc.pem
 
 Another way to look into a private key with OpenSSL is to use the `rsa` module. While the `asn1parse` module is a generic ASN.1 parser, the `rsa` module knows the structure of an RSA key and can properly output the field names
 
-``` sh
+``` bash
 $ openssl rsa -in private.pem -noout -text
 Private-Key: (2048 bit)
 modulus:
@@ -421,7 +421,7 @@ The structure of PKCS #8 is the reason why we had to parse the field at offset 2
 
 In the RSA algorithm the public key is build using the modulus and the public exponent, which means that we can always derive the public key from the private key. OpenSSL can easily do this with the `rsa` module, producing the public key in PEM format
 
-``` sh
+``` bash
 $ openssl rsa -in private.pem -pubout
 writing RSA key
 -----BEGIN PUBLIC KEY-----
@@ -437,7 +437,7 @@ DQIDAQAB
 
 You can dump the information in the public key specifying the `-pubin` flag
 
-``` sh
+``` bash
 $ openssl rsa -in public.pem -noout -text -pubin
 Public-Key: (2048 bit)
 Modulus:
@@ -466,7 +466,7 @@ Exponent: 65537 (0x10001)
 
 If you want to generate an RSA private key you can do it with OpenSSL
 
-``` sh
+``` bash
 $ openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
 ......................................................................+++
 ..........+++ 
@@ -476,7 +476,7 @@ Since OpenSSL is a collection of modules we specify `genpkey` to generate a priv
 
 If you want an encrypted key you can generate one specifying the cipher (for example `-aes-256-cbc`)
 
-``` sh
+``` bash
 $ openssl genpkey -algorithm RSA -out private-enc.pem -aes-256-cbc -pkeyopt rsa_keygen_bits:2048
 ...........................+++
 ..........+++
@@ -506,7 +506,7 @@ Another tool that you can use to generate key pairs is ssh-keygen, which is a to
 
 To create a key pair just run
 
-``` sh
+``` bash
 ssh-keygen -t rsa -b 2048 -f key
 ```
 
@@ -539,7 +539,7 @@ t16QlPubNxWeH3dHVzXdmFAItuH0DuyLyMoW1oxZ6+NrKu+pAAERxM303gejFzKDqXid5m1EOTvk4xhy
 
 To manually decode the central part of the key you can run the following code
 
-``` sh
+``` bash
 cat key.pub | cut -d " " -f2 | base64 -d | hexdump -ve '/1 "%02x "' -e '2/8 "\n"'
 ```
 
@@ -615,7 +615,7 @@ We often need to convert files created with one tool to a different format, so t
 
 This is useful to convert OpenSSH private keys to a newer format.
 
-``` sh
+``` bash
 openssl pkcs8 -topk8 -inform PEM -outform PEM -in pkcs1.pem -out pkcs8.pem
 ```
 
@@ -623,7 +623,7 @@ openssl pkcs8 -topk8 -inform PEM -outform PEM -in pkcs1.pem -out pkcs8.pem
 
 To convert public OpenSSH keys in a proper PEM format (prints to stdout)
 
-``` sh
+``` bash
 ssh-keygen -e -f public.pub -m PKCS8
 ```
 
@@ -633,7 +633,7 @@ This is easy to remember because `-e` stands for export.
 
 If you need to use in SSH a key pair created with another system 
 
-``` sh
+``` bash
 ssh-keygen -i -f public.pem -m PKCS8
 ```
 
