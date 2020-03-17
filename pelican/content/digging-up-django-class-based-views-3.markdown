@@ -23,7 +23,7 @@ class StickyNote(models.Model):
     text = models.TextField(blank=True, null=True)
 ```
 
-One of the first things we usually want to do is to build a form that allows the user to create a new entry in the database, in this case a new sticky note. We can create a page that allows us to input data for a new `StickyNote` simply creating the following vew
+One of the first things we usually want to do is to build a form that allows the user to create a new entry in the database, in this case a new sticky note. We can create a page that allows us to input data for a new `StickyNote` simply creating the following view
 
 ``` python
 class NoteAdd(CreateView):
@@ -61,7 +61,7 @@ Let us start with the `CreateView` class we used in our simple example ([CODE](h
 
 # Processing GET and POST requests
 
-We already met the `get` method in the [previous article]({filename}digging-up-django-class-based-views-2.markdown) when we talked about the `dispatch` method of the `View` class. A quick recap of its purpose: this method is uses to process an incoming HTTP request, and is called when the HTTP method is GET. Unsurprisingly, the `post` method is called when the incoming request is a POST one. The two methods are already defined by an ancestor of the `BaseCreateView` class, namely `ProcessFormView` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L129)), so itis useful to have a look at the source code of this last class:
+We already met the `get` method in the [previous article]({filename}digging-up-django-class-based-views-2.markdown) when we talked about the `dispatch` method of the `View` class. A quick recap of its purpose: this method is uses to process an incoming HTTP request, and is called when the HTTP method is GET. Unsurprisingly, the `post` method is called when the incoming request is a POST one. The two methods are already defined by an ancestor of the `BaseCreateView` class, namely `ProcessFormView` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L129)), so it is useful to have a look at the source code of this last class:
 
 ``` python
 class ProcessFormView(View):
@@ -96,7 +96,7 @@ Back to `ProcessFormView`, the `post` method does not directly render the templa
 
 This time, `get_form_kwargs` adds two keys to the form when it is instantiated, namely `data` and `files`. These come directly from the `POST` and `FILES` attributes of the request, and contain the data the user is sending to the server.
 
-Last, let's have a look at `form_valid` and `form_invalid`. Both methods are provided by `FormMixin` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L55)), but the former is augmented by `ModelFormMixin` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L123)). The base version of `form_invalid` calls `render_to_response` passing the context data initialised with the form itself. This way it is possible to fill the template with the form values and error messages for the wrong ones, while `form_valid`, in its base form, just returns an `HttpResponseRedirect` to the `success_url`. As I said, `form_valid` is overridded by `ModelFormMixin`, which first saves the form, and then calls the base version of the method.
+Last, let's have a look at `form_valid` and `form_invalid`. Both methods are provided by `FormMixin` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L55)), but the former is augmented by `ModelFormMixin` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L123)). The base version of `form_invalid` calls `render_to_response` passing the context data initialised with the form itself. This way it is possible to fill the template with the form values and error messages for the wrong ones, while `form_valid`, in its base form, just returns an `HttpResponseRedirect` to the `success_url`. As I said, `form_valid` is overridden by `ModelFormMixin`, which first saves the form, and then calls the base version of the method.
 
 Let's recap the process until here.
 
@@ -117,7 +117,7 @@ This rather rich code tour unveiled the inner mechanism of the `CreateView` clas
 
 # Final words
 
-As you can see, the structure behind the current implementation of Django class-based form views is rather complex. This allows the user to achieve complex behaviours like the CUD operations just by defining a couple of classes as I did in the simple example at the beginning of the post. Most of the time, however, such a simplification makes it difficult for the programmer to understand how to achieve the desired changes to the class behaviour. So, the purpose of this big tour I made inside the Django source code was to give an insight of what methods are called in the lifecycle of your HTTP request so that you can better identify what methods you need to override.
+As you can see, the structure behind the current implementation of Django class-based form views is rather complex. This allows the user to achieve complex behaviours like the CUD operations just by defining a couple of classes as I did in the simple example at the beginning of the post. Most of the time, however, such a simplification makes it difficult for the programmer to understand how to achieve the desired changes to the class behaviour. So, the purpose of this big tour I made inside the Django source code was to give an insight of what methods are called in the life cycle of your HTTP request so that you can better identify what methods you need to override.
 
 When performing special actions that fall outside the standard CUD operations you better inherit from `FormView` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L156)). The first thing to do is to check if and how you need to customize the `get` and `post` methods; remember that you either need to implement the full behaviour of those methods or make you changes and call the parent implementation. If this is not enough for your application consider overriding one of the more dedicated methods, such as `get_form_kwargs` or `form_valid`.
 
