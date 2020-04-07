@@ -9,4 +9,9 @@ cd ..
 rm -fR deploy/*
 cp -R pelican/output/* deploy/
 
-echo "Move to the deploy directory, check, commit and push"
+cd deploy
+git add .
+git ci -m "Updated"
+
+echo "Move to the deploy directory and push"
+
