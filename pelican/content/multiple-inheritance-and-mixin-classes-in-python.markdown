@@ -1,5 +1,6 @@
 Title: Multiple inheritance and mixin classes in Python
-Date: 2020-04-08 12:00:00 +0100
+Date: 2020-03-27 12:00:00 +0100
+Modified: 2020-04-08 12:00:00 +0100
 Category: Programming
 Tags: algorithms, Django, OOP, Python, Python3
 Authors: Leonardo Giordani
