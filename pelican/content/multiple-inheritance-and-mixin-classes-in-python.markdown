@@ -476,7 +476,7 @@ class Button(GraphicalEntity):
 
 
 class LimitSizeMixin:
-    def __init__(self, pos_x, pos_y, size):
+    def __init__(self, size_x, size_y, size):
 		size_x = min(size_x, 500)
 		size_y = min(size_y, 400)
         super().__init__(pos_x, pos_y, size_x, size_y)
