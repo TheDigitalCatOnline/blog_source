@@ -95,7 +95,7 @@ Once you have you unit test you can go and modify the code, knowing that the beh
 
 # Caveats
 
-Two remarks before we start our first refactoring. The first is that such a class could easily be refactored to some functional code. As you will be able to infer from the final result there is no real reason to keep an object-oriented approach for this code. I decided to go that way, however, as it gave me the possibility to show a design pattern called wrapper, and the refactoring technique that leverages it.
+Two remarks before we start our refactoring. The first is that such a class could easily be refactored to some functional code. As you will be able to infer from the final result there is no real reason to keep an object-oriented approach for this code. I decided to go that way, however, as it gave me the possibility to show a design pattern called wrapper, and the refactoring technique that leverages it.
 
 The second remark is that in pure TDD it is strongly advised not to test internal methods, that is those methods that do not form the public API of the object. In general, we identify such methods in Python by prefixing their name with an underscore, and the reason not to test them is that TDD wants you to shape objects according to the object-oriented programming methodology, which considers objects as **behaviours** and not as **structures**. Thus, we are only interested in testing public methods.
 
@@ -271,8 +271,9 @@ class DataStats:
 
 Where obviously `code_part_2` depends on `code_part_1`. The first refactoring, then, will follow this procedure
 
-1. We write a test called `test__stats()` for a `_stats()` method that is supposed to return the data as a Python structure. We can infer the latter manually from the JSON or running `json.loads()` from a Python shell. The test fails.
-2. We **duplicate** the code of the `stats()` method that produces the data, putting it in the new `_stats()` method. The test passes.
+1\. We write a test called `test__stats()` for a `_stats()` method that is supposed to return the data as a Python structure. We can infer the latter manually from the JSON or running `json.loads()` from a Python shell. The test fails.
+
+2\. We **duplicate** the code of the `stats()` method that produces the data, putting it in the new `_stats()` method. The test passes.
 
 ``` python
 
@@ -291,7 +292,7 @@ class DataStats:
         })
 ```
 
-3. We remove the duplicated code in `stats()` replacing it with a call to `_stats()`
+3\. We remove the duplicated code in `stats()` replacing it with a call to `_stats()`
 
 ``` python
 
@@ -727,7 +728,7 @@ After some passages, the code looks like this
         return self._select_salary(data, min)
 ```
 
-I noticed then a code duplication between `_avg_salary()` and `_select_salary()`:
+I noticed then a code duplication between `_avg_salary()` and `_select_salary()`
 
 ``` python
     def _avg_salary(self, data):
@@ -786,7 +787,7 @@ While doing this I noticed that `_avg_yearly_increase()` contains the same code,
         return math.floor(average_salary_increase/average_age_increase)
 ```
 
-It would be useful at this point to store the input data inside the class and to use it as `self.data` instead of passing it around to all the class's methods. This however would break the class's API, as currently `DataStats` is initialised without any data. Later I will show how to introduce changes that potentially break the API, and briefly discuss the issue. For the moment, however, I'll keep changing the class without modifying the external interface.
+It would be useful at this point to store the input data inside the class and to use it as `self.data` instead of passing it around to all the class's methods. This however would break the class's API, as `DataStats` is currently initialised without any data. Later I will show how to introduce changes that potentially break the API, and briefly discuss the issue. For the moment, however, I'll keep changing the class without modifying the external interface.
 
 It looks like `age` has the same code duplication issues as `salary`, so with the same procedure I introduce the `_ages()` method and change the `_avg_age()` and `_avg_yearly_increase()` methods accordingly.
 
@@ -812,9 +813,9 @@ The initial class didn't have any `__init__()` method, and was thus missing the 
 
 This is much more evident now that we refactored the method, because we have 10 methods that accept `data` as a parameter. I would be nice to load the input data into the class at instantiation time, and then access it as `self.data`. This would greatly improve the readability of the class, and also justify its existence.
 
-If we introduce a `__init__()` method that requires a parameter, however, we will change the class's API, breaking the compatibility with every other code that imports and uses it. Since we want to keep it, we have to devise a way to provide both the advantages of a new, clean class and of a stable API. This is not always perfectly achievable, but in this case the [Adapter design pattern](https://en.wikipedia.org/wiki/Adapter_pattern) (also known as Wrapper) can perfectly solve the issue.
+If we introduce a `__init__()` method that requires a parameter, however, we will change the class's API, breaking the compatibility with the code that imports and uses it. Since we want to keep it, we have to devise a way to provide both the advantages of a new, clean class and of a stable API. This is not always perfectly achievable, but in this case the [Adapter design pattern](https://en.wikipedia.org/wiki/Adapter_pattern) (also known as Wrapper) can perfectly solve the issue.
 
-The goal is to change the current class to match the new API, and then build a class that wraps the first one and provides the old API. The strategy is not that different from what we did previously, only this time we will deal with classes instead of methods. With a stupendous effort of my imagination I named the new class `NewDataStats`. Sorry, but sometimes you just have to get the job done.
+The goal is to change the current class to match the new API, and then build a class that wraps the first one and provides the old API. The strategy is not that different from what we did previously, only this time we will deal with classes instead of methods. With a stupendous effort of my imagination I named the new class `NewDataStats`. Sorry, sometimes you just have to get the job done.
 
 The first things, as happens very often with refactoring, is to duplicate the code, and when we insert new code we need to have tests that justify it. The tests will be the same as before, as the new class shall provide the same functionalities as the previous one, so I just create a new file, called `test_newdatastats.py` and start putting there the first test `test_init()`.
 
@@ -900,14 +901,6 @@ Once finished, I noticed that, as now methods like `_ages()` do not require an i
 It is time to replace the methods of `DataStats` with calls to `NewDataStats`. We could do it method by method, but actually the only thing that we really need is to replace `stats()`. So the new code is
 
 ``` python
-    def stats(self, data, iage, isalary):
-        nds = NewDataStats(data)
-        return nds.stats(iage, isalary)
-```
-
-And since all the other methods are no more used we can safely delete them, checking that the tests do not fail. Speaking of tests, removing methods will make many tests of `DataStats` fail, so we need to remove them.
-
-``` python
 class DataStats:
 
     def stats(self, data, iage, isalary):
@@ -915,7 +908,9 @@ class DataStats:
         return nds.stats(iage, isalary)
 ```
 
-## Step 10 - Still room for improvement
+And since all the other methods are not used any more we can safely delete them, checking that the tests do not fail. Speaking of tests, removing methods will make many tests of `DataStats` fail, so we need to remove them.
+
+# Step 10 - Still room for improvement
 
 As refactoring is an iterative process it will often happen that you think you did everything was possible, just to spot later that you missed something. In this case the missing step was spotted by Harun Yasar, who noticed another small code duplication.
 
@@ -942,19 +937,20 @@ share the same logic, so we can definitely isolate that and call the common code
         return self._floor_avg(sum(self._ages))
 ```
 
-Which passes all the tests and is thus correct.
+which passes all the tests and is thus correct.
 
-Whenever I get corrected by someone who read one of my posts and just learned something new I feel so happy, because it means that the message is clear.
+Whenever I get corrected by someone who read one of my posts and just learned something new I feel so happy, because it means that the message is clear!
 
-## Final words
+# Final words
 
 I hope this little tour of a refactoring session didn't result too trivial, and helped you to grasp the basic concepts of this technique. If you are interested in the subject I'd strongly recommend the classic book by Martin Fowler "Refactoring: Improving the Design of Existing Code", which is a collection of refactoring patterns. The reference language is Java, but the concepts are easily adapted to Python.
 
-## Updates
+# Updates
 
 2017-07-28: [delirious-lettuce](https://github.com/delirious-lettuce) and [Matt Beck](https://github.com/superbeckgit) did a very serious proofread and spotted many typos. Thank you both for reading the post and for taking the time to submit the issues!
+
 2020-02-15: [Harun Yasar](https://github.com/harunyasar) spotted a missing refactoring in two functions. Thanks!
 
-## Feedback
+# Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
