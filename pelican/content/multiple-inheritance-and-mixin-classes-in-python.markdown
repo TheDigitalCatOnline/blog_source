@@ -548,6 +548,10 @@ As we discussed before, mixins cannot be too generic, and here we see a good exa
 
 I hope this post helped you to understand a bit more how multiple inheritance works, and to be less scared by it. I also hope I managed to show you that classes have to be carefully designed and that there is a lot to consider when you create a class system. Once again, please don't forget composition, it's a powerful and too often forgotten tool.
 
+# Updates
+
+2020-03-13: GitHub user [sureshvv](https://github.com/sureshvv) noticed that the `LimitSizeMixin` method `__init__` had the wrong parameters `pos_x` and `pos_y`, instead of `size_x` and `size_y`. Thanks!
+
 # Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
