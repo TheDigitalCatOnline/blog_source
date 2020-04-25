@@ -15,6 +15,7 @@ To fully appreciate the content of the post, be sure you grasp two pillars of th
 # Multiple inheritance: blessing and curse
 
 ## General concepts
+
 To discuss mixins we need to start from one of the most controversial subjects in the whole OOP world: multiple inheritance. This is a natural extension of the concept of simple inheritance, where a class automatically delegates method and attribute resolution to another class (the parent class).
 
 Let me state it again, as it is important for the rest of the discussion: _inheritance is just an automatic delegation mechanism_.
@@ -66,10 +67,10 @@ we end up putting the features related to the review process in an object that s
                  |
                  |
           +------+--------------+
-		  |		                |
-		  |		                |
-		  |		                |
-	      |         reviewable assignable item
+          |                     |
+          |                     |
+          |                     |
+          |         reviewable assignable item
           |            (ask_review_to_user)
           |                     ^
           |                     |
@@ -89,10 +90,10 @@ However, this approach stops being viable as soon as an object needs to inherit 
                  |             CODE DUPLICATION           |
                  |                     |                  |
           +------+--------------+      |                  |
-		  |		                |      |                  |
-		  |		                |      |                  |
-		  |		                |      V                  |
-	      |         reviewable assignable item            |
+          |                     |      |                  |
+          |                     |      |                  |
+          |                     |      V                  |
+          |         reviewable assignable item            |
           |            (ask_review_to_user)               |
           |                     ^                         |
           |                     |                         |
@@ -116,10 +117,10 @@ The above situation can then be solved having `pull request` inherit from both t
                  |                                      |  |
                  |                                      |  |
           +------+-------------+ +----------------------+  |
-		  |		               | |                         |
-		  |		               | |                         |
-		  |		               | |                         |
-	      |                    | |                         |
+          |                    | |                         |
+          |                    | |                         |
+          |                    | |                         |
+          |                    | |                         |
           |                    | |                         |
           |                    | |                         |
           |                    | |                         |
@@ -209,7 +210,7 @@ class Child(Parent1, Parent2):
 As you can see, we already have a problem when we introduce multiple parents, and a common ancestor just adds a new level of complexity. The ancestor class can clearly be at any point of the inheritance tree (grandparent, grand-grandparent, etc.), the important part is that it is shared between `Parent1` and `Parent2`. This is the so-called diamond problem, as the inheritance graph has the shape of a diamond
 
 ``` text
-	  Ancestor
+      Ancestor
        ^   ^
       /     \
      /       \
@@ -217,7 +218,7 @@ Parent1     Parent2
     ^         ^
      \       /
       \     /
-	   Child
+       Child
 ```
 
 So, while with single-parent inheritance the rules are straightforward, with multiple inheritance we immediately have a more complex situation that doesn't have a trivial solution. Does all this prevent multiple inheritance from being implemented?
