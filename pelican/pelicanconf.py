@@ -42,7 +42,7 @@ AUTHOR_URL = 'authors/{slug}/'
 AUTHOR_SAVE_AS = AUTHOR_URL + 'index.html'
 
 PLUGIN_PATHS = ["../pelican-plugins"]
-PLUGINS = ['related_posts', 'series', 'sitemap', 'tag_cloud', 'assets']
+PLUGINS = ['related_posts', 'series', 'sitemap', 'tag_cloud', 'assets', 'share_post']
 
 SITEMAP = {
     'format': 'xml',

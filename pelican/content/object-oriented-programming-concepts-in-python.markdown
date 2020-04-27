@@ -1,6 +1,6 @@
 Title: Object-Oriented Programming (OOP) concepts in Python
 Date: 2020-04-26 00:00:00 +0100
-Category: Programming, Projects, Retro
+Category: Programming
 Tags: metaclasses, metaprogramming, OOP, Python, Python3
 Authors: Leonardo Giordani
 Slug: object-oriented-programming-concepts-in-python

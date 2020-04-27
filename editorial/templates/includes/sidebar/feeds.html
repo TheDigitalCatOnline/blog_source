@@ -1,15 +1,15 @@
 <ul class="list-clean">
     {% if FEED_ALL_ATOM %}
-    <li><a href="/{{ FEED_ALL_ATOM }}"><i class="fa fa-rss"></i> All posts</a></li>
+    <li><a href="/{{ FEED_ALL_ATOM }}"><i class="fas fa-rss"></i> All posts</a></li>
     {% endif %}
 
     {% if tag and TAG_FEED_ATOM %}
     {% set href = TAG_FEED_ATOM.format(slug=tag.slug) %}
-    <li><a href="/{{ href }}"><i class="fa fa-rss"></i> All posts tagged with: {{ tag }}</a></li>
+    <li><a href="/{{ href }}"><i class="fas fa-rss"></i> All posts tagged with: {{ tag }}</a></li>
     {% endif %}
 
     {% if category and CATEGORY_FEED_ATOM %}
     {% set href = CATEGORY_FEED_ATOM.format(slug=category.slug) %}
-    <li><a href="/{{ href }}"><i class="fa fa-rss"></i> All posts in category: {{ category }}</a></li>
+    <li><a href="/{{ href }}"><i class="fas fa-rss"></i> All posts in category: {{ category }}</a></li>
     {% endif %}
 </ul>

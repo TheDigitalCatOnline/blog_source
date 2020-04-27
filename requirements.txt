@@ -5,3 +5,4 @@ webassets
 cssmin
 jsmin
 mdx_video
+beautifulsoup4

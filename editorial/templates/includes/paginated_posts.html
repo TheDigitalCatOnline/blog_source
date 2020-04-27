@@ -12,7 +12,7 @@
             <a href="/{{ article.url }}"><h1 class="card-title">{{ article.title }}</h1></a>
             <p class="card-text">
                 <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
-                <span class="fa fa-tags"></span>
+                <span class="fas fa-tags"></span>
                 {% for tag in article.tags %}
                 <a href="/{{ tag.url }}" class="tag">{{ tag }}</a>{% if not loop.last %}{% endif %}
                 {% endfor %}

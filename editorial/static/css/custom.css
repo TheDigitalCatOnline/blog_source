@@ -8,7 +8,7 @@ div#wrapper div#main {
 
 #main .inner section#header h1 {
     font-size: 3em;
-    max-width: 70%;
+    max-width: 100%;
 }
 
 #banner .image img {
@@ -138,11 +138,15 @@ a.headerlink {
     margin-left: 0.4em;
 }
 
+a {
+    border-bottom: none;
+}
+
 code {
-    background-color: rgba(212, 218, 220, 0.25);
+    background-color: #f8f8f8; /*rgba(212, 218, 220, 0.25);*/
     border-radius: 0;
     font-family: "Courier New", monospace;
-    font-size: 0.9em;
+    font-size: 1em;
     border: 0;
     padding: 0;
     margin: 0;
@@ -174,15 +178,15 @@ article.card div.card-body h1:hover {
     color: inherit;
 }
 
-article.card div.card-body p.card-text time {
+p.article-info time {
     font-size: 0.8em;
 }
 
-article.card div.card-body p.card-text span {
+p.article-info span {
     margin-left: 0.5em;
 }
 
-article.card div.card-body p.card-text a.tag {
+p.article-info a.tag {
     font-size: 0.7em;
     border-radius: 0.25em;
     background-color: #f6f6f6;
@@ -192,7 +196,7 @@ article.card div.card-body p.card-text a.tag {
     font-weight: 1000;
 }
 
-article.card div.card-body p.card-text a.tag:hover {
+p.article-info a.tag:hover {
     background-color: #ddd;
     color: #999!important;
 }
