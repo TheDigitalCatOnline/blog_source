@@ -76,7 +76,7 @@
         </header>
         <div class="posts">
             <article class="card">
-                {% set article = series['Python 3 OOP'].first %}
+                {% set article = series['Python 3 OOP'][0] %}
                 <a href="/{{ article.url }}" class="image">
                     <img src="/images/python-3-oop.jpg" alt="Python 3 OOP" />
                 </a>
@@ -89,7 +89,7 @@
                 </div>
             </article>
             <article class="card">
-                {% set article = series['A game of tokens'].first %}
+                {% set article = series['A game of tokens'][0] %}
                 <a href="/{{ article.url }}" class="image">
                     <img src="/images/a-game-of-tokens.jpg" alt="A Game of Tokens" />
                 </a>
@@ -102,7 +102,7 @@
                 </div>
             </article>
             <article class="card">
-                {% set article = series['Exploring the Amiga'].first %}
+                {% set article = series['Exploring the Amiga'][0] %}
                 <a href="/{{ article.url }}" class="image">
                     <img src="/images/exploring-the-amiga-1.jpg" alt="Exploring the Amiga" />
                 </a>
