@@ -30,154 +30,152 @@
 
 {% block structured_data %}
 <script type="application/ld+json">
-{
-  "@context" : "https://schema.org",
-  "@type" : "Article",
-  "name" : "{{ article.title|striptags }}",
-  {% if article.author %}
-  "author" : {
-    "@type" : "Person",
-    "name" : "{{ article.author }}"
-  },
-  {% endif %}
-  "publisher" : {
-    "@type" : "Organization",
-    "name" : "The Digital Cat",
-    "logo" : {
-      "@type" : "ImageObject",
-      "url" : "{{ SITEURL }}/images/global/logo_200.jpg",
-      "height" : 200,
-      "width" : 200
-    }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ SITEURL }}/{{ article.url }}"
-  },
-  "datePublished" : "{{ article.locale_date }}",
-  "dateModified" : "{% if article.locale_modified %}{{ article.locale_modified }}{% else %}{{ article.locale_date }}{% endif %}",
-  "image" : "{{ SITEURL }}/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg",
-  {% if article.summary %}
-  "description" : "{{ article.summary|striptags }}",
-  "headline" : "{{ article.summary|striptags|truncate(110, False, '') }}",
-  {% endif %}
-  "url" : "{{ SITEURL }}/{{ article.url }}"
-}
+  {
+      "@context" : "https://schema.org",
+      "@type" : "Article",
+      "name" : "{{ article.title|striptags }}",
+      {% if article.author %}
+      "author" : {
+	  "@type" : "Person",
+	  "name" : "{{ article.author }}"
+      },
+      {% endif %}
+      "publisher" : {
+	  "@type" : "Organization",
+	  "name" : "The Digital Cat",
+	  "logo" : {
+	      "@type" : "ImageObject",
+	      "url" : "{{ SITEURL }}/images/global/logo_200.jpg",
+	      "height" : 200,
+	      "width" : 200
+	  }
+      },
+      "mainEntityOfPage": {
+	  "@type": "WebPage",
+	  "@id": "{{ SITEURL }}/{{ article.url }}"
+      },
+      "datePublished" : "{{ article.locale_date }}",
+      "dateModified" : "{% if article.locale_modified %}{{ article.locale_modified }}{% else %}{{ article.locale_date }}{% endif %}",
+      "image" : "{{ SITEURL }}/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg",
+      {% if article.summary %}
+      "description" : "{{ article.summary|striptags }}",
+      "headline" : "{{ article.summary|striptags|truncate(110, False, '') }}",
+      {% endif %}
+      "url" : "{{ SITEURL }}/{{ article.url }}"
+  }
 </script>
 {% endblock %}
 
 {% block content %}
 
-    <header id="header">
-        <a class="logo" href="/{{ article.category.url }}" title="{{ article.category }}">All posts in category {{ article.category }} <i class="fa fa-link"></i></a>
-        <div class="align-right">
-            {% if article.series %}
-            
-            {% if article.series and article.series.previous %}
-            <a href="/{{ article.series.previous.url }}"><i class="fa fa-caret-square-left"></i></a>
-            {% endif %}
-            
-            {{ article.series.name }} #{{ article.series.index}}
-
-            {% if article.series and article.series.next %}
-            <a href="/{{ article.series.next.url }}"><i class="fa fa-caret-square-right"></i></a>
-            {% endif %}
-
-            {% endif %}
-        </div>
-    </header>
-
-    <!-- <article class="post"> -->
-
-    <section id="header">
-        <header class="main">
-            <h1>{{ article.title }}</h1>
-        </header>
-    </section>
-
-    <section id="post-info">
-        <div class="align-center">
-        {% if article.tags %}
-            {% for tag in article.tags %}
-            <a class="button small" href="/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}{% endif %}
-            {% endfor %}
-        {% endif %}
-        </div>
-
-        <div class="align-center">
-        {% if article.author %}
-            By {{ article.author }}
-            <span class="separator">•</span>
-        {% endif %}
-
-            Published on <time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }}</time>
-
-        {% if article.modified %}
-            <span class="separator">•</span>
-            Last update on
-            <time datetime="{{ article.modified.isoformat() }}"> {{ article.locale_modified }}</time>
-        {% endif %}
-        </div>
-    </section>
-
-    <section id="content">
-        {{ article.content }}
-    </section>
-
+<header id="header">
+  <a class="logo" href="/{{ article.category.url }}" title="{{ article.category }}">All posts in category {{ article.category }} <i class="fas fa-link"></i></a>
+  <div class="align-right">
     {% if article.series %}
-    <section class="footer">
-        {% set text = 'Part %(index)s of the %(name)s series' %}
-        <h1>{{ text|format(index=article.series.index, name=article.series.name) }}</h1>
-        <div class="box">
-            {% if article.series.all_previous %}
-            <h5>Previous articles</h5>
-            <ul>
-                {% for article in article.series.all_previous %}
-                <li><a href="/{{ article.url }}">{{ article.title }}</a></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        
-            {% if article.series.all_next %}
-            <h5>Next articles</h5>
-            <ul>
-                {% for article in article.series.all_next %}
-                <li><a href="/{{ article.url }}">{{ article.title }}</a></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-    </section>
+
+    {% if article.series and article.series.previous %}
+    <a href="/{{ article.series.previous.url }}"><i class="fas fa-caret-square-left"></i></a>
+    {% endif %}
+    
+    {{ article.series.name }} #{{ article.series.index}}
+
+    {% if article.series and article.series.next %}
+    <a href="/{{ article.series.next.url }}"><i class="fas fa-caret-square-right"></i></a>
     {% endif %}
 
-    {% if article.related_posts %}
-    <section class="footer">
-        <h1>Related Posts</h1>
-        {% set _other_num = 10 %}
-        <div class="posts mini">
-            {% for article in article.related_posts[:_other_num] %}
-            <article class="card">
-                <a href="/{{ article.url }}" class="image">
-                    <img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="{{ article.image if article.image else 'article_image_placeholder' }}" />
-                </a>
-                <div class="card-body">
-                    <a href="/{{ article.url }}"><h2 class="card-title">{{ article.title }}</h2></a>
-                    <p class="card-text">
-                        <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
-                        <span class="fa fa-tags"></span>
-                        {% for tag in article.tags %}
-                        <a href="/{{ tag.url }}" class="tag">{{ tag }}</a>{% if not loop.last %}{% endif %}
-                        {% endfor %}
-                    </p>
-                </div>
-            </article>
+    {% endif %}
+  </div>
+</header>
+
+<!-- <article class="post"> -->
+
+  <section id="header">
+    <header class="main">
+      <h1>{{ article.title }}</h1>
+    </header>
+  </section>
+
+  <section id="post-info">
+    <p class="article-info">
+    {% if article.author %}
+    By {{ article.author }}
+    {% endif %}
+
+    <span class="fas fa-calendar-alt"></span> <time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }}</time>
+
+    {% if article.modified %}
+    <span class="fas fa-edit"></span> <time datetime="{{ article.modified.isoformat() }}"> {{ article.locale_modified }}</time>
+    {% endif %}
+
+    {% if article.tags %}
+    <span class="fas fa-tags"></span>
+    {% for tag in article.tags %}
+    <a class="tag" href="/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}{% endif %}
+    {% endfor %}
+    {% endif %}
+    <br>
+    Share on: {% include 'includes/share.html' %}
+    </p>
+  </section>
+
+  <section id="content">
+    {{ article.content }}
+  </section>
+
+  {% if article.series %}
+  <section class="footer">
+    {% set text = 'Part %(index)s of the %(name)s series' %}
+    <h1>{{ text|format(index=article.series.index, name=article.series.name) }}</h1>
+    <div class="box">
+      {% if article.series.all_previous %}
+      <h5>Previous articles</h5>
+      <ul>
+        {% for article in article.series.all_previous %}
+        <li><a href="/{{ article.url }}">{{ article.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      
+      {% if article.series.all_next %}
+      <h5>Next articles</h5>
+      <ul>
+        {% for article in article.series.all_next %}
+        <li><a href="/{{ article.url }}">{{ article.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if article.related_posts %}
+  <section class="footer">
+    <h1>Related Posts</h1>
+    {% set _other_num = 10 %}
+    <div class="posts mini">
+      {% for article in article.related_posts[:_other_num] %}
+      <article class="card">
+        <a href="/{{ article.url }}" class="image">
+          <img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="{{ article.image if article.image else 'article_image_placeholder' }}" />
+        </a>
+        <div class="card-body">
+          <a href="/{{ article.url }}"><h2 class="card-title">{{ article.title }}</h2></a>
+	  <p class="article-info">
+            <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+            <span class="fas fa-tags"></span>
+            {% for tag in article.tags %}
+            <a href="/{{ tag.url }}" class="tag">{{ tag }}</a>{% if not loop.last %}{% endif %}
             {% endfor %}
+          </p>
         </div>
-    </section>
-    {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
 
 
 
-    <!-- </article> -->
+  <!-- </article> -->
 
 {% endblock %}
