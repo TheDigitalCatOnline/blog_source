@@ -235,32 +235,45 @@ So, as in the case of standard inheritance, this means that the first class in t
 
 ``` python
 class Ancestor:
-	def rewind(self):
-		[...]
+    def rewind(self):
+        print("Ancestor: rewind")
 
 
 class Parent1(Ancestor):
-	def open(self):
-		[...]
+    def open(self):
+        print("Parent1: open")
 
 
 class Parent2(Ancestor):
-	def open(self):
-		[...]
+    def open(self):
+        print("Parent2: open")
 
-	def close(self):
-		[...]
+    def close(self):
+        print("Parent2: close")
 
-	def flush(self):
-		[...]
+    def flush(self):
+        print("Parent2: flush")
 
 
 class Child(Parent1, Parent2):
-	def flush(self):
-		[...]
+    def flush(self):
+        print("Child: flush")
+
+
+print(Child.__mro__)
+
+c = Child()
+c.rewind()
+c.open()
+c.close()
+c.flush()
+
 ```
 
-In this case an instance `c` of `Child` would provide `rewind`, `open`, `close`, and `flush`. When `c.rewind` is called, the code in `Ancestor` is executed, as this is the first class in the MRO list that provides that method. The method `open` is provided by `Parent1`, while `close` is provided by `Parent2`. If the method `c.flush` is called, the code is provided by the `Child` class itself, that redefines it overriding the one provided by `Parent2`.
+As you can see, we can access the MRO of any class reasind its `__mro__` attribute, and as we expected its value is `(<class '__main__.Child'>, <class '__main__.Parent1'>, <class '__main__.Parent2'>, <class '__main__.Ancestor'>, <class 'object'>).
+`
+
+So, in this case an instance `c` of `Child` provides `rewind`, `open`, `close`, and `flush`. When `c.rewind` is called, the code in `Ancestor` is executed, as this is the first class in the MRO list that provides that method. The method `open` is provided by `Parent1`, while `close` is provided by `Parent2`. If the method `c.flush` is called, the code is provided by the `Child` class itself, that redefines it overriding the one provided by `Parent2`.
 
 As we see with the `flush` method, Python doesn't change its behaviour when it comes to method overriding with multiple parents. The first implementation of a method with that name is executed, and the parent's implementation is not automatically called. As in the case of standard inheritance, then, it's up to us to design classes with matching method signatures.
 
@@ -288,7 +301,7 @@ class GraphicalEntity:
         self.size_x = size_x
         self.size_y = size_y
 
-	def move(self, pos_x, pos_y):
+    def move(self, pos_x, pos_y):
         self.pos_x = pos_x
         self.pos_y = pos_y
 
@@ -299,14 +312,14 @@ class GraphicalEntity:
 
 class Rectangle(GraphicalEntity):
     pass
-	
+    
 
 class Square(GraphicalEntity):
-	def __init__(self, pos_x, pos_y, size):
-		super().__init__(pos_x, pos_y, size, size)
+    def __init__(self, pos_x, pos_y, size):
+        super().__init__(pos_x, pos_y, size, size)
 
-	def resize(self, size):
-		super().resize(size, size)
+    def resize(self, size):
+        super().resize(size, size)
 ```
 
 Please note that `Square` changes the signature of both `__init__` and `resize`. Now, when we instantiate those classes we need to keep in mind the different signature of `__init__` in `Square`
@@ -317,13 +330,13 @@ r2 = Rectangle(150, 280, 23, 55)
 q1 = Square(300, 400, 50)
 ```
 
-We usually accept that an enhanced version of a class accepts more parameters when it is initialized, as we do not expect it to be polymorphic on `__init__`. Problems arise when we try to leverage polymorphism on other methods, for example resizing all `GraphicalEntity` objects in a list
+We usually accept that an enhanced version of a class accepts different parameters when it is initialized, as we do not expect it to be polymorphic on `__init__`. Problems arise when we try to leverage polymorphism on other methods, for example resizing all `GraphicalEntity` objects in a list
 
 ``` python
 for shape in [r1, r2, q1]:
-	size_x = shape.size_x
-	size_y = shape.size_y
-	shape.resize(size_x*2, size_y*2)
+    size_x = shape.size_x
+    size_y = shape.size_y
+    shape.resize(size_x*2, size_y*2)
 ```
 
 Since `r1`, `r2`, and `q1` are all objects that inherit from `GraphicalEntity` we expect them to provide the interface provided by that class, but this fails, because `Square` changed the signature of `resize`. The same would happen if we instantiated them in a for loop from a list of classes, but as I said it is generally accepted that child classes change the signature of the `__init__` method. This is not true, for example, in a plugin-based system, where all plugins shall be initialized the same way.
@@ -361,6 +374,9 @@ class ResizableMixin:
         
 class ResizableGraphicalEntity(GraphicalEntity, ResizableMixin):
     pass
+
+rge = ResizableGraphicalEntity(5, 4, 200, 300)
+rge.resize(1000, 2000)
 ```
 
 Here, the class `ResizableMixin` doesn't inherit from `GraphicalEntity`, but directly from `object`, so `ResizableGraphicalEntity` gets from it just the `resize` method. As we said before, this simplifies the inheritance tree of `ResizableGraphicalEntity` and helps to reduce the risk of the diamond problem. It leaves us free to use `GraphicalEntity` as a parent for other classes without having to inherit methods that we don't want. Please remember that this happens because the classes are designed to avoid it, and not because of language features: the MRO algorithm just ensures that there will always be an unambiguous choice in case of multiple ancestors.
@@ -447,14 +463,23 @@ class SingleDimensionMixin:
 
 
 class SquareButton(SingleDimensionMixin, Button):
-	pass
+    pass
 
 b = SquareButton(10, 20, 200)
 ```
 
 The second solution gives the same final result, but promotes code reuse, as now the `SingleDimensionMixin` class can be applied to other classes derived from `GraphicalEntity` and make them accept only one size, while in the first solution that feature was tightly connected with the `Button` ancestor class.
 
-Please note that the position of the mixin is important. As `super` follows the MRO, the called method is dispatched to the nearest class in the linearisation. If you put `SingleDimensionMixin` after `Button` in the definition of `SquareButton`, Python would complain. In that case the call `b = SquareButton(10, 20, 200)` and the method signature `__init__(self, pos_x, pos_y, size_x, size_y)` would not match.
+Please note that the position of the mixin is important as `super` follows the MRO. As it is, the MRO of `SquareButton` is `(SquareButton, SingleDimensionMixin, Button, GraphicalEntity, object)`, so, when we instantiate it the `__init__` method is provided by `SingleDimensionMixin`, which in turn calls trhough `super` the method `__init__` of `Button`. The call `super().__init__(pos_x, pos_y, size, size)` in `SingleDimensionMixin` and the signature `def __init__(self, pos_x, pos_y, size_x, size_y):` in `Button` match, so everything works.
+
+If we defined `SquareButton` as
+
+``` python
+class SquareButton(Button, SingleDimensionMixin):
+    pass
+```
+
+then the `__init__` method would first be provided by `Button`, and its `super` would call the `__init__` method of `SingleDimensionMixin`. This would however result in an error, as the call `super().__init__(pos_x, pos_y, size_x, size_y)` in `Button` doesn't match the signature `def __init__(self, pos_x, pos_y, size):` of `SingleDimensionMixin`.
 
 Mixins are not used only when you want to change the object's interface, though. Leveraging `super` we can achieve interesting designs like
 
@@ -477,19 +502,21 @@ class Button(GraphicalEntity):
 
 
 class LimitSizeMixin:
-    def __init__(self, size_x, size_y, size):
-		size_x = min(size_x, 500)
-		size_y = min(size_y, 400)
+    def __init__(self, pos_x, pos_y, size_x, size_y):
+        size_x = min(size_x, 500)
+        size_y = min(size_y, 400)
         super().__init__(pos_x, pos_y, size_x, size_y)
 
 
-class LimitSizeButton(Button, LimitSizeMixin):
-	pass
+class LimitSizeButton(LimitSizeMixin, Button):
+    pass
 
-b = LimitSizeButton(10, 20, 200, 100)
+b = LimitSizeButton(10, 20, 2000, 1000)
+print(b.size_x)
+print(b.size_y)
 ```
 
-Here, `LimitSizeButton` calls `__init__` of its first parent, which is `Button`. This, however, delegates the call to the next class in the MRO before initialising `self.status`, so the call is dispatched to `LimitSizeMixin`, that first operates some changes and eventually dispatches it to the original recipient, `GraphicalEntity`.
+Here, the MRO or `LimitSizeButton` is `(<class '__main__.LimitSizeButton'>, <class '__main__.LimitSizeMixin'>, <class '__main__.Button'>, <class '__main__.GraphicalEntity'>, <class 'object'>)`, which means that when we initialize it the `__init__` method is first provided by `LimitSizeMixin`, which then calls through `super` the `__init__` method of `Button`, and through the latter the `__init__` method of `GraphicalEntity`.
 
 Remember that in Python, you are never forced to call the parent's implementation of a method, so the mixin here might also stop the dispatching mechanism if that is the requirement of the business logic of the new object.
 
@@ -515,13 +542,13 @@ As you can see `TemplateView` is a `View`, but it uses two mixins to inject feat
 
 ``` python
 class TemplateResponseMixin:
-	[...]
+    [...]
 
     def render_to_response(self, context, **response_kwargs):
-		[...]
+        [...]
 
     def get_template_names(self):
-		[...]
+        [...]
 ```
 
 [I removed the code of the class as it is not crucial for the present discussion, you can see the full class [here](https://github.com/django/django/blob/3.0/django/views/generic/base.py#L117)]
