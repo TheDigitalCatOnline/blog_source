@@ -160,7 +160,7 @@ The include file `include_i/exec/nodes.i` tells us that a standard linked list n
     LABEL   LN_SIZE ; Note: word aligned
 ```
 
-The two 32-bit pointers `LN_SUCC` and `LN_PRED` are created when the node is loaded in memory, so we need to look for the rest of the structure, namely 1 byte with `LN_TYPE`, 1 byte with `LN_PRI` and 4 bytes with `LN_NAME`. From the same file `include_i/exec/nodes.i` we know that the note type for a library is `09`
+The two 32-bit pointers `LN_SUCC` and `LN_PRED` are created when the node is loaded in memory, so we need to look for the rest of the structure, namely 1 byte with `LN_TYPE`, 1 byte with `LN_PRI` and 4 bytes with `LN_NAME`. From the same file `include_i/exec/nodes.i` we know that the node type for a library is `09`
 
 ``` m68k
 NT_LIBRARY  EQU 9
