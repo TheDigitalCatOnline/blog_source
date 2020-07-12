@@ -1,5 +1,6 @@
 Title: Flask project setup: TDD, Docker, Postgres and more - Part 2
 Date: 2020-07-06 13:00:00 +0100
+Modified: 2020-07-13:00:00 +0100
 Category: Programming
 Tags: AWS, Docker, Flask, HTTP, Postgres, Python, Python3, TDD, testing, WWW
 Authors: Leonardo Giordani
@@ -1110,7 +1111,7 @@ Please not that this is a very simple example and that in a real case I would ad
 Once we are satisfied by the code we can generate the migration in the database. Spin up the development environment with
 
 ``` sh
-$ ./manage compose up -d
+$ ./manage.py compose up -d
 ```
 
 If this is the first time I spin up the environment I have to create the application database and to initialise the migrations, so I run
@@ -1156,6 +1157,10 @@ After this I can safely commit my code and move on with the next requirement.
 ## Final words
 
 I hope this post already showed you why a good setup can make the difference. The project is clean and wrapping the command in the management script plus the centralised config proved to be a good choice as it allowed me to solve the problem of migrations and testing in (what I think is) an elegant way. In the next post I'll show you how to easily create scenarios where you can test queries with only specific data in the database. If you find my posts useful please share them with whoever you thing might be interested.
+
+## Updates
+
+2020-07-13 [Vlad Pavlichek}(https://github.com/Alladin9393) found and fixed a typo in the post, where `manage.py` was missing the `.py` extension. Thanks Vlad!
 
 ## Feedback
 
