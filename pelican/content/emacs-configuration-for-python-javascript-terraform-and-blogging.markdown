@@ -1,23 +1,37 @@
-Title: Configuring Emacs
+Title: Emacs Configuration for Python/JavaScript, Terraform and blogging
 Date: 2020-07-18 12:45:00 +0100
 Category: Programming
-Tags: editor, JavaScript, Markdown, Python, Terraform, tools
+Tags: blogging, editor, Emacs, JavaScript, Markdown, Python, Terraform, tools
 Authors: Leonardo Giordani
-Slug: emacs-configuration
-Summary: 
+Slug: emacs-configuration-for-python-javascript-terraform-and-blogging
+Image: emacs-configuration-for-python-javascript-terraform-and-blogging
+Summary: A step-by-step analysis of the Emacs configuration that I use to write Python/JavaScript/Terraform code and  posts for the blog
 
+(image from https://commons.wikimedia.org/wiki/File:Gnu-listen-half.jpg)
 
-I have been an Emacs user for a long time. There is no specific reason why I started with Emacs but that it was available in the RedHat 6.0 distribution that in 1999 I found in a magazine, and with which I started my journey in the open source world.
+I have been an Emacs user for a long time. There is no specific reason why I started using Emacs: it was available in the RedHat 6.0 distribution that I found in a magazine in 1999, and with which I started my journey in the open source world. It was mentioned in some Linux guide I read at the time, so it became my editor.
 
-Then, one day, I went off-track. I started using one of the fancy editors of the new wave, Sublime Text, and kept it as my main editor for some years. Sublime Text is a very good editor, it's fast and has a lot of features (multiple cursors blew my mind when I first discovered them) but I still grew increasingly dissatisfied with it. The main reason is that modern editor rely too much on the mouse. Many people are happy with this, in particular because they use trackpads, but I honestly can't get use to them, and I simply don't want to take my hands off the keyboards while I code because I want to change tab, reorganise the screen, open a file, and so on.
+I'm not into flame wars, in particular about editors. If I don't like a software/operating system/language/whatever, I just don't use it, and at the same time I'm not scared to test alternatives, even though I'm not actively looking to replace tools that work. Admittedly, at the time I didn't properly configure my Emacs for years, in particular because the C language support was very good out of the box, and that was what I needed, so when I started programming in Python not everything was optimal.
 
-So I went back to Emacs, and started from scratch to configure it in order to match my needs. In this post I want to describe what I did, so that newcomers might be helped to setup their own editor. Emacs is incredibly customisable, and this is one of its main strengths, but a proper setup takes time. Please don't consider configuring your editor a waste of time. If you are a programmer, the editor is your main tool, and you have to take care of it. Like any other editor, Emacs has pros and cons, and a proper setup minimises the impact of the shortcomings.
+One day a new colleague showed me [Sublime Text](https://www.sublimetext.com/) and PyCharm. I don't like IDEs that much, they are too integrated, so the PyCharm wasn't very attractive, but Sublime Text is a very good editor, it's fast and has a lot of features (multiple cursors blew my mind when I first discovered them) and so it became my editor of choice for some years. In time, however I started growing increasingly dissatisfied with it, and with some alternatives that I tested like Atom. The main reason is that modern editor rely too much on the mouse: many people are happy with this, in particular because they use trackpads, but I honestly can't get use to them, and I simply don't want to take my hands off the keyboards while I code because I want to change tab, reorganise the screen, open a file, and so on.
+
+So I went back to Emacs, and started from scratch to configure it in order to match my needs. In this post I want to describe what I did, so that newcomers might be helped to setup their own editor. Emacs is incredibly customisable, and this is one of its main strengths, but a proper setup takes time. Please don't consider configuring your editor a waste of time. If you are a programmer, the editor is your main tool, and you have to take care of it: like any other editor, Emacs has pros and cons, and a proper setup minimises the impact of the shortcomings on your daily work.
+
+## Requirements
+
+As always, the choice of tools and their configuration depends on the requirements, so these are the ones I have at the moment.
+
+* I need to create **keyboard shortcuts** for everything I do often in the editor, I should be able to work without the mouse
+* **Multiple cursors** are a very useful feature and I am used to have them, so there should be an implementation similar to the one I found in Sublime Text
+* **Python**/**JavaScript**/**Terraform** syntax highlighting and formatting/linting
+* As I have some projects written with React, **JSX** syntax highlighting is also needed
+* **Markdown** syntax highlighting with spell-checking for my blogger activity
 
 ## Preamble
 
 The Emacs configuration file is `~/.emacs`, and when you install the editor you might get a default minimal version of it. Whenever part of the configuration is changed from the menus, Emacs writes the changes in the .emacs, using the `custom-set-variables` function. That file also contains the list of packages that I have installed, so I moved the `custom-set-variables` invocation to a separate file, `.emacs-custom`. This way Emacs doesn't have to change the main file whenever I install or remove a package and when I customise the face (colours and fonts).
 
-For packages, I'm using the standard MELPA configuration 
+For packages, I'm using the standard [MELPA configuration](https://melpa.org/#/getting-started)
 
 ``` lisp
 ;; Added by Package.el.  This must come before configurations of
@@ -40,7 +54,7 @@ For packages, I'm using the standard MELPA configuration
 
 ## Global settings
 
-In Emacs you can define new functions and assign them to ket combinations, and this is usually a major part of the setup. As I often need to work on the configuration file, at least initially, the first function I defined is one that allows me to quickly open the `.emacs` file. In the comments I'm following [Emacs key notation](https://www.emacswiki.org/emacs/EmacsKeyNotation)
+In Emacs you can define new functions and assign them to key combinations, and this is usually a major part of the setup. As I often need to work on the configuration file, at least initially, the first function I defined is one that allows me to quickly open the `.emacs` file. In the comments I'm following [Emacs key notation](https://www.emacswiki.org/emacs/EmacsKeyNotation)
 
 ``` lisp
 ;; Open .emacs with C-x c
@@ -76,14 +90,14 @@ I might not be a purist here. I used `M-w` and `C-y` for many years, but I also 
 (cua-mode t)
 ```
 
-I like Emacs to highlight the [matching parenthesis](https://www.emacswiki.org/emacs/ShowParenMode) whenever I'm on an opening or closing one. Please note that the word "parenthesis" here refers to what are more generally called [brackets](https://en.wikipedia.org/wiki/Bracket) in English, which inlcudes parentheses or round brackets `()`, curly brackets or curly braces `{}`, and square brackets `[]`
+I like Emacs to highlight the [matching parenthesis](https://www.emacswiki.org/emacs/ShowParenMode) whenever I'm on an opening or closing one. Please note that the word "parenthesis" here refers to what are more generally called [brackets](https://en.wikipedia.org/wiki/Bracket) in English, which includes parentheses or round brackets `()`, curly brackets or curly braces `{}`, and square brackets `[]`
 
 ``` lisp
 ;; Show the matching parenthesis
 (show-paren-mode 1)
 ```
 
-Speaking of brackets, I like to have a way to automatically match the opened ones. This is good in Lisp because there are more parentheses than words, but also in other languages like Python ehn dealing with complex data structures. Long story short, I mapped `C-]` to the auto-closing feature called `syntactic-close` (installed as a package)
+Speaking of brackets, I like to have a way to automatically match the opened ones. This is good in Lisp because there are more parentheses than words, but also in other languages like Python when dealing with complex data structures. Long story short, I mapped `C-]` to the auto-closing feature called `syntactic-close` (installed as a package)
 
 ``` lisp
 ;; Syntactic close
@@ -116,7 +130,7 @@ The standard behaviour of `C-Del` in Emacs is far too greedy for me. I'm used to
 (global-set-key (kbd "C-<delete>") 'kill-whitespace-or-word)
 ```
 
-Last, as I have a rotating wallpaper with screenshots from my favourite films I like to see them behind the editor and the terminal, so I enable a little bit of transparency.
+Last, as I have a rotating wallpaper with screenshots from my favourite films I like to see them behind the editor and the terminal, so I enable a little bit of transparency. I like this to be callable as an interactive function as I might want to remove the transparency, for example when sharing the screen, as that way the text might be easier to read.
 
 ``` lisp
 ;; Set transparency of emacs
@@ -130,9 +144,11 @@ Last, as I have a rotating wallpaper with screenshots from my favourite films I 
 
 ## Keyboard mapping
 
-I'm an Italian native speaker, so I often write texts in that language for my personal blog or for other resons. In Italian, we use the accented letters à, è, é, ì, ò, ù a lot ("is" is just "è", "why" and "because" are "perché", almost all future tenses end with an accented letter, and so on), so I like to have a proper mapping. Emacs has a very powerful mode for latin alphabeth [diacritics](https://en.wikipedia.org/wiki/Diacritic), which it `latin-postfix`, where you can write "è" typing "e`", so that was my first choice. While this is very powerful, and allows me to input almost everything I need also for other languages like German, on the long run I found it very difficult to use efficiently. I'm used to the Italian keymap, I know it by heart as I know the English keyboard mapping, so I tend to press keys that are supposed to insert the accented letters directly. Moreover, other software like the browser work with a system key mapping (that Emacs ignores), so again, I need to rewire my brain every time I go back to the editor. Last, `latin-postfix` is far too generic and has mappings for letters like ą or ę which are created typing "a," which is a combination that we have every time we type a comma in Italian given that almost all words end in a vowel. This forces me to type "a,," whenever I need "a,", which is far too different from the normal system I'm used to.
+I'm an Italian native speaker, so I often write texts in that language for my personal blog or for other reasons. In Italian, we use the accented letters à, è, é, ì, ò, ù a lot ("is" is just "è", "why" and "because" are "perché", almost all future tenses end with an accented letter, and so on), so I like to have a proper mapping. Emacs has a very powerful mode for Latin alphabet [diacritics](https://en.wikipedia.org/wiki/Diacritic), which is `latin-postfix`, where you can write "è" typing `e` followed by backticks, so that was my first choice. While this is very powerful, and allows me to input almost everything I need also for other languages like German, on the long run I found it very difficult to use efficiently.
 
-The input method `italian-keyboard` unfortunately doesn't map very well on a standard modern English keyboard, so I decided to just write my own mapping using [quail](http://web.mit.edu/Emacs/source/emacs/lisp/international/quail.el) which is unsurprisingly not very well documented (multilingual input has been and still is one of the great forgotten and messy topics in computer science, in particular in the open source world).
+First of all, I'm used to the Italian keymap, I know it by heart as I know the English keyboard mapping, so I tend to press keys that are supposed to insert the accented letters directly. Moreover, other software like the browser work with a system keyboard mapping (that Emacs ignores), so again, I need to rewire my brain every time I go back to the editor. Last, `latin-postfix` is far too generic and has mappings for letters like ą or ę which are created typing "a," which is a combination that we have every time we type a comma in Italian given that almost all words end in a vowel. This forces me to type "a,," whenever I need "a,", which is far too different from the normal system I'm used to.
+
+The input method `italian-keyboard` unfortunately doesn't map very well on a standard modern English keyboard, so I decided to just write my own mapping using the [quail](http://web.mit.edu/Emacs/source/emacs/lisp/international/quail.el) system, which is unsurprisingly not very well documented. I'm sorry to say it, but multilingual input has been and still is one of the great forgotten and messy topics in computer science, in particular in the open source world. Let's not even mention Chinese and other languages not based on an alphabet.
 
 ``` lisp
 ; Define a proper mapping for the Italian keyboard over the English one
@@ -247,7 +263,7 @@ Multiple cursors! Emacs has an implementation of [multiple cursors](https://gith
 (global-set-key (kbd "C-M-d") 'mc/edit-lines)
 ```
 
-How many times do I need to highlight the whole buffer? More than I imagined, apparently, so I define the classic `Ctrl-a` shortcut
+How many times do I need to highlight the whole buffer? More than I imagined, so I defined the classic `Ctrl-a` shortcut
 
 ``` lisp
 ;; C-a marks the whole buffer
@@ -306,7 +322,7 @@ When I will learn how to properly spell `inconceivably` and `counter-intuitive` 
   (setq ispell-really-hunspell t))
 ```
 
-By the way, I misspell simpler words all the time, no need to get into inconceivably counter-intuitive words.
+By the way, I misspell simpler words all the time, no need to get into inconceivably counter-intuitive words. And I'm sure there will be typos in this text, no matter how many times I check and read it =)
 
 ## Python development
 
@@ -376,7 +392,7 @@ And also JS need to be beautified, at least when I have to read and understand i
 
 ## Other languages
 
-Other languages I use are less demanding in term of customisation (generally because they are simpler or less general-purpose)
+Other languages I use are less demanding in term of customisation (generally because they are simpler or less general-purpose). The [Terraform mode](https://github.com/emacsorphanage/terraform-mode) automatically fixes the syntax of the file on save
 
 ``` lisp
 ;; Terraform
@@ -392,7 +408,7 @@ Other languages I use are less demanding in term of customisation (generally bec
 
 ## Files and projects
 
-My setup is still a work in progress here, I'm testing [Projectile](https://docs.projectile.mx/projectile/usage.html), [Prescient](https://github.com/raxod502/prescient.el), and [Treemacs](https://github.com/Alexander-Miller/treemacs). So far, only Projectile made it to the config file, but I'm not using it that much yet.
+My setup is still a work in progress here, I'm testing [Projectile](https://docs.projectile.mx/projectile/usage.html), [Prescient](https://github.com/raxod502/prescient.el), and [Treemacs](https://github.com/Alexander-Miller/treemacs). So far, only Projectile made it to the configuration file, but I'm not using it that much yet. I think I might use a good sidebar with Git integration through colours and icons, but I still have to find something I feel comfortable with.
 
 ``` lisp
 ;; Projectile
@@ -405,7 +421,7 @@ My setup is still a work in progress here, I'm testing [Projectile](https://docs
 
 ## The custom file
 
-As I mentioned when I discussed the preable the file `.emacs-custom` contains the customisation of variables and faces, and this is what I have
+As I mentioned when I discussed the preamble the file `.emacs-custom` contains the customisation of variables and faces, and this is what I have
 
 ``` lisp
 (custom-set-variables
@@ -421,7 +437,9 @@ As I mentioned when I discussed the preable the file `.emacs-custom` contains th
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (syntactic-close ivy projectile rjsx-mode js2-mode golden-ratio add-node-modules-path prettier-js tide elpy jinja2-mode drag-stuff markdown-mode fcitx command-log-mode yaml-mode terraform-mode multiple-cursors))))
+    (syntactic-close ivy projectile rjsx-mode js2-mode golden-ratio
+	 add-node-modules-path prettier-js tide elpy jinja2-mode drag-stuff
+	 markdown-mode fcitx command-log-mode yaml-mode terraform-mode multiple-cursors))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
