@@ -1,5 +1,5 @@
 Title: Emacs Configuration for Python/JavaScript, Terraform and blogging
-Date: 2020-07-18 12:45:00 +0100
+Date: 2020-07-18 15:30:00 +0100
 Category: Programming
 Tags: blogging, editor, Emacs, JavaScript, Markdown, Python, Terraform, tools
 Authors: Leonardo Giordani
