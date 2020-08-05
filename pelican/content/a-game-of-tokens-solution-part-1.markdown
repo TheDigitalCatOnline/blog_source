@@ -5,6 +5,7 @@ Tags: Python, Python3, TDD, testing, compilers
 Authors: Leonardo Giordani
 Slug: a-game-of-tokens-solution-part-1
 Image: a-game-of-tokens-solutions
+Status: hidden
 Summary:
 
 This post originally contained my solution to the challenge posted [here]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1.markdown). I moved those solutions inside the post itself, under the "Solution" subsections.
