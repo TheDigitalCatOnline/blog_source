@@ -470,7 +470,7 @@ b = SquareButton(10, 20, 200)
 
 The second solution gives the same final result, but promotes code reuse, as now the `SingleDimensionMixin` class can be applied to other classes derived from `GraphicalEntity` and make them accept only one size, while in the first solution that feature was tightly connected with the `Button` ancestor class.
 
-Please note that the position of the mixin is important as `super` follows the MRO. As it is, the MRO of `SquareButton` is `(SquareButton, SingleDimensionMixin, Button, GraphicalEntity, object)`, so, when we instantiate it the `__init__` method is provided by `SingleDimensionMixin`, which in turn calls trhough `super` the method `__init__` of `Button`. The call `super().__init__(pos_x, pos_y, size, size)` in `SingleDimensionMixin` and the signature `def __init__(self, pos_x, pos_y, size_x, size_y):` in `Button` match, so everything works.
+Please note that the position of the mixin is important as `super` follows the MRO. As it is, the MRO of `SquareButton` is `(SquareButton, SingleDimensionMixin, Button, GraphicalEntity, object)`, so, when we instantiate it the `__init__` method is provided by `SingleDimensionMixin`, which in turn calls through `super` the method `__init__` of `Button`. The call `super().__init__(pos_x, pos_y, size, size)` in `SingleDimensionMixin` and the signature `def __init__(self, pos_x, pos_y, size_x, size_y):` in `Button` match, so everything works.
 
 If we defined `SquareButton` as
 
