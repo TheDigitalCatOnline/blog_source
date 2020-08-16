@@ -1,8 +1,9 @@
 Title: Delegation: composition and inheritance in object-oriented programming
-Date: 2020-07-27 15:00:00 +0100
+Date: 2020-08-17 09:00:00 +0100
 Category: Programming, Projects, Retro
 Tags: OOP, Python, Python3
 Authors: Leonardo Giordani
+Image: delegation-composition-and-inheritance-in-object-oriented-programming
 Slug: delegation-composition-and-inheritance-in-object-oriented-programming
 Summary: 
 
@@ -567,3 +568,12 @@ class Child:
 As you can easily see, the more `Child` wants to expose of the `Parent` interface, the more wrapper methods and properties you need. To be perfectly clear, in this example the code above smells, as there are too many one-liner wrappers, which tells me it would be better to use inheritance. But if the class `Child` had a dozen of its own methods, suddenly it would make sense to do something like this, and in that case, `__getattr__` might come in handy.
 
 ## Final words
+
+Both composition and inheritance are tools, and both exist to serve the bigger purpose of code reuse, so learn their strength and their weaknesses, so that you might be able to use the correct one and avoid future issues in your code.
+
+I hope this rather long discussion helped you to get a better picture of the options you have when you design an object-oriented system, and also maybe introduced some new ideas or points of view if you are already comfortable with the concepts I wrote about.
+
+## Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+
