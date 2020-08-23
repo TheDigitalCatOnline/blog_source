@@ -1,6 +1,6 @@
 Title: Delegation: composition and inheritance in object-oriented programming
 Date: 2020-08-17 09:00:00 +0100
-Category: Programming, Projects, Retro
+Category: Programming
 Tags: OOP, Python, Python3
 Authors: Leonardo Giordani
 Image: delegation-composition-and-inheritance-in-object-oriented-programming
