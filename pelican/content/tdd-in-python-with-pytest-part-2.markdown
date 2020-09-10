@@ -10,7 +10,7 @@ Summary:
 
 This is the second post in the series "TDD in Python from scratch" where I develop a simple project following a strict TDD methodology. The posts come from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python) and have been reviewed to get rid of some bad naming choices of the version published in the book.
 
-You can find the first post [here]({filename}test-driven-development-in-python-from-scratch-part-1.markdown).
+You can find the first post [here]({filename}tdd-in-python-with-pytest-part-1.markdown).
 
 ## Step 7 - Division
 
