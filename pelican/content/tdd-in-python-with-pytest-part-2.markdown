@@ -1,0 +1,590 @@
+Title: Test Driven Development in Python from scratch - Part 2
+Date: 2020-09-09 09:00:00 +0100
+Category: Programming
+Tags: OOP, Python, Python3, refactoring, TDD, testing
+Authors: Leonardo Giordani
+Slug: test-driven-development-in-python-from-scratch-part-2
+Series: TDD in Python from scratch
+Summary:
+
+This is the second post in the series "TDD in Python from scratch" where I develop a simple project following a strict TDD methodology. The posts come from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python) and have been reviewed to get rid of some bad naming choices of the version published in the book.
+
+You can find the first post [here]({filename}test-driven-development-in-python-from-scratch-part-1.markdown).
+
+## Step 7 - Division
+
+The requirements state that there shall be a division function, and that it has to return a float value. This is a simple condition to test, as it is sufficient to divide two numbers that do not give an integer result
+
+``` python
+def test_div_two_numbers_float():
+    calculator = SimpleCalculator()
+
+    result = calculator.div(13, 2)
+
+    assert result == 6.5
+```
+
+The test suite fails with the usual error that signals a missing method. The implementation of this function is very simple as the `/` operator in Python performs a float division
+
+``` python
+class SimpleCalculator:
+    [...]
+
+    def div(self, a, b):
+        return a / b
+```
+
+**Git tag:** [step-7-float-division](https://github.com/lgiordani/simple_calculator/tree/step-7-float-division)
+
+If you run the test suite again all the test should pass. There is a second requirement about this operation, however, that states that division by zero shall return `inf`.
+
+I already mentioned in the previous post that this is not a good requirement, and please don't go around telling people that I told you to create function that return either floats of strings. This is a simple requirement that I will use to show you how to deal with exceptions.
+
+The test that comes from the requirement is simple
+
+``` python
+def test_div_by_zero_returns_inf():
+    calculator = SimpleCalculator()
+
+    result = calculator.div(5, 0)
+
+    assert result == float('inf')
+```
+
+And the test suite fails now with this message
+
+``` text
+__________________________ test_div_by_zero_returns_inf ___________________________
+
+    def test_div_by_zero_returns_inf():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.div(5, 0)
+
+tests/test_main.py:70:  
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <simple_calculator.main.SimpleCalculator object at 0x7f0b0b733990>, a = 5, b = 0
+
+    def div(self, a, b):
+>       return a / b
+E       ZeroDivisionError: division by zero
+
+simple_calculator/main.py:17: ZeroDivisionError
+```
+
+Note that when an exception happens in the code and not in the test, the pytest output changes slightly. The first part of the message shows where the test fails, but then there is a second part that shows the internal code that raised the exception and provides information about the value of local variables on the first line (`self = <simple_calculator.main.SimpleCalculator object at 0x7f0b0b733990>, a = 5, b = 0`).
+
+We might implement two different solutions to satisfy this requirement and its test. The first one is to prevent `b` to be 0
+
+``` python
+    def div(self, a, b):
+        if not b:
+            return float('inf')
+
+        return a / b
+```
+
+and the second one is to intercept the exception with a `try/except` block
+
+``` python
+    def div(self, a, b):
+        try:
+            return a / b
+        except ZeroDivisionError:
+            return float('inf')
+```
+
+Both solutions make the test suite pass, so both are correct. I leave to you the decision about which is the best one, syntactically speaking.
+
+**Git tag:** [step-7-division-by-zero](https://github.com/lgiordani/simple_calculator/tree/step-7-division-by-zero)
+
+## Step 8 - Testing exceptions
+
+A further requirement is that multiplication by zero must raise a `ValueError` exception. This means that we need a way to test if our code raises an exception, which is the opposite of what we did until now. In the previous tests, the condition to pass was that there was no exception in the code, while in this test the condition will be that an exception has been raised.
+
+Again, this is a requirement I made up just for the sake of showing you how do deal with exceptions, so if you think this is a silly behaviour for a multiplication function you are probably right.
+
+Pytest provides a context manager named `raises` that runs the code contained in it and passes only if the given exception is produced by that code.
+
+``` python
+import pytest
+
+[...]
+
+def test_mul_by_zero_raises_exception():
+    calculator = SimpleCalculator()
+
+    with pytest.raises(ValueError):
+        calculator.mul(3, 0)
+```
+
+In this case, thus, pytest runs the line `calculator.mul(3, 0)`. If the method  doesn't raise the `ValueError` exception the test will fail. Indeed, if you run the test suite now, you will get the following failure
+
+``` text
+________________________ test_mul_by_zero_raises_exception ________________________
+
+    def test_mul_by_zero_raises_exception():
+        calculator = SimpleCalculator()
+    
+        with pytest.raises(ValueError):
+>           calculator.mul(3, 0)
+E           Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_main.py:81: Failed
+```
+
+which signals that the code didn't raise the expected exception.
+
+The code that makes the test pass needs to test if one of the inputs of the function `mul` is 0. This can be done with the help of the built-in function `all`, which accepts an iterable and returns `True` only if all the values contained in it are `True`. Since in Python the value `0` is not true, we may write
+
+``` python
+    def mul(self, *args):
+        if not all(args):
+            raise ValueError
+        return reduce(lambda x, y: x*y, args)
+```
+
+and make the test suite pass. The condition checks that there are no false values in the `args` tuple, that is there are no zeros.
+
+**Git tag:** [step-8-multiply-by-zero](https://github.com/lgiordani/simple_calculator/tree/step-8-multiply-by-zero)
+
+## Step 9 - A more complex set of requirements
+
+Until now the requirements were pretty simple, and it was wasy to map each of them directly into tests. It's time to try to tackle a more complex problem. The remaining requirements say that the class has to provide a function to compute the average of an iterable, and that this function shall accept two optional upper and lower thresholds to remove outliers.
+
+Let's break these two requirements into a set of simpler ones
+
+1. The function accepts an iterable and computes the average, i.e. `avg([2, 5, 12, 98]) == 29.25`
+2. The function accepts an optional upper threshold. It must remove all the values that are greater than the threshold before computing the average, i.e. `avg([2, 5, 12, 98], ut=90) == avg([2, 5, 12])`
+3. The function accepts an optional lower threshold. It must remove all the values that are less then the threshold before computing the average, i.e. `avg([2, 5, 12, 98], lt=10) == avg([12, 98])`
+4. The upper threshold is not included in the comparison, i.e. `avg([2, 5, 12, 98], ut=98) == avg([2, 5, 12, 98])`
+5. The lower threshold is not included in the comparison, i.e. `avg([2, 5, 12, 98], lt=5) == avg([5, 12, 98])`
+6. The function works with an empty list, returning `0`, i.e. `avg([]) == 0`
+7. The function works if the list is empty after outlier removal, i.e. `avg([12, 98], lt=15, ut=90) == 0`
+8. The function outlier removal works if the list is empty, i.e. `avg([], lt=15, ut=90) == 0`
+
+As you can see a requirement can produce multiple tests. Some of these are clearly expressed by the requirement (numbers 1, 2, 3), some of these are choices that we make (numbers 4, 5, 6) and can be discussed, some are boundary cases that we have to discover thinking about the problem (numbers 6, 7, 8).
+
+There is a fourth category of tests, which are the ones that come from bugs that you discover. We will discuss about those later in this chapter.
+
+Now, if you followed the posts coding along it is time to try to tackle a problem on your own. Why don't you try to go on and implement these features? Each of the eight requirements can be directly mapped into a test, and you know how to write tests and code that passes them. The next steps show my personal solution, which is just one of the possible ones, so you can compare what you did with what I came up with to solve the tests.
+
+### Step 9.1 - Average of an iterable
+
+Let's start adding a test for requirement number 1
+
+``` python
+def test_avg_correct_average():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([2, 5, 12, 98])
+
+    assert result == 29.25
+```
+
+We feed the function `avg` a list of generic numbers, which average we calculated with an external tool. The first run of the test suite fails with the usual complaint about a missing function, and we can make the test pass with a simple use of `sum` and `len`, as both built-in functions work on iterables
+
+``` python
+class SimpleCalculator:
+    [...]
+
+    def avg(self, it):
+        return sum(it)/len(it)
+```
+
+Here, `it` stands for iterable, as this function works with anything that supports the loop protocol.
+
+**Git tag:** [step-9-1-average-of-an-iterable](https://github.com/lgiordani/simple_calculator/tree/step-9-1-average-of-an-iterable)
+
+### Step 9.2 - Upper threshold
+
+The second requirement mentions an upper threshold, but we are free with regards to the API, i.e. the requirement doesn't specify how the threshold is supposed to be specified or named. I decided to call the upper threshold parameter `ut`, so the test becomes
+
+``` python
+def test_avg_removes_upper_outliers():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([2, 5, 12, 98], ut=90)
+
+    assert result == pytest.approx(6.333333)
+```
+
+As you can see the `ut=90` parameter is supposed to remove the element `98` from the list and then compute the average of the remaining elements. Since the result has an infinite number of digits I used the function `pytest.approx` to check the result.
+
+The test suite fails because the function `avg` doesn't accept the parameter `ut`
+
+``` text
+_________________________ test_avg_removes_upper_outliers _________________________
+
+    def test_avg_removes_upper_outliers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.avg([2, 5, 12, 98], ut=90)
+E       TypeError: avg() got an unexpected keyword argument 'ut'
+
+tests/test_main.py:95: TypeError
+```
+
+There are two problems now that we have to solve, as it happened for the second test we wrote in this project. The new `ut` argument needs a default value, so we have to manage that case, and then we have to make the upper threshold work. My solution is
+
+``` python
+    def avg(self, it, ut=None):
+        if not ut:
+            ut = max(it)
+
+        _it = [x for x in it if x <= ut]
+
+        return sum(_it)/len(_it)
+```
+
+The idea here is that `ut` is used to filter the iterable keeping all the elements that are less than or equal to the threshold. This means that the default value for the threshold has to be neutral with regards to this filtering operation. Using the maximum value of the iterable makes the whole algorithm work in every case, while for example using a big fixed value like `9999` would introduce a bug, as one of the elements of the iterable might be bigger than that value.
+
+**Git tag:** [step-9-2-upper-threshold](https://github.com/lgiordani/simple_calculator/tree/step-9-2-upper-threshold)
+
+### Step 9.3 - Lower threshold
+
+The lower threshold is the mirror of the upper threshold, so it doesn't require many explanations. The test is
+
+``` python
+def test_avg_removes_lower_outliers():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([2, 5, 12, 98], lt=10)
+
+    assert result == pytest.approx(55)
+```
+
+and the code of the function `avg` now becomes
+
+``` python
+    def avg(self, it, lt=None, ut=None):
+        if not lt:
+            lt = min(it)
+
+        if not ut:
+            ut = max(it)
+
+        _it = [x for x in it if x >= lt and x <= ut]
+
+        return sum(_it)/len(_it)
+```
+
+**Git tag:** [step-9-3-lower-threshold](https://github.com/lgiordani/simple_calculator/tree/step-9-3-lower-threshold)
+
+### Step 9.4 and 9.5 - Boundary inclusion
+
+As you can see from the code of the function `avg`, the upper and lower threshold are included in the comparison, so we might consider the requirements as already satisfied. TDD, however, pushes you to write a test for each requirement (as we saw it's not unusual to actually have multiple tests per requirements), and this is what we are going to do. 
+
+The reason behind this is that you might get the expected behaviour for free, like in this case, because some other code that you wrote to pass a different test provides that feature as a side effect. You don't know, however what will happen to that code in the future, so if you don't have tests that show that all your requirements are satisfied you might lose features without knowing it.
+
+The test for the fourth requirement is
+
+``` python
+def test_avg_uppper_threshold_is_included():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([2, 5, 12, 98], ut=98)
+
+    assert result == 29.25
+```
+
+**Git tag:** [step-9-4-upper-threshold-is-included](https://github.com/lgiordani/simple_calculator/tree/step-9-4-upper-threshold-is-included)
+
+while the test for the fifth one is
+
+``` python
+def test_avg_lower_threshold_is_included():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([2, 5, 12, 98], lt=2)
+
+    assert result == 29.25
+```
+
+**Git tag:** [step-9-5-lower-threshold-is-included](https://github.com/lgiordani/simple_calculator/tree/step-9-5-lower-threshold-is-included)
+
+And, as expected, both pass without any change in the code. Do you remember rule number 5? You should ask yourself why the tests don't fail. In this case we reasoned about that before, so we can accept that the new tests don't require any code change to pass.
+
+### Step 9.6 - Empty list
+
+Requirement number 6 is something that wasn't clearly specified in the project description so we decided to return 0 as the average of an empty list. You are free to change the requirement and decide to raise an exception, for example.
+
+The test that implements this requirement is
+
+``` python
+def test_avg_empty_list():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([])
+
+    assert result == 0
+```
+
+and the test suite fails with the following error
+
+``` text
+_______________________________ test_avg_empty_list _______________________________
+
+    def test_avg_empty_list():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.avg([])
+
+tests/test_main.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <simple_calculator.main.SimpleCalculator object at 0x7feeb7098a10>, it = [], lt = None, ut = None
+
+    def avg(self, it, lt=None, ut=None):
+        if not lt:
+>           lt = min(it)
+E           ValueError: min() arg is an empty sequence
+
+simple_calculator/main.py:26: ValueError
+```
+
+The function `min` that we used to compute the default lower threshold doesn't work with an empty list, so the code raises an exception. The simplest solution is to check for the length of the iterable before computing the default thresholds
+
+``` python
+    def avg(self, it, lt=None, ut=None):
+        if not len(it):
+            return 0
+
+        if not lt:
+            lt = min(it)
+
+        if not ut:
+            ut = max(it)
+
+        _it = [x for x in it if x >= lt and x <= ut]
+
+        return sum(_it)/len(_it)
+```
+
+**Git tag:** [step-9-6-empty-list](https://github.com/lgiordani/simple_calculator/tree/step-9-6-empty-list)
+
+As you can see the function `avg` is already pretty rich, but at the same time it is well structured and understandable. This obviously happens because the example is trivial, but cleaner code is definitely among the benefits of TDD.
+
+### Step 9.7 - Empty list after applying the thresholds
+
+The next requirement deals with the case in which the outlier removal process empties the list. The test is the following
+
+``` python
+def test_avg_manages_empty_list_after_outlier_removal():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([12, 98], lt=15, ut=90)
+
+    assert result == 0
+```
+
+and the test suite fails with a `ZeroDivisionError`, because the length of the iterable is now 0.
+
+``` text
+________________ test_avg_manages_empty_list_after_outlier_removal ________________
+
+    def test_avg_manages_empty_list_after_outlier_removal():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.avg([12, 98], lt=15, ut=90)
+
+tests/test_main.py:135:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <simple_calculator.main.SimpleCalculator object at 0x7f9e60c3ba90>, it = [12, 98], lt = 15, ut = 90
+
+    def avg(self, it, lt=None, ut=None):
+        if not len(it):
+            return 0
+    
+        if not lt:
+            lt = min(it)
+    
+        if not ut:
+            ut = max(it)
+    
+        _it = [x for x in it if x >= lt and x <= ut]
+    
+>       return sum(_it)/len(_it)
+E       ZeroDivisionError: division by zero
+
+simple_calculator/main.py:36: ZeroDivisionError
+```
+
+The easiest solution is to introduce a new check on the length of the iterable
+
+``` python
+    def avg(self, it, lt=None, ut=None):
+        if not len(it):
+            return 0
+
+        if not lt:
+            lt = min(it)
+
+        if not ut:
+            ut = max(it)
+
+        _it = [x for x in it if x >= lt and x <= ut]
+
+        if not len(_it):
+            return 0
+
+        return sum(_it)/len(_it)
+```
+
+And this code makes the test suite pass. As I stated before, code that makes the tests pass is considered correct, but you are always allowed to improve it. In this case I don't really like the repetition of the length check, so I might try to refactor the function to get a cleaner solution. Since I have all the tests that show that the requirements are satisfied, I am free to try to change the code of the function.
+
+After some attempts I found this solution
+
+``` python
+    def avg(self, it, lt=None, ut=None):
+        _it = it[:]
+
+        if lt:
+            _it = [x for x in _it if x >= lt]
+
+        if ut:
+            _it = [x for x in _it if x <= ut]
+
+        if not len(_it):
+            return 0
+
+        return sum(_it)/len(_it)
+```
+
+which looks reasonably clean, and makes the whole test suite pass.
+
+**Git tag:** [step-9-7-empty-list-after-thresholds](https://github.com/lgiordani/simple_calculator/tree/step-9-7-empty-list-after-thresholds)
+
+### Step 9.8 - Empty list before applying the thresholds
+
+The last requirement checks another boundary case, which happens when the list is empty and we specify one of or both the thresholds. This test will check that the outlier removal code doesn't assume the list contains elements.
+
+``` python
+def test_avg_manages_empty_list_after_outlier_removal():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([12, 98], lt=15, ut=90)
+
+    assert result == 0
+```
+
+This test doesn't fail. So, according to the TDD methodology, we should provide a reason why this happens and decide if we want to keep the test. The reason is because the two list comprehensions used to filter the elements work perfectly with empty lists. As for the test, it comes directly from a corner case, and it checks a behaviour which is not already covered by other tests. This makes me decide to keep the test.
+
+**Git tag:** [step-9-8-empty-list-before-thresholds](https://github.com/lgiordani/simple_calculator/tree/step-9-8-empty-list-before-thresholds)
+
+### Step 9.9 - Zero as lower/upper threshold
+
+This is perhaps the most important step of the whole chapter, for two reasons.
+
+First of all, the test added in this step was added by two readers of my book about clean architectures ([Faust Gertz](https://github.com/faustgertz) and [Michael O'Neill](https://github.com/IrishPrime)), and this shows a real TDD workflow. After you published you package (or your book, in this case) someone notices a wrong behaviour in some use case. This might be a big flaw or a tiny corner case, but in any case they can come up with a test that exposes the bug, and maybe even with a patch to the code, but the most important part is the test.
+
+Whoever discovers the bug has a clear way to show it, and you, as an author/maintainter/developer can add that test to your suite and work on the code until that passes. The rest of the test suite will block any change in the code that disrupts the behaviour you already tested. As I already stressed multiple times, we could do the same without TDD, but if we need to change a substantial amount of code there is nothing like a test suite that can guarantee we are not re-introducing bugs (also called regressions).
+
+Second, this step shows an important part of the TDD workflow: checking corner cases. In general you should pay a lot of attention to the boundaries of a domain, and test the behaviour of the code in those cases.
+
+This test shows that the code doesn't manage zero-valued lower thresholds correctly
+
+``` python
+def test_avg_manages_zero_value_lower_outlier():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([-1, 0, 1], lt=0)
+
+    assert result == 0.5
+```
+
+The reason is that the function `avg` contains a check like `if lt:`, which fails when `lt` is 0, as that is a false value. The check should be `if lt is not None:`, so that part of the function `avg` becomes
+
+``` python
+        if lt is not None:
+            _it = [x for x in _it if x >= lt]
+```
+
+It is immediately clear that the upper threshold has the same issue, so the two tests I added are
+
+``` python
+def test_avg_manages_zero_value_lower_outlier():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([-1, 0, 1], lt=0)
+
+    assert result == 0.5
+
+
+def test_avg_manages_zero_value_upper_outlier():
+    calculator = SimpleCalculator()
+
+    result = calculator.avg([-1, 0, 1], ut=0)
+
+    assert result == -0.5
+```
+
+and the final version of `avg` is
+
+``` python
+    def avg(self, it, lt=None, ut=None):
+        _it = it[:]
+
+        if lt is not None:
+            _it = [x for x in _it if x >= lt]
+
+        if ut is not None:
+            _it = [x for x in _it if x <= ut]
+
+        if not len(_it):
+            return 0
+
+        return sum(_it)/len(_it)
+```
+
+**Git tag:** [step-9-9-zero-as-lower-upper-threshold](https://github.com/lgiordani/simple_calculator/tree/step-9-9-zero-as-lower-upper-threshold)
+
+## Recap of the TDD rules
+
+Through this very simple example we learned 6 important rules of the TDD methodology. Let us review them, now that we have some experience that can make the words meaningful
+
+1. Test first, code later
+2. Add the bare minimum amount of code you need to pass the tests
+3. You shouldn't have more than one failing test at a time
+4. Write code that passes the test. Then refactor it.
+5. A test should fail the first time you run it. If it doesn't ask yourself why you are adding it.
+6. Never refactor without tests.
+
+## How many assertions?
+
+I am frequently asked "How many assertions do you put in a test?", and I consider this question important enough to discuss it in a dedicated section. To answer this question I want to briefly go back to the nature of TDD and the role of the test suite that we run.
+
+The whole point of automated tests is to run through a set of checkpoints that can quickly reveal that there is a problem in a specific area. Mind the words "quickly" and "specific". When I run the test suite and an error occurs I'd like to be able to understand as fast as possible where the problem lies. This doesn't (always) mean that the problem will have a quick resolution, but at least I can be immediately aware of which part of the system is misbehaving.
+
+On the other hand, we don't want to have too many test for the same condition, on the contrary we want to avoid testing the same condition more than once as tests have to be maintained. A test suite that is too fine-grained might result in too many tests failing because of the same problem in the code, which might be daunting and not very informative.
+
+My advice is to group together assertions that can be executed after running the same setup, if they test the same process. For example, you might consider the two functions `add` and `sub` that we tested in this chapter. They require the same setup, which is to instantiate the class `SimpleCalculator` (a setup that they share with many other tests), but they are actually testing two different processes. A good sign of this is that you should rename the test to `test_add_or_sub`, and a failure in this test would require a further investigation in the test output to check which method of the class is failing.
+
+If you have to test that a method returns positive even numbers, instead, you will have consider running the method and then writing two assertions, one that checks that the number is positive, and one that checks it is even. This makes sense, as a failure in one of the two means a failure of the whole process.
+
+As a rule of thumb, then, consider if the test is a logical `AND` between conditions or a logical `OR`. In the former case go for multiple assertions, in the latter create multiple test functions.
+
+## How to manage bugs or missing features
+
+In this chapter we developed the project from scratch, so the challenge was to come up with a series of small tests starting from the requirements. At a certain point in the life of your project you will have a stable version in production (this expression has many definitions, but in general it means "used by someone other than you") and you will need to maintain it. This means that people will file bug reports and feature requests, and TDD gives you a clear strategy to deal with those.
+
+From the TDD point of view both a bug and a missing feature are cases not currently covered by a test, so I will refer to them collectively as bugs, but don't forget that I'm talking about the second ones as well. 
+
+The first thing you need to do is to write one or more tests that expose the bug. This way you can easily decide when the code that you wrote is correct or good enough. For example, let's assume that a user files an issue on the `SimpleCalculator` project saying: "The function `add` doesn't work with negative numbers". You should definitely try to get a concrete example from the user that wrote the issue and some information about the execution environment (as it is always possible that the problem comes from a different source, like for example an old version of a library your package relies on), but in the meanwhile you can come up with at least 3 tests: one that involves two negative numbers, one with a negative number as the first argument, and one with a negative numbers as the second argument.
+
+You shouldn't write down all of them at once. Write the first test that you think might expose the issue and see if it fails. If it doesn't, discard it and write a new one. From the TDD point of view, if you don't have a failing test there is no bug, so you have to come up with at least one test that exposes the issue you are trying to solve.
+
+At this point you can move on and try to change the code. Remember that you shouldn't have more than one failing test at a time, so start doing this as soon as you discover a test case that shows there is a problem in the code.
+
+Once you reach a point where the test suite passes without errors stop and try to run the code in the environment where the bug was first discovered (for example sharing a branch with the user that created the ticket) and iterate the process.
+
+## Final words
+
+I hope you found the project entertaining and that you can now appreciate the power of TDD. The journey doesn't end here, though. In the next post I will discuss the practice of writing unit tests in depth, and then introduce you to another powerful tool: mocks.
+
+## Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+
