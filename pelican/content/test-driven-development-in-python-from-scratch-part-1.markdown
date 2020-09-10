@@ -1,0 +1,723 @@
+Title: Test Driven Development in Python from scratch - Part 1
+Date: 2020-09-10 10:00:00 +0200
+Category: Programming
+Tags: OOP, Python, Python3, refactoring, TDD, testing
+Authors: Leonardo Giordani
+Slug: test-driven-development-in-python-from-scratch-part-1
+Series: TDD in Python from scratch
+Summary: 
+
+This series of posts comes directly from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python). As I am reviewing the book to prepare a second edition, I realised that Harry percival was right when he said that the initial part on TDD shouldn't be in the book. That's a prerequisite to follow the chapters on the clean architecture, but it is something many programmers already know and they might be surprised to find it in a book that discusses architectures.
+
+So, I decided to move it here before I start working on a new version of the book. I also followed the advice of [valorien](https://github.com/valorien), who pointed out that the main example has some bad naming choices, and so I reworked the code.
+
+## Introduction
+
+"Test-Driven Development" (TDD) is fortunately one of the names that I can spot most frequently when people talk about methodologies. Unfortunately, many programmers still do not follow it, fearing that it will impose a further burden on the already difficult life of the developer.
+
+In this chapter I will try to outline the basic concept of TDD and to show you how your job as a programmer can greatly benefit from it. I will develop a very simple project to show how to practically write software following this methodology.
+
+TDD is a _methodology_, something that can help you to create better code. But it is not going to solve all your problems. As with all methodologies you have to pay attention not to commit blindly to it. Try to understand the reasons why certain practices are suggested by the methodology and you will also understand when and why you can or have to be flexible.
+
+Keep also in mind that testing is a broader concept that doesn't end with TDD, which focuses a lot on unit testing, a specific type of test that helps you to develop the API of your library/package. There are other types of tests, like integration or functional ones, that are not specifically part of the TDD methodology, strictly speaking, even though the TDD approach can be extended to any testing activity.
+
+## A real-life example
+
+Let's start with a simple example taken from a programmer's everyday life.
+
+The programmer is in the office with other colleagues, trying to nail down an issue in some part of the software. Suddenly the boss storms into the office, and addresses the programmer:
+
+**Boss**: I just met with the rest of the board. Our clients are not happy, we didn't fix enough bugs in the last two months.
+
+**Programmer**: I see. How many bugs did we fix?
+
+**Boss**: Well, not enough!
+
+**Programmer**: OK, so how many bugs do we have to fix every month?
+
+**Boss**: More!
+
+I guess you feel very sorry for the poor programmer. Apart from the aggressive attitude of the boss, what is the real issue in this conversation? At the end of it there is no hint for the programmer and their colleagues about what to do next. They don't have any clue about what they have to change. They can definitely try to work harder, but the boss didn't refer to actual figures, so it will be definitely hard for the developers to understand if they improved "enough".
+
+The classical [sorites paradox](https://en.wikipedia.org/wiki/Sorites_paradox) may help to understand the issue. One of the standard formulations, taken from the Wikipedia page, is
+
+> 1,000,000 grains of sand is a heap of sand (Premise 1)
+
+> A heap of sand minus one grain is still a heap. (Premise 2)
+
+> So 999,999 grains is a heap of sand.
+
+> A heap of sand minus one grain is still a heap. (Premise 2)
+
+> So 999,998 grains is a heap of sand.
+
+> ...
+
+> So one grain is a heap of sand.
+
+Where is the issue? The concept expressed by the word "heap" is nebulous, it is not defined clearly enough to allow the process to find a stable point, or a solution.
+
+When you write software you face that same challenge. You cannot conceive a function and just expect it "to work", because this is not clearly defined. How do you test if the function that you wrote "works"? What do you mean by "works"? TDD forces you to **clearly state your goal** before you write the code. Actually, the TDD mantra is "Test first, code later", which can be translated to "Goal first, solution later". Will shortly see a practical example of this.
+
+For the time being, consider that this is a valid practice also outside the realm of software creation. Whoever runs a business knows that you need to be able to extract some numbers (KPIs) from the activity of your company, because it is by comparing those numbers with some predefined thresholds that you can easily tell if the business is healthy or not. KPIs are a form of test, and you have to define them in advance, according to the expectations or needs that you have. 
+
+Pay attention. Nothing prevents you from changing the thresholds as a reaction to external events. You may consider that, given the incredible heat wave that hit your country, the amount of coats that your company sold could not reach the goal. So, because of a specific event, you can justify a change in the test (KPI). If you didn't have the test you would have just generically recorded that you earned less money.
+
+Going back to software and TDD, following this methodology you are forced to state clear goals like
+
+``` python
+sum(4, 5) == 9
+```
+
+Let me read this test for you: there will be a `sum` function available in the system that accepts two integers. If the two integers are 4 and 5 the function will return 9.
+
+As you can see there are many things that are tested by this statement.
+
+* The function exists and can be imported
+* The function accepts two integers
+* Passing 4 and 5 as inputs, the output of the function will be 9.
+
+Pay attention that at this stage there is no code that implements the `sum` function, the tests will fail for sure.
+
+As we will see with a practical example in the next chapter, what I explained in this section will become a set of rules of the methodology.
+
+## A simple TDD project
+
+The project we are going to develop is available at [https://github.com/lgiordani/simple_calculator](https://github.com/lgiordani/simple_calculator).
+
+This project is purposefully extremely simple. You don't need to be an experienced Python programmer to follow this chapter, but you need to know the basics of the language. The goal of this series of posts is not that of making you write the best Python code, but that of allowing you learn the TDD work flow, so don't be too worried if your code is not perfect.
+
+Methodologies are like sports or arts: you cannot learn them just by reading their description on a book. You have to practice them. Thus, you should avoid as much as possible to just follow this chapter reading the code passively. Instead, you should try to write the code and to try new solutions to the problems that I discuss. This is very important, as it actually makes you use TDD. This way, at the end of the chapter you will have a personal experience of what TDD is like.
+
+The repository is tagged, and at the end of each section you will find a link to the relative tag that contains the working solution.
+
+## Setup the project
+
+Clone the project repository and move to the `develop` branch. The `master` branch contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
+
+``` sh 
+git clone https://github.com/lgiordani/simple_calculator
+cd simple_calculator
+git checkout develop
+```
+
+Create a virtual environment following your preferred process and install the requirements
+
+``` sh
+pip install -r requirements/dev.txt
+```
+
+You should at this point be able to run
+
+``` sh
+pytest -svv
+```
+
+and get an output like
+
+``` text
+=============================== test session starts ===============================
+platform linux -- Python XXXX, pytest-XXXX, py-XXXX, pluggy-XXXX --
+cabook/venv3/bin/python3
+cachedir: .cache
+rootdir: cabook/code/calc, inifile: pytest.ini
+plugins: cov-XXXX
+collected 0 items 
+
+============================== no tests ran in 0.02s ==============================
+```
+
+## Requirements
+
+The goal of the project is to write a class `SimpleCalculator` that performs calculations: addition, subtraction, multiplication, and division. Addition and multiplication shall accept multiple arguments. Division shall return a float value, and division by zero shall return the string `"inf"`. Multiplication by zero must raise a `ValueError` exception. The class will also provide a function to compute the average of an iterable like a list. This function gets two optional upper and lower thresholds and should remove from the computation the values that fall outside these boundaries.
+
+As you can see the requirements are pretty simple, and a couple of them are definitely not "good" requirements, like the behaviour of division and multiplication. I added those requirements for the sake of example, to show how to deal with exceptions when developing in TDD.
+
+## Step 1 - Adding two numbers
+
+The first test we are going to write is one that checks if the class `SimpleCalculator` can perform an addition. Add the following code to the file `tests/test_main.py`
+
+``` python
+from simple_calculator.main import SimpleCalculator
+
+def test_add_two_numbers():
+    calculator = SimpleCalculator()
+
+    result = calculator.add(4, 5)
+
+    assert result == 9
+```
+
+As you can see the first thing we do is to import the class `SimpleCalculator` that we are supposed to write. This class doesn't exist yet, don't worry, you didn't skip any passage.
+
+The test is a standard function (this is how pytest works), and the function name shall begin with `test_` so that pytest can automatically discover all the tests. I tend to give my tests a descriptive name, so it is easier later to come back and understand what the test is about with a quick glance. You are free to follow the style you prefer but in general remember that naming components in a proper way is one of the most difficult things in programming. So better to get a handle on it as soon as possible.
+
+The body of the test function is pretty simple. The class `SimpleCalculator` is instantiated, and the method `add` of the instance is called with two numbers, 4 and 5. The result is stored in the variable `result`, which is later the subject of the test itself. The statement `assert result == 9` first computes `result == 9` which is a boolean, with a value that is either `True` or `False`. The `assert` keyword, then, silently passes if the argument is `True`, but raises an exception if it is `False`.
+
+And this is how you write tests in pytest: if your code doesn't raise any exception the test passes, otherwise it fails. The keyword `assert` is used to force an exception in case of wrong result. Remember that pytest doesn't consider the return value of the function, so it can detect a failure only if it raises an exception.
+
+Save the file and go back to the terminal. Execute `py.test -svv` and you should receive the following error message
+
+``` text
+===================================== ERRORS ======================================
+_______________________ ERROR collecting tests/test_main.py _______________________
+
+[...]
+
+tests/test_main.py:4: in <module>
+    from simple_calculator.main import SimpleCalculator
+E   ImportError: cannot import name 'SimpleCalculator' from 'simple_calculator.main'
+!!!!!!!!!!!!!!!!!!!!!! Interrupted: 1 errors during collection !!!!!!!!!!!!!!!!!!!!!
+============================= 1 error in 0.20 seconds =============================
+```
+
+No surprise here, actually, as we just tried to use something that doesn't exist. This is good, the test is showing us that something we suppose exists actually doesn't.
+
+> **TDD rule number 1:** Test first, code later
+
+This, by the way, is not yet an error in a test. The error happens very soon, during the tests collection phase (as shown by the message in the bottom line `Interrupted: 1 errors during collection`). Given this, the methodology is still valid, as we wrote a test and it fails because of an error or a missing feature in the code.
+
+Let's fix this issue. Open the file `simple_calculator/main.py` and add this code
+
+``` python
+class SimpleCalculator:
+    pass
+```
+
+But, I hear you scream, this class doesn't implement any of the requirements that are in the project. Yes, this is the hardest lesson you have to learn when you start using TDD. The development is ruled by the tests, not by the requirements. The requirements are used to write the tests, the tests are used to write the code. You shouldn't worry about something that is more than one level above the current one.
+
+> **TDD rule number 2:** Add the reasonably minimum amount of code you need to pass the tests
+
+Run the test again, and this time you should receive a different error, that is
+
+``` text
+=============================== test session starts ===============================
+platform linux -- Python XXXX, pytest-XXXX, py-XXXX, pluggy-XXXX --
+cachedir: .pytest_cache
+rootdir: simple_calculator, inifile: pytest.ini
+plugins: cov-XXXX
+collected 1 item
+
+tests/test_main.py::test_add_two_numbers FAILED
+
+==================================== FAILURES =====================================
+______________________________ test_add_two_numbers _______________________________
+
+
+    def test_add_two_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.add(4, 5)
+E       AttributeError: 'SimpleCalculator' object has no attribute 'add'
+
+tests/test_main.py:9: AttributeError
+============================ 1 failed in 0.04 seconds =============================
+```
+
+This is the first proper pytest failure report that we receive, so it's time to learn how to read the output. The first lines show you general information about the system where the tests are run
+
+``` text
+=============================== test session starts ===============================
+platform linux -- Python XXXX, pytest-XXXX, py-XXXX, pluggy-XXXX --
+cachedir: .pytest_cache
+rootdir: simple_calculator, inifile: pytest.ini
+plugins: cov-XXXX
+```
+
+You can see here the operating system and a short list of the versions of the main packages involved in running pytest: Python, pytest itself, `py` (https://py.readthedocs.io/en/latest/) and `pluggy` (https://pluggy.readthedocs.io/en/latest/). You can also see here where pytest is reading its configuration from (`pytest.ini`), and the pytest plugins that are installed. As this header is standard I will omit it from the output I will show in the rest of the chapter.
+
+The second part of the output shows the list of files containing tests and the result of each test
+
+``` text
+collected 1 item
+
+tests/test_main.py::test_add_two_numbers FAILED
+```
+
+Please note that this list is formatted with a syntax that can be given directly to pytest to run a single test. In this case we already have only one test, but later you might run a single failing test giving the name shown here on the command line. For example
+
+``` sh
+pytest -svv tests/test_main.py::test_add_two_numbers
+```
+
+The third part of the output shows details on the failing tests, if any
+
+``` text
+______________________________ test_add_two_numbers _______________________________
+
+    def test_add_two_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.add(4, 5)
+E       AttributeError: 'SimpleCalculator' object has no attribute 'add'
+
+tests/test_main.py:9: AttributeError
+```
+
+For each failing test, pytest shows a header with the name of the test and the part of the code that raised the exception. At the end of each box, pytest shows the line of the test file where the error happened.
+
+Back to the project. The new error is no surprise, as the test uses the method `add` that wasn't defined in the class. I bet you already guessed what I'm going to do, didn't you? This is the code that you should add to the class
+
+``` python
+class SimpleCalculator:
+    def add(self):
+        pass
+```
+
+And again, as you notice, we made the smallest possible addition to the code to pass the test. Running pytest again you should receive a different error message
+
+``` text
+_______________________________ test_add_two_numbers _______________________________
+
+    def test_add_two_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.add(4, 5)
+E       TypeError: add() takes 1 positional argument but 3 were given
+
+tests/test_main.py:9: TypeError
+```
+
+The function we defined doesn't accept any argument other than `self` (`def add(self)`), but in the test we pass three of them (`calculator.add(4, 5)`. Remember that in Python `self` is implicit. Our move at this point is to change the function to accept the parameters that it is supposed to receive, namely two numbers. The code now becomes
+
+``` python
+class SimpleCalculator:
+    def add(self, a, b):
+        pass
+```
+
+Run the test again, and you will receive another error
+
+``` text
+______________________________ test_add_two_numbers ________________________________
+
+    def test_add_two_numbers():
+        calculator = SimpleCalculator()
+    
+        result = calculator.add(4, 5)
+    
+>       assert result == 9
+E       assert None == 9
+E         -None
+E         +9
+
+tests/test_main.py:11: AssertionError
+```
+
+The function returns `None`, as it doesn't contain any code, while the test expects it to return `9`. What do you think is the minimum code you can add to pass this test?
+
+Well, the answer is
+
+``` python
+class SimpleCalculator:
+    def add(self, a, b):
+        return 9
+```
+
+and this may surprise you (it should!). You might have been tempted to add some code that performs an addition between `a` and `b`, but this would violate the TDD principles, because you would have been driven by the requirements and not by the tests.
+
+When you run pytest again, you will be rewarded by a success message
+
+``` text
+tests/test_main.py::test_add_two_numbers PASSED
+```
+
+I know this sound weird, but think about it for a moment: if your code works (that is, it passes the tests), you don't need anything more, as your tests should specify everything the code should do. Maybe in the future you will discover that this solution is not good enough, and at that point you will have to change it (this will happen with the next test, in this case). But for now everything works, and you shouldn't implement more than this.
+
+**Git tag:** [step-1-adding-two-numbers](https://github.com/lgiordani/simple_calculator/tree/step-1-adding-two-numbers)
+
+## Step 2 - Adding three numbers
+
+The requirements state that "Addition and multiplication shall accept multiple arguments". This means that we should be able to execute not only `add(4, 5)` like we did, but also `add(4, 5, 11)`, `add(4, 5, 11, 2)`, and so on. We can start testing this behaviour with the following test, that you should put in `tests/test_main.py`, after the previous test that we wrote.
+
+``` python
+def test_add_three_numbers():
+    calculator = SimpleCalculator()
+
+    result = calculator.add(4, 5, 6)
+
+    assert result == 15
+```
+
+This test fails when we run the test suite
+
+``` text
+_____________________________ test_add_three_numbers _______________________________
+
+    def test_add_three_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.add(4, 5, 6)
+E       TypeError: add() takes 3 positional arguments but 4 were given
+
+tests/test_main.py:18: TypeError
+```
+
+for the obvious reason that the function we wrote in the previous section accepts only 2 arguments other than `self`. What is the minimum code that you can write to fix this test?
+
+Well, the simplest solution is to add another argument, so my first attempt is
+
+``` python
+class SimpleCalculator:
+    def add(self, a, b, c):
+        return 9
+```
+
+which solves the previous error, but creates a new one. If that wasn't enough, it also makes the first test fail!
+
+``` text
+______________________________ test_add_two_numbers ________________________________
+
+    def test_add_two_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.add(4, 5)
+E       TypeError: add() missing 1 required positional argument: 'c'
+
+tests/test_main.py:10: TypeError
+_____________________________ test_add_three_numbers _______________________________
+    
+    def test_add_two_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.add(4, 5)
+E       TypeError: add() missing 1 required positional argument: 'c'
+
+tests/test_main.py:10: TypeError
+```
+
+The first test now fails because the new `add` method requires three arguments and we are passing only two. The second tests fails because the `add` method returns `9` and not `15` as expected by the test.
+
+When multiple tests fail it's easy to feel discomforted and lost. Where are you supposed to start fixing this? Well, one possible solution is to undo the previous change and to try a different solution, but in general you should try to get to a situation in which only one test fails.
+
+> **TDD rule number 3:** You shouldn't have more than one failing test at a time
+
+This is very important as it allows you to focus on one single test and thus one single problem. And remember, commenting tests to make them inactive is a perfectly valid way to have only one failing test. Pytest, however, has a smarter solution: you can use the `-k` option that allows you to specify a matching name. That option has a lot of expressive power, but for now we can just give it the name of the test that we want to run
+
+``` sh
+pytest -svv -k test_add_two_numbers
+```
+
+which will run only the first test and return the same result returned before, since we didn't change the test itself
+
+``` text
+______________________________ test_add_two_numbers ________________________________
+
+    def test_add_two_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.add(4, 5)
+E       TypeError: add() missing 1 required positional argument: 'c'
+
+tests/test_main.py:10: TypeError
+```
+
+To fix this error we can obviously revert the addition of the third argument, but this would mean going back to the previous solution. Obviously, though tests focus on a very small part of the code, we have to keep in mind what we are doing in terms of the big picture. A better solution is to add to the third argument a default value. The additive identity is `0`, so the new code of the `add` method is
+
+``` python
+class SimpleCalculator:
+    def add(self, a, b, c=0):
+        return 9
+```
+
+And this makes the first test pass. At this point we can run the full suite and see what happens.
+
+``` text
+_____________________________ test_add_three_numbers ______________________________
+
+    def test_add_three_numbers():
+        calculator = SimpleCalculator()
+    
+        result = calculator.add(4, 5, 6)
+    
+>       assert result == 15
+E       assert 9 == 15
+E         -9
+E         +15
+
+tests/test_main.py:20: AssertionError
+```
+
+The second test still fails, because the returned value that we hard coded doesn't match the expected one. At this point the tests show that our previous solution (`return 9`) is not sufficient anymore, and we have to try to implement something more complex.
+
+I want to stress this. You should implement the minimal change in the code that makes tests pass, if that solution is not enough there will be a test that shows it. Now, as you can see, the addition of a new requirement changes the tests, adding a new one, and the old solution is not sufficient any more.
+
+How can we solve this? We know that writing `return 15` will make the first test fail (you may try, if you want), so here we have to be a bit smarter and try a better solution, that in this case is actually to implement a real sum
+
+``` python
+class SimpleCalculator:
+    def add(self, a, b, c=0):
+        return a + b + c
+```
+
+This solution makes both tests pass, so the entire suite runs without errors.
+
+**Git tag:** [step-2-adding-three-numbers](https://github.com/lgiordani/simple_calculator/tree/step-2-adding-three-numbers)
+
+I can see your face, your are probably frowning at the fact that it took us 10 minutes to write a method that performs the addition of two or three numbers. On the one hand, keep in mind that I'm going at a very slow pace, this being an introduction, and for these first tests it is better to take the time to properly understand every single step. Later, when you will be used to TDD, some of these steps will be implicit. On the other hand, TDD _is_ slower than untested development, but the time that you invest writing tests now is usually negligible compared to the amount of time you would spend trying to indentify and fix bugs later.
+
+## Step 3 - Adding multiple numbers
+
+The requirements are not yet satisfied, however, as they mention "multiple" numbers and not just three. How can we test that we can add a generic amount of numbers? We might add a `test_add_four_numbers`, a `test_add_five_numbers`, and so on, but this will cover specific cases and will never cover all of them. Sad to say, it is impossible to test that generic condition, or, at least in this case, so complex that it is not worth trying to do it.
+
+What you shall do in TDD is to test boundary cases. In general you should always try to find the so-called "corner cases" of your algorithm and write tests that show that the code covers them. For example, if you are testing some code that accepts as inputs a number from 1 to 100, you need a test that runs it with a generic number like 42 (which is far from being generic, but don't panic!), but you definitely want to have a specific test that runs the algorithm with the number 1 and one that runs with the number 100. You also want to have tests that show the algorithm doesn't work with 0 and with 101, but we will talk later about testing error conditions.
+
+In our example there is no real limitation to the number of arguments that you pass to your function. Before Python 3.7 there was a limit of 256 arguments, which has been removed in that version of the language, but these are limitations enforced by an external system, and they are not real boundaries of your algorithm.
+
+The definition of "external system" obviously depends on what you are testing. If you are implementing a programming language you want to have tests that show how many arguments you can pass to a function, or that check the amount of memory used by certain language features. In this case we accept the Python language as the environment in which we work, so we don't want to test its features.
+
+The solution, in this case, might be to test a reasonable high amount of input arguments, to check that everything works. In particular, we should try to keep in mind that our goal is to devise as much as possible a generic solution. For example, we easily realise that we cannot come up with a function like
+
+``` python
+    def add(self, a, b, c=0, d=0, e=0, f=0, g=0, h=0, i=0):
+```
+
+as it is not _generic_, it is just covering a greater amount of inputs (9, in this case, but not 10 or more).
+
+That said, a good test might be the following
+
+``` python
+def test_add_many_numbers():
+    numbers = range(100)
+
+    calculator = SimpleCalculator()
+
+    result = calculator.add(*numbers)
+
+    assert result == 4950
+```
+
+which creates an array (strictly speaking a `range`, which is an iterable) of all the numbers from 0 to 99. The sum of all those numbers is 4950, which is what the algorithm shall return. The test suite fails because we are giving the function too many arguments
+
+``` text
+______________________________ test_add_many_numbers _______________________________
+
+    def test_add_many_numbers():
+        numbers = range(100)
+    
+        calculator = SimpleCalculator()
+    
+>       result = calculator.add(*numbers)
+E       TypeError: add() takes from 3 to 4 positional arguments but 101 were given
+
+tests/test_main.py:28: TypeError
+```
+
+The minimum amount of code that we can add, this time, will not be so trivial, as we have to pass three tests. This is actually the greatest advantage of TDD: the tests that we wrote are still there and will check that the previous conditions are still satisfied. And since tests are committed with the code they will always be there.
+
+The Python way to support a generic number of arguments (technically called _variadic functions_) is through the use of the `*args` syntax, which stores in `args` a tuple that contains all the arguments.
+
+``` python
+class SimpleCalculator:
+    def add(self, *args):
+        return sum(args)
+```
+
+At that point we can use the `sum` built-in function to sum all the arguments. This solution makes the whole test suite pass without errors, so it is correct.
+
+**Git tag:** [step-3-adding-multiple-numbers](https://github.com/lgiordani/simple_calculator/tree/step-3-adding-multiple-numbers)
+
+Pay attention here, please. In TDD a solution is not correct when it is beautiful, when it is smart, or when it uses the latest feature of the language. All these things are good, but TDD wants your code to pass the tests. So, your code might be ugly, convoluted, and slow, but if it passes the test it is correct. This in turn means that TDD doesn't cover all the needs of your software project. Delivering fast routines, for example, might be part of the advantage you have on your competitors, but it is not really testable with the TDD methodology (typically, performance testing is done in a completely different way).
+
+Part of the TDD methodology, then, deals with "refactoring", which means changing the code in a way that doesn't change the outputs, which in turns means that all your tests keep passing. Once you have a proper test suite in place, you can focus on the beauty of the code, or you can introduce smart solutions according to what the language allows you to do. We will discuss refactoring further later in this post.
+
+> **TDD rule number 4:** Write code that passes the test. Then refactor it.
+
+## Step 4 - Subtraction
+
+From the requirements we know that we have to implement a function to subtract numbers, but this doesn't mention multiple arguments (as it would be complex to define what subtracting 3 of more numbers actually means). The tests that implements this requirements is
+
+``` python
+def test_subtract_two_numbers():
+    calculator = SimpleCalculator()
+
+    result = calculator.sub(10, 3)
+
+    assert result == 7
+```
+
+which doesn't pass with the following error
+
+``` text
+____________________________ test_subtract_two_numbers ____________________________
+
+    def test_subtract_two_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.sub(10, 3)
+E       AttributeError: 'SimpleCalculator' object has no attribute 'sub'
+
+tests/test_main.py:36: AttributeError
+```
+
+Now that you understood the TDD process, and that you know you should avoid over-engineering, you can also skip some of the passages that we run through in the previous sections. A good solution for this test is
+
+``` python
+    def sub(self, a, b):
+        return a - b
+```
+
+which makes the test suite pass.
+
+**Git tag:** [step-4-subtraction](https://github.com/lgiordani/simple_calculator/tree/step-4-subtraction)
+
+## Step 5 - Multiplication
+
+It's time to move to multiplication, which has many similarities to addition. The requirements state that we have to provide a function to multiply numbers and that this function shall allow us to multiply multiple arguments. In TDD you should try to tackle problems one by one, possibly dividing a bigger requirement in multiple smaller ones.
+
+In this case the first test can be the multiplication of two numbers, as it was for addition.
+
+``` python
+def test_mul_two_numbers():
+    calculator = SimpleCalculator()
+
+    result = calculator.mul(6, 4)
+
+    assert result == 24
+```
+
+And the test suite fails as expected with the following error
+
+``` text
+______________________________ test_mul_two_numbers _______________________________
+                                                                                                                                                                        
+    def test_mul_two_numbers():
+        calculator = SimpleCalculator()
+    
+>       result = calculator.mul(6, 4)
+E       AttributeError: 'SimpleCalculator' object has no attribute 'mul'
+
+tests/test_main.py:44: AttributeError
+```
+
+We face now a classical TDD dilemma. Shall we implement the solution to this test as a function that multiplies two numbers, knowing that the next test will invalidate it, or shall we already consider that the target is that of implementing a variadic function and thus use `*args` directly?
+
+In this case the choice is not really important, as we are dealing with very simple functions. In other cases, however, it might be worth recognising that we are facing the same issue we solved in a similar case and try to implement a smarter solution from the very beginning. In general, however, you should not implement anything that you don't plan to test in one of the next few tests that you will write.
+
+If we decide to follow the strict TDD, that is implement the simplest first solution, the bare minimum code that passes the test would be
+
+``` python
+    def mul(self, a, b):
+        return a * b
+```
+
+**Git tag:** [step-5-multiply-two-numbers](https://github.com/lgiordani/simple_calculator/tree/step-5-multiply-two-numbers)
+
+To show you how to deal with redundant tests I will in this case choose the second path, and implement a smarter solution for the present test. Keep in mind however that it is perfectly correct to implement that solution shown above and then move on and try to solve the problem of multiple arguments later.
+
+The problem of multiplying a tuple of numbers can be solved in Python using the `reduce` function. This function implements a typical algorithm that "reduces" an array to a single number, applying a given function. The algorithm steps are the following
+
+1. Apply the function to the first two elements
+2. Remove the first two elements from the array
+3. Apply the function to the result of the previous step and to the first element of the array
+4. Remove the first element
+5. If there are still elements in the array go back to step 3
+
+So, suppose the function is
+
+``` python
+def mul2(a, b):
+    return a * b
+```
+
+and the array is
+
+``` python
+a = [2, 6, 4, 8, 3]
+```
+
+The steps followed by the algorithm will be
+
+1. Apply the function to 2 and 6 (first two elements). The result is `2 * 6`, that is 12
+2. Remove the first two elements, the array is now `a = [4, 8, 3]`
+3. Apply the function to 12 (result of the previous step) and 4 (first element of the array). The new result is `12 * 4`, that is 48
+4. Remove the first element, the array is now `a = [8, 3]`
+5. Apply the function to 48 (result of the previous step) and 8 (first element of the array). The new result is `48 * 8`, that is 384
+6. Remove the first element, the array is now `a = [3]`
+7. Apply the function to 384 (result of the previous step) and 3 (first element of the array). The new result is `384 * 3`, that is 1152
+8. Remove the first element, the array is now empty and the procedure ends
+
+Going back to our class `SimpleCalculator`, we might import `reduce` from the `functools` module and use it on the `args` array. We need to provide a function that we can define in the `mul` function itself.
+
+``` python
+from functools import reduce
+
+
+class SimpleCalculator:
+    [...]
+
+    def mul(self, *args):
+        def mul2(a, b):
+            return a * b
+
+        return reduce(mul2, args)
+```
+
+**Git tag:** [step-5-multiply-two-numbers-smart](https://github.com/lgiordani/simple_calculator/tree/step-5-multiply-two-numbers-smart)
+
+More information about the `reduce` algorithm can be found on the MapReduce Wikipedia page [https://en.wikipedia.org/wiki/MapReduce](https://en.wikipedia.org/wiki/MapReduce). The Python function documentation can be found at [https://docs.python.org/3.6/library/functools.html#functools.reduce](https://docs.python.org/3.6/library/functools.html#functools.reduce).
+
+The above code makes the test suite pass, so we can move on and address the next problem. As happened with addition we cannot properly test that the function accepts a potentially infinite number of arguments, so we can test a reasonably high number of inputs.
+
+``` python
+def test_mul_many_numbers():
+    numbers = range(1, 10)
+
+    calculator = SimpleCalculator()
+
+    result = calculator.mul(*numbers)
+
+    assert result == 362880
+```
+
+**Git tag:** [step-5-multiply-many-numbers](https://github.com/lgiordani/simple_calculator/tree/step-5-multiply-many-numbers)
+
+We might use 100 arguments as we did with addition, but the multiplication of all numbers from 1 to 100 gives a result with 156 digits and I don't really need to clutter the tests file with such a monstrosity. As I said, testing multiple arguments is testing a boundary, and the idea is that if the algorithm works for 2 numbers and for 10 it will work for 10 thousands arguments as well.
+
+If we run the test suite now all tests pass, and _this should worry you_.
+
+Yes, you shouldn't be happy. When you follow TDD each new test that you add should fail. If it doesn't fail you should ask yourself if it is worth adding that test or not. This is because chances are that you are adding a useless test and we don't want to add useless code, because code has to be maintained, so the less the better.
+
+In this case, however, we know why the test already passes. We implemented a smarter algorithm as a solution for the first test knowing that we would end up trying to solve a more generic problem. And the value of this new test is that it shows that multiple arguments can be used, while the first test doesn't.
+
+So, after these considerations, we can be happy that the second test already passes.
+
+> **TDD rule number 5:** A test should fail the first time you run it. If it doesn't, ask yourself why you are adding it.
+
+## Step 6 - Refactoring
+
+Previously, I introduced the concept of refactoring, which means changing the code without altering the results. How can you be sure you are not altering the behaviour of your code? Well, this is what the tests are for. If the new code keeps passing the test suite you can be sure that you didn't remove any feature.
+
+In theory, refactoring shouldn't add any new behaviour to the code, as it should be an idempotent transformation. There is no real practical way to check this, and we will not bother with it now. You should be concerned with this if you are discussing security, as your code shouldn't add any entry point you don't want to be there. In this case you will need tests that check the absence of features instead of their presence.
+
+This means that if you have no tests you shouldn't refactor. But, after all, if you have no tests you shouldn't have any code, either, so refactoring shouldn't be a problem you have. If you have some code without tests (I know you have it, I do), you should seriously consider writing tests for it, at least before changing it. More on this in a later section.
+
+For the time being, let's see if we can work on the code of the class `SimpleCalculator` without altering the results. I do not really like the definition of the function `mul2` inside the `mul` one. It is obviously perfectly fine and valid, but for the sake of example I will pretend we have to get rid of it.
+
+Python provides support for anonymous functions with the `lambda` operator, so I might replace the `mul` code with
+
+``` python
+from functools import reduce
+
+
+class SimpleCalculator:
+    [...]
+
+    def mul(self, *args):
+        return reduce(lambda x, y: x*y, args)
+```
+
+**Git tag:** [step-6-refactoring](https://github.com/lgiordani/simple_calculator/tree/step-6-refactoring)
+
+where I define an anonymous function that accepts two inputs `x, y` and returns their multiplication `x*y`. Running the test suite I can see that all the test pass, so my refactoring is correct.
+
+> **TDD rule number 6:** Never refactor without tests.
+
+## Final words
+
+Well, I think we learned a lot. We started with no knowledge of TDD and we managed to implement a fully tested class with 3 methods. We also briefly touched the topic of refactoring, which is of paramount importance in development. In the next post I will cover the remaining requirements: division, testing exceptions, and the average function.
+
+## Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+
