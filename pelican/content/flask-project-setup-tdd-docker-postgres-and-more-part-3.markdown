@@ -1,7 +1,7 @@
 Title: Flask project setup: TDD, Docker, Postgres and more - Part 3
 Date: 2020-07-07 13:00:00 +0100
 Category: Programming
-Tags: AWS, Docker, Flask, HTTP, Postgres, Python, Python3, TDD, testing, WWW
+Tags: AWS, Docker, Flask, HTTP, Postgres, pytest, Python, Python3, TDD, testing, WWW
 Authors: Leonardo Giordani
 Slug: flask-project-setup-tdd-docker-postgres-and-more-part-3
 Image: flask-project-setup-tdd-docker-postgres-and-more-part-3

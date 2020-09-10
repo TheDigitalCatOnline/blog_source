@@ -1,7 +1,7 @@
 Title: Python Mocks: a gentle introduction - Part 2
 Date: 2016-09-27 09:00:00 +0000
 Category: Programming
-Tags: decorators, OOP, Python, Python2, Python3, TDD, testing
+Tags: decorators, OOP, pytest, Python, Python2, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: python-mocks-a-gentle-introduction-part-2
 Series: Python Mocks: a gentle introduction

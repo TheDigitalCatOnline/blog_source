@@ -1,7 +1,7 @@
 Title: Useful pytest command line options 
 Date: 2018-07-05 11:00:00 +0100
 Category: Programming
-Tags: Python, Python2, Python3, TDD, testing
+Tags: pytest, Python, Python2, Python3, TDD, testing
 Authors: Leonardo Giordani
 Slug: useful-pytest-command-line-options
 Image: useful-pytest-command-line-options
