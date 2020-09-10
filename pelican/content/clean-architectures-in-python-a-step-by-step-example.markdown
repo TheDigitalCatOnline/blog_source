@@ -2,7 +2,7 @@ Title: Clean architectures in Python: a step-by-step example
 Date: 2016-11-14 19:00:00 +0000
 Modified: 2018-12-29 08:50:00 +0000
 Category: Programming
-Tags: OOP, Python, Python2, Python3, TDD, architectures
+Tags: OOP, pytest, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
 Slug: clean-architectures-in-python-a-step-by-step-example
 Image: clean-architectures

@@ -1,10 +1,11 @@
-Title: Test Driven Development in Python from scratch - Part 1
-Date: 2020-09-10 10:00:00 +0200
+Title: TDD in Python with pytest - Part 1
+Date: 2020-09-10 10:30:00 +0200
 Category: Programming
-Tags: OOP, Python, Python3, refactoring, TDD, testing
+Tags: OOP, pytest, Python, Python3, refactoring, TDD, testing
 Authors: Leonardo Giordani
-Slug: test-driven-development-in-python-from-scratch-part-1
-Series: TDD in Python from scratch
+Slug: tdd-in-python-with-pytest-part-1
+Series: TDD in Python with pytest
+Image: tdd-in-python-with-pytest-part-1
 Summary: 
 
 This series of posts comes directly from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python). As I am reviewing the book to prepare a second edition, I realised that Harry percival was right when he said that the initial part on TDD shouldn't be in the book. That's a prerequisite to follow the chapters on the clean architecture, but it is something many programmers already know and they might be surprised to find it in a book that discusses architectures.
@@ -13,7 +14,7 @@ So, I decided to move it here before I start working on a new version of the boo
 
 ## Introduction
 
-"Test-Driven Development" (TDD) is fortunately one of the names that I can spot most frequently when people talk about methodologies. Unfortunately, many programmers still do not follow it, fearing that it will impose a further burden on the already difficult life of the developer.
+Test-Driven Development (TDD) is fortunately one of the names that I can spot most frequently when people talk about methodologies. Unfortunately, many programmers still do not follow it, fearing that it will impose a further burden on the already difficult life of the developer.
 
 In this chapter I will try to outline the basic concept of TDD and to show you how your job as a programmer can greatly benefit from it. I will develop a very simple project to show how to practically write software following this methodology.
 
