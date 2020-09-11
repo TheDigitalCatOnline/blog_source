@@ -8,7 +8,7 @@ Series: TDD in Python with pytest
 Image: tdd-in-python-with-pytest-part-2
 Summary: 
 
-This is the second post in the series "TDD in Python from scratch" where I develop a simple project following a strict TDD methodology. The posts come from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python) and have been reviewed to get rid of some bad naming choices of the version published in the book.
+This is the second post in the series "TDD in Python with pytest" where I develop a simple project following a strict TDD methodology. The posts come from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python) and have been reviewed to get rid of some bad naming choices of the version published in the book.
 
 You can find the first post [here]({filename}tdd-in-python-with-pytest-part-1.markdown).
 
