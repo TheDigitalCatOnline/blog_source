@@ -117,7 +117,13 @@ We want to be sure, however, that our component uses the API of the external act
 | Outgoing | Command | Mock  |
 ```
 
-## Recap
+## Final words
 
 Since the discovery of TDD few things changed the way I write code more than these considerations on what I am supposed to test. Out of 6 different types of tests we discovered that 2 shouldn't be tested, 2 of them require a very simple technique based on assertions, and the last 2 are the only ones that requires an advanced technique (mocks). This should cheer you up, as for once a good methodology doesn't add new rules and further worries, but removes one third of them, even forbidding you to implement them!
+
+In the next two posts I will discuss mocks and patches, two very important testing tools to have in your belt.
+
+## Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 
