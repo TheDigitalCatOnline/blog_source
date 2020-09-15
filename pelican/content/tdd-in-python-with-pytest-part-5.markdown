@@ -56,17 +56,7 @@ collected 0 items
 ============================== no tests ran in 0.02s ==============================
 ```
 
-
-
-
-
-
-
-
-
-Let us start with a very simple example. Patching can be complex to grasp at the beginning so it is better to start learning it with trivial use cases.
-
-Create a new project following the instructions given previously in the book, calling this project `fileinfo`. The purpose of this library is to develop a simple class that returns information about a given file. The class shall be instantiated with the file path, which can be relative.
+Let us start with a very simple example. Patching can be complex to grasp at the beginning so it is better to start learning it with trivial use cases. The purpose of this library is to develop a simple class that returns information about a given file. The class shall be instantiated with the file path, which can be relative.
 
 The starting point is the class with the method `__init__`. If you want you can develop the class using TDD, but for the sake of brevity I will not show here all the steps that I followed. This is the set of tests I have in `tests/test_fileinfo.py`
 
@@ -99,9 +89,9 @@ class FileInfo:
         self.filename = os.path.basename(path)
 ```
 
-**Git tag:** [first-version](https://github.com/pycabook/fileinfo/tree/first-version)
+**Git tag:** [first-version](https://github.com/lgiordani/fileinfo/tree/first-version)
 
-As you can see the class is extremely simple, and the tests are straightforward. So far I didn't add anything new to what we discussed in the previous chapter.
+As you can see the class is extremely simple, and the tests are straightforward. So far I didn't add anything new to what we discussed in the previous posts.
 
 Now I want the method `get_info` to return a tuple with the file name, the original path the class was instantiated with, and the absolute path of the file. Pretending we are in the `/some/absolute/path` directory, the class should work as shown here
 
@@ -111,7 +101,7 @@ Now I want the method `get_info` to return a tuple with the file name, the origi
 ('book_list.txt', '../book_list.txt', '/some/absolute')
 ```
 
-You can immediately realise that you have an issue in writing the test. There is no way to easily test something as "the absolute path", since the outcome of the function called in the test is supposed to vary with the path of the test itself. Let us try to write part of the test
+You can immediately realise that you have a problem writing the test. There is no way to easily test something as "the absolute path", since the outcome of the function called in the test is supposed to vary with the path of the test itself. Let us try to write part of the test
 
 ``` python
 def test_get_info():
@@ -169,9 +159,9 @@ class FileInfo:
 
 When this code is executed by the test the `os.path.abspath` function is replaced at run time by the mock that we prepared there, which basically ignores the input value `self.filename` and returns the fixed value it was instructed to use.
 
-**Git tag:** [patch-with-context-manager](https://github.com/pycabook/fileinfo/tree/patch-with-context-manager)
+**Git tag:** [patch-with-context-manager](https://github.com/lgiordani/fileinfo/tree/patch-with-context-manager)
 
-It is worth at this point discussing outgoing messages again. The code that we are considering here is a clear example of an outgoing query, as the method `get_info` is not interested in changing the status of the external component. In the previous chapter we reached the conclusion that testing the return value of outgoing queries is pointless and should be avoided. With `patch` we are replacing the external component with something that we know, using it to test that our object correctly handles the value returned by the outgoing query. We are thus not testing the external component, as it got replaced, and definitely we are not testing the mock, as its return value is already known.
+It is worth at this point discussing outgoing messages again. The code that we are considering here is a clear example of an outgoing query, as the method `get_info` is not interested in changing the status of the external component. In the previous chapter we reached the conclusion that testing the return value of outgoing queries is pointless and should be avoided. With `patch` we are replacing the external component with something that we know, using it to test that our object correctly handles the value returned by the outgoing query. We are thus not testing the external component, as it has been replaced, and we are definitely not testing the mock, as its return value is already known.
 
 Obviously to write the test you have to know that you are going to use the `os.path.abspath` function, so patching is somehow a "less pure" practice in TDD. In pure OOP/TDD you are only concerned with the external behaviour of the object, and not with its internal structure. This example, however, shows that this pure approach has some limitations that you have to cope with, and patching is a clean way to do it.
 
@@ -196,13 +186,13 @@ def test_get_info(abspath_mock):
     assert fi.get_info() == (filename, original_path, test_abspath)
 ```
 
-**Git tag:** [patch-with-function-decorator](https://github.com/pycabook/fileinfo/tree/patch-with-function-decorator)
+**Git tag:** [patch-with-function-decorator](https://github.com/lgiordani/fileinfo/tree/patch-with-function-decorator)
 
 As you can see the `patch` decorator works like a big `with` statement for the whole function. The `abspath_mock` argument passed to the test becomes internally the mock that replaces `os.path.abspath`. Obviously this way you replace `os.path.abspath` for the whole function, so you have to decide case by case which form of the `patch` function you need to use.
 
 ## Multiple patches
 
-You can patch more that one object in the same test. For example, consider the case where the method `get_info` calls `os.path.getsize` in addition to `os.path.abspath`, because it needs it to return the size of the file. You have at this point two different outgoing queries, and you have to replace both with mocks to make your class work during the test.
+You can patch more that one object in the same test. For example, consider the case where the method `get_info` calls `os.path.getsize` in addition to `os.path.abspath`m in order to return the size of the file. You have at this point two different outgoing queries, and you have to replace both with mocks to make your class work during the test.
 
 This can be easily done with an additional `patch` decorator
 
@@ -257,7 +247,7 @@ class FileInfo:
         )
 ```
 
-**Git tag:** [multiple-patches](https://github.com/pycabook/fileinfo/tree/multiple-patches)
+**Git tag:** [multiple-patches](https://github.com/lgiordani/fileinfo/tree/multiple-patches)
 
 We can write the above test using two `with` statements as well
 
@@ -287,7 +277,7 @@ Using more than one `with` statement, however, makes the code difficult to read,
 
 ## Checking call parameters
 
-When you patch, your internal algorithm is not run, as the patched method just return the values they have been instructed to return. This is connected to what we said about testing external systems, so everything is good, but while we don't want to test the internals of the `os.path` module, we want to be sure that we are passing the correct values to the external methods.
+When you patch, your internal algorithm is not executed, as the patched method just return the values it has been instructed to return. This is connected to what we said about testing external systems, so everything is good, but while we don't want to test the internals of the `os.path` module, we want to be sure that we are passing the correct values to the external methods.
 
 This is why mocks provide methods like `assert_called_with` (and other similar methods), through which we can check the values passed to a patched method when it is called. Let's add the checks to the test
 
@@ -316,15 +306,13 @@ As you can see, I first invoke `fi.get_info` storing the result in the variable 
 
 The test passes, confirming that we are passing the correct values.
 
-**Git tag:** [addding-checks-for-input-values](https://github.com/pycabook/fileinfo/tree/addding-checks-for-input-values)
+**Git tag:** [addding-checks-for-input-values](https://github.com/lgiordani/fileinfo/tree/addding-checks-for-input-values)
 
 ## Patching immutable objects
 
 The most widespread version of Python is CPython, which is written, as the name suggests, in C. Part of the standard library is also written in C, while the rest is written in Python itself.
 
-The objects (classes, modules, functions, etc.) that are implemented in C are shared between interpreters[^interpreters], and this requires those objects to be immutable, so that you cannot alter them at runtime from a single interpreter.
-
-[^interpreters]: having multiple interpreters is something that you achieve embedding the Python interpreter in a C program, for example.
+The objects (classes, modules, functions, etc.) that are implemented in C are shared between interpreters, and this requires those objects to be immutable, so that you cannot alter them at runtime from a single interpreter.
 
 An example of this immutability can be given easily using a Python console
 
@@ -336,7 +324,7 @@ Traceback (most recent call last):
 AttributeError: 'int' object attribute 'conjugate' is read-only
 ```
 
-Here I'm trying to replace a method with an integer, which is pointless, but nevertheless shows the issue we are facing.
+Here I'm trying to replace a method with an integer, which is pointless per se, but clearly shows the issue we are facing.
 
 What has this immutability to do with patching? What `patch` does is actually to temporarily replace an attribute of an object (method of a class, class of a module, etc.), which also means that if we try to replace an attribute in an immutable object the patching action will fail.
 
@@ -387,7 +375,7 @@ TypeError: can't set attributes of built-in/extension type 'datetime.datetime'
 
 which is raised because patching tries to replace the `now` function in `datetime.datetime` with a mock, and since the module is immutable this operation fails.
 
-**Git tag:** [initial-logger-not-working](https://github.com/pycabook/fileinfo/tree/initial-logger-not-working)
+**Git tag:** [initial-logger-not-working](https://github.com/lgiordani/fileinfo/tree/initial-logger-not-working)
 
 There are several ways to address this problem. All of them, however, start from the fact that importing or subclassing an immutable object gives you a mutable "copy" of that object.
 
@@ -405,7 +393,7 @@ def test_log(mock_datetime):
     assert test_logger.messages == [(test_now, test_message)]
 ```
 
-**Git tag:** [correct-patching](https://github.com/pycabook/fileinfo/tree/correct-patching)
+**Git tag:** [correct-patching](https://github.com/lgiordani/fileinfo/tree/correct-patching)
 
 If you run the test now, you can see that the patching works. What we did was to inject our mock in `fileinfo.logger.datetime.datetime` instead of `datetime.datetime.now`. Two things changed, thus, in our test. First, we are patching the module imported in the `logger.py` file and not the module provided globally by the Python interpreter. Second, we have to patch the whole module because this is what is imported by the `logger.py` file. If you try to patch `fileinfo.logger.datetime.datetime.now` you will find that it is still immutable.
 
@@ -429,11 +417,11 @@ In this cases we definitely crossed the barrier between unit testing and integra
 
 This threshold is not fixed, and I can't give you a rule to recognise it, but I can give you some advice. First of all keep an eye on how many things you need to mock to make a test run, as an increasing number of mocks in a single test is definitely a sign of something wrong in the testing approach. My rule of thumb is that when I have to create more than 3 mocks, an alarm goes off in my mind and I start questioning what I am doing.
 
-The second advice is to always consider the complexity of the mocks. You may find yourself patching a class but then having to create monsters like `cls_mock().func1().func2().func3.assert_called_with(x=42)` which is a sign that the part of the system that you are mocking is deep into some code that you cannot really access, because you don't know it's internal mechanisms. This is the case with ORMs, for example, and I will discuss it later in the book.
+The second advice is to always consider the complexity of the mocks. You may find yourself patching a class but then having to create monsters like `cls_mock().func1().func2().func3.assert_called_with(x=42)` which is a sign that the part of the system that you are mocking is deep into some code that you cannot really access, because you don't know it's internal mechanisms.
 
-The third advice is to consider mocks as "hooks" that you throw at the external system, and that break its hull to reach its internal structure. These hooks are obviously against the assumption that we can interact with a system knowing only its external behaviour, or its API. As such, you should keep in mind that each mock you create is a step back from this perfect assumption, thus "breaking the spell" of the decoupled interaction. Doing this you will quickly become annoyed when you have to create too many mocks, and this will contribute in keeping you aware of what you are doing (or overdoing).
+The third advice is to consider mocks as "hooks" that you throw at the external system, and that break its hull to reach its internal structure. These hooks are obviously against the assumption that we can interact with a system knowing only its external behaviour, or its API. As such, you should keep in mind that each mock you create is a step back from this perfect assumption, thus "breaking the spell" of the decoupled interaction. Doing this makes it increasingly complex to create mocks, and this will contribute to keep you aware of what you are doing (or overdoing).
 
-## Recap
+## Final words
 
 Mocks are a very powerful tool that allows us to test code that contains outgoing messages. In particular they allow us to test the arguments of outgoing commands. Patching is a good way to overcome the fact that some external components are hardcoded in our code and are thus unreachable through the arguments passed to the classes or the methods under analysis.
 
