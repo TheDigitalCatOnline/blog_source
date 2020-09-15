@@ -99,7 +99,7 @@ Clone the project repository and move to the `develop` branch. The `master` bran
 ``` sh 
 git clone https://github.com/lgiordani/simple_calculator
 cd simple_calculator
-git checkout develop
+git checkout --track origin/develop
 ```
 
 Create a virtual environment following your preferred process and install the requirements
