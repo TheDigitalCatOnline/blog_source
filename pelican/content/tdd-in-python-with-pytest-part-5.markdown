@@ -22,14 +22,12 @@ This is exactly the case addressed by patching. Patching, in a testing framework
 
 ### A warm-up example
 
-
-
-Clone the project repository and move to the `develop` branch. The `master` branch contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
+Clone the repository [lgiordani/fileinfo](https://github.com/lgiordani/fileinfo) and move to the `develop` branch. The `master` branch contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
 
 ``` sh 
-git clone https://github.com/lgiordani/simple_calculator
-cd simple_calculator
-git checkout develop
+git clone https://github.com/lgiordani/fileinfo
+cd fileinfo
+git checkout --track origin/develop
 ```
 
 Create a virtual environment following your preferred process and install the requirements
