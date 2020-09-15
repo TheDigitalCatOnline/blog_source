@@ -1,11 +1,12 @@
-Title: Test Driven Development in Python from scratch - Part 3
-Date: 2020-09-09 09:00:00 +0100
+Title: TDD in Python with pytest - Part 3
+Date: 2020-09-15 08:00:00 +0200
 Category: Programming
-Tags: OOP, Python, Python3, refactoring, TDD, testing
+Tags: OOP, pytest, Python, Python3, refactoring, TDD, testing
 Authors: Leonardo Giordani
-Slug: test-driven-development-in-python-from-scratch-part-3
-Series: TDD in Python from scratch
-Summary:
+Slug: tdd-in-python-with-pytest-part-3
+Series: TDD in Python with pytest
+Image: tdd-in-python-with-pytest-part-3
+Summary: 
 
 This is the third post in the series "TDD in Python from scratch" where I develop a simple project following a strict TDD methodology. The posts come from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python) and have been reviewed to get rid of some bad naming choices of the version published in the book.
 
