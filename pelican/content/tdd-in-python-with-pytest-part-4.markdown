@@ -42,7 +42,14 @@ This object has the peculiar property of creating methods and attributes on the 
 
 ``` python
 >>> dir(m)
-['assert_any_call', 'assert_called_once_with', 'assert_called_with', 'assert_has_calls', 'attach_mock', 'call_args', 'call_args_list', 'call_count', 'called', 'configure_mock', 'method_calls', 'mock_add_spec', 'mock_calls', 'reset_mock', 'return_value', 'side_effect']
+[
+	'assert_any_call', 'assert_called_once_with',
+	'assert_called_with', 'assert_has_calls',
+	'attach_mock', 'call_args', 'call_args_list',
+	'call_count', 'called', 'configure_mock',
+	'method_calls', 'mock_add_spec', 'mock_calls',
+	'reset_mock', 'return_value', 'side_effect'
+]
 ```
 
 As you can see there are some methods which are already defined into the object `Mock`. Let's try to read a non-existent attribute
@@ -51,7 +58,15 @@ As you can see there are some methods which are already defined into the object 
 >>> m.some_attribute
 <Mock name='mock.some_attribute' id='140222043808432'>
 >>> dir(m)
-['assert_any_call', 'assert_called_once_with', 'assert_called_with', 'assert_has_calls', 'attach_mock', 'call_args', 'call_args_list', 'call_count', 'called', 'configure_mock', 'method_calls', 'mock_add_spec', 'mock_calls', 'reset_mock', 'return_value', 'side_effect', 'some_attribute']
+[
+	'assert_any_call', 'assert_called_once_with',
+	'assert_called_with', 'assert_has_calls',
+	'attach_mock', 'call_args', 'call_args_list',
+	'call_count', 'called', 'configure_mock',
+	'method_calls', 'mock_add_spec', 'mock_calls',
+	'reset_mock', 'return_value', 'side_effect',
+	'some_attribute'
+]
 ```
 
 As you can see this class is somehow different from what you are used to. First of all, its instances do not raise an `AttributeError` when asked for a non-existent attribute, but they happily return another instance of `Mock` itself. Second, the attribute you tried to access has now been created inside the object and accessing it returns the same mock object as before.
@@ -235,7 +250,7 @@ class MyObj():
 
 If we change the method `setup` to
 
-```
+``` python
     def setup(self):
         self._repo.setup(cache=True)
 ```
