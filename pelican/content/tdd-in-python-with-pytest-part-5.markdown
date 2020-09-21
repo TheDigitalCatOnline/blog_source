@@ -1,5 +1,5 @@
 Title: TDD in Python with pytest - Part 5
-Date: 2020-09-11 10:30:00 +0200
+Date: 2020-09-21 10:30:00 +0200
 Category: Programming
 Tags: OOP, pytest, Python, Python3, refactoring, TDD, testing
 Authors: Leonardo Giordani
@@ -8,7 +8,7 @@ Series: TDD in Python with pytest
 Image: tdd-in-python-with-pytest-part-5
 Summary: 
 
-This is the fifth post in the series "TDD in Python with pytest" where I develop a simple project following a strict TDD methodology. The posts come from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python) and have been reviewed to get rid of some bad naming choices of the version published in the book.
+This is the fifth and last post in the series "TDD in Python with pytest" where I develop a simple project following a strict TDD methodology. The posts come from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python) and have been reviewed to get rid of some bad naming choices of the version published in the book.
 
 You can find the first post [here]({filename}tdd-in-python-with-pytest-part-1.markdown).
 
@@ -22,7 +22,7 @@ This is exactly the case addressed by patching. Patching, in a testing framework
 
 ### A warm-up example
 
-Clone the repository [lgiordani/fileinfo](https://github.com/lgiordani/fileinfo) and move to the `develop` branch. The `master` branch contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
+Clone the repository `fileinfo` that you can find [here](https://github.com/lgiordani/fileinfo) and move to the `develop` branch. As I did for the `simple_calculator`, the `master` branch contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
 
 ``` sh 
 git clone https://github.com/lgiordani/fileinfo
@@ -47,9 +47,9 @@ and get an output like
 ``` text
 =============================== test session starts ===============================
 platform linux -- Python XXXX, pytest-XXXX, py-XXXX, pluggy-XXXX --
-cabook/venv3/bin/python3
+fileinfo/venv3/bin/python3
 cachedir: .cache
-rootdir: cabook/code/calc, inifile: pytest.ini
+rootdir: fileinfo, inifile: pytest.ini
 plugins: cov-XXXX
 collected 0 items 
 
@@ -161,7 +161,7 @@ When this code is executed by the test the `os.path.abspath` function is replace
 
 **Git tag:** [patch-with-context-manager](https://github.com/lgiordani/fileinfo/tree/patch-with-context-manager)
 
-It is worth at this point discussing outgoing messages again. The code that we are considering here is a clear example of an outgoing query, as the method `get_info` is not interested in changing the status of the external component. In the previous chapter we reached the conclusion that testing the return value of outgoing queries is pointless and should be avoided. With `patch` we are replacing the external component with something that we know, using it to test that our object correctly handles the value returned by the outgoing query. We are thus not testing the external component, as it has been replaced, and we are definitely not testing the mock, as its return value is already known.
+It is worth at this point discussing outgoing messages again. The code that we are considering here is a clear example of an outgoing query, as the method `get_info` is not interested in changing the status of the external component. In the previous post we reached the conclusion that testing the return value of outgoing queries is pointless and should be avoided. With `patch` we are replacing the external component with something that we know, using it to test that our object correctly handles the value returned by the outgoing query. We are thus not testing the external component, as it has been replaced, and we are definitely not testing the mock, as its return value is already known.
 
 Obviously to write the test you have to know that you are going to use the `os.path.abspath` function, so patching is somehow a "less pure" practice in TDD. In pure OOP/TDD you are only concerned with the external behaviour of the object, and not with its internal structure. This example, however, shows that this pure approach has some limitations that you have to cope with, and patching is a clean way to do it.
 
@@ -425,4 +425,7 @@ The third advice is to consider mocks as "hooks" that you throw at the external 
 
 Mocks are a very powerful tool that allows us to test code that contains outgoing messages. In particular they allow us to test the arguments of outgoing commands. Patching is a good way to overcome the fact that some external components are hardcoded in our code and are thus unreachable through the arguments passed to the classes or the methods under analysis.
 
-Mocks are also the most complex part of testing, so don't be surprised if you are still a bit confused by them. Review the chapter once, maybe, but then try to go on, as in later chapters we will use mocks in very simple and practical examples, which may shed light upon the whole matter.
+## Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+
