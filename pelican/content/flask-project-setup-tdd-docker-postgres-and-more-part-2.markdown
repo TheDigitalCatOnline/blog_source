@@ -1,6 +1,6 @@
 Title: Flask project setup: TDD, Docker, Postgres and more - Part 2
 Date: 2020-07-06 13:00:00 +0100
-Modified: 2020-07-13 00:10:00 +0100
+Modified: 2020-10-17 14:00:00 +0100
 Category: Programming
 Tags: AWS, Docker, Flask, HTTP, Postgres, pytest, Python, Python3, TDD, testing, WWW
 Authors: Leonardo Giordani
@@ -98,7 +98,7 @@ File: `config/development.json`
 
 These are all development variables so there are no secrets. In production we will need a way to keep the secrets in a safe place and convert them into environment variables. The AWS Secret Manager for example can directly map secrets into environment variables passed to the containers, saving you from having to explicitly connect to the service with the API.
 
-We can run the `./manage.py compose up -d` and `./manage.py compose down` here to check that the database container works properly.
+We can run the `./manage.py compose up -d` and `./manage.py compose down` here to check that the database container works properly. Please note that the first time you run the command `compose -d` Docker will create the volume and build the Postgres image, and this might take some time.
 
 ``` text
 CONTAINER ID  IMAGE       COMMAND                 ...  PORTS                   NAMES
@@ -241,6 +241,43 @@ volumes:
 
 Running compose now spins up both Flask and Postgres but the application is not properly connected to the database yet.
 
+Let's have a look inside the DB to see what our configuration created. First run `./manage.py compose up -d` then connect to the Postgres DB with `./manage.py compose exec db psql -U postgres`. Please note that we have to specify the user with `-U` because the default value is `root`, but we changed it to `postgres` with the variable `POSTGRES_USER`.
+
+You should see a command line like
+
+``` text
+$ ./manage.py compose exec db psql -U postgres
+psql (13.0 (Debian 13.0-1.pgdg100+1))
+Type "help" for help.
+
+postgres=#
+```
+
+Also note that by default we are logging into the database called `postgres`, which was configured by the variable `POSTGRES_DB`. We can list the databases with `\l`
+
+``` text
+postgres=# \l
+                                 List of databases
+   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
+-----------+----------+----------+------------+------------+-----------------------
+ postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+ template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+           |          |          |            |            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+           |          |          |            |            | postgres=CTc/postgres
+(3 rows)
+
+postgres=# 
+```
+
+Last, note that the application database configured with `APPLICATION_DB` is not present because we haven't created it yet. All the environment variables prefixed by `POSTGRES_` are used automatically by the Docker image to perform the initial configuration, which is why the database `postgres` is already there.
+
+You can exit `psql` with Ctrl-D or `exit`.
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/813aec4b5fc0aa18a9924dd696594b0e40deddfa) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/813aec4b5fc0aa18a9924dd696594b0e40deddfa).
+
 #### Resources
 
 * [Postgres Docker image](https://hub.docker.com/_/postgres)
@@ -301,7 +338,7 @@ psycopg2
 flask-migrate
 ```
 
-Remember to run `pip install -r requirements/development.txt` to install the requirements locally and `./manage.py compose build web` to rebuild the image.
+Remember to run `pip install -r requirements/development.txt` to install the requirements locally and `./manage.py compose build web` to rebuild the image. Please note that you need the `pg_config` executable and some other development tools installed in your system. If you get an error message from `pip` please check the documentation of your operating system to find out what to do to install the required packages. For Ubuntu Linux I had to run `sudo apt install build-essential python3-dev libpq-dev`.
 
 Now we can initialise a `Migrate` object and add it to the application factory
 
@@ -344,7 +381,7 @@ def create_app(config_name):
 I can now run the database initialisation script
 
 ``` sh
-$ ./manage.py flask db init`
+$ ./manage.py flask db init
   Creating directory /home/leo/devel/flask-tutorial/migrations ...  done
   Creating directory /home/leo/devel/flask-tutorial/migrations/versions ...  done
   Generating /home/leo/devel/flask-tutorial/migrations/env.py ...  done
@@ -355,6 +392,12 @@ $ ./manage.py flask db init`
 ```
 
 And, when we will start creating models we will use the commands `./manage.py flask db migrate` and `./manage.py flask db upgrade`. You will find a complete example at the end of this post.
+
+For the time being let's have a brief look at what was created here. The command `db init` created the directory `migrations` and inside it some default configuration files and templates. The migration scripts will be created in the directory `migrations/versions` but at the moment that directory is empty, as we have no models and we run no migrations (only the initialization of the system). No changes have been made to the database. The command `db init` can be run even without running containers (you can remove the directory `migrations` and try it).
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/1060f782b69cb4f0ca188455164d91403d983c5e) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/1060f782b69cb4f0ca188455164d91403d983c5e).
 
 #### Resources
 
@@ -389,6 +432,8 @@ pytest-cov
 ```
 
 As you can see I also use the coverage plugin to keep an eye on how well I cover the code with the tests. Remember to run `pip install -r requirements/development.txt` to install the requirements locally and `./manage.py compose build web` to rebuild the image.
+
+Warning: before you change the script `manage.py` make sure you terminate all the running containers running `./manage.py compose down`. The next version will change the naming convention for containers and you might end up with some stale containers and run into issues with the database.
 
 File: `manage.py`
 
@@ -595,6 +640,12 @@ Stopping testing_db_1 ... done
 Removing testing_db_1 ... done
 Removing network testing_default
 ```
+
+Note that the command first creates the testing database container `testing_db_1`, then runs pytest, and finally stops and remove the container. This is exactly what we wanted to achieve to run tests in isolation. At the moment, however there are no tests, and the testing database is empty.
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/778e41361bc14df2f75c858b39901bf3fc6df657) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/778e41361bc14df2f75c858b39901bf3fc6df657).
 
 #### Resources
 
@@ -929,6 +980,10 @@ Notable changes:
 * I isolated the code that waits for a message in the database container logs, creating the `wait_for_logs` function.
 * The `docker_compose_cmdline` now receives a string and converts it into a list internally. This way expressing commands is more natural, as it doesn't require the ugly list syntax that subprocess works with.
 
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/2ece6780955de7694d7b31ab31151181044440a9) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/2ece6780955de7694d7b31ab31151181044440a9).
+
 #### Resources
 
 * [Psycopg](https://www.psycopg.org/docs/) – PostgreSQL database adapter for Python
@@ -975,7 +1030,13 @@ def database(app):
     yield db
 ```
 
+Remember to create the empty file `tests/__init__.py` to make pytest correctly load the code.
+
 As you can see, the `database` fixture uses the `drop_all` and `create_all` methods to reset the database. The reason is that this fixture is recreated for each function, and we can't be sure a previous function left the database clean. As a matter of fact, we might be almost sure of the opposite.
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/ea2702fc9805bbe99687561161d04691a4b4be13) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/ea2702fc9805bbe99687561161d04691a4b4be13).
 
 #### Resources
 
@@ -1120,20 +1181,7 @@ If this is the first time I spin up the environment I have to create the applica
 $ ./manage.py create-initial-db
 ```
 
-which returns no output, and
-
-``` text
-$ ./manage.py flask db init
-  Creating directory /home/leo/devel/flask-tutorial/migrations ...  done
-  Creating directory /home/leo/devel/flask-tutorial/migrations/versions ...  done
-  Generating /home/leo/devel/flask-tutorial/migrations/env.py ...  done
-  Generating /home/leo/devel/flask-tutorial/migrations/README ...  done
-  Generating /home/leo/devel/flask-tutorial/migrations/script.py.mako ...  done
-  Generating /home/leo/devel/flask-tutorial/migrations/alembic.ini ...  done
-  Please edit configuration/connection/logging settings in '/home/leo/devel/flask-tutorial/migrations/alembic.ini' before proceeding.
-```
-
-Once this is done (or if that was already done), I can create the migration with
+As we already initialised Alembic before we don't need to run the command `db init`. If you do, it will return `Error: Directory migrations already exists and is not empty`. Now I can create the migration with
 
 ``` text
 $ ./manage.py flask db migrate -m "Initial user model"
@@ -1143,7 +1191,9 @@ INFO  [alembic.autogenerate.compare] Detected added table 'users'
   Generating /home/leo/devel/flask-tutorial/migrations/versions/7a09d7f8a8fa_initial_user_model.py ...  done
 ```
 
-and finally apply the migration with
+As you can see from the output, this created the file `migrations/versions/7a09d7f8a8fa_initial_user_model.py`. The number `7a09d7f8a8fa` is just an hex version of a UUID ,so it will be different for you, while the name comes from the commit message. The file itself contains SQLAlchemy code that changes the DB according to the code that we wrote in the application.
+
+Finally I can apply the migration with
 
 ```
 $ ./manage.py flask db upgrade
@@ -1152,7 +1202,69 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade  -> 7a09d7f8a8fa, Initial user model
 ```
 
+At this point we can run ``./manage.py compose exec db psql -U postgres` again and see what happened to the database.
+
+``` text
+$ ./manage.py compose exec db psql -U postgres
+psql (13.0 (Debian 13.0-1.pgdg100+1))
+Type "help" for help.
+
+postgres=# \l
+                                  List of databases
+    Name     |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
+-------------+----------+----------+------------+------------+-----------------------
+ application | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+ postgres    | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+ template0   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+             |          |          |            |            | postgres=CTc/postgres
+ template1   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+             |          |          |            |            | postgres=CTc/postgres
+(4 rows)
+```
+
+You see here that the database `application` configured with `APPLICATION_DB` has beed created. You can now connect to it and list the tables
+
+``` text
+postgres=# \c application
+You are now connected to database "application" as user "postgres".
+application=# \dt
+              List of relations
+ Schema |      Name       | Type  |  Owner   
+--------+-----------------+-------+----------
+ public | alembic_version | table | postgres
+ public | users           | table | postgres
+(2 rows)
+```
+
+The content of the table `alembic_version` shouldn't be surprising, as it's the UUID used for the migration
+
+``` text
+application=# select * from alembic_version;
+ version_num  
+--------------
+ 7a09d7f8a8fa
+(1 row)
+```
+
+The table `users` contains the fields `id` and `email` according to the model that we wrote in Python
+
+``` text
+application=# \d users
+                                 Table "public.users"
+ Column |       Type        | Collation | Nullable |              Default              
+--------+-------------------+-----------+----------+-----------------------------------
+ id     | integer           |           | not null | nextval('users_id_seq'::regclass)
+ email  | character varying |           | not null | 
+Indexes:
+    "users_pkey" PRIMARY KEY, btree (id)
+    "users_email_key" UNIQUE CONSTRAINT, btree (email)
+```
+
 After this I can safely commit my code and move on with the next requirement.
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/20a398ea9181af6c445e6339a5a574d236c514a7) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/20a398ea9181af6c445e6339a5a574d236c514a7).
 
 ## Final words
 

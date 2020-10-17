@@ -1,5 +1,6 @@
 Title: Flask project setup: TDD, Docker, Postgres and more - Part 1
 Date: 2020-07-05 13:00:00 +0100
+Modified: 2020-10-17 14:00:00 +0100
 Category: Programming
 Tags: AWS, Docker, Flask, HTTP, Postgres, Python, Python3, TDD, testing, WWW
 Authors: Leonardo Giordani
@@ -88,6 +89,10 @@ ignore = E231
 This is clearly a very personal choice, and you might have different requirements. Take your time to properly configure the editor and the linter(s). Remember that the editor for a programmer is like the violin for the violinist. You need to know it, and to take care of it. So, set it up properly.
 
 At this point I also create my virtual environment and activate it.
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/a6c8e7acde7d5d5d89fad22224fff707d625ebe3) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/a6c8e7acde7d5d5d89fad22224fff707d625ebe3).
 
 #### Resources
 
@@ -201,6 +206,10 @@ $ FLASK_CONFIG="development" flask run
 
 Please note that it says `Environment: production` because we haven't configured `FLASK_ENV` yet. If you head to http://127.0.0.1:5000/ with your browser you can see the greetings message.
 
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/656621980f6f2c2aac3c526b37dca6ac32363bd5) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/656621980f6f2c2aac3c526b37dca6ac32363bd5).
+
 #### Resources
 
 * [Flask configuration documentation](https://flask.palletsprojects.com/en/1.1.x/config/)
@@ -218,6 +227,10 @@ File: `config/development.json`
 [
   {
     "name": "FLASK_ENV",
+    "value": "development"
+  },
+  {
+    "name": "FLASK_CONFIG",
     "value": "development"
   }
 ]
@@ -311,6 +324,10 @@ $ ./manage.py flask run
 
 Note that it now says `Environment: development` because of `FLASK_ENV` has been set to `development` in the configuration. As we did before, a quick visit to [http://127.0.0.1:5000/](http://127.0.0.1:5000/) shows us that everything is up and running.
 
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/8330e792aa55d2903fd4846487c64de12530c0d3) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/8330e792aa55d2903fd4846487c64de12530c0d3).
+
 #### Resources:
 
 * [Django's management script](https://docs.djangoproject.com/en/3.0/ref/django-admin/)
@@ -383,13 +400,15 @@ Install it with `pip install -r requirements/development.txt`, then build the im
 $ FLASK_ENV="development" FLASK_CONFIG="development" docker-compose -f docker/development.yml build web
 ```
 
+This will take some time, as Docker has to download all the required layers and install the requirements.
+
 We are explicitly passing environment variables here, as we have not wrapped docker-compose in the manage script yet. Once the image has been build, we can run it with the `up` command
 
 ``` sh
 $ FLASK_ENV="development" FLASK_CONFIG="development" docker-compose -f docker/development.yml up
 ```
 
-This command should give us the following output
+This command gives us the following output
 
 ``` text
 Creating network "docker_default" with the default driver
@@ -506,24 +525,11 @@ if __name__ == "__main__":
 
 You might have noticed that the two functions `flask` and `compose` are basically the same code, but I resisted the temptation to refactor them because I know that the `compose` command will need some changes as soon as I add a database.
 
-The last change we need in order to make everything work properly is adding the `FLASK_CONFIG` variable to the config file
-
-File: `config/development.json`
-
-``` json
-[
-  {
-    "name": "FLASK_ENV",
-    "value": "development"
-  },
-  {
-    "name": "FLASK_CONFIG",
-    "value": "development"
-  }
-]
-```
-
 Now I can run `./manage.py compose up -d` and `./manage.py compose down` and have the environment variables automatically passed to the system.
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/9e08735af6177760cd750230122a507b15c9c112) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/9e08735af6177760cd750230122a507b15c9c112).
 
 #### Resources
 
