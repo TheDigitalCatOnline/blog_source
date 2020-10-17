@@ -1,5 +1,6 @@
 Title: Flask project setup: TDD, Docker, Postgres and more - Part 3
 Date: 2020-07-07 13:00:00 +0100
+Modified: 2020-10-17 14:00:00 +0100
 Category: Programming
 Tags: AWS, Docker, Flask, HTTP, Postgres, pytest, Python, Python3, TDD, testing, WWW
 Authors: Leonardo Giordani
@@ -304,7 +305,7 @@ services:
   web:
     build:
       context: ${PWD}
-      dockerfile: docker/web/Dockerfile
+      dockerfile: docker/Dockerfile
     environment:
       FLASK_ENV: ${FLASK_ENV}
       FLASK_CONFIG: ${FLASK_CONFIG}
@@ -312,7 +313,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_PORT: ${POSTGRES_PORT}
     command: flask run --host 0.0.0.0
     volumes:
       - ${PWD}:/opt/code
@@ -361,6 +361,10 @@ File: `config/scenario.json`
 
 which doesn't add anything new to what I already did for development and testing. 
 
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/7f88f82a8cd6aea0519962326cb3a27d393e6cfb) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/7f88f82a8cd6aea0519962326cb3a27d393e6cfb).
+
 #### Resources
 
 * [Expose ports in docker-compose](https://docs.docker.com/compose/compose-file/#ports)
@@ -406,7 +410,7 @@ a031b6429e07  postgres          "docker-entrypoint.s…"  [...]  0.0.0.0:32827->
 
 And the output of the `scenario up foo` command contains the string `HEY! This is scenario foo` that was printed by the file `foo.py`. We can also successfully run the suggested command
 
-``` sh
+``` text
 $ docker-compose -p scenario_foo -f docker/scenario_foo.yml exec db psql -U postgres -d application
 psql (12.3 (Debian 12.3-1.pgdg100+1))
 Type "help" for help.
@@ -429,6 +433,10 @@ application=#
 And inside the database we find the `application` database created explicitly for the scenario (the name is specified in `config/scenario.json`). If you don't know `psql` you can exit with `\q` or `Ctrl-d`.
 
 Before tearing down the scenario have a look at the two files `config/scenario_foo.json` and `docker/scenario_foo.yml`. They are just copies of `config/scenario.json` and `docker/scenario.yml` but I think seeing them there might help to understand how the whole thing works. When you are done run `./manage.py scenario down foo`.
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/16330e0e7c8e842f2afb474fb2045c735ff194b2) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/16330e0e7c8e842f2afb474fb2045c735ff194b2).
 
 ### Scenario example 2
 
@@ -468,13 +476,13 @@ I decided to be as agnostic as possible in the scenarios, to avoid creating some
 
 I can run the scenario with
 
-```
+``` sh
 $ ./manage.py scenario up users
 ```
 
 and then connect to the database to find my users
 
-``` sh
+``` text
 $ docker-compose -p scenario_users -f docker/scenario_users.yml exec db psql -U postgres -d application
 psql (12.3 (Debian 12.3-1.pgdg100+1))
 Type "help" for help.
@@ -496,6 +504,10 @@ application=# select * from users;
 
 application=# \q
 ```
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/2e65ebd1336a6ba4635f5d4dd0048bb7c1903318) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/2e65ebd1336a6ba4635f5d4dd0048bb7c1903318).
 
 ## Step 2 - Simulating the production environment
 
@@ -539,7 +551,7 @@ services:
   web:
     build:
       context: ${PWD}
-      dockerfile: docker/web/Dockerfile.production
+      dockerfile: docker/Dockerfile.production
     environment:
       FLASK_ENV: ${FLASK_ENV}
       FLASK_CONFIG: ${FLASK_CONFIG}
@@ -560,9 +572,9 @@ volumes:
 
 As you can see here the command that runs the application is slightly different, `gunicorn -w 4 -b 0.0.0.0 wsgi:app`. It exposes 4 processes (`-w 4`) on the container's address 0.0.0.0 loading the `app` object from the `wsgi.py` file (`wsgi:app`). As by default Gunicorn exposes port 8000 I mapped that to the same port in the host.
 
-As the production image need to install the production requirements I also took the opportunity to create the `docker/web` subdirectory and move the web `Dockerfile` there. Then I created the `Dockerfile.production` one
+Then I created the `Dockerfile.production` that defines the production image of the web application
 
-File: `docker/web/Dockerfile.production`
+File: `docker/Dockerfile.production`
 
 ``` text
 FROM python:3
@@ -575,12 +587,6 @@ WORKDIR /opt/code
 
 ADD requirements /opt/requirements
 RUN pip install -r /opt/requirements/production.txt
-```
-
-Having moved the development `Dockerfile` into the subdirectory I also fixed the other docker-compose files to match the new configuration. I can now build the image with
-
-``` sh
-$ APPLICATION_CONFIG="production" ./manage.py compose build web
 ```
 
 The last thing I need is a configuration file
@@ -628,6 +634,16 @@ as you can notice this is not very different from the development one, as I just
 
 Remember that `FLASK_ENV` changes the internal settings of Flask, most notably disabling the debugger, and the `FLASK_CONFIG=production` loads the `ProductionConfig` object from `application/config.py`. That object is empty for the moment, but it might contain public configuration for the production server.
 
+I can now build the image with
+
+``` sh
+$ APPLICATION_CONFIG="production" ./manage.py compose build web
+```
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/66fe80edb61f3f8ca3303856f29d70f76923c30b) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/66fe80edb61f3f8ca3303856f29d70f76923c30b).
+
 #### Resources
 
 * [Gunicorn](https://gunicorn.org/) - A Python WSGI HTTP Server
@@ -658,7 +674,7 @@ services:
   web:
     build:
       context: ${PWD}
-      dockerfile: docker/web/Dockerfile.production
+      dockerfile: docker/Dockerfile.production
     environment:
       FLASK_ENV: ${FLASK_ENV}
       FLASK_CONFIG: ${FLASK_CONFIG}
@@ -745,6 +761,10 @@ Starting production_web_1 ... done
 Creating production_web_2 ... done
 Creating production_web_3 ... done
 ```
+
+#### Git commit
+
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/56278af7d3af1650b691b15c268cfa112d031657) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/56278af7d3af1650b691b15c268cfa112d031657).
 
 #### Resources
 
