@@ -1,5 +1,6 @@
 Title: Dissecting a Web stack
 Date: 2020-02-16 15:00:00 +0000
+Modified: 2020-10-27 08:30:00 +0000
 Category: Programming
 Tags: architectures, concurrent programming, cryptography, infrastructure, Flask, Django, Python, SSL, HTTP, WWW, AWS
 Authors: Leonardo Giordani
@@ -842,3 +843,4 @@ CloudFront is a Content Delivery Network, that is a geographically-distributed c
 
 # Conclusion
 
+As you can see a web stack is a pretty rich set of components, and the reason behind them is often related to performances. There are a lot of technologies that we take for granted, and that fortunately have become easier to deploy, but I still believe a full-stack engineer should be aware not only of the existence of such layers, but also of their purpose and at least their basic configuration.
