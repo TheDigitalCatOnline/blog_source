@@ -59,8 +59,17 @@ class Child(Parent):
     pass
     
 cld = Child(5)
+
 print(cld._value)
+
 cld.describe()
+```
+
+which outputs
+
+``` text
+5
+Parent: value is 5
 ```
 
 As you can see, `describe` is defined in `Parent`, so when the instance `cld` calls it, its class `Child` delegated the call to the class `Parent`. This, in turn, uses `_value` as if it was defined locally, while it is defined in `cld`. This works because, from the point of view of the state, `Parent` has complete access to the state of `Child`. Please note that the state is not even namespaced, as the state of the child class _becomes_ the state of the parent class.
@@ -86,6 +95,13 @@ prc = Process(5)
 print(prc._value)
 
 prc.info()
+```
+
+which outputs
+
+``` text
+5
+Logger: value is 5
 ```
 
 Here, `Process` objects have an attribute `_value` that is shared with `Logger` objects only when it comes to calling `Logger.log` inside their `info` method. `Logger` objects have no visibility of the state of `Process` objects unless it is explicitly shared.
@@ -126,7 +142,7 @@ class TransparentWindow(Window):
         
     def info(self):
         super().info()
-        print(f"Transparency is set to {self._transparency}")       
+        print(f"Transparency is set to {self._transparency}")
 ```
 
 At this point we can instantiate and use `TransparentWindow`
@@ -136,6 +152,15 @@ twin = TransparentWindow("Terminal", 640, 480, 80)
 twin.info()
 twin.change_transparency(70)
 twin.resize(800, 600)
+```
+
+and the output will be
+
+``` text
+Window 'Terminal' is 640x480
+Transparency is set to 80
+Window 'Terminal' is 800x600
+Transparency is set to 70
 ```
 
 When we call `twin.info`, Python is running `TransparentWindow`'s implementation of that method and is not automatically delegating anything to `Window` even though the latter has a method with that name. Indeed, we have to explicitly call it through `super` when we want to reuse it. When we use `resize`, though, the implicit delegation kicks in and we end up with the execution of `Window.resize`. Please note that this delegation doesn't propagate to the next calls, as when `Window.resize` calls `self.info` this runs `TransparentWindow.info`, as the original call was made from that class.
@@ -170,6 +195,12 @@ When we instantiate a `Page` and call `info` everything works
 ``` python
 page = Page("New post", "Some text for an exciting new post")
 page.info()
+```
+
+which outputs
+
+``` text
+{'title': 'New post', 'body': {'length': 34}}
 ```
 
 but as you can see, `Page.info` has to explicitly mention `Body.info` through `self._body`, as we had to do when using inheritance with `super`. Composition is not different from inheritance when methods are overridden, at least in Python.
@@ -454,6 +485,14 @@ c.info()
 c.is_even()
 ```
 
+which outputs
+
+``` text
+Value: 5
+
+False
+```
+
 This is a trivial example of an inheritance relationship between `Child` and `Parent`, where `Parent` provides the methods `__init__` and `info` and `Child` augments the interface with the method `is_even`.
 
 Let's have a look at the internals of the two classes. `Parent.__dict__` is
@@ -529,9 +568,17 @@ class Child:
         return getattr(self.parent, attr)
         
 c = Child(5)
-c.value
+print(c.value)
 c.info()
 c.is_even()
+```
+
+the output of this code is
+
+``` text
+5
+Value: 5
+False
 ```
 
 As you can see, here `Child` is composing `Parent` and there is no inheritance between the two. We can nevertheless access `c.value` and call `c.info`, thanks to the face that `Child.__getattr__` is delegating everything can't be found in `Child` to the instance of `Parent` stored in `self.parent`.
