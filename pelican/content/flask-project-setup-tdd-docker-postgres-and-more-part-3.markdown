@@ -33,9 +33,7 @@ Unfortunately the Docker interface is not extremely script-friendly when it come
 
 The new management script is
 
-File: `manage.py`
-
-``` python
+``` { .python filename="manage.py" }
 #! /usr/bin/env python
 
 import os
@@ -277,19 +275,17 @@ if __name__ == "__main__":
     cli()
 ```
 
-where I added the `scenario up` and `scenario down` commands. As you can see the function `up` first copies the `config/scenario.json` and the `docker/scenario.yml` files (that I still have to create) into files named after the scenario.
+where I added the commands `scenario up` and `scenario down`. As you can see the function `up` first copies the files `config/scenario.json` and `docker/scenario.yml` (that I still have to create) into files named after the scenario.
 
-Then I run the `up -d` command and wait for the database to be ready, as I already do for tests. After that, it's time to extract the port of the container with some very simple Python string processing and to initialise the correct environment variable.
+Then I run the command `up -d` and wait for the database to be ready, as I already do for tests. After that, it's time to extract the port of the container with some very simple Python string processing and to initialise the correct environment variable.
 
 Last, I import and execute the Python file containing the code of the scenario itself and print a friendly message with the command line to run `psql` to have a Postgres shell into the newly created database.
 
-The `down` function simply tears down the containers and removes the scenario configuration files.
+The function `down` simply tears down the containers and removes the scenario configuration files.
 
 The two missing config files are pretty simple. The docker compose configuration is
 
-File: `docker/scenario.yml`
-
-``` yaml
+``` { .yaml filename="docker/scenario.yml" }
 version: '3.4'
 
 services:
@@ -324,9 +320,7 @@ Here you can see that the database is ephemeral, that the port on the host is au
 
 The configuration file is
 
-File: `config/scenario.json`
-
-``` json
+``` { .json filename="config/scenario.json" }
 [
   {
     "name": "FLASK_ENV",
@@ -375,9 +369,7 @@ You can see the changes made in this step through [this Git commit](https://gith
 
 Let's have a look at a very simple scenario that doesn't do anything on the database, just to understand the system. The code for the scenario is
 
-File: `scenarios/foo.py`
-
-``` python
+``` { .python filename="scenarios/foo.py" }
 import os
 
 
@@ -408,7 +400,7 @@ a031b6429e07  postgres          "docker-entrypoint.s…"  [...]  0.0.0.0:32827->
 28aa566321b5  postgres          "docker-entrypoint.s…"  [...]  0.0.0.0:5432->5432/tcp   development_db_1
 ```
 
-And the output of the `scenario up foo` command contains the string `HEY! This is scenario foo` that was printed by the file `foo.py`. We can also successfully run the suggested command
+And the output of the command `scenario up foo` contains the string `HEY! This is scenario foo` that was printed by the file `foo.py`. We can also successfully run the suggested command
 
 ``` text
 $ docker-compose -p scenario_foo -f docker/scenario_foo.yml exec db psql -U postgres -d application
@@ -430,7 +422,7 @@ application=# \l
 application=#
 ```
 
-And inside the database we find the `application` database created explicitly for the scenario (the name is specified in `config/scenario.json`). If you don't know `psql` you can exit with `\q` or `Ctrl-d`.
+And inside the database we find the database `application` created explicitly for the scenario (the name is specified in `config/scenario.json`). If you don't know `psql` you can exit with `\q` or `Ctrl-d`.
 
 Before tearing down the scenario have a look at the two files `config/scenario_foo.json` and `docker/scenario_foo.yml`. They are just copies of `config/scenario.json` and `docker/scenario.yml` but I think seeing them there might help to understand how the whole thing works. When you are done run `./manage.py scenario down foo`.
 
@@ -442,9 +434,7 @@ You can see the changes made in this step through [this Git commit](https://gith
 
 Let's do something a bit more interesting. The new scenario is contained in `scenarios/users.py`
 
-File: `scenarios/users.py`
-
-``` py
+``` { .python filename="scenarios/users.py" }
 from application.app import create_app
 from application.models import db, User
 
@@ -472,7 +462,7 @@ def run():
         db.session.commit()
 ```
 
-I decided to be as agnostic as possible in the scenarios, to avoid creating something too specific that eventually would not give me enough flexibility to test what I need. This means that the scenario has to create the app and to use the database session explicitly, as I do in this example. The application is created with the `"development"` configuration. Remember that this is the Flask configuration that you find in `application/config.py`, not the one that is in `config/development.json`.
+I decided to be as agnostic as possible in the scenarios, to avoid creating something too specific that eventually would not give me enough flexibility to test what I need. This means that the scenario has to create the app and to use the database session explicitly, as I do in this example. The application is created with the configuration `"development"`. Remember that this is the Flask configuration that you find in `application/config.py`, not the one that is in `config/development.json`.
 
 I can run the scenario with
 
@@ -519,9 +509,7 @@ I will then create a configuration that simulates a production environment and t
 
 The first component that we have to change here is the HTTP server. In development we use Flask's development server, and the first message that server prints is `WARNING: This is a development server. Do not use it in a production deployment.` Got it, Flask! A good choice to replace it is Gunicorn, so first of all I add it in the requirements
 
-File: `requirements/production.txt`
-
-``` text
+``` { .text filename="requirements/production.txt" }
 Flask
 flask-sqlalchemy
 psycopg2
@@ -531,9 +519,7 @@ gunicorn
 
 Then I need to create a docker-compose configuration for production
 
-File: `docker/production.yml`
-
-``` yaml
+``` { .yaml filename="docker/production.yml" }
 version: '3.4'
 
 services:
@@ -570,13 +556,11 @@ volumes:
   pgdata:
 ```
 
-As you can see here the command that runs the application is slightly different, `gunicorn -w 4 -b 0.0.0.0 wsgi:app`. It exposes 4 processes (`-w 4`) on the container's address 0.0.0.0 loading the `app` object from the `wsgi.py` file (`wsgi:app`). As by default Gunicorn exposes port 8000 I mapped that to the same port in the host.
+As you can see here the command that runs the application is slightly different, `gunicorn -w 4 -b 0.0.0.0 wsgi:app`. It exposes 4 processes (`-w 4`) on the container's address 0.0.0.0 loading the object `app` from the file `wsgi.py` (`wsgi:app`). As by default Gunicorn exposes port 8000 I mapped that to the same port in the host.
 
-Then I created the `Dockerfile.production` that defines the production image of the web application
+Then I created the file `Dockerfile.production` that defines the production image of the web application
 
-File: `docker/Dockerfile.production`
-
-``` text
+``` { .text filename="docker/Dockerfile.production" }
 FROM python:3
 
 ENV PYTHONUNBUFFERED 1
@@ -591,9 +575,7 @@ RUN pip install -r /opt/requirements/production.txt
 
 The last thing I need is a configuration file
 
-File: `config/production.json`
-
-``` json
+``` { .json filename="config/production.json" }
 [
   {
     "name": "FLASK_ENV",
@@ -632,7 +614,7 @@ File: `config/production.json`
 
 as you can notice this is not very different from the development one, as I just changed the values of `FLASK_ENV` and `FLASK_CONFIG`. Clearly this contains a secret that shouldn't be written in plain text, `POSTGRES_PASSWORD`, but after all this is a simulation of production. In a real environment secrets should be kept in an encrypted manager such as AWS Secret Manager.
 
-Remember that `FLASK_ENV` changes the internal settings of Flask, most notably disabling the debugger, and the `FLASK_CONFIG=production` loads the `ProductionConfig` object from `application/config.py`. That object is empty for the moment, but it might contain public configuration for the production server.
+Remember that `FLASK_ENV` changes the internal settings of Flask, most notably disabling the debugger, and that `FLASK_CONFIG=production` loads the object `ProductionConfig` from `application/config.py`. That object is empty for the moment, but it might contain public configuration for the production server.
 
 I can now build the image with
 
@@ -654,9 +636,7 @@ Mapping the container port to the host is not a great idea, though, as it makes 
 
 I will add nginx and serve HTTP from there, reverse proxying the application containers through docker-compose networking. First of all the new configuration for docker-compose
 
-File: `docker/production.yml`
-
-``` yaml
+``` { .yaml filename="docker/production.yml" }
 version: '3.4'
 
 services:
@@ -699,9 +679,7 @@ volumes:
 
 As you can see I added a service `nginx` that runs the default Nginx image, mapping a custom configuration file that I will create in a minute. The application container doesn't need any port mapping, as I won't access it directly from the host anymore. The Nginx configuration file is
 
-File: `docker/nginx/nginx.conf`
-
-``` nginx
+``` { .naginx filename="docker/nginx/nginx.conf" }
 worker_processes 1;
  
 events { worker_connections 1024; }
@@ -729,7 +707,7 @@ http {
 }
 ```
 
-This is a pretty standard configuration, and in a real production environment I would add many other configuration values (most notably serving HTTPS instead of HTTP). The `upstream` section leverages docker-compose networking referring to `web`, which in the internal DNS directly maps to the IPs of the service with the same name. The port 8000 comes from the default Gunicorn port that I already mentioned before. I won't run the nginx container as root on my notebook, so I will expose port 8080 instead of the traditional 80 for HTTP, and this is also something that would be different in a real production environment.
+This is a pretty standard configuration, and in a real production environment I would add many other configuration values (most notably serving HTTPS instead of HTTP). The section `upstream` leverages docker-compose networking referring to `web`, which in the internal DNS directly maps to the IPs of the service with the same name. The port 8000 comes from the default Gunicorn port that I already mentioned before. I won't run the nginx container as root on my notebook, so I will expose port 8080 instead of the traditional 80 for HTTP, and this is also something that would be different in a real production environment.
 
 I can at this point run
 
@@ -816,7 +794,7 @@ web.                    600     IN      A       172.30.0.5
 root@33cbaea369be:/#
 ```
 
-The command outputs 3 IPs, which correspond to the 3 containers of the `web` service that I am currently running. If I scale down (from outside the container)
+The command outputs 3 IPs, which correspond to the 3 containers of the service `web` that I am currently running. If I scale down (from outside the container)
 
 ``` sh
 $ APPLICATION_CONFIG="production" ./manage.py compose up -d --scale web=1

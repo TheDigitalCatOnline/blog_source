@@ -16,7 +16,7 @@ You can find the first post [here]({filename}tdd-in-python-with-pytest-part-1.ma
 
 The requirements state that there shall be a division function, and that it has to return a float value. This is a simple condition to test, as it is sufficient to divide two numbers that do not give an integer result
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_div_two_numbers_float():
     calculator = SimpleCalculator()
 
@@ -25,9 +25,9 @@ def test_div_two_numbers_float():
     assert result == 6.5
 ```
 
-The test suite fails with the usual error that signals a missing method. The implementation of this function is very simple as the `/` operator in Python performs a float division
+The test suite fails with the usual error that signals a missing method. The implementation of this function is very simple as the operator `/` in Python performs a float division
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     [...]
 
@@ -43,7 +43,7 @@ I already mentioned in the previous post that this is not a good requirement, an
 
 The test that comes from the requirement is simple
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_div_by_zero_returns_inf():
     calculator = SimpleCalculator()
 
@@ -54,7 +54,7 @@ def test_div_by_zero_returns_inf():
 
 And the test suite fails now with this message
 
-``` text
+``` .text
 __________________________ test_div_by_zero_returns_inf ___________________________
 
     def test_div_by_zero_returns_inf():
@@ -78,7 +78,7 @@ Note that when an exception happens in the code and not in the test, the pytest 
 
 We might implement two different solutions to satisfy this requirement and its test. The first one is to prevent `b` to be 0
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def div(self, a, b):
         if not b:
             return float('inf')
@@ -88,7 +88,7 @@ We might implement two different solutions to satisfy this requirement and its t
 
 and the second one is to intercept the exception with a `try/except` block
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def div(self, a, b):
         try:
             return a / b
@@ -108,7 +108,7 @@ Again, this is a requirement I made up just for the sake of showing you how do d
 
 Pytest provides a context manager named `raises` that runs the code contained in it and passes only if the given exception is produced by that code.
 
-``` python
+``` { .python filename="tests/test_main.py" }
 import pytest
 
 [...]
@@ -120,7 +120,7 @@ def test_mul_by_zero_raises_exception():
         calculator.mul(3, 0)
 ```
 
-In this case, thus, pytest runs the line `calculator.mul(3, 0)`. If the method  doesn't raise the `ValueError` exception the test will fail. Indeed, if you run the test suite now, you will get the following failure
+In this case, thus, pytest runs the line `calculator.mul(3, 0)`. If the method  doesn't raise the exception `ValueError` the test will fail. Indeed, if you run the test suite now, you will get the following failure
 
 ``` text
 ________________________ test_mul_by_zero_raises_exception ________________________
@@ -139,14 +139,14 @@ which signals that the code didn't raise the expected exception.
 
 The code that makes the test pass needs to test if one of the inputs of the function `mul` is 0. This can be done with the help of the built-in function `all`, which accepts an iterable and returns `True` only if all the values contained in it are `True`. Since in Python the value `0` is not true, we may write
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def mul(self, *args):
         if not all(args):
             raise ValueError
         return reduce(lambda x, y: x*y, args)
 ```
 
-and make the test suite pass. The condition checks that there are no false values in the `args` tuple, that is there are no zeros.
+and make the test suite pass. The condition checks that there are no false values in the tuple `args`, that is there are no zeros.
 
 **Git tag:** [step-8-multiply-by-zero](https://github.com/lgiordani/simple_calculator/tree/step-8-multiply-by-zero)
 
@@ -175,7 +175,7 @@ Now, if you followed the posts coding along it is time to try to tackle a proble
 
 Let's start adding a test for requirement number 1
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_correct_average():
     calculator = SimpleCalculator()
 
@@ -186,7 +186,7 @@ def test_avg_correct_average():
 
 We feed the function `avg` a list of generic numbers, which average we calculated with an external tool. The first run of the test suite fails with the usual complaint about a missing function, and we can make the test pass with a simple use of `sum` and `len`, as both built-in functions work on iterables
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     [...]
 
@@ -202,7 +202,7 @@ Here, `it` stands for iterable, as this function works with anything that suppor
 
 The second requirement mentions an upper threshold, but we are free with regards to the API, i.e. the requirement doesn't specify how the threshold is supposed to be specified or named. I decided to call the upper threshold parameter `ut`, so the test becomes
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_removes_upper_outliers():
     calculator = SimpleCalculator()
 
@@ -211,7 +211,7 @@ def test_avg_removes_upper_outliers():
     assert result == pytest.approx(6.333333)
 ```
 
-As you can see the `ut=90` parameter is supposed to remove the element `98` from the list and then compute the average of the remaining elements. Since the result has an infinite number of digits I used the function `pytest.approx` to check the result.
+As you can see the parameter `ut=90` is supposed to remove the element `98` from the list and then compute the average of the remaining elements. Since the result has an infinite number of digits I used the function `pytest.approx` to check the result.
 
 The test suite fails because the function `avg` doesn't accept the parameter `ut`
 
@@ -229,7 +229,7 @@ tests/test_main.py:95: TypeError
 
 There are two problems now that we have to solve, as it happened for the second test we wrote in this project. The new `ut` argument needs a default value, so we have to manage that case, and then we have to make the upper threshold work. My solution is
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def avg(self, it, ut=None):
         if not ut:
             ut = max(it)
@@ -247,7 +247,7 @@ The idea here is that `ut` is used to filter the iterable keeping all the elemen
 
 The lower threshold is the mirror of the upper threshold, so it doesn't require many explanations. The test is
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_removes_lower_outliers():
     calculator = SimpleCalculator()
 
@@ -258,7 +258,7 @@ def test_avg_removes_lower_outliers():
 
 and the code of the function `avg` now becomes
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def avg(self, it, lt=None, ut=None):
         if not lt:
             lt = min(it)
@@ -281,7 +281,7 @@ The reason behind this is that you might get the expected behaviour for free, li
 
 The test for the fourth requirement is
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_uppper_threshold_is_included():
     calculator = SimpleCalculator()
 
@@ -294,7 +294,7 @@ def test_avg_uppper_threshold_is_included():
 
 while the test for the fifth one is
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_lower_threshold_is_included():
     calculator = SimpleCalculator()
 
@@ -313,7 +313,7 @@ Requirement number 6 is something that wasn't clearly specified in the project d
 
 The test that implements this requirement is
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_empty_list():
     calculator = SimpleCalculator()
 
@@ -347,7 +347,7 @@ simple_calculator/main.py:26: ValueError
 
 The function `min` that we used to compute the default lower threshold doesn't work with an empty list, so the code raises an exception. The simplest solution is to check for the length of the iterable before computing the default thresholds
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def avg(self, it, lt=None, ut=None):
         if not len(it):
             return 0
@@ -371,7 +371,7 @@ As you can see the function `avg` is already pretty rich, but at the same time i
 
 The next requirement deals with the case in which the outlier removal process empties the list. The test is the following
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_manages_empty_list_after_outlier_removal():
     calculator = SimpleCalculator()
 
@@ -415,7 +415,7 @@ simple_calculator/main.py:36: ZeroDivisionError
 
 The easiest solution is to introduce a new check on the length of the iterable
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def avg(self, it, lt=None, ut=None):
         if not len(it):
             return 0
@@ -438,7 +438,7 @@ And this code makes the test suite pass. As I stated before, code that makes the
 
 After some attempts I found this solution
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def avg(self, it, lt=None, ut=None):
         _it = it[:]
 
@@ -462,7 +462,7 @@ which looks reasonably clean, and makes the whole test suite pass.
 
 The last requirement checks another boundary case, which happens when the list is empty and we specify one of or both the thresholds. This test will check that the outlier removal code doesn't assume the list contains elements.
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_manages_empty_list_after_outlier_removal():
     calculator = SimpleCalculator()
 
@@ -487,7 +487,7 @@ Second, this step shows an important part of the TDD workflow: checking corner c
 
 This test shows that the code doesn't manage zero-valued lower thresholds correctly
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_manages_zero_value_lower_outlier():
     calculator = SimpleCalculator()
 
@@ -498,14 +498,14 @@ def test_avg_manages_zero_value_lower_outlier():
 
 The reason is that the function `avg` contains a check like `if lt:`, which fails when `lt` is 0, as that is a false value. The check should be `if lt is not None:`, so that part of the function `avg` becomes
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
         if lt is not None:
             _it = [x for x in _it if x >= lt]
 ```
 
 It is immediately clear that the upper threshold has the same issue, so the two tests I added are
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_avg_manages_zero_value_lower_outlier():
     calculator = SimpleCalculator()
 
@@ -524,7 +524,7 @@ def test_avg_manages_zero_value_upper_outlier():
 
 and the final version of `avg` is
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def avg(self, it, lt=None, ut=None):
         _it = it[:]
 
@@ -573,7 +573,7 @@ In this chapter we developed the project from scratch, so the challenge was to c
 
 From the TDD point of view both a bug and a missing feature are cases not currently covered by a test, so I will refer to them collectively as bugs, but don't forget that I'm talking about the second ones as well. 
 
-The first thing you need to do is to write one or more tests that expose the bug. This way you can easily decide when the code that you wrote is correct or good enough. For example, let's assume that a user files an issue on the `SimpleCalculator` project saying: "The function `add` doesn't work with negative numbers". You should definitely try to get a concrete example from the user that wrote the issue and some information about the execution environment (as it is always possible that the problem comes from a different source, like for example an old version of a library your package relies on), but in the meanwhile you can come up with at least 3 tests: one that involves two negative numbers, one with a negative number as the first argument, and one with a negative numbers as the second argument.
+The first thing you need to do is to write one or more tests that expose the bug. This way you can easily decide when the code that you wrote is correct or good enough. For example, let's assume that a user files an issue on the project `SimpleCalculator` saying: "The function `add` doesn't work with negative numbers". You should definitely try to get a concrete example from the user that wrote the issue and some information about the execution environment (as it is always possible that the problem comes from a different source, like for example an old version of a library your package relies on), but in the meanwhile you can come up with at least 3 tests: one that involves two negative numbers, one with a negative number as the first argument, and one with a negative numbers as the second argument.
 
 You shouldn't write down all of them at once. Write the first test that you think might expose the issue and see if it fails. If it doesn't, discard it and write a new one. From the TDD point of view, if you don't have a failing test there is no bug, so you have to come up with at least one test that exposes the issue you are trying to solve.
 

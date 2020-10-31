@@ -46,29 +46,21 @@ My format of choice for this tutorial is JSON, as it can be read by both Python 
 
 My standard structure for Python requirements uses 3 files: `production.txt`, `development.txt`, and `testing.txt`. They are all stored in the same directory called `requirements`, and are hierarchically connected. 
 
-File: `requirements/production.txt`
-
-``` text
+``` { .text filename="requirements/production.txt" }
 ## This file is currently empty
 ```
 
-File: `requirements/testing.txt`
-
-``` text
+``` { .text filename="requirements/testing.txt" }
 -r production.txt
 ```
 
-File: `requirements/development.txt`
-
-``` text
+``` { .text filename="requirements/development.txt" }
 -r testing.txt
 ```
 
 There is also a final `requirements.txt` file that points to the production one.
 
-File: `requirements.txt`
-
-``` text
+``` { .text filename="requirements.txt" }
 -r requirements/production.txt
 ```
 
@@ -76,9 +68,7 @@ As you can see this allows me to separate the requirements to avoid installing u
 
 I have my linters already installed system-wide, but as I'm using black to format the code I have to configure flake8 to accept what I'm doing
 
-File: `.flake8`
-
-``` ini
+``` { .ini filename=".flake8" }
 [flake8]
 # Recommend matching the black line length (default 88),
 # rather than using the flake8 default of 79:
@@ -104,9 +94,7 @@ You can see the changes made in this step through [this Git commit](https://gith
 
 As this will be a Flask application the first thing to do is to install Flask itself. That goes in the production requirements, as that is needed at every stage.
 
-File: `requirements/production.txt`
-
-``` text
+``` { .text filename="requirements/production.txt" }
 Flask
 ```
 
@@ -118,11 +106,9 @@ $ pip install -r requirements/development.txt
 
 As we saw before, that file automatically installs the testing and production requirements as well.
 
-Then we need a directory where to keep all the code that is directly connected with the Flask framework, and where we will start creating the configuration for the application. Create the `application` directory and the file `config.py` in it.
+Then we need a directory where to keep all the code that is directly connected with the Flask framework, and where we will start creating the configuration for the application. Create the directory `application` and the file `config.py` in it.
 
-File: `application/config.py`
-
-``` python
+``` { .python filename="application/config.py" }
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -148,7 +134,7 @@ class TestingConfig(Config):
 
 There are many ways to configure a Flask application, one of which is using Python objects. This allows me to leverage inheritance to avoid duplication (which is always good), so it's my method of choice.
 
-It's important to understand the variables and the parameters involved in the configuration. As the documentation clearly states, `FLASK_ENV` and `FLASK_DEBUG` have to be initialised outside the application as the code might misbehave if they are changed once the engine has been started. Furthermore the `FLASK_ENV` variable can have only the two values `development` and `production`, and the main difference is in performances. The most important thing we need to be aware of is that if `FLASK_ENV` is `development`, then `FLASK_DEBUG` becomes automatically `True`. To sum up we have the following guidelines:
+It's important to understand the variables and the parameters involved in the configuration. As the documentation clearly states, `FLASK_ENV` and `FLASK_DEBUG` have to be initialised outside the application as the code might misbehave if they are changed once the engine has been started. Furthermore the variable `FLASK_ENV` can have only the two values `development` and `production`, and the main difference is in performances. The most important thing we need to be aware of is that if `FLASK_ENV` is `development`, then `FLASK_DEBUG` becomes automatically `True`. To sum up we have the following guidelines:
 
 * It's pointless to set `DEBUG` and `ENV` in the application configuration, they have to be environment variables.
 * Generally you don't need to set `FLASK_DEBUG`, just set `FLASK_ENV` to `development`.
@@ -156,9 +142,7 @@ It's important to understand the variables and the parameters involved in the co
 
 We need now to create the application and to properly configure it. I decided to use and application factory that accepts a `config_name` string that is then converted into the name of the config object. For example, if `config_name` is `development` the variable `config_module` becomes `application.config.DevelopmentConfig` so that `app.config.from_object` can import it.
 
-File: `application/app.py`
-
-``` python
+``` { .python filename="application/app.py" }
 from flask import Flask
 
 
@@ -179,11 +163,10 @@ def create_app(config_name):
 
 I also added the standard "Hello, world!" route to have a quick way to see if the server is working or not.
 
-Last, we need something that initializes the application running the application factory and passing the correct value for the `config_name` parameter. The Flask development server can automatically use any file named `wsgi.py` in the root directory, and since WSGI is a standard specification using that makes me sure that any HTTP server we will use in production (for example Gunicorn or uWSGI) will be immediately working.
+Last, we need something that initializes the application running the application factory and passing the correct value for the parameter `config_name`. The Flask development server can automatically use any file named `wsgi.py` in the root directory, and since WSGI is a standard specification using that makes me sure that any HTTP server we will use in production (for example Gunicorn or uWSGI) will be immediately working.
 
-File: `wsgi.py`
 
-``` python
+``` { .python filename="wsgi.py" }
 import os
 
 from application.app import create_app
@@ -191,7 +174,7 @@ from application.app import create_app
 app = create_app(os.environ["FLASK_CONFIG"])
 ```
 
-Here, I decided to read the value of `config_name` from the `FLASK_CONFIG` variable. This is not a variable requested by the framework, but I decided to use the `FLASK_` prefix anyway because it is tightly connected with the structure of the Flask application.
+Here, I decided to read the value of `config_name` from the variable `FLASK_CONFIG`. This is not a variable requested by the framework, but I decided to use the prefix `FLASK_` anyway because it is tightly connected with the structure of the Flask application.
 
 At this point we can happily run the Flask development server with
 
@@ -221,9 +204,7 @@ You can see the changes made in this step through [this Git commit](https://gith
 
 As I mentioned in the introduction, I am going to use a static JSON configuration file. The choice of JSON comes from the fact that it is a widespread file format, accessible from many programming languages, included Terraform, which I plan to use to create my production infrastructure.
 
-File: `config/development.json`
-
-``` json
+``` { .json filename="config/development.json" }
 [
   {
     "name": "FLASK_ENV",
@@ -236,11 +217,9 @@ File: `config/development.json`
 ]
 ```
 
-I obviously need a script that extracts variables from the JSON file and converts them into environment variables, so it's time to start writing my own `manage.py` file. This is a pretty standard concept in the world of Python web frameworks, a tradition initiated by Django. The idea is to centralise all the management functions like starting/stopping the development server or managing database migrations. As in flask this is partially done by the `flask` command itself, for the time being I just need to wrap it providing suitable environment variables.
+I obviously need a script that extracts variables from the JSON file and converts them into environment variables, so it's time to start writing my own `manage.py` file. This is a pretty standard concept in the world of Python web frameworks, a tradition initiated by Django. The idea is to centralise all the management functions like starting/stopping the development server or managing database migrations. As in flask this is partially done by the command `flask` itself, for the time being I just need to wrap it providing suitable environment variables.
 
-File: `manage.py`
-
-``` python
+``` { .python filename="manage.py" }
 #! /usr/bin/env python
 
 import os
@@ -300,9 +279,9 @@ Remember to give make the script executables with
 $ chmod 775 manage.py
 ```
 
-As you can see I'm using `click`, which is the recommended way to implement Flask commands. As I might use it to customise subcommands of the flask main script, I decided to stick to one tool and use it for the `manage.py` script as well.
+As you can see I'm using `click`, which is the recommended way to implement Flask commands. As I might use it to customise subcommands of the flask main script, I decided to stick to one tool and use it for the script `manage.py` as well.
 
-The `APPLICATION_CONFIG` variable is the only one that I need to specify, and its default value is `development`. From that variable I infer the name of the JSON file with the full configuration and load environment variables from that. The `flask` function simply wraps the `flask` command provided by Flask so that I can run `./manage.py flask <subcommand>` to run it using the `development` configuration or `APPLICATION_CONFIG="foobar" ./manage.py flask <subcommand>` to use the `foobar` one.
+The variable `APPLICATION_CONFIG` is the only one that I need to specify, and its default value is `development`. From that variable I infer the name of the JSON file with the full configuration and load environment variables from that. The function `flask` simply wraps the command `flask` provided by Flask so that I can run `./manage.py flask <subcommand>` to run it using the configuration `development` or `APPLICATION_CONFIG="foobar" ./manage.py flask <subcommand>` to use the `foobar` one.
 
 A clarification, to be sure you don't confuse environment variables with each other:
 
@@ -341,13 +320,11 @@ There is also no better way to complicate your life than using Docker.
 
 As you might guess, I have mixed feelings about Docker. Don't get me wrong, Linux containers are an amazing concept, and Docker is very useful. It's also a complex technology that sometimes requires a lot of work to get properly configured. In this case the setup will be pretty simple, but there is a major complication with using a database server that I will describe later.
 
-Running the application in a Docker container allows me to isolate it and to simulate the way I will run it in production. I will use docker-compose, as I expect to have other containers running in my development setup (at least the database), so I can leverage the fact that the docker-compose configuration file can interpolate environment variables. Once again through the `APPLICATION_CONFIG` environment variable I will select the correct JSON file, load its values in environment variables and then run the docker-compose file.
+Running the application in a Docker container allows me to isolate it and to simulate the way I will run it in production. I will use docker-compose, as I expect to have other containers running in my development setup (at least the database), so I can leverage the fact that the docker-compose configuration file can interpolate environment variables. Once again through the environment variable `APPLICATION_CONFIG` I will select the correct JSON file, load its values in environment variables and then run the docker-compose file.
 
 First of all we need an image for the Flask application
 
-File: `docker/Dockerfile`
-
-``` Dockerfile
+``` { .Dockerfile filename="docker/Dockerfile" }
 FROM python:3
 
 ENV PYTHONUNBUFFERED 1
@@ -360,13 +337,11 @@ ADD requirements /opt/requirements
 RUN pip install -r /opt/requirements/development.txt
 ```
 
-As you can see the requirements directory is copied into the image, so that Docker can run the `pip install` command at creation time. The whole code directory will be mounted live into the image at run time.
+As you can see the requirements directory is copied into the image, so that Docker can run the command `pip install` at creation time. The whole code directory will be mounted live into the image at run time.
 
 This clearly means that every time we change the development requirements we need to rebuild the image. This is not a complicated process, so I will keep it as a manual process for now. To run the image we can create a configuration file for docker-compose.
 
-File: `docker/development.yml`
-
-``` yaml
+``` { .yaml filename="docker/development.yml" }
 version: '3.4'
 
 services:
@@ -386,9 +361,7 @@ services:
 
 As you can see, the docker-compose configuration file can read environment variables natively. To run it we first need to add docker-compose itself to the development requirements.
 
-File: `requirements/development.txt`
-
-```
+``` { .text filename="requirements/development.txt" }
 -r testing.txt
 
 docker-compose
@@ -402,7 +375,7 @@ $ FLASK_ENV="development" FLASK_CONFIG="development" docker-compose -f docker/de
 
 This will take some time, as Docker has to download all the required layers and install the requirements.
 
-We are explicitly passing environment variables here, as we have not wrapped docker-compose in the manage script yet. Once the image has been build, we can run it with the `up` command
+We are explicitly passing environment variables here, as we have not wrapped docker-compose in the manage script yet. Once the image has been build, we can run it with the command `up`
 
 ``` sh
 $ FLASK_ENV="development" FLASK_CONFIG="development" docker-compose -f docker/development.yml up
@@ -441,7 +414,7 @@ or with
 $ FLASK_ENV="development" FLASK_CONFIG="development" docker-compose -f docker/development.yml exec web bash
 ```
 
-In either case, you will end up in the `/opt/code` directory (which is the `WORKDIR` of the image), where the current directory in the host is mounted.
+In either case, you will end up in the directory `/opt/code` (which is the `WORKDIR` of the image), where the current directory in the host is mounted.
 
 To tear down the containers, when running as daemon, you can run
 
@@ -451,11 +424,9 @@ $ FLASK_ENV="development" FLASK_CONFIG="development" docker-compose -f docker/de
 
 Notice that the server now says `Running on http://0.0.0.0:5000/`, as the Docker container is using that network interface to communicate with the outside world. Since the ports are mapped, however, you can head to either [http://localhost:5000](http://localhost:5000) or [http://0.0.0.0:5000](http://0.0.0.0:5000) with your browser.
 
-To simplify the usage of docker-compose, I want to wrap it in the `manage.py` script, so that it automatically receives environment variables, as their number is going to increase soon when we will add a database.
+To simplify the usage of docker-compose, I want to wrap it in the script `manage.py`, so that it automatically receives environment variables, as their number is going to increase soon when we will add a database.
 
-File: `manage.py`
-
-``` python
+``` { .python filename="manage.py" }
 #! /usr/bin/env python
 
 import os
@@ -523,7 +494,7 @@ if __name__ == "__main__":
     cli()
 ```
 
-You might have noticed that the two functions `flask` and `compose` are basically the same code, but I resisted the temptation to refactor them because I know that the `compose` command will need some changes as soon as I add a database.
+You might have noticed that the two functions `flask` and `compose` are basically the same code, but I resisted the temptation to refactor them because I know that the command `compose` will need some changes as soon as I add a database.
 
 Now I can run `./manage.py compose up -d` and `./manage.py compose down` and have the environment variables automatically passed to the system.
 

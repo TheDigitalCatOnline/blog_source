@@ -7,16 +7,17 @@ from __future__ import unicode_literals
 
 import os
 import sys
+
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'https://www.thedigitalcatonline.com'
+SITEURL = "https://www.thedigitalcatonline.com"
 RELATIVE_URLS = False
 DEBUG = False
+WEBASSETS_DEBUG = False
 
 FEED_MAX_ITEMS = 10
 
 DELETE_OUTPUT_DIRECTORY = True
 
-GOOGLE_ANALYTICS_UNIVERSAL = 'UA-74364524-1'
-
+GOOGLE_ANALYTICS_UNIVERSAL = "UA-74364524-1"
