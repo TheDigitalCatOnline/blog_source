@@ -257,7 +257,7 @@ If we change the method `setup` to
 
 the test will fail with the following error
 
-``` sh
+``` text
 E           AssertionError: Expected call: setup(cache=True, max_connections=256)
 E           Actual call: setup(cache=True)
 ```
@@ -350,7 +350,7 @@ This little test contains, however, two big issues. First of all the method `get
 
 Testing such a case becomes very simple with mocks. Since the class has a public method `get_data` that interacts with the external component, it is enough to temporarily replace it with a mock that provides sensible values. Create the file `tests/test_meteorites.py` and put this code in it
 
-``` python
+``` { .python filename="tests/test_meteorites.py" }
 from unittest import mock
 
 from simple_calculator.meteorites import MeteoriteStats
@@ -401,7 +401,7 @@ When we run this test we are not testing that the external server provides the c
 
 We can now write a class that passes this test. Put the following code in `simple_calculator/meteorites.py` alongside with `main.py`
 
-``` python
+``` { .python filename="simple_calculator/meteorites.py" }
 import urllib.request
 import json
 

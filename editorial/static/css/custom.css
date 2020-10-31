@@ -143,7 +143,7 @@ a {
 }
 
 code {
-    background-color: #f8f8f8; /*rgba(212, 218, 220, 0.25);*/
+    background-color: #f8f8f8;
     border-radius: 0;
     font-family: "Courier New", monospace;
     font-size: 1em;
@@ -156,7 +156,18 @@ div.highlight {
     margin: 1em 0;
 }
 
+div.highlight span.filename {
+    display: inline-block;
+    background-color: #d8d8d8;
+    padding: 5px 15px;
+    border: 1px solid black;
+    border-bottom: 0px;
+    font-family: "Courier New", monospace;
+    font-size: 1em;
+}
+
 div.highlight pre {
+    border: 1px solid black;
     padding: 1em 0 1em 1em;
     margin: 0;
     overflow-x: auto;

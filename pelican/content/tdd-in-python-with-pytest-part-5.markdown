@@ -22,9 +22,9 @@ This is exactly the case addressed by patching. Patching, in a testing framework
 
 ### A warm-up example
 
-Clone the repository `fileinfo` that you can find [here](https://github.com/lgiordani/fileinfo) and move to the `develop` branch. As I did for the `simple_calculator`, the `master` branch contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
+Clone the repository `fileinfo` that you can find [here](https://github.com/lgiordani/fileinfo) and move to the branch `develop`. As I did for the project `simple_calculator`, the branch `master` contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
 
-``` sh 
+``` sh
 git clone https://github.com/lgiordani/fileinfo
 cd fileinfo
 git checkout --track origin/develop
@@ -60,7 +60,7 @@ Let us start with a very simple example. Patching can be complex to grasp at the
 
 The starting point is the class with the method `__init__`. If you want you can develop the class using TDD, but for the sake of brevity I will not show here all the steps that I followed. This is the set of tests I have in `tests/test_fileinfo.py`
 
-``` python
+``` { .python filename="tests/test_fileinfo.py" }
 from fileinfo.fileinfo import FileInfo
 
 
@@ -77,9 +77,9 @@ def test_init_relative():
     assert fi.filename == filename
 ```
 
-and this is the code of the class `FileInfo` in the `fileinfo/fileinfo.py` file
+and this is the code of the class `FileInfo` in the file `fileinfo/fileinfo.py`
 
-``` python
+``` { .python filename="fileinfo/fileinfo.py" }
 import os
 
 
@@ -93,7 +93,7 @@ class FileInfo:
 
 As you can see the class is extremely simple, and the tests are straightforward. So far I didn't add anything new to what we discussed in the previous posts.
 
-Now I want the method `get_info` to return a tuple with the file name, the original path the class was instantiated with, and the absolute path of the file. Pretending we are in the `/some/absolute/path` directory, the class should work as shown here
+Now I want the method `get_info` to return a tuple with the file name, the original path the class was instantiated with, and the absolute path of the file. Pretending we are in the directory `/some/absolute/path`, the class should work as shown here
 
 ``` python
 >>> fi = FileInfo('../book_list.txt')
@@ -101,7 +101,7 @@ Now I want the method `get_info` to return a tuple with the file name, the origi
 ('book_list.txt', '../book_list.txt', '/some/absolute')
 ```
 
-You can immediately realise that you have a problem writing the test. There is no way to easily test something as "the absolute path", since the outcome of the function called in the test is supposed to vary with the path of the test itself. Let us try to write part of the test
+You can quickly realise that you have a problem writing the test. There is no way to easily test something as "the absolute path", since the outcome of the function called in the test is supposed to vary with the path of the test itself. Let us try to write part of the test
 
 ``` python
 def test_get_info():
@@ -117,7 +117,7 @@ Patching is the way to solve this problem. You know that the function will use s
 
 Patching, thus, means to inform Python that during the execution of a specific portion of the code you want a globally accessible module/object replaced by a mock. Let's see how we can use it in our example
 
-``` python
+``` { .python filename="tests/test_fileinfo.py" }
 from unittest.mock import patch
 
 [...]
@@ -133,19 +133,31 @@ def test_get_info():
         assert fi.get_info() == (filename, original_path, test_abspath)
 ```
 
-You clearly see the context in which the patching happens, as it is enclosed in a `with` statement. Inside this statement the module `os.path.abspath` will be replaced by a mock created by the function `patch` and called `abspath_mock`. So, while Python executes the lines of code enclosed by the `with` statement any call to `os.path.abspath` will return the object `abspath_mock`.
+You clearly see the context in which the patching happens, as it is enclosed in a `with` statement. Inside this statement the module `os.path.abspath` will be replaced by a mock created by the function `patch` and called `abspath_mock`. So, while Python executes the lines of code enclosed by the statement `with` any call to `os.path.abspath` will return the object `abspath_mock`.
 
 The first thing we can do, then, is to give the mock a known `return_value`. This way we solve the issue that we had with the initial code, that is using an external component that returns an unpredictable result. The line
 
-``` python
+``` { .python filename="tests/test_fileinfo.py" hl_lines="11" }
+from unittest.mock import patch
+
+[...]
+
+def test_get_info():
+    filename = 'somefile.ext'
+    original_path = '../{}'.format(filename)
+
+    with patch('os.path.abspath') as abspath_mock:
+        test_abspath = 'some/abs/path'
         abspath_mock.return_value = test_abspath
+        fi = FileInfo(original_path)
+        assert fi.get_info() == (filename, original_path, test_abspath)
 ```
 
 instructs the patching mock to return the given string as a result, regardless of the real values of the file under consideration. 
 
 The code that make the test pass is
 
-``` python
+``` { .python filename="fileinfo/fileinfo.py" }
 class FileInfo:
     [...]
 
@@ -157,23 +169,23 @@ class FileInfo:
         )
 ```
 
-When this code is executed by the test the `os.path.abspath` function is replaced at run time by the mock that we prepared there, which basically ignores the input value `self.filename` and returns the fixed value it was instructed to use.
+When this code is executed by the test the function `os.path.abspath` is replaced at run time by the mock that we prepared there, which basically ignores the input value `self.filename` and returns the fixed value it was instructed to use.
 
 **Git tag:** [patch-with-context-manager](https://github.com/lgiordani/fileinfo/tree/patch-with-context-manager)
 
 It is worth at this point discussing outgoing messages again. The code that we are considering here is a clear example of an outgoing query, as the method `get_info` is not interested in changing the status of the external component. In the previous post we reached the conclusion that testing the return value of outgoing queries is pointless and should be avoided. With `patch` we are replacing the external component with something that we know, using it to test that our object correctly handles the value returned by the outgoing query. We are thus not testing the external component, as it has been replaced, and we are definitely not testing the mock, as its return value is already known.
 
-Obviously to write the test you have to know that you are going to use the `os.path.abspath` function, so patching is somehow a "less pure" practice in TDD. In pure OOP/TDD you are only concerned with the external behaviour of the object, and not with its internal structure. This example, however, shows that this pure approach has some limitations that you have to cope with, and patching is a clean way to do it.
+Obviously to write the test you have to know that you are going to use the function `os.path.abspath`, so patching is somehow a "less pure" practice in TDD. In pure OOP/TDD you are only concerned with the external behaviour of the object, and not with its internal structure. This example, however, shows that this pure approach has some limitations that you have to cope with, and patching is a clean way to do it.
 
 ## The patching decorator
 
-The `patch` function we imported from the `unittest.mock` module is very powerful, as it can temporarily replace an external object. If the replacement has to or can be active for the whole test, there is a cleaner way to inject your mocks, which is to use `patch` as a function decorator.
+The function `patch` we imported from the module `unittest.mock` is very powerful, as it can temporarily replace an external object. If the replacement has to or can be active for the whole test, there is a cleaner way to inject your mocks, which is to use `patch` as a function decorator.
 
 This means that you can decorate the test function, passing as argument the same argument you would pass if  `patch` was used in a `with` statement. This requires however a small change in the test function prototype, as it has to receive an additional argument, which will become the mock.
 
-Let's change `test_get_info`, removing the `with` statement and decorating the function with `patch`
+Let's change `test_get_info`, removing the statement `with` and decorating the function with `patch`
 
-``` python
+``` { .python filename="tests/test_fileinfo.py" }
 @patch('os.path.abspath')
 def test_get_info(abspath_mock):
     test_abspath = 'some/abs/path'
@@ -188,7 +200,7 @@ def test_get_info(abspath_mock):
 
 **Git tag:** [patch-with-function-decorator](https://github.com/lgiordani/fileinfo/tree/patch-with-function-decorator)
 
-As you can see the `patch` decorator works like a big `with` statement for the whole function. The `abspath_mock` argument passed to the test becomes internally the mock that replaces `os.path.abspath`. Obviously this way you replace `os.path.abspath` for the whole function, so you have to decide case by case which form of the `patch` function you need to use.
+As you can see the decorator `patch` works like a big `with` statement for the whole function. The argument `abspath_mock` passed to the test becomes internally the mock that replaces `os.path.abspath`. Obviously this way you replace `os.path.abspath` for the whole function, so you have to decide case by case which form of the function `patch` you need to use.
 
 ## Multiple patches
 
@@ -196,7 +208,7 @@ You can patch more that one object in the same test. For example, consider the c
 
 This can be easily done with an additional `patch` decorator
 
-``` python
+``` { .python filename="tests/test_fileinfo.py" }
 @patch('os.path.getsize')
 @patch('os.path.abspath')
 def test_get_info(abspath_mock, getsize_mock):
@@ -234,7 +246,7 @@ This explains why, in the test code, the function receives first `abspath_mock` 
 
 The code that makes the test pass is
 
-``` python
+``` { .python filename="fileinfo/fileinfo.py" }
 class FileInfo:
     [...]
 
@@ -251,7 +263,7 @@ class FileInfo:
 
 We can write the above test using two `with` statements as well
 
-``` python
+``` { .python filename="tests/test_fileinfo.py" }
 def test_get_info():
     filename = 'somefile.ext'
     original_path = '../{}'.format(filename)
@@ -277,11 +289,11 @@ Using more than one `with` statement, however, makes the code difficult to read,
 
 ## Checking call parameters
 
-When you patch, your internal algorithm is not executed, as the patched method just return the values it has been instructed to return. This is connected to what we said about testing external systems, so everything is good, but while we don't want to test the internals of the `os.path` module, we want to be sure that we are passing the correct values to the external methods.
+When you patch, your internal algorithm is not executed, as the patched method just return the values it has been instructed to return. This is connected to what we said about testing external systems, so everything is good, but while we don't want to test the internals of the module `os.path`, we want to be sure that we are passing the correct values to the external methods.
 
 This is why mocks provide methods like `assert_called_with` (and other similar methods), through which we can check the values passed to a patched method when it is called. Let's add the checks to the test
 
-``` python
+``` { .python filename="tests/test_fileinfo.py" }
 @patch('os.path.getsize')
 @patch('os.path.abspath')
 def test_get_info(abspath_mock, getsize_mock):
@@ -328,13 +340,13 @@ Here I'm trying to replace a method with an integer, which is pointless per se, 
 
 What has this immutability to do with patching? What `patch` does is actually to temporarily replace an attribute of an object (method of a class, class of a module, etc.), which also means that if we try to replace an attribute in an immutable object the patching action will fail.
 
-A typical example of this problem is the `datetime` module, which is also one of the best candidates for patching, since the output of time functions is by definition time-varying.
+A typical example of this problem is the module `datetime`, which is also one of the best candidates for patching, since the output of time functions is by definition time-varying.
 
 Let me show the problem with a simple class that logs operations. I will temporarily break the TDD methodology writing first the class and then the tests, so that you can appreciate the problem.
 
 Create a file called `logger.py` and put there the following code
 
-``` python
+``` { .python filename="fileinfo/logger.py" }
 import datetime
 
 
@@ -350,7 +362,7 @@ This is pretty simple, but testing this code is problematic, because the method 
 
 If we try to do it, however, we will have a bitter surprise. This is the test code, that you can put in `tests/test_logger.py`
 
-``` python
+``` { .python filename="tests/test_logger.py" }
 from unittest.mock import patch
 
 from fileinfo.logger import Logger
@@ -373,15 +385,15 @@ When you try to execute this test you will get the following error
 TypeError: can't set attributes of built-in/extension type 'datetime.datetime'
 ```
 
-which is raised because patching tries to replace the `now` function in `datetime.datetime` with a mock, and since the module is immutable this operation fails.
+which is raised because patching tries to replace the function `now` in `datetime.datetime` with a mock, and since the module is immutable this operation fails.
 
 **Git tag:** [initial-logger-not-working](https://github.com/lgiordani/fileinfo/tree/initial-logger-not-working)
 
 There are several ways to address this problem. All of them, however, start from the fact that importing or subclassing an immutable object gives you a mutable "copy" of that object.
 
-The easiest example in this case is the module `datetime` itself. In the `test_log` function we tried to patch directly the object `datetime.datetime.now`, affecting the builtin module `datetime`. The file `logger.py`, however, does import `datetime`, so this latter becomes a local symbol in the `logger` module. This is exactly the key for our patching. Let us change the code to
+The easiest example in this case is the module `datetime` itself. In the function `test_log` we tried to patch directly the object `datetime.datetime.now`, affecting the builtin module `datetime`. The file `logger.py`, however, does import `datetime`, so this latter becomes a local symbol in the module `logger`. This is exactly the key for our patching. Let us change the code to
 
-``` python
+``` { .python filename="tests/test_logger.py" }
 @patch('fileinfo.logger.datetime.datetime')
 def test_log(mock_datetime):
     test_now = 123
@@ -395,7 +407,7 @@ def test_log(mock_datetime):
 
 **Git tag:** [correct-patching](https://github.com/lgiordani/fileinfo/tree/correct-patching)
 
-If you run the test now, you can see that the patching works. What we did was to inject our mock in `fileinfo.logger.datetime.datetime` instead of `datetime.datetime.now`. Two things changed, thus, in our test. First, we are patching the module imported in the `logger.py` file and not the module provided globally by the Python interpreter. Second, we have to patch the whole module because this is what is imported by the `logger.py` file. If you try to patch `fileinfo.logger.datetime.datetime.now` you will find that it is still immutable.
+If you run the test now, you can see that the patching works. What we did was to inject our mock in `fileinfo.logger.datetime.datetime` instead of `datetime.datetime.now`. Two things changed, thus, in our test. First, we are patching the module imported in the file `logger.py` and not the module provided globally by the Python interpreter. Second, we have to patch the whole module because this is what is imported by the file `logger.py`. If you try to patch `fileinfo.logger.datetime.datetime.now` you will find that it is still immutable.
 
 Another possible solution to this problem is to create a function that invokes the immutable object and returns its value. This last function can be easily patched, because it just uses the builtin objects and thus is not immutable. This solution, however, requires changing the source code to allow testing, which is far from being optimal. Obviously it is better to introduce a small change in the code and have it tested than to leave it untested, but whenever is possible I try as much as possible to avoid solutions that introduce code which wouldn't be required without tests.
 

@@ -78,7 +78,7 @@ As you can see there are many things that are tested by this statement.
 * The function accepts two integers
 * Passing 4 and 5 as inputs, the output of the function will be 9.
 
-Pay attention that at this stage there is no code that implements the `sum` function, the tests will fail for sure.
+Pay attention that at this stage there is no code that implements the function `sum`, the tests will fail for sure.
 
 As we will see with a practical example in the next chapter, what I explained in this section will become a set of rules of the methodology.
 
@@ -94,9 +94,9 @@ The repository is tagged, and at the end of each section you will find a link to
 
 ## Setup the project
 
-Clone the project repository and move to the `develop` branch. The `master` branch contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
+Clone the project repository and move to the branch `develop`. The branch `master` contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
 
-``` sh 
+``` sh
 git clone https://github.com/lgiordani/simple_calculator
 cd simple_calculator
 git checkout --track origin/develop
@@ -138,7 +138,7 @@ As you can see the requirements are pretty simple, and a couple of them are defi
 
 The first test we are going to write is one that checks if the class `SimpleCalculator` can perform an addition. Add the following code to the file `tests/test_main.py`
 
-``` python
+``` { .python filename="tests/test_main.py" }
 from simple_calculator.main import SimpleCalculator
 
 def test_add_two_numbers():
@@ -153,7 +153,7 @@ As you can see the first thing we do is to import the class `SimpleCalculator` t
 
 The test is a standard function (this is how pytest works), and the function name shall begin with `test_` so that pytest can automatically discover all the tests. I tend to give my tests a descriptive name, so it is easier later to come back and understand what the test is about with a quick glance. You are free to follow the style you prefer but in general remember that naming components in a proper way is one of the most difficult things in programming. So better to get a handle on it as soon as possible.
 
-The body of the test function is pretty simple. The class `SimpleCalculator` is instantiated, and the method `add` of the instance is called with two numbers, 4 and 5. The result is stored in the variable `result`, which is later the subject of the test itself. The statement `assert result == 9` first computes `result == 9` which is a boolean, with a value that is either `True` or `False`. The `assert` keyword, then, silently passes if the argument is `True`, but raises an exception if it is `False`.
+The body of the test function is pretty simple. The class `SimpleCalculator` is instantiated, and the method `add` of the instance is called with two numbers, 4 and 5. The result is stored in the variable `result`, which is later the subject of the test itself. The statement `assert result == 9` first computes `result == 9` which is a boolean, with a value that is either `True` or `False`. The keyword `assert`, then, silently passes if the argument is `True`, but raises an exception if it is `False`.
 
 And this is how you write tests in pytest: if your code doesn't raise any exception the test passes, otherwise it fails. The keyword `assert` is used to force an exception in case of wrong result. Remember that pytest doesn't consider the return value of the function, so it can detect a failure only if it raises an exception.
 
@@ -180,7 +180,7 @@ This, by the way, is not yet an error in a test. The error happens very soon, du
 
 Let's fix this issue. Open the file `simple_calculator/main.py` and add this code
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     pass
 ```
@@ -259,7 +259,7 @@ For each failing test, pytest shows a header with the name of the test and the p
 
 Back to the project. The new error is no surprise, as the test uses the method `add` that wasn't defined in the class. I bet you already guessed what I'm going to do, didn't you? This is the code that you should add to the class
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     def add(self):
         pass
@@ -281,7 +281,7 @@ tests/test_main.py:9: TypeError
 
 The function we defined doesn't accept any argument other than `self` (`def add(self)`), but in the test we pass three of them (`calculator.add(4, 5)`. Remember that in Python `self` is implicit. Our move at this point is to change the function to accept the parameters that it is supposed to receive, namely two numbers. The code now becomes
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     def add(self, a, b):
         pass
@@ -309,7 +309,7 @@ The function returns `None`, as it doesn't contain any code, while the test expe
 
 Well, the answer is
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     def add(self, a, b):
         return 9
@@ -331,7 +331,7 @@ I know this sound weird, but think about it for a moment: if your code works (th
 
 The requirements state that "Addition and multiplication shall accept multiple arguments". This means that we should be able to execute not only `add(4, 5)` like we did, but also `add(4, 5, 11)`, `add(4, 5, 11, 2)`, and so on. We can start testing this behaviour with the following test, that you should put in `tests/test_main.py`, after the previous test that we wrote.
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_add_three_numbers():
     calculator = SimpleCalculator()
 
@@ -358,7 +358,7 @@ for the obvious reason that the function we wrote in the previous section accept
 
 Well, the simplest solution is to add another argument, so my first attempt is
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     def add(self, a, b, c):
         return 9
@@ -387,13 +387,13 @@ E       TypeError: add() missing 1 required positional argument: 'c'
 tests/test_main.py:10: TypeError
 ```
 
-The first test now fails because the new `add` method requires three arguments and we are passing only two. The second tests fails because the `add` method returns `9` and not `15` as expected by the test.
+The first test now fails because the new `add` method requires three arguments and we are passing only two. The second tests fails because the method `add` returns `9` and not `15` as expected by the test.
 
 When multiple tests fail it's easy to feel discomforted and lost. Where are you supposed to start fixing this? Well, one possible solution is to undo the previous change and to try a different solution, but in general you should try to get to a situation in which only one test fails.
 
 > **TDD rule number 3:** You shouldn't have more than one failing test at a time
 
-This is very important as it allows you to focus on one single test and thus one single problem. And remember, commenting tests to make them inactive is a perfectly valid way to have only one failing test. Pytest, however, has a smarter solution: you can use the `-k` option that allows you to specify a matching name. That option has a lot of expressive power, but for now we can just give it the name of the test that we want to run
+This is very important as it allows you to focus on one single test and thus one single problem. And remember, commenting tests to make them inactive is a perfectly valid way to have only one failing test. Pytest, however, has a smarter solution: you can use the option `-k` that allows you to specify a matching name. That option has a lot of expressive power, but for now we can just give it the name of the test that we want to run
 
 ``` sh
 pytest -svv -k test_add_two_numbers
@@ -413,9 +413,9 @@ E       TypeError: add() missing 1 required positional argument: 'c'
 tests/test_main.py:10: TypeError
 ```
 
-To fix this error we can obviously revert the addition of the third argument, but this would mean going back to the previous solution. Obviously, though tests focus on a very small part of the code, we have to keep in mind what we are doing in terms of the big picture. A better solution is to add to the third argument a default value. The additive identity is `0`, so the new code of the `add` method is
+To fix this error we can obviously revert the addition of the third argument, but this would mean going back to the previous solution. Obviously, though tests focus on a very small part of the code, we have to keep in mind what we are doing in terms of the big picture. A better solution is to add to the third argument a default value. The additive identity is `0`, so the new code of the method `add` is
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     def add(self, a, b, c=0):
         return 9
@@ -445,7 +445,7 @@ I want to stress this. You should implement the minimal change in the code that 
 
 How can we solve this? We know that writing `return 15` will make the first test fail (you may try, if you want), so here we have to be a bit smarter and try a better solution, that in this case is actually to implement a real sum
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     def add(self, a, b, c=0):
         return a + b + c
@@ -477,7 +477,7 @@ as it is not _generic_, it is just covering a greater amount of inputs (9, in th
 
 That said, a good test might be the following
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_add_many_numbers():
     numbers = range(100)
 
@@ -506,15 +506,15 @@ tests/test_main.py:28: TypeError
 
 The minimum amount of code that we can add, this time, will not be so trivial, as we have to pass three tests. This is actually the greatest advantage of TDD: the tests that we wrote are still there and will check that the previous conditions are still satisfied. And since tests are committed with the code they will always be there.
 
-The Python way to support a generic number of arguments (technically called _variadic functions_) is through the use of the `*args` syntax, which stores in `args` a tuple that contains all the arguments.
+The Python way to support a generic number of arguments (technically called _variadic functions_) is through the use of the syntax `*args`, which stores in `args` a tuple that contains all the arguments.
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 class SimpleCalculator:
     def add(self, *args):
         return sum(args)
 ```
 
-At that point we can use the `sum` built-in function to sum all the arguments. This solution makes the whole test suite pass without errors, so it is correct.
+At that point we can use the built-in function `sum` to sum all the arguments. This solution makes the whole test suite pass without errors, so it is correct.
 
 **Git tag:** [step-3-adding-multiple-numbers](https://github.com/lgiordani/simple_calculator/tree/step-3-adding-multiple-numbers)
 
@@ -528,7 +528,7 @@ Part of the TDD methodology, then, deals with "refactoring", which means changin
 
 From the requirements we know that we have to implement a function to subtract numbers, but this doesn't mention multiple arguments (as it would be complex to define what subtracting 3 of more numbers actually means). The tests that implements this requirements is
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_subtract_two_numbers():
     calculator = SimpleCalculator()
 
@@ -553,7 +553,7 @@ tests/test_main.py:36: AttributeError
 
 Now that you understood the TDD process, and that you know you should avoid over-engineering, you can also skip some of the passages that we run through in the previous sections. A good solution for this test is
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def sub(self, a, b):
         return a - b
 ```
@@ -568,7 +568,7 @@ It's time to move to multiplication, which has many similarities to addition. Th
 
 In this case the first test can be the multiplication of two numbers, as it was for addition.
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_mul_two_numbers():
     calculator = SimpleCalculator()
 
@@ -597,7 +597,7 @@ In this case the choice is not really important, as we are dealing with very sim
 
 If we decide to follow the strict TDD, that is implement the simplest first solution, the bare minimum code that passes the test would be
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
     def mul(self, a, b):
         return a * b
 ```
@@ -606,7 +606,7 @@ If we decide to follow the strict TDD, that is implement the simplest first solu
 
 To show you how to deal with redundant tests I will in this case choose the second path, and implement a smarter solution for the present test. Keep in mind however that it is perfectly correct to implement that solution shown above and then move on and try to solve the problem of multiple arguments later.
 
-The problem of multiplying a tuple of numbers can be solved in Python using the `reduce` function. This function implements a typical algorithm that "reduces" an array to a single number, applying a given function. The algorithm steps are the following
+The problem of multiplying a tuple of numbers can be solved in Python using the function `reduce`. This function implements a typical algorithm that "reduces" an array to a single number, applying a given function. The algorithm steps are the following
 
 1. Apply the function to the first two elements
 2. Remove the first two elements from the array
@@ -638,9 +638,9 @@ The steps followed by the algorithm will be
 7. Apply the function to 384 (result of the previous step) and 3 (first element of the array). The new result is `384 * 3`, that is 1152
 8. Remove the first element, the array is now empty and the procedure ends
 
-Going back to our class `SimpleCalculator`, we might import `reduce` from the `functools` module and use it on the `args` array. We need to provide a function that we can define in the `mul` function itself.
+Going back to our class `SimpleCalculator`, we might import `reduce` from the module `functools` and use it on the array `args`. We need to provide a function that we can define in the function `mul` itself.
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 from functools import reduce
 
 
@@ -656,11 +656,11 @@ class SimpleCalculator:
 
 **Git tag:** [step-5-multiply-two-numbers-smart](https://github.com/lgiordani/simple_calculator/tree/step-5-multiply-two-numbers-smart)
 
-More information about the `reduce` algorithm can be found on the MapReduce Wikipedia page [https://en.wikipedia.org/wiki/MapReduce](https://en.wikipedia.org/wiki/MapReduce). The Python function documentation can be found at [https://docs.python.org/3.6/library/functools.html#functools.reduce](https://docs.python.org/3.6/library/functools.html#functools.reduce).
+More information about the algorithm `reduce` can be found on the MapReduce Wikipedia page [https://en.wikipedia.org/wiki/MapReduce](https://en.wikipedia.org/wiki/MapReduce). The Python function documentation can be found at [https://docs.python.org/3.6/library/functools.html#functools.reduce](https://docs.python.org/3.6/library/functools.html#functools.reduce).
 
 The above code makes the test suite pass, so we can move on and address the next problem. As happened with addition we cannot properly test that the function accepts a potentially infinite number of arguments, so we can test a reasonably high number of inputs.
 
-``` python
+``` { .python filename="tests/test_main.py" }
 def test_mul_many_numbers():
     numbers = range(1, 10)
 
@@ -693,11 +693,11 @@ In theory, refactoring shouldn't add any new behaviour to the code, as it should
 
 This means that if you have no tests you shouldn't refactor. But, after all, if you have no tests you shouldn't have any code, either, so refactoring shouldn't be a problem you have. If you have some code without tests (I know you have it, I do), you should seriously consider writing tests for it, at least before changing it. More on this in a later section.
 
-For the time being, let's see if we can work on the code of the class `SimpleCalculator` without altering the results. I do not really like the definition of the function `mul2` inside the `mul` one. It is obviously perfectly fine and valid, but for the sake of example I will pretend we have to get rid of it.
+For the time being, let's see if we can work on the code of the class `SimpleCalculator` without altering the results. I do not really like the definition of the function `mul2` inside the function `mul`. It is obviously perfectly fine and valid, but for the sake of example I will pretend we have to get rid of it.
 
-Python provides support for anonymous functions with the `lambda` operator, so I might replace the `mul` code with
+Python provides support for anonymous functions with the operator `lambda`, so I might replace the code of `mul` with
 
-``` python
+``` { .python filename="simple_calculator/main.py" }
 from functools import reduce
 
 
