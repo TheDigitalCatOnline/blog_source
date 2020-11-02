@@ -530,7 +530,7 @@ The public key saved by ssh-keygen is written in the so-called SSH-format, which
 
 For example
 
-```
+``` text
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy9f0/nwkXESzkL4v4ftZ24VJYvkQ/Nt6vsLab3iSWtJXqrRsBythCcbAU6W9
 5OGxjbTSFFtp0poqMcPuogocMR7QhjY9JGG3fcnJ7nYDCGRHD4zfG5Af/tHwvJ2ew0WTYoemvlfZIG/jZ7fsuOQSyUpJoxGAlb6
 /QpnfSmJjxCx0VEoppWDn8CO3VhOgzVhWx0dcne+ZcUy3Kkt3HBQN0hosRfqkVSRTvkpK4RD8TaW5PrVDe1r2Q5ab37TO+Ls4xx
@@ -545,7 +545,7 @@ cat key.pub | cut -d " " -f2 | base64 -d | hexdump -ve '/1 "%02x "' -e '2/8 "\n"
 
 which in the previous case outputs something like
 
-```
+``` text
 00 00 00 07 73 73 68 2d 72 73 61 00 00 00 03 01
 00 01 00 00 01 01 00 b2 f5 fd 3f 9f 09 17 11 2c
 e4 2f 8b f8 7e d6 76 e1 52 58 be 44 3f 36 de af
