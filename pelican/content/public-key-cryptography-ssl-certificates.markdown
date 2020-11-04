@@ -1,5 +1,5 @@
 Title: Public key cryptography: SSL certificates
-Date: 2020-11-02 14:00:00 +0100
+Date: 2020-11-04 23:00:00 +0100
 Category: Programming
 Tags: algorithms, cryptography, SSL, SSH, RSA, Python, WWW
 Authors: Leonardo Giordani
