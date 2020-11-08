@@ -8,7 +8,7 @@ Series: TDD in Python with pytest
 Image: tdd-in-python-with-pytest-part-1
 Summary: 
 
-This series of posts comes directly from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python). As I am reviewing the book to prepare a second edition, I realised that Harry percival was right when he said that the initial part on TDD shouldn't be in the book. That's a prerequisite to follow the chapters on the clean architecture, but it is something many programmers already know and they might be surprised to find it in a book that discusses architectures.
+This series of posts comes directly from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python). As I am reviewing the book to prepare a second edition, I realised that Harry Percival was right when he said that the initial part on TDD shouldn't be in the book. That's a prerequisite to follow the chapters on the clean architecture, but it is something many programmers already know and they might be surprised to find it in a book that discusses architectures.
 
 So, I decided to move it here before I start working on a new version of the book. I also followed the advice of [valorien](https://github.com/valorien), who pointed out that the main example has some bad naming choices, and so I reworked the code.
 
