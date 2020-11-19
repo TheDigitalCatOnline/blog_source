@@ -777,7 +777,7 @@ Even here, elliptic curves are slowly being adopted.
 
 # AWS components related to certificates
 
-If you are using AWS, you can create certificates with ACM, the [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/). Such certificates cannot be downloaded, they can only be attached to other AWS components. For this reason, the generation process reuire you to create any request, as you might have to do with other authorities. Certificates created in the ACM are free.
+If you are using AWS, you can create certificates with ACM, the [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/). Such certificates cannot be downloaded, they can only be attached to other AWS components. For this reason, the generation process requires you to create any request, as you might have to do with other authorities. Certificates created in the ACM are free.
 
 Certificates created in the ACM can be attached to several AWS components, most notably [Load Balancers](https://aws.amazon.com/documentation/elastic-load-balancing/), [CloudFront](https://aws.amazon.com/documentation/cloudfront/), and [API Gateway](https://aws.amazon.com/documentation/apigateway/).
 
@@ -785,7 +785,7 @@ Traditionally, load balancers are the place where TLS is terminated for HTTPS, r
 
 ## Let's encrypt
 
-In an effort to push for HTTP encryption of any public server, the Internet Security Research Group founded in 2016 a non-profit CA named [Let's Encrypt](https://letsencrypt.org/), which provides at no charge TLD certificates valid for 90 days. Such certificates can be renewed automatically as part of the setup ([certbot](https://certbot.org/)) and represent a viable alternative to certificates issued by other CA, in particular for open source projects. This blog uses a certificate issued by Let's Encrypt (provided by GitHub Pages) and will thus expire in less than 3 months (but also automatically renewed).
+In an effort to push for HTTP encryption of any public server, the Internet Security Research Group founded in 2016 a non-profit CA named [Let's Encrypt](https://letsencrypt.org/), which provides at no charge TLS certificates valid for 90 days. Such certificates can be renewed automatically as part of the setup ([certbot](https://certbot.org/)) and represent a viable alternative to certificates issued by other CA, in particular for open source projects. This blog uses a certificate issued by Let's Encrypt (provided by GitHub Pages) and will thus expire in less than 3 months (but also automatically renewed).
 
 # Final words
 
