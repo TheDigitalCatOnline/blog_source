@@ -82,7 +82,7 @@
                 </a>
                 <div class="card-body">
                     <a href="/{{ article.url }}"><h3 class="card-title">Python 3 Object-oriented Programming</h3></a>
-                    <p class="article-info">A series of posts that dig into the Python implementation of the Object-oriented paradigm. No previous knowledge of the topic is required, but an initial knowledge of the Python syntax is useful.</p>
+                    <p class="article-info">What happens behind the scenes of classes and instances? What are composition, inheritance, and polymorphism? A series of posts that dig into the Python implementation of the Object-oriented paradigm.</p>
                     <ul class="actions">
                         <li><a href="/{{ article.url }}" class="button">Start</a></li>
                     </ul>
@@ -95,7 +95,20 @@
                 </a>
                 <div class="card-body">
                     <a href="/{{ article.url }}"><h3 class="card-title">A game of tokens</h3></a>
-                    <p class="card-text">Python, Ruby, Javascript, C, Erlang, how many different languages. But how does a compiler work? How si the source code converted into something that works? Let's write a simple language interpreter using TDD!</p>
+                    <p class="card-text">Python, Ruby, Javascript, C, Erlang, how many different languages. But how does a compiler work? How is the source code converted into something that works? To understand that there's nothing better than actually write a language. Let's write a simple language interpreter in Python using TDD!</p>
+                    <ul class="actions">
+                        <li><a href="/{{ article.url }}" class="button">Start</a></li>
+                    </ul>
+                </div>
+            </article>
+            <article class="card">
+                {% set article = series['Flask project setup'][0] %}
+                <a href="/{{ article.url }}" class="image">
+                    <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="Flask project setup" />
+                </a>
+                <div class="card-body">
+                    <a href="/{{ article.url }}"><h3 class="card-title">Flask project setup</h3></a>
+                    <p class="card-text">Have you ever started working on a web application project just to find yourself swamped in a bunch of files and directories with silly names and without a clear picture of what is really going on? In this series of post I show you how to properly set up a Flask application using TDD, Docker, Postgres and more.</p>
                     <ul class="actions">
                         <li><a href="/{{ article.url }}" class="button">Start</a></li>
                     </ul>
