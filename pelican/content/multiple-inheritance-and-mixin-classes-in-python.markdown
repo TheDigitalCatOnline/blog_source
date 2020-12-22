@@ -270,8 +270,8 @@ c.flush()
 
 ```
 
-As you can see, we can access the MRO of any class reasind its `__mro__` attribute, and as we expected its value is `(<class '__main__.Child'>, <class '__main__.Parent1'>, <class '__main__.Parent2'>, <class '__main__.Ancestor'>, <class 'object'>).
-`
+As you can see, we can access the MRO of any class reading its `__mro__` attribute, and as we expected its value is `(<class '__main__.Child'>, <class '__main__.Parent1'>, <class '__main__.Parent2'>, <class '__main__.Ancestor'>, <class 'object'>)`.
+
 
 So, in this case an instance `c` of `Child` provides `rewind`, `open`, `close`, and `flush`. When `c.rewind` is called, the code in `Ancestor` is executed, as this is the first class in the MRO list that provides that method. The method `open` is provided by `Parent1`, while `close` is provided by `Parent2`. If the method `c.flush` is called, the code is provided by the `Child` class itself, that redefines it overriding the one provided by `Parent2`.
 
@@ -330,7 +330,7 @@ r2 = Rectangle(150, 280, 23, 55)
 q1 = Square(300, 400, 50)
 ```
 
-We usually accept that an enhanced version of a class accepts different parameters when it is initialized, as we do not expect it to be polymorphic on `__init__`. Problems arise when we try to leverage polymorphism on other methods, for example resizing all `GraphicalEntity` objects in a list
+We usually accept that an enhanced version of a class accepts different parameters when it is initialised, as we do not expect it to be polymorphic on `__init__`. Problems arise when we try to leverage polymorphism on other methods, for example resizing all `GraphicalEntity` objects in a list
 
 ``` python
 for shape in [r1, r2, q1]:
@@ -339,15 +339,15 @@ for shape in [r1, r2, q1]:
     shape.resize(size_x*2, size_y*2)
 ```
 
-Since `r1`, `r2`, and `q1` are all objects that inherit from `GraphicalEntity` we expect them to provide the interface provided by that class, but this fails, because `Square` changed the signature of `resize`. The same would happen if we instantiated them in a for loop from a list of classes, but as I said it is generally accepted that child classes change the signature of the `__init__` method. This is not true, for example, in a plugin-based system, where all plugins shall be initialized the same way.
+Since `r1`, `r2`, and `q1` are all objects that inherit from `GraphicalEntity` we expect them to provide the interface provided by that class, but this fails, because `Square` changed the signature of `resize`. The same would happen if we instantiated them in a for loop from a list of classes, but as I said it is generally accepted that child classes change the signature of the `__init__` method. This is not true, for example, in a plugin-based system, where all plugins shall be initialised the same way.
 
-This is a classic problem in OOP. While we, as humans, perceive a square just as a slightly special rectangle, from the interface point of view the two classes are different, and thus should not be in the same inheritance tree when we are dealing with dimensions. This is an important consideration: `Rectangle` and `Square` are polymorphic on the `move` method, but not on `__init__` and `resize`. So, the question is if we could somehow separate the two natures of being movable and resizable.
+This is a classic problem in OOP. While we, as humans, perceive a square just as a slightly special rectangle, from the interface point of view the two classes are different, and thus should not be in the same inheritance tree when we are dealing with dimensions. This is an important consideration: `Rectangle` and `Square` are polymorphic on the `move` method, but not on `__init__` and `resize`. So, the question is if we could somehow separate the two natures of being movable and resizeable.
 
 Now, discussing interfaces, polymorphism, and the reasons behind them would require an entirely separate post, so in the following sections, I'm going to ignore the matter and just consider the object interface optional. You will thus find examples of objects that break the interface of the parent, and objects that keep it. Just remember: whenever you change the signature of a method you change the (implicit) interface of the object, and thus you stop polymorphism. I'll discuss another time if I consider this right or wrong.
 
 # Mixin classes
 
-MRO is a good solution that prevents ambiguity, but it leaves programmers with the responsibility of creating sensible inheritance trees. The algorithm helps to resolve complicated situations, but this doesn't mean we should create them in the first place. So, how can we leverage multiple inheritance without creating systems that are too complicated to grasp? Moreover, is it possible to use multiple inheritance to solve the problem of managing the double (or multiple) nature of an object, as in the previous example of a movable and resizable shape?
+MRO is a good solution that prevents ambiguity, but it leaves programmers with the responsibility of creating sensible inheritance trees. The algorithm helps to resolve complicated situations, but this doesn't mean we should create them in the first place. So, how can we leverage multiple inheritance without creating systems that are too complicated to grasp? Moreover, is it possible to use multiple inheritance to solve the problem of managing the double (or multiple) nature of an object, as in the previous example of a movable and resizeable shape?
 
 The solution comes from mixin classes: those are small classes that provide attributes but are not included in the standard inheritance tree, working more as "additions" to the current class than as proper ancestors. Mixins originate in the LISP programming language, and specifically in what could be considered the first version of the Common Lisp Object System, the Flavors extension. Modern OOP languages implement mixins in many different ways: Scala, for example, has a feature called _traits_, which live in their own space with a specific hierarchy that doesn't interfere with the proper class inheritance.
 
