@@ -28,7 +28,7 @@ The requirements of my setup are the following:
 * Have a way to spin up "scenarios" starting from an empty database, to create a sandbox where I can test queries
 * Possible simulate production in the local environment
 
-As for the technologies, I will use Flask, obviously, as the web framework. I will also use Gunicorn as HTTP server (in prodcution) and Postgres for the database part. I won't show here how to create the production infrastructure, but as I work daily with AWS, I will take into account some of its requirements, trying however not to be too committed to a specific solution.
+As for the technologies, I will use Flask, obviously, as the web framework. I will also use Gunicorn as HTTP server (in production) and Postgres for the database part. I won't show here how to create the production infrastructure, but as I work daily with AWS, I will take into account some of its requirements, trying however not to be too committed to a specific solution.
 
 ## A general advice
 
@@ -510,9 +510,13 @@ You can see the changes made in this step through [this Git commit](https://gith
 
 ## Final words
 
-That's enought for this first post. We started from scratch and added some boilerplate code for a Flask project, exploring what environment variables are used by the framework, then we added a configuration system, a management script, and finally we run everything in a Docker container. In the next post I will show you how to add a persistent database to the development setup and how to use an ephemeral one for the tests. If you find my posts useful please share them with whoever you thing might be interested. 
+That's enough for this first post. We started from scratch and added some boilerplate code for a Flask project, exploring what environment variables are used by the framework, then we added a configuration system, a management script, and finally we run everything in a Docker container. In the next post I will show you how to add a persistent database to the development setup and how to use an ephemeral one for the tests. If you find my posts useful please share them with whoever you thing might be interested. 
 
 Happy development!
+
+## Updates
+
+2020-12-22 I reviewed the whole tutorial and corrected several typos
 
 ## Feedback
 

@@ -12,6 +12,4 @@ cp -R pelican/output/* deploy/
 cd deploy
 git add .
 git ci -m "Updated"
-
-echo "Move to the deploy directory and push"
-
+git push
