@@ -21,11 +21,11 @@ In this post I will show you how to easily create scenarios, that is databases c
 
 The idea of scenarios is simple. Sometimes you need to investigate specific use cases for bugs, or maybe increase the performances of some database queries, and you might need to do this on a customised database. This is a scenario, a Python file that populates the database with a specific set of data and that allows you to run the application or the database shell on it.
 
-Often the development database is a copy of the production one, maybe with sensitive data stripped to avoid leaking private information, and while this gives us a realistic case where to test queries (e.g. how does the query perform on 1 million lines?) it might not help during the initial investigations, where you need to have all the data in fron of you to properly understand what happens. Whoever learned how joins work in relational databases understands what I mean here.
+Often the development database is a copy of the production one, maybe with sensitive data stripped to avoid leaking private information, and while this gives us a realistic case where to test queries (e.g. how does the query perform on 1 million lines?) it might not help during the initial investigations, where you need to have all the data in front of you to properly understand what happens. Whoever learned how joins work in relational databases understands what I mean here.
 
 In principle, to create a scenario we just need to spin up an empty database and to run the scenario code against it. In practice, things are not much more complicated, but there are a couple of minor issues that we need to solve.
 
-First, I am already running a database for the development and one for the testing. The second is ephemeral, but I decided to setup the project so that I can run the tests while the development database is up, and the way I did it was using port 5432 (the standard Postgres one) for development and 5433 for testing. Spinning up scenarios adds more databases to the equation. Clearly I do not expect to run 5 scenrios at the same time while running the development and the test databases, but I make myself a rule to make something generic as soon I do it for the third time.
+First, I am already running a database for the development and one for the testing. The second is ephemeral, but I decided to setup the project so that I can run the tests while the development database is up, and the way I did it was using port 5432 (the standard Postgres one) for development and 5433 for testing. Spinning up scenarios adds more databases to the equation. Clearly I do not expect to run 5 scenarios at the same time while running the development and the test databases, but I make myself a rule to make something generic as soon I do it for the third time.
 
 This means that I won't create a database for a scenario on port 5434 and will instead look for a more generic solution. This is offered me by the Docker networking model, where I can map a container port to the host but avoid assigning the destination port, and it will be chose randomly by Docker itself among the unprivileged ones. This means that I can create a Postgres container mapping port 5432 (the port in the container) and having Docker connect it to port 32838 in the host (for example). As long as the application knows which port to use this is absolutely the same as using port 5432.
 
@@ -294,7 +294,6 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432"
@@ -307,7 +306,7 @@ services:
       FLASK_CONFIG: ${FLASK_CONFIG}
       APPLICATION_DB: ${APPLICATION_DB}
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
+      POSTGRES_HOSTNAME: "db"
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     command: flask run --host 0.0.0.0
     volumes:
@@ -357,7 +356,7 @@ which doesn't add anything new to what I already did for development and testing
 
 #### Git commit
 
-You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/7f88f82a8cd6aea0519962326cb3a27d393e6cfb) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/7f88f82a8cd6aea0519962326cb3a27d393e6cfb).
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/dbb54d31af17866f9336199c65f1b495d879eb70) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/dbb54d31af17866f9336199c65f1b495d879eb70).
 
 #### Resources
 
@@ -428,7 +427,7 @@ Before tearing down the scenario have a look at the two files `config/scenario_f
 
 #### Git commit
 
-You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/16330e0e7c8e842f2afb474fb2045c735ff194b2) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/16330e0e7c8e842f2afb474fb2045c735ff194b2).
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/9d9601508cfa7dc5d718d76cd0827396069035fd) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/9d9601508cfa7dc5d718d76cd0827396069035fd).
 
 ### Scenario example 2
 
@@ -497,7 +496,7 @@ application=# \q
 
 #### Git commit
 
-You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/2e65ebd1336a6ba4635f5d4dd0048bb7c1903318) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/2e65ebd1336a6ba4635f5d4dd0048bb7c1903318).
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/b475c5e3d455098691fa1c736de573182d0e44ec) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/b475c5e3d455098691fa1c736de573182d0e44ec).
 
 ## Step 2 - Simulating the production environment
 
@@ -528,7 +527,6 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "${POSTGRES_PORT}:5432"
@@ -543,7 +541,7 @@ services:
       FLASK_CONFIG: ${FLASK_CONFIG}
       APPLICATION_DB: ${APPLICATION_DB}
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
+      POSTGRES_HOSTNAME: "db"
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_PORT: ${POSTGRES_PORT}
     command: gunicorn -w 4 -b 0.0.0.0 wsgi:app
@@ -624,7 +622,7 @@ $ APPLICATION_CONFIG="production" ./manage.py compose build web
 
 #### Git commit
 
-You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/66fe80edb61f3f8ca3303856f29d70f76923c30b) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/66fe80edb61f3f8ca3303856f29d70f76923c30b).
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/1c0fcf13c54ea13bb6e1307452de00529dbd57af) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/1c0fcf13c54ea13bb6e1307452de00529dbd57af).
 
 #### Resources
 
@@ -632,7 +630,7 @@ You can see the changes made in this step through [this Git commit](https://gith
 
 ## Step 3 - Scale up
 
-Mapping the container port to the host is not a great idea, though, as it makes it impossible to scale up and down to serve more load, which is the main point of running containers in production. This might be solved in many ways in the cloud, for example in AWS you might run the container in AWS Fargate and register them in an Application Load Balancer. Another way to do it on a sinlge host is to run a Web Server in front of your HTTP server, and this might be easily implemented  with docker-compose
+Mapping the container port to the host is not a great idea, though, as it makes it impossible to scale up and down to serve more load, which is the main point of running containers in production. This might be solved in many ways in the cloud, for example in AWS you might run the container in AWS Fargate and register them in an Application Load Balancer. Another way to do it on a single host is to run a Web Server in front of your HTTP server, and this might be easily implemented  with docker-compose
 
 I will add nginx and serve HTTP from there, reverse proxying the application containers through docker-compose networking. First of all the new configuration for docker-compose
 
@@ -645,7 +643,6 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "${POSTGRES_PORT}:5432"
@@ -660,7 +657,7 @@ services:
       FLASK_CONFIG: ${FLASK_CONFIG}
       APPLICATION_DB: ${APPLICATION_DB}
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
+      POSTGRES_HOSTNAME: "db"
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_PORT: ${POSTGRES_PORT}
     command: gunicorn -w 4 -b 0.0.0.0 wsgi:app
@@ -742,7 +739,7 @@ Creating production_web_3 ... done
 
 #### Git commit
 
-You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/56278af7d3af1650b691b15c268cfa112d031657) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/56278af7d3af1650b691b15c268cfa112d031657).
+You can see the changes made in this step through [this Git commit](https://github.com/lgiordani/flask_project_setup/commit/2794ea1ca6e7c56a823ddf30201e69700f596bf2) or [browse the files](https://github.com/lgiordani/flask_project_setup/tree/2794ea1ca6e7c56a823ddf30201e69700f596bf2).
 
 #### Resources
 
@@ -840,6 +837,10 @@ When you create your deploy pipeline you need to do much more than just creating
 ## Final words
 
 This is the last post of this short series. I hope you learned something useful, and that it encouraged you to properly setup your projects and to investigate technologies like Docker. As always, feel free to send me feedback or questions, and if you find my posts useful please share them with whoever you thing might be interested.
+
+## Updates
+
+2020-12-22 I reviewed the whole tutorial and corrected several typos
 
 ## Feedback
 
