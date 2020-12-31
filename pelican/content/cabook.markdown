@@ -8,7 +8,7 @@ Slug: cabook
 Image: cabook
 Summary: A practical approach to better software design
 
-I'm excited to announce that the success of [the post on clean architectures]({filename}clean-architectures-in-python-a-step-by-step-example.markdown) encouraged me to expand the subject and to write a book that I titled "Clean Architectures in Python. A practical approach to better software design".
+The second edition of the book "Clean Architectures in Python. A practical approach to better software design" is out!
 
 <div class="center-image">
 <img src="/images/cabook/cover.jpg" alt="Cover" />
