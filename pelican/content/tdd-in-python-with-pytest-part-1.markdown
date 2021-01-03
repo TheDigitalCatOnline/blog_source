@@ -157,7 +157,7 @@ The body of the test function is pretty simple. The class `SimpleCalculator` is 
 
 And this is how you write tests in pytest: if your code doesn't raise any exception the test passes, otherwise it fails. The keyword `assert` is used to force an exception in case of wrong result. Remember that pytest doesn't consider the return value of the function, so it can detect a failure only if it raises an exception.
 
-Save the file and go back to the terminal. Execute `py.test -svv` and you should receive the following error message
+Save the file and go back to the terminal. Execute `pytest -svv` and you should receive the following error message
 
 ``` text
 ===================================== ERRORS ======================================
@@ -717,6 +717,10 @@ where I define an anonymous function that accepts two inputs `x, y` and returns 
 ## Final words
 
 Well, I think we learned a lot. We started with no knowledge of TDD and we managed to implement a fully tested class with 3 methods. We also briefly touched the topic of refactoring, which is of paramount importance in development. In the next post I will cover the remaining requirements: division, testing exceptions, and the average function.
+
+## Updates
+
+2021-01-03: [George](https://github.com/4myhw) fixed a typo, thanks!
 
 ## Feedback
 
