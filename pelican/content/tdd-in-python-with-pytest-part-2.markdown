@@ -152,7 +152,7 @@ and make the test suite pass. The condition checks that there are no false value
 
 ## Step 9 - A more complex set of requirements
 
-Until now the requirements were pretty simple, and it was wasy to map each of them directly into tests. It's time to try to tackle a more complex problem. The remaining requirements say that the class has to provide a function to compute the average of an iterable, and that this function shall accept two optional upper and lower thresholds to remove outliers.
+Until now the requirements were pretty simple, and it was was easy to map each of them directly into tests. It's time to try to tackle a more complex problem. The remaining requirements say that the class has to provide a function to compute the average of an iterable, and that this function shall accept two optional upper and lower thresholds to remove outliers.
 
 Let's break these two requirements into a set of simpler ones
 
@@ -584,6 +584,10 @@ Once you reach a point where the test suite passes without errors stop and try t
 ## Final words
 
 I hope you found the project entertaining and that you can now appreciate the power of TDD. The journey doesn't end here, though. In the next post I will discuss the practice of writing unit tests in depth, and then introduce you to another powerful tool: mocks.
+
+## Updates
+
+2021-01-03: [George](https://github.com/4myhw) fixed a typo, thanks!
 
 ## Feedback
 
