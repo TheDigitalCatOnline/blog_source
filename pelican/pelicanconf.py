@@ -48,8 +48,9 @@ PLUGINS = [
     "series",
     "sitemap",
     "tag_cloud",
-    "pelican_webassets",
     "share_post",
+    "webassets",
+    "mau_reader",
 ]
 
 SITEMAP = {
@@ -101,6 +102,9 @@ MARKDOWN = {
     },
     "output_format": "html5",
 }
+
+
+MAU = {"custom_templates": {}}
 
 QUOTES = [
     {
