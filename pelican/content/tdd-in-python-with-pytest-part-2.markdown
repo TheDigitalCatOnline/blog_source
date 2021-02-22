@@ -463,10 +463,10 @@ which looks reasonably clean, and makes the whole test suite pass.
 The last requirement checks another boundary case, which happens when the list is empty and we specify one of or both the thresholds. This test will check that the outlier removal code doesn't assume the list contains elements.
 
 ``` { .python filename="tests/test_main.py" }
-def test_avg_manages_empty_list_after_outlier_removal():
+def test_avg_manages_empty_list_before_outlier_removal():
     calculator = SimpleCalculator()
 
-    result = calculator.avg([12, 98], lt=15, ut=90)
+    result = calculator.avg([], lt=15, ut=90)
 
     assert result == 0
 ```
