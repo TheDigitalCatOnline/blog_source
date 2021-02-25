@@ -104,7 +104,7 @@ MARKDOWN = {
 }
 
 
-MAU = {"custom_templates": {}}
+MAU = {"custom_templates": {}, "pygments": {"html": {}}}
 
 QUOTES = [
     {
