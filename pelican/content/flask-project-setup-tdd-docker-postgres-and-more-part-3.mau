@@ -203,7 +203,7 @@ def scenario():
 
 @scenario.command()
 @click.argument("name")
-def up(name):
+def up(name)::1:
     os.environ["APPLICATION_CONFIG"] = f"scenario_{name}"
     config = os.getenv("APPLICATION_CONFIG")
 
@@ -212,24 +212,24 @@ def up(name):
 
     if not os.path.isfile(scenario_config_source_file):
         raise ValueError(f"File {scenario_config_source_file} doesn't exist")
-    shutil.copy(scenario_config_source_file, scenario_config_file)
+    shutil.copy(scenario_config_source_file, scenario_config_file):3:
 
     scenario_docker_source_file = docker_compose_file("scenario")
     scenario_docker_file = docker_compose_file(config)
 
     if not os.path.isfile(scenario_docker_source_file):
         raise ValueError(f"File {scenario_docker_source_file} doesn't exist")
-    shutil.copy(docker_compose_file("scenario"), scenario_docker_file)
+    shutil.copy(docker_compose_file("scenario"), scenario_docker_file):4:
 
     configure_app(f"scenario_{name}")
 
-    cmdline = docker_compose_cmdline("up -d")
+    cmdline = docker_compose_cmdline("up -d"):5:
     subprocess.call(cmdline)
 
     cmdline = docker_compose_cmdline("logs db")
     wait_for_logs(cmdline, "ready to accept connections")
 
-    cmdline = docker_compose_cmdline("port db 5432")
+    cmdline = docker_compose_cmdline("port db 5432"):6:
     out = subprocess.check_output(cmdline)
     port = out.decode("utf-8").replace("\n", "").split(":")[1]
     os.environ["POSTGRES_PORT"] = port
@@ -238,7 +238,7 @@ def up(name):
 
     scenario_module = f"scenarios.{name}"
     scenario_file = os.path.join("scenarios", f"{name}.py")
-    if os.path.isfile(scenario_file):
+    if os.path.isfile(scenario_file)::7:
         import importlib
 
         os.environ["APPLICATION_SCENARIO_NAME"] = name
@@ -246,7 +246,7 @@ def up(name):
         scenario = importlib.import_module(scenario_module)
         scenario.run()
 
-    cmdline = " ".join(
+    cmdline = " ".join(:8:
         docker_compose_cmdline(
             "exec db psql -U {} -d {}".format(
                 os.getenv("POSTGRES_USER"), os.getenv("APPLICATION_DB")
@@ -259,7 +259,7 @@ def up(name):
 
 @scenario.command()
 @click.argument("name")
-def down(name):
+def down(name)::2:
     os.environ["APPLICATION_CONFIG"] = f"scenario_{name}"
     config = os.getenv("APPLICATION_CONFIG")
 
@@ -277,11 +277,11 @@ if __name__ == "__main__":
     cli()
 ----
 
-where I added the commands `scenario up` and `scenario down`. As you can see the function `up` first copies the files `config/scenario.json` and `docker/scenario.yml` (that I still have to create) into files named after the scenario.
+where I added the commands `scenario up` [callout]#1# and `scenario down` [callout]#2#. As you can see the function `up` first copies the files `config/scenario.json` [callout]#3# and `docker/scenario.yml` [callout]#4# (that I still have to create) into files named after the scenario.
 
-Then I run the command `up -d` and wait for the database to be ready, as I already do for tests. After that, it's time to extract the port of the container with some very simple Python string processing and to initialise the correct environment variable.
+Then I run the command `up -d` [callout]#5# and wait for the database to be ready, as I already do for tests. After that, it's time to extract the port of the container with some very simple Python string processing [callout]#6# and to initialise the correct environment variable.
 
-Last, I import and execute the Python file containing the code of the scenario itself and print a friendly message with the command line to run `psql` to have a Postgres shell into the newly created database.
+Last, I import and execute the Python file [callout]#7# containing the code of the scenario itself and print a friendly message with the command line to run `psql` [callout]#8# to have a Postgres shell into the newly created database.
 
 The function `down` simply tears down the containers and removes the scenario configuration files.
 
@@ -300,7 +300,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5432"
+      - "5432":1:
   web:
     build:
       context: ${PWD}
@@ -319,7 +319,7 @@ services:
       - "5000"
 ----
 
-Here you can see that the database is ephemeral, that the port on the host is automatically assigned, and that I also spin up the application (mapping it to a random port as well to avoid clashing with the development one).
+Here you can see that the database is ephemeral, that the port on the host is automatically assigned [callout]#1#, and that I also spin up the application (mapping it to a random port as well to avoid clashing with the development one).
 
 The configuration file is
 
@@ -451,7 +451,7 @@ from application.app import create_app
 from application.models import db, User
 
 
-app = create_app("development")
+app = create_app("development"):1:
 
 
 def run():
@@ -461,7 +461,7 @@ def run():
 
         # Administrator
         admin = User(email="admin@server.com")
-        db.session.add(admin)
+        db.session.add(admin):2:
 
         # First user
         user1 = User(email="user1@server.com")
@@ -474,7 +474,7 @@ def run():
         db.session.commit()
 ----
 
-I decided to be as agnostic as possible in the scenarios, to avoid creating something too specific that eventually would not give me enough flexibility to test what I need. This means that the scenario has to create the app and to use the database session explicitly, as I do in this example. The application is created with the configuration `"development"`. Remember that this is the Flask configuration that you find in `application/config.py`, not the one that is in `config/development.json`.
+I decided to be as agnostic as possible in the scenarios, to avoid creating something too specific that eventually would not give me enough flexibility to test what I need. This means that the scenario has to create the app [callout]#1# and to use the database session explicitly [callout]#2#, as I do in this example. The application is created with the configuration `"development"` [callout]#1#. Remember that this is the Flask configuration that you find in `application/config.py`, not the one that is in `config/development.json`.
 
 I can run the scenario with
 
@@ -530,7 +530,7 @@ Flask
 flask-sqlalchemy
 psycopg2
 flask-migrate
-gunicorn
+gunicorn:@:
 ----
 
 Then I need to create a docker-compose configuration for production
@@ -563,17 +563,17 @@ services:
       POSTGRES_HOSTNAME: "db"
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_PORT: ${POSTGRES_PORT}
-    command: gunicorn -w 4 -b 0.0.0.0 wsgi:app
+    command: gunicorn -w 4 -b 0.0.0.0 wsgi:app:1:
     volumes:
       - ${PWD}:/opt/code
     ports:
-      - "8000:8000"
+      - "8000:8000":2:
 
 volumes:
   pgdata:
 ----
 
-As you can see here the command that runs the application is slightly different, `gunicorn -w 4 -b 0.0.0.0 wsgi:app`. It exposes 4 processes (`-w 4`) on the container's address 0.0.0.0 loading the object `app` from the file `wsgi.py` (`wsgi:app`). As by default Gunicorn exposes port 8000 I mapped that to the same port in the host.
+As you can see here the command that runs the application is slightly different [callout]#1#. It exposes 4 processes (`-w 4`) on the container's address 0.0.0.0 loading the object `app` from the file `wsgi.py` (`wsgi:app`). As by default Gunicorn exposes port 8000 I mapped that [callout]#2# to the same port in the host.
 
 Then I created the file `Dockerfile.production` that defines the production image of the web application
 
@@ -633,7 +633,7 @@ The last thing I need is a configuration file
 ]
 ----
 
-as you can notice this is not very different from the development one, as I just changed the values of `FLASK_ENV` and `FLASK_CONFIG`. Clearly this contains a secret that shouldn't be written in plain text, `POSTGRES_PASSWORD`, but after all this is a simulation of production. In a real environment secrets should be kept in an encrypted manager such as AWS Secret Manager.
+as you can notice this is not very different from the development one, as I just changed the values of `FLASK_ENV` and `FLASK_CONFIG`. Clearly this contains a secret that shouldn't be written in plain text, `POSTGRES_PASSWORD`, but after all this is a simulation of production. In a real environment secrets should be kept in an encrypted manager such as [link](https://aws.amazon.com/secrets-manager/,"AWS Secrets Manager").
 
 Remember that `FLASK_ENV` changes the internal settings of Flask, most notably disabling the debugger, and that `FLASK_CONFIG=production` loads the object `ProductionConfig` from `application/config.py`. That object is empty for the moment, but it might contain public configuration for the production server.
 
@@ -689,12 +689,12 @@ services:
     command: gunicorn -w 4 -b 0.0.0.0 wsgi:app
     volumes:
       - ${PWD}:/opt/code
-  nginx:
-    image: nginx
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    ports:
-      - 8080:8080
+  nginx::@:
+    image: nginx:@:
+    volumes::@:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro:@:
+    ports::@:
+      - 8080:8080:@:
 
 volumes:
   pgdata:
@@ -713,12 +713,12 @@ http {
  
     sendfile on;
  
-    upstream app {
+    upstream app {:1:
         server web:8000;
     }
  
     server {
-        listen 8080;
+        listen 8080;:2:
  
         location / {
             proxy_pass         http://app;
@@ -732,7 +732,7 @@ http {
 }
 ----
 
-This is a pretty standard configuration, and in a real production environment I would add many other configuration values (most notably serving HTTPS instead of HTTP). The section `upstream` leverages docker-compose networking referring to `web`, which in the internal DNS directly maps to the IPs of the service with the same name. The port 8000 comes from the default Gunicorn port that I already mentioned before. I won't run the nginx container as root on my notebook, so I will expose port 8080 instead of the traditional 80 for HTTP, and this is also something that would be different in a real production environment.
+This is a pretty standard configuration, and in a real production environment I would add many other configuration values (most notably serving HTTPS instead of HTTP). The section `upstream` [callout]#1# leverages docker-compose networking referring to `web`, which in the internal DNS directly maps to the IPs of the service with the same name. The port 8000 comes from the default Gunicorn port that I already mentioned before. I won't run the nginx container as root on my notebook, so I expose port 8080 [callout]#2# instead of the traditional 80 for HTTP, and this is also something that might be different in a real production environment.
 
 I can at this point run
 
@@ -779,9 +779,9 @@ You can see the changes made in this step through [link](https://github.com/lgio
 * [link](https://docs.docker.com/compose/reference/logs/,"Docker Compose logs command") - A command to print container logs
 * [link](https://docs.docker.com/compose/reference/up/,"Docker Compose up command") - The new way to scale containers in docker-compose
 
-== Bonus step - A closer look at Docker networking
+= Bonus step - A closer look at Docker networking
 
-I mentioned that docker-compose creates a connection between services, and used that in the configuration of the nginx container, but I understand that this might look like black magic to some people. While I believe that this is actually black magic, I also think that we can investigate it a bit, so let's open the grimoire and reveal (some of) the dark secrets of Docker networking.
+I mentioned that Docker Compose creates a connection between services, and used that in the configuration of the nginx container, but I understand that this might look like black magic to some people. While I believe that this is actually black magic, I also think that we can investigate it a bit, so let's open the grimoire and reveal (some of) the dark secrets of Docker networking.
 
 While the production setup is running we can connect to the nginx container and see what is happening in real time, so first of all I run a bash shell on it
 

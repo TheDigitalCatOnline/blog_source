@@ -30,13 +30,13 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: ${POSTGRES_DB}:1:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data:2:
   web:
     build:
       context: ${PWD}
@@ -51,12 +51,12 @@ services:
       - "5000:5000"
 
 volumes:
-  pgdata:
+  pgdata::3:
 ----
 
-The variables starting with `POSTGRES_` are requested by the PostgreSQL Docker image. In particular, remember that `POSTGRESQL_DB` is the database that gets created by default when you create the image, and also the one that contains data on other databases as well, so for the application we usually want to use a different one.
+The variables starting with `POSTGRES_` are requested by the PostgreSQL Docker image. In particular, remember that `POSTGRESQL_DB` [callout]#1# is the database that gets created by default when you create the image, and also the one that contains data on other databases as well, so for the application we usually want to use a different one.
 
-Notice also that I'm creating a persistent volume for the service `db`, so that the content of the database is not lost when we tear down the container. For this service I'm using the default image, so no build step is needed.
+Notice also that I'm creating a persistent volume for the service `db` [callout]#2# [callout]#3#, so that the content of the database is not lost when we tear down the container. For this service I'm using the default image, so no build step is needed.
 
 To orchestrate this setup we need to add those variables to the JSON configuration
 
@@ -81,7 +81,7 @@ To orchestrate this setup we need to add those variables to the JSON configurati
     "value": "postgres"
   },
   {
-    "name": "POSTGRES_HOSTNAME",
+    "name": "POSTGRES_HOSTNAME",:1:
     "value": "localhost"
   },
   {
@@ -95,9 +95,9 @@ To orchestrate this setup we need to add those variables to the JSON configurati
 ]
 ----
 
-These are all development variables so there are no secrets. In production we will need a way to keep the secrets in a safe place and convert them into environment variables. The AWS Secret Manager for example can directly map secrets into environment variables passed to the containers, saving you from having to explicitly connect to the service with the API.
+These are all development variables so there are no secrets. In production we will need a way to keep the secrets in a safe place and convert them into environment variables. The [link](https://aws.amazon.com/secrets-manager/,"AWS Secrets Manager") for example can directly map secrets into environment variables passed to the containers, saving you from having to explicitly connect to the service with the API.
 
-You may have noticed the variable `POSTGRES_HOSTNAME`, which is not in the Docker Compose file. Generally we want the database to be accessible by utility scripts, so we want to record the host name where the database is running. As we will see shortly, other Docker containers do not need this, but migrations will.
+You may have noticed the variable `POSTGRES_HOSTNAME` [callout]#1#, which is not used in the Docker Compose file. Generally we want the database to be accessible by utility scripts, so we want to record the host name where the database is running. As we will see shortly, other Docker containers do not need this, but migrations will.
 
 We can run the commands `./manage.py compose up -d` and `./manage.py compose down` here to check that the database container works properly. Please note that the first time you run the command `compose -d` Docker will create the volume and build the Postgres image, and this might take some time.
 
@@ -114,8 +114,8 @@ Now we need to connect the application to the database and to do this we can lev
 [source]
 ----
 Flask
-flask-sqlalchemy
-psycopg2
+flask-sqlalchemy:@:
+psycopg2:@:
 ----
 
 Remember to run `pip install -r requirements/development.txt` to install the requirements locally and `./manage.py compose build web` to rebuild the image.
@@ -134,7 +134,7 @@ class Config(object):
     password = os.environ["POSTGRES_PASSWORD"]
     hostname = os.environ["POSTGRES_HOSTNAME"]
     port = os.environ["POSTGRES_PORT"]
-    database = os.environ["APPLICATION_DB"]
+    database = os.environ["APPLICATION_DB"]:1:
 
     SQLALCHEMY_DATABASE_URI = (
         f"postgresql+psycopg2://{user}:{password}@{hostname}:{port}/{database}"
@@ -156,7 +156,7 @@ class TestingConfig(Config):
     TESTING = True
 ----
 
-As you can see, here I use the variable `APPLICATION_DB` and not `POSTGRES_DB`, so I need to specify that as well in the config file. The reason, as I mentioned before, is that we prefer to separate the default database, used by Postgres to manage all other databases, from the one used specifically by our application.
+As you can see, here I use the variable `APPLICATION_DB` [callout]#1# and not `POSTGRES_DB`, so I need to specify that as well in the config file. The reason, as I mentioned before, is that we prefer to separate the default database, used by Postgres to manage all other databases, from the one used specifically by our application.
 
 .config/development.json
 [source,json]
@@ -190,10 +190,10 @@ As you can see, here I use the variable `APPLICATION_DB` and not `POSTGRES_DB`, 
     "name": "POSTGRES_PASSWORD",
     "value": "postgres"
   },
-  {
-    "name": "APPLICATION_DB",
-    "value": "application"
-  }
+  {:@:
+    "name": "APPLICATION_DB",:@:
+    "value": "application":@:
+  }:@:
 ]
 ----
 
@@ -222,11 +222,11 @@ services:
     environment:
       FLASK_ENV: ${FLASK_ENV}
       FLASK_CONFIG: ${FLASK_CONFIG}
-      APPLICATION_DB: ${APPLICATION_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_HOSTNAME: "db"
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_PORT: ${POSTGRES_PORT}
+      APPLICATION_DB: ${APPLICATION_DB}:@:
+      POSTGRES_USER: ${POSTGRES_USER}:@:
+      POSTGRES_HOSTNAME: "db":@:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}:@:
+      POSTGRES_PORT: ${POSTGRES_PORT}:@:
     command: flask run --host 0.0.0.0
     volumes:
       - ${PWD}:/opt/code
@@ -310,11 +310,11 @@ def create_app(config_name):
 
     config_module = f"application.config.{config_name.capitalize()}Config"
 
-    app.config.from_object(config_module)
+    app.config.from_object(config_module):@:
 
-    from application.models import db
+    from application.models import db:@:
 
-    db.init_app(app)
+    db.init_app(app):@:
 
     @app.route("/")
     def hello_world():
@@ -337,7 +337,7 @@ Fortunately I wrapped the command `flask` in the script `manage.py`, which loads
 Flask
 flask-sqlalchemy
 psycopg2
-flask-migrate
+flask-migrate:@:
 ----
 
 Remember to run `pip install -r requirements/development.txt` to install the requirements locally and `./manage.py compose build web` to rebuild the image. Please note that you need the executable `pg_config` and some other development tools installed in your system. If you get an error message from `pip` please check the documentation of your operating system to find out what to do to install the required packages. For Ubuntu Linux I had to run `sudo apt install build-essential python3-dev libpq-dev`.
@@ -348,10 +348,10 @@ Now we can initialise a `Migrate` object and add it to the application factory
 [source,python]
 ----
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_migrate import Migrate:@:
 
 db = SQLAlchemy()
-migrate = Migrate()
+migrate = Migrate():@:
 ----
 
 .application/app.py
@@ -368,10 +368,10 @@ def create_app(config_name):
 
     app.config.from_object(config_module)
 
-    from application.models import db, migrate
+    from application.models import db, migrate:@:
 
     db.init_app(app)
-    migrate.init_app(app, db)
+    migrate.init_app(app, db):@:
 
     @app.route("/")
     def hello_world():
@@ -411,10 +411,10 @@ You can see the changes made in this step through [link](https://github.com/lgio
 
 I want to use a TDD approach as much as possible when developing my applications, so I need to setup a good testing environment upfront, and it has to be as ephemeral as possible. It is not unusual in big projects to create (or scale up) infrastructure components explicitly to run tests, and through Docker and docker-compose we can easily do the same. Namely, I will:
 
-1. Spin up a test database in a container without permanent volumes
-2. Initialise it
-3. Run all the tests against it
-4. Tear down the container
+# Spin up a test database in a container without permanent volumes
+# Initialise it
+# Run all the tests against it
+# Tear down the container
 
 This approach has one big advantage, which is that it requires no previous setup and can this be executed on infrastructure created on the fly. It also has disadvantages, however, as it can slow down the testing part of the application, which should be as fast as possible in a TDD setup. Tests that involve the database, however, should be considered integration tests, and not run continuously in a TDD process, which is impossible (or very hard) when using a framework that merges the concept of entity and database model. If you want to know more about this read [link](https://leanpub.com/clean-architectures-in-python,"the book") that I wrote on the subject.
 
@@ -422,16 +422,16 @@ Another advantage of this setup is it that we might need other things during the
 
 Generally speaking testing is an umbrella under which many different things can happen. As I will use pytest I can run the full suite, but I might want to select specific tests, mentioning a single file or using the powerful option `-k` that allows me to select tests by pattern-matching their name. For this reason I want to map the management command line to that of pytest.
 
-Let's add pytest to the testing requirements
+Let's add pytest to the testing requirements, along with a couple of packages to monitor the test coverage
 
 .requirements/testing.txt
 [source]
 ----
 -r production.txt
 
-pytest
-coverage
-pytest-cov
+pytest:@:
+coverage:@:
+pytest-cov:@:
 ----
 
 As you can see I also use the coverage plugin to keep an eye on how well I cover the code with the tests. Remember to run `pip install -r requirements/development.txt` to install the requirements locally and `./manage.py compose build web` to rebuild the image.
@@ -457,10 +457,10 @@ def setenv(variable, default):
     os.environ[variable] = os.getenv(variable, default)
 
 
-setenv("APPLICATION_CONFIG", "development")
+setenv("APPLICATION_CONFIG", "development"):2:
 
 
-def configure_app(config):
+def configure_app(config)::1:
     # Read configuration from the relative JSON file
     with open(os.path.join("config", f"{config}.json")) as f:
         config_data = json.load(f)
@@ -492,7 +492,7 @@ def flask(subcommand):
         p.wait()
 
 
-def docker_compose_cmdline(config):
+def docker_compose_cmdline(config)::3:
     configure_app(os.getenv("APPLICATION_CONFIG"))
 
     docker_compose_file = os.path.join("docker", f"{config}.yml")
@@ -502,7 +502,7 @@ def docker_compose_cmdline(config):
 
     return [
         "docker-compose",
-        "-p",
+        "-p",:4:
         config,
         "-f",
         docker_compose_file,
@@ -524,7 +524,7 @@ def compose(subcommand):
 @cli.command()
 @click.argument("filenames", nargs=-1)
 def test(filenames):
-    os.environ["APPLICATION_CONFIG"] = "testing"
+    os.environ["APPLICATION_CONFIG"] = "testing":5:
     configure_app(os.getenv("APPLICATION_CONFIG"))
 
     cmdline = docker_compose_cmdline(os.getenv("APPLICATION_CONFIG")) + ["up", "-d"]
@@ -532,7 +532,7 @@ def test(filenames):
 
     cmdline = docker_compose_cmdline(os.getenv("APPLICATION_CONFIG")) + ["logs", "db"]
     logs = subprocess.check_output(cmdline)
-    while "ready to accept connections" not in logs.decode("utf-8"):
+    while "ready to accept connections" not in logs.decode("utf-8")::6:
         time.sleep(0.1)
         logs = subprocess.check_output(cmdline)
 
@@ -550,10 +550,10 @@ if __name__ == "__main__":
 
 Notable changes are
 
-* The environment configuration code is now in the function `configure_app`. This allows me to force the variable `APPLICATION_CONFIG` inside the script and then configure the environment, which saves me from having to call tests with `APPLICATION_CONFIG=testing flask test`.
+* The environment configuration code is now in the function `configure_app` [callout]#1#. This allows me to force the variable `APPLICATION_CONFIG` inside the script [callout]#2# and then configure the environment, which saves me from having to call tests with `APPLICATION_CONFIG=testing flask test`.
 * Both commands `flask` and `compose` use the configuration `development`. Since that is the default value of the variable `APPLICATION_CONFIG` they just have to call the function `configure_app`.
-* The docker-compose command line is needed both in the commands `compose` and in `test`, so I isolated some code into a function called `docker_compose_cmdline` which returns a list as needed by `subprocess` functions. The command line now uses also the option `-p` (project name) to give a prefix to the containers. This way we can run tests while running the development server.
-* The command `test` forces `APPLICATION_CONFIG` to be `testing`, which loads the file `config/testing.json`, then runs docker-compose using the file `docker/testing.yml` (both file have not bee created yet), runs the pytest command line, and tears down the testing database container. Before running the tests the script waits for the service to be available. Postgres doesn't allow connection until the database is ready to accept them.
+* The docker-compose command line is needed both in the commands `compose` and in `test`, so I isolated some code into a function called `docker_compose_cmdline` [callout]#3# which returns a list as needed by `subprocess` functions. The command line now uses also the option `-p` (project name) [callout]#4# to give a prefix to the containers. This way we can run tests while running the development server.
+* The command `test` forces `APPLICATION_CONFIG` to be `testing` [callout]#5#, which loads the file `config/testing.json`, then runs docker-compose using the file `docker/testing.yml` (both file have not been created yet), runs the pytest command line, and tears down the testing database container. Before running the tests the script waits for the service to be available [callout]#6#. Postgres doesn't allow connection until the database is ready to accept them.
 
 .config/testing.json
 [source,json]
@@ -577,11 +577,11 @@ Notable changes are
   },
   {
     "name": "POSTGRES_HOSTNAME",
-    "value": "localhost"
+    "value": "localhost":2:
   },
   {
     "name": "POSTGRES_PORT",
-    "value": "5433"
+    "value": "5433":1:
   },
   {
     "name": "POSTGRES_PASSWORD",
@@ -594,11 +594,11 @@ Notable changes are
 ]
 ----
 
-Note that here I specified the value `5433` for `POSTGRES_PORT`. This allows us to spin up the test database container while the development one is running, as that will use port `5432` and you can't have two different containers using the same port on the host. A more general solution could be to leave Docker pick a random host port for the container and then use that, but this requires a bit more code to be properly implemented, so I will come back to this problem when setting up the scenarios.
+Note that here I specified the value `5433` for `POSTGRES_PORT` [callout]#1#. This allows us to spin up the test database container while the development one is running, as that will use port `5432` and you can't have two different containers using the same port on the host. A more general solution could be to leave Docker pick a random host port for the container and then use that, but this requires a bit more code to be properly implemented, so I will come back to this problem when setting up the scenarios.
 
-Also note that I set the variable `POSTGRES_HOSTNAME` to `localhost` here. We will run the tests on the local machine and not in a container, so we can't use the DNS provided by Docker Compose.
+Also note that I set the variable `POSTGRES_HOSTNAME` to `localhost` in this file [callout]#2#. We will run the tests on the local machine and not in a container, so we can't use the DNS provided by Docker Compose.
 
-The last piece of setup that we need is the orchestration configuration for docker-compose
+The last piece of setup that we need is the orchestration configuration for Docker Compose
 
 .docker/testing.yml
 [source,yaml]
@@ -769,7 +769,7 @@ def run_sql(statements):
 
 
 @cli.command()
-def create_initial_db():
+def create_initial_db()::1:
     configure_app(os.getenv("APPLICATION_CONFIG"))
 
     try:
@@ -809,7 +809,7 @@ if __name__ == "__main__":
     cli()
 ----
 
-As you can see I took the opportunity to write the command `create_initial_db` as well, that just runs the very same SQL command that creates the testing database, but in any configuration I will use. 
+As you can see I took the opportunity to write the command `create_initial_db` [callout]#1# as well, that just runs the very same SQL command that creates the testing database, but in any configuration I will use. 
 
 Before moving on I think it's time to refactor the file `manage.py`. Refactoring is not mandatory, but I feel like some parts of the script are not generic enough, and when I will add the scenarios I will definitely need my functions to be flexible.
 
@@ -842,11 +842,11 @@ APPLICATION_CONFIG_PATH = "config"
 DOCKER_PATH = "docker"
 
 
-def app_config_file(config):
+def app_config_file(config)::1:
     return os.path.join(APPLICATION_CONFIG_PATH, f"{config}.json")
 
 
-def docker_compose_file(config):
+def docker_compose_file(config)::2:
     return os.path.join(DOCKER_PATH, f"{config}.yml")
 
 
@@ -882,7 +882,7 @@ def flask(subcommand):
         p.wait()
 
 
-def docker_compose_cmdline(commands_string=None):
+def docker_compose_cmdline(commands_string=None)::4:
     config = os.getenv("APPLICATION_CONFIG")
     configure_app(config)
 
@@ -936,7 +936,7 @@ def run_sql(statements):
     conn.close()
 
 
-def wait_for_logs(cmdline, message):
+def wait_for_logs(cmdline, message)::3:
     logs = subprocess.check_output(cmdline)
     while message not in logs.decode("utf-8"):
         time.sleep(0.1)
@@ -983,9 +983,9 @@ if __name__ == "__main__":
 
 Notable changes:
 
-* I created two new functions `app_config_file` and `docker_compose_file` that encapsulate the creation of the file paths.
-* I isolated the code that waits for a message in the database container logs, creating the function `wait_for_logs`.
-* The command `docker_compose_cmdline` now receives a string and converts it into a list internally. This way expressing commands is more natural, as it doesn't require the ugly list syntax that subprocess works with.
+* I created two new functions `app_config_file` [callout]#1# and `docker_compose_file` [callout]#2# that encapsulate the creation of the file paths.
+* I isolated the code that waits for a message in the database container logs, creating the function `wait_for_logs` [callout]#3#.
+* The command `docker_compose_cmdline` [callout]#4# now receives a string and converts it into a list internally. This way expressing commands is more natural, as it doesn't require the ugly list syntax that `subprocess` works with.
 
 == Git commit
 
@@ -997,7 +997,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 
 = Step 5 - Fixtures for tests
 
-Pytest uses fixtures for tests, so we should prepare some basic ones that will be generally useful. First let's include pytest-flask, which provides already some basic fixtures
+Pytest uses fixtures for tests, so we should prepare some basic ones that will be generally useful. First let's include `pytest-flask`, which provides already some basic fixtures
 
 .requirements/testing.txt
 [source]
@@ -1007,7 +1007,7 @@ Pytest uses fixtures for tests, so we should prepare some basic ones that will b
 pytest
 coverage
 pytest-cov
-pytest-flask
+pytest-flask:@:
 ----
 
 Then add the fixtures `app` and `database` to the file `tests/conftest.py`. The first is required by pytest-flask itself (it's used by other fixtures) and the second one is useful every time you need to interact with the database itself.
@@ -1102,7 +1102,7 @@ venv3/lib/python3.7/site-packages/_pytest/assertion/rewrite.py:152: in exec_modu
     exec(co, module.__dict__)
 tests/tests/test_user.py:1: in <module>
     from application.models import User
-E   ImportError: cannot import name 'User' from 'application.models'
+E   ImportError: cannot import name 'User' from 'application.models':@:
 	(/home/leo/devel/flask-tutorial/application/models.py)
 
 ----------- coverage: platform linux, python 3.7.5-final-0 -----------
@@ -1204,10 +1204,10 @@ def create_app(config_name):
     def hello_world():
         return "Hello, World!"
 
-    @app.route("/users")
-    def users():
-        num_users = User.query.count()
-        return f"Number of users: {num_users}"
+    @app.route("/users"):@:
+    def users()::@:
+        num_users = User.query.count():@:
+        return f"Number of users: {num_users}":@:
 
     return app
 ----

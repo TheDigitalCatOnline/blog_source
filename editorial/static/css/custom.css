@@ -137,6 +137,10 @@ ul.list-inline li {
     line-height: 4em;
 }
 
+code {
+    padding: 0.25em 0.45em;
+}
+
 a.headerlink {
     font-size: 0.8em;
     margin-left: 0.4em;
@@ -266,16 +270,13 @@ blockquote.styled cite {
 
 span.callout {
     border-radius: 1em;
+    border: 1px solid black;
     background-color: #f8f8f2;
     color: #49483e;
     text-align: center;
     padding: 0 0.5em;
     display: inline-block;
     font-weight: bold;
-}
-
-p span.callout {
-    border: 1px solid black;
 }
 
 /* This is Pygments Monokai */
