@@ -127,9 +127,6 @@ At this point I need to create a connection string in the configuration of the a
 ----
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-
 class Config(object):
     """Base configuration"""
 

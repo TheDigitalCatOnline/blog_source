@@ -124,11 +124,6 @@ Then we need a directory where to keep all the code that is directly connected w
 .application/config.py
 [source,python]
 ----
-import os
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-
 class Config(object):
     """Base configuration"""
 
@@ -155,7 +150,7 @@ It's important to understand the variables and the parameters involved in the co
 * Generally you don't need to set `FLASK_DEBUG`, just set `FLASK_ENV` to `development`.
 * Testing doesn't need the debug server turned on, so you can set `FLASK_ENV` to `production` during that phase. It needs `TESTING` set to `True`, though, and that has to be done inside the application.
 
-We need now to create the application and to properly configure it. I decided to use and application factory that accepts a `config_name` string that is then converted into the name of the config object. For example, if `config_name` is `development` the variable `config_module` becomes `application.config.DevelopmentConfig` so that `app.config.from_object` can import it.
+We need now to create the application and to properly configure it.
 
 .application/app.py
 [source,python]
@@ -163,22 +158,22 @@ We need now to create the application and to properly configure it. I decided to
 from flask import Flask
 
 
-def create_app(config_name):
+def create_app(config_name)::1:
 
     app = Flask(__name__)
 
-    config_module = f"application.config.{config_name.capitalize()}Config"
+    config_module = f"application.config.{config_name.capitalize()}Config":2:
 
     app.config.from_object(config_module)
 
-    @app.route("/")
+    @app.route("/"):3:
     def hello_world():
         return "Hello, World!"
 
     return app
 ----
 
-I also added the standard "Hello, world!" route to have a quick way to see if the server is working or not.
+I decided to use an application factory [callout]#1# that accepts a string `config_name` that is then converted into the name of the config object [callout]#2#. For example, if `config_name` is `development` the variable `config_module` becomes `application.config.DevelopmentConfig` so that `app.config.from_object` can import it. I also added the standard "Hello, world!" route [callout]#3# to have a quick way to see if the server is working or not.
 
 Last, we need something that initializes the application running the application factory and passing the correct value for the parameter `config_name`. The Flask development server can automatically use any file named `wsgi.py` in the root directory, and since WSGI is a standard specification using that makes me sure that any HTTP server we will use in production (for example Gunicorn or uWSGI) will be immediately working.
 
@@ -259,10 +254,10 @@ def setenv(variable, default):
     os.environ[variable] = os.getenv(variable, default)
 
 
-setenv("APPLICATION_CONFIG", "development")
+setenv("APPLICATION_CONFIG", "development"):1:
 
 # Read configuration from the relative JSON file
-config_json_filename = os.getenv("APPLICATION_CONFIG") + ".json"
+config_json_filename = os.getenv("APPLICATION_CONFIG") + ".json":2:
 with open(os.path.join("config", config_json_filename)) as f:
     config = json.load(f)
 
@@ -280,7 +275,7 @@ def cli():
 
 @cli.command(context_settings={"ignore_unknown_options": True})
 @click.argument("subcommand", nargs=-1, type=click.Path())
-def flask(subcommand):
+def flask(subcommand)::3:
     cmdline = ["flask"] + list(subcommand)
 
     try:
@@ -297,7 +292,7 @@ if __name__ == "__main__":
     cli()
 ----
 
-Remember to give make the script executable with
+Remember to make the script executable with
 
 [source,sh]
 ----
@@ -306,7 +301,7 @@ $ chmod 775 manage.py
 
 As you can see I'm using `click`, which is the recommended way to implement Flask commands. As I might use it to customise subcommands of the flask main script, I decided to stick to one tool and use it for the script `manage.py` as well.
 
-The variable `APPLICATION_CONFIG` is the only one that I need to specify, and its default value is `development`. From that variable I infer the name of the JSON file with the full configuration and load environment variables from that. The function `flask` simply wraps the command `flask` provided by Flask so that I can run `./manage.py flask <subcommand>` to run it using the configuration `development` or `APPLICATION_CONFIG="foobar" ./manage.py flask <subcommand>` to use the `foobar` one.
+The variable `APPLICATION_CONFIG` [callout]#1# is the only one that I need to specify, and its default value is `development`. From that variable I infer the name of the JSON file with the full configuration [callout]#2# and load environment variables from that. The function `flask` [callout]#3# simply wraps the command `flask` provided by Flask so that I can run `./manage.py flask <subcommand>` to run it using the configuration `development` or `APPLICATION_CONFIG="foobar" ./manage.py flask <subcommand>` to use the `foobar` one.
 
 A clarification, to be sure you don't confuse environment variables with each other:
 
@@ -463,7 +458,7 @@ $ FLASK_ENV="development" FLASK_CONFIG="development" docker-compose -f docker/de
 
 Notice that the server now says `Running on http://0.0.0.0:5000/`, as the Docker container is using that network interface to communicate with the outside world. Since the ports are mapped, however, you can head to either http://localhost:5000 or http://0.0.0.0:5000 with your browser.
 
-To simplify the usage of docker-compose, I want to wrap it in the script `manage.py`, so that it automatically receives environment variables, as their number is going to increase soon when we will add a database.
+To simplify the usage of docker-compose, I want to wrap it in the script `manage.py`, so that it automatically receives environment variables, as their number is going to increase as soon as we add a database.
 
 .manage.py
 [source,python]
