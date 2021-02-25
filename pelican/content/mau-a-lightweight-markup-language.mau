@@ -1,7 +1,8 @@
 :pelican.title:Mau: a lightweight markup language
 :pelican.date:2021-02-22 10:00:00 +0000
+:pelican.modified:2021-02-25 18:00:00 +0000
 :pelican.category:Programming
-:pelican.tags:Python, Python2, Python3
+:pelican.tags:Python, Python2, Python3, Mau
 :pelican.authors:Leonardo Giordani
 :pelican.slug:mau-a-lightweight-markup-language
 :pelican.image:mau-a-lightweight-markup-language
@@ -918,6 +919,85 @@ def header_anchor(text, level)::step1:
 step1: The name of the function
 step2: Some memory-related wizardry
 step3: This is the return value
+++++
+
+Callouts don't need to have a definition
+
+[source,callouts="|"]
+++++
+[source,python]
+----
+def header_anchor(text, level)::1:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+++++
+
+. Result
+[callout]
+++++
+[source,python]
+----
+def header_anchor(text, level)::1:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+++++
+
+And you can reference them [callout]#1# in the text.
+
+==== Highlight lines
+
+You can highlight lines using a callout with the special name `@`
+
+[source,highlight='#',callouts='|']
+++++
+[source,python]
+----
+def header_anchor(text, level)::@:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:@:
+    )  # pragma: no cover
+----
+++++
+
+. Result
+[callout]
+++++
+[source,python]
+----
+def header_anchor(text, level)::@:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:@:
+    )  # pragma: no cover
+----
+++++
+
+Should you prefer to list the lines you want to highlight you can use Pygments directly
+
+[source]
+++++
+[source,python,pygments.hl_lines="1,3"]
+----
+def header_anchor(text, level):
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]
+    )  # pragma: no cover
+----
+++++
+
+. Result
+[callout]
+++++
+[source,python,pygments.hl_lines="1,3"]
+----
+def header_anchor(text, level):
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]
+    )  # pragma: no cover
+----
 ++++
 
 == Lists

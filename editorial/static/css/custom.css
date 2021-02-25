@@ -182,6 +182,10 @@ div.code .highlight pre {
     color: #f8f8f2
 }
 
+div.code .highlight pre .hll {
+    background-color: #666;
+}
+
 div.code {
     display: flex;
     flex-direction: column;
@@ -268,13 +272,16 @@ span.callout {
     padding: 0 0.5em;
     display: inline-block;
     font-weight: bold;
-    height: 1.5em;
+}
+
+p span.callout {
+    border: 1px solid black;
 }
 
 /* This is Pygments Monokai */
 /* It's here because I'm keeping the old style in articles that are not written with Mau */
 
-div.code .highlight pre .hll { background-color: #49483e }
+/* div.code .highlight pre .hll { background-color: #49483e } */
 /* div.code .highlight pre  { background: #38372f; color: #f8f8f2 } */
 div.code .highlight pre .c { color: #97927b } /* Comment */
 div.code .highlight pre .err { color: #960050; background-color: #1e0010 } /* Error */
