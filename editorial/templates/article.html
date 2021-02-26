@@ -22,7 +22,18 @@
 {% set styles = article.style.split(',') %}
 {% for style in styles %}
 {% assets filters="cssmin", output="css/" + style + ".min.css", "css/" + style + ".css" %}
-<link rel="stylesheet" href="/{{ ASSET_URL }}">
+<link id="style-{{ style }}" rel="stylesheet" href="/{{ ASSET_URL }}">
+{% endassets %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block custom_js %}
+{% if article.style %}
+{% set styles = article.style.split(',') %}
+{% for style in styles %}
+{% assets filters="jsmin", output="js/" + style + ".min.js", "js/" + style + ".js" %}
+<script src="/{{ ASSET_URL }}"></script>
 {% endassets %}
 {% endfor %}
 {% endif %}
