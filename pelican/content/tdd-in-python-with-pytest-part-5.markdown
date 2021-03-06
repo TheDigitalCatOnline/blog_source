@@ -254,8 +254,8 @@ class FileInfo:
         return (
             self.filename,
             self.original_path,
-            os.path.abspath(self.filename),
-            os.path.getsize(self.filename)
+            os.path.abspath(self.original_path),
+            os.path.getsize(self.original_path)
         )
 ```
 
