@@ -1,5 +1,6 @@
 Title: TDD in Python with pytest - Part 5
 Date: 2020-09-21 10:30:00 +0200
+Modified: 2021-03-06 18:00:00 +0000
 Category: Programming
 Tags: OOP, pytest, Python, Python3, refactoring, TDD, testing
 Authors: Leonardo Giordani
@@ -436,6 +437,10 @@ The third advice is to consider mocks as "hooks" that you throw at the external 
 ## Final words
 
 Mocks are a very powerful tool that allows us to test code that contains outgoing messages. In particular they allow us to test the arguments of outgoing commands. Patching is a good way to overcome the fact that some external components are hardcoded in our code and are thus unreachable through the arguments passed to the classes or the methods under analysis.
+
+## Updates
+
+2021-03-06 GitHub user [4myhw](https://github.com/4myhw) spotted an inconsistency between the code on GitHub and the code in the post. Thanks!
 
 ## Feedback
 
