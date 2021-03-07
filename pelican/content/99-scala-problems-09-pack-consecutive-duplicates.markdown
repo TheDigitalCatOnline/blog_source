@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-09-pack-consecutive-duplicates
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to groups values inside a list in Scala
 
 # The problem
 

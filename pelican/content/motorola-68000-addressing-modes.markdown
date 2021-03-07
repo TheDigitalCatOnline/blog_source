@@ -6,7 +6,7 @@ Authors: Leonardo Giordani
 Slug: motorola-68000-addressing-modes
 Image: mc68000
 Style: retro
-Summary: 
+Summary: A review of the addressing modes of one of the most famous 32-bit CPUs
 
 The Motorola 68000 is an impressive microprocessor, and this is reflected by the large amount of addressing modes that it provides; it is actually surprising, for people used to the x86 family, to find in this microprocessor's Assembly language constructs that are very similar to the ones provided by high level languages such as pre- and postdecrements, or multiconditional branching instructions.
 

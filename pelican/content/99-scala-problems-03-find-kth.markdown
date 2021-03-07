@@ -7,7 +7,7 @@ Authors: Leonardo Giordani
 Slug: 99-scala-problems-03-find-kth
 Series: 99 Scala Problems
 Image: 99-scala-problems
-Summary: 
+Summary: Discussing how to extract elements from Scala lists
 
 # The problem
 

@@ -1,7 +1,7 @@
 Title: The Digital Cat Youtube Channel
 Date: 2019-05-27 12:00:00 +0100
 Category: Programming
-Tags: Python, Python2, Python3, TDD, testing, video
+Tags: pytest, Python, Python2, Python3, TDD, testing, video
 Authors: Leonardo Giordani
 Slug: youtube-channel
 Image: youtube-channel

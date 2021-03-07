@@ -7,7 +7,7 @@
     {% set name_sanitized = s[0]|lower|replace('+','-plus')|replace(' ','-') %}
     {% endif %}
     
-    {% set iconclass = '"fa-' ~ name_sanitized ~ '"' %}
+    {% set iconclass = '"fab-' ~ name_sanitized ~ '"' %}
     
     <li class="fa-{{ name_sanitized }}"><a href="{{ s[1] }}">{{ s[0] }}</a></li>
     

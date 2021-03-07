@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source venv3/bin/activate
-
 cd pelican
 make publish
 cd ..
@@ -9,4 +7,7 @@ cd ..
 rm -fR deploy/*
 cp -R pelican/output/* deploy/
 
-echo "Move to the deploy directory, check, commit and push"
+cd deploy
+git add .
+git ci -m "Updated"
+git push

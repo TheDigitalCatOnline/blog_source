@@ -3,179 +3,193 @@
 {% block title %}{{ SITENAME }} - Home{% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="A technical blog about programming in Python and other languages">
+<meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development.">
 {% endblock %}
 
 {% block content %}
 
 <!-- Header -->
-    <header id="header">
-        <ul class="icons">
-            {% for s in SOCIAL %}
-            
-            {% if s[2] %}
-            {% set name_sanitized = s[2]|lower|replace('+','-plus')|replace(' ','-') %}
-            {% else %}
-            {% set name_sanitized = s[0]|lower|replace('+','-plus')|replace(' ','-') %}
-            {% endif %}
-            
-            {% set iconclass = '"fa-' ~ name_sanitized ~ '"' %}
-            
-            <li><a href="{{ s[1] }}" class="icon fa-{{ name_sanitized }}"><span class="label">{{ s[0] }}</span></a></li>
-            
-            {% endfor %}
-        </ul>
-    </header>
+<header id="header">
+  <ul class="icons">
+    {% for s in SOCIAL %}
+    
+    {% if s[2] %}
+    {% set name_sanitized = s[2]|lower|replace('+','-plus')|replace(' ','-') %}
+    {% else %}
+    {% set name_sanitized = s[0]|lower|replace('+','-plus')|replace(' ','-') %}
+    {% endif %}
+    
+    {% set iconclass = '"fa-' ~ name_sanitized ~ '"' %}
+    
+    <li><a href="{{ s[1] }}" class="icon fa-{{ name_sanitized }}"><span class="label">{{ s[0] }}</span></a></li>
+    
+    {% endfor %}
+  </ul>
+</header>
 
 <!-- Banner -->
-    <section id="banner">
-        <div class="content">
-            <header>
-                <h1>The Digital Cat</h1>
-                <p>Adventures of a curious cat in the land of programming</p>
-            </header>
-            {% for q in QUOTES %}
-            <p class="quote"><i class="fa fa-quote-right"></i> {{ q.quote }} <i class="fa fa-quote-left"></i></p>
-            <p class="quote-source">{{ q.source }}</p>
-            {% endfor %}
-        </div>
-        <span class="image object">
-            <img src="/images/global/cover.jpg" alt="Cover" />
-        </span>
-    </section>
+<section id="banner">
+  <div class="content">
+    <header>
+      <h1>The Digital Cat</h1>
+      <p>Adventures of a curious cat in the land of programming</p>
+    </header>
+    {% for q in QUOTES %}
+    <p class="quote"><i class="fas fa-quote-right"></i> {{ q.quote }} <i class="fas fa-quote-left"></i></p>
+    <p class="quote-source">{{ q.source }}</p>
+    {% endfor %}
+  </div>
+  <span class="image object">
+    <img src="/images/global/cover.jpg" alt="Cover" />
+  </span>
+</section>
 
 <!-- Section -->
-    <section>
-        <header class="major">
-            <h2>Sections</h2>
-        </header>
-        <div class="features">
-            <article>
-                <span class="icon fa-desktop"></span>
-                <div class="content">
-                    <h3>Programming</h3>
-                    <p>Articles about programming in various languages, mainly Python but also Scala, Erlang, C. Other topics I discuss are algorithms, compilers, architectures, operating systems, testing.</p>
-                    <a href="/category/programming" class="button">More</a>
-                </div>
-            </article>
-            <article>
-                <span class="icon fa-save"></span>
-                <div class="content">
-                    <h3>Retro</h3>
-                    <p>All my retroprogramming articles, bits and bytes, and low level investigations. Home of the "Exploring the Amiga" series. Beware of the dragons!</p>
-                    <a href="/category/retro" class="button">More</a>
-                </div>
-            </article>
-        </div>
-    </section>
+<section>
+  <header class="major">
+    <h2>Sections</h2>
+  </header>
+  <div class="features">
+    <article>
+      <span class="icon fa-desktop"></span>
+      <div class="content">
+        <h3>Programming</h3>
+        <p>Articles about programming in various languages, mainly Python but also Scala, Erlang, C. Other topics I discuss are algorithms, compilers, architectures, operating systems, testing.</p>
+        <a href="/category/programming" class="button">More</a>
+      </div>
+    </article>
+    <article>
+      <span class="icon fa-save"></span>
+      <div class="content">
+        <h3>Retro</h3>
+        <p>All my retroprogramming articles, bits and bytes, and low level investigations. Home of the "Exploring the Amiga" series. Beware of the dragons!</p>
+        <a href="/category/retro" class="button">More</a>
+      </div>
+    </article>
+  </div>
+</section>
 
 <!-- Section -->
-    <section>
-        <header class="major">
-            <h2>Top series</h2>
-        </header>
-        <div class="posts">
-            <article class="card">
-                {% set article = series['Python 3 OOP'].first %}
-                <a href="/{{ article.url }}" class="image">
-                    <img src="/images/python-3-oop.jpg" alt="Python 3 OOP" />
-                </a>
-                <div class="card-body">
-                    <a href="/{{ article.url }}"><h1 class="card-title">Python 3 Object-oriented Programming</h1></a>
-                    <p class="card-text">A series of posts that dig into the Python implementation of the Object-oriented paradigm. No previous knowledge of the topic is required, but an initial knowledge of the Python syntax is useful.</p>
-                    <ul class="actions">
-                        <li><a href="/{{ article.url }}" class="button">Start</a></li>
-                    </ul>
-                </div>
-            </article>
-            <article class="card">
-                {% set article = series['A game of tokens'].first %}
-                <a href="/{{ article.url }}" class="image">
-                    <img src="/images/a-game-of-tokens.jpg" alt="A Game of Tokens" />
-                </a>
-                <div class="card-body">
-                    <a href="/{{ article.url }}"><h1 class="card-title">A game of tokens</h1></a>
-                    <p class="card-text">Python, Ruby, Javascript, C, Erlang, how many different languages. But how does a compiler work? How si the source code converted into something that works? Let's write a simple language interpreter using TDD!</p>
-                    <ul class="actions">
-                        <li><a href="/{{ article.url }}" class="button">Start</a></li>
-                    </ul>
-                </div>
-            </article>
-            <article class="card">
-                {% set article = series['Exploring the Amiga'].first %}
-                <a href="/{{ article.url }}" class="image">
-                    <img src="/images/exploring-the-amiga-1.jpg" alt="Exploring the Amiga" />
-                </a>
-                <div class="card-body">
-                    <a href="/{{ article.url }}"><h1 class="card-title">Exploring the Amiga</h1></a>
-                    <p class="card-text">Is it worth unearthing old architectures? Is it worth understanding how a computer system from the 80s worked? I believe old architectures can teach us a lot, so let's explore "the computer that wouldn’t die"!</p>
-                    <ul class="actions">
-                        <li><a href="/{{ article.url }}" class="button">Start</a></li>
-                    </ul>
-                </div>
-            </article>
-        </div>
-    </section>
-<!-- Section -->
-    <section>
-        <header class="major">
-            <h2>My books</h2>
-        </header>
-        <div class="posts">
-            <article class="card">
-                {% set article = series['Python 3 OOP'].first %}
-                <a href="https://leanpub.com/clean-architectures-in-python" class="image">
-                    <img src="/images/book-clean-architectures.jpg" alt="Clean Architectures in Python" />
-                </a>
-                <div class="card-body">
-                    <a href="https://leanpub.com/clean-architectures-in-python"><h1 class="card-title">Clean Architectures in Python</h1></a>
-                    <p class="card-text">The clean architecture is the opposite of spaghetti code, where everything is interlaced and there are no single elements that can be easily detached from the rest and replaced without the whole system collapsing. The main point of the clean architecture is to make clear "what is where and why", and this should be your first concern while you design and implement a software system, whatever architecture or development methodology you want to follow.</p>
-                    <ul class="actions">
-                        <li><a href="https://leanpub.com/clean-architectures-in-python" class="button">Get it</a></li>
-                    </ul>
-                </div>
-            </article>
-        </div>
-    </section>
-<!-- Section -->
-    <section>
-        <header class="major">
-            <h2>My videos</h2>
-        </header>
-        <div class="posts">
-            <article class="card">
-                <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m" class="image">
-                    <img src="/images/video-tdd-in-python-with-pytest.jpg" alt="TDD in Python with pytest (playlist)" />
-                </a>
-                <div class="card-body">
-                    <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m"><h1 class="card-title">TDD in Python with pytest (playlist)</h1></a>
-                    <p class="card-text">I recorded my successful workshop "TDD in Python with pytest" and produced my first series of videos, for a grand total of 2 hours of hands-on tutorial on Test-Driven Development in Python.</p>
-                    <ul class="actions">
-                        <li><a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m" class="button">Watch it</a></li>
-                    </ul>
-                </div>
-            </article>
-            <article class="card">
-                <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O" class="image">
-                    <img src="/images/video-object-oriented-programming-in-python.jpg" alt="Object-oriented programming in Python (playlist)" />
-                </a>
-                <div class="card-body">
-                    <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O"><h1 class="card-title">Object-oriented programming in Python (playlist)</h1></a>
-                    <p class="card-text">A journey into the Python implementation of the Object-oriented paradigm, specifically tailored for beginner programmers.</p>
-                    <ul class="actions">
-                        <li><a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O" class="button">Watch it</a></li>
-                    </ul>
-                </div>
-            </article>
-        </div>
-    </section>
-<!-- Section -->
-    <section>
-        <header class="major">
-            <h2>All posts</h2>
-        </header>
+<section>
+  <header class="major">
+    <h2>Top series</h2>
+  </header>
+  <div class="posts">
+    <article class="card">
+      {% set article = 'blog/2014/08/20/python-3-oop-part-1-objects-and-types/' %}
+      <a href="{{ article }}" class="image">
+        <img src="/images/python-3-oop.jpg" alt="Python 3 OOP" />
+      </a>
+      <div class="card-body">
+        <a href="{{ article }}"><h3 class="card-title">Python 3 Object-oriented Programming</h3></a>
+        <p class="article-info">What happens behind the scenes of classes and instances? What are composition, inheritance, and polymorphism? A series of posts that dig into the Python implementation of the Object-oriented paradigm.</p>
+        <ul class="actions">
+          <li><a href="{{ article }}" class="button">Start</a></li>
+        </ul>
+      </div>
+    </article>
+    <article class="card">
+      {% set article = 'blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/' %}
+      <a href="{{ article }}" class="image">
+        <img src="/images/a-game-of-tokens-1.jpg" alt="A Game of Tokens" />
+      </a>
+      <div class="card-body">
+        <a href="{{ article }}"><h3 class="card-title">A game of tokens</h3></a>
+        <p class="card-text">Python, Ruby, Javascript, C, Erlang, how many different languages. But how does a compiler work? How is the source code converted into something that works? To understand that there's nothing better than actually write a language. Let's write a simple language interpreter in Python using TDD!</p>
+        <ul class="actions">
+          <li><a href="{{ article }}" class="button">Start</a></li>
+        </ul>
+      </div>
+    </article>
+    <article class="card">
+      {% set article = 'blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/' %}
+      <a href="{{ article }}" class="image">
+        <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="Flask project setup" />
+      </a>
+      <div class="card-body">
+        <a href="{{ article }}"><h3 class="card-title">Flask project setup</h3></a>
+        <p class="card-text">Have you ever started working on a web application project just to find yourself swamped in a bunch of files and directories with silly names and without a clear picture of what is really going on? In this series of post I show you how to properly set up a Flask application using TDD, Docker, Postgres and more.</p>
+        <ul class="actions">
+          <li><a href="{{ article }}" class="button">Start</a></li>
+        </ul>
+      </div>
+    </article>
+    <article class="card">
+      {% set article = 'blog/2018/05/28/exploring-the-amiga-1/' %}
+      <a href="{{ article }}" class="image">
+        <img src="/images/exploring-the-amiga-1.jpg" alt="Exploring the Amiga" />
+      </a>
+      <div class="card-body">
+        <a href="{{ article }}"><h3 class="card-title">Exploring the Amiga</h3></a>
+        <p class="card-text">Is it worth unearthing old architectures? Is it worth understanding how a computer system from the 80s worked? I believe old architectures can teach us a lot, so let's explore "the computer that wouldn’t die"!</p>
+        <ul class="actions">
+          <li><a href="{{ article }}" class="button">Start</a></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
 
-        {% include 'includes/paginated_posts.html' %}
+<!-- Section -->
+<section>
+  <header class="major">
+    <h2>My books</h2>
+  </header>
+  <div class="posts">
+    <article class="card">
+      <a href="https://www.pycabook.com" class="image">
+        <img src="/images/book-clean-architectures.jpg" alt="Clean Architectures in Python" />
+      </a>
+      <div class="card-body">
+        <a href="https://leanpub.com/clean-architectures-in-python"><h3 class="card-title">Clean Architectures in Python</h3></a>
+        <p class="card-text">The clean architecture is the opposite of spaghetti code, where everything is interlaced and there are no single elements that can be easily detached from the rest and replaced without the whole system collapsing. The main point of the clean architecture is to make clear "what is where and why", and this should be your first concern while you design and implement a software system, whatever architecture or development methodology you want to follow.</p>
+        <ul class="actions">
+          <li><a href="https://www.pycabook.com" class="button">Read it online</a></li>
+          <li><a href="https://leanpub.com/clean-architectures-in-python" class="button">Buy it</a></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+<!-- Section -->
+<section>
+  <header class="major">
+    <h2>My videos</h2>
+  </header>
+  <div class="posts">
+    <article class="card">
+      <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m" class="image">
+        <img src="/images/video-tdd-in-python-with-pytest.jpg" alt="TDD in Python with pytest (playlist)" />
+      </a>
+      <div class="card-body">
+        <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m"><h3 class="card-title">TDD in Python with pytest (playlist)</h3></a>
+        <p class="card-text">I recorded my successful workshop "TDD in Python with pytest" and produced my first series of videos, for a grand total of 2 hours of hands-on tutorial on Test-Driven Development in Python.</p>
+        <ul class="actions">
+          <li><a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m" class="button">Watch it</a></li>
+        </ul>
+      </div>
+    </article>
+    <article class="card">
+      <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O" class="image">
+        <img src="/images/video-object-oriented-programming-in-python.jpg" alt="Object-oriented programming in Python (playlist)" />
+      </a>
+      <div class="card-body">
+        <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O"><h3 class="card-title">Object-oriented programming in Python (playlist)</h3></a>
+        <p class="card-text">A journey into the Python implementation of the Object-oriented paradigm, specifically tailored for beginner programmers.</p>
+        <ul class="actions">
+          <li><a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O" class="button">Watch it</a></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+<!-- Section -->
+<section>
+  <header class="major">
+    <h2>All posts</h2>
+  </header>
 
-    </section>
+  {% include 'includes/paginated_posts.html' %}
+
+</section>
 {% endblock %}

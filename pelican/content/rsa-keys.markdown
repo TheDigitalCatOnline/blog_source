@@ -1,20 +1,20 @@
 Title: Public key cryptography: RSA keys
 Date: 2018-04-25 13:00:00 +0100
-Modified: 2018-10-14 23:00:00 +0000
+Modified: 2020-03-14 11:00:00 +0000
 Category: Programming
 Tags: algorithms, cryptography, SSL, SSH, RSA, Python
 Authors: Leonardo Giordani
 Slug: rsa-keys
 Image: rsa-keys
-Summary: 
+Summary: An in-depth discussion of the format of RSA keys, the PEM format, ASN, and PKCS
 
 I bet you created at least once an RSA key pair, usually because you needed to connect to GitHub and you wanted to avoid typing your password every time. You diligently followed the documentation on how to create SSH keys and after a couple of minutes your setup was complete.
 
 But do you know what you actually did?
 
-Do you know what the `~/.ssh/id_rsa` file really contains, or why that strange file that begins with `ssh-rsa` pairs with another that begins with `-----BEGIN RSA PRIVATE KEY-----`. Or why sometimes that same header misses the `RSA` part and just says `BEGIN PRIVATE KEY`?
+Do you know what the file `~/.ssh/id_rsa` really contains? Why did ssh create two files with such a different format? Did you notice that one file begins with `ssh-rsa`, while the other begins with `-----BEGIN RSA PRIVATE KEY-----`? Have you noticed that sometimes the header of the second file misses the `RSA` part and just says `BEGIN PRIVATE KEY`?
 
-I think a minimum knowledge of the various formats of RSA keys is mandatory for every developer nowadays, not to mention the importance of understanding them deeply if you want to pursue a career in the infrastructure management world.
+I believe that a minimum level of knowledge regarding the various formats of RSA keys is mandatory for every developer nowadays, not to mention the importance of understanding them deeply if you want to pursue a career in the infrastructure management world.
 
 # RSA algorithm and key pairs
 
@@ -26,7 +26,7 @@ I will not cover the internals of the RSA algorithm in this article, however. If
 
 In this article I will instead explore two ways to create RSA key pairs and the formats used to store them. Applied cryptography is, like many other topics in computer science, a moving target, and the tools change often. Sometimes it is pretty easy to find out *how* to do something (StackOverflow helps), but less easy to get a clear picture of what is going on.
 
-All the examples show in this post use a 2048-bits RSA key created for this purpose, so all the numbers you see come from a real example. The key has been obviously trashed after I wrote the article.
+All the examples shown in this post use a 2048-bits RSA key created for this purpose, so all the numbers you see come from a real example. The key has been obviously trashed after I wrote the article.
 
 # The PEM format
 
@@ -65,7 +65,7 @@ I7BWY4mUirC7sDGHl3DaFPRBiut1rpg0kSKi2VNRF7Bb75OKEhGjvm6IKVe8Kl8d
 -----END PRIVATE KEY-----
 ```
 
-Basically, you can tell you are dealing with a PEM format from the typical header and footer that identify the content. While the hyphens and the two `BEGIN` and `END` words are always present, the `PRIVATE KEY` part describes the content and can change if the PEM file contains something different from a key, for example an X.509 certificate for SSL.
+Basically, you can tell you are dealing with a PEM format from the typical header and footer that identify the content. While the hyphens and the two words `BEGIN` and `END` are always present, the `PRIVATE KEY` part describes the content and can change if the PEM file contains something different from a key, for example an X.509 certificate for SSL.
 
 The PEM format specifies that the the body of the content (the part between the header and the footer) is encoded using [Base64](https://en.wikipedia.org/wiki/Base64).
 
@@ -108,11 +108,24 @@ When the PEM format is used to store cryptographic keys the body of the content 
 
 The PKCS #8 format describes the content using the [ASN.1](https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One) (Abstract Syntax Notation One) description language and the relative DER (Distinguished Encoding Rules) to serialize the resulting structure. This means that Base64-decoding the content will return some binary content that can be processed only by an ASN.1 parser.
 
-Please not that, due to the structure of the underlying ASN.1 structure, every PEM body starts with the `MII` characters.
+Let me visually recap the structure
+
+``` text
+-----BEGIN label-----
++--------------------------- Base64 ---------------------------+
+|                                                              |
+| PKCS #8 content:                                             |
+| ASN.1 language serialized with DER                           |
+|                                                              |
++--------------------------------------------------------------+
+-----END label-----
+```
+
+Please note that, due to the structure of the underlying ASN.1 structure, every PEM body starts with the characters `MII`.
 
 ## OpenSSL and ASN.1
 
-OpenSSL can directly decode a key in PEM format and show the underlying ASN.1 structure with the `asn1parse` module
+OpenSSL can directly decode a key in PEM format and show the underlying ASN.1 structure with the module `asn1parse`
 
 ``` bash
 $ openssl asn1parse -inform pem -in private.pem
@@ -149,9 +162,11 @@ $ openssl asn1parse -inform pem -in private.pem
    F1DE5CA50C26F42EE0A383A2A2B6340D52E1A36
 ```
 
+This that you see in the code snippet is then the private key in ASN.1 format. Remember that DER is only used to go from the text representation of ASN.1 to binary data, so we don't see it unless we decode the Base64 content into a file and open it with a binary editor.
+
 Note that the ASN.1 structure contains the type of the object (`rsaEncryption`, in this case). You can further decode the `OCTET STRING` field, which is the actual key, specifying the offset
 
-```
+``` bash
 $ openssl asn1parse -inform pem -in private.pem -strparse 22
     0:d=0  hl=4 l=1188 cons: SEQUENCE          
     4:d=1  hl=2 l=   1 prim: INTEGER           :00
@@ -194,7 +209,7 @@ Being this an RSA key the fields represent specific components of the algorithm.
 
 If the key has been encrypted there are fields with information about the cipher, and the `OCTET STRING` fields cannot be further parsed because of the encryption.
 
-``` sh
+``` bash
 $ openssl asn1parse -inform pem -in private-enc.pem
     0:d=0  hl=4 l=1311 cons: SEQUENCE          
     4:d=1  hl=2 l=  73 cons: SEQUENCE          
@@ -239,9 +254,9 @@ $ openssl asn1parse -inform pem -in private-enc.pem
 
 ## OpenSSL and RSA keys
 
-Another way to look into a private key with OpenSSL is to use the `rsa` module. While the `asn1parse` module is a generic ASN.1 parser, the `rsa` module knows the structure of an RSA key and can properly output the field names
+Another way to look into a private key with OpenSSL is to use the module `rsa`. While the module `asn1parse` is a generic ASN.1 parser, the module `rsa` knows the structure of an RSA key and can properly output the field names
 
-``` sh
+``` bash
 $ openssl rsa -in private.pem -noout -text
 Private-Key: (2048 bit)
 modulus:
@@ -335,7 +350,9 @@ coefficient:
     2a:2b:63:40:d5:2e:1a:36
 ```
 
-The fields are the same we found in the ASN.1 structure, this being only a different representation of the same data. You can compare the two and see that the value of the fields are the same.
+The fields are the same we found in the ASN.1 structure, but in this representation we have a better view of the specific values of the RSA key. You can compare the two and see that the value of the fields are the same.
+
+If you want to learn something about RSA try to investigate the historical reasons behind the choice of 65537 as a common public exponent (as you can see here in the section `publicExponent`).
 
 ## PKCS #8 vs PKCS #1
 
@@ -380,7 +397,7 @@ PrivateKey ::= OCTET STRING
                      -- the key.
 ```
 
-The definition of the `PrivateKey` field for the RSA algorithm is the same used in PKCS #1.
+The definition of the field `PrivateKey` for the RSA algorithm is the same used in PKCS #1.
 
 If the PEM format uses PKCS #8 its header and footer are
 
@@ -398,13 +415,13 @@ If it uses PKCS #1, however, there has to be an external identification of the a
 -----END RSA PRIVATE KEY-----
 ```
 
-The structure of PKCS #8 is the reason why previously we had to parse the field at offset 22 to access the RSA parameters. If you are parsing a PKCS #1 key in PEM format you don't need this second step.
+The structure of PKCS #8 is the reason why we had to parse the field at offset 22 to access the RSA parameters when using the module `asn1parse` of OpenSSL. If you are parsing a PKCS #1 key in PEM format you don't need this second step.
 
 # Private and public key
 
-In the RSA algorithm the public key is made by the modulus and the public exponent, which means that we can derive the public key from the private key. OpenSSL can easily do this with the `rsa` module, producing the public key in PEM format
+In the RSA algorithm the public key is built using the modulus and the public exponent, which means that we can always derive the public key from the private key. OpenSSL can easily do this with the module `rsa`, producing the public key in PEM format
 
-``` sh
+``` bash
 $ openssl rsa -in private.pem -pubout
 writing RSA key
 -----BEGIN PUBLIC KEY-----
@@ -418,9 +435,9 @@ DQIDAQAB
 -----END PUBLIC KEY-----
 ```
 
-You can dump the information in the public key specifying the `-pubin` flag
+You can dump the information in the public key specifying the flag `-pubin`
 
-``` sh
+``` bash
 $ openssl rsa -in public.pem -noout -text -pubin
 Public-Key: (2048 bit)
 Modulus:
@@ -449,15 +466,17 @@ Exponent: 65537 (0x10001)
 
 If you want to generate an RSA private key you can do it with OpenSSL
 
-``` sh
-$ openssl genpkey -algorithm RSA -out key.pem -pkeyopt rsa_keygen_bits:2048
+``` bash
+$ openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
 ......................................................................+++
 ..........+++ 
 ```
 
+Since OpenSSL is a collection of modules we specify `genpkey` to generate a private key. The option `-algorithm` specifies which algorithm we want to use to generate the key (RSA in this case), `-out` specifies the name of the output file, and `-pkeyopt` allows us to set the value for specific key options. In this case the length of the RSA key in bits.
+
 If you want an encrypted key you can generate one specifying the cipher (for example `-aes-256-cbc`)
 
-``` sh
+``` bash
 $ openssl genpkey -algorithm RSA -out private-enc.pem -aes-256-cbc -pkeyopt rsa_keygen_bits:2048
 ...........................+++
 ..........+++
@@ -465,7 +484,21 @@ Enter PEM pass phrase:
 Verifying - Enter PEM pass phrase:
 ```
 
-You can see the list of supported ciphers with `openssl list-cipher-algorithms`. In both cases you can then extract the public key with the method shown previously.
+You can see the list of supported ciphers with `openssl list-cipher-algorithms`. In both cases you can then extract the public key with the method shown previously. OpenSSL private keys are created using PKCS #8, so unencrypted keys will be in the form
+
+``` text
+-----BEGIN PRIVATE KEY-----
+[...]
+-----END PRIVATE KEY-----
+```
+
+and encrypted ones in the form
+
+``` text
+-----BEGIN ENCRYPTED PRIVATE KEY-----
+[...]
+-----END ENCRYPTED PRIVATE KEY-----
+```
 
 # Generating key pairs with OpenSSH
 
@@ -473,22 +506,31 @@ Another tool that you can use to generate key pairs is ssh-keygen, which is a to
 
 To create a key pair just run
 
-``` sh
-ssh-keygen -t rsa -b 2048 -f private
+``` bash
+ssh-keygen -m PEM -t rsa -b 2048 -f key
 ```
 
-The `-t` option specifies the key generation algorithm (RSA in this case), while the `-b` option specifies the length of the key in bits.
+The option `-m` specifies the key format. By default OpenSSH uses its own format specified in [RFC 4716](https://tools.ietf.org/html/rfc4716#page-4) ("The Secure Shell (SSH) Public Key File Format".
 
-The `-f` option sets the name of the output file. If not present, ssh-keygen will ask the name of the file, offering to save it to the default file `~/.ssh/id_rsa`. ssh-keygen always asks for a password to encrypt the key, but you are allowed to enter an empty one to skip the encryption.
+The option `-t` specifies the key generation algorithm (RSA in this case), while the option `-b` specifies the length of the key in bits.
 
-This tool creates two files. One is the private key file, named as requested, and the second is the public key file, named like the private key one but with a `.pub` extension.
+The option `-f` sets the name of the output file. If not present, ssh-keygen will ask the name of the file, offering to save it to the default file `~/.ssh/id_rsa`. The tool always asks for a password to encrypt the key, but you are allowed to enter an empty one to skip the encryption.
 
-OpenSSH private keys are generated using the PKCS #1 format, so the key will be in the form
+This tool creates two files. One is the private key file, named as requested, and the second is the public key file, named like the private key one but with the extension `.pub`.
+
+The value `PEM` specified for the option `-m` writes the private key using the PKCS #1 format, so the key will be in the form
 
 ``` text
 -----BEGIN RSA PRIVATE KEY-----
 [...]
 -----END RSA PRIVATE KEY-----
+```
+
+Using `-m PKCS8` instead uses PKCS #8 and the kwy will be in the form
+``` text
+-----BEGIN PRIVATE KEY-----
+[...]
+-----END PRIVATE KEY-----
 ```
 
 ## The OpenSSH public key format
@@ -497,7 +539,7 @@ The public key saved by ssh-keygen is written in the so-called SSH-format, which
 
 For example
 
-```
+``` text
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy9f0/nwkXESzkL4v4ftZ24VJYvkQ/Nt6vsLab3iSWtJXqrRsBythCcbAU6W9
 5OGxjbTSFFtp0poqMcPuogocMR7QhjY9JGG3fcnJ7nYDCGRHD4zfG5Af/tHwvJ2ew0WTYoemvlfZIG/jZ7fsuOQSyUpJoxGAlb6
 /QpnfSmJjxCx0VEoppWDn8CO3VhOgzVhWx0dcne+ZcUy3Kkt3HBQN0hosRfqkVSRTvkpK4RD8TaW5PrVDe1r2Q5ab37TO+Ls4xx
@@ -506,13 +548,13 @@ t16QlPubNxWeH3dHVzXdmFAItuH0DuyLyMoW1oxZ6+NrKu+pAAERxM303gejFzKDqXid5m1EOTvk4xhy
 
 To manually decode the central part of the key you can run the following code
 
-``` sh
+``` bash
 cat key.pub | cut -d " " -f2 | base64 -d | hexdump -ve '/1 "%02x "' -e '2/8 "\n"'
 ```
 
 which in the previous case outputs something like
 
-```
+``` text
 00 00 00 07 73 73 68 2d 72 73 61 00 00 00 03 01
 00 01 00 00 01 01 00 b2 f5 fd 3f 9f 09 17 11 2c
 e4 2f 8b f8 7e d6 76 e1 52 58 be 44 3f 36 de af
@@ -543,7 +585,7 @@ The "ssh-rsa" key format has the following specific encoding:
       mpint     n
 ```
 
-while the definition of the `string` and `mpint` types can be found in [RFC 4251](https://tools.ietf.org/html/rfc4251) ("SSH Protocol Architecture"), section 5
+while the definition of the types `string` and `mpint` can be found in [RFC 4251](https://tools.ietf.org/html/rfc4251) ("SSH Protocol Architecture"), section 5
 
 ```
 string
@@ -559,7 +601,7 @@ mpint
     stored as a string, 8 bits per byte, MSB first. [...]
 ```
 
-This means that the above sequence of bytes is interpreted as 4 bytes of length (32 bits of the `uint32` type) followed by that number of bytes of content.
+This means that the above sequence of bytes is interpreted as 4 bytes of length (32 bits of the type `uint32`) followed by that number of bytes of content.
 
 ``` text
 (4 bytes)   00 00 00 07          = 7
@@ -570,41 +612,45 @@ This means that the above sequence of bytes is interpreted as 4 bytes of length 
 (257 bytes) 00 b2 .. ca a6 0d    = The key modulus
 ```
 
-Please note that since we created a key of 2048 bits we should have a modulus of 256 bytes. Instead this key uses 257 bytes prefixing the number with a `00` byte to avoid it being interpreted as negative (two's complement format).
+Please note that since we created a key of 2048 bits we should have a modulus of 256 bytes. Instead this key uses 257 bytes prefixing the number with a byte `00` to avoid it being interpreted as negative (two's complement format).
 
-The structure shown above is the reason why all the RSA public SSH keys start with the same 12 characters `AAAAB3NzaC1y`. This string, converted in Base64 gives the initial 9 bytes `00 00 00 07 73 73 68 2d 72` (Base64 strings are not a one-to-one mapping of the source bytes). If the exponent is the standard 65537 the key starts with `AAAAB3NzaC1yc2EAAAADAQAB`, which encoded gives the fist 18 bytes `00 00 00 07 73 73 68 2d 72 73 61 00 00 00 03 01 00 01`. 
+The structure shown above is the reason why all the RSA public SSH keys start with the same 12 characters `AAAAB3NzaC1y`. This string, converted in Base64 gives the initial 9 bytes `00 00 00 07 73 73 68 2d 72` (Base64 characters are not a one-to-one mapping of the source bytes). If the exponent is the standard 65537 the key starts with `AAAAB3NzaC1yc2EAAAADAQAB`, which encoded gives the fist 18 bytes `00 00 00 07 73 73 68 2d 72 73 61 00 00 00 03 01 00 01`. 
 
 # Converting between PEM and OpenSSH format
 
-Often you need to convert files created with one tool to a different format, so this is a list of the most common conversions you might need. I prefer to consider the key format instead of the source tool, but I give a short description of the reason why you should want to perform the conversion.
+We often need to convert files created with one tool to a different format, so this is a list of the most common conversions you might need. I prefer to consider the key format instead of the source tool, but I give a short description of the reason why you should want to perform the conversion.
 
 ## PEM/PKCS#1 to PEM/PKCS#8
 
-This is useful to convert OpenSSh private keys to a newer format.
+This is useful to convert OpenSSH private keys to a newer format.
 
-``` sh
+``` bash
 openssl pkcs8 -topk8 -inform PEM -outform PEM -in pkcs1.pem -out pkcs8.pem
 ```
 
 ## OpenSSH public to PEM/PKCS#8
 
-To convert public OpenSSH keys in a proper PEM format.
+To convert public OpenSSH keys in a PEM format using PKCS #8 (prints to stdout)
 
-``` sh
-ssh-keygen -e -f public.pub -mPKCS8
+``` bash
+ssh-keygen -e -f public.pub -m PKCS8
 ```
+
+This is easy to remember because `-e` stands for export. Note that you can also use `-m PEM` to convert the key into a PEM format that uses PKCS #1.
 
 ## PEM/PKCS#8 to OpenSSH public
 
-if you need to use in SSH a key pair created with another system.
+If you need to use in SSH a key pair created with another system 
 
-``` sh
-ssh-keygen -i -f public.pem
+``` bash
+ssh-keygen -i -f public.pem -m PKCS8
 ```
+
+This is easy to remember because `-i` stands for import. As happened when exporting the key, you can import a PEM/PKCS #1 key using `-m PEM`.
 
 # Reading RSA keys in Python
 
-In Python you can use the `pycrypto` package to access a PEM file containing an RSA key with the `RSA.importKey` function. Now you can hopefully understand the [documentation](https://www.dlitz.net/software/pycrypto/api/current/Crypto.PublicKey.RSA-module.html) that says
+In Python you can use the package `pycrypto` to access a PEM file containing an RSA key with the function `RSA.importKey`. Now you can hopefully understand the [documentation](https://www.dlitz.net/software/pycrypto/api/current/Crypto.PublicKey.RSA-module.html) that says
 
 ``` text
 externKey (string) - The RSA key to import, encoded as a string.
@@ -626,7 +672,7 @@ according to a certain pass phrase. Only OpenSSL-compatible pass phrases are
 supported.
 ```
 
-In practice what you can do with a `private.pem` file is
+In practice what you can do with a file `private.pem` is
 
 ``` python
 from Crypto.PublicKey import RSA
@@ -635,7 +681,7 @@ f = open('private.pem', 'r')
 key = RSA.importKey(f.read())
 ```
 
-and the `key` variable will contain an instance of `_RSAobj` (not a very pythonic name, to be honest). This instance contains the RSA parameters as attributes as stated in the [documentation](https://www.dlitz.net/software/pycrypto/api/current/Crypto.PublicKey.RSA._RSAobj-class.html)
+and the variable `key` will contain an instance of `_RSAobj` (not a very pythonic name, to be honest). This instance contains the RSA parameters as attributes as stated in the [documentation](https://www.dlitz.net/software/pycrypto/api/current/Crypto.PublicKey.RSA._RSAobj-class.html)
 
 ``` python
 modulus = key.n
@@ -658,6 +704,7 @@ I keep finding on StackOverflow (and on other boards) messages of users that are
 * The Abstract Syntax Notation One [ASN.1](https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One) interface description language
 * [RFC 4251 - The Secure Shell (SSH) Protocol Architecture](https://tools.ietf.org/html/rfc4251)
 * [RFC 4253 - The Secure Shell (SSH) Transport Layer Protocol](https://tools.ietf.org/html/rfc4253)
+* [RFC 4716 - The Secure Shell (SSH) Public Key File Format](https://tools.ietf.org/html/rfc4716)
 * [RFC 5208 - Public-Key Cryptography Standards (PKCS) #8: Private-Key Information Syntax Specification Version 1.2](https://tools.ietf.org/html/rfc5208)
 * [RFC 5958 - Asymmetric Key Packages](https://tools.ietf.org/html/rfc5958)
 * [RFC 7468 - Textual Encodings of PKIX, PKCS, and CMS Structures](https://tools.ietf.org/html/rfc7468)

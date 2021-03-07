@@ -1,0 +1,1178 @@
+:pelican.title:Mau: a lightweight markup language
+:pelican.date:2021-02-22 10:00:00 +0000
+:pelican.modified:2021-02-25 18:00:00 +0000
+:pelican.category:Programming
+:pelican.tags:Python, Python2, Python3, Mau
+:pelican.authors:Leonardo Giordani
+:pelican.slug:mau-a-lightweight-markup-language
+:pelican.image:mau-a-lightweight-markup-language
+:pelican.summary:Mau is a lightweight markup language heavily inspired by AsciiDoc that makes is very easy to write blog posts or books.
+
+= What is Mau?
+
+Mau is a lightweight markup language heavily inspired by AsciiDoc that makes is very easy to write blog posts or books.
+
+The main goal of Mau is to provide a customisable markup language, reusing the good parts of AsciiDoc and providing a pure Python 3 implementation.
+
+You can find Mau's source code on [link](https://github.com/Project-Mau/mau, GitHub).
+
+= Why not Markdown or AsciiDoc?
+
+Markdown is a very good format, and I used it for all the posts in this blog so far. I grew increasingly unsatisfied, though, because of the lack of some features and the poor amount of customisation that it provides. When I wrote the second version of my book "Clean Architectures in Python" I considered using Markdown (through Pelican), but I couldn't find a good way to create tips and warnings. Recently, Python Markdown added a feature that allows to specify the file name for the source code, but the resulting HTML cannot easily be changed, making it difficult to achieve the graphical output I wanted.
+
+AsciiDoc started as a Python project, but then was abandoned and eventually resurrected by Dan Allen with Asciidoctor. AsciiDoc has a lot of features and I consider it superior to Markdown, but Asciidoctor is a Ruby program, and this made it difficult for me to use it. In addition, the standard output of Asciidoctor is a nice single HTML page but again customising it is a pain. I had to struggle to add my Google Analytics code and a `sitemap.xml` to the book site.
+
+I simply thought I could try to write my own tool, in a language that I know well (Python). It works, and I learned a lot writing it, so I'm definitely happy. I'd be delighted to know that this can be useful to other people, though.
+
+= What can Mau do?
+
+Being inspired by AsciiDoc, which in my opinion is superior to Markdown, Mau takes a lot from Stuart Rackham's language. This whole post is written in Mau, using mostly the default templates. I changed the template for the source code to accommodate my poor CSS knowledge and get to a result that I consider decent.
+
+== Paragraphs
+
+[source]
+----
+Paragraphs don't require special markup in Mau.
+A paragraph is defined by one or more consecutive lines of text.
+Newlines within a paragraph are not displayed.
+
+Leave at least one blank line to begin a new paragraph.
+----
+
+. Result
+[callout]
+----
+Paragraphs don't require special markup in Mau.
+A paragraph is defined by one or more consecutive lines of text.
+Newlines within a paragraph are not displayed.
+
+Leave at least one blank line to begin a new paragraph.
+----
+
+== Comments
+
+You can comment a single line with `//`
+
+[source]
+----
+// This is a comment
+----
+
+or you can comment a block of lines enclosing them between two markers `////`
+
+[source]
+----
+////
+This is
+a multiline
+comment
+////
+----
+
+== Thematic break
+
+You can insert an horizontal line using three dashes
+
+[source]
+----
+---
+----
+
+---
+
+== Text formatting
+
+Mau supports three inline styles triggered by `_`, `*`, and `\``.
+
+[source]
+----
+Stars identify *strong* text.
+
+Underscores for _emphasized_ text
+
+Backticks are used for `verbatim` text.
+----
+
+. Result
+[callout]
+----
+Stars identify *strong* text.
+
+Underscores for _emphasized_ text
+
+Backticks are used for `verbatim` text.
+----
+
+You can use them together, but pay attention that verbatim is very strong in Mau.
+
+[source]
+----
+You can have _*strong and empashized*_ text.
+
+You can also apply styles to _*`verbatim`*_.
+
+But verbatim will `_*preserve*_` them.
+----
+
+. Result
+[callout]
+----
+You can have _*strong and empashized*_ text.
+
+You can also apply styles to _*`verbatim`*_.
+
+But verbatim will `_*preserve*_` them.
+----
+
+Styles can be applied to only part of a word
+
+[source]
+----
+*S*trategic *H*azard *I*ntervention *E*spionage *L*ogistics *D*irectorate
+
+It is completely _counter_intuitive.
+
+There are too many `if`s in this function.
+----
+
+. Result
+[callout]
+----
+*S*trategic *H*azard *I*ntervention *E*spionage *L*ogistics *D*irectorate
+
+It is completely _counter_intuitive.
+
+There are too many `if`s in this function.
+----
+
+Using a single style marker doesn't trigger any effect, if you need to use two of them in the sentence, though, you have to escape at least one
+
+[source]
+----
+You can use _single *markers.
+
+But you \_need\_ to escape pairs.
+
+Even though you can escape \_only one_ of the two.
+
+If you have \_more than two\_ it's better to just \_escape\_ all of them.
+
+Oh, this is valid for `verbatim as well.
+----
+
+. Result
+[callout]
+----
+You can use _single *markers.
+
+But you \_need\_ to escape pairs.
+
+Even though you can escape \_only one_ of the two.
+
+If you have \_more than two\_ it's better to just \_escape\_ all of them.
+
+Oh, this is valid for `verbatim as well.
+----
+
+You can use inline classes to transform the text. Mau has no embedded classes, they have to be implemented in the theme.
+
+[source]
+----
+Using this we can [underline]#underline words#
+
+Now let's create a label like [label]#this#
+
+You can use multiple classes separating them with commas: [label,success]#yeah!#
+----
+
+. Result
+[callout]
+----
+Using this we can [underline]#underline words#
+
+Now let's create a label like [label]#this#
+
+You can use multiple classes separating them with commas: [label,success]#yeah!#
+----
+
+The CSS of my theme here has the following code
+
+[source,css]
+----
+.underline {
+    text-decoration: underline;
+}
+
+.label {
+    background-color: orange;
+    border: 1px #333 solid;
+    padding: 0 3px;
+}
+
+.label.success {
+    background-color: #00aa00;
+}
+----
+
+== Links
+
+Links beginning with `http://` or `https://` are automatically parsed. If you want to use a specific text for the link you need to use the macro `link` and specify target and text.
+
+[source]
+----
+https://projectmau.org - automatic!
+
+[link](https://projectmau.org,"Project Mau")
+----
+
+. Result
+[callout]
+----
+https://projectmau.org - automatic!
+
+[link](https://projectmau.org,"Project Mau")
+----
+
+You can include spaces and other special characters in the URL
+
+[source]
+----
+[link]("https://example.org/?q=[a b]","URL with special characters")
+
+[link]("https://example.org/?q=%5Ba%20b%5D","URL with special characters")
+----
+
+. Result
+[callout]
+----
+[link]("https://example.org/?q=[a b]","URL with special characters")
+
+[link]("https://example.org/?q=%5Ba%20b%5D","URL with special characters")
+----
+
+== Headers
+
+Headers are created using the character `=`. The number of equal signs represents the level of the header
+
+[source]
+----
+= Header 1
+
+== Header 2
+
+=== Header 3
+
+==== Header 4
+
+===== Header 5
+
+====== Header 6
+----
+
+. Result
+[callout]
+----
+= Header 1
+
+== Header 2
+
+=== Header 3
+
+==== Header 4
+
+===== Header 5
+
+====== Header 6
+----
+
+Headers are automatically collected and included in the Table of Contents, but if you want to avoid it for a specific section you can exclude the header using an exclamation mark
+
+[source]
+----
+===! This header is not in the TOC
+----
+
+. Result
+[callout]
+----
+===! This header is not in the TOC
+----
+
+== Variables
+
+You can define variables and use them in paragraphs
+
+[source]
+----
+:answer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is {answer}
+----
+
+. Result
+[callout]
+----
+:wanswer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is {wanswer}
+----
+
+You can avoid variable replacement escaping curly braces
+
+[source]
+----
+:answer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is \{answer\}
+----
+
+. Result
+[callout]
+----
+:answer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is \{answer\}
+----
+
+Curly braces are used a lot in programming languages, so verbatim text automatically escapes curly braces
+
+[source]
+----
+:answer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is `{answer}`
+----
+
+. Result
+[callout]
+----
+:answer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is `{answer}`
+----
+
+Variables are replaced before parsing paragraphs, so they can contain any inline item such as styles or links
+
+[source]
+----
+:styled:_this is text with style_
+:homepage:https://projectmau.org
+
+For example {styled}. Read the docs at {homepage}
+----
+
+. Result
+[callout]
+----
+:styled:_this is text with style_
+:homepage:https://projectmau.org
+
+For example {styled}. Read the docs at {homepage}
+----
+
+Variables without a value will automatically become booleans
+
+[source,callouts="|"]
+----
+:flag:
+
+The flag is {flag}.
+----
+
+. Result
+[callout]
+----
+:flag:
+
+The flag is {flag}.
+----
+
+You can set a flag to false negating it
+
+[source,callouts="|"]
+----
+:!flag:
+
+The flag is {flag}.
+----
+
+. Result
+[callout]
+----
+:!flag:
+
+The flag is {flag}.
+----
+
+== Blocks
+
+Mau has the concept of blocks, which are parts of the text delimited by fences
+
+[source]
+++++
+----
+This is a block
+----
+++++
+
+.Result
+[callout]
+++++
+----
+This is a block
+----
+++++
+
+You can use any sequence of 4 identical characters to delimit a block, provided this doesn't clash with other syntax like headers
+
+[source]
+----
+++++
+This is a block
+++++
+
+%%%%
+This is another block
+%%%%
+----
+
+.Result
+[callout]
+----
+++++
+This is a block
+++++
+
+%%%%
+This is another block
+%%%%
+----
+
+Should you need to insert 4 identical characters on a line for some reasons, you need to escape one of them
+
+[source]
+----
+\++++
+----
+
+.Result
+[callout]
+----
+\++++
+----
+
+Blocks have the concept of _secondary content_, which is any paragraph that is adjacent to the closing fence. This paragraph is included in the block metadata and used according to the type of block (for example for callouts by `source` blocks). The default block simply discards that content
+
+[source]
+++++
+----
+Content of the block
+----
+Secondary content that won't be in the output
+
+This is not part of the block
+++++
+
+
+.Result
+[callout]
+++++
+----
+Content of the block
+----
+Secondary content that won't be in the output
+
+This is not part of the block
+++++
+
+=== Block titles
+
+Blocks can have titles
+
+[source]
+++++
+. The title
+----
+This is a block
+----
+++++
+
+.Result
+[callout]
+++++
+. The title
+----
+This is a block
+----
+++++
+
+=== Block attributes
+
+Blocks can have attributes, specified before the opening fence between square brackets
+
+[source]
+++++
+[classes="callout"]
+----
+This is a block with the class `callout`
+----
+++++
+
+.Result
+[callout]
+++++
+[classes="callout"]
+----
+This is a block with the class `callout`
+----
+++++
+
+Attributes can be unnamed or named, and the first unnamed attribute is the type of the block. Mau provides some special block types like `source`, `admonition`, and `quote` (see the documentation below), and each one of them has a specific set of required or optional attributes.
+
+You can combine title and attribute in any order
+
+[source]
+++++
+. Title of the block
+[classes="callout"]
+----
+This is a block with the class `callout` and a title
+----
+
+[classes="callout"]
+. Title of the block
+----
+This is a block with the class `callout` and a title
+----
+++++
+
+.Result
+[callout]
+++++
+. Title of the block
+[classes="callout"]
+----
+This is a block with the class `callout` and a title
+----
+
+[classes="callout"]
+. Title of the block
+----
+This is a block with the class `callout` and a title
+----
+++++
+
+Title and attributes are consumed by the next block, so they don't need to be adjacent, should you want to separate them for some reasons
+
+[source]
+++++
+[classes="callout"]
+
+----
+This is a block with the class `callout`
+----
+++++
+
+.Result
+[callout]
+++++
+[classes="callout"]
+
+----
+This is a block with the class `callout`
+----
+++++
+
+=== Quotes
+
+The simplest block type the Mau provides is called `quote`. The second attribute is the attribution, and the content of the block is the quote itself.
+
+[source]
+++++
+[quote,"Star Wars, 1977"]
+----
+Learn about the Force, Luke.
+----
+++++
+
+.Result
+[callout]
+++++
+[quote,"Star Wars, 1977"]
+----
+Learn about the Force, Luke.
+----
+++++
+
+=== Admonitions
+
+Mau supports admonitions, special blocks that are meant to be rendered with an icon and a title like warnings, tips, or similar things. To create an admonition you need to use the type `admonition` and specify a `class`, and `icon`, and a `label`
+
+[source]
+++++
+[admonition,source,"fab fa-github","Source code"]
+----
+This is my admonition
+----
+++++
+
+.Result
+[callout]
+++++
+[admonition,source,"fab fa-github","Source code"]
+----
+This is my admonition
+----
+++++
+
+Admonition attributes can be provided with variables to simplify their usage
+
+[source]
+++++
+:github:admonition,source,"fab fa-github","Source code"
+
+[{github}]
+----
+This is my admonition
+----
+++++
+
+.Result
+[callout]
+++++
+:github:admonition,source,"fab fa-github","Source code"
+
+[{github}]
+----
+This is my admonition
+----
+++++
+
+Given how simple it is to build an admonition, Mau doesn't provide any admonitions like warnings or tips out of the box.
+
+=== Conditional blocks
+
+You can wrap Mau content in a conditional block, which displays it only when the condition is met.
+
+[source]
+++++
+:render:yes
+
+[if,render,yes]
+----
+This will be rendered
+----
+
+[if,render,no]
+----
+This will not be rendered
+----
+++++
+
+. Result
+[callout]
+++++
+:render:yes
+
+[if,render,yes]
+----
+This will be rendered
+----
+
+[if,render,no]
+----
+This will not be rendered
+----
+++++
+
+You can use booleans directly without specifying the value
+
+[source,callouts="|"]
+++++
+:render:
+
+[if,render]
+----
+This will be rendered
+----
+
+:!render:
+
+[if,render]
+----
+This will not be rendered
+----
+++++
+
+. Result
+[callout]
+++++
+:render:
+
+[if,render]
+----
+This will be rendered
+----
+
+:!render:
+
+[if,render]
+----
+This will not be rendered
+----
+++++
+
+You can reverse the condition using `ifnot`
+
+[source,callouts="|"]
+++++
+:render:
+
+[ifnot,render]
+----
+This will not be rendered
+----
+++++
+
+. Result
+[callout]
+++++
+:render:
+
+[ifnot,render]
+----
+This will not be rendered
+----
+++++
+
+=== Source code
+
+Literal paragraphs and source code can be printed using block type `source`
+
+[source]
+++++
+[source]
+----
+This is all literal.
+
+= This is not a header
+
+[These are not attributes]
+----
+++++
+
+. Result
+[callout]
+++++
+[source]
+----
+This is all literal.
+
+= This is not a header
+
+[These are not attributes]
+----
+++++
+
+You can specify the language for the highlighting
+
+[source]
+++++
+[source,python]
+----
+def header_anchor(text, level):
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]
+    )  # pragma: no cover
+----
+++++
+
+. Result
+[callout]
+++++
+[source,python]
+----
+def header_anchor(text, level):
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]
+    )  # pragma: no cover
+----
+++++
+
+==== Callouts
+
+Source code supports callouts, where you add notes to specific lines of code. Callouts are listed in the code using a delimiter and their text is added to the secondary content of the block
+
+[source,callouts="|"]
+++++
+[source,python]
+----
+def header_anchor(text, level)::1:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+++++
+
+. Result
+[callout]
+++++
+[source,python]
+----
+def header_anchor(text, level)::1:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+++++
+
+Callouts use a delimiter that can be any character, and are automatically removed from the source code. The default delimiter is `:`, so if that clashes with the syntax of your language you can pick a different one with the attribute `callouts`
+
+[source]
+++++
+[source,python,callouts="|"]
+----
+def header_anchor(text, level):|1|
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]|2|
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+++++
+
+. Result
+[callout]
+++++
+[source,python,callouts="|"]
+----
+def header_anchor(text, level):|1|
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]|2|
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+++++
+
+Callouts names are not manipulated by Mau, so you can use them our of order
+
+[source,callouts="|"]
+++++
+[source,python]
+----
+def header_anchor(text, level)::1:
+    return "h{}-{}-{}".format(:3:
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+3: This is the return value
+++++
+
+. Result
+[callout]
+++++
+[source,python]
+----
+def header_anchor(text, level)::1:
+    return "h{}-{}-{}".format(:3:
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+3: This is the return value
+++++
+
+Callouts are not limited to digits, you can use non-numeric labels
+
+[source,callouts="|"]
+++++
+[source,python]
+----
+def header_anchor(text, level)::step1:
+    return "h{}-{}-{}".format(:step3:
+        level, quote(text.lower())[:20], str(id(text))[:8]:step2:
+    )  # pragma: no cover
+----
+step1: The name of the function
+step2: Some memory-related wizardry
+step3: This is the return value
+++++
+
+. Result
+[callout]
+++++
+[source,python]
+----
+def header_anchor(text, level)::step1:
+    return "h{}-{}-{}".format(:step3:
+        level, quote(text.lower())[:20], str(id(text))[:8]:step2:
+    )  # pragma: no cover
+----
+step1: The name of the function
+step2: Some memory-related wizardry
+step3: This is the return value
+++++
+
+Callouts don't need to have a definition
+
+[source,callouts="|"]
+++++
+[source,python]
+----
+def header_anchor(text, level)::1:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+++++
+
+. Result
+[callout]
+++++
+[source,python]
+----
+def header_anchor(text, level)::1:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+++++
+
+And you can reference them [callout]#1# in the text.
+
+==== Highlight lines
+
+You can highlight lines using a callout with the special name `@`
+
+[source,highlight='#',callouts='|']
+++++
+[source,python]
+----
+def header_anchor(text, level)::@:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:@:
+    )  # pragma: no cover
+----
+++++
+
+. Result
+[callout]
+++++
+[source,python]
+----
+def header_anchor(text, level)::@:
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:@:
+    )  # pragma: no cover
+----
+++++
+
+Should you prefer to list the lines you want to highlight you can use Pygments directly
+
+[source]
+++++
+[source,python,pygments.hl_lines="1,3"]
+----
+def header_anchor(text, level):
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]
+    )  # pragma: no cover
+----
+++++
+
+. Result
+[callout]
+++++
+[source,python,pygments.hl_lines="1,3"]
+----
+def header_anchor(text, level):
+    return "h{}-{}-{}".format(
+        level, quote(text.lower())[:20], str(id(text))[:8]
+    )  # pragma: no cover
+----
+++++
+
+== Lists
+
+You can create unordered lists using the character `*`
+
+[source,text]
+----
+* List item
+** Nested list item
+*** Nested list item
+* List item
+ ** Another nested list item (indented)
+* List item
+----
+
+. Result
+[callout]
+----
+* List item
+** Nested list item
+*** Nested list item
+* List item
+ ** Another nested list item (indented)
+* List item
+----
+
+and ordered lists with the character `#`
+
+[source]
+----
+# Step 1
+# Step 2
+## Step 2a
+## Step 2b
+# Step 3
+----
+
+. Result
+[callout]
+----
+# Step 1
+# Step 2
+## Step 2a
+## Step 2b
+# Step 3
+----
+
+Mixed lists are possible
+
+[source,text]
+----
+* List item
+** Nested list item
+### Ordered item 1
+### Ordered item 2
+### Ordered item 3
+* List item
+----
+
+. Result
+[callout]
+----
+* List item
+** Nested list item
+### Ordered item 1
+### Ordered item 2
+### Ordered item 3
+* List item
+----
+
+== Footnotes
+
+You can insert a footnote in a paragraph using the macro `footnote`
+
+[source,text]
+----
+This is a paragraph that ends with a note[footnote](extra information here)
+----
+
+. Result
+[callout]
+----
+This is a paragraph that ends with a note[footnote](extra information here)
+----
+
+Footnotes can be inserted with the command `::footnotes:` and are then rendered according to the template, an example could be
+
+::footnotes:
+
+== Table of contents
+
+The table of contents (TOC) can be inserted with the command `::toc:` and is rendered according to the template, an example could be
+
+::toc:
+
+
+== Images
+
+Images can be included with
+
+[source,text]
+----
+<< image:https://via.placeholder.com/150
+----
+
+with the following result
+
+<< image:https://via.placeholder.com/150
+
+You can add a caption using a title
+
+[source,text]
+----
+. This is the caption
+<< image:https://via.placeholder.com/150
+----
+
+. This is the caption
+<< image:https://via.placeholder.com/150
+
+and specify the alternate text with `alt_text`
+
+[source,text]
+----
+[alt_text="Description of the image"]
+<< image:https://via.placeholder.com/150
+----
+
+[alt_text="Description of the image"]
+<< image:https://via.placeholder.com/150
+
+Images can be added inline with the macro `image`.
+
+[source,text]
+----
+This is a paragraph with an image [image](https://via.placeholder.com/30,alt_text="A placeholder")
+----
+
+. Result
+[callout]
+----
+This is a paragraph with an image [image](https://via.placeholder.com/30,alt_text="A placeholder")
+----
+
+= Templates
+
+Mau uses Jinja templates to render the AST nodes. It provides default templates for all the elements it can render but these templates are easily overridden to change the way they are rendered or to add custom classes/elements.
+
+For example the default template for the underscore marker `_` is
+
+[source, python]
+----
+"<em>{{ content }}</em>"
+----
+
+and that for quotes is
+
+[source, python]
+----
+"<blockquote>" "{{ content }}" "<cite>{{ attribution }}</cite>" "</blockquote>"
+----
+
+= Pelican
+
+A reader for Mau source files is available in Pelican, you can find the code at https://github.com/getpelican/pelican-plugins/pull/1327. Simply add the code to your Pelican plugins directory and activate it adding `"mau_reader"` to `PLUGINS` in your file `pelicanconf.py`. The Mau reader processes only files with the `.mau` extension, so you can use Markdown/reStructuredText and Mau at the same time.
+
+= Development
+
+Can Mau do `[insert feature here]`?
+
+What you see here is pretty much what Mau can do at the moment. I implemented only the features I needed to render my book (which at the moment is written using Mau syntax, transpiled with Mau to AsciiDoctor syntax and rendered with that tool). I'm planning to move to a workflow based entirely on Mau and Pelican shortly for both my blog and the book, and in the process I'm pretty sure I will find bugs and missing features, and have chances to improve the documentation.
+
+If you are interested you can leave a star on the project on the [link](https://github.com/Project-Mau/mau, "GitHub page"), start using it, or contribute ideas, code, bugfixes.
+
+= Feedback
+
+Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

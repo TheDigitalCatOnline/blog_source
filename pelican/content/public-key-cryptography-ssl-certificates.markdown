@@ -1,0 +1,811 @@
+Title: Public key cryptography: SSL certificates
+Date: 2020-11-04 23:00:00 +0100
+Category: Programming
+Tags: algorithms, cryptography, SSL, SSH, RSA, Python, WWW
+Authors: Leonardo Giordani
+Slug: public-key-cryptography-ssl-certificates
+Image: public-key-cryptography-ssl-certificates
+Summary: An in-depth discussion of the format of X.509 certificates and the signing mechanism
+
+In the context of public key cryptography, certificates are a way to prove the identity of the owner of a public key.
+
+While public key cryptography allows us to communicate securely through an insecure network, it leaves the problem of identity untouched. Once we established an encrypted communication we can be sure that the data we send and receive cannot be read or tampered with by third parties. But how can we be sure that the entity on the other side of the communication channel, with which we initiated the communication, is what it claims to be?
+
+In other words, the messages cannot be read or modified by malicious third-parties, but what if we established communication with a malicious actor in the first place? Such a situation can arise during a man-in-the-middle attack, where the low-level network communication is hijacked by a malicious actor who pretends to be the desired recipient of the communication.
+
+In the context of the Internet, and in particular of the World Wide Web, the main concern is that the server that provides services we log into (think of every service that has your personal or financial data like you bank, Google, Facebook, Netflix, etc.) is run by the company that we trust and not by an attacker who wants to steal our data.
+
+In this post I will try to clarify the main components of the certificates system and to explain the meaning of the major acronyms and names that you might hear when you deal with this part of web development.
+
+# Clarification: SSL vs TLS
+
+In the world of web development and infrastructure management, we normally speak of SSL protocol and of SSL certificates, but it has to be noted that SSL (Secure Sockets Layer) is the name of a deprecated protocol. The current implementation of the protocol used to secure web applications is **TLS** (Transport Layer Security).
+
+The story of SSL and TLS is rich of events and spans 25 years since its inception by Taher Elgamal at Netscape. In short, SSL had 3 major versions (the first of which was never publicly used), and was replaced by TLS in 1999. TLS itself has gone through 3 revisions at the time of writing, TLS 1.3 being the latest version available.
+
+The TLS/SSL nomenclature is one of many sources of confusion in the complicated world of security and applied cryptography. In this article I will use only the acronym TLS, but I went for SSL in the title because I wanted the subject matter to be recognisable also by developers that are not much into security and cryptography.
+
+# X.509 certificates
+
+While the problem of the identity in an insecure network can be solved in several ways, the solution embraced to secure the World Wide Web is based on a standard called **X.509**. When we mention SSL certificates, we usually mean X.509 certificates used in a TLS connection, such as that created by HTTPS.
+
+X.509 is the ITU-T standard used to represent certificates, and has been chosen to be the standard used in the TLS protocol. The standard doesn't only define the binary structure of the certificate itself, but it also defines procedures to revoke the certificates, and establishes a hierarchical system of certification known as **certificate path**, or **certificate chain**.
+
+The structure of an X.509 certificate is expressed using [ASN.1](https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One), a notation used natively by the PEM format (discussed [here]({filename}rsa-keys.markdown)). You can read the full specification in [RFC 2459](https://tools.ietf.org/html/rfc2459), in particular [Section 4](https://tools.ietf.org/html/rfc2459#section-4) "Certificate and Certificate Extensions Profile". I will refer to this later when I will have a look at a real certificate.
+
+# How are certificates related to HTTPS?
+
+Before I discuss how certificates solve the problem of identity (or ownership of a public key), let's clarify the relationship between them and HTTPS.
+
+HTTPS stands for HTTP Secure, and the core of the protocol consists of running HTTP over TLS. When we access a web site with HTTPS the browser first establishes a TLS connection with the server and then communicates with it using pure HTTP. This means that the whole HTTP protocol is encrypted, as the secure channel is established outside it, and also means that, aside from the different URI scheme `https://` instead of `http://`, there are no differences between the two protocols.
+
+Certificates come into play when the browser establishes the TLS connection, which is why you need to set-up HTTPS as part of your infrastructure and not in your web application. By the time the HTTP requests reach your application they are already decrypted and accessible in plain text, as the HTTP protocol mandates. We usually say that we "terminate TLS" when a component of our infrastructure manages certificates and decrypts HTTPS into HTTP.
+
+# How do certificates work?
+
+The X.509 standard establishes entities called **Certificate Authorities** (CAs), and creates a hierarchy of trust called **chain** between them. The idea is that there is a set of entities that are trusted worldwide by operating systems, browsers, and other network-related software, and that these entities can trust other entities, thus creating a trust network.
+
+While the market of Certificate Authorities is dominated by three major commercial players (see the [usage statistics](https://w3techs.com/technologies/overview/ssl_certificate))there are approximately 100 organisations operating worldwide, among which some non-profit ones. Not all of these are trusted by all operating systems or browsers, though.
+
+The set of CAs trusted by an organisation is called **root program**. The Mozilla community runs a program that is independent from the hardware/software platform, aptly called [Mozilla's CA Certificate Program](https://wiki.mozilla.org/CA) and uses data contained in the [Common CA Database](https://www.ccadb.org/) (CCADB). Private companies such as Microsoft, Apple, and Oracle run their own root programs and software running on the respective platforms (Windows, macOS/iOS, Java) can decide to trust the CAs provided by those programs.
+
+In the open-source world, the Mozilla root program is by far the most influential and important source of information, being used by other software packages and Linux distributions.
+
+It is possible to create certificates that are not signed by any CA, and these are called **self-signed certificates**. Such certificates can be used with any software that relies on certificates, but it requires such a software to disable certificate checking with the Certificate Authorities. Self-signed certificates are obviously useful for testing purposes, but there are scenarios in which it might be desirable not to rely on the CAs and establish a private network of trust.
+
+# Example: CA root certificate
+
+The certificates for root CAs that are part of the Mozilla root program can be retrieved from the [Common CA Database](https://www.ccadb.org/resources) web page, or can be seen in the Firefox [source code](https://hg.mozilla.org/mozilla-central/file/tip/security/nss/lib/ckfw/builtins/certdata.txt) directly. On a running Firefox browser you can open the [Privacy & Security](about:preferences#privacy) menu and click on "View Certificates" at the bottom of the page. The CAs are listed under the tab "Authorities".
+
+The interesting thing you can do here is to export a CA certificate. If you do it Firefox will save it in a file with extension `.crt`, that contains data in PEM format. I exported the certificate for `Amazon Root CA 1` and I ended up with the file `AmazonRootCA1.crt`. If, instead of exporting, you view the certificate, you will end up in a page that allows you to download the certificate and the chain, both in PEM format, in files with the extension `.pem`. As you see, you are not the only one who is confused.
+
+I described the PEM format [in a post on RSA keys]({filename}rsa-keys.markdown) so I won't repeat here the whole discussion about it. The [RFC 7468](https://tools.ietf.org/html/rfc7468) ("Textual Encodings of PKIX, PKCS, and CMS Structures") describes certificates in section 5. Section 4 mentions the module `id-pkix1-e` for `Certificate`, `CertificateList`, and `SubjectPublicKeyInfo` [RFC 5280](https://tools.ietf.org/html/rfc5280) ("Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile").
+
+The identifier `id-pkix1-e` is part of a registry of objects to be used in ASN.1 data created in the framework of the Public-Key Infrastructure using X.509 (PKIX) Working Group, that defined the infrastructure around the X.509 certificates system. Basically it's a standard way to identify binary objects and their structure. You can see a full list of all the objects in [RFC 7299](https://tools.ietf.org/html/rfc7299) ("Object Identifier Registry for the PKIX Working Group"). Not a very exciting one to read, if you ask me.
+
+I can dump the content of the Amazon Root CA 1 certificate with OpenSSL
+
+``` text
+$ openssl asn1parse -inform pem -in amazon-root-ca-1.pem
+    0:d=0  hl=4 l= 833 cons: SEQUENCE
+    4:d=1  hl=4 l= 553 cons: SEQUENCE
+    8:d=2  hl=2 l=   3 cons: cont [ 0 ]
+   10:d=3  hl=2 l=   1 prim: INTEGER           :02
+   13:d=2  hl=2 l=  19 prim: INTEGER           :066C9FCF99BF8C0A39E2F0788A43E696365BCA
+   34:d=2  hl=2 l=  13 cons: SEQUENCE
+   36:d=3  hl=2 l=   9 prim: OBJECT            :sha256WithRSAEncryption
+   47:d=3  hl=2 l=   0 prim: NULL
+   49:d=2  hl=2 l=  57 cons: SEQUENCE
+   51:d=3  hl=2 l=  11 cons: SET
+   53:d=4  hl=2 l=   9 cons: SEQUENCE
+   55:d=5  hl=2 l=   3 prim: OBJECT            :countryName
+   60:d=5  hl=2 l=   2 prim: PRINTABLESTRING   :US
+   64:d=3  hl=2 l=  15 cons: SET
+   66:d=4  hl=2 l=  13 cons: SEQUENCE
+   68:d=5  hl=2 l=   3 prim: OBJECT            :organizationName
+   73:d=5  hl=2 l=   6 prim: PRINTABLESTRING   :Amazon
+   81:d=3  hl=2 l=  25 cons: SET
+   83:d=4  hl=2 l=  23 cons: SEQUENCE
+   85:d=5  hl=2 l=   3 prim: OBJECT            :commonName
+   90:d=5  hl=2 l=  16 prim: PRINTABLESTRING   :Amazon Root CA 1
+  108:d=2  hl=2 l=  30 cons: SEQUENCE
+  110:d=3  hl=2 l=  13 prim: UTCTIME           :150526000000Z
+  125:d=3  hl=2 l=  13 prim: UTCTIME           :380117000000Z
+  140:d=2  hl=2 l=  57 cons: SEQUENCE
+  142:d=3  hl=2 l=  11 cons: SET
+  144:d=4  hl=2 l=   9 cons: SEQUENCE
+  146:d=5  hl=2 l=   3 prim: OBJECT            :countryName
+  151:d=5  hl=2 l=   2 prim: PRINTABLESTRING   :US
+  155:d=3  hl=2 l=  15 cons: SET
+  157:d=4  hl=2 l=  13 cons: SEQUENCE
+  159:d=5  hl=2 l=   3 prim: OBJECT            :organizationName
+  164:d=5  hl=2 l=   6 prim: PRINTABLESTRING   :Amazon
+  172:d=3  hl=2 l=  25 cons: SET
+  174:d=4  hl=2 l=  23 cons: SEQUENCE
+  176:d=5  hl=2 l=   3 prim: OBJECT            :commonName
+  181:d=5  hl=2 l=  16 prim: PRINTABLESTRING   :Amazon Root CA 1
+  199:d=2  hl=4 l= 290 cons: SEQUENCE
+  203:d=3  hl=2 l=  13 cons: SEQUENCE
+  205:d=4  hl=2 l=   9 prim: OBJECT            :rsaEncryption
+  216:d=4  hl=2 l=   0 prim: NULL
+  218:d=3  hl=4 l= 271 prim: BIT STRING
+  493:d=2  hl=2 l=  66 cons: cont [ 3 ]
+  495:d=3  hl=2 l=  64 cons: SEQUENCE
+  497:d=4  hl=2 l=  15 cons: SEQUENCE
+  499:d=5  hl=2 l=   3 prim: OBJECT            :X509v3 Basic Constraints
+  504:d=5  hl=2 l=   1 prim: BOOLEAN           :255
+  507:d=5  hl=2 l=   5 prim: OCTET STRING      [HEX DUMP]:30030101FF
+  514:d=4  hl=2 l=  14 cons: SEQUENCE
+  516:d=5  hl=2 l=   3 prim: OBJECT            :X509v3 Key Usage
+  521:d=5  hl=2 l=   1 prim: BOOLEAN           :255
+  524:d=5  hl=2 l=   4 prim: OCTET STRING      [HEX DUMP]:03020186
+  530:d=4  hl=2 l=  29 cons: SEQUENCE
+  532:d=5  hl=2 l=   3 prim: OBJECT            :X509v3 Subject Key Identifier
+  537:d=5  hl=2 l=  22 prim: OCTET STRING      [HEX DUMP]:04148418CC8534ECBC0C94942E08599CC7B2104E0A08
+  561:d=1  hl=2 l=  13 cons: SEQUENCE
+  563:d=2  hl=2 l=   9 prim: OBJECT            :sha256WithRSAEncryption
+  574:d=2  hl=2 l=   0 prim: NULL
+  576:d=1  hl=4 l= 257 prim: BIT STRING
+```
+
+Let's read part of it using the aforementioned [section 4 of RFC 5280](https://tools.ietf.org/html/rfc5280#section-4).
+
+The signed certificate is a sequence of three main components
+
+``` text
+   Certificate  ::=  SEQUENCE  {
+        tbsCertificate       TBSCertificate,
+        signatureAlgorithm   AlgorithmIdentifier,
+        signatureValue       BIT STRING  }
+```
+
+and the `TBSCertificate` structure represents the unsigned certificate (TBS = To Be Signed)
+
+``` text
+TBSCertificate  ::=  SEQUENCE  {
+        version         [0]  EXPLICIT Version DEFAULT v1,
+        serialNumber         CertificateSerialNumber,
+        signature            AlgorithmIdentifier,
+        issuer               Name,
+        validity             Validity,
+        subject              Name,
+        subjectPublicKeyInfo SubjectPublicKeyInfo,
+        issuerUniqueID  [1]  IMPLICIT UniqueIdentifier OPTIONAL,
+                             -- If present, version MUST be v2 or v3
+        subjectUniqueID [2]  IMPLICIT UniqueIdentifier OPTIONAL,
+                             -- If present, version MUST be v2 or v3
+        extensions      [3]  EXPLICIT Extensions OPTIONAL
+                             -- If present, version MUST be v3
+        }
+```
+
+Comparing this with the output of OpenSSL we can find fields such as `version`
+
+
+``` text
+   10:d=3  hl=2 l=   1 prim: INTEGER           :02
+```
+
+which according to the documentation is 3 (binary `02`). Many values are of type `PRINTABLESTRING`, so they are readable already in the ASN.1 dump.
+
+The validity of the certificate is
+
+``` text
+  110:d=3  hl=2 l=  13 prim: UTCTIME           :150526000000Z
+  125:d=3  hl=2 l=  13 prim: UTCTIME           :380117000000Z
+```
+
+and following section 4.1.2.5.1 of the RFC we find out that the certificate is valid between 26 May 2015 and 17 Jan 2038. You can easily read these values in the certificate page in the browser without getting an headache trying to decode ASN.1.
+
+The CA signed the certificate using a certain algorithm. The algorithm identifier is repeated twice, first in the structure `Certificate` (`signatureAlgorithm AlgorithmIdentifier`) and then in the structure `TBSCertificate` (`signature AlgorithmIdentifier`). The two fields must have the same value.
+
+``` text
+   34:d=2  hl=2 l=  13 cons: SEQUENCE
+   36:d=3  hl=2 l=   9 prim: OBJECT            :sha256WithRSAEncryption
+   47:d=3  hl=2 l=   0 prim: NULL
+   
+[...]
+   
+  561:d=1  hl=2 l=  13 cons: SEQUENCE
+  563:d=2  hl=2 l=   9 prim: OBJECT            :sha256WithRSAEncryption
+  574:d=2  hl=2 l=   0 prim: NULL
+```
+
+For this certificate, the algorithm used by Amazon is `sha256WithRSAEncryption`. This label is described in [RFC 4055](https://tools.ietf.org/html/rfc4055) ("Additional Algorithms and Identifiers for RSA Cryptography for use in the Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile") as "PKCS #1 version 1.5 signature algorithm with SHA-256". The specific algorithm can be found in [RFC 2313](https://tools.ietf.org/html/rfc2313) ("PKCS #1: RSA Encryption Version 1.5"). As the name of the algorithm suggests, the certificate is first digested with SHA-256 and then encrypted using RSA and the private key of the signer.
+
+Speaking of keys, the public key the CA used for the certificate can be found in the field `subjectpublickeyinfo`, which is again made of a field type `AlgorithmIdentifier` and a bit string with the value of the key. In this case the fields are
+
+``` text
+  205:d=4  hl=2 l=   9 prim: OBJECT            :rsaEncryption
+  216:d=4  hl=2 l=   0 prim: NULL
+  218:d=3  hl=4 l= 271 prim: BIT STRING
+```
+
+The algorithm `rsaEncryption` is described in [RFC 3279](https://tools.ietf.org/html/rfc3279) ("Algorithms and Identifiers for the Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"), section 2.3.1 as
+
+``` text
+      RSAPublicKey ::= SEQUENCE {
+         modulus            INTEGER,    -- n
+         publicExponent     INTEGER  }  -- e
+```
+
+(_sic_) or in [RFC 8017](https://tools.ietf.org/html/rfc8017) ("PKCS #1: RSA Cryptography Specifications Version 2.2")
+
+``` text
+RSAPublicKey ::= SEQUENCE {
+    modulus           INTEGER,  -- n
+    publicExponent    INTEGER   -- e
+}
+```
+
+We can then use the option `-strparse` of the module `asn1parse` to find the actual values
+
+``` text
+$ openssl asn1parse -inform pem -in amazon-root-ca-1.pem -strparse 218
+    0:d=0  hl=4 l= 266 cons: SEQUENCE
+    4:d=1  hl=4 l= 257 prim: INTEGER           :B2788071CA78D5E371AF478050747D6ED8D78876F4
+9968F7582160F97484012FAC022D86D3A0437A4EB2A4D036BA01BE8DDB48C80717364CF4EE8823C73EEB37F5B5
+19F84968B0DED7B976381D619EA4FE8236A5E54A56E445E1F9FDB416FA74DA9C9B35392FFAB02050066C7AD080
+B2A6F9AFEC47198F503807DCA2873958F8BAD5A9F948673096EE94785E6F89A351C0308666A14566BA54EBA3C3
+91F948DCFFD1E8302D7D2D747035D78824F79EC4596EBB738717F2324628B843FAB71DAACAB4F29F240E2D4BF7
+715C5E69FFEA9502CB388AAE50386FDBFB2D621BC5C71E54E177E067C80F9C8723D63F40207F2080C4804C3E3B
+24268E04AE6C9AC8AA0D
+  265:d=1  hl=2 l=   3 prim: INTEGER           :010001
+```
+
+As we already saw for [RSA keys]({filename}rsa-keys.markdown)), OpenSSL has a specific module for important structures, and the X.509 certificates are definitely worth a module aptly called `x509`. using that we can easily decode any certificate
+
+``` text
+$ openssl x509 -inform pem -in amazon-root-ca-1.pem -noout -text
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            06:6c:9f:cf:99:bf:8c:0a:39:e2:f0:78:8a:43:e6:96:36:5b:ca
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C = US, O = Amazon, CN = Amazon Root CA 1
+        Validity
+            Not Before: May 26 00:00:00 2015 GMT
+            Not After : Jan 17 00:00:00 2038 GMT
+        Subject: C = US, O = Amazon, CN = Amazon Root CA 1
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:b2:78:80:71:ca:78:d5:e3:71:af:47:80:50:74:
+                    7d:6e:d8:d7:88:76:f4:99:68:f7:58:21:60:f9:74:
+                    84:01:2f:ac:02:2d:86:d3:a0:43:7a:4e:b2:a4:d0:
+                    36:ba:01:be:8d:db:48:c8:07:17:36:4c:f4:ee:88:
+                    23:c7:3e:eb:37:f5:b5:19:f8:49:68:b0:de:d7:b9:
+                    76:38:1d:61:9e:a4:fe:82:36:a5:e5:4a:56:e4:45:
+                    e1:f9:fd:b4:16:fa:74:da:9c:9b:35:39:2f:fa:b0:
+                    20:50:06:6c:7a:d0:80:b2:a6:f9:af:ec:47:19:8f:
+                    50:38:07:dc:a2:87:39:58:f8:ba:d5:a9:f9:48:67:
+                    30:96:ee:94:78:5e:6f:89:a3:51:c0:30:86:66:a1:
+                    45:66:ba:54:eb:a3:c3:91:f9:48:dc:ff:d1:e8:30:
+                    2d:7d:2d:74:70:35:d7:88:24:f7:9e:c4:59:6e:bb:
+                    73:87:17:f2:32:46:28:b8:43:fa:b7:1d:aa:ca:b4:
+                    f2:9f:24:0e:2d:4b:f7:71:5c:5e:69:ff:ea:95:02:
+                    cb:38:8a:ae:50:38:6f:db:fb:2d:62:1b:c5:c7:1e:
+                    54:e1:77:e0:67:c8:0f:9c:87:23:d6:3f:40:20:7f:
+                    20:80:c4:80:4c:3e:3b:24:26:8e:04:ae:6c:9a:c8:
+                    aa:0d
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+            X509v3 Key Usage: critical
+                Digital Signature, Certificate Sign, CRL Sign
+            X509v3 Subject Key Identifier: 
+                84:18:CC:85:34:EC:BC:0C:94:94:2E:08:59:9C:C7:B2:10:4E:0A:08
+    Signature Algorithm: sha256WithRSAEncryption
+         98:f2:37:5a:41:90:a1:1a:c5:76:51:28:20:36:23:0e:ae:e6:
+         28:bb:aa:f8:94:ae:48:a4:30:7f:1b:fc:24:8d:4b:b4:c8:a1:
+         97:f6:b6:f1:7a:70:c8:53:93:cc:08:28:e3:98:25:cf:23:a4:
+         f9:de:21:d3:7c:85:09:ad:4e:9a:75:3a:c2:0b:6a:89:78:76:
+         44:47:18:65:6c:8d:41:8e:3b:7f:9a:cb:f4:b5:a7:50:d7:05:
+         2c:37:e8:03:4b:ad:e9:61:a0:02:6e:f5:f2:f0:c5:b2:ed:5b:
+         b7:dc:fa:94:5c:77:9e:13:a5:7f:52:ad:95:f2:f8:93:3b:de:
+         8b:5c:5b:ca:5a:52:5b:60:af:14:f7:4b:ef:a3:fb:9f:40:95:
+         6d:31:54:fc:42:d3:c7:46:1f:23:ad:d9:0f:48:70:9a:d9:75:
+         78:71:d1:72:43:34:75:6e:57:59:c2:02:5c:26:60:29:cf:23:
+         19:16:8e:88:43:a5:d4:e4:cb:08:fb:23:11:43:e8:43:29:72:
+         62:a1:a9:5d:5e:08:d4:90:ae:b8:d8:ce:14:c2:d0:55:f2:86:
+         f6:c4:93:43:77:66:61:c0:b9:e8:41:d7:97:78:60:03:6e:4a:
+         72:ae:a5:d1:7d:ba:10:9e:86:6c:1b:8a:b9:59:33:f8:eb:c4:
+         90:be:f1:b9
+```
+
+Now I'm pretty sure you want to kill me because I could have shown you this from the start. But I like to understand things, and the easy path doesn't always make everything clear. At any rate, here you have a way to read an X.509 certificate in PEM format.
+
+Please note that in this certificate the `Issuer` and the `Subject` are the same entity, as this is a root certificate, which is signed by the same entity that creates it.
+
+``` text
+        Issuer: C = US, O = Amazon, CN = Amazon Root CA 1
+[...]
+	    Subject: C = US, O = Amazon, CN = Amazon Root CA 1
+```
+
+Moreover, one of the version 3 extensions of the self-signed certificate is a basic constraint with the boolean `CA` set to true. It also has the extension `Key Usage` set to `Digital Signature, Certificate Sign, CRL Sign`, which means that the certificate can be used to sign other certificates.
+
+# Example: self-signed certificate
+
+You can use OpenSSL to create a self-signed certificate using the module `req` that you would normally use to create certificate requests. As a self-signed certificate doesn't need approval, the module can directly output the certificate.
+
+``` sh
+$ openssl req -x509 -newkey rsa:2048 -keyout self-signed-key.pem -out self-signed.pem -days 365 -nodes -subj '/CN=localhost'
+Generating a RSA private key
+....+++++
+................+++++
+writing new private key to 'self-signed-key.pem'
+-----
+```
+
+(note that for simplicity's sake I specified the option `-nodes` that prevents the key to be protected with a password, but this is a bad practice). This command creates the two files I mentioned, `self-signed-key.pem` (the private key) and `self-signed.pem`.
+
+We can read the certificate using the module `x509`
+
+``` text
+$ openssl x509 -inform pem -in self-signed.pem  -noout -text
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            46:e5:2f:8e:42:82:43:b8:ac:88:cb:6d:0c:2f:71:28:a9:fe:00:ec
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN = localhost
+        Validity
+            Not Before: Nov  3 00:23:34 2020 GMT
+            Not After : Nov  3 00:23:34 2021 GMT
+        Subject: CN = localhost
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:b7:14:ef:3b:eb:8b:a9:40:18:c5:d2:eb:1d:4f:
+                    5d:e4:a3:17:f3:df:ce:b7:d3:3f:52:58:eb:61:02:
+                    a2:68:0a:cd:0f:97:ae:e0:a5:ac:a7:88:cf:a1:15:
+                    0a:97:ca:e7:03:8a:a5:c0:66:38:ef:bb:59:4d:48:
+                    17:db:a7:bd:fa:4b:50:2a:be:e9:5b:bb:59:65:71:
+                    dc:99:73:9c:bc:4d:3b:42:97:91:e9:3b:1a:8a:9d:
+                    cc:41:38:ba:8b:8f:df:65:ff:5b:1f:ef:8a:b7:c5:
+                    93:07:ce:15:4c:13:72:78:59:64:9a:5b:95:20:b6:
+                    b3:8e:aa:c3:29:c3:7f:28:39:43:81:59:e4:0f:26:
+                    7c:3f:49:d2:06:05:d9:54:ab:09:65:96:01:cc:c2:
+                    72:be:85:1f:40:ea:94:35:04:09:9d:87:eb:a1:90:
+                    36:ce:d2:55:f9:ee:08:db:52:78:e8:70:d0:25:89:
+                    13:8e:0f:9d:98:98:d1:4d:67:06:8f:8a:61:9e:3a:
+                    73:89:aa:0a:0a:1b:05:a7:52:32:ef:1b:78:5a:5f:
+                    4b:b6:c9:a7:4e:15:10:04:50:99:00:09:2f:60:8e:
+                    aa:20:af:6b:ee:f5:60:0b:29:da:38:1c:b2:73:14:
+                    99:a4:ee:5e:89:e6:77:0b:ba:cf:d3:5d:d7:a3:ea:
+                    c4:bf
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                64:7B:C1:FC:99:74:56:B7:82:D1:4F:E7:2D:94:77:1A:09:52:26:5C
+            X509v3 Authority Key Identifier: 
+                keyid:64:7B:C1:FC:99:74:56:B7:82:D1:4F:E7:2D:94:77:1A:09:52:26:5C
+
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+    Signature Algorithm: sha256WithRSAEncryption
+         43:7b:0b:c8:98:b8:6f:72:af:39:4a:d9:76:ce:e3:9d:3a:c7:
+         9f:14:b0:4f:20:0a:45:b3:b4:8c:e5:37:4c:bf:15:ad:8e:5c:
+         45:4f:3e:b7:ef:8d:60:57:bb:6f:d9:5e:6a:d3:04:05:4a:ff:
+         f2:66:b1:76:66:59:7e:24:89:0a:50:28:c9:d5:f5:7a:00:07:
+         8a:79:9c:6e:53:43:66:e5:9a:10:d8:f8:e1:f2:c1:f1:17:d0:
+         d2:9e:50:80:fe:2a:ca:08:b6:98:e9:b5:a4:82:23:31:45:35:
+         33:da:2c:e3:fe:54:f2:bd:f2:61:91:f4:32:e3:7d:4c:3a:e5:
+         3a:0f:cd:36:b0:8b:af:9f:8e:3d:0e:0b:a5:df:4a:3a:91:83:
+         b3:b2:5f:3c:47:81:73:4f:a2:c1:49:06:75:17:25:fa:5a:8d:
+         30:e5:55:7f:9c:3e:15:a8:b5:ab:f7:45:38:e3:76:8e:d4:0d:
+         60:fc:42:17:3d:85:72:41:1d:53:9d:58:b0:e9:29:0c:e4:6b:
+         14:c2:22:c4:d5:7b:de:36:da:df:d8:a0:4f:a4:0a:f2:3e:ca:
+         7e:66:a6:10:38:97:24:73:5b:db:eb:0b:6c:a8:f8:37:15:2c:
+         0e:b1:82:44:cc:fe:85:b0:cb:6c:26:4b:4a:70:33:dc:7e:f5:
+         84:ba:07:db
+```
+
+As you can see this certificate has the same value in `Issuer` and `Subject`, as happened before for the Amazon Root one. It also has the flag `CA` set to true but it doesn't have the extension `Key Usage` meaning that this certificate can't be used to sign other certificates.
+
+# Example: this site's certificate
+
+You can see TLS certificates and the chain of trust in action in this very website. Following the documentation of you browser (instructions for Firefox are [here](https://support.mozilla.org/en-US/kb/secure-website-certificate)), you can see the certificate used by The Digital Cat. At the time of writing the blog is hosted on GitHub Pages, even tough I'm using a custom domain, and GitHub partnered with [Let's Encrypt](https://letsencrypt.org/) to provide certificates for such a configuration (details [here](https://github.blog/2018-05-01-github-pages-custom-domains-https/)).
+
+Indeed, the certificate for [thedigitalcatonline.com](https://www.thedigitalcatonline.com) is provided by "Let's Encrypt Authority X3", which in turn is trusted by Digital Signature Trust Co. with its root CA "DST Root CA X3".
+
+Let's have a look at the three certificates. The one for The Digital Cat is
+
+``` text
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            03:93:02:bb:9a:c9:ed:a5:c3:d1:16:00:8b:15:76:af:e5:d9
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C = US, O = Let's Encrypt, CN = Let's Encrypt Authority X3
+        Validity
+            Not Before: Oct 22 04:53:28 2020 GMT
+            Not After : Jan 20 04:53:28 2021 GMT
+        Subject: CN = www.thedigitalcatonline.com
+[...]
+	    X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication, TLS Web Client Authentication
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                63:4E:15:85:56:5A:A4:94:02:C2:16:42:A4:A5:97:9A:38:02:57:97
+            X509v3 Authority Key Identifier: 
+                keyid:A8:4A:6A:63:04:7D:DD:BA:E6:D1:39:B7:A6:45:65:EF:F3:A8:EC:A1
+
+            Authority Information Access: 
+                OCSP - URI:http://ocsp.int-x3.letsencrypt.org
+                CA Issuers - URI:http://cert.int-x3.letsencrypt.org/
+
+            X509v3 Subject Alternative Name: 
+                DNS:www.thedigitalcatonline.com
+[...]
+```
+
+And you can see that this time the `Subject` is `www.thedigitalcatonline.com`, but the `Issuer` is `Let's Encrypt Authority X3`. The certificate provided by the organisation `Let's Encrypt` is
+
+``` text
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            0a:01:41:42:00:00:01:53:85:73:6a:0b:85:ec:a7:08
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: O = Digital Signature Trust Co., CN = DST Root CA X3
+        Validity
+            Not Before: Mar 17 16:40:46 2016 GMT
+            Not After : Mar 17 16:40:46 2021 GMT
+        Subject: C = US, O = Let's Encrypt, CN = Let's Encrypt Authority X3
+[...]
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:TRUE, pathlen:0
+            X509v3 Key Usage: critical
+                Digital Signature, Certificate Sign, CRL Sign
+            Authority Information Access: 
+                OCSP - URI:http://isrg.trustid.ocsp.identrust.com
+                CA Issuers - URI:http://apps.identrust.com/roots/dstrootcax3.p7c
+
+            X509v3 Authority Key Identifier: 
+                keyid:C4:A7:B1:A4:7B:2C:71:FA:DB:E1:4B:90:75:FF:C4:15:60:85:89:10
+
+            X509v3 Certificate Policies: 
+                Policy: 2.23.140.1.2.1
+                Policy: 1.3.6.1.4.1.44947.1.1.1
+                  CPS: http://cps.root-x1.letsencrypt.org
+
+            X509v3 CRL Distribution Points: 
+
+                Full Name:
+                  URI:http://crl.identrust.com/DSTROOTCAX3CRL.crl
+
+            X509v3 Subject Key Identifier: 
+                A8:4A:6A:63:04:7D:DD:BA:E6:D1:39:B7:A6:45:65:EF:F3:A8:EC:A1
+[...]
+```
+
+Here, the `Subject` is `Let's Encrypt Authority X3` (the `Issuer` of the previous certificate), and the `Issuer` is `DST Root CA X3`. Last, the certificate provided by the organisation `Digital Signature Trust Co.` is
+
+``` text
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            44:af:b0:80:d6:a3:27:ba:89:30:39:86:2e:f8:40:6b
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: O = Digital Signature Trust Co., CN = DST Root CA X3
+        Validity
+            Not Before: Sep 30 21:12:19 2000 GMT
+            Not After : Sep 30 14:01:15 2021 GMT
+        Subject: O = Digital Signature Trust Co., CN = DST Root CA X3
+[...]
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+            X509v3 Key Usage: critical
+                Certificate Sign, CRL Sign
+            X509v3 Subject Key Identifier: 
+                C4:A7:B1:A4:7B:2C:71:FA:DB:E1:4B:90:75:FF:C4:15:60:85:89:10
+[...]
+```
+
+As happened for the certificate `Amazon Root CA 1` that we discussed before, this one is self-signed, having the same value for `Subject` and `Issuer`.
+
+# How to verify certificates with OpenSSL
+
+To verify if a certificate is valid we can use the module `verify` of OpenSSL. By default, OpenSSL doesn't trust anything, and `verify` relies on a default path in the system to find root certificates. You can see the path running
+
+``` sh
+$ openssl version -d
+OPENSSLDIR: "/usr/lib/ssl"
+```
+
+On Ubuntu 20.04, the directory `/usr/lib/ssl/certs` is a symbolic link to `/etc/ssl/certs` that is installed by the package [`ca-certificates`](https://packages.ubuntu.com/focal/ca-certificates) which is linked to the Mozilla's CA Certificate Program (details on that package can be found in the [source code](https://salsa.debian.org/debian/ca-certificates/-/blob/master/debian/README.Debian)).
+
+So, if a root certificate is included in the Mozilla program, it is trusted by OpenSSL
+
+``` sh
+$ openssl verify amazon-root-ca-1.pem 
+amazon-root-ca-1.pem: OK
+```
+
+while a self-signed certificate is not
+
+``` sh
+$ openssl verify self-signed.pem 
+CN = localhost
+error 18 at 0 depth lookup: self signed certificate
+error self-signed.pem: verification failed
+```
+
+A non-root certificate can be verified specifying which root certificate signed it. So, the certificate for this website is not trusted automatically
+
+``` sh
+$ openssl verify www-thedigitalcatonline-com.pem 
+CN = www.thedigitalcatonline.com
+error 20 at 0 depth lookup: unable to get local issuer certificate
+error www-thedigitalcatonline-com.pem: verification failed
+```
+
+But it is verified specifying the certificate for Let's Encrypt that signed it
+
+``` sh
+$ openssl verify -CAfile lets-encrypt-x3.pem www-thedigitalcatonline-com.pem 
+www-thedigitalcatonline-com.pem: OK
+```
+
+because the certificate `lets-encrypt-x3.pem` is signed by `DST_Root_CA_X3.pem` which is included in the Mozilla program, and thus included in my Linux distribution.
+
+If I remove the default certificates path OpenSSL doesn't accept the certificate for Let's Encrypt any more
+
+``` sh
+$ openssl verify -no-CApath -CAfile lets-encrypt-x3.pem www-thedigitalcatonline-com.pem
+C = US, O = Let's Encrypt, CN = Let's Encrypt Authority X3
+error 2 at 1 depth lookup: unable to get issuer certificate
+error www-thedigitalcatonline-com.pem: verification failed
+```
+
+# Low-level certificate validation process
+
+Let's have a look at the signature process for x.509 certificates. The process depends on the specific algorithm used to sign the certificate, so I will use the certificate `Amazon Root CA 1` as an example, leaving to the reader the investigation about other algorithms.
+
+A signed certificate is made of two parts, the certificate itself and the signature. The signature contains an encrypted hash of the certificate. Being encrypted we can verify the signed using their public key, and once we decrypted it we can compare the hash with one that we create on the fly using the same algorithm.
+
+For the Amazon root certificate, we know the signature algorithm and value from the output of `openssl x509`
+
+``` text
+$ openssl x509 -inform pem -in amazon-root-ca-1.pem  -noout -text
+[...]
+	Signature Algorithm: sha256WithRSAEncryption
+         98:f2:37:5a:41:90:a1:1a:c5:76:51:28:20:36:23:0e:ae:e6:
+         28:bb:aa:f8:94:ae:48:a4:30:7f:1b:fc:24:8d:4b:b4:c8:a1:
+         97:f6:b6:f1:7a:70:c8:53:93:cc:08:28:e3:98:25:cf:23:a4:
+         f9:de:21:d3:7c:85:09:ad:4e:9a:75:3a:c2:0b:6a:89:78:76:
+         44:47:18:65:6c:8d:41:8e:3b:7f:9a:cb:f4:b5:a7:50:d7:05:
+         2c:37:e8:03:4b:ad:e9:61:a0:02:6e:f5:f2:f0:c5:b2:ed:5b:
+         b7:dc:fa:94:5c:77:9e:13:a5:7f:52:ad:95:f2:f8:93:3b:de:
+         8b:5c:5b:ca:5a:52:5b:60:af:14:f7:4b:ef:a3:fb:9f:40:95:
+         6d:31:54:fc:42:d3:c7:46:1f:23:ad:d9:0f:48:70:9a:d9:75:
+         78:71:d1:72:43:34:75:6e:57:59:c2:02:5c:26:60:29:cf:23:
+         19:16:8e:88:43:a5:d4:e4:cb:08:fb:23:11:43:e8:43:29:72:
+         62:a1:a9:5d:5e:08:d4:90:ae:b8:d8:ce:14:c2:d0:55:f2:86:
+         f6:c4:93:43:77:66:61:c0:b9:e8:41:d7:97:78:60:03:6e:4a:
+         72:ae:a5:d1:7d:ba:10:9e:86:6c:1b:8a:b9:59:33:f8:eb:c4:
+         90:be:f1:b9
+```
+
+You can see the signed certificate binary values with `cat amazon-root-ca-1.pem | tail -n+2 | head -n-1 | base64 -di |  hexdump -ve '/1 "%02x "' -e '2/8 "\n"'`. While we can recognise the signature in the last 256 bytes we can't easily separate the bytes with the signature algorithm. If we open the signed certificate with an ASN.1 parser, instead, we can easily find the binary value of the certificate part
+
+``` text
+30 82 03 41 30 82 02 29 a0 03 02 01 02 02 13 06
+6c 9f cf 99 bf 8c 0a 39 e2 f0 78 8a 43 e6 96 36
+5b ca 30 0d 06 09 2a 86 48 86 f7 0d 01 01 0b 05
+00 30 39 31 0b 30 09 06 03 55 04 06 13 02 55 53
+31 0f 30 0d 06 03 55 04 0a 13 06 41 6d 61 7a 6f
+6e 31 19 30 17 06 03 55 04 03 13 10 41 6d 61 7a
+6f 6e 20 52 6f 6f 74 20 43 41 20 31 30 1e 17 0d
+31 35 30 35 32 36 30 30 30 30 30 30 5a 17 0d 33
+38 30 31 31 37 30 30 30 30 30 30 5a 30 39 31 0b
+30 09 06 03 55 04 06 13 02 55 53 31 0f 30 0d 06
+03 55 04 0a 13 06 41 6d 61 7a 6f 6e 31 19 30 17
+06 03 55 04 03 13 10 41 6d 61 7a 6f 6e 20 52 6f
+6f 74 20 43 41 20 31 30 82 01 22 30 0d 06 09 2a
+86 48 86 f7 0d 01 01 01 05 00 03 82 01 0f 00 30
+82 01 0a 02 82 01 01 00 b2 78 80 71 ca 78 d5 e3
+71 af 47 80 50 74 7d 6e d8 d7 88 76 f4 99 68 f7
+58 21 60 f9 74 84 01 2f ac 02 2d 86 d3 a0 43 7a
+4e b2 a4 d0 36 ba 01 be 8d db 48 c8 07 17 36 4c
+f4 ee 88 23 c7 3e eb 37 f5 b5 19 f8 49 68 b0 de
+d7 b9 76 38 1d 61 9e a4 fe 82 36 a5 e5 4a 56 e4
+45 e1 f9 fd b4 16 fa 74 da 9c 9b 35 39 2f fa b0
+20 50 06 6c 7a d0 80 b2 a6 f9 af ec 47 19 8f 50
+38 07 dc a2 87 39 58 f8 ba d5 a9 f9 48 67 30 96
+ee 94 78 5e 6f 89 a3 51 c0 30 86 66 a1 45 66 ba
+54 eb a3 c3 91 f9 48 dc ff d1 e8 30 2d 7d 2d 74
+70 35 d7 88 24 f7 9e c4 59 6e bb 73 87 17 f2 32
+46 28 b8 43 fa b7 1d aa ca b4 f2 9f 24 0e 2d 4b
+f7 71 5c 5e 69 ff ea 95 02 cb 38 8a ae 50 38 6f
+db fb 2d 62 1b c5 c7 1e 54 e1 77 e0 67 c8 0f 9c
+87 23 d6 3f 40 20 7f 20 80 c4 80 4c 3e 3b 24 26
+8e 04 ae 6c 9a c8 aa 0d 02 03 01 00 01 a3 42 30
+40 30 0f 06 03 55 1d 13 01 01 ff 04 05 30 03 01
+01 ff 30 0e 06 03 55 1d 0f 01 01 ff 04 04 03 02
+01 86 30 1d 06 03 55 1d 0e 04 16 04 14 84 18 cc
+85 34 ec bc 0c 94 94 2e 08 59 9c c7 b2 10 4e 0a
+08
+```
+
+The signature algorithm part is
+
+``` text
+30 0d 06 09 2a 86 48 86 f7 0d 01 01 0b 05 00
+03 82 01 01 00
+```
+
+and the ASN.1 parser tells us that those bytes represent an `OBJECT IDENTIFIER` which value is `2.16.840.1.101.3.4.2.1`. Now, object identifiers are not complicated per se, they are just a way to identify algorithms and other well known components in ASN.1 structures. The description of the field [`signatureAlgorithm`](https://tools.ietf.org/html/rfc5280#section-4.1.1.2) of an x.509 certificate mentions three other RFCs that contains descriptions of the available algorithms. In particular, [RFC 4055](https://tools.ietf.org/html/rfc4055#section-2.1) contains the description of PKCS #1 one-way hash functions, one of which is
+
+``` text
+id-sha256  OBJECT IDENTIFIER  ::=  { joint-iso-itu-t(2)
+                     country(16) us(840) organization(1) gov(101)
+                     csor(3) nistalgorithm(4) hashalgs(2) 1 }
+```
+
+You can see the values in the object identifier between parentheses. Since these are PKCS #1 (a.k.a. RSA) has functions, OpenSSL identifies it as `sha256WithRSAEncryption` (see again [RFC 4055](https://tools.ietf.org/html/rfc4055#section-5)).
+
+RSA encryption is described in [RFC 2313](https://tools.ietf.org/html/rfc2313) ("PKCS #1: RSA Encryption Version 1.5") and the signature algorithm based on RSA is described there in [section 10](https://tools.ietf.org/html/rfc2313#section-10). In particular, section 10.2 details the verification process, which is the one we are interested in. The steps are
+
+* Bit-string-to-octet-string conversion of the signature
+* RSA decryption
+* Digest decoding (ASN.1)
+* Message digesting and comparison
+
+As for the signature conversion, the sentence
+
+``` text
+Specifically, assuming that the length in bits of the
+signature S is a multiple of eight, the first bit of the signature
+shall become the most significant bit of the first octet of the
+encrypted data, and so on through the last bit of the signature,
+which shall become the least significant bit of the last octet of the
+encrypted data.
+```
+
+is a very verbose way to say that the signature is big-endian.
+
+So, the hexadecimal value of the signature is
+
+``` text
+98f2375a4190a11ac57651282036230eaee628bbaaf894ae48a4307f1bfc248d
+4bb4c8a197f6b6f17a70c85393cc0828e39825cf23a4f9de21d37c8509ad4e9a
+753ac20b6a897876444718656c8d418e3b7f9acbf4b5a750d7052c37e8034bad
+e961a0026ef5f2f0c5b2ed5bb7dcfa945c779e13a57f52ad95f2f8933bde8b5c
+5bca5a525b60af14f74befa3fb9f40956d3154fc42d3c7461f23add90f48709a
+d9757871d1724334756e5759c2025c266029cf2319168e8843a5d4e4cb08fb23
+1143e843297262a1a95d5e08d490aeb8d8ce14c2d055f286f6c49343776661c0
+b9e841d7977860036e4a72aea5d17dba109e866c1b8ab95933f8ebc490bef1b9
+```
+
+And reading the field `Subject Public Key Info` of the certificate we find the public key. Remember that this is a root certificate, so it is signed using the same key that it contains, which is not true in general.
+
+The public key's modulus is
+
+``` text
+b2788071ca78d5e371af478050747d6ed8d78876f49968f7582160f97484012f
+ac022d86d3a0437a4eb2a4d036ba01be8ddb48c80717364cf4ee8823c73eeb37
+f5b519f84968b0ded7b976381d619ea4fe8236a5e54a56e445e1f9fdb416fa74
+da9c9b35392ffab02050066c7ad080b2a6f9afec47198f503807dca2873958f8
+bad5a9f948673096ee94785e6f89a351c0308666a14566ba54eba3c391f948dc
+ffd1e8302d7d2d747035d78824f79ec4596ebb738717f2324628b843fab71daa
+cab4f29f240e2d4bf7715c5e69ffea9502cb388aae50386fdbfb2d621bc5c71e
+54e177e067c80f9c8723d63f40207f2080c4804c3e3b24268e04ae6c9ac8aa0d
+```
+
+and the exponent is `0x10001` (default choice).
+
+RSA public-key signature decryption is performed with `signature ^ exponent mod modulus`, and this operation returns
+
+``` text
+1fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+fffffffffffffffffffff003031300d0609608648016503040201050004206fc
+4b8ac3d2b52c08baf56255e43d22c762962e4facab01ace16d48ec008be0a
+```
+
+Once the padding is removed, we are left with an ASN.1 binary structure that represents the digest
+
+``` text
+DigestInfo ::= SEQUENCE {
+  digestAlgorithm DigestAlgorithmIdentifier,
+  digest Digest }
+```
+
+(see [RFC 2313 - Section 10.1.2](https://tools.ietf.org/html/rfc2313#section-10.1.2))
+
+The value of `Digest` can be extracted with an ASN.1 parser or by taking the last 256 bits and is `6fc4b8ac3d2b52c08baf56255e43d22c762962e4facab01ace16d48ec008be0a`.
+
+At this point we need to process the certificate bytes (without signature) with the SHA-256 hash function and we will find a matching value of `6fc4b8ac3d2b52c08baf56255e43d22c762962e4facab01ace16d48ec008be0a`.
+
+This process (for the specific case of this certificate) can be easily done in Python
+
+``` python
+from cryptography import x509
+from hashlib import sha256
+
+certificate_pem_file = "amazon-root-ca-1.pem"
+
+with open(certificate_pem_file, "rb") as f:
+    certificate_pem = f.read()
+
+certificate = x509.load_pem_x509_certificate(certificate_pem)
+
+modulus = certificate.public_key().public_numbers().n
+exponent = certificate.public_key().public_numbers().e
+
+signature = int.from_bytes(certificate.signature, "big")
+
+verification = pow(signature, exponent, modulus)
+
+digest = bytes().fromhex(str(hex(verification))[-64:])
+
+calculated_digest = sha256(certificate.tbs_certificate_bytes)
+
+print(digest.hex() == calculated_digest.hexdigest())
+```
+
+This is arguably not the best Python code ever, but it's a simple way to demonstrate the process. As I said, this is far from being general, as it assumes the signature is `sha256WithRSAEncryption`, which might not be the case.
+
+What I showed you here is what happens when we validate a root certificate. When we validate a non-root certificate the process is exactly the same (taking into account that the algorithms involved might be different), only the public key used to sign the certificate doesn't come from the certificate itself, but from the signer one. So, in the case of this blog, the certificate for www.thedigitalcat.com has a signature encrypted with the public key of Let's Encrypt. And the certificate for Let's Encrypt will be signed using the public key of Digital Signature Trust Co. This is what creates the chain of trust.
+
+# Algorithms used by root certificates
+
+A quick scan of the certificates that are part of the Mozilla program reveals that the vast majority of them is using RSA to self-sign them
+
+``` sh
+$ for i in /etc/ssl/certs/*.pem; do openssl x509 -inform pem -in ${i} -noout -text | grep -E "Public Key Algorithm"; done | sort | uniq -c
+     25             Public Key Algorithm: id-ecPublicKey
+    114             Public Key Algorithm: rsaEncryption
+```
+
+while part of them are using `id-ecPublicKey` which is the identifier of elliptic curves algorithms.
+
+When it comes to signature algorithms, instead, there is more variety
+
+``` sh
+$ for i in /etc/ssl/certs/*.pem; do openssl x509 -inform pem -in ${i} -noout -text | grep -E "^    Signature Algorithm"; done | sort | uniq -c
+      7     Signature Algorithm: ecdsa-with-SHA256
+     18     Signature Algorithm: ecdsa-with-SHA384
+     47     Signature Algorithm: sha1WithRSAEncryption
+     57     Signature Algorithm: sha256WithRSAEncryption
+      9     Signature Algorithm: sha384WithRSAEncryption
+      1     Signature Algorithm: sha512WithRSAEncryption
+```
+
+Even here, elliptic curves are slowly being adopted.
+
+# AWS components related to certificates
+
+If you are using AWS, you can create certificates with ACM, the [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/). Such certificates cannot be downloaded, they can only be attached to other AWS components. For this reason, the generation process requires you to create any request, as you might have to do with other authorities. Certificates created in the ACM are free.
+
+Certificates created in the ACM can be attached to several AWS components, most notably [Load Balancers](https://aws.amazon.com/documentation/elastic-load-balancing/), [CloudFront](https://aws.amazon.com/documentation/cloudfront/), and [API Gateway](https://aws.amazon.com/documentation/apigateway/).
+
+Traditionally, load balancers are the place where TLS is terminated for HTTPS, requiring a connection to port 443. While [Application Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/index.html) can do that, in 2019 AWS [announced](https://aws.amazon.com/blogs/aws/new-tls-termination-for-network-load-balancers/) support for certificates in [Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/index.html) as well.
+
+## Let's encrypt
+
+In an effort to push for HTTP encryption of any public server, the Internet Security Research Group founded in 2016 a non-profit CA named [Let's Encrypt](https://letsencrypt.org/), which provides at no charge TLS certificates valid for 90 days. Such certificates can be renewed automatically as part of the setup ([certbot](https://certbot.org/)) and represent a viable alternative to certificates issued by other CA, in particular for open source projects. This blog uses a certificate issued by Let's Encrypt (provided by GitHub Pages) and will thus expire in less than 3 months (but also automatically renewed).
+
+# Final words
+
+I hope this post helped to clarify some of the most obscure points of certificates, that definitely bugged be when I first approached them. As always when standards are involved, the risk is to get lost in the myriad of documents where information is scattered, and not to realise that some (if not many) parts of the systems we run every day have a long history and thus a big burden of legacy code or nomenclature.
+
+# Resources
+
+* The Wikipedia article on [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_1.0,_2.0,_and_3.0)
+* The Wikipedia article on [Certificate authority](https://en.wikipedia.org/wiki/Certificate_authority)
+* The Wikipedia article on [X.509](https://en.wikipedia.org/wiki/X.509)
+* The Wikipedia article on [Let's Encrypt](https://en.wikipedia.org/wiki/Let%27s_Encrypt)
+* OpenSSL documentation: [asn1parse](https://www.openssl.org/docs/man1.1.0/apps/asn1parse.html), [x509](https://www.openssl.org/docs/man1.1.1/man1/x509.html), [verify](https://www.openssl.org/docs/man1.1.1/man1/verify.html)
+* The Abstract Syntax Notation One [ASN.1](https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One) interface description language
+* [RFC 2313](https://tools.ietf.org/html/rfc2313) - "PKCS #1: RSA Encryption Version 1.5"
+* [RFC 2459](https://tools.ietf.org/html/rfc2459) - "Internet X.509 Public Key Infrastructure Certificate and CRL Profile"
+* [RFC 3279](https://tools.ietf.org/html/rfc3279) - "Algorithms and Identifiers for the Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"
+* [RFC 4055](https://tools.ietf.org/html/rfc4055) - "Additional Algorithms and Identifiers for RSA Cryptography for use in the Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"
+* [RFC 5280](https://tools.ietf.org/html/rfc5280) - "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"
+* [RFC 7299](https://tools.ietf.org/html/rfc7299) - "Object Identifier Registry for the PKIX Working Group"
+* [RFC 7468](https://tools.ietf.org/html/rfc7468) - "Textual Encodings of PKIX, PKCS, and CMS Structures"
+* [RFC 8017](https://tools.ietf.org/html/rfc8017) - "PKCS #1: RSA Cryptography Specifications Version 2.2"
+* [RFC 8446](https://tools.ietf.org/html/rfc8446) - "The Transport Layer Security (TLS) Protocol Version 1.3"
+* [pyca/cryptography](https://cryptography.io/en/latest/) - The Python pyca/cryptography package
