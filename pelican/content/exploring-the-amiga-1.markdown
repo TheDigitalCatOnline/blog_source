@@ -160,7 +160,7 @@ When the Amiga OS loads a library in memory the Exec master library analyses its
 
 The Exec master library is not different, but this library is loaded as part of the bootstrap process, and the base address is always stored in memory location `0x4`. To use one of Exec's functions, then, we just need to issue a `jsr <address>` (Jump to SubRoutine), where `<address>` is the current position in memory of the function we want to call. Since we don't know the absolute address, being the library dynamically loaded, we use the library's jump table to retrieve the base address and get the function address as a fixed offset from the former.
 
-Many Amiga programmers knew (and know) the addresses by heart, which is fine since the Amiga OS promises not to change the orderof the jump table among different versions of Exec. So, for example, the address of the `OpenLibrary` function can be found at `-552` bytes before the library base address, while `CloseLibrary` is at `-414`. To call the `OpenLibrary` function, then, you need the following code
+Many Amiga programmers knew (and know) the addresses by heart, which is fine since the Amiga OS promises not to change the order of the jump table among different versions of Exec. So, for example, the address of the `OpenLibrary` function can be found at `-552` bytes before the library base address, while `CloseLibrary` is at `-414`. To call the `OpenLibrary` function, then, you need the following code
 
 ``` m68k
     move.l 4.w,a6   ; a6 = base address of Exec
