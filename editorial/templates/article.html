@@ -136,7 +136,7 @@
   {% if article.series %}
   <section class="footer">
     {% set text = 'Part %(index)s of the %(name)s series' %}
-    <h1>{{ text|format(index=article.series.index, name=article.series.name) }}</h1>
+    <h2>{{ text|format(index=article.series.index, name=article.series.name) }}</h2>
     <div class="box">
       {% if article.series.all_previous %}
       <h5>Previous articles</h5>
@@ -161,7 +161,7 @@
 
   {% if article.related_posts %}
   <section class="footer">
-    <h1>Related Posts</h1>
+    <h2>Related Posts</h2>
     {% set _other_num = 10 %}
     <div class="posts mini">
       {% for article in article.related_posts[:_other_num] %}
