@@ -12,7 +12,7 @@
 
 <button onclick="hideStyle()">Toggle retro style</button>
 
-= Exec and the vector table
+== Exec and the vector table
 
 The Exec library is the base library of the Amiga system. This library is loaded in memory at boot time, and it is always open and available. Once loaded, it has the same structure of any other library, that is a prefix containing the jump table in reverse order, then the actual code.
 
@@ -104,7 +104,7 @@ where `&lt;vectors_offset&gt;` is a hardcoded offset (as the displacement of `ve
 
 This mechanism creates then a library that can install other libraries through a given function, but that can at the same time install itself.
 
-= The Kickstart vector table
+== The Kickstart vector table
 
 An actual example of the vector table mechanism can be found in the Kickstart code. Kickstart is the BIOS of the Amiga system, and is loaded at boot time either from disk (Amiga 1000 and some Amiga 3000) or from a ROM.
 
@@ -125,7 +125,7 @@ The practice of understanding how a system works starting from the pure implemen
 
 The purpose of the present investigation is to find the Kickstart 1.3 vector table, and with that to find the position and implementation of the Exec functions. Well, let's start.
 
-== Step 1
+=== Step 1
 
 I know that `MakeFunctions` is used to create in memory the structure of Exec itself. So I know that somewhere that function is invoked on the code that I am studying.
 
@@ -151,7 +151,7 @@ When looking for strings it's better to use a hexadecimal editor that can show a
 
 We know that Kickstart is loaded at address 0xfc0000 (Amiga System Programmer's Guide, page 67), so all the 16-bit addresses are relative to 0x00fc. The library name pointer is then `00fc 00a8`.
 
-== Step 2
+=== Step 2
 
 In the Amiga system all libraries have a specific structure when loaded in memory. Apart from the prefixed jump table, the library code itself is wrapped in a fixed structure that allows us to read and use it.
 
@@ -223,7 +223,7 @@ From this I know that the version of `exec` contained in this Kickstart is 34 (`
 .Exec version string
 << image:/images/exploring-the-amiga-3/exec-version-string.png
 
-== Step 3
+=== Step 3
 
 What we are really interested in, at this point, is where the address of this structure is mentioned in the code, as it will be used to create the library structure. Since the `MakeFunctions` routine will be invoked after creating the library structure, we can know from here where the former is defined.
 
@@ -276,7 +276,7 @@ where `address` is the address where the jump table will be constructed, `vector
 
 So the first line stores in `a0` the content of `a6`, which is the ExecBase address. This is where we want to install the library. The second line loads the address of the vectors table in `a1` and the same value is stored in `a2`. Then the code branches to the subroutine at `0x15b2` which at this point we know is the address of `MakeFunctions`.
 
-== Step 4
+=== Step 4
 
 We extracted two useful information from this code. First, the vector table is at address `0x1a7c`, and second the `MakeFunctions` subroutine is at address `0x15b2`. The latter will be useful to double check the content of the vector table.
 
@@ -311,20 +311,20 @@ The file `include_i/exec/exec_lib.i` doesn't contain the first 4 reserved vector
 
 This shows that our investigation is correct. The Kickstart 1.3 vector table is at address `0x1a7c` and from there we can reach and analyse all the functions contained in the base Amiga library.
 
-= What's next
+== What's next
 
 In the next article I will show the code of the 4 Exec base functions and discuss `MakeFunctions` in depth. I will also briefly discuss self-modifying code, as `MakeFunctions` has a good example of it.
 
-= Resources
+== Resources
 
 * Amiga System Programmers Guide, Abacus - https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus
 * [link](http://amigadev.elowar.com,"AmigaOS Developer Docs")
 * Amiga Forever package sold by Cloanto [link](https://www.amigaforever.com,here)
 
-= Updates
+== Updates
 
 2018-06-23: As [link](https://new.reddit.com/user/Malor,Malor) pointed out on Reddit ([link](https://new.reddit.com/r/programming/comments/8pkgk0/exploring_the_amiga_part_1/e0cifax,here)) there is no need to own the original hardware, as licenses are still sold by Cloanto. Thanks Malor!
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

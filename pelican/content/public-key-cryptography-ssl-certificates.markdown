@@ -17,7 +17,7 @@ In the context of the Internet, and in particular of the World Wide Web, the mai
 
 In this post I will try to clarify the main components of the certificates system and to explain the meaning of the major acronyms and names that you might hear when you deal with this part of web development.
 
-# Clarification: SSL vs TLS
+## Clarification: SSL vs TLS
 
 In the world of web development and infrastructure management, we normally speak of SSL protocol and of SSL certificates, but it has to be noted that SSL (Secure Sockets Layer) is the name of a deprecated protocol. The current implementation of the protocol used to secure web applications is **TLS** (Transport Layer Security).
 
@@ -25,7 +25,7 @@ The story of SSL and TLS is rich of events and spans 25 years since its inceptio
 
 The TLS/SSL nomenclature is one of many sources of confusion in the complicated world of security and applied cryptography. In this article I will use only the acronym TLS, but I went for SSL in the title because I wanted the subject matter to be recognisable also by developers that are not much into security and cryptography.
 
-# X.509 certificates
+## X.509 certificates
 
 While the problem of the identity in an insecure network can be solved in several ways, the solution embraced to secure the World Wide Web is based on a standard called **X.509**. When we mention SSL certificates, we usually mean X.509 certificates used in a TLS connection, such as that created by HTTPS.
 
@@ -33,7 +33,7 @@ X.509 is the ITU-T standard used to represent certificates, and has been chosen 
 
 The structure of an X.509 certificate is expressed using [ASN.1](https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One), a notation used natively by the PEM format (discussed [here]({filename}rsa-keys.markdown)). You can read the full specification in [RFC 2459](https://tools.ietf.org/html/rfc2459), in particular [Section 4](https://tools.ietf.org/html/rfc2459#section-4) "Certificate and Certificate Extensions Profile". I will refer to this later when I will have a look at a real certificate.
 
-# How are certificates related to HTTPS?
+## How are certificates related to HTTPS?
 
 Before I discuss how certificates solve the problem of identity (or ownership of a public key), let's clarify the relationship between them and HTTPS.
 
@@ -41,7 +41,7 @@ HTTPS stands for HTTP Secure, and the core of the protocol consists of running H
 
 Certificates come into play when the browser establishes the TLS connection, which is why you need to set-up HTTPS as part of your infrastructure and not in your web application. By the time the HTTP requests reach your application they are already decrypted and accessible in plain text, as the HTTP protocol mandates. We usually say that we "terminate TLS" when a component of our infrastructure manages certificates and decrypts HTTPS into HTTP.
 
-# How do certificates work?
+## How do certificates work?
 
 The X.509 standard establishes entities called **Certificate Authorities** (CAs), and creates a hierarchy of trust called **chain** between them. The idea is that there is a set of entities that are trusted worldwide by operating systems, browsers, and other network-related software, and that these entities can trust other entities, thus creating a trust network.
 
@@ -53,7 +53,7 @@ In the open-source world, the Mozilla root program is by far the most influentia
 
 It is possible to create certificates that are not signed by any CA, and these are called **self-signed certificates**. Such certificates can be used with any software that relies on certificates, but it requires such a software to disable certificate checking with the Certificate Authorities. Self-signed certificates are obviously useful for testing purposes, but there are scenarios in which it might be desirable not to rely on the CAs and establish a private network of trust.
 
-# Example: CA root certificate
+## Example: CA root certificate
 
 The certificates for root CAs that are part of the Mozilla root program can be retrieved from the [Common CA Database](https://www.ccadb.org/resources) web page, or can be seen in the Firefox [source code](https://hg.mozilla.org/mozilla-central/file/tip/security/nss/lib/ckfw/builtins/certdata.txt) directly. On a running Firefox browser you can open the [Privacy & Security](about:preferences#privacy) menu and click on "View Certificates" at the bottom of the page. The CAs are listed under the tab "Authorities".
 
@@ -308,7 +308,7 @@ Please note that in this certificate the `Issuer` and the `Subject` are the same
 
 Moreover, one of the version 3 extensions of the self-signed certificate is a basic constraint with the boolean `CA` set to true. It also has the extension `Key Usage` set to `Digital Signature, Certificate Sign, CRL Sign`, which means that the certificate can be used to sign other certificates.
 
-# Example: self-signed certificate
+## Example: self-signed certificate
 
 You can use OpenSSL to create a self-signed certificate using the module `req` that you would normally use to create certificate requests. As a self-signed certificate doesn't need approval, the module can directly output the certificate.
 
@@ -389,7 +389,7 @@ Certificate:
 
 As you can see this certificate has the same value in `Issuer` and `Subject`, as happened before for the Amazon Root one. It also has the flag `CA` set to true but it doesn't have the extension `Key Usage` meaning that this certificate can't be used to sign other certificates.
 
-# Example: this site's certificate
+## Example: this site's certificate
 
 You can see TLS certificates and the chain of trust in action in this very website. Following the documentation of you browser (instructions for Firefox are [here](https://support.mozilla.org/en-US/kb/secure-website-certificate)), you can see the certificate used by The Digital Cat. At the time of writing the blog is hosted on GitHub Pages, even tough I'm using a custom domain, and GitHub partnered with [Let's Encrypt](https://letsencrypt.org/) to provide certificates for such a configuration (details [here](https://github.blog/2018-05-01-github-pages-custom-domains-https/)).
 
@@ -500,7 +500,7 @@ Certificate:
 
 As happened for the certificate `Amazon Root CA 1` that we discussed before, this one is self-signed, having the same value for `Subject` and `Issuer`.
 
-# How to verify certificates with OpenSSL
+## How to verify certificates with OpenSSL
 
 To verify if a certificate is valid we can use the module `verify` of OpenSSL. By default, OpenSSL doesn't trust anything, and `verify` relies on a default path in the system to find root certificates. You can see the path running
 
@@ -554,7 +554,7 @@ error 2 at 1 depth lookup: unable to get issuer certificate
 error www-thedigitalcatonline-com.pem: verification failed
 ```
 
-# Low-level certificate validation process
+## Low-level certificate validation process
 
 Let's have a look at the signature process for x.509 certificates. The process depends on the specific algorithm used to sign the certificate, so I will use the certificate `Amazon Root CA 1` as an example, leaving to the reader the investigation about other algorithms.
 
@@ -749,7 +749,7 @@ This is arguably not the best Python code ever, but it's a simple way to demonst
 
 What I showed you here is what happens when we validate a root certificate. When we validate a non-root certificate the process is exactly the same (taking into account that the algorithms involved might be different), only the public key used to sign the certificate doesn't come from the certificate itself, but from the signer one. So, in the case of this blog, the certificate for www.thedigitalcat.com has a signature encrypted with the public key of Let's Encrypt. And the certificate for Let's Encrypt will be signed using the public key of Digital Signature Trust Co. This is what creates the chain of trust.
 
-# Algorithms used by root certificates
+## Algorithms used by root certificates
 
 A quick scan of the certificates that are part of the Mozilla program reveals that the vast majority of them is using RSA to self-sign them
 
@@ -775,7 +775,7 @@ $ for i in /etc/ssl/certs/*.pem; do openssl x509 -inform pem -in ${i} -noout -te
 
 Even here, elliptic curves are slowly being adopted.
 
-# AWS components related to certificates
+## AWS components related to certificates
 
 If you are using AWS, you can create certificates with ACM, the [AWS Certificate Manager](https://aws.amazon.com/certificate-manager/). Such certificates cannot be downloaded, they can only be attached to other AWS components. For this reason, the generation process requires you to create any request, as you might have to do with other authorities. Certificates created in the ACM are free.
 
@@ -783,15 +783,15 @@ Certificates created in the ACM can be attached to several AWS components, most 
 
 Traditionally, load balancers are the place where TLS is terminated for HTTPS, requiring a connection to port 443. While [Application Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/index.html) can do that, in 2019 AWS [announced](https://aws.amazon.com/blogs/aws/new-tls-termination-for-network-load-balancers/) support for certificates in [Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/index.html) as well.
 
-## Let's encrypt
+### Let's encrypt
 
 In an effort to push for HTTP encryption of any public server, the Internet Security Research Group founded in 2016 a non-profit CA named [Let's Encrypt](https://letsencrypt.org/), which provides at no charge TLS certificates valid for 90 days. Such certificates can be renewed automatically as part of the setup ([certbot](https://certbot.org/)) and represent a viable alternative to certificates issued by other CA, in particular for open source projects. This blog uses a certificate issued by Let's Encrypt (provided by GitHub Pages) and will thus expire in less than 3 months (but also automatically renewed).
 
-# Final words
+## Final words
 
 I hope this post helped to clarify some of the most obscure points of certificates, that definitely bugged be when I first approached them. As always when standards are involved, the risk is to get lost in the myriad of documents where information is scattered, and not to realise that some (if not many) parts of the systems we run every day have a long history and thus a big burden of legacy code or nomenclature.
 
-# Resources
+## Resources
 
 * The Wikipedia article on [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_1.0,_2.0,_and_3.0)
 * The Wikipedia article on [Certificate authority](https://en.wikipedia.org/wiki/Certificate_authority)
@@ -809,3 +809,7 @@ I hope this post helped to clarify some of the most obscure points of certificat
 * [RFC 8017](https://tools.ietf.org/html/rfc8017) - "PKCS #1: RSA Cryptography Specifications Version 2.2"
 * [RFC 8446](https://tools.ietf.org/html/rfc8446) - "The Transport Layer Security (TLS) Protocol Version 1.3"
 * [pyca/cryptography](https://cryptography.io/en/latest/) - The Python pyca/cryptography package
+
+## Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

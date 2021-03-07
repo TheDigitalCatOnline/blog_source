@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing how to flatten nested lists in Scala
 
-# The problem
+## The problem
 
 **P07** (**) Flatten a nested list structure.
 
@@ -20,11 +20,11 @@ scala> flatten(List(List(1, 1), 2, List(3, List(5, 8))))
 res0: List[Any] = List(1, 1, 2, 3, 5, 8)
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 Flattening lists is a perfect application for recursive functions, and the algorithm shouldn't be too complex. The key point in flattening is the possibility to tell apart a list from a non-list element, to rule the call of another recursion. To solve this I will probably have to deal with typed patterns.
 
-# The recursive solution
+## The recursive solution
 
 The `flatten()` method of `List` objects works only if the list contains "traversable collections".
 
@@ -114,7 +114,7 @@ res5: List[Any] = List(4, 5, 6, 5)
 
 At this point I understand that I need to learn how to write unit tests in Scala, I miss TDD!!
 
-# Flatmap
+## Flatmap
 
 `List` objects provide a very interesting method, `flatMap()` that, just like `map()`, applies a given function to all elements of the list. While `map()` builds the resulting collection concatenating the results of each application, `flatMap()` concatenates the elements of the collection that results from each application.
 
@@ -143,15 +143,15 @@ def flatten(l: List[Any]): List[Any] = l flatMap {
 
 Pay attention to the fact that this function has to drop the type check just like the first one.
 
-# Updates
+## Updates
 
 2020-02-15: Thanks [Raja](https://github.com/mighty-raj) for spotting the error with nested lists. You can see his considerations [here](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues/15)
 
-# Final considerations
+## Final considerations
 
 **Type erasure** is a new concept, and one shall be aware of it. **Partial functions as case sequences** are really handy, and so are the `map()` and `flatMap()` methods.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

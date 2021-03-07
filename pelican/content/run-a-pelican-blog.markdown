@@ -17,7 +17,7 @@ So my advice is once again: write a blog. Share your experience as a programmer,
 
 One of my most successful posts on this blog is something I wrote after fighting for 3 hours with a trivial Python syntax mistake. I was already a senior programmer, I did a novice mistake. I shared the solution and now that post has a huge amount of visits every day, which hopefully means that some people stuck with the same problem can quickly find a solution. Maybe these people will one day write the new Google or the new AWS, and I'm glad I helped them today.
 
-# Pelican 
+## Pelican 
 
 I run this blog since 2013. I wanted to use a static website generator because I liked the simplicity of the concept, and since GitHub was providing free hosting on [GitHub Pages](https://pages.github.com/) I considered it a viable option.
 
@@ -33,17 +33,17 @@ You can also run Pelican without this template, just follow the [instructions](h
 
 If you are not acquainted with static web sites have a look at the [Wikipedia page](https://en.wikipedia.org/wiki/Static_web_page).
 
-# Prerequisites
+## Prerequisites
 
 You need to have [Python 3](https://www.python.org/) and [Git](https://git-scm.com/) installed in your system. [Git Flow](https://github.com/petervanderdoes/gitflow-avh) is optional, so if you don't want to use it you can avoid installing it.
 
-# GitHub
+## GitHub
 
 You need to create two repositories in your GitHub account. The first one will host the source files of your blog (the _source_ repository), while the second one will host the actual static site files (deploy repository). Follow the instructions [here](https://help.github.com/en/articles/create-a-repo) if you are not sure how to create them.
 
 Call the first repository `blog_source` and the second one `<your_user_name>.github.io`. The former is just a convention followed by my template, while the latter is enforced by GitHub pages, which uses by default that repository to publish the website at the address with that name.
 
-# Install the template
+## Install the template
 
 Create a [Python virtual environment](https://docs.python.org/3/tutorial/venv.html) and install `cookiecutter`
 
@@ -66,7 +66,7 @@ Now, you will be asked some questions, let's look at them in detail. Remember th
 * `use_versioning [y]` - Say `y` if you want to have a release process for your website with a version number and associated Git tags.
 * `use_git_flow [y]` - Say `y` if you want to initialise Git Flow on the repository (you need to have Git Flow already installed in the system).
 
-# Set up the environment
+## Set up the environment
 
 Now enter the directory that was created by the template, install the requirements and run the `setup.sh` script
 
@@ -84,7 +84,7 @@ This script performs the following actions
 * it clones the https://github.com/getpelican/pelican-themes repository
 * it creates the `deploy` directory which is a local clone one of the deploy repository
 
-# Configure Pelican
+## Configure Pelican
 
 Now everything is ready to run the `pelican-quickstart` script.
 
@@ -110,7 +110,7 @@ If you have questions on this part you can read the [Pelican documentation](http
 
 Now you can enter the `pelican` directory and run `make devserver` which will run the development server at http://localhost:8000. [This page](http://docs.getpelican.com/en/latest/publish.html#make) of the official documentation explains all the options of the Makefile.
 
-# The work flow
+## The work flow
 
 The work flow that you will follow using this setup is the following (I assume you use Git Flow, change the git commands accordingly if you are using another flow)
 
@@ -124,7 +124,10 @@ The work flow that you will follow using this setup is the following (I assume y
 
 Each one of these steps, with the notable exception of the second one, is performed through a single command and takes up to few seconds in the worst case. I prefer to have control on the publishing process, so often I run the git commands manually in the `deploy` directory, but you can safely use the provided Make directive.
 
-# Versioning
+## Versioning
 
 Versioning is not the most important thing to do in a blog, but I personally like to have a trace of what I created and when in my Git log. I use [Punch](https://pypi.org/project/punch.py/), a package that I developed to replace bumpversion. If you want to customise the default versioning scheme contained in the template read the [Punch documentation](https://punch.readthedocs.io/en/latest/).
 
+## Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

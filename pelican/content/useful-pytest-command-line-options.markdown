@@ -15,7 +15,7 @@ Part of the workshop was dedicated to pytest command line options and in general
 
 Please remember to `import pytest` before using functions, decorators or attributes prefixed by `pytest.`, as I will not repeat it in each example.
 
-# Run single tests
+## Run single tests
 
 If you want to run only a specific test you can provide its name on the pytest command line
 
@@ -29,7 +29,7 @@ which for example runs the `tests_addition` test inside the `tests/test_calc.py`
 $ pytest -svv tests/test_calc.py
 ```
 
-# Skipping tests
+## Skipping tests
 
 Sometimes it is useful to skip tests. The reason might be that some new code broke too many tests, and we want to face them one at a time, or that a specific feature had to be temporarily disabled. In all those cases the `pytest.mark.skip` decorator is your friend. Remember that a decorator is something that changes the way the decorated function works (for the skilled reader: it's a function wrapper). Assuming we are working on a `tests/test_calc.py` file the code might be
 
@@ -45,7 +45,7 @@ The result on the command line will be (after running `py.test -svv`)
 tests/test_calc.py::test_addition SKIPPED
 ```
 
-# Skipping with a reason
+## Skipping with a reason
 
 The previous solution is good for a temporary skip, but if the test has to remain deactivated for a long time it's better to annotate a specific reason for the exclusion. In my experience 1 day is enough to forget small details like this, so my advice is to always put a well-written reason on skipped tests. To add it you can use the `reason` attribute of the `skip` decorator
 
@@ -66,7 +66,7 @@ SKIP [1] tests/test_calc.py:5: Addition has been deactivated because of issue #1
 ====================== 12 passed, 1 skipped in 0.02 seconds =======================
 ```
 
-# Skipping tests conditionally
+## Skipping tests conditionally
 
 Well, most of the time we will skip tests not for a stable reason, but according to some other condition that we can retrieve from the system, like the Python version, or maybe the region in which a server is running. The decorator that we need to use in that case is `skipif`, which accepts a condition (a boolean value) and a reason
 
@@ -84,7 +84,7 @@ def test_addition():
 
 With this code running `AWS_REGION=eu-west-1 py.test -svv -rs` will run the `test_addition` test, while running `AWS_REGION=us-west-2 py.test -svv -rs` will skip it. The environment variable `AWS_REGION` set in the previous command lines is an example that simulates the presence of the variable in the system.
 
-# Run tests by name
+## Run tests by name
 
 You can selectively run tests by name using `-k`. This option accepts Python expressions that try to match the name of the test with the provided values. So
 
@@ -101,7 +101,7 @@ $ pytest -svv -k "test_addition and not complex"
 which will run both `test_addition` and `test_addition_multiple_inputs` but not `test_complex_addition`.
 
 
-# Tagging tests
+## Tagging tests
 
 Tests can be tagged or labelled using `pytest.mark`, and the tag can be used to run or skip sets of tests. Let's say that we identify a set of very slow tests that we don't want to run continuously.
 
@@ -151,7 +151,7 @@ $ pytest -svv -m 'mac or linux'
 
 which runs all the tests tagged with `mac` and all the tests tagged with `linux`. Pay attention that `-m` expressions refer to the tags of each single test, so `slow and complex` will run only those tests that are tagged both with `slow` and with `complex`, and not all the tests marked with the first and all the tests marked with the second.
 
-# Adding a command line option
+## Adding a command line option
 
 You can add custom command line options to pytest with the `pytest_addoption` and `pytest_runtest_setup` hooks that allows you to manage the command line parser and the setup for each test.
 
@@ -173,7 +173,7 @@ def pytest_runtest_setup(item):
 
 Here `item` is the single test, so `item.keywords` is the set of tags attached to the test, and `item.config` is the configuration after the parser run on the command line. This makes the previous code match all the tests that are decorated with `@pytest.mark.slow` and only when the `--runslow` option has been specified on the command line. If both those conditions are satisfied the `pytest.skip` function is run, which skips the current test adding the specified string as a reason.
 
-# Coverage
+## Coverage
 
 Coverage is a measure of the percentage of code lines are "hit" when running tests. Basically the idea is to discover if there are parts of the code that are not run during the tests, thus being untested.
 
@@ -225,11 +225,11 @@ TOTAL                            26      2    92%
 
 Here I commented some of the tests to force the coverage percentage to drop. As you can see the report tells us that lines 6 and 11 of the `mypymodule/calc.py` file are not covered by any test.
 
-# Updates
+## Updates
 
 2017-12-24: pytest.org (such an honour!) spotted a misspelled `pytest.mark.skip`. Thanks!
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

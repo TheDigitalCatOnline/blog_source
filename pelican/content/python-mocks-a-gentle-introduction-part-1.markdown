@@ -19,7 +19,7 @@ Such restrictions, which guarantee that your tests are not passing due to a temp
  
 In this series of posts I am going to review the Python `mock` library and exemplify its use. I will not cover everything you may do with mock, obviously, but hopefully I'll give you the information you need to start using this powerful library.
 
-# Installation
+## Installation
 
 First of all, `mock` is a Python library which development started around 2008. It was selected to be included in the standard library as of Python 3.3, which however does not prevent you to use other libraries if you prefer.
  
@@ -27,7 +27,7 @@ Python 3 users, thus, are not required to take any step, while for Python 2 proj
 
 You may find the official documentation [here](https://docs.python.org/dev/library/unittest.mock.html). It is very detailed, and as always I strongly recommend taking your time to run through it.
 
-# Basic concepts
+## Basic concepts
 
 A mock, in the testing lingo, is an object that simulates the behaviour of another (more complex) object. When you (unit)test an object of your library you need sometimes to access other systems your object want to connect to, but you do not really want to be forced to run them, for several reasons.
 
@@ -87,7 +87,7 @@ Mock objects are callables, which means that they may act both as attributes and
 
 As you can understand, such objects are the perfect tool to mimic other objects or systems, since they may expose any API without raising exceptions. To use them in tests, however, we need them to behave just like the original, which implies returning sensible values or performing operations.
  
-# Return value
+## Return value
 
 The simplest thing a mock can do for you is to return a given value every time you call it. This is configured setting the `return_value` attribute of a mock object
 
@@ -111,7 +111,7 @@ Now the object does not return a mock object any more, instead it just returns t
 
 As you can see calling `some_attribute()` just returns the value stored in `return_value`, that is the function itself. To return values that come from a function we have to use a slightly more complex attribute of mock objects called `side_effect`.
 
-# Side effect
+## Side effect
 
 The `side_effect` parameter of mock objects is a very powerful tool. It accepts three different flavours of objects, callables, iterables, and exceptions, and changes its behaviour accordingly.
 
@@ -189,11 +189,11 @@ And finally an example with a class
 Value: 26
 ```
 
-# Testing with mocks
+## Testing with mocks
 
 Now we know how to build a mock and how to give it a static return value or make it call a callable object. It is time to see how to use a mock in a test and what facilities do mocks provide. I'm going to use [pytest](http://pytest.org) as a testing framework. You can find a quick introduction to pytest and TDD [here](/categories/tdd/)).
 
-## Setup
+### Setup
 
 If you want to quickly setup a pytest playground you may execute this code in a terminal (you need to have Python 3 and virtualenv installed in your system) 
 
@@ -214,7 +214,7 @@ PYTHONPATH="." py.test
 
 The `PYTHONPATH` environment variable is an easy way to avoid having to setup a whole Python project to just test some simple code.
 
-## The three test types 
+### The three test types 
 
 According to Sandy Metz we need to test only three types of messages (calls) between objects:
 
@@ -229,7 +229,7 @@ As you can see when dealing with external objects we are only interested in know
 So the purpose of the methods provided by mock objects is to allow us to check what methods we called on the mock itself and what parameters we used in the call.
 
 
-## Asserting calls
+### Asserting calls
 
 To show how to use Python mocks in testing I will follow the TDD methodology, writing tests first and then writing the code that makes the tests pass. In this post I want to give you a simple overview of the mock objects, so I will not implement a real world use case, and the code will be very trivial. In the second part of this series I will test and implement a real class, in order to show some more interesting use cases.
 
@@ -345,16 +345,16 @@ and you see that the error message is very clear about what we expected and what
  
 As you can read in the official documentation, the `Mock` object also provides the following methods and attributes: `assert_called_once_with`, `assert_any_call`, `assert_has_calls`, `assert_not_called`, `called`, `call_count`. Each of them explores a different aspect of the mock behaviour concerning calls, make sure to check their description and the examples provided along.
 
-# Final words
+## Final words
 
 In this first part of the series I described the behaviour of mock objects and the methods they provide to simulate return values and to test calls. They are a very powerful tool that allows you to avoid creating complex and slow tests that depend on external facilities to run, thus missing the main purpose of tests, which is that of _continuously_ helping you to check your code.
 
 In the next issue of the series I will explore the automatic creation of mock methods from a given object and the very important patching mechanism provided by the `patch` decorator and context manager.
 
-# Updates
+## Updates
 
 2019-02-27: [schneeemensch](https://github.com/schneeemensch) spotted a mistake in the code of the "Return value" section, where `m.some_attribute.side_effect()` was used instead of `m.some_attribute()`. Thanks!
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

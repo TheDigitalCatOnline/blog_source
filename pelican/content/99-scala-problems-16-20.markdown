@@ -8,9 +8,9 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing more list management in Scala (dropping elements, splitting the, etc.)
 
-# Problem 16
+## Problem 16
 
-## The problem
+### The problem
 
 **P16** (**) Drop every Nth element from a list.
 
@@ -21,7 +21,7 @@ scala> drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
 res0: List[Symbol] = List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k)
 ```
 
-## Mapping
+### Mapping
 
 A first simple approach is to divide the list in small groups of up to N elements and drop the last element from each of them. This is easily achieved with the `grouped()` method of `List` types and the application of a flat mapping.
 
@@ -65,7 +65,7 @@ def dropZip[A](n: Int, l: List[A]):List[A] = {
 }
 ```
 
-## The recursive solution
+### The recursive solution
 
 A recursive solution can be written based on this simple algorithm: the number N is used as a countdown, keeping elements until it reaches the value 1. Then the current element is discarded and the process continues with a countdown reset.
 
@@ -82,9 +82,9 @@ def dropRec[A](n: Int, l: List[A]):List[A] = {
 
 As you can see the case `(1, _::tail)` restarts the process ignoring the current head of the list, while the more generic `(_, h::tail)` case stores the element in the result list.
 
-# Problem 17
+## Problem 17
 
-## The problem
+### The problem
 
 **P17** (*) Split a list into two parts.
 
@@ -95,7 +95,7 @@ scala> split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
 res0: (List[Symbol], List[Symbol]) = (List('a, 'b, 'c),List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
 ```
 
-## Solution
+### Solution
 
 `List` objects provide a bunch of methods to interact with them, thus splitting may make use of several different ones. Very simple and straightforward solutions come from the `splitAt()` method
 
@@ -134,9 +134,9 @@ def split[A](n: Int, l: List[A]):(List[A], List[A]) = {
 
 where I basically keep extracting the head from `rem` appending it to `res` until the counter is 0.
 
-# Problem 18
+## Problem 18
 
-## The problem
+### The problem
 
 **Pxx** (**) Extract a slice from a list.
 Given two indices, I and K, the slice is the list containing the elements from and including the Ith element up to but not including the Kth element of the original list.  Start counting the elements with 0.
@@ -148,7 +148,7 @@ scala> slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
 res0: List[Symbol] = List('d, 'e, 'f, 'g)
 ```
 
-## Solution
+### Solution
 
 As for the previous problem we may make use of the `List` type methods. The aptly named `slice()`
 
@@ -178,9 +178,9 @@ def slice[A](i: Int, k: Int, l: List[A]):List[A] = {
 }
 ```
 
-# Problem 19
+## Problem 19
 
-## The problem
+### The problem
 
 **P19** (**) Rotate a list N places to the left.
 
@@ -194,7 +194,7 @@ scala> rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
 res1: List[Symbol] = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
 ```
 
-## Solution
+### Solution
 
 Rotating a list has some caveats. First one must consider wrapping, so the first thing I did is to calculate the actual shift with the modulo operation. The second thing is that rotation can happen in both directions, and the case of negative shift can be converted to a positive one just adding the shift to the length of the list (being the shift negative this is actually a subtraction). Eventually we can perform the rotation which requires a composition of the output of `drop()` and `take()`
 
@@ -206,9 +206,9 @@ def rotate[A](n: Int, l: List[A]):List[A] = {
 }
 ```
 
-# Problem 20
+## Problem 20
 
-## The problem
+### The problem
 
 **P20** (*) Remove the Kth element from a list.
 Return the list and the removed element in a Tuple.  Elements are numbered from 0.
@@ -218,7 +218,7 @@ scala> removeAt(1, List('a, 'b, 'c, 'd))
 res0: (List[Symbol], Symbol) = (List('a, 'c, 'd),'b)
 ```
 
-## Solution
+### Solution
 
 There are two edge conditions in this problem. The first is when the list is empty, and the second is when we are asking for an index outside the list. Since an empty list has length 0 both conditions can be summarized checking if the requested index is greater or equal than the length of the list (the "or equal" part comes from the fact that lists are indexed starting from 0).
 

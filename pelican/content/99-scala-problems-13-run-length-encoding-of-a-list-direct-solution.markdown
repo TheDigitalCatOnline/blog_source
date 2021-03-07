@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing how to process a whole list through the run-length encoding in Scala
 
-# The problem
+## The problem
 
 **P13** (**) Run-length encoding of a list (direct solution).
 Implement the so-called run-length encoding data compression method directly. I.e. don't use other methods you've written (like P09's pack); do all the work directly.
@@ -21,11 +21,11 @@ scala> encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
 res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 Obviously the issue shouldn't be solved just copying all stuff from [problem 09]({filename}99-scala-problems-09-pack-consecutive-duplicates.markdown) and [problem 10]({filename}99-scala-problems-10-run-length-encoding-of-a-list.markdown) inside a single file. There shall be a way to build a single-function solution.
 
-# Spanning
+## Spanning
 
 Scala lists provide a `span()` method that splits the list in two. It scans all elements in order, storing them into a list while the given predicate (a function) is true. When the predicate is false `span()` stops and returns the two resulting lists.
 
@@ -77,10 +77,10 @@ res: List[Symbol] = List('e, 'e, 'e, 'e)
 rem6: List[Symbol] = List()
 ```
 
-# Final considerations
+## Final considerations
 
 I learned another very useful method to **split** Scala lists, ``span()``. I also used a **complex expression** in a case statement, as already done in problems 09 and 10.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

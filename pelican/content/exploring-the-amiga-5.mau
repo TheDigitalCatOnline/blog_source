@@ -22,7 +22,7 @@ The Motorola 68k is a 32-bit processor, thus registers and the address bus have 
 
 The lack of a memory scheme enforced by the processor means that at boot time the memory is just a flat area that can be addressed directly. As we saw in the previous instalments, Exec creates its own structure in memory, generating the library node and creating the library jump table. This happens in the bigger picture of the machine initialisation, and one of the tasks performed during this initialisation is the setup of the memory management structures.
 
-= The Exec base address
+== The Exec base address
 
 Every Amiga programmer knows that address `0x4` contains the Exec base address, and I showed in past instalments how this is used in conjunction with the jump table to call the library functions.
 
@@ -53,7 +53,7 @@ which sets the stack pointer, but I'll keep this analysis for a future post.
 
 The address `0x4` is then free to be used during the normal execution, since it is used only during a reset, but in that case whatever we wrote there (the Exec base address) is overwritten by the ROM code.
 
-= List headers
+== List headers
 
 Exec manages memory and resources using [link](https://en.wikipedia.org/wiki/Linked_list,linked lists). As you know, to manage a linked list we need the address (pointer) of the head, of the tail, and also of the second-to-last element (the tail predecessor), to allow the tail to be detached and replaced. Actually it is evident that, given the convention that the last node is connected to the address 0, the only value we need is the address of the list head. The two additional addresses, however, can greatly simplify the code that manages the list and can greatly increase the performances, avoiding the need of a complete scan of the list to find the last element every time we want to add something to the end of the list.
 
@@ -385,16 +385,16 @@ According to the values of `LN_TYPE` the list headers table is the following
 0000030a: 0000
 ----
 
-= What's next
+== What's next
 
 The next instalment of the series will cover the initial part of the system memory initialisation, both the standard one and potential expansions, introducing `AddMemList` for the first time. It will also discuss the origin of some important numbers used in the Kickstart code, `0x24c`, `0x400`, and `0x676`.
 
-= Resources
+== Resources
 
 * Microprocessor-based system design by Ricardo Gutierrez-Osuna ([link](
 http://courses.cs.tamu.edu/rgutier/ceg411_f01/,slides)), in particular [link](http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf,"Lesson 9 - Exception processing")
 * Motorola M68000 Family Programmer's Reference Manual - https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

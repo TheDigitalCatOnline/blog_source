@@ -8,7 +8,7 @@
 :pelican.image:mau-a-lightweight-markup-language
 :pelican.summary:Mau is a lightweight markup language heavily inspired by AsciiDoc that makes is very easy to write blog posts or books.
 
-= What is Mau?
+== What is Mau?
 
 Mau is a lightweight markup language heavily inspired by AsciiDoc that makes is very easy to write blog posts or books.
 
@@ -16,7 +16,7 @@ The main goal of Mau is to provide a customisable markup language, reusing the g
 
 You can find Mau's source code on [link](https://github.com/Project-Mau/mau, GitHub).
 
-= Why not Markdown or AsciiDoc?
+== Why not Markdown or AsciiDoc?
 
 Markdown is a very good format, and I used it for all the posts in this blog so far. I grew increasingly unsatisfied, though, because of the lack of some features and the poor amount of customisation that it provides. When I wrote the second version of my book "Clean Architectures in Python" I considered using Markdown (through Pelican), but I couldn't find a good way to create tips and warnings. Recently, Python Markdown added a feature that allows to specify the file name for the source code, but the resulting HTML cannot easily be changed, making it difficult to achieve the graphical output I wanted.
 
@@ -24,11 +24,11 @@ AsciiDoc started as a Python project, but then was abandoned and eventually resu
 
 I simply thought I could try to write my own tool, in a language that I know well (Python). It works, and I learned a lot writing it, so I'm definitely happy. I'd be delighted to know that this can be useful to other people, though.
 
-= What can Mau do?
+== What can Mau do?
 
 Being inspired by AsciiDoc, which in my opinion is superior to Markdown, Mau takes a lot from Stuart Rackham's language. This whole post is written in Mau, using mostly the default templates. I changed the template for the source code to accommodate my poor CSS knowledge and get to a result that I consider decent.
 
-== Paragraphs
+=== Paragraphs
 
 [source]
 ----
@@ -49,7 +49,7 @@ Newlines within a paragraph are not displayed.
 Leave at least one blank line to begin a new paragraph.
 ----
 
-== Comments
+=== Comments
 
 You can comment a single line with `//`
 
@@ -69,7 +69,7 @@ comment
 ////
 ----
 
-== Thematic break
+=== Thematic break
 
 You can insert an horizontal line using three dashes
 
@@ -80,7 +80,7 @@ You can insert an horizontal line using three dashes
 
 ---
 
-== Text formatting
+=== Text formatting
 
 Mau supports three inline styles triggered by `_`, `*`, and `\``.
 
@@ -214,7 +214,7 @@ The CSS of my theme here has the following code
 }
 ----
 
-== Links
+=== Links
 
 Links beginning with `http://` or `https://` are automatically parsed. If you want to use a specific text for the link you need to use the macro `link` and specify target and text.
 
@@ -250,55 +250,55 @@ You can include spaces and other special characters in the URL
 [link]("https://example.org/?q=%5Ba%20b%5D","URL with special characters")
 ----
 
-== Headers
+=== Headers
 
 Headers are created using the character `=`. The number of equal signs represents the level of the header
 
 [source]
 ----
-= Header 1
+== Header 1
 
-== Header 2
+=== Header 2
 
-=== Header 3
+==== Header 3
 
-==== Header 4
+===== Header 4
 
-===== Header 5
+====== Header 5
 
-====== Header 6
+======= Header 6
 ----
 
 . Result
 [callout]
 ----
-= Header 1
+== Header 1
 
-== Header 2
+=== Header 2
 
-=== Header 3
+==== Header 3
 
-==== Header 4
+===== Header 4
 
-===== Header 5
+====== Header 5
 
-====== Header 6
+======= Header 6
 ----
 
 Headers are automatically collected and included in the Table of Contents, but if you want to avoid it for a specific section you can exclude the header using an exclamation mark
 
 [source]
 ----
-===! This header is not in the TOC
+====! This header is not in the TOC
 ----
 
 . Result
 [callout]
 ----
-===! This header is not in the TOC
+====! This header is not in the TOC
 ----
 
-== Variables
+=== Variables
 
 You can define variables and use them in paragraphs
 
@@ -404,7 +404,7 @@ The flag is {flag}.
 The flag is {flag}.
 ----
 
-== Blocks
+=== Blocks
 
 Mau has the concept of blocks, which are parts of the text delimited by fences
 
@@ -485,7 +485,7 @@ Secondary content that won't be in the output
 This is not part of the block
 ++++
 
-=== Block titles
+==== Block titles
 
 Blocks can have titles
 
@@ -506,7 +506,7 @@ This is a block
 ----
 ++++
 
-=== Block attributes
+==== Block attributes
 
 Blocks can have attributes, specified before the opening fence between square brackets
 
@@ -583,7 +583,7 @@ This is a block with the class `callout`
 ----
 ++++
 
-=== Quotes
+==== Quotes
 
 The simplest block type the Mau provides is called `quote`. The second attribute is the attribution, and the content of the block is the quote itself.
 
@@ -604,7 +604,7 @@ Learn about the Force, Luke.
 ----
 ++++
 
-=== Admonitions
+==== Admonitions
 
 Mau supports admonitions, special blocks that are meant to be rendered with an icon and a title like warnings, tips, or similar things. To create an admonition you need to use the type `admonition` and specify a `class`, and `icon`, and a `label`
 
@@ -650,7 +650,7 @@ This is my admonition
 
 Given how simple it is to build an admonition, Mau doesn't provide any admonitions like warnings or tips out of the box.
 
-=== Conditional blocks
+==== Conditional blocks
 
 You can wrap Mau content in a conditional block, which displays it only when the condition is met.
 
@@ -745,7 +745,7 @@ This will not be rendered
 ----
 ++++
 
-=== Source code
+==== Source code
 
 Literal paragraphs and source code can be printed using block type `source`
 
@@ -755,7 +755,7 @@ Literal paragraphs and source code can be printed using block type `source`
 ----
 This is all literal.
 
-= This is not a header
+== This is not a header
 
 [These are not attributes]
 ----
@@ -768,7 +768,7 @@ This is all literal.
 ----
 This is all literal.
 
-= This is not a header
+== This is not a header
 
 [These are not attributes]
 ----
@@ -799,7 +799,7 @@ def header_anchor(text, level):
 ----
 ++++
 
-==== Callouts
+===== Callouts
 
 Source code supports callouts, where you add notes to specific lines of code. Callouts are listed in the code using a delimiter and their text is added to the secondary content of the block
 
@@ -948,7 +948,7 @@ def header_anchor(text, level)::1:
 
 And you can reference them [callout]#1# in the text.
 
-==== Highlight lines
+===== Highlight lines
 
 You can highlight lines using a callout with the special name `@`
 
@@ -1000,7 +1000,7 @@ def header_anchor(text, level):
 ----
 ++++
 
-== Lists
+=== Lists
 
 You can create unordered lists using the character `*`
 
@@ -1069,7 +1069,7 @@ Mixed lists are possible
 * List item
 ----
 
-== Footnotes
+=== Footnotes
 
 You can insert a footnote in a paragraph using the macro `footnote`
 
@@ -1088,14 +1088,14 @@ Footnotes can be inserted with the command `::footnotes:` and are then rendered 
 
 ::footnotes:
 
-== Table of contents
+=== Table of contents
 
 The table of contents (TOC) can be inserted with the command `::toc:` and is rendered according to the template, an example could be
 
 ::toc:
 
 
-== Images
+=== Images
 
 Images can be included with
 
@@ -1143,7 +1143,7 @@ This is a paragraph with an image [image](https://via.placeholder.com/30,alt_tex
 This is a paragraph with an image [image](https://via.placeholder.com/30,alt_text="A placeholder")
 ----
 
-= Templates
+== Templates
 
 Mau uses Jinja templates to render the AST nodes. It provides default templates for all the elements it can render but these templates are easily overridden to change the way they are rendered or to add custom classes/elements.
 
@@ -1161,11 +1161,11 @@ and that for quotes is
 "<blockquote>" "{{ content }}" "<cite>{{ attribution }}</cite>" "</blockquote>"
 ----
 
-= Pelican
+== Pelican
 
 A reader for Mau source files is available in Pelican, you can find the code at https://github.com/getpelican/pelican-plugins/pull/1327. Simply add the code to your Pelican plugins directory and activate it adding `"mau_reader"` to `PLUGINS` in your file `pelicanconf.py`. The Mau reader processes only files with the `.mau` extension, so you can use Markdown/reStructuredText and Mau at the same time.
 
-= Development
+== Development
 
 Can Mau do `[insert feature here]`?
 
@@ -1173,6 +1173,6 @@ What you see here is pretty much what Mau can do at the moment. I implemented on
 
 If you are interested you can leave a star on the project on the [link](https://github.com/Project-Mau/mau, "GitHub page"), start using it, or contribute ideas, code, bugfixes.
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

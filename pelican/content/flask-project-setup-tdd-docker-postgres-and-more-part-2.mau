@@ -11,13 +11,13 @@
 
 In this series of posts I explore the development of a Flask project with a setup that is built with efficiency and tidiness in mind, using TDD, Docker and Postgres.
 
-= Catch-up
+== Catch-up
 
 In the [link](\{filename}flask-project-setup-tdd-docker-postgres-and-more-part-1.mau,"previous post") we started from an empty project and learned how to add the minimal code to run a Flask project. Then we created a static configuration file and a management script that wraps the commands `flask` and `docker-compose` to run the application with a specific configuration.
 
 In this post I will show you how to run a production-ready database alongside your code in a Docker container, both in your development setup and for the tests.
 
-= Step 1 - Adding a database container
+== Step 1 - Adding a database container
 
 A database is an integral part of a web application, so in this step I will add my database of choice, Postgres, to the project setup. To do this I need to add a service in the docker-compose configuration file
 
@@ -276,17 +276,17 @@ Last, note that the application database configured with `APPLICATION_DB` is not
 
 You can exit `psql` with Ctrl-D or `exit`.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/e1af82cb302d669b1559b788c92aafeab1b427d5,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/e1af82cb302d669b1559b788c92aafeab1b427d5,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://hub.docker.com/_/postgres,"Postgres Docker image")
 * [link](https://flask-sqlalchemy.palletsprojects.com/en/2.x/,"Flask-SQLAlchemy") - A Flask extension to work with SQLAlchemy
 * [link](https://docs.sqlalchemy.org/en/13/dialects/postgresql.html,"SQLAlchemy and PostgreSQL") - The Python SQL Toolkit and ORM
 
-= Step 2 - Connecting the application and the database
+== Step 2 - Connecting the application and the database
 
 To connect the Flask application with the database running in the container we need to initialise a `SQLAlchemy` object and add it to the application factory.
 
@@ -398,16 +398,16 @@ And, when we will start creating models we will use the commands `./manage.py fl
 
 For the time being let's have a brief look at what was created here. The command `db init` created the directory `migrations` and inside it some default configuration files and templates. The migration scripts will be created in the directory `migrations/versions` but at the moment that directory is empty, as we have no models and we run no migrations (only the initialisation of the system). No changes have been made to the database. The command `db init` can be run even without running containers (you can remove the directory `migrations` and try it).
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/ee7e2b32fb85b9a22b3e4ddb5de4e27e58884c25,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/ee7e2b32fb85b9a22b3e4ddb5de4e27e58884c25,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://flask-sqlalchemy.palletsprojects.com/en/2.x/,"Flask-SQLAlchemy") - A Flask extension to work with SQLAlchemy
 * [link](https://flask-migrate.readthedocs.io/en/latest/,"Flask-Migrate") - A Flask extension to handle database migrations with Alembic.
 
-= Step 3 - Testing setup
+== Step 3 - Testing setup
 
 I want to use a TDD approach as much as possible when developing my applications, so I need to setup a good testing environment upfront, and it has to be as ephemeral as possible. It is not unusual in big projects to create (or scale up) infrastructure components explicitly to run tests, and through Docker and docker-compose we can easily do the same. Namely, I will:
 
@@ -622,7 +622,7 @@ Now we can run `./manage.py test` and get
 ----
 Creating network "testing_default" with the default driver
 Creating testing_db_1 ... done
-========================= test session starts =========================
+========================== test session starts =========================
 platform linux -- Python 3.7.5, pytest-5.4.3, py-1.8.2, pluggy-0.13.1
 -- /home/leo/devel/flask-tutorial/venv3/bin/python3
 cachedir: .pytest_cache
@@ -641,7 +641,7 @@ application/models.py       4      4     0%   1-5
 -----------------------------------------------------
 TOTAL                      28     28     0%
 
-======================= no tests ran in 0.07s =======================
+======================== no tests ran in 0.07s =======================
 Stopping testing_db_1 ... done
 Removing testing_db_1 ... done
 Removing network testing_default
@@ -649,16 +649,16 @@ Removing network testing_default
 
 Note that the command first creates the testing database container `testing_db_1`, then runs pytest, and finally stops and remove the container. This is exactly what we wanted to achieve to run tests in isolation. At the moment, however there are no tests, and the testing database is empty.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/1de9666f8d06e4061ba3513b1eadd869b6a8dd3d,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/1de9666f8d06e4061ba3513b1eadd869b6a8dd3d,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://docs.pytest.org/en/latest/,pytest) - A full-featured Python testing framework
 * [link](\{filename}useful-pytest-command-line-options.markdown,Useful pytest command line options)
 
-= Step 4 - Initialise the testing database
+== Step 4 - Initialise the testing database
 
 When you develop a web application and then run it in production, you typically create the database once and then upgrade it through migrations. When running tests we need to create the database every time, so I need to add a way to run SQL commands on the testing database before I run pytest.
 
@@ -987,15 +987,15 @@ Notable changes:
 * I isolated the code that waits for a message in the database container logs, creating the function `wait_for_logs` [callout]#3#.
 * The command `docker_compose_cmdline` [callout]#4# now receives a string and converts it into a list internally. This way expressing commands is more natural, as it doesn't require the ugly list syntax that `subprocess` works with.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/1781b43a872e9518ae179e30e9e640a059d87cf6,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/1781b43a872e9518ae179e30e9e640a059d87cf6,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://www.psycopg.org/docs/,Psycopg) – PostgreSQL database adapter for Python
 
-= Step 5 - Fixtures for tests
+== Step 5 - Fixtures for tests
 
 Pytest uses fixtures for tests, so we should prepare some basic ones that will be generally useful. First let's include `pytest-flask`, which provides already some basic fixtures
 
@@ -1041,17 +1041,17 @@ Remember to create the empty file `tests/__init__.py` to make pytest correctly l
 
 As you can see, the fixture `database` uses the methods `drop_all` and `create_all` to reset the database. The reason is that this fixture is recreated for each function, and we can't be sure a previous function left the database clean. As a matter of fact, we might be almost sure of the opposite.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/6f30e869ae040420c3b3b94d414b5dd841217c0d,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/6f30e869ae040420c3b3b94d414b5dd841217c0d,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://docs.pytest.org/en/stable/fixture.html,"pytest fixtures") - One of the most powerful features of pytest
 * [link](https://pytest-flask.readthedocs.io/en/latest/,"pytest-flask") - A plugin for pytest that simplifies testing Flask applications
 * [link](https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/,"Flask-SQLAlchemy API")
 
-= Bonus step - A full TDD example
+== Bonus step - A full TDD example
 
 Before wrapping up this post, I want to give you a full example of the TDD process that I would follow given the current state of the setup, which is already complete enough to start the development of an application. Let's pretend my goal is that of adding a `User` model that can be created with an `id` (primary key) and an `email` fields.
 
@@ -1082,14 +1082,14 @@ Running this test results in an error, because the module `User` does not exist
 $ ./manage.py test
 Creating network "testing_default" with the default driver
 Creating testing_db_1 ... done
-====================================== test session starts ======================================
+======================================= test session starts ======================================
 platform linux -- Python 3.7.5, pytest-5.4.3, py-1.9.0, pluggy-0.13.1 --
 /home/leo/devel/flask-tutorial/venv3/bin/python3
 cachedir: .pytest_cache
 rootdir: /home/leo/devel/flask-tutorial
 plugins: flask-1.0.0, cov-2.10.0
 collected 0 items / 1 error
-============================================ ERRORS =============================================
+============================================= ERRORS =============================================
 ___________________________ ERROR collecting tests/tests/test_user.py ___________________________
 ImportError while importing test module '/home/leo/devel/flask-tutorial/tests/tests/test_user.py'.
 Hint: make sure your test modules/packages have valid Python names.
@@ -1114,10 +1114,10 @@ application/models.py       4      0   100%
 -----------------------------------------------------
 TOTAL                      29     23    21%
 
-=================================== short test summary info ===================================
+==================================== short test summary info ===================================
 ERROR tests/tests/test_user.py
 !!!!!!!!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-====================================== 1 error in 0.20s =======================================
+======================================= 1 error in 0.20s =======================================
 Stopping testing_db_1 ... done
 Removing testing_db_1 ... done
 Removing network testing_default
@@ -1149,7 +1149,7 @@ With this model the test passes
 $ ./manage.py test
 Creating network "testing_default" with the default driver
 Creating testing_db_1 ... done
-================================== test session starts ==================================
+=================================== test session starts ==================================
 platform linux -- Python 3.7.5, pytest-5.4.3, py-1.9.0, pluggy-0.13.1 --
 /home/leo/devel/flask-tutorial/venv3/bin/python3
 cachedir: .pytest_cache
@@ -1169,7 +1169,7 @@ application/models.py       8      0   100%
 TOTAL                      33      1    97%
 
 
-=================================== 1 passed in 0.14s ===================================
+==================================== 1 passed in 0.14s ===================================
 Stopping testing_db_1 ... done
 Removing testing_db_1 ... done
 Removing network testing_default
@@ -1315,21 +1315,21 @@ Indexes:
 
 You can also open your browser and head to http://localhost:5000/users to see the new route in action. After this we can safely commit my code and move on with the next requirement.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec,"browse the files").
 
-= Final words
+== Final words
 
 I hope this post already showed you why a good setup can make the difference. The project is clean and wrapping the command in the management script plus the centralised config proved to be a good choice as it allowed me to solve the problem of migrations and testing in (what I think is) an elegant way. In the next post I'll show you how to easily create scenarios where you can test queries with only specific data in the database. If you find my posts useful please share them with whoever you thing might be interested.
 
-= Updates
+== Updates
 
 2020-07-13 [link](https://github.com/Alladin9393,"Vlad Pavlichek") found and fixed a typo in the post, where `manage.py` was missing the extension `.py`. Thanks Vlad!
 
 2020-12-22 I reviewed the whole tutorial and corrected several typos
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.
 

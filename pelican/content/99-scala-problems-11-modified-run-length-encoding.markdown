@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing a variant of the run-length encoding in Scala
 
-# The problem
+## The problem
 
 **P11** (*) Modified run-length encoding.
 Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as (N, E) terms.
@@ -21,11 +21,11 @@ scala> encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, '
 res0: List[Any] = List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e))
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 The solution shall be a modification of that of [problem 10]({filename}99-scala-problems-10-run-length-encoding-of-a-list.markdown), and the only difference is that this time we do not produce the same type of result for each element.
 
-# Choices
+## Choices
 
 If the source element is a list with more than an element, we produce a tuple `(Int, A)`, where `A` is the actual type of elements in the list. If the source element is a list with a single element, we just produce that element, so the type is `A`.
 
@@ -46,10 +46,10 @@ def encode[A](l: List[A]):List[Either[A, (Int, A)]] = {
 
 I prefer to express conditions through pattern matching, but the same code may be expressed with an `if/else` statement.
 
-# Final considerations
+## Final considerations
 
 This time I learned how to use the three types **Either**, **Left** and **Right**. Reading the suggested posts I also dug into **Option**, **Some** and **None**, and the three similar types introduced with Scala 2.10 **Try**, **Success** and **Failure**.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing how to duplicate elements of a list in Scala
 
-# The problem
+## The problem
 
 **P14** (*) Duplicate the elements of a list.
 
@@ -20,11 +20,11 @@ scala> duplicate(List('a, 'b, 'c, 'c, 'd))
 res0: List[Symbol] = List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd)
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 Once again (see [problem 12]({filename}99-scala-problems-12-decode-a-run-length-encoded-list.markdown)) a perfect task for `flatMap()` since for each element a list must be produced, but the resulting list shall be flat.
 
-# Solution
+## Solution
 
 The function passed to `flatMap()` this time shall return a list with two elements for each element of the source list.
 
@@ -34,10 +34,10 @@ def duplicate[A](l:List[A]):List[A] = {
 }
 ```
 
-# Final considerations
+## Final considerations
 
 This problem didn't involve new concepts, but allowed me to test again **mapping** and **anonymous** functions.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

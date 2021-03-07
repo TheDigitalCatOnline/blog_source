@@ -16,7 +16,7 @@ In this post I want to introduce you to the concept of _hashing_, which is one o
 
 This will obviously be only a humble introduction to the subject matter, as the whole concept is too broad for a single post. You can start a serious study of this important part of computer science reading the Wikipedia articles liked at the bottom of the page and reading a good book (or taking a course) in either cryptography or data structures.
 
-# A practical example
+## A practical example
 
 Let me give you a concrete example of hashing before we analyse the matter in depth.
 
@@ -40,7 +40,7 @@ MD5 is one of many **hash functions** that have been invented to deal with probl
 
 The rest of the post is dedicated to the exploration of such an important and intriguing part of contemporary technology.
 
-# Hash functions
+## Hash functions
 
 Let's start from the formal definition of hash function:
 
@@ -54,7 +54,7 @@ Getting the first letter of the word is, as a matter of fact, _a function_ (an o
 
 Before we move on, I want to stress one aspect that is clear from the previous example. Through a hash function we can connect a set of potentially infinite values (all the words that we can create) with a finite set (the letters of an alphabet). This is the most important concept we have to keep in mind when dealing with hashing.
 
-# Uniqueness
+## Uniqueness
 
 The result of a hash function is not unique, which means that two different inputs may give the same output. This is pretty easy to understand in the dictionary example, where multiple words can give as a result the same letter, as multiple words begin with that letter.
 
@@ -79,23 +79,23 @@ Collisions are not intrinsically bad, but we have to be aware they can happen wh
 
 In this last example avoiding collisions is easy. We just need to increase the number of characters that we consider until there are no clashes on the right. This is a very empirical way to sort the problem, though, and it's possible only because we are dealing with a narrow set of inputs and a very simple hash function. In the next section we will discuss how more complicated hash functions deal with this problem.
 
-# Digital hash functions
+## Digital hash functions
 
 As we saw the definition of hash functions involves functions, which are mappings. In other words we just need to describe a process that couples objects from the infinite source set of inputs to the finite destination set of outputs. Taking the fist letter of a word is such a process, but other examples may be grouping people according to the colour of the eyes or cataloguing films by production year. Among the various processes that we can use a big role is played by digital processes, that is functions that involve some operation on binary numbers.
 
 When we _digitalise_ something we represent it with a sequence of bits, and once this is done there is no real difference between strings, images, videos, sounds, programs. Everything in a computer is ultimately a sequence of bits, and those sequences can be sliced and changed with pure numerical functions such as additions and multiplications.
 
-# Cryptographic hash functions
+## Cryptographic hash functions
 
 Hash functions play a decisive role in security and in cryptography, and can be found in algorithms that provide authentication, i.e. secure ways to demonstrate the authenticity of some data. While the actual cryptographic techniques are not in the scope of this article, it is important to know that hash functions used for cryptographic purposes are not different, in principle, from hash functions used for other tasks that do not require any degree of security. *Cryptographic hash functions*, however, must have some specific properties that give the function a certain degree of "robustness". Being able to find the input of a hash function given the output, for example, would be catastrophic for some security algorithms that rely on the infeasibility of such an operation.
 
-# "Good" hash functions
+## "Good" hash functions
 
 The definition of hash function is pretty inclusive as the only required property is that of returning a fixed-length output. Hash functions used in practice may however have other properties. Such properties may be desirable or mandatory depending on the application, so functions that are extremely good for cryptography may be a poor choice for data structures like dictionaries. 
 
 Let me briefly describe some of the most important properties that you should be aware of.
 
-## Determinism
+### Determinism
 
 Given the algorithm (with its parameters) and given the input data, the hash **must always be the same**. The result of the hashing function depends only on the data itself, and not on other external factors like for example time or computer system.
 
@@ -105,7 +105,7 @@ Pay attention to the fact that this definition considers the algorithm and its p
 
 Let's consider a system that uses a hash to speed up searches in some arrays. For several reasons the hashing algorithm employs an initial random seed that is derived from the boot time. As long as the system is running (i.e. it is not rebooted), the algorithm is consistent, and we may consider the random seed as a constant parameter. We may also persist the hashes on a storage, because when we load them they are still perfectly valid. As soon as the system is rebooted, however, the whole set of hashes created during the previous execution becomes invalid and meaningless. This is not the case, though, if the hashing function bases its computation on the actual data only.
 
-## Diffusion
+### Diffusion
 
 Changing one single bit of the source data shall results in a **complete change** of the hash number. Compare for example the MD5 hash values of two similar strings
 
@@ -118,13 +118,13 @@ As you can see when a single input byte is different (the letter `d` in `dog` be
 
 This implies that every part of the output is computed considering all the bits of the input. A function that returns the first `n` bits of the input does not have a good diffusion, as two different strings may return exactly the same hash if they have the same first `n` bits (see the example given above when I spoke about uniqueness). This property is important for cryptographic hash function.
 
-## Minimal change (continuity)
+### Minimal change (continuity)
 
 An interesting property of some hash functions is that **similar input values map to similar hash values**. The exact definition of "similar" may vary, but in general we might associate it with the number of changes from the first output to the second. This behaviour is handy in some searching algorithms, where it is important that similar objects are stored near each other.
 
 Note that this property is somehow the opposite of diffusion, thus demonstrating that not all these properties might be found in a single hash function.
 
-## Uniformity
+### Uniformity
 
 A hash function has a given finite number of possible outputs, because the output has a finite length. When a hash function is uniform, producing the output for each possible input produces a **uniform distribution of outputs**, that is there is no output value that is used more often than others. When designing data structures this is often the desirable behaviour, since it leads to an uniform use of resources, for example memory, leading to an uniform behaviour of other algorithms that work on the same structure, like search. 
 
@@ -132,7 +132,7 @@ A hash function has a given finite number of possible outputs, because the outpu
 
 Uniformity is obviously linked to the number of collisions produced by a hash function, and a perfectly uniform hash function will have the same number of collisions for each output value. Increasing the number of possible output values, thus, results in a uniform reduction of collisions.
 
-## Non-invertible
+### Non-invertible
 
 Inverting a function means to create a function that returns the original input given the output. For example multiplication by 2 is an invertible function, as given the result we may easily divide by 2 and retrieve the original input.
 
@@ -142,11 +142,11 @@ With non-invertible functions **there is no simple way to find the input given t
 
 ![Image 05](/images/introduction_to_hashing/hash5.jpg)
 
-## Collisions-resistant
+### Collisions-resistant
 
 A hash function is said to be collision-resistant when **it is hard to find two different inputs that produce the same hash value**. Mind that the definition of "hard" here is the same as that of "infeasible" in the previous section. This property is very important in cryptography, where collisions can be exploited to crack a cipher.
 
-# Theoretical and practical inputs
+## Theoretical and practical inputs
 
 It is important to understand that the analysis of a hash function can be made considering either theoretical or practical inputs. Theoretical inputs are all the possible inputs, like "all the possible strings", while a set of practical inputs might be "the names of a group of people". The latter might be very large but it is not infinite. 
 
@@ -169,11 +169,11 @@ where it is known (or evident) that each string begins with a different letter, 
 
 A very good example of such an analysis can be found in the source code of the Python language. The implementation of dictionaries contains an in-depth discussion of the choices made when implementing the hashing mechanism behind those structures. You can find it [here](https://github.com/python/cpython/blob/3.8/Objects/dictobject.c#L135). If you never approached data structures I recommend starting from a simpler explanation, however, as you might be intimidated by that discussion. You will find a good basic tutorial on hash tables in any data structures course or textbook.
 
-# Final words
+## Final words
 
 As I said this is just a very quick and humble introduction to hashing. I think you cannot call yourself a programmer nowadays without knowing something about hashing, and what I summarized in this post is enough to understand hash uses like Bitcoin or SSL. If you want to study the topic in depth, however, I recommend taking a course or reading a book on data structures.
 
-# Resources
+## Resources
 
 * [Hash function](https://en.wikipedia.org/wiki/Hash_function)  on Wikipedia
 * [Cryptographic hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function) on Wikipedia
@@ -182,10 +182,10 @@ As I said this is just a very quick and humble introduction to hashing. I think 
 * Wiley & Sons publishes a book on [Data Structures and Algorithms in Python](https://www.amazon.co.uk/Structures-Algorithms-Python-Michael-Goodrich/dp/1118290275)
 * O'Reilly publishes a book on [Mastering Algorithms with C: Useful Techniques from Sorting to Encryption](https://www.amazon.com/Mastering-Algorithms-Techniques-Sorting-Encryption/dp/1565924533/ref=sr_1_1?s=books&ie=UTF8&qid=1523009383&sr=1-1&keywords=Mastering+Algorithms+with+C)
 
-## Updates
+### Updates
 
 2018-04-28 [gixslayer](https://www.reddit.com/user/gixslayer) and [SevenGlass](https://www.reddit.com/user/SevenGlass) discussed on reddit the right command line for the `md5sum` example on Windows. See https://www.reddit.com/r/programming/comments/8fbepo/introduction_to_hashing/dy316go
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

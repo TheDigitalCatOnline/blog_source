@@ -12,7 +12,7 @@
 
 <button onclick="hideStyle()">Toggle retro style</button>
 
-= The Exec base functions
+== The Exec base functions
 
 We found the Kickstart 1.3 (Exec 34.2) vector table at address `0x1a7c`, and the first 4 entries read
 
@@ -26,7 +26,7 @@ We found the Kickstart 1.3 (Exec 34.2) vector table at address `0x1a7c`, and the
 
 If we translate these relative values into absolute addresses, summing the address of the table itself, we discover the address of the 4 base functions that every Amiga library has to provide, namely `Open`, `Close`, `Expunge`, and a reserved slot that should contain a function that returns 0.
 
-== Open
+=== Open
 
 The first value is `0x08a0`, and if we sum this value to the address of the table itself we get `0x1a7c + 0x08a0 = 0x231c`. At this address we will find the first function defined in the jump table, that is `Open`.
 
@@ -83,7 +83,7 @@ To find the field updated by `Open` we need to skip 32 bytes. So, after we skip 
 
 The last instruction of the `Open` function is `rts` (ReTurn from Subroutine) that returns to the instruction after the `jsr` that called the function.
 
-== Close, Expunge, and the reserved slot
+=== Close, Expunge, and the reserved slot
 
 Immediately after the definition of the `Open` function, we find the definition of `Close`, listed in the vector table as `0x08a8`, which becomes `0x1a7c + 0x08a8 = 0x2324`. The next two entries in the vector table contain the same value `0x08ac`, which translates to the absolute address `0x1a7c + 0x08ac = 0x2328`. This address is then the location of both the `Expunge` function and the reserved function that must return 0.
 
@@ -99,7 +99,7 @@ The code of the `Close` function is very simple, it just decrements the open cou
 0000232a: 4e75          rts     
 ----
 
-= MakeFunctions
+== MakeFunctions
 
 The `MakeFunctions` routine is used by Exec to create the vector table at the beginning of the library when it is loaded in memory. You might recall that the vector table is created backward from the beginning of the library, thus allowing to use a simpler addressing scheme.
 
@@ -172,7 +172,7 @@ Cleanup:
 000015e6: 4e75                      rts     
 ----
 
-== Setup
+=== Setup
 
 The first part of the code is
 
@@ -214,7 +214,7 @@ Lastly, the code moves the `a2` register to `d1` to be able to manipulate it.
 
 This, however, also sets the processor flags according to the value of `a2` itself, and those flags are used in the next `beq.b` instruction. If `a2` contains the value 0 the table is absolute (code at `0x15d0`, labelled `Absolute` here) otherwise it is relative (code at `0x15ba`, labelled `Relative` here).
 
-== Relative
+=== Relative
 
 The second section manages relative jump vectors
 
@@ -270,7 +270,7 @@ Note that since we are storing the jump table at negative addresses starting fro
 000015ce: 60ea                      bra.b   Relative
 ----
 
-== Absolute
+=== Absolute
 
 The third section is very similar to the second one, because it performs the same actions, only with absolute addresses instead of relative ones.
 
@@ -287,7 +287,7 @@ The third section is very similar to the second one, because it performs the sam
 
 The only difference with the previous section is that there is no need to load the effective address, as the value contained in `d1` is already absolute, so the latter can be stored directly.
 
-== Cleanup
+=== Cleanup
 
 The last section simply restores the stack pointer, popping the value of the `a3` register where the pointer was previously saved, and returns to the caller.
 
@@ -297,7 +297,7 @@ The last section simply restores the stack pointer, popping the value of the `a3
 000015e6: 4e75                      rts     
 ----
 
-= Self-modifying code
+== Self-modifying code
 
 The creation of the jump table performed by the `MakeFunctions` routine leverages a very powerful feature of any assembly language, that is being able to produce code that self-modifies. This feature comes from a property of machine languages called [link](https://en.wikipedia.org/wiki/Homoiconicity,homoiconicity).
 
@@ -329,15 +329,15 @@ The first 10 bits (`0100 1110 11`) already identify a `jmp` instruction. The fol
 
 With that `move.w`, then, the code writes in memory some Assembly code. Techniques like this have been and are used by games and viruses to obfuscate the code, as a static analysis of the binary will not reveal what will be there only at runtime!
 
-= What's next
+== What's next
 
 The next article will discuss the reason behind the address `0x4` used for the Exec base address, and then will move on discussing linked lists and how Exec manages system resources using them.
 
-= Resources
+== Resources
 
 * Motorola M68000 Family Programmer's Reference Manual - https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
 * [link](http://amigadev.elowar.com,"AmigaOS Developer Docs")
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

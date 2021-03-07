@@ -12,7 +12,7 @@
 
 <button onclick="hideStyle()">Toggle retro style</button>
 
-= Memory initialisation
+== Memory initialisation
 
 The Amiga has two types of memory. The first one is found on-board and it is traditionally referred to as "Chip Memory". This name comes from the fact that both the CPU and the custom chips have access to it, which also means that all this components have to share the access. This slows down the CPU when the custom chips are using the memory. While they can use DMA to access it without blocking the CPU, the memory cannot be accessed by multiple components at the same time.
 
@@ -235,7 +235,7 @@ After this we repeat the same procedure that was described for the fast memory. 
 
 The last action of this part of the code is to call `AddLibrary` at `0x1448`. The only parameter the routine requires is the base address of the library in `a1`, which is why the code copies `a6` there.
 
-= The "magic number" `0x24c`
+== The "magic number" `0x24c`
 
 When we discussed the way the memory is initialised we discovered a "magic number" that Kickstart uses to find the first free location in memory
 
@@ -345,7 +345,7 @@ The include file that I found in the Amiga Developer CD has a slightly different
 
 As you can see the final address is `0x24c`, which is exactly where the free memory begins (remember that `LABEL` is a macro and not a field, so it doesn't use space).
 
-= The "magic numbers" `0x676` and `0x400`
+== The "magic numbers" `0x676` and `0x400`
 
 The Motorola 68000 architecture forces to reserve the first 1024 bytes (`0x400`) for the exception vectors. The table of these vectors can be found in the Programmer's Reference Manual, page B-2, and this is the source for the magic number used when adding the chip memory to the system lists in case an expansion memory is installed.
 
@@ -382,17 +382,17 @@ The Exec base address, however, is not `0x400` but `0x676`. As we already know t
       0 +---------------------------------------+ 0x0   <-+
 ----
 
-= What's next
+== What's next
 
 It's time to show the complete Exec vector table, as we are going to use and analyse all the functions defined there. I will then discuss the structure of the memory list header and its relationship with linked lists. Last I will dissect the code of `AddMemList` and thus show in detail how the chip and expansion memory areas are added to to free memory pool.
 
-= Resources
+== Resources
 
 * Microprocessor-based system design by Ricardo Gutierrez-Osuna ([link](
 http://courses.cs.tamu.edu/rgutier/ceg411_f01/,slides)), in particular [link](http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf,"Lesson 9 - Exception processing")
 * Motorola M68000 Family Programmer's Reference Manual - https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
 * Amiga System Programmers Guide, Abacus - https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.
