@@ -12,9 +12,9 @@ I recently revisited three old posts on Django class-based views that I wrote fo
 
 To fully appreciate the content of the post, be sure you grasp two pillars of the OOP approach: **delegation**, in particular how it is implemented through inheritance, and **polymorphism**. [This post about delegation]({filename}python-3-oop-part-3-delegation-composition-and-inheritance.markdown) and [this post about polymorphism]({filename}python-3-oop-part-4-polymorphism.markdown) contain all you need to understand how Python implements those concepts.
 
-# Multiple inheritance: blessing and curse
+## Multiple inheritance: blessing and curse
 
-## General concepts
+### General concepts
 
 To discuss mixins we need to start from one of the most controversial subjects in the whole OOP world: multiple inheritance. This is a natural extension of the concept of simple inheritance, where a class automatically delegates method and attribute resolution to another class (the parent class).
 
@@ -135,7 +135,7 @@ These are just examples and might be valid or not, depending on the concrete cas
 
 That said, as inheritance and composition implement two different types of delegation (_to be_ and _to have_), they are both valuable, and multiple inheritance is the way to remove the single provider limitation that comes from having only one parent class.
 
-## Why is it controversial?
+### Why is it controversial?
 
 Given what I just said, multiple inheritance seems to be a blessing. When an object can inherit from multiple parents, we can easily spread responsibilities among different classes and use only the ones we need, promoting code reuse and avoiding god objects.
 
@@ -225,7 +225,7 @@ So, while with single-parent inheritance the rules are straightforward, with mul
 
 Not at all! There are solutions to this problem, as we will see shortly, but this further level of intricacy makes multiple inheritance something that doesn't fit easily in a design and has to be implemented carefully to avoid subtle bugs. Remember that inheritance is an automatic delegation mechanism, as this makes what happens in the code less evident. For these reasons, multiple inheritance is often depicted as scary and convoluted, and usually given some space only in the advanced OOP courses, at least in the Python world. I believe every Python programmer, instead, should familiarise with it and learn how to take advantage of it.
 
-## Multiple inheritance: the Python way
+### Multiple inheritance: the Python way
 
 Let's see how it is possible to solve the diamond problem. Unlike genetics, we programmers can't afford any level of uncertainty or randomness in our processes, so in the presence of a possible ambiguity as the one created by multiple inheritance, we need to write down a rule that will be strictly followed in every case. In Python, this rule goes by the name of MRO (Method Resolution Order), which was introduced in Python 2.3 and is described in [this document](https://www.python.org/download/releases/2.3/mro/) by Michele Simionato.
 
@@ -277,7 +277,7 @@ So, in this case an instance `c` of `Child` provides `rewind`, `open`, `close`, 
 
 As we see with the `flush` method, Python doesn't change its behaviour when it comes to method overriding with multiple parents. The first implementation of a method with that name is executed, and the parent's implementation is not automatically called. As in the case of standard inheritance, then, it's up to us to design classes with matching method signatures.
 
-### Under the bonnet
+#### Under the bonnet
 
 How does multiple inheritance work internally? How does Python create the MRO list?
 
@@ -285,7 +285,7 @@ Python has a very simple approach to OOP (even though it ultimately ends with a 
 
 The MRO is created using only `__bases__`, but the underlying algorithm is not that trivial and has to with the monotonicity of the resulting class linearisation. It is less scary than it sounds, but not something you want to read while suntanning, probably. If that's the case, the aforementioned [document](https://www.python.org/download/releases/2.3/mro/) by Michele Simionato contains all the gory details on class linearisation that you always wanted to explore while lying on the beach.
 
-# Inheritance and interfaces
+## Inheritance and interfaces
 
 To approach mixins, we need to discuss inheritance in detail, and specifically the role of method signatures.
 
@@ -345,13 +345,13 @@ This is a classic problem in OOP. While we, as humans, perceive a square just as
 
 Now, discussing interfaces, polymorphism, and the reasons behind them would require an entirely separate post, so in the following sections, I'm going to ignore the matter and just consider the object interface optional. You will thus find examples of objects that break the interface of the parent, and objects that keep it. Just remember: whenever you change the signature of a method you change the (implicit) interface of the object, and thus you stop polymorphism. I'll discuss another time if I consider this right or wrong.
 
-# Mixin classes
+## Mixin classes
 
 MRO is a good solution that prevents ambiguity, but it leaves programmers with the responsibility of creating sensible inheritance trees. The algorithm helps to resolve complicated situations, but this doesn't mean we should create them in the first place. So, how can we leverage multiple inheritance without creating systems that are too complicated to grasp? Moreover, is it possible to use multiple inheritance to solve the problem of managing the double (or multiple) nature of an object, as in the previous example of a movable and resizeable shape?
 
 The solution comes from mixin classes: those are small classes that provide attributes but are not included in the standard inheritance tree, working more as "additions" to the current class than as proper ancestors. Mixins originate in the LISP programming language, and specifically in what could be considered the first version of the Common Lisp Object System, the Flavors extension. Modern OOP languages implement mixins in many different ways: Scala, for example, has a feature called _traits_, which live in their own space with a specific hierarchy that doesn't interfere with the proper class inheritance.
 
-## Mixin classes in Python
+### Mixin classes in Python
 
 Python doesn't provide support for mixins with any dedicated language feature, so we use multiple inheritance to implement them. This clearly requires great discipline from the programmer, as it violates one of the main assumptions for mixins: their orthogonality to the inheritance tree. In Python, so-called mixins are classes that live in the normal inheritance tree, but they are kept small to avoid creating hierarchies that are too complicated for the programmer to grasp. In particular, mixins shouldn't have common ancestors other than `object` with the other parent classes.
 
@@ -383,7 +383,7 @@ Here, the class `ResizableMixin` doesn't inherit from `GraphicalEntity`, but dir
 
 Mixins cannot usually be too generic. After all, they are designed to add features to classes, but these new features often interact with other pre-existing features of the augmented class. In this case, the `resize` method interacts with the attributes `size_x` and `size_y` that have to be present in the object. Obviously, there are obviously examples of _pure_ mixins, but since they would require no initialization their scope is definitely limited.
 
-## Using mixins to hijack inheritance
+### Using mixins to hijack inheritance
 
 Thanks to the MRO, Python programmers can leverage multiple inheritance to override methods that objects inherit from their parents, allowing them to customise classes without code duplication. Let's have a look at this example
 
@@ -520,7 +520,7 @@ Here, the MRO or `LimitSizeButton` is `(<class '__main__.LimitSizeButton'>, <cla
 
 Remember that in Python, you are never forced to call the parent's implementation of a method, so the mixin here might also stop the dispatching mechanism if that is the requirement of the business logic of the new object.
 
-# A real example: Django class-based views
+## A real example: Django class-based views
 
 Finally, let's get to the original source of inspiration for this post: the Django codebase. I will show you here how the Django programmers used multiple inheritance and mixin classes to promote code reuse, and you will now hopefully grasp all the reasons behind them.
 
@@ -563,7 +563,7 @@ It might look complicated, but try to follow the code a couple of times and the 
 
 As we discussed before, mixins cannot be too generic, and here we see a good example of a mixin designed to work on specific classes. `TemplateResponseMixin` has to be applied to classes that contain `self.request` ([CODE](https://github.com/django/django/blob/3.0/django/views/generic/base.py#L133)), and while this doesn't mean exclusively classes derived from `View`, it is clear that it has been designed to augment that specific type.
 
-# Takeaway points
+## Takeaway points
 
 * Inheritance is designed to promote code reuse but can lead to the opposite result
 * Multiple inheritance allows us to keep the inheritance tree simple
@@ -572,15 +572,15 @@ As we discussed before, mixins cannot be too generic, and here we see a good exa
 * Mixin classes are used to add simple changes to classes
 * Mixins are implemented in Python using multiple inheritance: they have great expressive power but require careful design.
 
-# Final words
+## Final words
 
 I hope this post helped you to understand a bit more how multiple inheritance works, and to be less scared by it. I also hope I managed to show you that classes have to be carefully designed and that there is a lot to consider when you create a class system. Once again, please don't forget composition, it's a powerful and too often forgotten tool.
 
-# Updates
+## Updates
 
 2020-03-13: GitHub user [sureshvv](https://github.com/sureshvv) noticed that the `LimitSizeMixin` method `__init__` had the wrong parameters `pos_x` and `pos_y`, instead of `size_x` and `size_y`. Thanks!
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

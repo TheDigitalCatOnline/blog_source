@@ -66,13 +66,13 @@ If you made it so far you are ready to face the big players! The following are c
 * Abstract Base Classes: [Object-Oriented Programming in Python 3 - Abstract Base Classes]({filename}python-3-oop-part-6-abstract-base-classes.markdown) and [Python decorators: metaprogramming with style]({filename}python-decorators-metaprogramming-with-style.markdown)
 * Multiple inheritance: [Multiple inheritance and mixin classes in Python]({filename}multiple-inheritance-and-mixin-classes-in-python.markdown)
 
-# Final words
+## Final words
 
 Wow, this was a nice trip! Obviously, I don't think I covered all that can be said on OOP in Python, but I'm pretty sure that all these posts can boost your knowledge of this important paradigm and allow you to become a better Python programmer. I will update this post when I will publish new articles on OOP here on the blog.
 
 If you found this useful, please consider sharing it with a friend! 
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

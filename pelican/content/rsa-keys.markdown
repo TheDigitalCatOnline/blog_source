@@ -16,7 +16,7 @@ Do you know what the file `~/.ssh/id_rsa` really contains? Why did ssh create tw
 
 I believe that a minimum level of knowledge regarding the various formats of RSA keys is mandatory for every developer nowadays, not to mention the importance of understanding them deeply if you want to pursue a career in the infrastructure management world.
 
-# RSA algorithm and key pairs
+## RSA algorithm and key pairs
 
 Since the invention of public-key cryptography, various systems have been devised to create the key pair. One of the first ones is RSA, the creation of three brilliant cryptographers, that dates back to 1977. The story of RSA is quite interesting, as it was first invented by an English mathematician, Clifford Cocks, who was however forced to keep it secret by the British intelligence office he was working for.
 
@@ -28,7 +28,7 @@ In this article I will instead explore two ways to create RSA key pairs and the 
 
 All the examples shown in this post use a 2048-bits RSA key created for this purpose, so all the numbers you see come from a real example. The key has been obviously trashed after I wrote the article.
 
-# The PEM format
+## The PEM format
 
 Let's start the discussion about key pairs with the format used to store them. Nowadays the most widely accepted storage format is called PEM (Privacy-enhanced Electronic Mail). As the name suggests, this format was initially created for e-mail encryption but later became a general format to store cryptographic data like keys and certificates. It is described in [RFC 7468](https://tools.ietf.org/html/rfc7468) ("Textual Encodings of PKIX, PKCS, and CMS Structures").
 
@@ -123,7 +123,7 @@ Let me visually recap the structure
 
 Please note that, due to the structure of the underlying ASN.1 structure, every PEM body starts with the characters `MII`.
 
-## OpenSSL and ASN.1
+### OpenSSL and ASN.1
 
 OpenSSL can directly decode a key in PEM format and show the underlying ASN.1 structure with the module `asn1parse`
 
@@ -252,7 +252,7 @@ $ openssl asn1parse -inform pem -in private-enc.pem
    5806E5D76D4CD8308B8FDFE
 ```
 
-## OpenSSL and RSA keys
+### OpenSSL and RSA keys
 
 Another way to look into a private key with OpenSSL is to use the module `rsa`. While the module `asn1parse` is a generic ASN.1 parser, the module `rsa` knows the structure of an RSA key and can properly output the field names
 
@@ -354,7 +354,7 @@ The fields are the same we found in the ASN.1 structure, but in this representat
 
 If you want to learn something about RSA try to investigate the historical reasons behind the choice of 65537 as a common public exponent (as you can see here in the section `publicExponent`).
 
-## PKCS #8 vs PKCS #1
+### PKCS #8 vs PKCS #1
 
 The first version of the PKCS standard (PKCS #1) was specifically tailored to contain an RSA key. Its ASN.1 definition can be found in [RFC 8017](https://tools.ietf.org/html/rfc8017) ("PKCS #1: RSA Cryptography Specifications Version 2.2")
 
@@ -417,7 +417,7 @@ If it uses PKCS #1, however, there has to be an external identification of the a
 
 The structure of PKCS #8 is the reason why we had to parse the field at offset 22 to access the RSA parameters when using the module `asn1parse` of OpenSSL. If you are parsing a PKCS #1 key in PEM format you don't need this second step.
 
-# Private and public key
+## Private and public key
 
 In the RSA algorithm the public key is built using the modulus and the public exponent, which means that we can always derive the public key from the private key. OpenSSL can easily do this with the module `rsa`, producing the public key in PEM format
 
@@ -462,7 +462,7 @@ Modulus:
 Exponent: 65537 (0x10001)
 ```
 
-# Generating key pairs with OpenSSL
+## Generating key pairs with OpenSSL
 
 If you want to generate an RSA private key you can do it with OpenSSL
 
@@ -500,7 +500,7 @@ and encrypted ones in the form
 -----END ENCRYPTED PRIVATE KEY-----
 ```
 
-# Generating key pairs with OpenSSH
+## Generating key pairs with OpenSSH
 
 Another tool that you can use to generate key pairs is ssh-keygen, which is a tool included in the SSH suite that is specifically used to create and manage SSH keys. As SSH keys are standard asymmetrical keys we can use the tool to create keys for other purposes.
 
@@ -533,7 +533,7 @@ Using `-m PKCS8` instead uses PKCS #8 and the kwy will be in the form
 -----END PRIVATE KEY-----
 ```
 
-## The OpenSSH public key format
+### The OpenSSH public key format
 
 The public key saved by ssh-keygen is written in the so-called SSH-format, which is not a standard in the cryptography world. It's structure is `<algorithm> <key> <comment>`, where the `<key>` part of the format is encoded with Base64.
 
@@ -616,11 +616,11 @@ Please note that since we created a key of 2048 bits we should have a modulus of
 
 The structure shown above is the reason why all the RSA public SSH keys start with the same 12 characters `AAAAB3NzaC1y`. This string, converted in Base64 gives the initial 9 bytes `00 00 00 07 73 73 68 2d 72` (Base64 characters are not a one-to-one mapping of the source bytes). If the exponent is the standard 65537 the key starts with `AAAAB3NzaC1yc2EAAAADAQAB`, which encoded gives the fist 18 bytes `00 00 00 07 73 73 68 2d 72 73 61 00 00 00 03 01 00 01`. 
 
-# Converting between PEM and OpenSSH format
+## Converting between PEM and OpenSSH format
 
 We often need to convert files created with one tool to a different format, so this is a list of the most common conversions you might need. I prefer to consider the key format instead of the source tool, but I give a short description of the reason why you should want to perform the conversion.
 
-## PEM/PKCS#1 to PEM/PKCS#8
+### PEM/PKCS#1 to PEM/PKCS#8
 
 This is useful to convert OpenSSH private keys to a newer format.
 
@@ -628,7 +628,7 @@ This is useful to convert OpenSSH private keys to a newer format.
 openssl pkcs8 -topk8 -inform PEM -outform PEM -in pkcs1.pem -out pkcs8.pem
 ```
 
-## OpenSSH public to PEM/PKCS#8
+### OpenSSH public to PEM/PKCS#8
 
 To convert public OpenSSH keys in a PEM format using PKCS #8 (prints to stdout)
 
@@ -638,7 +638,7 @@ ssh-keygen -e -f public.pub -m PKCS8
 
 This is easy to remember because `-e` stands for export. Note that you can also use `-m PEM` to convert the key into a PEM format that uses PKCS #1.
 
-## PEM/PKCS#8 to OpenSSH public
+### PEM/PKCS#8 to OpenSSH public
 
 If you need to use in SSH a key pair created with another system 
 
@@ -648,7 +648,7 @@ ssh-keygen -i -f public.pem -m PKCS8
 
 This is easy to remember because `-i` stands for import. As happened when exporting the key, you can import a PEM/PKCS #1 key using `-m PEM`.
 
-# Reading RSA keys in Python
+## Reading RSA keys in Python
 
 In Python you can use the package `pycrypto` to access a PEM file containing an RSA key with the function `RSA.importKey`. Now you can hopefully understand the [documentation](https://www.dlitz.net/software/pycrypto/api/current/Crypto.PublicKey.RSA-module.html) that says
 
@@ -692,11 +692,11 @@ second_prime_number = key.q
 q_inv_crt = key.u
 ```
 
-# Final words
+## Final words
 
 I keep finding on StackOverflow (and on other boards) messages of users that are confused by RSA keys, the output of the various tools, and by the subtle but important differences between the formats, so I hope this post helped you to get a better understanding of the matter.
 
-# Resources
+## Resources
 
 * The Wikipedia article on [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem))
 * OpenSSL documentation: [asn1parse](https://www.openssl.org/docs/man1.1.0/apps/asn1parse.html), [rsa](https://www.openssl.org/docs/man1.1.0/apps/rsa.html), [genpkey](https://www.openssl.org/docs/man1.1.0/apps/genpkey.html)
@@ -711,6 +711,6 @@ I keep finding on StackOverflow (and on other boards) messages of users that are
 * [RFC 8017 - PKCS #1: RSA Cryptography Specifications Version 2.2](https://tools.ietf.org/html/rfc8017)
 * [PyCrypto](https://www.dlitz.net/software/pycrypto/) - The Python Cryptography Toolkit
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

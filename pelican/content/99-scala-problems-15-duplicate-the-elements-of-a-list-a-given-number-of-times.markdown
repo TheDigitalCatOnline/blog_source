@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing how to replicate elements in a Scala list
 
-# The problem
+## The problem
 
 **P15** (**) Duplicate the elements of a list a given number of times.
 
@@ -20,11 +20,11 @@ scala> duplicateN(3, List('a, 'b, 'c, 'c, 'd))
 res0: List[Symbol] = List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd)
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 Problem 12 already taught me to use `fill()` to build lists of repeated elements so this could be a good occasion to use it again.
 
-# Solution
+## Solution
 
 This problem is a generalization of the previous [problem 14]({filename}99-scala-problems-14-duplicate-the-elements-of-a-list.markdown) which required to duplicate the elements of a list. There we could build the list into an anonymous function with the `List(e, e)` syntax.
 
@@ -46,10 +46,10 @@ def duplicateN2[A](n: Int, l: List[A]):List[A] = {
 }
 ```
 
-# Final considerations
+## Final considerations
 
 Previous problems gave me all I needed to solve this one. I used **anonymous functions** and **mapping**, which are a very important component of Scala. I learned how to **simplify an anonymous function** using the underscore.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

@@ -114,7 +114,7 @@ class FileInfo:
 
 Obviously to write the test you have to know that you are going to use the `os.path.abspath` function, so patching is somehow a "less pure" practice in TDD. In pure OOP/TDD you are only concerned with the external behaviour of the object, and not with its internal structure. This example, however, shows that you have to cope with some real world issues, and patching is a clean way to do it.
 
-# The patching decorator
+## The patching decorator
 
 The `patch` function we imported from the `unittest.mock` module is very powerful, and can be used as a function decorator as well. When used in this fashion you need to change the decorated function to accept a mock as last argument.
 
@@ -132,7 +132,7 @@ def test_get_info(abspath_mock):
 
 As you can see the `patch` decorator works like a big `with` statement for the whole function. Obviously in this way you replace the target function `os.path.abspath` in the scope of the whole function. It is then up to you to decide if you need to use `patch` as a decorator or in a `with` block.
 
-# Multiple patches
+## Multiple patches
 
 We can also patch more that one object. Say for example that we want to change the above test to check that the outcome of the `FileInfo.get_info()` method also contains the size of the file. To get the size of a file in Python we may use the `os.path.getsize()` function, which returns the size of the file in bytes.
 
@@ -205,7 +205,7 @@ def test_get_info():
 
 Using more than one `with` statement, however, makes the code difficult to read, in my opinion, so in general I prefer to avoid complex `with` trees if I do not need a limited scope of the patching.
 
-# Patching immutable objects
+## Patching immutable objects
 
 The most widespread version of Python is CPython, which is written, as the name suggests, in C. Part of the standard library is also written in C, while the rest is written in Python itself.
 

@@ -15,7 +15,7 @@ Why another tutorial, then? Recently I started working on a small personal proje
 
 So, I decided to start from scratch again, this time writing down some requirements I want from my development setup. I also know very well how complicated the deploy of an application in production can be, so I want my setup to be "deploy-friendly" as much as possible. Having seen too many project suffer from legacy setups, and knowing that many times such issues can be avoided with a minimum amount of planning, I thought this might be interesting for other developers as well. I consider this setup by no means _better_ than others, it simply addresses different concerns.
 
-= What you will learn
+== What you will learn
 
 This post contains a step-by-step description of how I set up a real Flask project that I am working on. It's important that you understand that this is just one of many possible setups, and that my choices are both a matter of personal taste and dictated by some goals that I will state in this section. Changing the requirements would clearly result in a change of the structure. The target of the post is then to show that the setup of a project can take into account many things upfront, without leaving them to an undetermined future when it will likely be too late to tackle them properly.
 
@@ -30,19 +30,19 @@ The requirements of my setup are the following:
 
 As for the technologies, I will use Flask, obviously, as the web framework. I will also use Gunicorn as HTTP server (in production) and Postgres for the database part. I won't show here how to create the production infrastructure, but as I work daily with AWS, I will take into account some of its requirements, trying however not to be too committed to a specific solution.
 
-= A general advice
+== A general advice
 
 Proper setup is an investment for the future. As we do in TDD, where we decide to spend time now (writing tests) to avoid spending tenfold later (to find and correct bugs), setting up a project requires time, and might frustrate the desire of "see things happen". Proper setup is a discipline that requires patience and commitment!
 
 If you are ready to go, join me for this journey towards a great setup of a Flask application.
 
-= The golden rule
+== The golden rule
 
 The golden rule of any proper infrastructural work is: there has to be a single source of information. The configuration of you project shouldn't be scattered among different files or repositories (not considering secrets, that have to be stored securely). The configuration has to be accessible and easy to convert into different formats to accommodate the needs of different tools. For this reason, the configuration should be stored in a static file format like JSON, YAML, INI, or similar, which can be read and processed by different programming languages and tools.
 
 My format of choice for this tutorial is JSON, as it can be read by both Python and Terraform, and is natively used by ECS on AWS.
 
-= Step 1 - Requirements and editor
+== Step 1 - Requirements and editor
 
 My standard structure for Python requirements uses 3 files: `production.txt`, `development.txt`, and `testing.txt`. They are all stored in the same directory called `requirements`, and are hierarchically connected. 
 
@@ -90,17 +90,17 @@ This is clearly a very personal choice, and you might have different requirement
 
 At this point I also create my virtual environment and activate it.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/a6c8e7acde7d5d5d89fad22224fff707d625ebe3,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/a6c8e7acde7d5d5d89fad22224fff707d625ebe3,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://packaging.python.org/tutorials/installing-packages/,"Installing packages in Python")
 * [link](https://flake8.pycqa.org/en/latest/,flake8) - A tool for style guide enforcement
 * [link](https://github.com/psf/black,black) - The uncompromising Python code formatter
 
-= Step 2 - Flask project boilerplate
+== Step 2 - Flask project boilerplate
 
 As this will be a Flask application the first thing to do is to install Flask itself. That goes in the production requirements, as that is needed at every stage.
 
@@ -204,18 +204,18 @@ $ FLASK_CONFIG="development" flask run
 
 Please note that it says `Environment: production` because we haven't configured `FLASK_ENV` yet. If you head to http://127.0.0.1:5000/ with your browser you can see the greetings message.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/656621980f6f2c2aac3c526b37dca6ac32363bd5,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/656621980f6f2c2aac3c526b37dca6ac32363bd5,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://flask.palletsprojects.com/en/1.1.x/config/,"Flask configuration documentation")
 * [link](https://flask.palletsprojects.com/en/1.1.x/patterns/appfactories/,"Flask application factories")
 * [link](https://wsgi.readthedocs.io/en/latest/what.html,WSGI) - The Python Web Server Gateway Interface
 * My post [link](\{filename}dissecting-a-web-stack.markdown,"Dissecting a web stack") includes a section on WSGI
 
-= Step 3 - Application configuration
+== Step 3 - Application configuration
 
 As I mentioned in the introduction, I am going to use a static JSON configuration file. The choice of JSON comes from the fact that it is a widespread file format, accessible from many programming languages, included Terraform, which I plan to use to create my production infrastructure.
 
@@ -324,16 +324,16 @@ $ ./manage.py flask run
 
 Note that it now says `Environment: development` because of `FLASK_ENV` has been set to `development` in the configuration. As we did before, a quick visit to http://127.0.0.1:5000/ shows us that everything is up and running.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/8330e792aa55d2903fd4846487c64de12530c0d3,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/8330e792aa55d2903fd4846487c64de12530c0d3,"browse the files").
 
-== Resources:
+=== Resources:
 
 * [link](https://docs.djangoproject.com/en/3.0/ref/django-admin/,"Django's management script")
 * [link](https://click.palletsprojects.com/en/7.x/,Click) - A Python package for creating command line interfaces 
 
-= Step 4 - Containers and orchestration
+== Step 4 - Containers and orchestration
 
 There is no better way to simplify your development than using Docker.
 
@@ -534,27 +534,27 @@ You might have noticed that the two functions `flask` and `compose` are basicall
 
 Now I can run `./manage.py compose up -d` and `./manage.py compose down` and have the environment variables automatically passed to the system.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/9e08735af6177760cd750230122a507b15c9c112,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/9e08735af6177760cd750230122a507b15c9c112,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://docs.docker.com/compose/,"Docker compose") - A tool for defining and running multi-container Docker applications
 * [link](https://docs.docker.com/network/,"Docker networking")
 * [link](https://docs.python.org/3/library/subprocess.html,"Python subprocess module")
 
-= Final words
+== Final words
 
 That's enough for this first post. We started from scratch and added some boilerplate code for a Flask project, exploring what environment variables are used by the framework, then we added a configuration system, a management script, and finally we run everything in a Docker container. In the next post I will show you how to add a persistent database to the development setup and how to use an ephemeral one for the tests. If you find my posts useful please share them with whoever you thing might be interested. 
 
 Happy development!
 
-= Updates
+== Updates
 
 2020-12-22 I reviewed the whole tutorial and corrected several typos
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.
 

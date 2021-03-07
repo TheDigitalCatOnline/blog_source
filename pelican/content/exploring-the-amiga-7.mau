@@ -12,7 +12,7 @@
 
 <button onclick="hideStyle()">Toggle retro style</button>
 
-= The complete Exec vector table
+== The complete Exec vector table
 
 In [link](\{filename}exploring-the-amiga-3.mau,"the 3rd post") of this series I showed the Exec vectors table and the way `MakeFunctions` creates the jump table when Exec is installed in memory. In that post I focused on the first 4 reserved vectors, but it is useful to have the full table while reading the Kickstart code. This is the full vectors table for Exec 34.2 (28 Oct 1987).
 
@@ -130,7 +130,7 @@ The **Relative offset** column contains the offset of the function in the jump t
 |-----------------|-----------------|------------------|------------------|--------------------------|
 ----
 
-= The memory list header
+== The memory list header
 
 Before we dig into the code of the `AddMemList` function to see how the memory space is added to the free memory list, let's have a look at the status of the memory list itself, as we need to be familiar with its structure to understand the rest of the process.
 
@@ -170,7 +170,7 @@ It is also interesting to note that the structure at `0x146` is very similar to 
 
 and as you can see `LH_TAIL`, `LH_TAILPRED`, and `LH_TYPE` can act as a proper node of a linked list. This is done on purpose (obviously), as the tail of the list has to be processed by the code that manages linked lists.
 
-= Adding free memory to the system list
+== Adding free memory to the system list
 
 At the end of the [link](\{filename}exploring-the-amiga-6.mau,"previous post") we left Exec just after its code prepared the parameters of the free memory that was available on the system. As we saw in that post, this operation is always executed for the chip memory, and optionally for the fast memory if the hardware expansion is installed.
 
@@ -263,7 +263,7 @@ If the starting point was 1 and the total size 65 bytes, however, the result wou
     0x1 +---------------+ <-+
 ----
 
-= AddMemList internals
+== AddMemList internals
 
 According to the Exec vectors table, `AddMemList` can be found at `00001a26`, and ends at `00001a78`. It is immediately followed by a padding word `0000` and the vectors table itself
 
@@ -367,11 +367,11 @@ This code creates the memory chunk in the free memory area. The size of the chun
 
 The rest of the code prepares the call to the protected version of `Enqueue`, copying the address of the node in `a1` , the absolute address of `MemList` in `a0`, and branching to the subroutine. When `Enqueue` returns, `AddMemList` terminates and returns as well.
 
-= Resources
+== Resources
 
 * Motorola M68000 Family Programmer's Reference Manual - https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
 * Amiga System Programmers Guide, Abacus - https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

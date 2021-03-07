@@ -13,7 +13,7 @@ In the first two issues of this short series we discussed the basic concepts of 
 
 This third issue will introduce the reader to the class-based version of Django forms. This post is not meant to be a full introduction to the Django form library; rather, I want to show how class-based generic views implement the CUD part of the CRUD operations (Create, Read, Update, Delete), the Read one being implemented by "standard" generic views.
 
-# A very basic example
+## A very basic example
 
 To start working with CBFs (class-based forms) let's consider a simple example. We have a `StickyNote` class which represents a simple text note with a date:
 
@@ -34,7 +34,7 @@ It is no surprise that the class is mostly empty. Thanks to inheritance, as happ
 
 To make the post easier to follow, please always remember that "class-based form" is a short name for "class-based form view". That is, CBFs are views, so their job is to process incoming HTTP requests and return an HTTP response. Form views do this in a slightly different way than the standard ones, mostly due to the different nature of POST requests compared with GET ones. Let us take a look at this concept before moving on.
 
-# HTTP requests: GET and POST
+## HTTP requests: GET and POST
 
 _Please note that this is a broad subject and that the present section wants only to be a very quick review of the main concepts that are related to Django CBFs_
 
@@ -44,7 +44,7 @@ As you can see, the definition of POST is very broad: the server accepts the inc
 
 Keep in mind that forms are not the same thing as POST request. As a matter of fact, they are connected just incidentally: a form is a way to collect data from a user browsing a HTML page, while POST requests are the way that data is transmitted to the server. You do not need to have a form to make a POST request, you just need some data to send. HTML forms are just a useful way to send POST requests, but not the only one.
 
-# Form views
+## Form views
 
 Why are form views different from standard views? The answer can be found looking at the flow of a typical data submission on a Web site:
 
@@ -59,7 +59,7 @@ Since most of the time the URL we use to POST data is the same URL we used to GE
 
 Let us start with the `CreateView` class we used in our simple example ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L175). It is an almost empty class that inherits from `SingleObjectTemplateResponseMixin` and `BaseCreateView`. The first class deals with the template selected to render the response and we can leave it aside for the moment. The second class ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L160)), on the other hand, is the one we are interested in now, as it implements two methods which names are self explaining, `get` and `post`.
 
-# Processing GET and POST requests
+## Processing GET and POST requests
 
 We already met the `get` method in the [previous article]({filename}digging-up-django-class-based-views-2.markdown) when we talked about the `dispatch` method of the `View` class. A quick recap of its purpose: this method is uses to process an incoming HTTP request, and is called when the HTTP method is GET. Unsurprisingly, the `post` method is called when the incoming request is a POST one. The two methods are already defined by an ancestor of the `BaseCreateView` class, namely `ProcessFormView` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L129)), so it is useful to have a look at the source code of this last class:
 
@@ -84,7 +84,7 @@ class ProcessFormView(View):
 
 As you can see the two methods are pretty straightforward, but it's clear that a lot is going on under the hood.
 
-# The form workflow
+## The form workflow
 
 Let's start with `get`, which apparently doesn't do much. It just calls `render_to_response` passing the result of `get_context_data`, so we need to track the latter to see what the template will get. `ProcessFormView` or its ancestors don't provide any method called `get_context_data`; instead, the `BaseCreateView` class receives it from `ModelFormMixin`, which in turn receives it from `FormMixin` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L63)).
 
@@ -107,7 +107,7 @@ Let's recap the process until here.
 5. When the use submits the form the URL dispatcher requests the page with a POST that contains the data
 6. The `post` method of `ProcessFormView` validates the form and acts accordingly, rendering the page again if the data is invalid or processing it and rendering a success template with the newly created object.
 
-# Update and Delete operations
+## Update and Delete operations
 
 This rather rich code tour unveiled the inner mechanism of the `CreateView` class, which can be used to create a new object in the database. The `UpdateView` and `DeleteView` classes follow a similar path, with minor changes to perform the different action they are implementing.
 
@@ -115,7 +115,7 @@ This rather rich code tour unveiled the inner mechanism of the `CreateView` clas
 
 `DeleteView` is a bit different from `CreateView` and `UpdateView`. As [the official documentation](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-editing/#deleteview) states, if called with a GET method it shows a confirmation page that POSTs to the same URL. So, as for the GET requests, `DeleteView` just uses the `get` method defined by its ancestor `BaseDetailView` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/detail.py#L105)), which renders the template putting the object in the context. When called with a POST request, the view uses the `post` method defined by `DeletionMixin` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L217), which just calls the `delete` method of the same class ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/edit.py#L206)). This performs the deletion on the database and redirects to the success URL.
 
-# Final words
+## Final words
 
 As you can see, the structure behind the current implementation of Django class-based form views is rather complex. This allows the user to achieve complex behaviours like the CUD operations just by defining a couple of classes as I did in the simple example at the beginning of the post. Most of the time, however, such a simplification makes it difficult for the programmer to understand how to achieve the desired changes to the class behaviour. So, the purpose of this big tour I made inside the Django source code was to give an insight of what methods are called in the life cycle of your HTTP request so that you can better identify what methods you need to override.
 
@@ -123,6 +123,6 @@ When performing special actions that fall outside the standard CUD operations yo
 
 This post ends the series "Digging Up Django Class-based Views". Stay tuned for other [articles on Django](/categories/django/)!
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

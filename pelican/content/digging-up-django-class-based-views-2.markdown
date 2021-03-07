@@ -13,7 +13,7 @@ In the first instalment of this short series, I introduced the theory behind Dja
 
 In this second post I want to talk about the second most used generic view, `DetailView`, and about custom querysets and arguments. Last, I'm going to introduce unspecialised class-based views that allow you to build more complex Web pages. To fully understand `DetailView`, however, you need to grasp two essential concepts, namely **querysets** and **view parameters**. So I'm sorry for the learn-by-doing readers, but this time too I'm going to start with some pure programming topics.
 
-# QuerySets or the art of extracting information
+## QuerySets or the art of extracting information
 
 One of the most important parts of Django is the ORM (Object Relational Mapper), which allows you to access the underlying database just like a collection of Python objects. As you know, Django provides tools to simplify the construction of DB queries; they are **managers** (the `.objects` attribute of any models, for example) and **query methods** (`get`, `filter`, and so on). Pay attention because things here are slightly more complicated than you can think at a first glance.
 
@@ -38,7 +38,7 @@ As you can see the `get_oldest_three` method is just filtering an incoming `Quer
 
 Being such flexible objects, querysets are an important part of generic views, so keep them warm for the upcoming banquet.
 
-# Being flexible: parametric views
+## Being flexible: parametric views
 
 URLs are the API of our Web site or service. This can be more or less evident for the user that browses through the pages, but from the programmer's point of view, URLs are the entry points of a Web-based service. As such, they are not very different from the API of a library: here, static pages are just like constants, or functions that always return that same value (such as a configuration parameter), while dynamic pages are like functions that process incoming data (parameters) and return a result.
 
@@ -88,7 +88,7 @@ Now look at what the `view` wrapper function actually does with the instanced cl
 
 This means that *anywhere in our CBVs* we can access the original call parameters simply reading `request`, `args` and `kwargs`, where `*args` and `**kwargs` are the unnamed and named values extracted by the URLconf regular expression.
 
-# Getting details
+## Getting details
 
 Just after listing things, one of the most useful things a Web site does is giving details about objects. Obviously any e-commerce site is made for the most part by pages that list products and show product details, but also a blog is made of one or more pages with a list of posts and a page for each of them. So building a detailed view of the content of our database is worth learning.
 
@@ -185,7 +185,7 @@ urlpatterns = patterns('',
 
 As explained before, you can access the object being shown through `object`, which in the above example is passed to a service function we implemented somewhere in our code.
 
-# Using the base views
+## Using the base views
 
 Sometimes, when dealing with complex pages, the generic display CBVs that Django provides are not the right choice. This usually becomes evident when you start overriding method to prevent the view to perform its standard behaviour. As an instance say that you want to show detailed information of more than one object: probably DetailView will soon show its limits, having been built to show only one object.
 
@@ -199,16 +199,16 @@ I'm not going to fully describe those views; I want however to briefly point out
 
 `RedirectView`, as the name implies, is used to redirect a request. The redirection mechanism is very simple: its `get` method returns a `HttpResponseRedirect` to the URL defined by the `url` class attribute. The class exhibits a very interesting behaviour ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L201)) when called with HTTP methods other than GET (namely HEAD, POST, OPTIONS, DELETE, PUT, or PATCH): it "converts" the method to GET simply calling `get` from the respective method (`head`, `post`, and so on). In the next post I'll show how to leverage this simple technique to show the user a pre-filled form.
 
-# Date-based views
+## Date-based views
 
 Django provides other class-based views that simplify dealing with objects extracted or ordered by date. As a programmer, you know that sometimes dealing with dates is awkward, to say the least; views such as `YearArchiveView` or `DayArchiveView` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/dates.py)) aim to help you to tame your date-based objects; any object that contains a date (e.g. post date for articles, birth date for people, log date for messages, etc.) can be processed by these views. You can find the official documentation [here](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-date-based/).
 
 Remember that date-based views are CBVs, so they are based on `View`, just like `ListView` or `TemplateView`. So, apart from their specialization on date processing, they behave the same (using `get_context_data`, `get`, `dispatch`, and so on).
 
-# Final words
+## Final words
 
 In this post we covered `DetailView` in deep and, more superficially, all the remaining base and data-based views. I showed you how `DetailView` uses the given model and the querystring parameters to find the requested object, and how you can change its default behaviour. In the next post we will step into the rich (and strange) world of forms.
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

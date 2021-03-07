@@ -11,13 +11,13 @@
 
 In this series of posts I explore the development of a Flask project with a setup that is built with efficiency and tidiness in mind, using TDD, Docker and Postgres.
 
-= Catch-up
+== Catch-up
 
 In the [link](\{filename}flask-project-setup-tdd-docker-postgres-and-more-part-1.mau,first) and [link](\{filename}flask-project-setup-tdd-docker-postgres-and-more-part-2.mau,second) posts I created a Flask project with a tidy setup, using Docker to run the development environment and the tests, and mapping important commands in a management script, so that the configuration can be in a single file and drive the whole system.
 
 In this post I will show you how to easily create scenarios, that is databases created on the fly with custom data, so that it is possible to test queries in isolation, either with the Flask application or with the command line. I will also show you how to define a configuration for production and give some hints for the deployment.
 
-= Step 1 - Creating scenarios
+== Step 1 - Creating scenarios
 
 The idea of scenarios is simple. Sometimes you need to investigate specific use cases for bugs, or maybe increase the performances of some database queries, and you might need to do this on a customised database. This is a scenario, a Python file that populates the database with a specific set of data and that allows you to run the application or the database shell on it.
 
@@ -360,17 +360,17 @@ The configuration file is
 
 which doesn't add anything new to what I already did for development and testing. 
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/dbb54d31af17866f9336199c65f1b495d879eb70,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/dbb54d31af17866f9336199c65f1b495d879eb70,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://docs.docker.com/compose/compose-file/#ports,"Expose ports in docker-compose")
 * [link](https://docs.docker.com/compose/reference/port/,"Docker Compose port command") - A command to print the port exposed by a container
 * [link](https://www.postgresql.org/docs/current/app-psql.html,psql) - PostgreSQL interactive terminal
 
-== Scenario example 1
+=== Scenario example 1
 
 Let's have a look at a very simple scenario that doesn't do anything on the database, just to understand the system. The code for the scenario is
 
@@ -436,11 +436,11 @@ And inside the database we find the database `application` created explicitly fo
 
 Before tearing down the scenario have a look at the two files `config/scenario_foo.json` and `docker/scenario_foo.yml`. They are just copies of `config/scenario.json` and `docker/scenario.yml` but I think seeing them there might help to understand how the whole thing works. When you are done run `./manage.py scenario down foo`.
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/9d9601508cfa7dc5d718d76cd0827396069035fd,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/9d9601508cfa7dc5d718d76cd0827396069035fd,"browse the files").
 
-== Scenario example 2
+=== Scenario example 2
 
 Let's do something a bit more interesting. The new scenario is contained in `scenarios/users.py`
 
@@ -509,11 +509,11 @@ application=# select * from users;
 application=# \q
 ----
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/b475c5e3d455098691fa1c736de573182d0e44ec,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/b475c5e3d455098691fa1c736de573182d0e44ec,"browse the files").
 
-= Step 2 - Simulating the production environment
+== Step 2 - Simulating the production environment
 
 As I stated at the very beginning of this mini series of posts, one of my goals was to run in development the same database that I run in production, and for this reason I went through the configuration steps that allowed me to have a Postgres container running both in development and during tests. In a real production scenario Postgres would probably run in a separate instance, for example on the RDS service in AWS, but as long as you have the connection parameters nothing changes in the configuration.
 
@@ -644,15 +644,15 @@ I can now build the image with
 $ APPLICATION_CONFIG="production" ./manage.py compose build web
 ----
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/1c0fcf13c54ea13bb6e1307452de00529dbd57af,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/1c0fcf13c54ea13bb6e1307452de00529dbd57af,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://gunicorn.org/,Gunicorn) - A Python WSGI HTTP Server
 
-= Step 3 - Scale up
+== Step 3 - Scale up
 
 Mapping the container port to the host is not a great idea, though, as it makes it impossible to scale up and down to serve more load, which is the main point of running containers in production. This might be solved in many ways in the cloud, for example in AWS you might run the container in AWS Fargate and register them in an Application Load Balancer. Another way to do it on a single host is to run a Web Server in front of your HTTP server, and this might be easily implemented  with Docker Compose.
 
@@ -768,18 +768,18 @@ Creating production_web_2 ... done
 Creating production_web_3 ... done
 ----
 
-== Git commit
+=== Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/2794ea1ca6e7c56a823ddf30201e69700f596bf2,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/2794ea1ca6e7c56a823ddf30201e69700f596bf2,"browse the files").
 
-== Resources
+=== Resources
 
 * [link](https://nginx.org/en/,Nginx) - An HTTP and reverse proxy server (and more)
 * [link](https://hub.docker.com/_/nginx,"Docker nginx") - the official nginx Docker image
 * [link](https://docs.docker.com/compose/reference/logs/,"Docker Compose logs command") - A command to print container logs
 * [link](https://docs.docker.com/compose/reference/up/,"Docker Compose up command") - The new way to scale containers in docker-compose
 
-= Bonus step - A closer look at Docker networking
+== Bonus step - A closer look at Docker networking
 
 I mentioned that Docker Compose creates a connection between services, and used that in the configuration of the nginx container, but I understand that this might look like black magic to some people. While I believe that this is actually black magic, I also think that we can investigate it a bit, so let's open the grimoire and reveal (some of) the dark secrets of Docker networking.
 
@@ -858,7 +858,7 @@ web.                    600     IN      A       172.30.0.4
 root@33cbaea369be:/#
 ----
 
-= How to create the production infrastructure
+== How to create the production infrastructure
 
 This will be a very short section, as creating infrastructure and deploying in production are complex topics, so I want to just give some hints to stimulate your research.
 
@@ -870,14 +870,14 @@ Terraform is not the right tool to deploy your code, though, as that requires a 
 
 When you create your deploy pipeline you need to do much more than just creating the image and running it, at least for real applications. You need to decide when to apply database migrations and if you have a web front-end you will also need to compile and install the JavaScript assets. Since you don't want to have downtime when you deploy you will need to look into blue/green deployments, and in general to strategies that allow you to run different versions of the application at the same time, at least for short periods of time. Or for longer periods, if you want to perform A/B testing or zonal deployments.
 
-= Final words
+== Final words
 
 This is the last post of this short series. I hope you learned something useful, and that it encouraged you to properly setup your projects and to investigate technologies like Docker. As always, feel free to send me feedback or questions, and if you find my posts useful please share them with whoever you thing might be interested.
 
-= Updates
+== Updates
 
 2020-12-22 I reviewed the whole tutorial and corrected several typos
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

@@ -12,7 +12,7 @@
 
 <button onclick="hideStyle()">Toggle retro style</button>
 
-= Branching
+== Branching
 
 As branching is one of the most important ways to control the program flow it is worth discussing how it works in the Motorola 68000 processor, and review what options we have.
 
@@ -92,7 +92,7 @@ Here, the tested result is the value that has been moved. So, the next line bran
 
 Pay attention that `GE`, `GT`, `LE`, and `LT` read `N`, so they should be used only with signed integers Unsigned integers, instead, should be compared using `HI` and `LS`.
 
-= Enqueue
+== Enqueue
 
 In the previous article we discussed the structure of a memory node created by `AddMemList` and I briefly mentioned `Enqueue` and a protected version of it. `Enqueue` is the function that Exec uses to add a node into a linked list, following a simple schema based on priorities, but it turns out `AddMemList` does not use it directly, resorting to a version of it wrapped by two other functions, namely `Forbid` and `Permit` that are connected to task rescheduling. For the time being, however, we may forget the wrappers and jump directly to `Enqueue` and learn how the Amiga operating system was managing linked lists.
 
@@ -193,7 +193,7 @@ The first section, `Init`, prepares the execution of the rest of the function. T
 
 As I did for other functions in the previous articles, I'm going to dissect this line by line. Let's start from the `Init` part.
 
-== Init
+=== Init
 
 [source]
 ----
@@ -208,7 +208,7 @@ The second line is the core or the node traversal algorithm. Since `a0` points t
 
 Putting aside the intricacies of the addressing modes, the second line stores the address of the first node in the list, which is the part of the header that starts with `LH_TAIL`. The header thus acts as the first node of the list.
 
-== FindPos
+=== FindPos
 
 [source]
 ----
@@ -224,7 +224,7 @@ The first two lines repeat the same algorithm. The address of the current node (
 
 If the list contains at least one node, `d0` contains its address. But if the list is empty at this point `d0` contains `0x0`, and this is the condition tested by the `beq.b` instruction. If `d0` is empty we reached the end of the list, which means that there was no better place to insert the node, and we jump to the actual node insertion code, `InsertNode`. If the value is not zero, the current node has a proper successor, so let's check it's priority to see if we need to go on or if we can stop here. The code compares the priorities of the current node and of the `Ins` node, and if the latter is less than the former we can loop back to `FindPos` and move to the next node. Remember that priorities are expressed with negative numbers only, so "less than" actually means "higher priority".
 
-== InsertNode
+=== InsertNode
 
 [source]
 ----
@@ -264,7 +264,7 @@ This moves `a0`, the address of `Next`, into the first field of `Ins`, that is `
 
 Last, the address of `Ins` becomes the `LN_SUCC` of `Pred`, so we move `d0` into `a0` because, as I already mentioned, the Address Register Indirect Mode can be used only with `An` registers. After this the function returns to the caller.
 
-= Remove
+== Remove
 
 Since we reviewed the code of `Enqueue` it makes sense to have a look at the opposite function, `Remove`. A protected version of this exists as well, but here I will just show the code of the pure function without the wrapper.
 
@@ -281,7 +281,7 @@ Removing a node is simpler than adding it, as all we have to do is to make `Pred
 
 The first two lines store the address of `Next` in `a0` and of `Pred` in `a1` (overwriting the input value). The third line makes `Next` the successor of `Pred` and the fourth line makes `Pred` the predecessor of `Next`. Then the function returns to the caller.
 
-= AddLibrary
+== AddLibrary
 
 In the [link](\{filename}exploring-the-amiga-6.mau,"6th post") of this series we left Kickstart just after it finished adding the physical memory to the system pool. The last instruction we mentioned was a call to `AddLibrary`, and this is then the next function I will explore.
 
@@ -301,7 +301,7 @@ The following lines call the protected version of `Enqueue` and `SumLibrary`, af
 
 `SumLibrary`, as the name suggests, computes the checksum of a library, or checks the existing one.
 
-= Manual decompilation
+== Manual decompilation
 
 When I was following the call to `AddLibrary` from the main body of Kickstart I was surprised to find this code
 
@@ -351,11 +351,11 @@ The third instruction is again a `bsr` and following the same process we find ou
 
 The most important thing to keep in mind when manually reading instructions is the position of the Program Counter. As we already saw two times, with `lea` and with `bsr`, the PC moves as soon as the 16-bit instruction has been read, which means that when a displacement is given we have to use the address of the displacement itself as a base for our calculations.
 
-= Resources
+== Resources
 
 * Motorola M68000 Family Programmer's Reference Manual - https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
 * Motorola 68000 Opcodes Cheat Sheet - http://goldencrystal.free.fr/M68kOpcodes-v2.3.pdf
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.
