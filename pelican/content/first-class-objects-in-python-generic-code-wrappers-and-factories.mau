@@ -1,10 +1,10 @@
-:pelican.title:First-class objects and factories in Python
+:pelican.title:First-class objects in Python: generic code, wrappers, and factories
 :pelican.date:2021-02-22 10:00:00 +0000
 :pelican.category:Programming
-:pelican.tags:Python, Python2, Python3
+:pelican.tags:Python, Python2, Python3, OOP, functional programming, decorators, 
 :pelican.authors:Leonardo Giordani
-:pelican.slug:first-class-objects-and-factories-in-python
-:pelican.image:first-class-objects-and-factories-in-python
+:pelican.slug:first-class-objects-in-python-generic-code-wrappers-and-factories
+:pelican.image:first-class-objects-in-python-generic-code-wrappers-and-factories
 
 One of the most important concepts that you can find in Python (as well in other languages like JavaScript, Ruby, and Scala, just to name some of the most important ones) is that of *first-class citizenship*. In this post I will discuss what _first-class_ means and what practical contribution it can give to our code, together with a derived concept, that of factories.
 
@@ -14,7 +14,9 @@ The answer is yes, and this feature is granted by the so-called _first-class cit
 
 As I said, the subject matter is very important, and also very broad. Exploring it in detail would make this post too long, and I don't think I have enough knowledge to face such a task anyway. So, I will try to explain the main concepts through simple examples and exercises without digging to much into what happens under the bonnet.
 
-= Recap: how to define functions in Python
+You can follow the post using [link]("/notebooks/first-class-objects-and-factories-in-python.ipynb","this Jupyter Notebook").
+
+== Recap: how to define functions in Python
 
 Let's start with a simple review of the basic syntax we use to define functions in Python. There are four main components in a function: the keyword `def`, the name of the function, the arguments, and the body.
 
@@ -36,7 +38,7 @@ This function is called `square`, receives a single unnamed argument `x`, and ca
 
 This is all we need to start!
 
-= Functions as arguments: generic functions
+== Functions as arguments: generic functions
 
 The first feature granted to a component by first-class citizenship in the land of programming languages is that it *can be passed as an argument to a function*. You already know that you can pass values of all the built-in types and also instances of objects, but as a matter of fact you can also pass functions. Let's have a look at a simple example
 
@@ -70,7 +72,7 @@ and pass that to `process` we should get 6
 6
 ----
 
-== Exercise
+=== Exercise
 
 Write a function `apply` that accepts a function and an iterable (e.g. a list) and applies the function to each element of the iterable.
 
@@ -88,7 +90,7 @@ Once defined, you should be able to run
 [1, 4, 9, 16]
 ----
 
-=== Solution
+==== Solution
 
 A basic solution for this problem is the following
 
@@ -109,7 +111,7 @@ def apply(func, iterable):
     return [func(i) for i in iterable]
 ----
 
-== Exercise
+=== Exercise
 
 Define a function `dec` that decrements by 1 the argument (mirroring `inc`). Then create a function called `compute` that accepts a list of functions and a single value, and applies each function to the value.
 
@@ -127,7 +129,7 @@ Once defined you should be able to run
 [25, 6, 4]
 ----
 
-=== Solution
+==== Solution
 
 This problem is somehow orthogonal to the previous one. A trivial solution is
 
@@ -151,7 +153,7 @@ def compute(functions, value):
     return [f(value) for f in functions]
 ----
 
-== Python built-ins
+=== Python built-ins
 
 The function `apply` that we defined in the first exercise is so important that Python has a built-in function `map` that performs exactly the same job. Feel free to try it and read about it at [link](https://docs.python.org/3/library/functions.html#map). Remember that `map` returns a `map object` (which is an iterator), so if you want to print the results you need to cast it into a list
 
@@ -163,13 +165,13 @@ The function `apply` that we defined in the first exercise is so important that 
 [1, 4, 9, 16]
 ----
 
-== Wrap up
+=== Wrap up
 
 Since you can treat functions as "values", you can also store them into structures like lists or dictionaries. I'm sure you understand that this feature alone gives a boost to the expressive power of the language, and in particular it make easier to write _generic functions_.
 
 The adjective _generic_, in programming languages, is usually related to a higher level of algorithmic abstraction than the one of simple procedural programming. What we did in this section can be defined generic code because we didn't specify a function that performs a specific action on the elements of a list, but one that applies a function that is still to be defined to them.
 
-= Nested functions: wrappers
+== Nested functions: wrappers
 
 Now that we learned that functions can accept other functions, let's move on and learn that *functions can host other functions*, defining them inside their body. This allows you to create what is usually nicknamed a _helper function_ that might simplify an algorithm, without the need of creating it globally.
 
@@ -177,7 +179,7 @@ For example, let's write a function that removes the extension from each file in
 
 [source,python]
 ----
-def remove_extensions(file_list):
+def get_extensions(file_list):
     results = []
     for i in file_list:
         if "." in i:
@@ -192,16 +194,16 @@ You can test this with the list `["foo.txt", "bar.mp4", "python3"]`
 
 [source,python]
 ----
->>> remove_extensions(["foo.txt", "bar.mp4", "python3"])
+>>> get_extensions(["foo.txt", "bar.mp4", "python3"])
 ['txt', 'mp4', '']
 ----
 
-As you can see the algorithm is not terribly complicated, but it's rich enough to make it impossible to write it in the form of a list comprehension, which is one of the standard idiomatic refactorings that improve the readability of Python code. If we define a helper function, though, things will get better
+As you can see the algorithm is not terribly complicated, but it's rich enough to make it impossible to write it in the form of a list comprehension, which is one of the standard idiomatic refactoring that improve the readability of Python code. If we define a helper function, though, things will get better
 
 [source,python]
 ----
-def remove_extensions(file_list):
-    def _remove_ext(file_name):
+def get_extensions(file_list):
+    def _get_extension(file_name):
         if "." in file_name:
             ext = file_name.split(".")[-1]
         else:
@@ -210,7 +212,7 @@ def remove_extensions(file_list):
 
     results = []
     for i in file_list:
-        results.append(_remove_ext(i))
+        results.append(_get_extension(i))
 
     return results
 ----
@@ -219,7 +221,7 @@ And applying another iteration of our idiomatic filter we can come up with
 
 [source,python]
 ----
-def remove_extensions(file_list):
+def get_extensions(file_list):
     def _remove_ext(file_name):
         if "." not in file_name:
             return ""
@@ -231,13 +233,13 @@ def remove_extensions(file_list):
 
 Oh, in case you don't know it already, the standard library provides a very nice function called `splitext` ([link](https://docs.python.org/3/library/os.path.html#os.path.splitext)) that performs the very same job of our example, so don't reimplement it if you need that functionality.
 
-== Exercise
+=== Exercise
 
 A very simple exercise here, just to practice what we learned. Create a function called `wrapped_inc` that accepts a `value`. In the body create a function `_inc` that accepts a value and increments it. Then, still inside the body of the outer function, call `_inc` passing `value` and return the result. When you are done, look at it and explain what happens when you run `wrapped_inc(41)` and what is the result.
 
-=== Solution
+==== Solution
 
-The function is nothing more than a simpler version of what we did with `remove_extensions`
+The function is nothing more than a simpler version of what we did with `get_extensions`
 
 [source, python]
 ----
@@ -250,11 +252,11 @@ def wrapped_inc(value):
 
 When we run `wrapped_inc(41)` the function defines the wrapper and then calls it, so `_inc` receives 41, increments it and returns it. The second `return` statement, then returns that same value to the original caller. The returned value is 42, which is by the way the answer to all questions.
 
-== Wrap up (pun intended)
+=== Wrap up (pun intended)
 
 Whenever you have an outer function that defines and calls an inner function you can say that the outer one _wraps_ the inner one. The concept of wrappers is extremely important in programming languages and in architectures, as any system can be seen as a wrapper of smaller ones, and consequently be described with a higher level of abstraction.
 
-= Functions as return values: factories
+== Functions as return values: factories
 
 The third feature provided by first-class citizenship is that *functions can return other functions*. The simplest (and not really useful) example is that of a function defining and returning a helper function
 
@@ -303,7 +305,7 @@ Here we pass the parameter `steps` to the factory, and this is used by the funct
 
 As you can see `inc5` uses 5 as a value for `steps`, while `inc10` uses 10. The fact that an inner function "remembers" the scope where it was defined is called _closure_ in programming languages that support this feature.
 
-== Exercise
+=== Exercise
 
 Suppose we noticed that we use `apply(square, some_iterable)` and `apply(inc, some_iterable)` a lot on different list so we would like to create two shortcut functions `lsquare` and `linc` that accept only an iterable and perform the action suggested by their name.
 
@@ -324,7 +326,7 @@ After you defined it you should be able to run the following code
 [1, 4, 9, 16]
 ----
 
-=== Solution
+==== Solution
 
 We can start from the first version of `create_inc`, but the inner function has to call `apply`.
 
@@ -339,7 +341,7 @@ def partial_square():
 
 Here you have a function that defines a function that runs a function. If your head is spinning it's OK. Grab something to drink, have a walk, then come back, there is still something to learn.
 
-== Exercise
+=== Exercise
 
 Improve `partial_square` writing a function called `partial_apply` that accepts a function `func` and returns a function that runs `func` on an `iterable`.
 
@@ -358,7 +360,7 @@ If your solution is correct you should be able to run this code
 [1, 4, 9, 16]
 ----
 
-=== Solution
+==== Solution
 
 Leveraging what we learned with the two versions of `create_inc` we can easily change `partial_square` to be more generic
 
@@ -371,15 +373,15 @@ def partial_apply(func):
     return _apply
 ----
 
-== Python's standard library
+=== Python's standard library
 
-A _partial function_ is a very important and useful concept, so Python provides a solution with `functools.partial` that is an even more generic version of what we wrote just now. You can find the documentation [link](https://docs.python.org/3/library/functools.html#functools.partial,here).
+A _partial function_ is a very important and useful concept, so Python provides a solution with `functools.partial` that is an even more generic version of what we wrote just now. You can find the documentation at [link](https://docs.python.org/3/library/functools.html#functools.partial).
 
-== Wrap up
+=== Wrap up
 
 Factories are a very important concept in Object-oriented Programming, and once you introduce them they can radically change the approach to a specific problem. As always, remember that you shouldn't use a complex solution if there is a simpler one, so do not introduce factories if you can just need a couple of simple functions.
 
-= Functions are objects... or are objects functions?
+== Functions are objects... or are objects functions?
 
 In Python everything is an object. Basic values like integers and floats, structures like lists and dictionaries, class instances, classes themselves, and functions. You can actually look inside a function and read some of its attributes
 
@@ -463,8 +465,8 @@ class Square:
     def run(self, x):
         return x * x
        
-def process(filter, value):
-    f = filter()
+def process(filt, value):
+    f = filt()
     return f.run(value)
 
 process(Square, 5)
@@ -501,7 +503,7 @@ The concept of factory is rooted in the Object-oriented paradigm, and as happene
 * An object factory is a function that creates objects
 * A factory object is an objects that behaves like a factory
 
-=== Object factories
+== Object factories
 
 When it comes to objects we always have two entities involved: the class and the instance (in Python we could add the metaclass, but since that is rarely used I prefer to leave it outside the equation for now). An object factory can thus be either a _class factory_ or an _instance factory_.
 
@@ -558,7 +560,7 @@ def init_myobj(cls, value):
     return cls(value)
 ----
 
-=== Factory objects
+== Factory objects
 
 It is clearly possible to use an object as the factory itself, which means having a class or an instance which purpose is that of creating and configuring other objects and to return them. Here the number of combinations increases drastically, as we can have classes that produce classes or instances, and instances that produce classes or instances.
 
@@ -566,7 +568,7 @@ For the sake of simplicity I will give just a single example of a factory object
 
 [source,python]
 ----
-def Converter:
+class Converter:
     def __init__(self, precision='low'):
         if precision == 'low':
             self._type = int
@@ -584,7 +586,7 @@ def Converter:
 
 As you can see aside from the usual differences between functions and objects, there is nothing new in this example.
 
-= Decorators
+== Decorators
 
 Decorators are another important concept that any Python programmer should know. While I think you might not need to know all the gritty details about decorators, you should understand the basic principles and be able to write them.
 
@@ -647,15 +649,15 @@ True
 
 I hope that now, in the light of what we discussed in the previous sections, decorators are not that obscure any more. This can get a bit more complicated if you use a class instead of a pure function, but the underlying concept is exactly the same.
 
-= Functools
+== Functools
 
 Python core developers take the functional needs of users very seriously, and provide a module completely dedicated to problems related with high-order functions.
 
-I already mentioned the module in one of the previous sections, when I discussed the function `partial`, but I think the whole module deserves to be surveyed at least to be aware of what it can provide. You never know when you will need a cache ([link](https://docs.python.org/3/library/functools.html#functools.lru_cache,here)) or to leverage map/reduce ([link](https://docs.python.org/3/library/functools.html#functools.reduce,here)).
+I already mentioned the module in one of the previous sections, when I discussed the function `partial`, but I think the whole module deserves to be surveyed at least to be aware of what it can provide. You never know when you will [link](https://docs.python.org/3/library/functools.html#functools.lru_cache,"need a cache") or to [link](https://docs.python.org/3/library/functools.html#functools.reduce,"leverage map/reduce").
 
-If you have only 1 minute I highly recommend you read the documentation of `wraps` ([link](https://docs.python.org/3/library/functools.html#functools.wraps,here)), as you should use it for all your function-based decorators.
+If you have only 1 minute I highly recommend you read the [link](https://docs.python.org/3/library/functools.html#functools.wraps,"documentation") of `wraps`, as you should use it for all your function-based decorators.
 
-= Use case: application factory in Flask
+== Use case: application factory in Flask
 
 Last, a practical example that comes from the wild world of open source. Flask, the well-known web framework, has the concept of _application factory_ ([link](https://flask.palletsprojects.com/en/1.1.x/patterns/appfactories/,here)), which are highly recommended when [link](\{filename}flask-project-setup-tdd-docker-postgres-and-more-part-1.mau,setting up a project).
 
@@ -669,9 +671,26 @@ As you can see from the documentation, an application factory is nothing more th
 
 I think this demonstrates the great amount of expressive power that first-class citizenship can give to your code.
 
-= Resources
+== Resources
 
+=== The standard library
+* [link](https://docs.python.org/3/library/functions.html#map) - The built-in function `map`
+* [link](https://docs.python.org/3/library/functools.html#functools.partial) - A function to partially apply other functions
+* [link](https://docs.python.org/3/library/functools.html#functools.wraps) - A function to build decorators
+
+=== Wikipedia
 * [link](https://en.wikipedia.org/wiki/Generic_programming)
 * [link](https://en.wikipedia.org/wiki/Wrapper_function)
 * [link](https://en.wikipedia.org/wiki/Closure_(computer_programming\))
 * [link](https://en.wikipedia.org/wiki/Factory_(object-oriented_programming\))
+
+=== This blog
+* [link](\{filename}multiple-inheritance-and-mixin-classes-in-python.markdown,"Multiple inheritance and mixin classes in Python")
+* [link](\{filename}python-3-oop-part-2-classes-and-members.markdown,"Object-Oriented Programming in Python 3 - Classes and members")
+* [link](\{filename}python-3-oop-part-3-delegation-composition-and-inheritance.markdown,"Object-Oriented Programming in Python 3 - Composition and inheritance")
+* [link](\{filename}python-decorators-metaprogramming-with-style.markdown,"Python decorators: metaprogramming with style")
+
+== Feedback
+
+Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.
+
