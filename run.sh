@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd pelican
-pelican -lrD
+pelican -lr $@
