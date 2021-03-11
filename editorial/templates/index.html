@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}{{ SITENAME }} - Home{% endblock %}
+{% block title %}Home{% if articles_page.number != 1 %} Page {{ articles_page.number }}{% endif %}{% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development.">
+<meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development{% if articles_page.number != 1 %} - Page {{ articles_page.number }}{% endif %}">
 {% endblock %}
 
 {% block content %}
@@ -76,7 +76,7 @@
   </header>
   <div class="posts">
     <article class="card">
-      {% set article = 'blog/2014/08/20/python-3-oop-part-1-objects-and-types/' %}
+      {% set article = '/blog/2014/08/20/python-3-oop-part-1-objects-and-types/' %}
       <a href="{{ article }}" class="image">
         <img src="/images/python-3-oop.jpg" alt="Python 3 OOP" />
       </a>
@@ -89,7 +89,7 @@
       </div>
     </article>
     <article class="card">
-      {% set article = 'blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/' %}
+      {% set article = '/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/' %}
       <a href="{{ article }}" class="image">
         <img src="/images/a-game-of-tokens-1.jpg" alt="A Game of Tokens" />
       </a>
@@ -102,7 +102,7 @@
       </div>
     </article>
     <article class="card">
-      {% set article = 'blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/' %}
+      {% set article = '/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/' %}
       <a href="{{ article }}" class="image">
         <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="Flask project setup" />
       </a>
@@ -115,7 +115,7 @@
       </div>
     </article>
     <article class="card">
-      {% set article = 'blog/2018/05/28/exploring-the-amiga-1/' %}
+      {% set article = '/blog/2018/05/28/exploring-the-amiga-1/' %}
       <a href="{{ article }}" class="image">
         <img src="/images/exploring-the-amiga-1.jpg" alt="Exploring the Amiga" />
       </a>

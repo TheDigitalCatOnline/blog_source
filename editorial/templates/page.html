@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ page.title }}">
+{% endblock %}
+
 {% block content %}
     <section id="header">
         <header class="main">

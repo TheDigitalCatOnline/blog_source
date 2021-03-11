@@ -3,6 +3,8 @@
 {% block meta_description %}
 {% if article.summary %}
 <meta name="description" content="{{ article.summary|striptags }}">
+{% else %}
+<meta name="description" content="{{ article.title|striptags }}">
 {% endif %}
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@thedigicat" />
@@ -15,7 +17,7 @@
 <meta name="twitter:image" content="{{ SITEURL }}/images/{{ article.image }}.jpg" />
 {% endblock %}
 
-{% block title %}{{ article.title|striptags }} - {{ SITENAME }}{% endblock %}
+{% block title %}{{ article.title|striptags }}{% endblock %}
 
 {% block custom_css %}
 {% if article.style %}
