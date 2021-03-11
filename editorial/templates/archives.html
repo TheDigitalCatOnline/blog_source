@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Archives - {{ SITENAME }}{% endblock %}
+{% block title %}Archives{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Archives">
+{% endblock %}
 
 {% block content %}
     <section>
         <header class="major">
-            <h2>Archives for {{ SITENAME }}</h1>
+            <h1>Archives for {{ SITENAME }}</h1>
         </header>
         <div class="post-list">
             {% for article in dates %}
