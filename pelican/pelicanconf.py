@@ -42,9 +42,6 @@ ARCHIVES_SAVE_AS = ARCHIVES_URL + "index.html"
 AUTHOR_URL = "authors/{slug}/"
 AUTHOR_SAVE_AS = AUTHOR_URL + "index.html"
 
-PLUGIN_PATHS = ["../pelican-plugins"]
-PLUGINS = ["related_posts", "series", "sitemap", "tag_cloud", "share_post", "webassets"]
-
 SITEMAP = {
     "format": "xml",
 }

@@ -1,8 +1,10 @@
 pelican
-pelican-webassets
 pelican-related-posts
-pelican-mau-reader
+pelican-series
+pelican-share-post
+pelican-sitemap
 pelican-tag-cloud
+pelican-webassets
 
 markdown
 mau
