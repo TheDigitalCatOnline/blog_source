@@ -42,17 +42,6 @@ ARCHIVES_SAVE_AS = ARCHIVES_URL + "index.html"
 AUTHOR_URL = "authors/{slug}/"
 AUTHOR_SAVE_AS = AUTHOR_URL + "index.html"
 
-PLUGIN_PATHS = ["../pelican-plugins"]
-PLUGINS = [
-    "related_posts",
-    "series",
-    "sitemap",
-    "tag_cloud",
-    "share_post",
-    "webassets",
-    "mau_reader",
-]
-
 SITEMAP = {
     "format": "xml",
 }
@@ -104,7 +93,17 @@ MARKDOWN = {
 }
 
 
-MAU = {"custom_templates": {}, "pygments": {"html": {}}}
+MAU = {
+    "custom_templates": {
+        "header.html": (
+            '<h{{ level }} id="{{ anchor }}">'
+            "{{ value }}"
+            '{% if anchor and level <= 2 %}<a class="headerlink" href="#{{ anchor }}" title="Permanent link">¶</a>{% endif %}'
+            "</h{{ level }}>"
+        )
+    },
+    "pygments": {"html": {}},
+}
 
 QUOTES = [
     {
