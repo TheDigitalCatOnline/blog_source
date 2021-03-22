@@ -1,5 +1,5 @@
 :pelican.title:AWS Log Insights as CloudWatch metrics with Python and Terraform
-:pelican.date:2021-03-19 19:00:00 +0100
+:pelican.date:2021-03-22 19:00:00 +0100
 :pelican.category:Programming
 :pelican.tags:AWS, infrastructure, Lambda, Python, Terraform
 :pelican.authors:Leonardo Giordani
