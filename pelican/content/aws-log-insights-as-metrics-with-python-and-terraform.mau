@@ -1,11 +1,13 @@
-:pelican.title:AWS Log Insights as Cloudwatch metrics with Python and Terraform
+:pelican.title:AWS Log Insights as CloudWatch metrics with Python and Terraform
 :pelican.date:2021-03-19 19:00:00 +0100
 :pelican.category:Programming
 :pelican.tags:AWS, infrastructure, Lambda, Python, Terraform
 :pelican.authors:Leonardo Giordani
 :pelican.slug:aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform
+:pelican.image:aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform
+:pelican.summary: A step-by-step report on how to build a Lambda function with Terraform and Python to convert Log Insights queries into CloudWatch metrics
 
-Recently I started using [link](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html,"AWS Cloudwatch Log Insights") and I find the tool really useful to extract data about the systems I'm running without having to set up dedicated monitoring tools, which come with their own set of permissions, rules, configuration language, and so forth.
+Recently I started using [link](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html,"AWS CloudWatch Log Insights") and I find the tool really useful to extract data about the systems I'm running without having to set up dedicated monitoring tools, which come with their own set of permissions, rules, configuration language, and so forth.
 
 Log Insights allow you to query log outputs with a language based on regular expressions with hints of SQL and to produce tables or graphs of quantities that you need to monitor. For example, the system I am monitoring runs Celry in ECS containers that log received tasks with a line like the following
 
@@ -25,7 +27,7 @@ parse @message /\[celery\.(?<source>[a-z.]+)\].*Received task: (?<task>[a-z._]+)
  | limit 9
 ----
 
-This gives me a nice table of the top 9 `source` functions and the number of `task` submitted for each, and the count can be adjusted with the usual Cloudwatch controls
+This gives me a nice table of the top 9 `source` functions and the number of `task` submitted for each, and the time frame can be adjusted with the usual CloudWatch controls
 
 [source]
 ----
@@ -40,7 +42,7 @@ This gives me a nice table of the top 9 `source` functions and the number of `ta
 9 lib.tasks.lists.recalculate_list_entry 56
 ----
 
-Using time bins, quantities can also be easily plotted. For example I can process and visualise the same log messages with
+Using time bins, quantities can also be easily plotted. For example, I can process and visualise the number of received tasks with
 
 [source]
 ----
@@ -49,13 +51,13 @@ parse @message /\[celery\.(?<source>[a-z.]+)\].*Received task: (?<task>[a-z._]+)
  | stats count(*) by bin(30s)
 ----
 
-Unfortunately I quickly discovered an important limitation of Log Insights, that is *queries are not metrics*. Which also immediately implies I can't set up alarms on those queries. As fun as it is to look at nice plots, I need something automatic that sends me messages or scales up systems in reaction to specific events such as "too many submitted tasks".
+Unfortunately I quickly discovered an important limitation of Log Insights, that is *queries are not metrics*. Which also immediately implies that I can't set up alarms on those queries. As fun as it is to look at nice plots, I need something automatic that sends me messages or scales up systems in reaction to specific events such as "too many submitted tasks".
 
-The standard solution AWS gives to this problem is to write a Lambda that runs the query and stores the value into a custom Cloudwatch metric, which I can then use to satisfy my automation needs. I did it, and in this post I will show you exactly how, using Terraform, Python and Zappa, Cloudwatch, and DynamoDB. At the end of the post I will also briefly discuss the cost of the solution.
+The standard solution to this problem suggested by AWS is to write a Lambda that runs the query and stores the value into a custom CloudWatch metric, which I can then use to satisfy my automation needs. I did it, and in this post I will show you exactly how, using Terraform, Python and Zappa, CloudWatch, and DynamoDB. At the end of the post I will also briefly discuss the cost of the solution.
 
 [callout]
 ----
-Pygments seems to have issues with Terraform code, so I had to temporarily turn off syntax highlight on the Terraform blocks.
+Pygments seems to have issues with the latest versions of the HCL language, so I had to temporarily turn off syntax highlight on the Terraform blocks.
 ----
 
 == The big picture
@@ -68,7 +70,7 @@ Since Log Insights queries are just strings of code, however, we can store them 
 
 == Terraform
 
-In the following sections I will discuss the main components of the solution from the infrastructural point of view, showing how I created them with Terraform. The four main AWS services that I will use are: DynamoDB, Lambda, IAM, Cloudwatch.
+In the following sections I will discuss the main components of the solution from the infrastructural point of view, showing how I created them with Terraform. The four main AWS services that I will use are: [link](https://aws.amazon.com/dynamodb/,DynamoDB), [link](https://aws.amazon.com/lambda/,Lambda), [link](https://aws.amazon.com/iam/,IAM), [link](https://aws.amazon.com/cloudwatch/,CloudWatch).
 
 I put the bulk of the code in a module so that I can easily create the same structure for multiple AWS accounts. While my current setup is a bit more complicated that that, the structure of the code can be simplified as
 
@@ -124,7 +126,7 @@ variable "security_groups" {
 }
 ----
 
-Funally, Lambda functions need to be told which VPC subnets they can use to run
+Finally, Lambda functions need to be told which VPC subnets they can use to run
 
 .common/lambda-loginsights2metrics/variables.tf
 [source,terraform]
@@ -175,7 +177,7 @@ resource "aws_dynamodb_table_item" "item" {
 }
 ----
 
-As the query is written as a Terraform string and will be read from Python there are two small caveats here. To be consistent with Terraform's syntax we need to escape double quotes in the query, and to avoid fights with Python we need to escape backslashes. So for example a valid query like
+Since the query is written as a Terraform string and will be read from Python there are two small caveats here. To be consistent with Terraform's syntax we need to escape double quotes in the query, and to avoid fights with Python we need to escape backslashes. So for example a valid query like
 
 [source]
 ----
@@ -193,7 +195,7 @@ will be stored as
 
 Another remark is that the Lambda I will write in Python will read data plotted with the name `Value` on bins of 1 minute, so the query should end with `stats X as Value by bin(1m)` where `X` is a specific stat, for example `stats count(*) as Value by bin(1m)`.
 
-The reason behind 1 minute is that the maximum standard resolution of CW metrics is 1 minute. Should you want more you need to have a look at [link](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html#high-resolution-metrics,"Cloudwatch High-Resolution Metrics").
+The reason behind 1 minute is that the maximum standard resolution of CloudWatch metrics is 1 minute. Should you want more you need to have a look at [link](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html#high-resolution-metrics,"CloudWatch High-Resolution Metrics").
 
 ==== Resources
 
@@ -203,7 +205,7 @@ The reason behind 1 minute is that the maximum standard resolution of CW metrics
 
 === IAM part 1
 
-IAM roles are central in AWS. In this specific case we have the so-called [link](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html,"Lambda execution role"), which is the IAM role that the Lambda assumes when you run it. In AWS users or services (that is humans or AWS components) _assume_ a role, receiving the permissions connected with it. To assume roles, however, they need to have a specific permission, a so-called trust policy.
+IAM roles are central in AWS. In this specific case we have the so-called [link](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html,"Lambda execution role"), which is the IAM role that the Lambda assumes when you run it. In AWS users or services (that is humans or AWS components) _assume_ a role, receiving the permissions connected with it. To assume roles, however, they need to have a specific permission, a so-called _trust policy_.
 
 Let's define a trust policy that allows the Lambda service to assume the role that we will define
 
@@ -218,15 +220,12 @@ data "aws_iam_policy_document" "trust" {
     principals {
       type = "Service"
       identifiers = [
-        "lambda.amazonaws.com",
-        "events.amazonaws.com"
+        "lambda.amazonaws.com"
       ]
     }
   }
 }
 ----
-
-TODO is events.amazonaws.com needed?
 
 and after that the role in question
 
@@ -288,7 +287,7 @@ $ aws iam get-policy-version --policy-arn arn:aws:iam::aws:policy/service-role/A
 }
 ----
 
-Attachin a canned policy is just a matter of creating a specific `aws_iam_role_policy_attachment` resource
+Attaching a canned policy is just a matter of creating a specific `aws_iam_role_policy_attachment` resource
 
 .common/lambda-loginsights2metrics/iam.tf
 [source]
@@ -299,7 +298,7 @@ resource "aws_iam_role_policy_attachment" "loginsights2metrics-" {
 }
 ----
 
-Now that we have the IAM role and the basic policy we can assign custom permissions to it. We need to grant the Lambda permissions on other AWS components, namely Cloudwatch to run Log Insights queries and to store metrics and DynamoDB to retrieve all the items from the queries table.
+Now that we have the IAM role and the basic policy we can assign custom permissions to it. We need to grant the Lambda permissions on other AWS components, namely CloudWatch to run Log Insights queries and to store metrics and DynamoDB to retrieve all the items from the queries table.
 
 .common/lambda-loginsights2metrics/iam.tf
 [source]
@@ -350,7 +349,7 @@ resource "aws_iam_role_policy" "loginsights2metrics" {
 
 === Lambda
 
-We can now create the Lambda function container. I do not use Terraform as a deployer, as I think it should be used to define static infrastructure only, so I will use a dummy function that is later deployed using the AWS CLI.
+We can now create the Lambda function container. I do not use Terraform as a deployer, as I think it should be used to define static infrastructure only, so I will use a dummy function here and later deploy the real code using the AWS CLI.
 
 The dummy function can be easily created with
 
@@ -368,9 +367,9 @@ data "archive_file" "dummy" {
 }
 ----
 
-The Lambda function is a bit more complicated. As I mentioned, I'll use Zappa to package the function, so the `handler` has to be `"zappa.handler.lambda_handler"`. The IAM role given to the function is the one we defined previously, while `memory_size` and `timeout` clearly depend on the specific function. Lambdas should run in private networks, and the AWS docs contains a lot of details on this topic (e.g. [link](https://aws.amazon.com/premiumsupport/knowledge-center/internet-access-lambda-function/)).
+The Lambda function is a bit more complicated. As I mentioned, I'll use Zappa to package the function, so the `handler` has to be `"zappa.handler.lambda_handler"`. The IAM role given to the function is the one we defined previously, while `memory_size` and `timeout` clearly depend on the specific function. Lambdas should run in private networks, and I won't cover here the steps to create them. The AWS docs contains a lot of details on this topic, e.g. [link](https://aws.amazon.com/premiumsupport/knowledge-center/internet-access-lambda-function/).
 
-The environment variables allow me to inject the name of the DynamoDB table so that I don't need to hardcode it. I also pass another variable (the [link](https://sentry.io/welcome/,"Sentry DSN") that I use in my configuration. This is not essential for the problem at hand, but I left it there to show how to pass such values. Last, forcing the code to ignore changes prevents Terraform from executing the code again after I deployed the function.
+The environment variables allow me to inject the name of the DynamoDB table so that I don't need to hardcode it. I also pass another variable, the [link](https://sentry.io/welcome/,"Sentry DSN") that I use in my configuration. This is not essential for the problem at hand, but I left it there to show how to pass such values.
 
 .common/lambda-loginsights2metrics/lambda.tf
 [source]
@@ -403,7 +402,9 @@ resource "aws_lambda_function" "loginsights2metrics" {
 }
 ----
 
-Since I want to trigger the function from AWS Cloudwatch Events I need to grant the service `events.amazonaws.com` the `lambda:InvokeFunction` permission.
+Please note that I instructed Terraform to ignore changes to the two attributes `last_modified` and `filename`, and that I haven't used any `source_code_hash`. This way I can safely apply Terraform to change parameters like `memory_size` or `timeout` without affecting what I deployed with the CI.
+
+Since I want to trigger the function from AWS CloudWatch Events I need to grant the service `events.amazonaws.com` the `lambda:InvokeFunction` permission.
 
 .common/lambda-loginsights2metrics/lambda.tf
 [source]
@@ -442,9 +443,9 @@ data "aws_iam_policy_document" "loginsights2metrics_exec" {
 }
 ----
 
-I could not define this when I defined the rest of the IAM components because this needs the Lambda to be defined. This is clearly just a matter of design clarity for myself, as Terraform doesn't care about which resource we defined first as long as there are no loops in the definitions.
+I could not define this when I defined the rest of the IAM components because this needs the Lambda to be defined, but the resource is in the same file. Terraform doesn't care about which resource we defined first and where we define it as long as there are no loops in the definitions.
 
-We can now assign the newly created policy (document) to the IAM role we created previously
+We can now assign the newly created policy document to the IAM role we created previously
 
 .common/lambda-loginsights2metrics/iam.tf
 [source]
@@ -462,22 +463,22 @@ resource "aws_iam_role_policy" "loginsights2metrics_exec" {
 documentation")
 * [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy, "aws_iam_role_policy documentation")
 
-=== Cloudwatch
+=== CloudWatch
 
-Whenever you need to run Lambdas (or other things) periodically, the standard AWS solution is to use Cloudwatch Events, which work as the AWS cron system. Cloudwatch Events are made of rules and targets, so first we define a rule that gets triggered every 2 minutes
+Whenever you need to run Lambdas (or other things) periodically, the standard AWS solution is to use CloudWatch Events, which work as the AWS cron system. CloudWatch Events are made of rules and targets, so first of all I defined a rule that gets triggered every 2 minutes
 
 .common/lambda-loginsights2metrics/cloudwatch.tf
 [source]
 ----
 resource "aws_cloudwatch_event_rule" "rate" {
-  # zappa requires the name to match the processing function
+  # Zappa requires the name to match the processing function
   name                = "main.loginsights2metrics"
   description         = "Trigger Lambda ${var.prefix}"
   schedule_expression = "rate(2 minutes)"
 }
 ----
 
-Please note that Zappa has a specific requirement for Cloudwatch Events, so I left a comment to clarify this to my future self. The second part of the event is the target, which is the Lambda function that we defined in the previous section.
+Please note that Zappa has a specific requirement for CloudWatch Events, so I left a comment to clarify this to my future self. The second part of the event is the target, which is the Lambda function that we defined in the previous section.
 
 .common/lambda-loginsights2metrics/cloudwatch.tf
 [source]
@@ -496,7 +497,7 @@ resource "aws_cloudwatch_event_target" "lambda" {
 
 === Using the module
 
-Now the module is finished, so I just need to create some items for the DynamoDB table and to create the whole project
+Now the module is finished, so I just need to create some items for the DynamoDB table and to call the module itself
 
 .account1/lambda-loginsights2metrics/main.tf
 [source]
@@ -567,7 +568,7 @@ locals {
 }
 ----
 
-I need to provide a security group for the Lambda, in this case I can use the default one provided by the VPC
+I need to provide a security group for the Lambda, and in this case I can safely use the default one provided by the VPC
 
 .account1/lambda-loginsights2metrics/main.tf
 [source]
@@ -599,9 +600,9 @@ Please note that the variable `vpc_private_subnets` is a list of subnet names th
 * [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group, "aws_security_group documentation")
 * [link](https://www.terraform.io/docs/language/modules/develop/index.html, "Creating Terraform modules")
 
-=== The Python code
+== Python
 
-As I mentioned before, the Python code of the Lambda function is contained in a different repository and deployed with the CI using [link](https://github.com/zappa/Zappa,Zappa). Given we are interacting with AWS I am clearly using `boto3`, the [link](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html,"AWS SDK for Python"). The code was developed locally without Zappa's support, to test out the `boto3` functions I wanted to use, then quickly adjusted to be executed in a Lambda.
+As I mentioned before, the Python code of the Lambda function is contained in a different repository and deployed with the CI using [link](https://github.com/zappa/Zappa,Zappa). Given we are interacting with AWS I am clearly using Boto3, the [link](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html,"AWS SDK for Python"). The code was developed locally without Zappa's support, to test out the Boto3 functions I wanted to use, then quickly adjusted to be executed in a Lambda.
 
 I think the code is pretty straightforward, but I left my original comments to be sure everything is clear. 
 
@@ -719,7 +720,11 @@ def loginsights2metrics(event, context)::1:
         put_metric_data(i)
 ----
 
-The relative Zappa settings are
+So, when the Lambda is executed, the entry point is the function `loginsights2metrics` [callout]#1# which queries the DynamoDB table [callout]#2# and loops over all the items contained in it. The loop executes the function `put_metric_data` [callout]#3# which being a Zappa `task` runs it in a new Lambda invocation. This function runs the Log Insights query [callout]#4#, adjusts Boto3's output [callout]#5#, and finally puts the values in the custom metric [callout]#6#.
+
+The problem I mention in the comment just before I run `logs.start_query` is interesting. Log Insights are queries, and since they extract data from logs the result can change between two calls of the same query. This means that, since there is an overlap between calls (we run a query on the last 15 minutes every 2 minutes), the function will put multiple values in the same bin of the metric. This is perfectly normal, and it's the reason why CloudWatch allows you to show the maximum, minimum, average, or various percentiles of the same metric. When it comes to counting events, the number can only increase or stay constant in time, but never decrease, so it's sensible to look at the maximum. This is not true if you are looking at execution times, for example, so pay attention to the nature of the underlying query when you graph the metric.
+
+The Zappa settings I use for the function are
 
 .zappa_settings.json
 [source,json]
@@ -736,9 +741,18 @@ The relative Zappa settings are
 }
 ----
 
-So, when the Lambda is executed, the entry point is the function `loginsights2metrics` [callout]#1# which queries the DynamoDB table [callout]#2# and loops over all items in it. The loop executes the function `put_metric_data` [callout]#3# which being a Zappa `task` runs it in a new Lambda invocation. This function runs the Log Insights query [callout]#4#, adjusts Boto3's output [callout]#5#, and finally puts the values in the custom metric [callout]#6#.
+And the requirements are
 
-This can be packages and installed with a simple bash script like
+.requirements.txt
+[source]
+----
+zappa
+zappa-sentry
+----
+
+Please note that as I mentioned before `zappa-sentry` is not a strict requirement for this solution.
+
+The code can be packaged and deployed with a simple bash script like
 
 [source,bash]
 ----
@@ -764,7 +778,7 @@ rm -fR ${VENV_DIRECTORY}
 aws --region=${REGION} lambda update-function-code --function-name ${FUNCTION_NAME}  --zip-file "fileb://${LAMBDA_PACKAGE}"
 ----
 
-=== Costs
+== Costs
 
 I will follow here the [link](https://aws.amazon.com/lambda/pricing/, "AWS guide on Lambda pricing") and the calculations published in 2018 by my colleague João Neves on [link](https://silvaneves.org/how-much-does-a-lambda-cost.html, "his blog").
 
