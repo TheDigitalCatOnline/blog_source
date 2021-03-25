@@ -3,8 +3,8 @@
 :pelican.category:Programming
 :pelican.tags:blogging, Markdown, pelican, Python, WWW, HTML
 :pelican.authors:Leonardo Giordani
-:pelican.slug:how-to-write-a-pelican-theme-for-your-website
-:pelican.image:how-to-write-a-pelican-theme-for-your-website
+:pelican.slug:how-to-write-a-pelican-theme-for-your-static-website
+:pelican.image:how-to-write-a-pelican-theme-for-your-static-website
 :pelican.summary:A full-fledged tutorial that shows how to convert an HTML template into a Pelican theme
 
 I run The Digital Cat using a static site generator called [link](https://blog.getpelican.com/,Pelican), created by my friend [link](https://justinmayer.com/,"Justin Mayer") and actively maintained by him and other developers. I also gave some minor contributions to the project.
