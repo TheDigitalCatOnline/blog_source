@@ -7,6 +7,7 @@
 :pelican.slug:flask-project-setup-tdd-docker-postgres-and-more-part-1
 :pelican.image:flask-project-setup-tdd-docker-postgres-and-more-part-1
 :pelican.series:Flask project setup
+:pelican.series_info:Have you ever started working on a web application project just to find yourself swamped in a bunch of files and directories with silly names and without a clear picture of what is really going on? In this series of post I show you how to properly set up a Flask application using TDD, Docker, Postgres and more.
 :pelican.summary:A step-by-step tutorial on how to setup a Flask project with TDD, Docker and Postgres
 
 There are tons of tutorials on Internet that tech you how to use a web framework and how to create Web applications, and many of these cover Flask, first of all the impressive [link](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world,"Flask Mega-Tutorial") by Miguel Grinberg (thanks Miguel!). 

@@ -6,6 +6,7 @@ Tags: pytest, Python, Python3, TDD, testing, compilers
 Authors: Leonardo Giordani
 Slug: a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1
 Series: A game of tokens
+Series_info: Python, Ruby, Javascript, C, Erlang, how many different languages. But how does a compiler work? How is the source code converted into something that works? To understand that there's nothing better than actually write a language. Let's write a simple language interpreter in Python using TDD!
 Image: a-game-of-tokens-1
 Summary: How to write a programming language in Python, a TDD game
 

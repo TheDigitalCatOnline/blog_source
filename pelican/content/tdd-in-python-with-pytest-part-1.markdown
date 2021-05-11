@@ -5,12 +5,13 @@ Tags: OOP, pytest, Python, Python3, refactoring, TDD, testing
 Authors: Leonardo Giordani
 Slug: tdd-in-python-with-pytest-part-1
 Series: TDD in Python with pytest
+Series_info: You might have heard of TDD and tests, but are they part of your workflow? Do you think that writing tests is a useless waste of time, or that it's too complicated for a beginner? Beginner or not, join me in this series of posts where I create a very simple Python class from scratch using a strict TDD approach, and discover the joy of tested, reliable, well-designed code.
 Image: tdd-in-python-with-pytest-part-1
 Summary: 
 
 This series of posts comes directly from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python). As I am reviewing the book to prepare a second edition, I realised that Harry Percival was right when he said that the initial part on TDD shouldn't be in the book. That's a prerequisite to follow the chapters on the clean architecture, but it is something many programmers already know and they might be surprised to find it in a book that discusses architectures.
 
-So, I decided to move it here before I start working on a new version of the book. I also followed the advice of [valorien](https://github.com/valorien), who pointed out that the main example has some bad naming choices, and so I reworked the code.
+So, I decided to move it here before I start working on a new version of the book. I also followed the advice of [valorien](https://github.com/valorien), who pointed out that the main example had some bad naming choices, and so I reworked the code.
 
 ## Introduction
 
