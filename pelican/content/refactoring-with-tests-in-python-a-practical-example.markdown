@@ -13,7 +13,7 @@ Refactoring is not easy. It requires a double effort to understand code that oth
 
 Programming, after all, is craftsmanship.
 
-# The starting point
+## The starting point
 
 The simple use case I will use for this post is that of a service API that we can access, and that produces data in JSON format, namely a **list** of elements like the one shown here
 
@@ -73,7 +73,7 @@ class DataStats:
         })
 ```
 
-# The goal
+## The goal
 
 It is fairly easy, even for the untrained eye, to spot some issues in the previous class. A list of the most striking ones is
 
@@ -85,7 +85,7 @@ So, since we are going to use this code in some part of our Amazing New Projectâ
 
 The class, however, is working perfectly. It has been used in production for many years and there are no known bugs, so our operation has to be a **refactoring**, which means that we want to write something better, preserving the behaviour of the previous object.
 
-# The path
+## The path
 
 In this post I want to show you how you can safely refactor such a class using tests. This is different from TDD, but the two are closely related. The class we have has not been created using TDD, as there are no tests, but we can use tests to ensure its behaviour is preserved. This should therefore be called Test Driven Refactoring (TDR).
 
@@ -93,7 +93,7 @@ The idea behind TDR is pretty simple. First, we have to write a test that checks
 
 Once you have you unit test you can go and modify the code, knowing that the behaviour of the resulting object will be the same of the previous one. As you can easily understand, the effectiveness of this methodology depends strongly on the quality of the tests themselves, possibly more than when developing with TDD, and this is why refactoring is hard.
 
-# Caveats
+## Caveats
 
 Two remarks before we start our refactoring. The first is that such a class could easily be refactored to some functional code. As you will be able to infer from the final result there is no real reason to keep an object-oriented approach for this code. I decided to go that way, however, as it gave me the possibility to show a design pattern called wrapper, and the refactoring technique that leverages it.
 
@@ -103,7 +103,7 @@ It is also true, however, that sometimes even tough we do not want to make a met
 
 When it comes to refactoring, however, we are somehow deconstructing a previously existing structure, and usually we end up creating a lot of private methods to help extracting and generalising parts of the code. My advice in this case is to test those methods, as this gives you a higher degree of confidence in what you are doing. With experience you will then learn which tests are required and which are not.
 
-# Setup of the testing environment
+## Setup of the testing environment
 
 Clone [this repository](https://github.com/lgiordani/datastats) and create a virtual environment. Activate it and install the required packages with 
 
@@ -128,7 +128,7 @@ collected 0 items
 
 The given repository contains two branches. `master` is the one that you are into, and contains the initial setup, while `develop` points to the last step of the whole refactoring process. Every step of this post contains a reference to the commit that contains the changes introduced in that section.
 
-# Step 1 - Testing the endpoints
+## Step 1 - Testing the endpoints
 
 Commit: [27a1d8c](https://github.com/lgiordani/datastats/commit/27a1d8ccd5b0a57fa6d9d5f3bd80874538f14ed2)
 
@@ -250,7 +250,7 @@ As said before, this test is obviously passing, having been artificially constru
 
 Well, this test is very important! Now we know that if we change something inside the code, altering the behaviour of the class, at least one test will fail.
 
-# Step 2 - Getting rid of the JSON format
+## Step 2 - Getting rid of the JSON format
 
 Commit: [65e2997](https://github.com/lgiordani/datastats/commit/65e2997d71ade752633229186c6669803a46f185)
 
@@ -357,7 +357,7 @@ class DataStats:
 
 and we have two tests that check the correctness of it.
 
-# Step 3 - Refactoring the tests
+## Step 3 - Refactoring the tests
 
 Commit: [d619017](https://github.com/lgiordani/datastats/commit/d61901754b83ccc36fa25bcebf88da7cace28ff2)
 
@@ -450,7 +450,7 @@ def test__stats():
     }
 ```
 
-# Step 4 - Isolate the average age algorithm
+## Step 4 - Isolate the average age algorithm
 
 Commit: [9db1803](https://github.com/lgiordani/datastats/commit/9db18036eee2f6712384195fcd970303387291f6)
 
@@ -492,7 +492,7 @@ and once the test passes we can replace the duplicated code in `_stats()` with a
 
 Checking after that that no test is failing. Well done! We isolated the first feature, and our refactoring produced already three tests.
 
-# Step 5 - Isolate the average salary algorithm
+## Step 5 - Isolate the average salary algorithm
 
 Commit: [4122201](https://github.com/lgiordani/datastats/commit/412220145ea4d7ef846b1d1f289b4ddefc4fb24b)
 
@@ -525,7 +525,7 @@ and a new version of the final return value
         }
 ```
 
-# Step 6 - Isolate the average yearly increase algorithm
+## Step 6 - Isolate the average yearly increase algorithm
 
 Commit: [4005145](https://github.com/lgiordani/datastats/commit/4005145f39d36fda0519127d57e1b4099d24e72b)
 
@@ -584,7 +584,7 @@ and a new version of the `_stats()` method
 
 Please note that we are not solving any code duplication but the ones that we introduce to refactor. The first achievement we should aim to is to completely isolate independent features.
 
-# Step 7 - Isolate max and min salary algorithms
+## Step 7 - Isolate max and min salary algorithms
 
 Commit: [17b2413](https://github.com/lgiordani/datastats/commit/17b24138e712f9174b072a579a2dfc9e2800e6ac)
 
@@ -650,7 +650,7 @@ and the `_stats()` method is now really tiny
         }
 ```
 
-# Step 8 - Reducing code duplication
+## Step 8 - Reducing code duplication
 
 Commit: [b559a5c](https://github.com/lgiordani/datastats/commit/b559a5c91ef58e1e734ac97b676468d09a460a45)
 
@@ -805,7 +805,7 @@ Speaking of `_avg_yearly_increase()`, the code of that method contains the code 
         return math.floor(average_salary_increase/average_age_increase)
 ```
 
-# Step 9 - Advanced refactoring
+## Step 9 - Advanced refactoring
 
 Commit: [cc0b0a1](https://github.com/lgiordani/datastats/commit/cc0b0a105ebc882cb73831b177e881bb65f4b491)
 
@@ -910,7 +910,7 @@ class DataStats:
 
 And since all the other methods are not used any more we can safely delete them, checking that the tests do not fail. Speaking of tests, removing methods will make many tests of `DataStats` fail, so we need to remove them.
 
-# Step 10 - Still room for improvement
+## Step 10 - Still room for improvement
 
 As refactoring is an iterative process it will often happen that you think you did everything was possible, just to spot later that you missed something. In this case the missing step was spotted by Harun Yasar, who noticed another small code duplication.
 
@@ -941,16 +941,16 @@ which passes all the tests and is thus correct.
 
 Whenever I get corrected by someone who read one of my posts and just learned something new I feel so happy, because it means that the message is clear!
 
-# Final words
+## Final words
 
 I hope this little tour of a refactoring session didn't result too trivial, and helped you to grasp the basic concepts of this technique. If you are interested in the subject I'd strongly recommend the classic book by Martin Fowler "Refactoring: Improving the Design of Existing Code", which is a collection of refactoring patterns. The reference language is Java, but the concepts are easily adapted to Python.
 
-# Updates
+## Updates
 
 2017-07-28: [delirious-lettuce](https://github.com/delirious-lettuce) and [Matt Beck](https://github.com/superbeckgit) did a very serious proofread and spotted many typos. Thank you both for reading the post and for taking the time to submit the issues!
 
 2020-02-15: [Harun Yasar](https://github.com/harunyasar) spotted a missing refactoring in two functions. Thanks!
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

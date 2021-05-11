@@ -7,6 +7,7 @@
 :pelican.slug:tdd-in-python-with-pytest-part-1
 :pelican.series:TDD in Python with pytest
 :pelican.image:tdd-in-python-with-pytest-part-1
+:pelican.series_info:You might have heard of TDD and tests, but are they part of your workflow? Do you think that writing tests is a useless waste of time, or that it's too complicated for a beginner? Beginner or not, join me in this series of posts where I create a very simple Python class from scratch using a strict TDD approach, and discover the joy of tested, reliable, well-designed code.
 
 This series of posts comes directly from my book [link](https://leanpub.com/clean-architectures-in-python,"Clean Architectures in Python"). As I am reviewing the book to prepare a second edition, I realised that Harry Percival was right when he said that the initial part on TDD shouldn't be in the book. That's a prerequisite to follow the chapters on the clean architecture, but it is something many programmers already know and they might be surprised to find it in a book that discusses architectures.
 

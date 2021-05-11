@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing how to groups values inside a list in Scala
 
-# The problem
+## The problem
 
 **P09** (**) Pack consecutive duplicates of list elements into sublists. If a list contains repeated elements they should be placed in separate sublists.
 
@@ -20,11 +20,11 @@ scala> pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
 res0: List[List[Symbol]] = List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e))
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 This is similar to [problem 08]({filename}99-scala-problems-08-eliminate-consecutive-duplicates.markdown) but has an important difference: the result will be a list of lists. When dealing with multi-level structures like these, it is very easy to get lost, so I expect to find a recursive solution with a lot of cases or complex pattern guards.
 
-# The recursive solution
+## The recursive solution
 
 The tail recursive solution is easier to write than the standard recursive one. The resulting list we are building is a `List[List[A]]`, while the remainder is just a plain list `List[A]`.
 
@@ -60,11 +60,11 @@ def pack[A](l: List[A]):List[List[A]] = {
 
 The function I pass to `span()` is simply `{ _ == rem.head }` since the method gives the function each element in the list.
 
-# Final considerations
+## Final considerations
 
 This problem helped me enhance my knowledge of **pattern guards** and Scala **anonymous functions**. The solution with `span()` includes a pattern match that leads to a **block expression**, which was somehow a syntactical blind guess for me, but ended up being perfectly valid.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

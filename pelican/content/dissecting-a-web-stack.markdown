@@ -12,7 +12,7 @@ Summary: A layer-by-layer review of the components of a web stack and the reason
 > 
 > (Beetlejuice, 1988)
 
-# Introduction
+## Introduction
 
 Having recently worked with young web developers who were exposed for the first time to proper production infrastructure, I received many questions about the various components that one can find in the architecture of a "Web service". These questions clearly expressed the confusion (and sometimes the frustration) of developers who understand how to create endpoints in a high-level language such as Node.js or Python, but were never introduced to the complexity of what happens between the user's browser and their framework of choice. Most of the times they don't know why the framework itself is there in the first place.
 
@@ -24,7 +24,7 @@ As the focus of the post is the global architecture and the reasons behind the p
 
 My approach will be that of first stating the rationale and then implementing a possible solution. After this, I will point out missing pieces or unresolved issues and move on with the next layer. At the end of the process, the reader should have a clear picture of why each component has been added to the system.
 
-# The perfect architecture
+## The perfect architecture
 
 A very important underlying concept of system architectures is that there is no _perfect solution_ devised by some wiser genius, that we just need to apply. Unfortunately, often people mistake design patterns for such a "magic solution". The "Design Patterns" original book, however, states that
 
@@ -38,17 +38,17 @@ The authors of the book are discussing Object-oriented Programming, but these se
 
 A very last remark. A web stack is a complex beast, made of several components and software packages developed by different programmers with different goals in mind. It is perfectly understandable, then, that such components have some degree of superposition. While the division line between theoretical layers is usually very clear, in practice the separation is often blurry. Expect this a lot, and you will never be lost in a web stack anymore.
 
-# Some definitions
+## Some definitions
 
 Let's briefly review some of the most important concepts involved in a Web stack, the protocols.
 
-## TCP/IP
+### TCP/IP
 
 TCP/IP is a network protocol, that is, a _set of established rules_ two computers have to follow to get connected over a physical network to exchange messages. TCP/IP is composed of two different protocols covering two different layers of the OSI stack, namely the Transport (TCP) and the Network (IP) ones. TCP/IP can be implemented on top of any physical interface (Data Link and Physical OSI layers), such as Ethernet and Wireless. Actors in a TCP/IP network are identified by a _socket_, which is a tuple made of an IP address and a port number.
 
 As far as we are concerned when developing a Web service, however, we need to be aware that TCP/IP is a _reliable_ protocol, which in telecommunications means that the protocol itself takes care or retransmissions when packets get lost. In other words, while the speed of the communication is not granted, we can be sure that once a message is sent it will reach its destination without errors.
 
-## HTTP
+### HTTP
 
 TCP/IP can guarantee that the raw bytes one computer sends will reach their destination, but this leaves completely untouched the problem of how to send meaningful information. In particular, in 1989 the problem Tim Barners-Lee wanted to solve was how to uniquely name hypertext resources in a network and how to access them.
 
@@ -60,7 +60,7 @@ The most important feature of HTTP we need to keep in mind as developers is that
 
 Session management is crucial nowadays because you usually want to have an authentication layer in front of a service, where a user provides credentials and accesses some private data. It is, however, useful in other contexts such as visual preferences or choices made by the user and re-used in later accesses to the same website. Typical solutions to the session management problem of HTTP involve the use of cookies or session tokens.
 
-## HTTPS
+### HTTPS
 
 Security has become a very important word in recent years, and with a reason. The amount of sensitive data we exchange on the Internet or store on digital devices is increasing exponentially, but unfortunately so is the number of malicious attackers and the level of damage they can cause with their actions. The HTTP protocol is inherently
 
@@ -68,7 +68,7 @@ HTTP is inherently insecure, being a plain text communication between two server
 
 HTTPS solves both the problem of tampering and eavesdropping, encrypting HTTP with the Transport Layer Security (TLS) protocol, that also enforces the usage of digital certificates, issued by a trusted authority. At the time of writing, approximately 80% of websites loaded by Firefox use HTTPS by default. When a server receives an HTTPS connection and transforms it into an HTTP one it is usually said that it _terminates TLS_ (or SSL, the old name of TLS).
 
-## WebSocket
+### WebSocket
 
 One great disadvantage of HTTP is that communication is always initiated by the client and that the server can send data only when this is explicitly requested. Polling can be implemented to provide an initial solution, but it cannot guarantee the performances of proper full-duplex communication, where a channel is kept open between server and client and both can send data without being requested. Such a channel is provided by the WebSocket protocol.
 
@@ -76,7 +76,7 @@ WebSocket is a killer technology for applications like online gaming, real-time 
 
 It is important to understand that WebSocket is not HTTP, and can exist without it. It is also true that this new protocol was designed to be used on top of an existing HTTP connection, so a WebSocket communication is often found in parts of a Web page, which was originally retrieved using HTTP in the first place.
 
-# Implementing a service over HTTP
+## Implementing a service over HTTP
 
 Let's finally start discussing bits and bytes. The starting point for our journey is a service over HTTP, which means there is an HTTP request-response exchange. As an example, let us consider a GET request, the simplest of the HTTP methods.
 
@@ -108,34 +108,34 @@ As happened for the request, the response is a text message, formatted according
 
 So, the first problem we have is that of implementing a server that understands this protocol and sends a proper response when it receives an HTTP request. We should try to load the requested resource and return either a success (HTTP 200) if we can find it, or a failure (HTTP 404) if we can't.
 
-# 1 Sockets and parsers
+## 1 Sockets and parsers
 
-## 1.1 Rationale
+### 1.1 Rationale
 
 TCP/IP is a network protocol that works with _sockets_. A socket is a tuple of an IP address (unique in the network) and a port (unique for a specific IP address) that the computer uses to communicate with others. A socket is a file-like object in an operating system, that can be thus _opened_ and _closed_, and that we can _read_ from or _write_ to. Socket programming is a pretty low-level approach to the network, but you need to be aware that every software in your computer that provides network access has ultimately to deal with sockets (most probably through some library, though).
 
 Since we are building things from the ground up, let's implement a small Python program that opens a socket connection, receives an HTTP request, and sends an HTTP response. As port 80 is a "low port" (a number smaller than 1024), we usually don't have permissions to open sockets there, so I will use port 8080. This is not a problem for now, as HTTP can be served on any port.
 
-## 1.2 Implementation
+### 1.2 Implementation
 
 Create the file `server.py` and type this code. Yes, **type it**, don't just copy and paste, you will not learn anything otherwise.
 
 ``` python
 import socket
 
-# Create a socket instance
-# AF_INET: use IP protocol version 4
-# SOCK_STREAM: full-duplex byte stream
+## Create a socket instance
+## AF_INET: use IP protocol version 4
+## SOCK_STREAM: full-duplex byte stream
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Allow reuse of addresses
+## Allow reuse of addresses
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-# Bind the socket to any address, port 8080, and listen
+## Bind the socket to any address, port 8080, and listen
 s.bind(('', 8080))
 s.listen()
 
-# Serve forever
+## Serve forever
 while True:
     # Accept the connection
     conn, addr = s.accept()
@@ -175,19 +175,19 @@ Our server becomes then
 ``` python
 import socket
 
-# Create a socket instance
-# AF_INET: use IP protocol version 4
-# SOCK_STREAM: full-duplex byte stream
+## Create a socket instance
+## AF_INET: use IP protocol version 4
+## SOCK_STREAM: full-duplex byte stream
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Allow reuse of addresses
+## Allow reuse of addresses
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-# Bind the socket to any address, port 8080, and listen
+## Bind the socket to any address, port 8080, and listen
 s.bind(('', 8080))
 s.listen()
 
-# Serve forever
+## Serve forever
 while True:
     # Accept the connection
     conn, addr = s.accept()
@@ -212,22 +212,22 @@ This version of the HTTP server properly extracts the resource and tries to load
 import socket
 import re
 
-# Create a socket instance
-# AF_INET: use IP protocol version 4
-# SOCK_STREAM: full-duplex byte stream
+## Create a socket instance
+## AF_INET: use IP protocol version 4
+## SOCK_STREAM: full-duplex byte stream
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Allow reuse of addresses
+## Allow reuse of addresses
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-# Bind the socket to any address, port 8080, and listen
+## Bind the socket to any address, port 8080, and listen
 s.bind(('', 8080))
 s.listen()
 
 HEAD_200 = "HTTP/1.1 200 OK\n\n"
 HEAD_404 = "HTTP/1.1 404 Not Found\n\n"
 
-# Serve forever
+## Serve forever
 while True:
     # Accept the connection
     conn, addr = s.accept()
@@ -319,7 +319,7 @@ Resource favicon.ico cannot be loaded
 
 As you can see the browser sends rich HTTP requests, with a lot of headers, automatically requesting the CSS file mentioned in the HTML code and automatically trying to retrieve a favicon image.
 
-## 1.3 Resources
+### 1.3 Resources
 
 These resources provide more detailed information on the topics discussed in this section
 
@@ -328,7 +328,7 @@ These resources provide more detailed information on the topics discussed in thi
 * [HTTP/1.1 Response format](https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html#sec6)
 * The source code of this example is available [here](https://github.com/lgiordani/dissecting-a-web-stack-code/tree/master/1_sockets_and_parsers)
 
-## 1.4 Issues
+### 1.4 Issues
 
 It gives a certain dose of satisfaction to build something from scratch and discover that it works smoothly with full-fledged software like the browser you use every day. I also think it is very interesting to discover that technologies like HTTP, that basically run the world nowadays, are at their core very simple.
 
@@ -340,9 +340,9 @@ The situation of our small HTTP server is possibly worsened by the fact that HTT
 
 Long story short: to work as a proper HTTP server, our code should at this point implement all HTTP methods and cookies management. We also need to support other protocols like Websockets. These are all but trivial tasks, so we definitely need to add some component to the whole system that lets us focus on the business logic and not on the low-level details of application protocols.
 
-# 2 Web framework
+## 2 Web framework
 
-## 2.1 Rationale
+### 2.1 Rationale
 
 Enter the Web framework!
 
@@ -350,7 +350,7 @@ As I discussed many times (see [the book on clean architectures]({filename}caboo
 
 In the grand scheme of an HTTP service, this is what the framework is supposed to do. Everything the framework provides out of this scope, like layers to access DBs, template engines, and interfaces to other systems, is an addition that you, as a programmer, may find useful, but is not in principle part of the reason why we added the framework to the system. We add the framework because it acts as a layer between our business logic and HTTP.
 
-## 2.2 Implementation
+### 2.2 Implementation
 
 Thanks to Miguel Gringberg and his [amazing Flask mega-tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) I can set up Flask in seconds. I will not run through the tutorial here, as you can follow it on Miguel's website. I will only use the content of the first article (out of 23!) to create an extremely simple "Hello, world" application.
 
@@ -407,7 +407,7 @@ You can now visit the given URL with your browser and see that everything works 
 
 You can recognise both now, as those are the same request we got with our little server in the previous part of the article.
 
-## 2.3 Resources
+### 2.3 Resources
 
 These resources provide more detailed information on the topics discussed in this section
 
@@ -415,7 +415,7 @@ These resources provide more detailed information on the topics discussed in thi
 * [What is localhost](https://en.wikipedia.org/wiki/Localhost)
 * The source code of this example is available [here](https://github.com/lgiordani/dissecting-a-web-stack-code/tree/master/2_web_framework)
 
-## 2.4 Issues
+### 2.4 Issues
 
 Apparently, we solved all our problems, and many programmers just stop here. They learn how to use the framework (which is a big achievement!), but as we will shortly discover, this is not enough for a production system. Let's have a closer look at the output of the Flask server. It clearly says, among other things
 
@@ -432,9 +432,9 @@ This is hardly surprising. After all, we didn't want to deal with TCP/IP connect
 
 So, now that we have a full-fledged HTTP service, we need to make it so fast that users won't even notice this is not running locally on their computer.
 
-# 3 Concurrency and façades
+## 3 Concurrency and façades
 
-## 3.1 Rationale 
+### 3.1 Rationale 
 
 Well, whenever you have performance issues, just go for concurrency. Now you have many problems!
 (see [here](https://twitter.com/davidlohr/status/288786300067270656?lang=en))
@@ -445,7 +445,7 @@ And whenever you have to homogenise different things just create a layer of indi
 
 So we need to create a layer that runs our service in a concurrent way, but we also want to keep it detached from the specific implementation of the service, that is independent of the framework or library that we are using.
 
-## 3.2 Implementation
+### 3.2 Implementation
 
 In this case, the solution is that of giving a _specification_ of the API that web frameworks have to expose, in order to be usable by independent third-party components. In the Python world, this set of rules has been named WSGI, the Web Server Gateway Interface, but such interfaces exist for other languages such as Java or Ruby. The "gateway" mentioned here is the part of the system outside the framework, which in this discussion is the part that deals with production performances. Through WSGI we are defining a way for frameworks to expose a common interface, leaving people interested in concurrency free to implement something independently.
 
@@ -487,7 +487,7 @@ $ ps ax | grep gunicorn
 
 Using processes is just one of the two ways to implement concurrency in a Unix system, the other being using threads. The benefits and demerits of each solution are outside the scope of this post, however. For the time being just remember that you are dealing with multiple workers that process incoming requests asynchronously, thus implementing a non-blocking server, ready to accept multiple connections.
 
-## 3.3 Resources
+### 3.3 Resources
 
 These resources provide more detailed information on the topics discussed in this section
 
@@ -497,41 +497,41 @@ These resources provide more detailed information on the topics discussed in thi
 * A good entry point for your journey into the crazy world of concurrency: [multithreading](https://en.wikipedia.org/wiki/Multithreading_(computer_architecture)).
 * The source code of this example is available [here](https://github.com/lgiordani/dissecting-a-web-stack-code/tree/master/3_concurrency_and_facades)
 
-## 3.4 Issues
+### 3.4 Issues
 
 Using a Gunicorn we have now a production-ready HTTP server, and apparently implemented everything we need. There are still many considerations and missing pieces, though.
 
-### Performances (again)
+#### Performances (again)
 
 Are 3 workers enough to sustain the load of our new killer mobile application? We expect thousands of visitors per minute, so maybe we should add some. But while we increase the amount of workers, we have to keep in mind that the machine we are using has a finite amount of CPU power and memory. So, once again, we have to focus on performances, and in particular on scalability: how can we keep adding workers without having to stop the application, replace the machine with a more powerful one, and restart the service?
 
-### Embrace change
+#### Embrace change
 
 This is not the only problem we have to face in production. An important aspect of technology is that it changes over time, as new and (hopefully) better solutions become widespread. We usually design systems dividing them as much as possible into communicating layers exactly because we want to be free to replace a layer with something else, be it a simpler component or a more advanced one, one with better performances or maybe just a cheaper one. So, once again, we want to be able to evolve the underlying system keeping the same interface, exactly as we did in the case of web frameworks.
 
-### HTTPS
+#### HTTPS
 
 Another missing part of the system is HTTPS. Gunicorn and uWSGI do not understand the HTTPS protocol, so we need something in front of them that will deal with the "S" part of the protocol, leaving the "HTTP" part to the internal layers.
 
-### Load balancers
+#### Load balancers
 
 In general, a _load balancer_ is just a component in a system that distributes work among a pool of workers. Gunicorn is already distributing load among its workers, so this is not a new concept, but we generally want to do it on a bigger level, among machines or among entire systems. Load balancing can be hierarchical and be structured on many levels. We can also assign more importance to some components of the system, flagging them as ready to accept more load (for example because their hardware is better). Load balancers are extremely important in network services, and the definition of load can be extremely different from system to system: generally speaking, in a Web service the number of connections is the standard measure of the load, as we assume that on average all connections bring the same amount of work to the system.
 
-### Reverse proxies
+#### Reverse proxies
 
 Load balancers are forward proxies, as they allow a client to contact any server in a pool. At the same time, a _reverse proxy_ allows a client to retrieve data produced by several systems through the same entry point. Reverse proxies are a perfect way to route HTTP requests to sub-systems that can be implemented with different technologies. For example, you might want to have part of the system implemented with Python, using Django and Postgres, and another part served by an AWS Lambda function written in Go and connected with a non-relational database such as DynamoDB. Usually, in HTTP services this choice is made according to the URL (for example routing every URL that begins with `/api/`).
 
-### Logic
+#### Logic
 
 We also want a layer that can implement a certain amount of logic, to manage simple rules that are not related to the service we implemented. A typical example is that of HTTP redirections: what happens if a user accesses the service with an `http://` prefix instead of `https://`? The correct way to deal with this is through an HTTP 301 code, but you don't want such a request to reach your framework, wasting resources for such a simple task.
 
-# 4 The Web server
+## 4 The Web server
 
-## 4.1 Rationale
+### 4.1 Rationale
 
 The general label of _Web server_ is given to software that performs the tasks we discussed. Two very common choices for this part of the system are nginx and Apache, two open source projects that are currently leading the market. With different technical approaches, they both implement all the features we discussed in the previous section (and many more).
 
-## 4.2 Implementation
+### 4.2 Implementation
 
 To test nginx without having to fight with the OS and install too many packages we can use Docker. Docker is useful to simulate a multi-machine environment, but it might also be your technology of choice for the actual production environment (AWS ECS works with Docker containers, for example).
 
@@ -787,7 +787,7 @@ where you can clearly notice the load balancing between `172.18.0.2` (`applicati
 
 I will not show here an example of reverse proxy or HTTPS to prevent this post to become too long. You can find resources on those topics in the next section.
 
-## 4.3 Resources
+### 4.3 Resources
 
 These resources provide more detailed information on the topics discussed in this section
 
@@ -799,48 +799,52 @@ These resources provide more detailed information on the topics discussed in thi
 * How to [create a reverse proxy](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/) with nginx, the documentation of the [`location`](http://nginx.org/en/docs/http/ngx_http_core_module.html#location) directive and [some insights](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms) on the location choosing algorithms (one of the most complex parts of nginx)
 * The source code of this example is available [here](https://github.com/lgiordani/dissecting-a-web-stack-code/tree/master/4_the_web_server)
 
-## 4.4 Issues
+### 4.4 Issues
 
 Well, finally we can say that the job is done. Now we have a production-ready web server in front of our multi-threaded web framework and we can focus on writing Python code instead of dealing with HTTP headers.
 
 Using a web server allows us to scale the infrastructure just adding new instances behind it, without interrupting the service. The HTTP concurrent server runs multiple instances of our framework, and the framework itself abstracts HTTP, mapping it to our high-level language.
 
-# Bonus: cloud infrastructures
+## Bonus: cloud infrastructures
 
 Back in the early years of the Internet, companies used to have their own servers on-premise, and system administrators used to run the whole stack directly on the bare operating system. Needless to say, this was complicated, expensive, and failure-prone.
 
 Nowadays "the cloud" is the way to go, so I want to briefly mention some components that can help you run such a web stack on AWS, which is the platform I know the most and the most widespread cloud provider in the world at the time of writing.
 
-## Elastic Beanstalk
+### Elastic Beanstalk
 
 This is the entry-level solution for simple applications, being a managed infrastructure that provides load balancing, auto-scaling, and monitoring. You can use several programming languages (among which Python and Node.js) and choose between different web servers like for example Apache or nginx. The components of an EB service are not hidden, but you don't have direct access to them, and you have to rely on configuration files to change the way they work. It's a good solution for simple services, but you will probably soon need more control.
 
 [Go to Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk)
 
-## Elastic Container Service (ECS)
+### Elastic Container Service (ECS)
 
 With ECS you can run Docker containers grouping them in clusters and setting up auto-scale policies connected with metrics coming from CloudWatch. You have the choice of running them on EC2 instances (virtual machines) managed by you or on a serverless infrastructure called Fargate. ECS will run your Docker containers, but you still have to create DNS entries and load balancers on your own. You also have the choice of running your containers on Kubernetes using EKS (Elastic Kubernetes Service).
 
 [Go to Elastic Container Service](https://aws.amazon.com/ecs/)
 
-## Elastic Compute Cloud (EC2)
+### Elastic Compute Cloud (EC2)
 
 This is the bare metal of AWS, where you spin up stand-alone virtual machines or auto-scaling group of them. You can SSH into these instances and provide scripts to install and configure software. You can install here your application, web servers, databases, whatever you want. While this used to be the way to go at the very beginning of the cloud computing age I don't think you should go for it. There is so much a cloud provider can give you in terms of associated services like logs or monitoring, and in terms of performances, that it doesn't make sense to avoid using them. EC2 is still there, anyway, and if you run ECS on top of it you need to know what you can and what you can't do.
 
 [Go to Elastic Compute Cloud](https://aws.amazon.com/ec2/)
 
-## Elastic Load Balancing
+### Elastic Load Balancing
 
 While Network Load Balancers (NLB) manage pure TCP/IP connections, Application Load Balancers are dedicated to HTTP, and they can perform many of the services we need. They can reverse proxy through rules (that were recently improved) and they can terminate TLS, using certificates created in ACM (AWS Certificate Manager). As you can see, ALBs are a good replacement for a web server, even though they clearly lack the extreme configurability of a software. You can, however, use them as the first layer of load balancing, still using nginx or Apache behind them if you need some of the features they provide.
 
 [Go to Elastic Load Balancing](https://aws.amazon.com/elasticloadbalancing/)
 
-## CloudFront
+### CloudFront
 
 CloudFront is a Content Delivery Network, that is a geographically-distributed cache that provides faster access to your content. While CDNs are not part of the stack that I discussed in this post I think it is worth mentioning CF as it can speed-up any static content, and also terminate TLS in connection with AWS Certificate Manager.
 
 [Go to CloudFront](https://aws.amazon.com/cloudfront/)
 
-# Conclusion
+## Conclusion
 
 As you can see a web stack is a pretty rich set of components, and the reason behind them is often related to performances. There are a lot of technologies that we take for granted, and that fortunately have become easier to deploy, but I still believe a full-stack engineer should be aware not only of the existence of such layers, but also of their purpose and at least their basic configuration.
+
+## Feedback
+
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

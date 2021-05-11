@@ -12,7 +12,7 @@
 
 <button onclick="hideStyle()">Toggle retro style</button>
 
-= The library jump table
+== The library jump table
 
 As already mentioned when a library is loaded in memory a jump table is created just before the library base address. This table contains the addresses of the functions exposed by the library, and Exec itself has one.
 
@@ -171,7 +171,7 @@ libname:
     dc.b "somename.library",0
 ----
 
-= The four reserved vectors
+== The four reserved vectors
 
 As we saw, the Amiga system reserves 4 vectors at the beginning of the jump table of a library. These 4 spaces host 3 standard functions that shall be provided by any library, `Open()`, `Close()`, and `Expunge()`. The fourth slot is kept for possible future expansions and must contain a function that returns 0.
 
@@ -205,7 +205,7 @@ LIB_EXTFUNC     EQU     -24
 
 You can try to follow the definitions of the `LIBINIT` and `LIBDEF` macros to obtain the same result.
 
-= Types and structures
+== Types and structures
 
 Let's see how the Exec library defines its types, which are the base components of the Amiga system. The main entry point for this investigation is the `include_i/exec/types.i` file.
 
@@ -295,7 +295,7 @@ LN_SIZE     EQU     14
 
 As you can see the field names are just offsets inside the structure, and there is no specific padding at the end to align the structure. In this case there is no need, as the structure size is already a multiple of a word (14 bytes).
 
-== How to align structures
+=== How to align structures
 
 If we need to align the bytes however we can use a little binary trick. If you ignore the least significant bit of a binary number you convert it to the nearest even number (downwards). An example in Python is
 
@@ -317,7 +317,7 @@ You can ignore the least significant bits with a simple bitwise AND
 12
 ----
 
-So if we get the current offset, we increase it by one and round down to the nearest integer we are aligning the offset to multiples of a word (2 bytes). The `ALIGNWORD` macro in the `include_i/exec/types.i` file implements exactly this algorithm
+So, given the current offset, if we increase it by one and round down to the nearest integer we are aligning the offset to multiples of a word (2 bytes). The `ALIGNWORD` macro in the `include_i/exec/types.i` file implements exactly this algorithm
 
 [source]
 ----
@@ -328,15 +328,15 @@ SOFFSET     SET     (SOFFSET+1)&$fffffffe
 
 This can be seen in action in the `CardHandle` structure defined in `include_i/resources/card.i`. The same algorithm is implemented in other parts of the Kickstart code, for example in the `AddMemList` function that adds memory space to the free memory pool.
 
-= What's next
+== What's next
 
 The next article will describe in depth how the jump table of the Exec library is created through the `MakeFunctions` routine. This will be shown step by step discussing the reverse engineering method followed to discover the mechanism and the relevant code.
 
-= Resources
+== Resources
 
 * Amiga System Programmers Guide, Abacus - https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus
 * [link](http://amigadev.elowar.com,"AmigaOS Developer Docs")
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

@@ -11,8 +11,6 @@ With the introduction of Abstract Base Classes, Python once again shows its natu
 
 Many Python programmers overlooked Abstract Base Classes and the classes in the `collections` module, which are one of the simplest and useful applications of the concept. Sure enough, this is not a feature that you will use every day or that will change the way you are programming in Python. But neither is it something you shall discard before understanding what it brings into the language, and what sort of problems it can solve for you.
 
-# Level 1
-
 ## EAFP
 
 Python is a dynamically-typed object-oriented language strongly based on delegation, so its approach to problems is intrinsically polymorphic. This means that Python deals mostly with the behaviour of objects and not with their structure. The well-known EAFP protocol (it's Easier to Ask Forgiveness than Permission) comes from this approach. This code

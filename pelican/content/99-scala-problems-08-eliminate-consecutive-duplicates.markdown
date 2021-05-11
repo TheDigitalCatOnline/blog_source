@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing strategies to clean up lists in Scala
 
-# The problem
+## The problem
 
 **P08** Eliminate consecutive duplicates of list elements. If a list contains repeated elements they should be replaced with a single copy of the element. The order of the elements should not be changed.
 
@@ -20,11 +20,11 @@ scala> compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
 res0: List[Symbol] = List('a, 'b, 'c, 'a, 'd, 'e)
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 This task seems to be easy to accomplish. It should be all about filtering incoming elements based on the last element added to the list.
 
-# The recursive solution
+## The recursive solution
 
 ``` scala
 def compress[A](l: List[A]):List[A] = l match {
@@ -37,7 +37,7 @@ def compress[A](l: List[A]):List[A] = l match {
 
 Instead of adding one element and then discarding the successive if equal, the point here is to discard elements until a new one pops up.
 
-# Folding
+## Folding
 
 The folding methods of `List` types are very suitable for this task, as they scan the whole list carrying the result of previous applications.
 
@@ -73,11 +73,11 @@ def compress[A](l: List[A]):List[A] = l.foldRight(List[A]()) {
 
 Remember that `foldLeft()` accepts a tuple in the form `(result, element)`, while `foldRight()` wants a tuple in the form `(element, result)`.
 
-# Final considerations
+## Final considerations
 
 Folding became more clear with this exercise. It's a good thing to learn ho to reverse algorithms to use `foldLeft()` or `foldRight()` according to the task we are performing.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 

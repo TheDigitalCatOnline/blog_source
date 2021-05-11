@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}{{ SITENAME }} - Home{% endblock %}
+{% block title %}Home{% if articles_page.number != 1 %} Page {{ articles_page.number }}{% endif %}{% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development.">
+<meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development{% if articles_page.number != 1 %} - Page {{ articles_page.number }}{% endif %}">
 {% endblock %}
 
 {% block content %}
@@ -47,6 +47,16 @@
 <!-- Section -->
 <section>
   <header class="major">
+    <h2>All posts</h2>
+  </header>
+
+  {% include 'includes/paginated_posts.html' %}
+
+</section>
+
+<!-- Section -->
+<section>
+  <header class="major">
     <h2>Sections</h2>
   </header>
   <div class="features">
@@ -75,58 +85,23 @@
     <h2>Top series</h2>
   </header>
   <div class="posts">
+    {% for series_name, series_articles in series.items() %}
+    {% set article = series_articles[0] %}
+    {% if article.series_info %}
     <article class="card">
-      {% set article = 'blog/2014/08/20/python-3-oop-part-1-objects-and-types/' %}
-      <a href="{{ article }}" class="image">
-        <img src="/images/python-3-oop.jpg" alt="Python 3 OOP" />
+      <a href="{{ article.url }}" class="image">
+        <img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="{{ article.image if article.image else 'article_image_placeholder' }}" />
       </a>
       <div class="card-body">
-        <a href="{{ article }}"><h3 class="card-title">Python 3 Object-oriented Programming</h3></a>
-        <p class="article-info">What happens behind the scenes of classes and instances? What are composition, inheritance, and polymorphism? A series of posts that dig into the Python implementation of the Object-oriented paradigm.</p>
+        <a href="{{ article.url }}"><h3 class="card-title">{{ series_name }}</h3></a>
+        <p class="article-info">{{ article.series_info }}</p>
         <ul class="actions">
-          <li><a href="{{ article }}" class="button">Start</a></li>
+          <li><a href="{{ article.url }}" class="button">Start</a></li>
         </ul>
       </div>
     </article>
-    <article class="card">
-      {% set article = 'blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/' %}
-      <a href="{{ article }}" class="image">
-        <img src="/images/a-game-of-tokens-1.jpg" alt="A Game of Tokens" />
-      </a>
-      <div class="card-body">
-        <a href="{{ article }}"><h3 class="card-title">A game of tokens</h3></a>
-        <p class="card-text">Python, Ruby, Javascript, C, Erlang, how many different languages. But how does a compiler work? How is the source code converted into something that works? To understand that there's nothing better than actually write a language. Let's write a simple language interpreter in Python using TDD!</p>
-        <ul class="actions">
-          <li><a href="{{ article }}" class="button">Start</a></li>
-        </ul>
-      </div>
-    </article>
-    <article class="card">
-      {% set article = 'blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/' %}
-      <a href="{{ article }}" class="image">
-        <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="Flask project setup" />
-      </a>
-      <div class="card-body">
-        <a href="{{ article }}"><h3 class="card-title">Flask project setup</h3></a>
-        <p class="card-text">Have you ever started working on a web application project just to find yourself swamped in a bunch of files and directories with silly names and without a clear picture of what is really going on? In this series of post I show you how to properly set up a Flask application using TDD, Docker, Postgres and more.</p>
-        <ul class="actions">
-          <li><a href="{{ article }}" class="button">Start</a></li>
-        </ul>
-      </div>
-    </article>
-    <article class="card">
-      {% set article = 'blog/2018/05/28/exploring-the-amiga-1/' %}
-      <a href="{{ article }}" class="image">
-        <img src="/images/exploring-the-amiga-1.jpg" alt="Exploring the Amiga" />
-      </a>
-      <div class="card-body">
-        <a href="{{ article }}"><h3 class="card-title">Exploring the Amiga</h3></a>
-        <p class="card-text">Is it worth unearthing old architectures? Is it worth understanding how a computer system from the 80s worked? I believe old architectures can teach us a lot, so let's explore "the computer that wouldn’t die"!</p>
-        <ul class="actions">
-          <li><a href="{{ article }}" class="button">Start</a></li>
-        </ul>
-      </div>
-    </article>
+    {% endif %}
+    {% endfor %}
   </div>
 </section>
 
@@ -151,6 +126,7 @@
     </article>
   </div>
 </section>
+
 <!-- Section -->
 <section>
   <header class="major">
@@ -183,13 +159,5 @@
     </article>
   </div>
 </section>
-<!-- Section -->
-<section>
-  <header class="major">
-    <h2>All posts</h2>
-  </header>
 
-  {% include 'includes/paginated_posts.html' %}
-
-</section>
 {% endblock %}

@@ -7,6 +7,7 @@ Authors: Leonardo Giordani
 Slug: python-3-oop-part-1-objects-and-types
 Image: python-3-oop
 Series: Python 3 OOP
+Series_info: What happens behind the scenes of classes and instances? What are composition, inheritance, and polymorphism? A series of posts that dig into the Python implementation of the Object-oriented paradigm.
 Summary: Fundamentals of object-oriented programming in Python - objects and types
 
 This post is available as an **IPython Notebook** [here](/notebooks/Python_3_OOP_Part_1__Objects_and_types.ipynb)

@@ -18,7 +18,7 @@ The syntax of the `movea` instruction, for example, is `movea <ea>, An`, which t
 
 The addressing mode is encoded using three fields of the binary instruction. The **EA Mode** field, the **EA register** field, and the **Extension words**. The first two are 3-bit fields contained in the instruction word, which combination uniquely identifies the addressing mode and the number of the register, in case this is needed. The extension words, instead, are words that follow the instruction word in memory, and that usually represent actual 8-, 16-, or 32-bit numbers.
 
-# Sign extension
+## Sign extension
 
 Before we discuss the addressing modes provided by the MC68000 it is worth explaining the sign-extension mechanism used by this processor. Sometimes addressing modes use 8-bit or 16-bit data instead of a full long word, for example to provide a constant that is added to a register before using its value. Calculations inside the microprocessor, however, are always performed on 32-bits numbers, so such values are _extended_ to a long word.
 
@@ -26,13 +26,13 @@ There are two ways to extend a byte/word to a long word. One is to pad with zero
 
 While the MC68000 can use both address and data registers for general-purpose data storage, the two categories are meant to manage data of different nature. In particular, _data registers never sign-extend bytes or words_, as this would change the pure representation of that sequence of bits, adding spurious bits to keep the sign. Addressed, instead, should never change their value, so the _address registers sign-extend incoming values_ to preserve the real address or displacement represented by the bits.
 
-# Addressing Modes
+## Addressing Modes
 
-## Register Direct 
+### Register Direct 
 
 This is the simplest addressing mode, as it reads or writes data in one of the microprocessor's registers. There are two versions of it, one for data registers and one for address registers.
 
-### Data Register Direct
+#### Data Register Direct
 
 * Assembly syntax: `Dn`
 * EA Mode field: `000`
@@ -54,7 +54,7 @@ d1 0x12ca ------------> |  0x12ca  |
                         +----------+
 ```
 
-### Address Register Direct Mode
+#### Address Register Direct Mode
 
 * Assembly syntax: `An`
 * EA Mode field: `001`
@@ -76,11 +76,11 @@ a1 0xfc1d28 ----------> |  0xfc1d28  |
                         +------------+
 ```
 
-## Register Indirect
+### Register Indirect
 
 As the name of this mode suggests, the addressing is performed using a register, but the data is accessed indirectly. The register doesn't contain the data we want to use, but the address in memory of the data. This is what higher level languages like C call _memory pointer_.
 
-### Address Register Indirect
+#### Address Register Indirect
 
 * Assembly syntax: `(An)`
 * EA Mode field: `010`
@@ -108,7 +108,7 @@ a1 0xfc1d28
                      0xfc1d2c  |         |
 ```
 
-### Address Register Indirect with Postincrement
+#### Address Register Indirect with Postincrement
 
 * Assembly syntax: `(An)+`
 * EA Mode field: `011`
@@ -138,7 +138,7 @@ The standard syntax is `(An)+`, and for this mode, the EA Mode field is `011`, w
 
 This mode and the following one are very powerful, as they automatically add to the address the size of the data that has been read, so 1 for a byte read, 2 for a word, and 4 for a long word. The only exception to this rule is when the register is `a7`, which is an alias for `sp`, the system Stack Pointer. In that case the pointer is always kept aligned to a word boundary, so the increment is 2 even for a byte read.
 
-### Address Register Indirect with Predecrement
+#### Address Register Indirect with Predecrement
 
 * Assembly syntax: `-(An)`
 * EA Mode field: `100`
@@ -167,7 +167,7 @@ cmpi.w  #0x1111,-(a1)
                          0xfc1d2a  |         |
 ```
 
-### Address Register Indirect with Displacement
+#### Address Register Indirect with Displacement
 
 * Assembly syntax: `(d16,An) / d16(An)`
 * EA Mode field: `101`
@@ -200,7 +200,7 @@ Please note that the displacement is fixed to 16-bit, so its value limited in th
 
 Note: this mode is sometimes called "Register Indirect with Offset".
 
-### Address Register Indirect with Index
+#### Address Register Indirect with Index
 
 * Assembly syntax: `(d8,Dn,An)`
 * EA Mode field: `110`
@@ -239,11 +239,11 @@ For this mode the EA Mode field is set to `110` and the EA Register field contai
 
 Note: this mode is sometimes called "Indexed Register Indirect with Offset"
 
-## Absolute Data
+### Absolute Data
 
 These modes provide a version of the Address Register Indirect mode where the address is specified directly in the instruction and not through a register.
 
-### Absolute Short Data
+#### Absolute Short Data
 
 * Assembly syntax: `<address>.w`
 * EA Mode field: `111`
@@ -252,7 +252,7 @@ These modes provide a version of the Address Register Indirect mode where the ad
 
 This mode specifies the address of the data in memory through a 16-bit direct operand specified in the extension word. The standard syntax is `<address>.w`, while the EA mode and EA register fields are respectively `111` and `000`. Since the address is a signed word, only the first or the last 32KiB of memory can be addressed (respectively using positive and negative addresses).
 
-### Absolute Long Data
+#### Absolute Long Data
 
 * Assembly syntax: `<address>.l`
 * EA Mode field: `111`
@@ -263,13 +263,13 @@ This is the 32-bit version of the previous mode, with EA mode and EA register fi
 
 It is worth noting that this mode overcomes the limitation of the previous one, allowing you to access the full 16MiB address space. However, it requires more memory space, having two extension words, and 4 additional CPU cycles to be executed.
 
-## Program Counter Relative
+### Program Counter Relative
 
 The addressing modes relative to the Program Counter (PC) are the fundamental building block of relocatable programs, as the effective address is computed as a displacement from the address of the current instruction being executed. Strictly speaking the base address is that of the extension word, as will be shown in detail later in this article.
 
 Please note that effective addresses expressed with Program Counter Relative can only be used to read from memory.
 
-### Program Counter Relative with Displacement
+#### Program Counter Relative with Displacement
 
 * Assembly syntax: `(d16,PC)` or `d16(PC)`
 * EA Mode field: `111`
@@ -280,7 +280,7 @@ This mode is very similar to Address Register Indirect with Displacement, as bot
 
 Note: this mode is sometimes called "Program Counter Relative with Offset".
 
-### Program Counter Relative with Index
+#### Program Counter Relative with Index
 
 * Assembly syntax: `(d8,Dn,PC)`
 * EA Mode field: `111`
@@ -291,7 +291,7 @@ This is the Program Counter version of Address Register Indirect with Index. The
 
 Note: this mode is sometimes called "Program Counter Relative with Index and Offset".
 
-## Immediate Data
+### Immediate Data
 
 * Assembly syntax: `#<data>`
 * EA Mode field: `111`
@@ -300,15 +300,15 @@ Note: this mode is sometimes called "Program Counter Relative with Index and Off
 
 Immediate data uses the plain data written in the extension words instead of referring to the system memory. In this mode you can specify a constant of any length (byte, word, long word). The EA mode and EA register fields are respectively `111` and `100`, and the number of extension words is either 1 (byte and word) or 2 (long word). Remember that the 68000 sign-extends data only when the destination is an address register, leaving it untouched when a data register is used. The standard syntax for this addressing mode is `#<data>`
 
-### Quick Immediate
+#### Quick Immediate
 
 This addressing mode is available for a set of 3 instructions only, namely `addq`, `subq`, and `moveq`. For the first two instructions, it allows to specify a value between 1 and 8 (3 bits), while the third one can interact with a full signed byte, managing a value between -128 and 127. The "quick" label comes from the fact that the instructions use bits of their own binary representation to store the data, thus requiring no extension words. As happens for the simple Immediate Data addressing, EA mode field is `111` and EA Register field is `100`.
 
-## Implied 
+### Implied 
 
 This is another mode that is available only for some instructions. Those are bound to specific registers, and are thus not really allowing any generic effective address to be used. The registers used in this addressing mode are only `SP`, `PC`, `SP`, `SSP`, `SR`, and `USP`.
 
-# Table of addressing modes
+## Table of addressing modes
 
 The following table gives an overview of all the addressing modes. For each of them I show the name, the standard Assembly syntax, the value of the EA Mode field, the value of the EA Register field, and the number of extension word required.
 
@@ -327,11 +327,11 @@ The following table gives an overview of all the addressing modes. For each of t
 | Program Counter Relative with Index          | `(d8,Dn,PC)`           | `111` | `011`       | 1   |
 | Immediate                                    | `#<data>`              | `111` | `100`       | 1,2 |
 
-# Examples
+## Examples
 
 Let's consider some example of actual MC68000 code that uses effective addressing modes.
 
-## Example 1
+### Example 1
 
 ``` m68k
 0280 0003 ffff          andi.l  #0x3ffff,d0
@@ -355,7 +355,7 @@ andi      long  Dn   d0
 
 So the microprocessor expects the instruction to be followed by two extension words (long), that will contain the immediate data that will be added to the register. The register is selected among the data ones because the EA Mode field is `000`, and the EA Register field selects register number 0. The two following extension words are `0003` and `ffff`, so the number `0x3ffff` is added to the register.
 
-## Example 2
+### Example 2
 
 ``` m68k
 2052                    movea.l (a2),a0
@@ -378,7 +378,7 @@ so in this case the hexadecimal code `2052` becomes
 ```
 
 
-## Example 3
+### Example 3
 
 ``` m68k
 397c 0200 0100          move.w  #0x200,0x100(a4)
@@ -404,7 +404,7 @@ move  word  a4   (d16,An)  Immediate Data
 
 It is interesting to note that the word for the source is given with Immediate Data, and is indeed just after the instruction (`0x0200`), followed by the 16-bit displacement for Address Register Indirect with Displacement (`0x0100`).
 
-# LEA: Load Effective Address
+## LEA: Load Effective Address
 
 Many newcomers to Assembly are confused by the need of the `lea` instruction, so I want to briefly show why we need it, and dig into its low-level representation to clarify possible doubts.
 
@@ -420,7 +420,7 @@ That said, the problem we face is that often we want to compute a memory address
 
 This is where `lea` comes into play. This instruction loads the effective address computed by the addressing mode that we are using into an address register. So `lea 0xe(a1),a2` puts the sum between the content of `a1` and `0xe` into the register `a2`. Familiarising with `lea` is very important, as it is one of the most important instructions that the Motorola 68000 provides. A quick analysis of the Amiga Kickstart code shows that `lea` is the 4th most used instruction, after `move`, `jsr`, and `bra`.
 
-# Program Counter Relative syntax and representation
+## Program Counter Relative syntax and representation
 
 As we discussed previously, the two Program Counter Relative modes just mirror Address Register Indirect with Displacement and Address Register Indirect with Index, binding them to the Program Counter instead of a generic register. It is worth however digging exactly into what the microprocessor is doing when decoding this addressing mode, and what the standard Assembly representation means.
 
@@ -450,16 +450,16 @@ The documentation of the addressing mode, however, states that
 
 The thing that can be easily overlooked is that the PC points to the extension word and not to the instruction word. In this case, while the instruction word is at `0x364`, the extension word is at `0x366`, and `0x366 - 0x5a` gives exactly `0x30c`, which is what the Assembly syntax shows us. As you can see, the Assembler and the Disassembler have to perform some calculations to show the actual relative final value.
 
-# Resources
+## Resources
 
 * Motorola M68000 Family Programmer's Reference Manual [PDF here](https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf)
 * M68000 Microprocessors User's Manual [PDF here](https://www.nxp.com/docs/en/reference-manual/MC68000UM.pdf)
 * The 68000 Principles and Programming, Leo J. Scanion, 1981
 
-# Updates
+## Updates
 
 2017-12-24: Reddit user [SpaceShrimp](https://new.reddit.com/user/SpaceShrimp) pointed out the rage of a signed 16-bit number is `(-32768,32767)` and not `(-32767,32768)`. Thanks!
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

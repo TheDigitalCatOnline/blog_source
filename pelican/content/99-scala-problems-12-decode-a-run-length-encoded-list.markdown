@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing how to implement run-length encoding in Scala
 
-# The problem
+## The problem
 
 **P12** (**) Decode a run-length encoded list.
 Given a run-length code list generated as specified in problem P10, construct its uncompressed version.
@@ -21,11 +21,11 @@ scala> decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
 res0: List[Symbol] = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 The problem is simple, being just a reverse version of the last two problems. The target is to build a list from another one, so it should be possible to find both a recursive and a functional solution. The only problem is that we may easily build a list for each element, but we shall end up with a flat list. So `flatMap()` from [problem 07]({filename}99-scala-problems-07-flatten.markdown) will come in play again.
 
-# The recursive solution
+## The recursive solution
 
 Since I decided to use `flatMap()`, which basically acts like `map()` but then inserts the resulting list into the target list (indeed flattening it), I have to write a function that converts a `(Int, A)` tuple into a `List[A]`, where `A` is a type of choice.
 
@@ -44,7 +44,7 @@ def decode[A](l: List[(Int, A)]):List[A] = {
 
 The last call is a mapping. Each element is mapped into a list by the `_expand()` function, while `flatMap()` does the flattening job.
 
-# The functional solution
+## The functional solution
 
 There is a simpler way that makes use of a function of the `List` object. Object and classes are two different entities in Scala, and objects are singletons that encapsulate constructor (and de-constructor) methods.
 
@@ -60,10 +60,10 @@ def decode2[A](l: List[(Int, A)]):List[A] = {
 
 Scala tuples may be indexed using the `_index` notation, starting from 1 (while lists are indexed from 0). Here, just like in the recursive solution, we have to use `flatMap()` to flatten the resulting list.
 
-# Final considerations
+## Final considerations
 
 Writing this solution I renewed my knowledge of **flatmapping**, learned that Scala classes have **companion objects**, learned how to **create lists** and how to **index tuples**.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

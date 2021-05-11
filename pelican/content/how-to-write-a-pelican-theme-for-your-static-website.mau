@@ -1,0 +1,1041 @@
+:pelican.title:How to write a Pelican theme for your static website
+:pelican.date:2021-03-25 14:00:00 +0100
+:pelican.category:Programming
+:pelican.tags:blogging, Markdown, pelican, Python, WWW, HTML
+:pelican.authors:Leonardo Giordani
+:pelican.slug:how-to-write-a-pelican-theme-for-your-static-website
+:pelican.image:how-to-write-a-pelican-theme-for-your-static-website
+:pelican.summary:A full-fledged tutorial that shows how to convert an HTML template into a Pelican theme
+
+I run The Digital Cat using a static site generator called [link](https://blog.getpelican.com/,Pelican), created by my friend [link](https://justinmayer.com/,"Justin Mayer") and actively maintained by him and other developers. I also gave some minor contributions to the project.
+
+Since I started working on the blog in 2013 I run a great length to customise the theme that I use. I initially went for a pre-made Pelican theme, but I soon started to change small things, and eventually ended up creating a whole new theme that suits my needs.
+
+Front-end development if not my forte, though, so I didn't want to start from scratch with HTML, CSS and JS. My knowledge of those tools is limited, and I have other interests, so I started from a free (CC BY 3.0) pre-made HTML5 template created by [link](https://html5up.net/,"HTML5 UP"). You can see [link](https://html5up.net/editorial,"a demo of the original template") and compare it with what you see on this very page.
+
+Encouraged by Justin, I decided to write down this initial guide on how to port a Pelican theme from a static template. I will show you how to start a blog from scratch, how to get a static template and how to make it usable by Pelican. Everything done step by step without skipping any passage. At the end of the post you will *have a running blog with some demo articles*, you will *have learned how to use the Jinja language and the Pelican variables*, and you will *have an idea of what to do next to further customise your static website*.
+
+Let's start!
+
+== Initial setup
+
+Let's create a blog called The Analog Fox, following [link](https://docs.getpelican.com/en/latest/quickstart.html,"Pelican's quickstart guide").
+
+I created a virtual environment and installed Pelican as suggested, then run
+
+[source]
+----
+mkdir theanalogfox
+cd theanalogfox
+pelican-quickstart
+----
+
+For this project I will only run the blog locally, so I didn't configure any specific way to publish it, neither properly set up a URL prefix. If you are about to create a real website please read Pelican's documentation about those settings.
+
+[source]
+----
+> Where do you want to create your new web site? [.] 
+> What will be the title of this web site? The Analog Fox:@:
+> Who will be the author of this web site? Leonardo Giordani:@:
+> What will be the default language of this web site? [en] 
+> Do you want to specify a URL prefix? e.g., https://example.com   (Y/n) n:@:
+> Do you want to enable article pagination? (Y/n) 
+> How many articles per page do you want? [10] 3:@:
+> What is your time zone? [Europe/Paris] 
+> Do you want to generate a tasks.py/Makefile to automate generation and publishing? (Y/n) 
+> Do you want to upload your website using FTP? (y/N) 
+> Do you want to upload your website using SSH? (y/N) 
+> Do you want to upload your website using Dropbox? (y/N) 
+> Do you want to upload your website using S3? (y/N) 
+> Do you want to upload your website using Rackspace Cloud Files? (y/N) 
+> Do you want to upload your website using GitHub Pages? (y/N) 
+Done. Your new project is available at /home/leo/devel/theanalogfox
+----
+
+If you run `pelican -lr` now and visit http://localhost:8000 with your browser you will see the first page of the blog rendered with the default theme.
+
+== Demo content
+
+Before we venture into the jungle of Jinja templates it's worth creating some content. As this is a very boring activity I prepared a little script that you can run in the terminal.
+
+[source, bash]
+----
+#!/bin/bash
+
+NUM_POSTS=20
+CONTENT_DIR=content
+LOREM_API=https://jaspervdj.be/lorem-markdownum/markdown.txt
+IMAGES_API=https://placeimg.com/1000/341/animals
+
+rm -fR content
+mkdir -p content/images
+
+for i in $(seq -w 1 ${NUM_POSTS})
+do
+    post_file=${CONTENT_DIR}/post${i}.markdown
+    
+    echo "Creating post ${i}"
+    echo "Title: A sample article ${i}" >> ${post_file}
+    echo "Date: 2021-03-${i}" >> ${post_file}
+    echo "Category: News" >> ${post_file}
+    echo "Tags: $(seq 1 20 | shuf | head -n3 | sed -r s,"^","tag", | paste -sd "," -)" >> ${post_file}
+    echo "Image: post${i}.jpg" >> ${post_file}
+    echo "Summary: Summary of post ${i}" >> ${post_file}
+    echo >> ${post_file}
+
+    curl -s ${LOREM_API} | sed -r s,"^#","##", >> ${post_file}
+
+    curl -s ${IMAGES_API} > ${CONTENT_DIR}/images/post${i}.jpg
+done
+----
+
+Save it as `create_content.sh` and give it execution permissions with `chmod 775 create_content.sh`. At this point you can run it with `./create_content.sh` and it will create the directory `content` with 20 posts and an image for each of them. You can safely run it multiple times, it will automatically delete the previous output.
+
+The script works out of the box on Linux, but you might have issues on a Mac (I have no way to check), so I zipped an execution of the script that you can [link](/files/demo_posts.zip,"download here").
+
+If you know bash feel free to hack the script to do something more complicated, but this very simple program does everything we need to work on Pelican themes.
+
+Running `pelican -lr` and visiting http://localhost:8000 will now show a richer website.
+
+== The template
+
+From now on I will make extensive use of the documentation at [link](https://docs.getpelican.com/en/latest/themes.html#creating-themes), so please be sure to have that page open in your browser.
+
+For this tutorial I will use the template "Future Imperfect" by [link](https://html5up.net/,"HTML5 UP"). The template can be seen in action [link](https://html5up.net/future-imperfect,"at this page"), and you can download it using the button in the top right corner of the page itself.
+
+Please consider supporting HTML UP even only with a Tweet. Being a content creator myself I know how important it can be to receive any type of feedback from readers/users.
+
+Let's have a quick look at the template before we dive into the core of the post. We have a navbar at the top of the screen, with a link to the homepage, several links to specific pages, a search button, and a menu. In the body of the page there is a sidebar on the left and a preview of the articles on the right.
+
+The sidebar contains the title and the subtitle of the blog, two lists of posts, the about section, and some social buttons. The first list of posts features image, title, date, and the avatar of the author, while the second list has just a small thumbnail, title, and date. Each post in the main list shows the full image, title, subtitle, name and avatar of the author, publication date, a preview of the content of the article, and a button that links the full version of the article. Last, tags are listed at the bottom right, just next to the number of likes and comments.
+
+Just to be clear from the start, I won't implement everything we see here in my Pelican theme. I won't touch the navbar, and I won't discuss likes and comments, which require external systems when it comes to static sites. I will also simplify the sidebar, using only one list of posts. Moreover, I will not preview the articles in the main page, but print the full content.
+
+Unzip the template archive in a subdirectory of the blog directory called `future-imperfect`. The archive doesn't contains a root folder, so you need to create it explicitly.
+
+Enter the theme directory and change the layout of the files to follow [link](https://docs.getpelican.com/en/latest/themes.html#structure,"Pelican's requirements"):
+
+[source]
+----
+mv assets/ static
+mv images/ static/
+mkdir templates
+mv *.html templates/
+----
+
+At this point edit the file `pelicanconf.py` in the main directory of the blog, adding the variable `THEME`
+
+.pelicanconf.py
+[source, python]
+----
+PATH = 'content'
+
+THEME = "future-imperfect":@:
+
+TIMEZONE = 'Europe/Paris'
+
+DEFAULT_LANG = 'en'
+----
+
+If you refresh the blog page now you will see that the output doesn't even have a working style sheet, but don't worry, Pelican is still working correctly. We are overriding Pelican's output with the file `future-imperfect/templates/index.html`, which is supposed to be a Jinja template, but being part of the HTML5 template is just injecting static content. In particular, the CSS/JS assets are not loaded correctly, as you can see.
+
+Let's learn the first piece of syntax adjusting the CSS and JS links, then, so that we can at least have a good output to look at. We need to change the path `assets/` with `{{ SITEURL }}/theme/`
+
+.future-imperfect/templates/index.html
+[source, html+jinja]
+----
+<!DOCTYPE HTML>
+<!--
+    Future Imperfect by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+  -->
+<html>
+  <head>
+    <title>Future Imperfect by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css" />:@:
+  </head>
+
+[...]
+
+    <script src="{{ SITEURL }}/theme/js/jquery.min.js"></script>:@:
+    <script src="{{ SITEURL }}/theme/js/browser.min.js"></script>:@:
+    <script src="{{ SITEURL }}/theme/js/breakpoints.min.js"></script>:@:
+    <script src="{{ SITEURL }}/theme/js/util.js"></script>:@:
+    <script src="{{ SITEURL }}/theme/js/main.js"></script>:@:
+
+  </body>
+</html>    
+----
+
+We also need to correctly link images. Change any occurrence of `images/` into `{{ SITEURL}}/theme/images/`, e.g.
+
+[source, html+jinja]
+----
+    <div class="meta">
+      <time class="published" datetime="2015-11-01">November 1, 2015</time>
+      <a href="#" class="author"><span class="name">Jane Doe</span><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>:@:
+    </div>
+  </header>
+  <a href="single.html" class="image featured"><img src="{{ SITEURL }}/theme/images/pic01.jpg" alt="" /></a>:@:
+----
+
+If you refresh the page after these changes you will see the template fully rendered (minus the images you saw in the demo, those are replaced by placeholders in the downloaded version).
+
+A little trick: if you remove the comments at lines 177 and 487 you will get a nice recap of the graphical components of the template. I will not use them, so I removed lines 176-487, but remember that those cheat sheets can be very useful when trying to understand how a template works.
+
+As I mentioned earlier, I also removed the third list of posts, as it doesn't add anything to what we will learn. You are clearly free to keep it and experiment with it.
+
+=== Deep dive
+
+How does `{{ SITEURL }}/theme` work?
+
+Pelican's [link](https://docs.getpelican.com/en/latest/settings.html#themes,"documentation on themes") says
+
+[callout]
+----
+`THEME_STATIC_DIR = 'theme'`
+
+Destination directory in the output path where Pelican will place the files collected from THEME_STATIC_PATHS. Default is theme.
+----
+
+the variable `THEME_STATIC_PATHS` is by default `static`, which is why we created that directory inside the theme.
+
+As you can see all these paths are configurable, should you prefer different names.
+
+== Pelican variables
+
+As I mentioned, we are currently overriding Pelican's output with a static template. What we want to do is to inject values known to Pelican into the template itself, be those static variables or more dynamic items like articles, tags, and images.
+
+To do this, Pelican uses [link](https://jinja.palletsprojects.com/en/2.11.x/,Jinja), a widely adopted template engine written in Python. If you want to fully understand how to create Pelican themes, then, you need to learn Jinja. Don't worry, it's not complicated, and since Jinja uses Python you will catch up very quickly. I won't get into details about the Jinja syntax that I will use, please check out the [link](https://jinja.palletsprojects.com/en/2.11.x/,"Jinja documentation") if you have any doubts.
+
+We actually already used Pelican's variables and Jinja templates when we prefixed links with `{{ SITEURL }}`. Aside from that, however, the first and simplest variable injection for our template are title and subtitle.
+
+=== Title
+
+The Pelican variable we are interested in is `SITENAME`, which has been initialised by the quickstart script as you can see in the configuration file
+
+.pelicanconf.py
+[source,python]
+----
+SITENAME = "The Analog Fox"
+----
+
+We need to replace the static text with this variable three times: in the tag `&lt;title&gt;`, in the navigation bar and in the header at the top of the sidebar.
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+<html>
+  <head>
+    <title>{{ SITENAME }}</title>:@:
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css" />
+  </head>
+  <body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Header -->
+      <header id="header">
+        <h1><a href="index.html">{{ SITENAME }}</a></h1>:@:
+        <nav class="links">
+          <ul>
+            <li><a href="#">Lorem</a></li>
+
+[...]
+
+      <!-- Sidebar -->
+      <section id="sidebar">
+
+        <!-- Intro -->
+        <section id="intro">
+          <a href="#" class="logo"><img src="{{ SITEURL }}/theme/images/logo.jpg" alt="" /></a>
+          <header>
+            <h2>{{ SITENAME }}</h2>:@:
+            <p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a></p>
+          </header>
+        </section>
+----
+
+=== Subtitle
+
+Pelican provides support even for the subtitle, but that wasn't filled in by the setup script for us, so we need to create the variable in the configuration file
+
+.pelicanconf.py
+[source,python]
+----
+SITENAME = "The Analog Fox"
+SITESUBTITLE = "A great blog about old stuff"
+----
+
+Once this is done we can insert the variable at the top of the sidebar, just under the title
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+        <section id="intro">
+          <a href="#" class="logo"><img src="{{ SITEURL }}/theme/images/logo.jpg" alt="" /></a>
+          <header>
+            <h2>{{ SITENAME }}</h2>
+            <p>{{ SITESUBTITLE }}</p>:@:
+          </header>
+        </section>
+----
+
+Marvellous! Now the page should show the title of the blog in the window header, announcing to the world the The Analog Fox is ready to take over the world of vintage!
+
+OK, I might be a bit overexcited, but I love when plans come together ;)
+
+=== Deep dive
+
+Pelican passes the whole configuration file to the template, together with the parsed content of the site itself, so you are free to use any variable, should you need them, or to introduce new ones (which we will do in the next section).
+
+For now, just to familiarise with the concept, you might try to add `TIMEZONE` under the subtitle
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+          <header>
+            <h2>{{ SITENAME }}</h2>
+            <p>{{ SITESUBTITLE }}</p>
+            <p>{{ TIMEZONE }}</p>
+          </header>
+----
+
+I don't think this specific change is really useful, but it's good to remember that all those variables are available.
+
+== Social buttons
+
+The template has a section for social buttons under the sidebar, and this is a great use case for a bit of advanced usage of the configuration file.
+
+Pelican has a native support for social links, as you can see from the `SOCIAL` variable in `pelicanconf.py`. For the sake of showing you that you are free to define custom variables in that file and use them I will however ignore it and go with something richer. The template uses nice icons to represent the links, so I'd like to include that information.
+
+The section of the template that renders those buttons is
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+        <!-- Footer -->
+        <section id="footer">
+          <ul class="icons">
+            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="#" class="icon solid fa-rss"><span class="label">RSS</span></a></li>
+            <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+          </ul>
+          <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+        </section>
+----
+
+Lists are one of the most common patterns when writing templates, as they usually become just a simple for loop. let's start writing down the data, then we will learn how to render the buttons.
+
+As I mentioned, I created a new variable `CONTACTS`
+
+.pelicanconf.py
+[source,python]
+----
+# Social widget
+SOCIAL = (
+    ("You can add links in your config file", "#"),
+    ("Another social link", "#"),
+)
+
+CONTACTS = [:@:
+    ("Twitter", "twitter", "https://twitter.com/theanalogfox"),:@:
+    ("Facebook", "facebook-f", "https://facebook.com/theanalogfox"),:@:
+    ("Instagram", "instagram", "https://www.instagram.com/theanalogfox/"),:@:
+    ("Email", "envelope", "info@theanalogfox.com"),:@:
+]:@:
+
+DEFAULT_PAGINATION = 3
+----
+
+that is a list of tuples, each one including the title of the button, the name of the icon (Font Awesome), and the link itself. Now we can replace the snippet of code above with this
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+        <!-- Footer -->
+        <section id="footer">
+          <ul class="icons">
+            {% for name, icon, link in CONTACTS %}:@:
+            <li><a href="{{ link }}" class="icon brands fa-{{ icon }}"><span class="label">{{ name }}</span></a></li>:@:
+            {% endfor %}:@:
+          </ul>
+          <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+        </section>
+----
+
+As you can see, the core of the snippet is a `for` loop that uses Python's unpacking to assign `name`, `icon`, and `link`. The variables are then used directly in the HTML as we did before. Remember that Jinja doesn't understand HTML, it just blindly replaces the variables in a text file, which allows us to perform nice tricks like `fa-{{ icon }}` to use the right icon for each social button.
+
+== Articles
+
+Now that we introduced loops and variables we have all the tools we need to work on the two lists of articles. Let's first change the list in the main body of the page, the one in the sidebar will then receive the very same treatment.
+
+First of all, I reduced the static list of posts to a single one
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+      <!-- Main -->
+      <div id="main">
+
+        <!-- Post -->
+        <article class="post">
+          <header>
+            <div class="title">
+              <h2><a href="single.html">Magna sed adipiscing</a></h2>
+              <p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
+            </div>
+            <div class="meta">
+              <time class="published" datetime="2015-11-01">November 1, 2015</time>
+              <a href="#" class="author"><span class="name">Jane Doe</span><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+            </div>
+          </header>
+          <a href="single.html" class="image featured"><img src="{{ SITEURL }}/theme/images/pic01.jpg" alt="" /></a>
+          <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+          <footer>
+            <ul class="actions">
+              <li><a href="single.html" class="button large">Continue Reading</a></li>
+            </ul>
+            <ul class="stats">
+              <li><a href="#">General</a></li>
+              <li><a href="#" class="icon solid fa-heart">28</a></li>
+              <li><a href="#" class="icon solid fa-comment">128</a></li>
+            </ul>
+          </footer>
+        </article>
+
+        <!-- Pagination -->
+        <ul class="actions pagination">
+          <li><a href="" class="disabled button large previous">Previous Page</a></li>
+          <li><a href="#" class="button large next">Next Page</a></li>
+        </ul>
+
+      </div>
+----
+
+Please note that your content will be slightly different as it has been randomly generated.
+
+The list of Pelican variables we can access is available at [link](https://docs.getpelican.com/en/latest/themes.html#index-html) (variables for the page `index.html`) and [link](https://docs.getpelican.com/en/latest/themes.html#article) (attributes of `Article` objects).
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+        {% for article in articles %}:@:
+        <!-- Post -->
+        <article class="post">
+          <header>
+            <div class="title">
+              <h2><a href="single.html">{{ article.title }}</a></h2>:@:
+              <p>{{ article.summary }}</p>:@:
+            </div>
+            <div class="meta">
+              <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>:@:
+              <a href="#" class="author"><span class="name">{{ article.author }}</span><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>:@:
+            </div>
+          </header>
+          <a href="single.html" class="image featured"><img src="{{ SITEURL }}/theme/images/pic01.jpg" alt="" /></a>
+          {{ article.content }}:@:
+          <footer>
+            <ul class="actions">
+              <li><a href="single.html" class="button large">Continue Reading</a></li>
+            </ul>
+            <ul class="stats">
+              {% for tag in article.tags %}:@:
+              <li><a href="#">{{ tag.name }}</a></li>:@:
+              {% endfor %}:@:
+            </ul>
+          </footer>
+        </article>
+        {% endfor %}:@:
+----
+
+As you can see we can just loop over the page variable `articles` and read the attributes of object just like we usually do in Python, for example with `{{ article.title }}` or `{{ article.summary }}`.
+
+Jinja filters are very powerful, and as you see I used them twice with dates to give them different formats. One for the internal representation of time `{{ article.date | strftime('%Y-%m-%d') }}` and one is the more visually pleasant (`{{ article.date | strftime('%b %-d, %Y') }}`). I don't normally use the American date format, but as the template did I kept it as a good example of what you can do with Jinja filters.
+
+Last, you can nest for loops in other for loops, as I did with tags. You can see the internal structure of tags [link]("https://docs.getpelican.com/en/latest/themes.html#author-category-tag", "in the documentation"). Please note that the string representation of tags (and other objects in Pelican) is the attribute `name`, so we might write
+
+[source,html+jinja]
+----
+              {% for tag in article.tags %}
+              <li><a href="#">{{ tag }}</a></li>:@:
+              {% endfor %}
+----
+
+and it would return the same output.
+
+A note about the content of the article. As you can see `{{ article.content }}` prints the full article, so if you want to print a preview you need to truncate it. Unfortunately you can't just write something like `{{ article.content[:600] }}` to print 600 characters. Remember that Jinja works on the output of the readers already, which means that `article. content` is already HTML, and if you arbitrarily truncate it you leave some tags open, which disrupts the rendering of the page.
+
+At the end of the post I will show you how you can easily solve this in Pelican, once we have a dedicated page for each article.
+
+== Pagination
+
+What we did in the previous section prints all the articles in the blog on the same page. This is clearly not acceptable as the number of articles increases, and the standard solution for this is _pagination_.
+
+Pelican fully supports it, and if you remember we set it up when we run `pelican-quickstart`. You can see the current number of articles per page in `pelicanconf.py`
+
+[source, python]
+----
+DEFAULT_PAGINATION = 3
+----
+
+To leverage pagination we first need to replace the variable `articles` with `articles_page.object_list`
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+        {% for article in articles_page.object_list %}:@:
+        <!-- Post -->
+        <article class="post">
+          <header>
+            <div class="title">
+              <h2><a href="single.html">{{ article.title }}</a></h2>
+              <p>{{ article.summary }}</p>
+----
+
+If you render the page in the browser now you'll see that it shows only the last 3 posts, which corresponds to the value of `DEFAULT_PAGINATION`. If you want you can try to change it and see it affecting the page.
+
+To use pagination we also need to configure navigation buttons. The template already includes them after all the articles in the main body.
+
+[source,html+jinja]
+----
+        <!-- Pagination -->
+        <ul class="actions pagination">
+          <li><a href="" class="disabled button large previous">Previous Page</a></li>
+          <li><a href="#" class="button large next">Next Page</a></li>
+        </ul>
+----
+
+We have three different cases when it comes to pagination. The first page should grey out or remove the "Previous page" button, the last page should do the same with the "Next page" button, and any page between the two should show both.
+
+We can achieve it with the following code
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+        <!-- Pagination -->
+        <ul class="actions pagination">
+          {% if articles_page.has_previous() %}
+          <li><a href="/{{ articles_previous_page.url }}" class="button large previous">Previous Page</a></li>
+          {% else %}
+	  <li><a href="" class="disabled button large previous">Previous Page</a></li>
+	  {% endif %}
+	  
+	  {% if articles_page.has_next() %}
+	  <li><a href="/{{ articles_next_page.url }}" class="button large next">Next Page</a></li>
+	  {% else %}
+	  <li><a href="#" class="disabled button large next">Next Page</a></li>
+	  {% endif %}
+	</ul>
+----
+
+The two functions `articles_page.has_previous()` and `articles_page.has_next()` can be used to know if there are pages before of after the current one, and if not we can use the class `disabled` to grey out the button. The link to the previous or next page is provided by `articles_previous_page.url` and `articles_next_page.url` respectively. Again, remember that you can learn everything about all these variables reading [link](https://docs.getpelican.com/en/latest/themes.html,"Pelican's documentation on themes").
+
+Render the page in the browser and you will see that the "Next page" button leads to [link](http://localhost:8000/index2.html), which is the second page of articles. Indeed, if you click it, you will see articles from 17 to 15, and so on until the last page of articles [link](http://localhost:8001/index7.html) that contains the first and the secodn articles of the blog (if you generated 20 articles at the beginning as I did).
+
+== Slicing
+
+The sidebar is usually the best place to show a fixed set of posts like latest ones. We can easily achieve this slicing the list of articles. To do this let's first reduce the number of mini posts to one, so that we can introduce a loop
+
+.future-imperfect/templates/index.html
+[source, html+jinja]
+----
+        <!-- Mini Posts -->
+        <section>
+          <div class="mini-posts">
+
+            <!-- Mini Post -->
+            <article class="mini-post">
+              <header>
+                <h3><a href="single.html">Vitae sed condimentum</a></h3>
+                <time class="published" datetime="2015-10-20">October 20, 2015</time>
+                <a href="#" class="author"><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+              </header>
+              <a href="single.html" class="image"><img src="{{ SITEURL }}/theme/images/pic04.jpg" alt="" /></a>
+            </article>
+
+          </div>
+        </section>
+----
+
+We can show the last 4 articles with this simple sintax
+
+.future-imperfect/templates/index.html
+[source, html+jinja]
+----
+        <!-- Mini Posts -->
+        <section>
+          <div class="mini-posts">
+
+	    {% for article in articles[:4] %}:@:
+            <!-- Mini Post -->
+            <article class="mini-post">
+              <header>
+                <h3><a href="single.html">Vitae sed condimentum</a></h3>
+                <time class="published" datetime="2015-10-20">October 20, 2015</time>
+                <a href="#" class="author"><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+              </header>
+              <a href="single.html" class="image"><img src="{{ SITEURL }}/theme/images/pic04.jpg" alt="" /></a>
+            </article>
+	    {% endfor %}:@:
+
+          </div>
+        </section>
+----
+
+which will print the same static article 4 times because we are not using Pelican's variables yet. Applying the same changes we introduced for the main list of articles we finally get
+
+.future-imperfect/templates/index.html
+[source, html+jinja]
+----
+        <!-- Mini Posts -->
+        <section>
+          <div class="mini-posts">
+
+	    {% for article in articles[:4] %}
+            <!-- Mini Post -->
+            <article class="mini-post">
+              <header>
+                <h3><a href="single.html">{{ article.title }}</a></h3>:@:
+                <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>:@:
+                <a href="#" class="author"><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+              </header>
+              <a href="single.html" class="image"><img src="{{ SITEURL }}/theme/images/pic04.jpg" alt="" /></a>
+            </article>
+	    {% endfor %}
+	    
+          </div>
+        </section>
+----
+
+And now you will see the proper titles and dates. Please note that this loop depends on `articles`, which doesn't change from page to page, so this list will be immutable across the blog.
+
+== Pictures
+
+The script that created demo articles downloaded an image for each article, that can be used as featured image. There are many way to manage images in a website and I won't dive into that particular subject here. I will only show you a basic way to serve images that are not static, but part of the content.
+
+The images are stored in `content/images` and this is also an arbitrary decision. The only thing you need to keep in mind is that Pelican's root is usually set in the directory `content`, so if you place files elsewhere it might be complicated to reach them.
+
+Through the automated script that we used to generate content we wrote a specific metadata in each article, with the name of the relative image. For example
+
+.content/post01.markdown
+[source]
+----
+Title: A sample article 01
+Date: 2021-03-01
+Category: News
+Tags: tag6,tag11,tag8
+Image: post01.jpg:@:
+Summary: Summary of post 01
+
+[...]
+----
+
+This shows you that you can add whatever metadata you want to your posts and have them loaded into the object `article`. To show the image we just need to load the correct file instead of the placeholder, both in the main list
+
+.future-imperfect/templates/index.html
+[source, html+jinja]
+----
+        {% for article in articles_page.object_list %}
+        <!-- Post -->
+        <article class="post">
+          <header>
+            <div class="title">
+              <h2><a href="single.html">{{ article.title }}</a></h2>
+              <p>{{ article.summary }}</p>
+            </div>
+            <div class="meta">
+              <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+              <a href="#" class="author"><span class="name">{{ article.author }}</span><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+            </div>
+          </header>
+          <a href="single.html" class="image featured"><img src="images/{{ article.image }}" alt="" /></a>:@:
+          {{ article.content }}
+          <footer>
+            <ul class="actions">
+              <li><a href="single.html" class="button large">Continue Reading</a></li>
+            </ul>
+            <ul class="stats">
+              {% for tag in article.tags %}
+              <li><a href="#">{{ tag.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </footer>
+        </article>
+        {% endfor %}
+----
+
+and in the sidebar
+
+.future-imperfect/templates/index.html
+[source, html+jinja]
+----
+        <!-- Mini Posts -->
+        <section>
+          <div class="mini-posts">
+
+	    {% for article in articles[:4] %}
+            <!-- Mini Post -->
+            <article class="mini-post">
+              <header>
+                <h3><a href="single.html">{{ article.title }}</a></h3>
+                <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+                <a href="#" class="author"><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+              </header>
+              <a href="single.html" class="image"><img src="images/{{ article.image }}" alt="" /></a>:@:
+            </article>
+	    {% endfor %}
+	    
+          </div>
+        </section>
+----
+
+Now the page is definitely more appealing!
+
+== Advanced techniques: extend and include
+
+As in everything related to computer programming (and not only) you will soon discover that you are repeating yourself, and one of the top design advice that you should follow says: don't do it.
+
+Jinja templates provide two tags to help you reduce duplicated code, namely `extend` and `include`. To see how they work let's focus our attention on the page of a specific article. When we click on an article we would like to go to a dedicated page, while all links at the moment load the same static page `single.html`.
+
+The article page, however, won't be that different from the front page we just created. It might be, as you are free to completely change the style, but in general some elements will be in common, for example the navigation, the sidebar, and the footer.
+
+In the following section I will show you how to use the Jinja tags `extends` and `include` to reuse parts of your theme.
+
+=== Extends
+
+Since we want to reuse some parts of the page we need to move them to a "common space". Create a new file called `future-imperfect/templates/base.html` and move the whole content of `index.html` into it. Then write this single statement in the now empty `index.html`
+
+.future-imperfect/templates/index.html
+[source, html+jinja]
+----
+{% extends "base.html" %}
+----
+
+What we did is to tell Jinja that everything we do in `index.html` should happen on top of `base.html` (we'll soon discover the meaning of this "on top"). For now you might think about it as `index.html` copying the content of `base.html`.
+
+The problem with this setup is that `base.html` doesn't have access to the variables that `index.html` has access to, as `base.html` is an arbitrary file and not something known to Pelican. Indeed the command `pelican -lr` that you are running in a terminal should give you this error
+
+[source,callouts="|"]
+----
+WARNING: Caught exception:
+  | "'articles_page' is undefined".
+----
+
+Since that is something only `index.html` can provide we need to do something more than just copying the content of `base.html`, we need to also fill in some parts, which is exactly what you can do with `block` (see [link](https://jinja.palletsprojects.com/en/2.11.x/templates/#template-inheritance,"Jinja's documentation on template inheritance")).
+
+Grab the whole content of the `&lt;div id="main"&gt;` and move it in `index.html` wrapped in `{% block content %}`
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+{% extends "base.html" %}
+
+{% block content %}
+{% for article in articles_page.object_list %}
+<!-- Post -->
+<article class="post">
+  <header>
+    <div class="title">
+      <h2><a href="single.html">{{ article.title }}</a></h2>
+      <p>{{ article.summary }}</p>
+    </div>
+    <div class="meta">
+      <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+      <a href="#" class="author"><span class="name">{{ article.author }}</span><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+    </div>
+  </header>
+  <a href="single.html" class="image featured"><img src="images/{{ article.image }}" alt="" /></a>
+  {{ article.content }}
+  <footer>
+    <ul class="actions">
+      <li><a href="single.html" class="button large">Continue Reading</a></li>
+    </ul>
+    <ul class="stats">
+      {% for tag in article.tags %}
+      <li><a href="#">{{ tag.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </footer>
+</article>
+{% endfor %}
+
+<!-- Pagination -->
+<ul class="actions pagination">
+  {% if articles_page.has_previous() %}
+  <li><a href="/{{ articles_previous_page.url }}" class="button large previous">Previous Page</a></li>
+  {% else %}
+  <li><a href="" class="disabled button large previous">Previous Page</a></li>
+  {% endif %}
+  
+  {% if articles_page.has_next() %}
+  <li><a href="/{{ articles_next_page.url }}" class="button large next">Next Page</a></li>
+  {% else %}
+  <li><a href="#" class="disabled button large next">Next Page</a></li>
+  {% endif %}
+</ul>
+{% endblock %}
+----
+
+At the same time fill the empty space you left in `base.html` with a call for that block
+
+.future-imperfect/templates/base.html
+[source,html+jinja]
+----
+      <!-- Main -->
+      <div id="main">
+	{% block content %}{% endblock %}:@:
+      </div>
+----
+
+When this is done, reload the page and... nothing should have changed. Sorry, but this is one of those things that happen behind the scenes and that do not have any immediate benefit. However, Pelican shouldn't give you any error on the command line, which is comforting.
+
+To see the benefit of what we did let's move on and create the page for the single article, `article.html`
+
+.future-imperfect/templates/article.html
+[source,html+jinja]
+----
+{% extends "base.html" %}
+----
+
+As we said before `base.html` is supposed to be the common part of all pages, so `article.html` should start from that as well. To check how that page looks like now let's update the links from the articles in the main body. Open `index.html` and replace the URLs of each article
+
+.future-imperfect/templates/index.html
+[source,html+jinja]
+----
+<article class="post">
+  <header>
+    <div class="title">
+      <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>:@:
+      <p>{{ article.summary }}</p>
+    </div>
+    <div class="meta">
+      <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+      <a href="#" class="author"><span class="name">{{ article.author }}</span><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+    </div>
+  </header>
+  <a href="{{ article.url }}" class="image featured"><img src="images/{{ article.image }}" alt="" /></a>:@:
+  {{ article.content }}
+  <footer>
+    <ul class="actions">
+      <li><a href="{{ article.url }}" class="button large">Continue Reading</a></li>:@:
+    </ul>
+    <ul class="stats">
+      {% for tag in article.tags %}
+      <li><a href="#">{{ tag.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </footer>
+</article>
+----
+
+Now if you render the front page and click on the title of a post in the main column you will end up in the page dedicated to it, which has a worrying empty central column! Well, after all `article.html` extends `base.html` but doesn't provide anything for the block `content`, so let's fix this
+
+.future-imperfect/templates/article.html
+[source,html+jinja]
+----
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Post -->
+<article class="post">
+  <header>
+    <div class="title">
+      <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+      <p>{{ article.summary }}</p>
+    </div>
+    <div class="meta">
+      <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+      <a href="#" class="author"><span class="name">{{ article.author }}</span><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+    </div>
+  </header>
+  <a href="{{ article.url }}" class="image featured"><img src="images/{{ article.image }}" alt="" /></a>
+  {{ article.content }}
+  <footer>
+    <ul class="actions">
+      <li><a href="{{ article.url }}" class="button large">Continue Reading</a></li>
+    </ul>
+    <ul class="stats">
+      {% for tag in article.tags %}
+      <li><a href="#">{{ tag.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </footer>
+</article>
+{% endblock %}
+----
+
+I copied the content of the block from the loop in `index.html`. In this simple example they have the same code, but in a real production environment you might want to differentiate them. As you can see `article.html` provides the variable `article` out of the box. Please note that the page of each article doesn't show the pagination buttons, as they are not part of `article.html`.
+
+=== Include
+
+When you write a theme there are often snippets of code that you might need to repeat in different parts of the whole site. The sidebar is typically a good example of a collection of such snippets, like the "About" section or the list of latest posts that you might want to reuse somewhere else.
+
+Jinja provides the tag `include` that allows you to easily inject the content of another template file into the current one. Let's see how it works moving the list of latest posts to a separate file.
+
+Move the content of the mini posts section from `base.html` to a file called `templates/includes/latest_posts.html`
+
+.templates/includes/latest_posts.html
+[source, html+jinja]
+----
+<!-- Mini Posts -->
+<section>
+  <div class="mini-posts">
+
+    {% for article in articles[:4] %}
+    <!-- Mini Post -->
+    <article class="mini-post">
+      <header>
+        <h3><a href="single.html">{{ article.title }}</a></h3>
+        <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+        <a href="#" class="author"><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+      </header>
+      <a href="single.html" class="image"><img src="images/{{ article.image }}" alt="" /></a>
+    </article>
+    {% endfor %}
+    
+  </div>
+</section>
+----
+
+And replace it with a call to `include` in `base.html`
+
+.templates/includes/base.html
+[source, html+jinja]
+----
+        <!-- Intro -->
+        <section id="intro">
+          <a href="#" class="logo"><img src="{{ SITEURL }}/theme/images/logo.jpg" alt="" /></a>
+          <header>
+            <h2>{{ SITENAME }}</h2>
+            <p>{{ SITESUBTITLE }}</p>
+          </header>
+        </section>
+
+        {% include 'includes/latest_posts.html' %}:@:
+
+        <!-- About -->
+        <section class="blurb">
+          <h2>About</h2>
+          <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod amet placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at phasellus sed ultricies.</p>
+          <ul class="actions">
+            <li><a href="#" class="button">Learn More</a></li>
+          </ul>
+        </section>
+----
+
+Again, reloading the page won't show anything different, but now we isolated a piece of code that shows the latest posts and we can reuse it in another part of the site which is not the sidebar. You can find the documentation of `include` at [link](https://jinja.palletsprojects.com/en/2.11.x/templates/#include)
+
+=== Deep dive
+
+What is the difference between `extends` and `include`? Which one shall you use?
+
+The difference between extending and including is the same difference that lies between a _framework_ and a _library_ in the context of programming languages. A framework provides the bulk of the system, and we provide the code for specific operations, while a library provides specific code that we need to put in a bigger picture. This about a Web framework like Django or Flask: they already "work" in the background, but until you provide the endpoints they don't do anything specific. At the same time, when you need to encrypt a password you import a library and use its functions.
+
+In the same way `extends` means that another template is providing the main part of the page and that we provide the content of the blocks. When we use `include` the opposite happens, we get a specific snippet of code and insert it in some wider context.
+
+As there are no limitations to the number of lines contained in a block or in an imported snippet, there is a certain amount of overlap between the two. Sometimes it might not be immediately clear which one to use, but in the vast majority of cases it should be straightforward.
+
+== Preview articles
+
+Earlier in the post I mentioned a way to create the preview of articles, so now that we have two different pages it makes sense to implement that.
+
+As I said before the preview of an article has to be created before the content is converted into HTML, or we might leave open tags. Pelican supports this mechanism out of the box, through the `summary` metadata. If you specify a summary (as I did through the random generation script), Pelican won't do anything, but id the summary is not present it will be initialised with a preview of the article.
+
+The two variables involved in this process are `SUMMARY_MAX_LENGTH` and `SUMMARY_END_SUFFIX` (see [link](https://docs.getpelican.com/en/latest/settings.html, "the documentation")), but we can accept the default values for our little project.
+
+To see the summary in action let's open the last post (`post20.markdown`) and remove the line `Summary: Summary of post 20`. Then we need to adjust the code of the page to properly display the summary as content.
+
+.templates/includes/index.html
+[source, html+jinja]
+----
+{% for article in articles_page.object_list %}
+<!-- Post -->
+<article class="post">
+  <header>
+    <div class="title">
+      <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                                                                  :@:
+    </div>
+    <div class="meta">
+      <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+      <a href="#" class="author"><span class="name">{{ article.author }}</span><img src="{{ SITEURL}}/theme/images/avatar.jpg" alt="" /></a>
+    </div>
+  </header>
+  <a href="{{ article.url }}" class="image featured"><img src="images/{{ article.image }}" alt="" /></a>
+  {{ article.summary }}:@:
+  <footer>
+    <ul class="actions">
+      <li><a href="{{ article.url }}" class="button large">Continue Reading</a></li>
+    </ul>
+    <ul class="stats">
+      {% for tag in article.tags %}
+      <li><a href="#">{{ tag.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </footer>
+</article>
+{% endfor %}
+----
+
+In the article page, instead we want the content to be displayed, so we just need to remove the summary (which at this point is not a single line that can be easily displayed under the title.
+
+.templates/includes/article.html
+[source, html+jinja]
+----
+{% block content %}
+<!-- Post -->
+<article class="post">
+  <header>
+    <div class="title">
+      <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                                                                  :@:
+    </div>
+    <div class="meta">
+      <time class="published" datetime="{{ article.date | strftime('%Y-%m-%d') }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+      <a href="#" class="author"><span class="name">{{ article.author }}</span><img src="{{ SITEURL }}/theme/images/avatar.jpg" alt="" /></a>
+    </div>
+  </header>
+  <a href="{{ article.url }}" class="image featured"><img src="images/{{ article.image }}" alt="" /></a>
+  {{ article.content }}
+  <footer>
+    <ul class="actions">
+      <li><a href="{{ article.url }}" class="button large">Continue Reading</a></li>
+    </ul>
+    <ul class="stats">
+      {% for tag in article.tags %}
+      <li><a href="#">{{ tag.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </footer>
+</article>
+{% endblock %}
+----
+
+== Next steps
+
+As I promised, I showed you how to use Jinja tags and Pelican variables, and we went from a purely static template to a rich dynamic one. There are several things that you might want to investigate and implement now:
+
+* Both `index.html` and `article.html` contain a great amount of common code (the part that displays the article). Try to work on that to isolate the shared code and remove the duplication. Remember that they are not exactly the same, so you might want to investigate the tag `with` provided by Jinja.
+* Tags and categories. Pelican creates pages with all the articles that belong to a specific category or tag, and they work exactly like the index page. The documentation of the variables available in those pages can be found at [link](https://docs.getpelican.com/en/latest/themes.html#category-html) and [link](https://docs.getpelican.com/en/latest/themes.html#tag-html). You should try to create a page that lists all the articles with a certain tag and connect it to the tag button at the end of each article.
+* Pelican can create pages of content (as opposed to articles), and you might want to show those in the navigation bar. You can find the documentation of the `Page` objects at [link](https://docs.getpelican.com/en/latest/themes.html#page). Create an "About me" page and link it there.
+* If you want to publish the website you probably want to minify assets to save bandwidth and reduce the loading time. Have a look at `webassets` ([link](https://github.com/pelican-plugins/webassets)), a plugin that makes assets management as easy as pie.
+* Speaking of plugins, Pelican has a huge number of them. The developers are in the process of transitioning them to a new better format, so you will find the main plugins at [link](https://github.com/pelican-plugins) and the rest at [link](https://github.com/getpelican/pelican-plugins). I recommend having a look at `sitemap`, which is very easy to setup and provides an important tool for search engines to discover your site.
+* When it comes to deploying the static website you should definitely read [link](https://docs.getpelican.com/en/latest/publish.html, "Pelican's documentation"), as the management scripts support several backends.
+
+Last, but hopefully not least, the code of this blog is public and can be found at [link](https://github.com/TheDigitalCatOnline/blog_source). While the overall setup contains a bit of legacy code (I started a while ago and many things have changed in the meanwhile), the theme `editorial` is pretty new, so feel free to have a look at it and to get inspired ([link](https://github.com/TheDigitalCatOnline/blog_source/tree/master/editorial)).
+
+I hope this was useful. Remember that Pelican is open source, and you can always get in touch with the maintainers to ask questions or to submit enhancements. Also remember to drop a line on Twitter to the author of any template you will use (thanks are always welcome) and to link to the source on the website.
+Happy blogging!
+
+== Feedback
+
+Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.

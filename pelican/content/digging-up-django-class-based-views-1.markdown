@@ -18,7 +18,7 @@ If you need to brush up on these concepts you might find useful to read the foll
 * [Object-Oriented Programming in Python 3]({filename}python-3-oop-part-1-objects-and-types.markdown)
 * [Method overriding in Python]({filename}method-overriding-in-python.markdown)
 
-# What are CBVs?
+## What are CBVs?
 
 Class-based views are, Django views based on Python classes. This means that, to master them, you need to understand both Django views and Python classes, so let's give a quick definition of them.
 
@@ -26,7 +26,7 @@ A Django view is a piece of code that processes an incoming HTTP request and ret
 
 So, a view needs to be a [callable](https://docs.python.org/3/library/functions.html#callable), and this includes functions and classes. Thus, to understand the advantages of class-based views over function-based views we shall discuss the merits of classes over functions. The latter sentence could be the title of a 10 volumes book on programming (followed by another 10 volumes book titled "Merits of functions over classes"), so I am just going to scratch the surface of the matter here. If you want to dig more into the subject, please read the series on Python 3 OOP that I linked above, where you will find all the gory details that you are craving for.
 
-# Starting off with Python classes
+## Starting off with Python classes
 
 The main point classes is to implement encapsulation: they represent a way of coupling data and functions. Doing this, a class loses the dynamic essence of a procedure, which exists only while it is running, and becomes a living entity, something that sits there, caring for its data, and reacts when we call its functions (methods).
 
@@ -54,7 +54,7 @@ The two are very similar, and it might look like we haven't changed anything. In
 
 Converting the procedure to a class, then, we obtained a rich tool that can execute its job step by step and, in general, can work in a non linear way, as we might add further methods, and thus more states.
 
-# Delegation is the key
+## Delegation is the key
 
 The real power of classes used as finite-state machines lies in the concept of delegation. This is a mechanism through which a class can delegate some work to another class, avoiding to duplicate code, and thus favouring code reuse and generalisation.
 
@@ -83,7 +83,7 @@ and call it a day. Through the inheritance mechanism expressed by that `(EvenExt
 
 To summarise the lesson: using classes and delegation you can build finite-state machines that are easily customizable to suit your exact needs. This obviously is just one of the many points of view under which you can consider classes, but it is the one we need to understand Django CBVs.
 
-# Back to Django
+## Back to Django
 
 Let's start discussing a practical use of what we learned so far, reviewing how Django uses Python classes and delegation to provide views.
 
@@ -107,7 +107,7 @@ You can see here the full power of inheritance. We just derived `ArticleListView
 
 Since `ArticleListView` derives from `ListView`, the latter is the class we have to analyse to understand how incoming data is processed. To do this you need to look at the [documentation](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-display/#listview), and if something is still unclear you can freely look at the [source code](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/list.py). In the following paragraphs I will summarise what happens when Django calls the sample `ArticleListView` class shown above, and you will find links called "DOCS" for the official documentation, and "CODE" for the relevant source code, if you want to read it by yourself.
 
-# URL dispatchers and views
+## URL dispatchers and views
 
 A CBV cannot directly be used in your URL dispatcher; instead you have to give the result of the `as_view` method ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L49)), which defines a function that instances the class ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L61)) and calls the `dispatch` method ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L71)); then the function is returned ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L81)) to be used in the URL dispatcher. As a user, we are interested only in the fact that the _entry point_ of the class (the method called when a request hits the URL linked with it) is `dispatch`.
 
@@ -154,7 +154,7 @@ This, in a nutshell, is the standard way of dealing with Django CBGVs: inherit f
 
 The full list of methods `ListView` uses when processing incoming requests is listed on its [official documentation page](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-display/#listview) in the "Method Flowchart" section; in the "Ancestors (MRO)" section you can see that `ListView` inherits from a good number of other classes. MRO stands for Method Resolution Order and has to deal with multiple inheritance: if you are eager to deal with one of the most intricate Python topics feel free to read [this](https://docs.python.org/3.8/tutorial/classes.html#multiple-inheritance).
 
-# Incoming GET requests
+## Incoming GET requests
 
 Back to our `ArticleListView`. The `dispatch` method of the parent reads the `method` attribute of the `request` object and selects a handler to process the request itself ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L93)): this means that if `request.method` is `'GET'`, which is the HTTP way to say that we are _reading_ a resource, `dispatch` will call the `get` method of the class.
 
@@ -164,7 +164,7 @@ Are you still with me? Don't give up, we are almost done, at least with ListView
 
 That's all, actually. Our `ArticleListView` class extracts all `Article` objects from the database, and calls a template passing a context that contains a single variable, `object_list`, instanced with the list of extracted objects.
 
-# Templates and contexts
+## Templates and contexts
 
 Are you satisfied? I'm actually still curious about the template and the context. Let's see what we can find about these topics. First of all, when the class calls `render_to_response` it uses the code that comes from its `TemplateResponseMixin` ancestor ([DOCS](https://docs.djangoproject.com/en/3.0/ref/class-based-views/mixins-simple/#templateresponsemixin), [CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L117)); the method initialises the class `TemplateResponse` passing a template and a context. The template, through a series of calls which you can follow by yourself, comes from `template_name` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L150)); while `TemplateResponseMixin` initializes it as `None` ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/base.py#L119)), `ListView` performs some magic tricks through ancestors ([CODE](https://github.com/django/django/blob/stable/3.0.x/django/views/generic/list.py#L165)) to return a template which name derives from the given model. In short, our `ArticleListView`, defining an `Article` model, automatically uses a template that is called `article_list.html`.
 
@@ -203,11 +203,11 @@ class ArticleListView(ListView):
 
 As always, when overriding a method we need to ask ourselves if we need to call the original method. In this case, we want to merely augment the content of the context and not replace it, so we call `super().get_context_data(**kwargs)` first, and we add the value that we need to that. pay attention that this might not be always the case, as it depends on the logic of your override.
 
-# Final words
+## Final words
 
 In this first post I tried to uncover some of the mysteries behind CBVs and CBGVs in Django, showing exactly what happens to a GET request that hits a class-based view. Hopefully the matter has now been demystified a little! In the next posts I will discuss `DetailView`, the generic view to show detail about an object, how to create custom CBVs, and how to use CBVs to process forms, i.e. accept POST requests.
 
-# Updates
+## Updates
 
 2020-03-12: A global review of the post, which has been updated with the latest Django code (3.0)
 
@@ -219,6 +219,6 @@ In this first post I tried to uncover some of the mysteries behind CBVs and CBGV
 
 2015-06-10: [meatypocket](https://www.reddit.com/user/meatypocket) spotted a missing `return` in the `dispatch()` override. Thank you!
 
-# Feedback
+## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.

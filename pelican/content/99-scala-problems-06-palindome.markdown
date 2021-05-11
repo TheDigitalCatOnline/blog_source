@@ -9,7 +9,7 @@ Series: 99 Scala Problems
 Image: 99-scala-problems
 Summary: Discussing how to check palindrome lists in Scala
 
-# The problem
+## The problem
 
 **P06** (*) Find out whether a list is a palindrome.
 
@@ -20,13 +20,13 @@ scala> isPalindrome(List(1, 2, 3, 2, 1))
 res0: Boolean = true
 ```
 
-# Initial thoughts
+## Initial thoughts
 
 The algorithm is pretty simple. A list is palindrome when it is equal to its reversed version. So both a procedural and a recursive solution may get a reversed version of the list and then compare the two.
 
 For long lists this could be a performance issue, so a recursive solution could be interesting. It is sufficient to check if head and tail are equal, then remove them and recursively check the remaining list. The last step will either check a list of one element or an empty list (depending on the length of the list being odd or even), which are both palindrome by definition.
 
-# The procedural solution
+## The procedural solution
 
 ``` scala
 def isPalindrome[A](l: List[A]):Boolean = {
@@ -36,7 +36,7 @@ def isPalindrome[A](l: List[A]):Boolean = {
 
 Nothing special to highlight here.
 
-# The recursive solution
+## The recursive solution
 
 The recursive solution may mimic the procedural implementing a helper function that reverses the list. See [problem 05]({filename}99-scala-problems-05-reverse.markdown) for an implementation of such a function.
 
@@ -63,7 +63,7 @@ def isPalindrome[A](l: List[A]):Boolean = {
 }
 ```
 
-# A custom operator
+## A custom operator
 
 Scala version 2.10+ define an [extractor](https://issues.scala-lang.org/browse/SI-2575) for pattern matching last element of a list, which is `:+`. The souce code can be found [here](https://github.com/scala/scala/blob/v2.11.6/src/library/scala/collection/SeqExtractors.scala#L5)-
 
@@ -156,11 +156,11 @@ def isPalindrome[A](l: List[A]):Boolean = {
 }
 ```
 
-# Final considerations
+## Final considerations
 
 The palindrome problem was straightforward, but this time I had the occasion to understand **pattern matching operators** and **extractors**.
 
-# Feedback
+## Feedback
 
 The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
 
