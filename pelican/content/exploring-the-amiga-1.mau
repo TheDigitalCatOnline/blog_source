@@ -6,6 +6,7 @@
 :pelican.authors:Leonardo Giordani
 :pelican.slug:exploring-the-amiga-1
 :pelican.series:Exploring the Amiga
+:pelican.series_info:Is it worth unearthing old architectures? Is it worth understanding how a computer system from the 80s worked? I believe old architectures can teach us a lot, so let's explore "the computer that wouldn’t die"!
 :pelican.image:exploring-the-amiga-1
 :pelican.style:retro
 :pelican.summary:How to disassemble Amiga binaries and a discussion of the LEA instruction and relative offsets
