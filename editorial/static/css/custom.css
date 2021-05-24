@@ -445,3 +445,13 @@ div.callout .label {
 div.callout .label.success {
     background-color: #00aa00;
 }
+
+div.excerpt {
+    border: 1px black solid;
+    margin: 1em;
+    padding: 0.5em;
+}
+
+section ul, section ol {
+    margin: 0 0 1em 0;
+}

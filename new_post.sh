@@ -2,9 +2,6 @@
 
 if [[ $# != 1 ]]; then echo "$0 <article-slug>"; exit 1; fi
 
-source venv3/bin/activate
-cd pelican/content
-
 article_slug=$1
 article_file=${article_slug}.markdown
 touch ${article_file}
