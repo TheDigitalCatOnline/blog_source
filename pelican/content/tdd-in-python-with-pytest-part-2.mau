@@ -7,7 +7,7 @@
 :pelican.series:TDD in Python with pytest
 :pelican.image:tdd-in-python-with-pytest-part-2
 
-This is the second post in the series "TDD in Python with pytest" where I develop a simple project following a strict TDD methodology. The posts come from my book [link](https://leanpub.com/clean-architectures-in-python,"Clean Architectures in Python") and have been reviewed to get rid of some bad naming choices of the version published in the book.
+This is the second post in the series *TDD in Python with pytest* where I develop a simple project following a strict TDD methodology. The posts come from my book [link](https://leanpub.com/clean-architectures-in-python,"Clean Architectures in Python") and have been reviewed to get rid of some bad naming choices of the version published in the book.
 
 You can find the first post [link](\{filename}tdd-in-python-with-pytest-part-1.mau,here).
 
