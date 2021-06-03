@@ -4,6 +4,7 @@
 :pelican.tags:algorithms, cryptography, ed25519, RSA, SSH, SSL
 :pelican.authors:Leonardo Giordani
 :pelican.slug:public-key-cryptography-openssh-private-keys
+:pelican.image:public-key-cryptography-openssh-private-keys
 :pelican.summary:An in-depth discussion of the format of OpenSSH keys
 
 When you create standard RSA keys with `ssh-keygen` you end up with a private key in PEM format, and a public key in OpenSSH format. Both have been described in detail in my post [link](\{filename\}rsa-keys.markdown,"Public key cryptography: RSA keys"). In 2014, OpenSSH introduced a custom format for private keys that is apparently similar to PEM but is internally completely different. This format is used by default when you create ed25519 keys and it is expected to be the default format for all keys in the future, so it is worth having a look.
