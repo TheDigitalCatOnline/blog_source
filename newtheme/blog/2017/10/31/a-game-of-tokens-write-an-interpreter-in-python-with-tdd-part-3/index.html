@@ -1,0 +1,1132 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+        <title>The Digital Cat - A game of tokens: write an interpreter in Python with TDD - Part 3</title>
+	<meta charset="utf-8" />
+	<meta http-equiv='content-language' content='en-gb'>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="description" content="A game of tokens: write an interpreter in Python with TDD - Part 3">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="A game of tokens: write an interpreter in Python with TDD - Part 3" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="../../../../../images/a-game-of-tokens-3.jpg" />
+	<script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700">
+
+        <link rel="stylesheet" href="/theme/webassets-external/4a9e78055c32c64c0053d516051922e1_main.css">
+        <link rel="stylesheet" href="/theme/webassets-external/29e84bb99f5d774b43b32c32b0e1cf63_custom.css">
+        <link rel="stylesheet" href="/theme/webassets-external/bb3753b8350cbac2c66e937353842ee9_default.css">
+
+        
+        <link href="/images/global/favicon.jpg" rel="icon">
+
+
+
+<script type="application/ld+json">
+  {
+      "@context" : "https://schema.org",
+      "@type" : "Article",
+      "name" : "A game of tokens: write an interpreter in Python with TDD - Part 3",
+      "author" : {
+	  "@type" : "Person",
+	  "name" : "Leonardo Giordani"
+      },
+      "publisher" : {
+	  "@type" : "Organization",
+	  "name" : "The Digital Cat",
+	  "logo" : {
+	      "@type" : "ImageObject",
+	      "url" : "../../../../../images/global/logo_200.jpg",
+	      "height" : 200,
+	      "width" : 200
+	  }
+      },
+      "mainEntityOfPage": {
+	  "@type": "WebPage",
+	  "@id": "../../../../../blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/"
+      },
+      "datePublished" : "31/10/2017",
+      "dateModified" : "05/08/2020",
+      "image" : "../../../../../images/a-game-of-tokens-3.jpg",
+      "url" : "../../../../../blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/"
+  }
+</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+<header id="header">
+  <a class="logo" href="/category/programming/" title="Programming">All posts in category Programming <i class="fas fa-link"></i></a>
+  <div class="align-right">
+
+    <a href="/blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2/"><i class="fas fa-caret-square-left"></i></a>
+    
+    A game of tokens #3
+
+    <a href="/blog/2018/06/02/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-4/"><i class="fas fa-caret-square-right"></i></a>
+
+  </div>
+</header>
+
+<!-- <article class="post"> -->
+
+  <section id="header">
+    <header class="main">
+      <h1>A game of tokens: write an interpreter in Python with TDD - Part 3</h1>
+    </header>
+  </section>
+
+  <section id="post-info">
+    <p class="article-info">
+    By Leonardo Giordani
+
+    <span class="fas fa-calendar-alt"></span> <time datetime="2017-10-31T11:00:00+00:00"> 31/10/2017</time>
+
+    <span class="fas fa-edit"></span> <time datetime="2020-08-05T11:00:00+00:00"> 05/08/2020</time>
+
+    <span class="fas fa-tags"></span>
+    <a class="tag" href="/categories/pytest/">pytest</a>    <a class="tag" href="/categories/python/">Python</a>    <a class="tag" href="/categories/python3/">Python3</a>    <a class="tag" href="/categories/tdd/">TDD</a>    <a class="tag" href="/categories/testing/">testing</a>    <a class="tag" href="/categories/compilers/">compilers</a>    <br>
+    Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%203&url=/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/&via=thedigicat&hashtags=pytest,python,python3,tdd,testing,compilers" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/&title=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%203&summary=&source=/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%203&u=/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%203&amp;body=/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/&title=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%203" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span>    </p>
+  </section>
+
+  <section id="content">
+    <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This is the third instalment of a series of posts on how to write an interpreter in Python. In the <a href="../../../../../blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/">first part</a> we developed together a small command line calculator that could sum and subtract numbers, while in the <a href="../../../../../blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2/">second part</a> we went further adding multiplication, division and unary plus and minus.</p>
+<p>In this third part we wil start adding variables to our calculator, moving towards a proper programming language.</p>
+<h2 id="mezzanine-refactoring">Mezzanine - Refactoring<a class="headerlink" href="#mezzanine-refactoring" title="Permanent link">&para;</a></h2>
+<p>Often, after wroting some code, you realise that some of the original choices you did are not perfect, especially when it comes to variable and function names. Furthermore, you can realise that some of your functions are too long, and you may consider splitting them in mutiple functions to make the code easier to understand and to use.</p>
+<p>It is time, then, to reconsider the code of smallcalc and see if we can improve it. Luckily, having all our tests in place, we may refactor it, that is we can change the code with a high degree of confidence, as the tests check that the behaviour of the whole system doesn't change.</p>
+<p>The first change is the naming of the method <code>parse_addsymbol</code>, which now can be more aptly named <code>_parse_symbol</code>. As Martin Fowler says in his book "Refactoring" (a recommended reading): "<em>Life being what it is, you won't get your names right the first time. [...] Remember your code is for a human first and a computer second. Humans need good names.</em>" The name of the method will be prefixed with an underscore because this method is used only internally, and shouldn't be used by third parties.</p>
+<p>The proper way to change the name of a method involves calling the new method from the old one, but in this case we may safely rely on tests to tell us what needs to be fixed (this is because our codebase is small). We may thus open the file <code>smallcalc/calc_parser.py</code> and change the name to <code>_parse_symbol</code>. At this point, running the test suite, you should have 11 failures. You can fix them with a text replace action of your editor of choice, but I recommend you to make the tests fail before replacing the text. The 3 replacements are in the methods <code>parse_factor</code>, <code>parse_term</code>, and <code>parse_expression</code>.</p>
+<p>I then wanted to add two methods, <code>discard</code> and <code>discard_type</code>, to the lexer, to better control what gets discarded. At the moment the code is using <code>self.lexer.get_token</code> which doesn't allow to explicitly check what we are dropping. These are the tests that I added to <code>tests/test_calc_lexer.py</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="k">def</span> <span class="nf">test_discard_tokens</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 + 5&#39;</span><span class="p">)</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test_discard_checks_equality</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 + 5&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">TokenError</span><span class="p">):</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">test_discard_tokens_by_type</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 + 5&#39;</span><span class="p">)</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">discard_type</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test_discard_type_checks_equality</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 + 5&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">TokenError</span><span class="p">):</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">discard_type</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">)</span>
+</code></pre></div>
+
+<p>As you can see the idea is for both methods to require a parameter, either the token or the type. The code that passes these tests is made by a custom exception in <code>smallcalc/calc_lexer.py</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TokenError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The expected token cannot be found &quot;&quot;&quot;</span>
+</code></pre></div>
+
+<p>and, in the <code>CalcLexer</code> class in the same file</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">discard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span> <span class="o">!=</span> <span class="n">token</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TokenError</span><span class="p">(</span>
+                <span class="s1">&#39;Expected token </span><span class="si">{}</span><span class="s1">, found </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span>
+                <span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">discard_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_type</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">_type</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TokenError</span><span class="p">(</span>
+                <span class="s1">&#39;Expected token of type </span><span class="si">{}</span><span class="s1">, found </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="o">.</span><span class="n">type</span>
+                <span class="p">))</span>
+</code></pre></div>
+
+<p>As I am satisfied with the code that I have now, I will move on to add new features.</p>
+<h2 id="level-13-variables">Level 13 - Variables<a class="headerlink" href="#level-13-variables" title="Permanent link">&para;</a></h2>
+<p><em>I have been assigned by my strength and cunning.</em> - Up (2009)</p>
+<p>Variables are labels assigned to values, so what we need to add is a way for the user to make this assignment and then to use variables intead of actual values. The simplest syntax, used by many languages is <code>name = value</code> and we will stick to this. Usually languages allow only a subset of symbols in the name of a variable so we will learn how to use lower- and uppercase names that may also contain an underscore.</p>
+<h3 id="lexer">Lexer<a class="headerlink" href="#lexer" title="Permanent link">&para;</a></h3>
+<p>We want the lexer to recognise a new token called <code>NAME</code>, so the test we have to add to <code>tests/test_calc_lexer.py</code> is</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_letters</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;somevar&#39;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s1">&#39;somevar&#39;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOL</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOF</span><span class="p">)</span>
+    <span class="p">]</span>
+</code></pre></div>
+
+<p>This test checks only the support for lowercase letters. Since we want to support also uppercase letters and underscores we need another pair of test</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_uppercase_letters</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;SomeVar&#39;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s1">&#39;SomeVar&#39;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOL</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOF</span><span class="p">)</span>
+    <span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">test_get_tokens_understands_names_with_underscores</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;some_var&#39;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s1">&#39;some_var&#39;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOL</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOF</span><span class="p">)</span>
+    <span class="p">]</span>
+</code></pre></div>
+
+<p>If you wonder why I created two tests instead of just one with both uppercase letters and underscores, the reason is that I generally prefer to have tests that focus on one specific feature. This obviously depends on the level of granularity that you want, and in this case we are discussing very simple features, so I would not argue if I saw both tested at the same time.</p>
+<h3 id="parser">Parser<a class="headerlink" href="#parser" title="Permanent link">&para;</a></h3>
+<p>To support variables in expressions we need to change the behaviour of <code>parse_factor</code>, which is the method where we parse the building blocks like integers of unary operators. The test you need to add to <code>tests/test_calc_parser.py</code> is</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_factor_variable</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;somevar&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_factor</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;variable&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;somevar&#39;</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>After this we want to provide support for variable assignments. Working on the parser we need only to output the correct node so the test is pretty straightforward</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_assignment</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;x = 5&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_assignment</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;assignment&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">5</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>This test tries to assign the value <code>5</code> to the variable <code>x</code>, but in general we want to support assignment with expressions, so we should test this behaviour as well, including the presence of variables</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_assignment_with_expression</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;x = 4 * (3 + 5)&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_assignment</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;assignment&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;literal&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">4</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;literal&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;+&#39;</span>
+                <span class="p">},</span>
+                <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">3</span>
+                <span class="p">},</span>
+                <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">5</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">test_parse_assignment_expression_with_variables</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;x = y + 4&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_assignment</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;literal&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;+&#39;</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;variable&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;y&#39;</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">4</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<h3 id="visitor">Visitor<a class="headerlink" href="#visitor" title="Permanent link">&para;</a></h3>
+<p>It is now time to implement the code that actually stores and retrieves variables, which is what happens in the visitor when an <code>assignment</code> or a <code>variable</code> node are processed. For the moment we do not have specific requirements for variables and we can treat the storage space as a big global dictionary.</p>
+<p>The test we want to pass specifies the initial API of the storage space when we assign a value to a variable</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_visitor_assignment</span><span class="p">():</span>
+    <span class="n">ast</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;assignment&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">5</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">v</span> <span class="o">=</span> <span class="n">cvis</span><span class="o">.</span><span class="n">CalcVisitor</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">ast</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">isvariable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;integer&#39;</span>
+</code></pre></div>
+
+<p>We want the visitor to provide three new methods, <code>isvariable</code>, <code>valueof</code>, and <code>typeof</code>, that allow us to interact with the variables we defined.</p>
+<p>The last change that the visitor requires is some code that allows it to read the value of variables to be able to use them when computing the result of an expression. The test is then</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_visitor_variable</span><span class="p">():</span>
+    <span class="n">assignment_ast</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;assignment&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">123</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">read_ast</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;variable&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span>
+    <span class="p">}</span>
+
+    <span class="n">v</span> <span class="o">=</span> <span class="n">cvis</span><span class="o">.</span><span class="n">CalcVisitor</span><span class="p">()</span>
+    <span class="n">v</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">assignment_ast</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">read_ast</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>where two different ASTs have been created. The first one assigns a value to the variable, the second one reads it and returns its value. Note that the visitor returns both value and type of the variable, which seems reasonable to implement later checks of equality or other operations on variables.</p>
+<hr>
+<h3 id="solution">Solution<a class="headerlink" href="#solution" title="Permanent link">&para;</a></h3>
+<p>To pass the <code>test_get_tokens_understands_letters</code> test I added a method <code>_process_name</code> to the <code>CalcLexer</code> class</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[a-z]+&#39;</span><span class="p">)</span>
+
+        <span class="n">match</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">tail</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">token_string</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_token_and_skip</span><span class="p">(</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">NAME</span><span class="p">,</span> <span class="n">token_string</span><span class="p">)</span>
+        <span class="p">)</span>
+</code></pre></div>
+
+<p>and then added it to the method <code>get_token</code>. The new version of the latter is then</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">eof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_eof</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">eof</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">eof</span>
+
+        <span class="n">eol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_eol</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">eol</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">eol</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_whitespace</span><span class="p">()</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_name</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">name</span>
+
+        <span class="n">integer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_integer</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">integer</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">integer</span>
+
+        <span class="n">literal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_literal</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">literal</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">literal</span>
+</code></pre></div>
+
+<p>At this point to pass the remaining tests <code>test_get_tokens_understands_uppercase_letters</code> and <code>test_get_tokens_understands_names_with_underscores</code> it is sufficient to change the regular expression we use in <code>_process_name</code></p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[a-zA-Z_]+&#39;</span><span class="p">)</span>
+
+        <span class="n">match</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">tail</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">token_string</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_token_and_skip</span><span class="p">(</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">NAME</span><span class="p">,</span> <span class="n">token_string</span><span class="p">)</span>
+        <span class="p">)</span>
+</code></pre></div>
+
+<p>The required change to <code>parse_factor</code> is simple, but since we will be returning a new type of node we have to define it</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">VariableNode</span><span class="p">(</span><span class="n">ValueNode</span><span class="p">):</span>
+
+    <span class="n">node_type</span> <span class="o">=</span> <span class="s1">&#39;variable&#39;</span>
+</code></pre></div>
+
+<p>We can then add the required <code>if</code> statement in <code>parse_factor</code>, which becomes</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">next_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">peek_token</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">next_token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span> <span class="ow">and</span> <span class="n">next_token</span><span class="o">.</span><span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">]:</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_symbol</span><span class="p">()</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_factor</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">UnaryNode</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">factor</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">next_token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span> <span class="ow">and</span> <span class="n">next_token</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard_type</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">)</span>
+            <span class="n">expression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_expression</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard_type</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">expression</span>
+
+        <span class="k">if</span> <span class="n">next_token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">clex</span><span class="o">.</span><span class="n">NAME</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">VariableNode</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_integer</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The second test that we have to pass checks if the parser can understand variable assignments. First of all we need to define <code>AssignmentNode</code> which is the node we will return to the visitor.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">AssignmentNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+
+    <span class="n">node_type</span> <span class="o">=</span> <span class="s1">&#39;assignment&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variable</span> <span class="o">=</span> <span class="n">variable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span><span class="p">,</span>
+            <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">variable</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">asdict</span><span class="p">(),</span>
+        <span class="p">}</span>
+</code></pre></div>
+
+<p>At this point we need a method to parse a variable in <code>CalcParser</code>. This method is very similar to <code>_parse_symbol</code> and <code>parse_integer</code></p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_parse_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">VariableNode</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Since the test is running <code>parse_assignment</code> we just need to add that method. We want the assignment to have a variable as its left member and an expression as its right member</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_assignment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_variable</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard_type</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_expression</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">AssignmentNode</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This code makes both the <code>test_parse_assignment</code> and the <code>test_parse_assignment_with_expression</code> tests pass.</p>
+<p>As discussed in the introductory text before the test code the variable storage space can be a simple dictionary. The key will be the name of the variable, and the content will be another dictionary with <code>value</code> and <code>type</code>. This is sufficient for the moment and should be also extensible when future requirements will arise.</p>
+<p>The <code>CalcVisitor</code> class can be then changed to get the new methods, and a <code>__init__</code> that initializes the dictionary. I also added the relevant <code>if</code> statement to the method <code>visit</code> of the same class. The new <code>CalcVisitor</code> is then</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CalcVisitor</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">isvariable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span>
+
+    <span class="k">def</span> <span class="nf">valueof</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">typeof</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;integer&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;unary&#39;</span><span class="p">:</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+            <span class="n">cvalue</span><span class="p">,</span> <span class="n">ctype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span> <span class="n">cvalue</span><span class="p">,</span> <span class="n">ctype</span>
+
+            <span class="k">return</span> <span class="n">cvalue</span><span class="p">,</span> <span class="n">ctype</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;binary&#39;</span><span class="p">:</span>
+            <span class="n">lvalue</span><span class="p">,</span> <span class="n">ltype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">])</span>
+            <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">])</span>
+
+            <span class="n">operator</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">lvalue</span> <span class="o">+</span> <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span>
+            <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">lvalue</span> <span class="o">-</span> <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span>
+            <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">lvalue</span> <span class="o">*</span> <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span>
+            <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">lvalue</span> <span class="o">//</span> <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;assignment&#39;</span><span class="p">:</span>
+            <span class="n">right_value</span><span class="p">,</span> <span class="n">right_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;variable&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">right_value</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">right_type</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</code></pre></div>
+
+<p>To pass the second test we need only to change the method <code>visit</code> adding an <code>if</code> statement for the <code>variable</code> nodes. The new version of the method is</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;integer&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;variable&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;unary&#39;</span><span class="p">:</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+            <span class="n">cvalue</span><span class="p">,</span> <span class="n">ctype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span> <span class="n">cvalue</span><span class="p">,</span> <span class="n">ctype</span>
+
+            <span class="k">return</span> <span class="n">cvalue</span><span class="p">,</span> <span class="n">ctype</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;binary&#39;</span><span class="p">:</span>
+            <span class="n">lvalue</span><span class="p">,</span> <span class="n">ltype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">])</span>
+            <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">])</span>
+
+            <span class="n">operator</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">lvalue</span> <span class="o">+</span> <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span>
+            <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">lvalue</span> <span class="o">-</span> <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span>
+            <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">lvalue</span> <span class="o">*</span> <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span>
+            <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">lvalue</span> <span class="o">//</span> <span class="n">rvalue</span><span class="p">,</span> <span class="n">rtype</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;assignment&#39;</span><span class="p">:</span>
+            <span class="n">right_value</span><span class="p">,</span> <span class="n">right_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;variable&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">right_value</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">right_type</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</code></pre></div>
+
+<hr>
+<h2 id="level-14-parsing-expressions-and-assignments">Level 14 - Parsing expressions and assignments<a class="headerlink" href="#level-14-parsing-expressions-and-assignments" title="Permanent link">&para;</a></h2>
+<p><em>Speak words we can all understand!</em> - The Lord of the Rings: The Fellowship of the Ring (2001)</p>
+<p>We are missing a final step. The CLI uses <code>parse_expression</code> as its default entry point, which means that it doesn't understand variable assignments for the time being. We need then to introduce a new entry point <code>parse_line</code> that we will use to process general language statements. The test for this goes in <code>tests/test_calc_parser.py</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_line_supports_expression</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;2 * x + 4&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_line</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;variable&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;literal&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">4</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;literal&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;+&#39;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>and checks that <code>parse_line</code> can parse expressions (which can be solved just wrapping <code>parse_expression</code> with it). The second test checks that <code>parse_line</code> can parse variable assignments and goes in the same file</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_line_supports_assigment</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;x = 5&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_line</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;assignment&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">5</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>At this point we can change the entry point in the CLI, using <code>parse_line</code> instead of <code>parse_expression</code>. The new CLI is then</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_parser</span> <span class="k">as</span> <span class="n">cpar</span>
+<span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_visitor</span> <span class="k">as</span> <span class="n">cvis</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">cvis</span><span class="o">.</span><span class="n">CalcVisitor</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;smallcalc :&gt; &#39;</span><span class="p">)</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_line</span><span class="p">()</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">())</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bye!&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Try to fire the CLI and enjoy a calculator with variables! Everything works, but you now know it is not magic, but the outcome of a good amount of code. And you wrote it, so you may proudly say that you created a simple but working programming language.</p>
+<hr>
+<h3 id="solution_1">Solution<a class="headerlink" href="#solution_1" title="Permanent link">&para;</a></h3>
+<p>To pass the first test, as suggested, I added the method <code>parse_line</code> as a wrapper around <code>parse_expression</code></p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_expression</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The second test requires some changes to <code>parse_line</code>. As I do not know if the next token is an expression or an assignment I decided to stash the status and try one of the two. In case of error I just pop the state and try with the second option</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">stash</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_assignment</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">clex</span><span class="o">.</span><span class="n">TokenError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_expression</span><span class="p">()</span>
+</code></pre></div>
+
+<p>At the same time <code>parse_assignment</code> has to be changed. The current code parses a variable and then discards a literal, which is too generic, as an expression like <code>x * 2</code> will not raise an error. The new code for that method is then</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_assignment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_variable</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">))</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_expression</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">AssignmentNode</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+<p>where I explicitly discard a literal <code>=</code> sign.</p>
+<hr>
+<h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">&para;</a></h2>
+<p>Managing variables may look like a very easy task, but as soon as we will start implementing functions and local scopes we will have to move to something richer than a simple global dictionary. Memory management is another big topic that I didn't touch here, perhaps in the future I might discuss garbage collections and related problems.</p>
+<p>The code I developed in this post is available on the GitHub repository tagged with <code>part3</code> (<a href="https://github.com/lgiordani/smallcalc/tree/part3">link</a>).</p>
+<p>In the next issue I will face with you the task of adding the power operator, support for floating point numbers, and a big refactoring with context managers that will greatly simplify the code.</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </section>
+
+  <section class="footer">
+    <h2>Part 3 of the A game of tokens series</h2>
+    <div class="box">
+      <h5>Previous articles</h5>
+      <ul>
+        <li><a href="/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/">A game of tokens: write an interpreter in Python with TDD - Part 1</a></li>
+        <li><a href="/blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2/">A game of tokens: write an interpreter in Python with TDD - Part 2</a></li>
+      </ul>
+      
+      <h5>Next articles</h5>
+      <ul>
+        <li><a href="/blog/2018/06/02/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-4/">A game of tokens: write an interpreter in Python with TDD - Part 4</a></li>
+        <li><a href="/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/">A game of tokens: write an interpreter in Python with TDD - Part 5</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="footer">
+    <h2>Related Posts</h2>
+    <div class="posts mini">
+      <article class="card">
+        <a href="/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/" class="image">
+          <img src="/images/a-game-of-tokens-5.jpg" alt="a-game-of-tokens-5" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/"><h2 class="card-title">A game of tokens: write an interpreter in Python with TDD - Part 5</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-08-09T18:00:00+01:00">Aug 9, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>            <a href="/categories/compilers/" class="tag">compilers</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/" class="image">
+          <img src="/images/a-game-of-tokens-1.jpg" alt="a-game-of-tokens-1" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/"><h2 class="card-title">A game of tokens: write an interpreter in Python with TDD - Part 1</h2></a>
+	  <p class="article-info">
+            <time datetime="2017-05-09T23:00:00+01:00">May 9, 2017</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>            <a href="/categories/compilers/" class="tag">compilers</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2 class="card-title">TDD in Python with pytest - Part 5</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2 class="card-title">TDD in Python with pytest - Part 4</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2 class="card-title">TDD in Python with pytest - Part 3</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2 class="card-title">TDD in Python with pytest - Part 2</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2 class="card-title">TDD in Python with pytest - Part 1</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/" class="image">
+          <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-3.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-3" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/"><h2 class="card-title">Flask project setup: TDD, Docker, Postgres and more - Part 3</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-07-07T13:00:00+01:00">Jul 7, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/aws/" class="tag">AWS</a>            <a href="/categories/docker/" class="tag">Docker</a>            <a href="/categories/flask/" class="tag">Flask</a>            <a href="/categories/http/" class="tag">HTTP</a>            <a href="/categories/postgres/" class="tag">Postgres</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>            <a href="/categories/www/" class="tag">WWW</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/" class="image">
+          <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-2.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-2" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/"><h2 class="card-title">Flask project setup: TDD, Docker, Postgres and more - Part 2</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-07-06T13:00:00+01:00">Jul 6, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/aws/" class="tag">AWS</a>            <a href="/categories/docker/" class="tag">Docker</a>            <a href="/categories/flask/" class="tag">Flask</a>            <a href="/categories/http/" class="tag">HTTP</a>            <a href="/categories/postgres/" class="tag">Postgres</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>            <a href="/categories/www/" class="tag">WWW</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2019/05/27/youtube-channel/" class="image">
+          <img src="/images/youtube-channel.jpg" alt="youtube-channel" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2019/05/27/youtube-channel/"><h2 class="card-title">The Digital Cat Youtube Channel</h2></a>
+	  <p class="article-info">
+            <time datetime="2019-05-27T12:00:00+01:00">May 27, 2019</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python2/" class="tag">Python2</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>            <a href="/categories/video/" class="tag">video</a>          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+
+  <!-- </article> -->
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+<div class="inner">
+    <!-- Menu -->
+        <nav id="menu">
+            <header class="major">
+                <h2>Menu</h2>
+            </header>
+<ul>
+    <li><a href="/index.html">Homepage</a></li>
+    <li><a href="/pages/about.html">About</a></li>
+    <li><a href="/archives/index.html">Archives</a></li>
+</ul>        </nav>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Recent posts</h2>
+            </header>
+<div class="mini-posts">
+    <article>
+        <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/" class="image"><img src="/images/public-key-cryptography-openssh-private-keys.jpg" alt="public-key-cryptography-openssh-private-keys" /></a>
+        <p><strong>Public key cryptography: OpenSSH private keys</strong> <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/" class="image"><img src="/images/stop-using-tools-as-if-they-were-solutions.jpg" alt="stop-using-tools-as-if-they-were-solutions" /></a>
+        <p><strong>Stop using tools as if they were solutions</strong> <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/" class="image"><img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" /></a>
+        <p><strong>How to write a Pelican theme for your static website</strong> <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">Read</a></p> 
+    </article>
+</div>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Categories</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/category/programming/">Programming</a></li>
+    <li><a href="/category/projects/">Projects</a></li>
+    <li><a href="/category/retro/">Retro</a></li>
+</ul>
+        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Feeds</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/atom.xml"><i class="fas fa-rss"></i> All posts</a></li>
+
+
+    <li><a href="/category/programming/atom.xml"><i class="fas fa-rss"></i> All posts in category: Programming</a></li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Tags</h2>
+            </header>
+<ul class="list-inline list-clean" id="tags-side">
+    <li class="tag font-size-2">
+        <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Get in touch</h2>
+            </header>
+<ul class="contact">
+    
+    
+    
+    <li class="fa-twitter"><a href="https://twitter.com/thedigicat">Twitter</a></li>
+    
+    
+    
+    
+    <li class="fa-github"><a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+    
+</ul>        </section>
+
+    <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright">Editorial theme by: <a href="https://html5up.net">HTML5 UP</a>.</p>
+            <p class="copyright">Cover picture by: <a href="https://pxhere.com/en/photo/1428515">An Min @ pxhere.com</a></p>
+        </footer>
+
+</div>					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="/theme/js/jquery.min.js"></script>
+			<script src="/theme/js/browser.min.js"></script>
+			<script src="/theme/js/breakpoints.min.js"></script>
+            <script src="/theme/webassets-external/fbe79d99b38a8623685ff42823edd66f_util.js"></script>
+            <script src="/theme/webassets-external/0c2f3654914fe90dd661c09240b58315_main.js"></script>
+
+
+	</body>
+</html>

@@ -1,0 +1,927 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+        <title>The Digital Cat - Motorola 68000: addressing modes</title>
+	<meta charset="utf-8" />
+	<meta http-equiv='content-language' content='en-gb'>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="description" content="A review of the addressing modes of one of the most famous 32-bit CPUs">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Motorola 68000: addressing modes" />
+<meta name="twitter:description" content="A review of the addressing modes of one of the most famous 32-bit CPUs" />
+<meta name="twitter:image" content="../../../../../images/mc68000.jpg" />
+	<script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700">
+
+        <link rel="stylesheet" href="/theme/webassets-external/4a9e78055c32c64c0053d516051922e1_main.css">
+        <link rel="stylesheet" href="/theme/webassets-external/29e84bb99f5d774b43b32c32b0e1cf63_custom.css">
+        <link rel="stylesheet" href="/theme/webassets-external/bb3753b8350cbac2c66e937353842ee9_default.css">
+
+<link id="style-retro" rel="stylesheet" href="/theme/webassets-external/17c245c5167387c25ab55cafb75ac886_retro.css">
+        
+        <link href="/images/global/favicon.jpg" rel="icon">
+
+
+
+<script type="application/ld+json">
+  {
+      "@context" : "https://schema.org",
+      "@type" : "Article",
+      "name" : "Motorola 68000: addressing modes",
+      "author" : {
+	  "@type" : "Person",
+	  "name" : "Leonardo Giordani"
+      },
+      "publisher" : {
+	  "@type" : "Organization",
+	  "name" : "The Digital Cat",
+	  "logo" : {
+	      "@type" : "ImageObject",
+	      "url" : "../../../../../images/global/logo_200.jpg",
+	      "height" : 200,
+	      "width" : 200
+	  }
+      },
+      "mainEntityOfPage": {
+	  "@type": "WebPage",
+	  "@id": "../../../../../blog/2019/03/04/motorola-68000-addressing-modes/"
+      },
+      "datePublished" : "04/03/2019",
+      "dateModified" : "04/03/2019",
+      "image" : "../../../../../images/mc68000.jpg",
+      "description" : "A review of the addressing modes of one of the most famous 32-bit CPUs",
+      "headline" : "A review of the addressing modes of one of the most famous 32-bit CPUs",
+      "url" : "../../../../../blog/2019/03/04/motorola-68000-addressing-modes/"
+  }
+</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+<header id="header">
+  <a class="logo" href="/category/retro/" title="Retro">All posts in category Retro <i class="fas fa-link"></i></a>
+  <div class="align-right">
+  </div>
+</header>
+
+<!-- <article class="post"> -->
+
+  <section id="header">
+    <header class="main">
+      <h1>Motorola 68000: addressing modes</h1>
+    </header>
+  </section>
+
+  <section id="post-info">
+    <p class="article-info">
+    By Leonardo Giordani
+
+    <span class="fas fa-calendar-alt"></span> <time datetime="2019-03-04T22:30:00+01:00"> 04/03/2019</time>
+
+
+    <span class="fas fa-tags"></span>
+    <a class="tag" href="/categories/assembly/">assembly</a>    <a class="tag" href="/categories/m68000/">M68000</a>    <br>
+    Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Motorola%2068000%3A%20addressing%20modes&url=/blog/2019/03/04/motorola-68000-addressing-modes/&via=thedigicat&hashtags=assembly,m68000" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=/blog/2019/03/04/motorola-68000-addressing-modes/&title=Motorola%2068000%3A%20addressing%20modes&summary=A%20review%20of%20the%20addressing%20modes%20of%20one%20of%20the%20most%20famous%2032-bit%20CPUs&source=/blog/2019/03/04/motorola-68000-addressing-modes/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Motorola%2068000%3A%20addressing%20modes&u=/blog/2019/03/04/motorola-68000-addressing-modes/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Motorola%2068000%3A%20addressing%20modes&amp;body=/blog/2019/03/04/motorola-68000-addressing-modes/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=/blog/2019/03/04/motorola-68000-addressing-modes/&title=Motorola%2068000%3A%20addressing%20modes" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span>    </p>
+  </section>
+
+  <section id="content">
+    <p>The Motorola 68000 is an impressive microprocessor, and this is reflected by the large amount of addressing modes that it provides; it is actually surprising, for people used to the x86 family, to find in this microprocessor's Assembly language constructs that are very similar to the ones provided by high level languages such as pre- and postdecrements, or multiconditional branching instructions.</p>
+<p>The processor provides 6 different addressing modes, each of which has multiple versions, for a grand total of 14. The specific instruction used to manipulate the data can also work on different data sizes, but these variations are not considered here, being features of the instruction and not of the addressing mode.</p>
+<p>Addressing refers to the format of the <strong>effective address</strong> (<code>ea</code> or <code>EA</code> in many manuals), that is the representation of the source or destination of an instruction. Remember that not all the instructions support all 14 modes, so whenever you read <code>ea</code> remember that we are talking about data which address can be represented by one or more of those modes. </p>
+<p>The syntax of the <code>movea</code> instruction, for example, is <code>movea &lt;ea&gt;, An</code>, which tells us that the source is one of the 14 possible combinations presented here, while the destination is one of the address registers <code>a1-a6</code>. Strictly speaking, however, the syntax of the instruction is <code>movea &lt;ea1&gt;, &lt;ea2&gt;</code>, where <code>&lt;ea1&gt;</code> can be one of the 14 modes, and <code>&lt;ea2&gt;</code> can only be an address register (Address Register Direct Mode).</p>
+<p>The addressing mode is encoded using three fields of the binary instruction. The <strong>EA Mode</strong> field, the <strong>EA register</strong> field, and the <strong>Extension words</strong>. The first two are 3-bit fields contained in the instruction word, which combination uniquely identifies the addressing mode and the number of the register, in case this is needed. The extension words, instead, are words that follow the instruction word in memory, and that usually represent actual 8-, 16-, or 32-bit numbers.</p>
+<h2 id="sign-extension">Sign extension<a class="headerlink" href="#sign-extension" title="Permanent link">&para;</a></h2>
+<p>Before we discuss the addressing modes provided by the MC68000 it is worth explaining the sign-extension mechanism used by this processor. Sometimes addressing modes use 8-bit or 16-bit data instead of a full long word, for example to provide a constant that is added to a register before using its value. Calculations inside the microprocessor, however, are always performed on 32-bits numbers, so such values are <em>extended</em> to a long word.</p>
+<p>There are two ways to extend a byte/word to a long word. One is to pad with zeroes on the left (unsigned extension) and the other is to pad preserving the sign (signed extension). While this doesn't change positive numbers it affects negative ones. Let's consider an 8-bit negative number like -126, which is represented by <code>10000010</code> in 8-bit two's complement, <code>0x82</code> in hexadecimal. A 32-bit signed extension of this number becomes <code>0xffffff82</code>, which is still -126 in 32-bit two's complement, but an unsigned extension would give <code>0x00000082</code>, which is 130.</p>
+<p>While the MC68000 can use both address and data registers for general-purpose data storage, the two categories are meant to manage data of different nature. In particular, <em>data registers never sign-extend bytes or words</em>, as this would change the pure representation of that sequence of bits, adding spurious bits to keep the sign. Addressed, instead, should never change their value, so the <em>address registers sign-extend incoming values</em> to preserve the real address or displacement represented by the bits.</p>
+<h2 id="addressing-modes">Addressing Modes<a class="headerlink" href="#addressing-modes" title="Permanent link">&para;</a></h2>
+<h3 id="register-direct">Register Direct<a class="headerlink" href="#register-direct" title="Permanent link">&para;</a></h3>
+<p>This is the simplest addressing mode, as it reads or writes data in one of the microprocessor's registers. There are two versions of it, one for data registers and one for address registers.</p>
+<h4 id="data-register-direct">Data Register Direct<a class="headerlink" href="#data-register-direct" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>Dn</code></li>
+<li>EA Mode field: <code>000</code></li>
+<li>EA Register field: Register number</li>
+<li>Extension words: 0</li>
+</ul>
+<p>This mode addresses the data contained in one of the data registers <code>d0-d7</code>. The EA Mode field is <code>000</code> and the EA Register field contains the register number. The official documentation uses the syntax <code>Dn</code> to identify this mode. No extension words are used.</p>
+<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,d1
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>                           <span class="n">Compare</span>
+                        <span class="o">+----------+</span>
+                        <span class="o">|</span>  <span class="mh">0x1111</span>  <span class="o">|</span>
+                        <span class="o">+----------+</span>
+<span class="n">d1</span> <span class="mh">0x12ca</span> <span class="o">------------&gt;</span> <span class="o">|</span>  <span class="mh">0x12ca</span>  <span class="o">|</span>
+                        <span class="o">+----------+</span>
+</code></pre></div>
+
+<h4 id="address-register-direct-mode">Address Register Direct Mode<a class="headerlink" href="#address-register-direct-mode" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>An</code></li>
+<li>EA Mode field: <code>001</code></li>
+<li>EA Register field: Register number</li>
+<li>Extension words: 0</li>
+</ul>
+<p>This mode identifies the data contained in one of the address registers <code>a0-a6</code>. The EA Mode field is <code>001</code> and the EA Register field is the number of the register, while the official syntax for it is <code>An</code>.  No extension words are used.</p>
+<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,a1
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>                           <span class="n">Compare</span>
+                        <span class="o">+------------+</span>
+                        <span class="o">|</span>  <span class="mh">0x1111</span>    <span class="o">|</span>
+                        <span class="o">+------------+</span>
+<span class="n">a1</span> <span class="mh">0xfc1d28</span> <span class="o">----------&gt;</span> <span class="o">|</span>  <span class="mh">0xfc1d28</span>  <span class="o">|</span>
+                        <span class="o">+------------+</span>
+</code></pre></div>
+
+<h3 id="register-indirect">Register Indirect<a class="headerlink" href="#register-indirect" title="Permanent link">&para;</a></h3>
+<p>As the name of this mode suggests, the addressing is performed using a register, but the data is accessed indirectly. The register doesn't contain the data we want to use, but the address in memory of the data. This is what higher level languages like C call <em>memory pointer</em>.</p>
+<h4 id="address-register-indirect">Address Register Indirect<a class="headerlink" href="#address-register-indirect" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>(An)</code></li>
+<li>EA Mode field: <code>010</code></li>
+<li>EA Register field: Register number</li>
+<li>Extension words: 0</li>
+</ul>
+<p>The simplest form of indirect access is when the address of the data is stored in one of the address registers <code>a0-a6</code>. The syntax for this mode is <code>(An)</code>, while the binary form has the EA Mode field set to <code>010</code> and the EA Register field represents the number of the address register in use. No extension words are used.</p>
+<p>The following example compares the number <code>0x1111</code> with the content of the memory cell which address is contained in <code>a1</code></p>
+<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,(a1)
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">a1</span> <span class="mh">0xfc1d28</span>
+      <span class="o">|</span>              <span class="mh">0xfc1d24</span>  <span class="o">|</span>         <span class="o">|</span>                <span class="n">Compare</span>
+      <span class="o">|</span>                        <span class="o">+---------+</span>              <span class="o">+----------+</span>
+      <span class="o">|</span>              <span class="mh">0xfc1d26</span>  <span class="o">|</span>         <span class="o">|</span>              <span class="o">|</span>  <span class="mh">0x1111</span>  <span class="o">|</span>
+      <span class="o">|</span>                        <span class="o">+---------+</span>              <span class="o">+----------+</span>
+      <span class="o">+------------&gt;</span> <span class="mh">0xfc1d28</span>  <span class="o">|</span>  <span class="mh">0x13c</span>  <span class="o">|</span> <span class="o">-----------&gt;</span> <span class="o">|</span>   <span class="mh">0x13c</span>  <span class="o">|</span>
+                               <span class="o">+---------+</span>              <span class="o">+----------+</span>
+                     <span class="mh">0xfc1d2a</span>  <span class="o">|</span>         <span class="o">|</span>
+                               <span class="o">+---------+</span>
+                     <span class="mh">0xfc1d2c</span>  <span class="o">|</span>         <span class="o">|</span>
+</code></pre></div>
+
+<h4 id="address-register-indirect-with-postincrement">Address Register Indirect with Postincrement<a class="headerlink" href="#address-register-indirect-with-postincrement" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>(An)+</code></li>
+<li>EA Mode field: <code>011</code></li>
+<li>EA Register field: Register number</li>
+<li>Extension words: 0</li>
+</ul>
+<p>This addressing mode is another of the high-level languages constructs that the MC68000 provides directly in its Assembly language. This mode works exactly like the Address Register Indirect, but <em>after</em> the data has been fetched from memory the address register is incremented by the size of the data itself. So, this addressing mode is perfectly suited for algorithms that need to read consecutive arrays from memory, as there is no need to add instructions that increment the pointer.</p>
+<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,(a1)+
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>    <span class="n">a1</span> <span class="mh">0xfc1d28</span>
+     <span class="o">^</span>       <span class="o">|</span>              <span class="mh">0xfc1d24</span>  <span class="o">|</span>         <span class="o">|</span>                <span class="n">Compare</span>
+     <span class="o">|</span>       <span class="o">|</span>                        <span class="o">+---------+</span>              <span class="o">+----------+</span>
+     <span class="o">|</span>       <span class="o">|</span>              <span class="mh">0xfc1d26</span>  <span class="o">|</span>         <span class="o">|</span>              <span class="o">|</span>  <span class="mh">0x1111</span>  <span class="o">|</span>
+   <span class="o">+----+</span>    <span class="n">v</span>                        <span class="o">+---------+</span>              <span class="o">+----------+</span>
+   <span class="o">|</span> <span class="o">+</span><span class="mi">2</span> <span class="o">|</span> <span class="o">&lt;--+------------&gt;</span> <span class="mh">0xfc1d28</span>  <span class="o">|</span>  <span class="mh">0x13c</span>  <span class="o">|</span> <span class="o">-----------&gt;</span> <span class="o">|</span>   <span class="mh">0x13c</span>  <span class="o">|</span>
+   <span class="o">+----+</span>                             <span class="o">+---------+</span>              <span class="o">+----------+</span>
+                            <span class="mh">0xfc1d2a</span>  <span class="o">|</span>         <span class="o">|</span>
+                                      <span class="o">+---------+</span>
+                            <span class="mh">0xfc1d2c</span>  <span class="o">|</span>         <span class="o">|</span>
+</code></pre></div>
+
+<p>The standard syntax is <code>(An)+</code>, and for this mode, the EA Mode field is <code>011</code>, while the EA Register field contains the register number.  No extension words are used.</p>
+<p>This mode and the following one are very powerful, as they automatically add to the address the size of the data that has been read, so 1 for a byte read, 2 for a word, and 4 for a long word. The only exception to this rule is when the register is <code>a7</code>, which is an alias for <code>sp</code>, the system Stack Pointer. In that case the pointer is always kept aligned to a word boundary, so the increment is 2 even for a byte read.</p>
+<h4 id="address-register-indirect-with-predecrement">Address Register Indirect with Predecrement<a class="headerlink" href="#address-register-indirect-with-predecrement" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>-(An)</code></li>
+<li>EA Mode field: <code>100</code></li>
+<li>EA Register field: Register number</li>
+<li>Extension words: 0</li>
+</ul>
+<p>This is the specular version of the previous mode, where the address register used to point to the data is decremented <em>before</em> the addressing is performed. The standard syntax is <code>-(An)</code>; the EA Mode field is <code>100</code> and the EA Register field contains the register number. No extension words are used.</p>
+<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,-(a1)
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>   <span class="n">a1</span> <span class="mh">0xfc1d28</span>
+    <span class="o">^</span>       <span class="o">|</span>
+    <span class="o">|</span>       <span class="n">v</span>
+    <span class="o">|</span>    <span class="o">+----+</span>
+    <span class="o">|</span>    <span class="o">|</span> <span class="o">-</span><span class="mi">2</span> <span class="o">|</span>          <span class="mh">0xfc1d22</span>  <span class="o">|</span>         <span class="o">|</span>                <span class="n">Compare</span>
+    <span class="o">|</span>    <span class="o">+----+</span>                    <span class="o">+---------+</span>              <span class="o">+----------+</span>
+    <span class="o">|</span>       <span class="o">|</span>            <span class="mh">0xfc1d24</span>  <span class="o">|</span>         <span class="o">|</span>              <span class="o">|</span>  <span class="mh">0x1111</span>  <span class="o">|</span>
+    <span class="o">|</span>       <span class="n">v</span>                      <span class="o">+---------+</span>              <span class="o">+----------+</span>
+    <span class="o">+-------+----------&gt;</span> <span class="mh">0xfc1d26</span>  <span class="o">|</span>  <span class="mh">0x13c</span>  <span class="o">|</span> <span class="o">-----------&gt;</span> <span class="o">|</span>   <span class="mh">0x13c</span>  <span class="o">|</span>
+                                   <span class="o">+---------+</span>              <span class="o">+----------+</span>
+                         <span class="mh">0xfc1d28</span>  <span class="o">|</span>         <span class="o">|</span>
+                                   <span class="o">+---------+</span>
+                         <span class="mh">0xfc1d2a</span>  <span class="o">|</span>         <span class="o">|</span>
+</code></pre></div>
+
+<h4 id="address-register-indirect-with-displacement">Address Register Indirect with Displacement<a class="headerlink" href="#address-register-indirect-with-displacement" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>(d16,An) / d16(An)</code></li>
+<li>EA Mode field: <code>101</code></li>
+<li>EA Register field: Register number</li>
+<li>Extension words: 1</li>
+</ul>
+<p>The natural evolution of the previous two addressing modes is to use an arbitrary offset that is added to the base address contained in the register. The standard syntax for this mode is <code>(d16,An)</code> or <code>d16(An)</code>, where <code>d16</code> is a 16-bit signed integer. So for example <code>0xf(a1)</code> is the data contained in memory at the address <code>a1 + 0xf</code>. The EA Mode field is <code>101</code> and the EA register fields is the number of the address register used. This address mode requires 1 extension word that contains the 16-bit displacement.</p>
+<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,0x140(a1)
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>     <span class="n">a1</span> <span class="mh">0xfc1d28</span>
+           <span class="o">|</span>
+           <span class="n">v</span>
+         <span class="o">+---+</span>
+<span class="mh">0x140</span> <span class="o">-&gt;</span> <span class="o">|</span> <span class="o">+</span> <span class="o">|</span>            <span class="mh">0xfc1e64</span>  <span class="o">|</span>         <span class="o">|</span>                <span class="n">Compare</span>
+         <span class="o">+---+</span>                      <span class="o">+---------+</span>              <span class="o">+----------+</span>
+           <span class="o">|</span>              <span class="mh">0xfc1e66</span>  <span class="o">|</span>         <span class="o">|</span>              <span class="o">|</span>  <span class="mh">0x1111</span>  <span class="o">|</span>
+           <span class="n">v</span>                        <span class="o">+---------+</span>              <span class="o">+----------+</span>
+           <span class="o">+------------&gt;</span> <span class="mh">0xfc1e68</span>  <span class="o">|</span>  <span class="mh">0x13c</span>  <span class="o">|</span> <span class="o">-----------&gt;</span> <span class="o">|</span>   <span class="mh">0x13c</span>  <span class="o">|</span>
+                                    <span class="o">+---------+</span>              <span class="o">+----------+</span>
+                          <span class="mh">0xfc1e6a</span>  <span class="o">|</span>         <span class="o">|</span>
+                                    <span class="o">+---------+</span>
+                          <span class="mh">0xfc1e6c</span>  <span class="o">|</span>         <span class="o">|</span>
+</code></pre></div>
+
+<p>Please note that the displacement is fixed to 16-bit, so its value limited in the range <code>(-32768,32767)</code>; the displacement is however sign-extended to 32-bit before being added to the base address.</p>
+<p>Note: this mode is sometimes called "Register Indirect with Offset".</p>
+<h4 id="address-register-indirect-with-index">Address Register Indirect with Index<a class="headerlink" href="#address-register-indirect-with-index" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>(d8,Dn,An)</code></li>
+<li>EA Mode field: <code>110</code></li>
+<li>EA Register field: Register number</li>
+<li>Extension words: 1</li>
+</ul>
+<p>Besides an addressing mode that mimics C-style loops and a way to perform random access of arrays through a 16-bit displacement, the MC68000 provides a double-indexed array access with this addressing mode. The base address contained in one of the address registers is added to the content of a 16/32-bit register and an 8-bit index. This address mode requires 1 extension word that contains the 8-bit index; only the 8 least significant bits of the extension words are kept and sign-extended to 32-bits before any calculation.</p>
+<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,(0x4,d0,a1)
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>    <span class="n">a1</span> <span class="mh">0xfc1d28</span>   <span class="n">d0</span> <span class="mh">0x140</span>
+          <span class="o">|</span>            <span class="o">|</span>
+          <span class="n">v</span>            <span class="o">|</span>
+        <span class="o">+---+</span>          <span class="o">|</span>
+        <span class="o">|</span> <span class="o">+</span> <span class="o">|</span> <span class="o">&lt;--------+</span>
+        <span class="o">+---+</span>
+          <span class="o">|</span>
+          <span class="n">v</span>
+        <span class="o">+---+</span>
+<span class="mh">0x4</span> <span class="o">--&gt;</span> <span class="o">|</span> <span class="o">+</span> <span class="o">|</span>            <span class="mh">0xfc1e68</span>  <span class="o">|</span>          <span class="o">|</span>                <span class="n">Compare</span>
+        <span class="o">+---+</span>                      <span class="o">+----------+</span>              <span class="o">+----------+</span>
+          <span class="o">|</span>              <span class="mh">0xfc1e6a</span>  <span class="o">|</span>          <span class="o">|</span>              <span class="o">|</span>  <span class="mh">0x1111</span>  <span class="o">|</span>
+          <span class="n">v</span>                        <span class="o">+----------+</span>              <span class="o">+----------+</span>
+          <span class="o">+------------&gt;</span> <span class="mh">0xfc1e6c</span>  <span class="o">|</span>   <span class="kt">data</span>   <span class="o">|</span> <span class="o">-----------&gt;</span> <span class="o">|</span>   <span class="mh">0x13c</span>  <span class="o">|</span>
+                                   <span class="o">+----------+</span>              <span class="o">+----------+</span>
+                         <span class="mh">0xfc1e6e</span>  <span class="o">|</span>          <span class="o">|</span>
+                                   <span class="o">+----------+</span>
+                         <span class="mh">0xfc1e70</span>  <span class="o">|</span>          <span class="o">|</span>
+</code></pre></div>
+
+<p>For this mode the EA Mode field is set to <code>110</code> and the EA Register field contains the number of the address register in use. The standard syntax used by manuals is <code>(d8, An, Dn.SIZE)</code>, where <code>SIZE</code> can be either <code>w</code> or <code>l</code>. This addressing mode can provide an invaluable way to access two-dimensional arrays, and once again shows how powerful this microprocessor is.</p>
+<p>Note: this mode is sometimes called "Indexed Register Indirect with Offset"</p>
+<h3 id="absolute-data">Absolute Data<a class="headerlink" href="#absolute-data" title="Permanent link">&para;</a></h3>
+<p>These modes provide a version of the Address Register Indirect mode where the address is specified directly in the instruction and not through a register.</p>
+<h4 id="absolute-short-data">Absolute Short Data<a class="headerlink" href="#absolute-short-data" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>&lt;address&gt;.w</code></li>
+<li>EA Mode field: <code>111</code></li>
+<li>EA Register field: <code>000</code></li>
+<li>Extension words: 1</li>
+</ul>
+<p>This mode specifies the address of the data in memory through a 16-bit direct operand specified in the extension word. The standard syntax is <code>&lt;address&gt;.w</code>, while the EA mode and EA register fields are respectively <code>111</code> and <code>000</code>. Since the address is a signed word, only the first or the last 32KiB of memory can be addressed (respectively using positive and negative addresses).</p>
+<h4 id="absolute-long-data">Absolute Long Data<a class="headerlink" href="#absolute-long-data" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>&lt;address&gt;.l</code></li>
+<li>EA Mode field: <code>111</code></li>
+<li>EA Register field: <code>001</code></li>
+<li>Extension words: 2</li>
+</ul>
+<p>This is the 32-bit version of the previous mode, with EA mode and EA register fields set respectively to <code>111</code> and <code>001</code>. The standard syntax is <code>&lt;address&gt;.l</code>, and it requires two extension words. As always in the MC68000 long words are given in big endian order, that is the first word is the most significant part of the address and the second word is the least significant one.</p>
+<p>It is worth noting that this mode overcomes the limitation of the previous one, allowing you to access the full 16MiB address space. However, it requires more memory space, having two extension words, and 4 additional CPU cycles to be executed.</p>
+<h3 id="program-counter-relative">Program Counter Relative<a class="headerlink" href="#program-counter-relative" title="Permanent link">&para;</a></h3>
+<p>The addressing modes relative to the Program Counter (PC) are the fundamental building block of relocatable programs, as the effective address is computed as a displacement from the address of the current instruction being executed. Strictly speaking the base address is that of the extension word, as will be shown in detail later in this article.</p>
+<p>Please note that effective addresses expressed with Program Counter Relative can only be used to read from memory.</p>
+<h4 id="program-counter-relative-with-displacement">Program Counter Relative with Displacement<a class="headerlink" href="#program-counter-relative-with-displacement" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>(d16,PC)</code> or <code>d16(PC)</code></li>
+<li>EA Mode field: <code>111</code></li>
+<li>EA Register field: <code>010</code></li>
+<li>Extension words: 1</li>
+</ul>
+<p>This mode is very similar to Address Register Indirect with Displacement, as both use a 16-bit offset added to a base address; in this case the latter is provided by the PC instead of an address register. The EA mode field is <code>111</code> and the EA Register field is <code>010</code>. One extension word is needed, to provide the signed 16-bits displacement, extended to 32-bit before any other calculation.</p>
+<p>Note: this mode is sometimes called "Program Counter Relative with Offset".</p>
+<h4 id="program-counter-relative-with-index">Program Counter Relative with Index<a class="headerlink" href="#program-counter-relative-with-index" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Assembly syntax: <code>(d8,Dn,PC)</code></li>
+<li>EA Mode field: <code>111</code></li>
+<li>EA Register field: <code>011</code></li>
+<li>Extension words: 1</li>
+</ul>
+<p>This is the Program Counter version of Address Register Indirect with Index. The EA mode field is <code>111</code> and the EA Register field is <code>011</code>. One extension word is needed, to provide the signed 8-bits displacement, which will be extended to 32 bit before using it.</p>
+<p>Note: this mode is sometimes called "Program Counter Relative with Index and Offset".</p>
+<h3 id="immediate-data">Immediate Data<a class="headerlink" href="#immediate-data" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Assembly syntax: <code>#&lt;data&gt;</code></li>
+<li>EA Mode field: <code>111</code></li>
+<li>EA Register field: <code>100</code></li>
+<li>Extension words: 1,2</li>
+</ul>
+<p>Immediate data uses the plain data written in the extension words instead of referring to the system memory. In this mode you can specify a constant of any length (byte, word, long word). The EA mode and EA register fields are respectively <code>111</code> and <code>100</code>, and the number of extension words is either 1 (byte and word) or 2 (long word). Remember that the 68000 sign-extends data only when the destination is an address register, leaving it untouched when a data register is used. The standard syntax for this addressing mode is <code>#&lt;data&gt;</code></p>
+<h4 id="quick-immediate">Quick Immediate<a class="headerlink" href="#quick-immediate" title="Permanent link">&para;</a></h4>
+<p>This addressing mode is available for a set of 3 instructions only, namely <code>addq</code>, <code>subq</code>, and <code>moveq</code>. For the first two instructions, it allows to specify a value between 1 and 8 (3 bits), while the third one can interact with a full signed byte, managing a value between -128 and 127. The "quick" label comes from the fact that the instructions use bits of their own binary representation to store the data, thus requiring no extension words. As happens for the simple Immediate Data addressing, EA mode field is <code>111</code> and EA Register field is <code>100</code>.</p>
+<h3 id="implied">Implied<a class="headerlink" href="#implied" title="Permanent link">&para;</a></h3>
+<p>This is another mode that is available only for some instructions. Those are bound to specific registers, and are thus not really allowing any generic effective address to be used. The registers used in this addressing mode are only <code>SP</code>, <code>PC</code>, <code>SP</code>, <code>SSP</code>, <code>SR</code>, and <code>USP</code>.</p>
+<h2 id="table-of-addressing-modes">Table of addressing modes<a class="headerlink" href="#table-of-addressing-modes" title="Permanent link">&para;</a></h2>
+<p>The following table gives an overview of all the addressing modes. For each of them I show the name, the standard Assembly syntax, the value of the EA Mode field, the value of the EA Register field, and the number of extension word required.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Syntax</th>
+<th>EA Mode</th>
+<th>EA Register</th>
+<th>Extension words</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data Register Direct</td>
+<td><code>Dn</code></td>
+<td><code>000</code></td>
+<td>Reg. number</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Address Register Direct Mode</td>
+<td><code>An</code></td>
+<td><code>001</code></td>
+<td>Reg. number</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Address Register Indirect</td>
+<td><code>(An)</code></td>
+<td><code>010</code></td>
+<td>Reg. number</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Address Register Indirect with Postincrement</td>
+<td><code>(An)+</code></td>
+<td><code>011</code></td>
+<td>Reg. number</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Address Register Indirect with Predecrement</td>
+<td><code>-(An)</code></td>
+<td><code>100</code></td>
+<td>Reg. number</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Address Register Indirect with Displacement</td>
+<td><code>(d16,An)</code> or <code>d16(An)</code></td>
+<td><code>101</code></td>
+<td>Reg. number</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Address Register Indirect with Index</td>
+<td><code>(d8,Dn,An)</code></td>
+<td><code>110</code></td>
+<td>Reg. number</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Absolute Short Data</td>
+<td><code>&lt;address&gt;.w</code></td>
+<td><code>111</code></td>
+<td><code>000</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>Absolute Long Data</td>
+<td><code>&lt;address&gt;.l</code></td>
+<td><code>111</code></td>
+<td><code>001</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>Program Counter Relative with Displacement</td>
+<td><code>(d16,PC)</code> / <code>d16(PC)</code></td>
+<td><code>111</code></td>
+<td><code>010</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>Program Counter Relative with Index</td>
+<td><code>(d8,Dn,PC)</code></td>
+<td><code>111</code></td>
+<td><code>011</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>Immediate</td>
+<td><code>#&lt;data&gt;</code></td>
+<td><code>111</code></td>
+<td><code>100</code></td>
+<td>1,2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Let's consider some example of actual MC68000 code that uses effective addressing modes.</p>
+<h3 id="example-1">Example 1<a class="headerlink" href="#example-1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="mf">0280</span> <span class="mf">0003</span> <span class="n">ffff</span>          <span class="ow">and</span><span class="n">i</span><span class="mf">.</span><span class="n">l</span>  <span class="err">#</span><span class="mf">0</span><span class="n">x3ffff</span><span class="p">,</span><span class="n">d0</span>
+</code></pre></div>
+
+<p>This instruction uses the the Data Register Direct mode to address register <code>d0</code>. The instruction format of <code>andi</code> is the following</p>
+<div class="highlight"><pre><span></span><code>| 15 | 14 | 13 | 12 | 11 | 10 | 09 | 08 | 07 | 06 | 05 | 04 | 03 | 02 | 01 | 00 |
+| 0  | 0  | 0  | 0  | 0  | 0  | 1  | 0  | SIZE    | EFFECTIVE ADDRESS           |
+|                                       |         | MODE         | REGISTER     |
+</code></pre></div>
+
+<p>which in the example shown above translates to</p>
+<div class="highlight"><pre><span></span><code><span class="mf">00000010</span>  <span class="mf">10</span>    <span class="mf">000</span>  <span class="mf">000</span> <span class="mf">0000000000000011</span> <span class="mf">1111111111111111</span>
+<span class="o">^</span>         <span class="o">^</span>     <span class="o">^</span>    <span class="o">^</span>
+<span class="ow">and</span><span class="n">i</span>      <span class="n">long</span>  <span class="n">Dn</span>   <span class="n">d0</span>  
+</code></pre></div>
+
+<p>So the microprocessor expects the instruction to be followed by two extension words (long), that will contain the immediate data that will be added to the register. The register is selected among the data ones because the EA Mode field is <code>000</code>, and the EA Register field selects register number 0. The two following extension words are <code>0003</code> and <code>ffff</code>, so the number <code>0x3ffff</code> is added to the register.</p>
+<h3 id="example-2">Example 2<a class="headerlink" href="#example-2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="mf">2052</span>                    <span class="n">movea</span><span class="mf">.</span><span class="n">l</span> <span class="p">(</span><span class="n">a2</span><span class="p">),</span><span class="n">a0</span>
+</code></pre></div>
+
+<p>The <code>movea</code> instruction moves data into an address register, but in this case uses the Address Register Indirect mode to specify the source. The instruction format is</p>
+<div class="highlight"><pre><span></span><code>| 15 | 14 | 13 | 12 | 11 | 10 | 09 | 08 | 07 | 06 | 05 | 04 | 03 | 02 | 01 | 00 |
+| 0  | 0  | SIZE    | DEST. REG.   | 0  | 0  | 1  | SOURCE EFFECTIVE ADDRESS    |
+|         |         |              |              | MODE         | REGISTER     |
+</code></pre></div>
+
+<p>so in this case the hexadecimal code <code>2052</code> becomes</p>
+<div class="highlight"><pre><span></span><code><span class="mf">00</span>  <span class="mf">10</span>    <span class="mf">000</span>  <span class="mf">001</span>  <span class="mf">010</span>   <span class="mf">010</span>
+    <span class="o">^</span>     <span class="o">^</span>         <span class="o">^</span>     <span class="o">^</span>
+    <span class="n">long</span>  <span class="n">a0</span>        <span class="p">(</span><span class="n">An</span><span class="p">)</span>  <span class="n">a2</span>
+</code></pre></div>
+
+<h3 id="example-3">Example 3<a class="headerlink" href="#example-3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="mf">397</span><span class="n">c</span> <span class="mf">0200</span> <span class="mf">0100</span>          <span class="n">move</span><span class="mf">.</span><span class="n">w</span>  <span class="err">#</span><span class="mf">0</span><span class="n">x200</span><span class="p">,</span><span class="mf">0</span><span class="n">x100</span><span class="p">(</span><span class="n">a4</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This <code>move</code> instruction puts a word with the value <code>0x200</code> into an address which is <code>0x100</code> above the address pointed by <code>a4</code>. It uses Immediate Data for the source and Address Register Indirect with Displacement for the destination. The format of the <code>move</code> instruction is</p>
+<div class="highlight"><pre><span></span><code>| 15 | 14 | 13 | 12 | 11 | 10 | 09 | 08 | 07 | 06 | 05 | 04 | 03 | 02 | 01 | 00 |
+| 0  | 0  | SIZE    | DEST. EFFECTIVE ADDRESS     | SOURCE EFFECTIVE ADDRESS    |
+|         |         | REGISTER     | MODE         | MODE         | REGISTER     |
+</code></pre></div>
+
+<p>(please note that register and mode are swapped in the destination part)</p>
+<p>In this case we have</p>
+<div class="highlight"><pre><span></span><code><span class="mf">00</span>    <span class="mf">11</span>    <span class="mf">100</span>  <span class="mf">101</span>       <span class="mf">111100</span>
+<span class="o">^</span>     <span class="o">^</span>     <span class="o">^</span>    <span class="o">^</span>         <span class="o">^</span>    
+<span class="n">move</span>  <span class="n">word</span>  <span class="n">a4</span>   <span class="p">(</span><span class="n">d16</span><span class="p">,</span><span class="n">An</span><span class="p">)</span>  <span class="n">Immediate</span> <span class="kd">Data</span>
+</code></pre></div>
+
+<p>It is interesting to note that the word for the source is given with Immediate Data, and is indeed just after the instruction (<code>0x0200</code>), followed by the 16-bit displacement for Address Register Indirect with Displacement (<code>0x0100</code>).</p>
+<h2 id="lea-load-effective-address">LEA: Load Effective Address<a class="headerlink" href="#lea-load-effective-address" title="Permanent link">&para;</a></h2>
+<p>Many newcomers to Assembly are confused by the need of the <code>lea</code> instruction, so I want to briefly show why we need it, and dig into its low-level representation to clarify possible doubts.</p>
+<p>As we saw in the previous sections there are three ways to manage data in the M68000 Assembly language: the first is to mention a <em>pure number</em>, the second is to use a <em>register</em>, and the third is to use a <em>memory address</em>. Registers can be considered memory, but since they are not proper arrays I will consider them something different.</p>
+<p>The Immediate Data addressing mode allows us to use pure data in an instruction. For example we may write <code>move.l  #0x20000,d0</code>, which puts the number <code>0x20000</code> into the first data register. So when we mention a pure number the microprocessor uses its binary representation directly.</p>
+<p>When we mention a register, the microprocessor does the only thing it can do with it, that is it reads its value or writes into it. The instruction mentioned previously, <code>move.l  #0x20000,d0</code>, puts the number into the register <code>d0</code>. An instruction like <code>cmp.l d2,d3</code>, instead, reads the value of both registers and performs the comparison.</p>
+<p>Memory addresses are similar to registers, but they are identified by a number and not by a name (and are part of a contiguous array). Whenever an instruction mentions a memory address the microprocessor automatically tries to access that location, to read or to write. An instruction like <code>move.l 0x4,d3</code> moves into <code>d3</code> <em>the content</em> of the address <code>0x4</code>, and this happens just because <code>0x4</code> is a memory address.</p>
+<p>That said, the problem we face is that often we want to compute a memory address and deal with <em>its value</em> and not with its content. For example, if we write <code>move.w 0xe(a1),d0</code>, the microprocessor computes <code>a1 + 0xe</code>, that is, the content of <code>a1</code> plus the number <code>0xe</code>, and then fetches the content of that address in memory, putting it into <code>d0</code>. How can we compute <code>a1 + 0xe</code> and put that <em>result</em> into <code>d0</code>?</p>
+<p>This is where <code>lea</code> comes into play. This instruction loads the effective address computed by the addressing mode that we are using into an address register. So <code>lea 0xe(a1),a2</code> puts the sum between the content of <code>a1</code> and <code>0xe</code> into the register <code>a2</code>. Familiarising with <code>lea</code> is very important, as it is one of the most important instructions that the Motorola 68000 provides. A quick analysis of the Amiga Kickstart code shows that <code>lea</code> is the 4th most used instruction, after <code>move</code>, <code>jsr</code>, and <code>bra</code>.</p>
+<h2 id="program-counter-relative-syntax-and-representation">Program Counter Relative syntax and representation<a class="headerlink" href="#program-counter-relative-syntax-and-representation" title="Permanent link">&para;</a></h2>
+<p>As we discussed previously, the two Program Counter Relative modes just mirror Address Register Indirect with Displacement and Address Register Indirect with Index, binding them to the Program Counter instead of a generic register. It is worth however digging exactly into what the microprocessor is doing when decoding this addressing mode, and what the standard Assembly representation means.</p>
+<p>To describe the mechanism behind this modes let's consider an example of actual M68000 code</p>
+<div class="highlight"><pre><span></span><code><span class="mi">00000364</span><span class="o">:</span> <span class="mi">41</span><span class="n">fa</span> <span class="n">ffa6</span>         <span class="n">lea</span>     <span class="mh">0x30c</span><span class="o">(</span><span class="n">pc</span><span class="o">),</span><span class="n">a0</span>
+</code></pre></div>
+
+<p>This <code>lea</code> instruction stores the address <code>0x30c</code> into <code>a0</code>, but it's pretty evident that this address mode doesn't work like the traditional Address Register Indirect with Displacement. The instruction is at address <code>0x364</code> and if we read the displacement as usual we would expect the effective address to be at <code>0x364 + 0x30c</code>. It is important to understand that this is what the Assembler (or the disassembler) shows, and that the proper meaning of <code>0x30c(pc)</code> is "the address <code>0x30c</code> knowing that this instruction is at <code>0x364</code>". I believe this clearly shows why relocatable code makes use of this addressing mode. The address that we identify with <code>0x364</code> might actually be anywhere in memory, as this number means only <code>0x364</code> words after the first instruction (which is at <code>0x0</code> in our relative space).</p>
+<p>The binary representation of the instruction is actually revealing. The hexadecimal values of the two words <code>41fa ffa6</code> become <code>01000001111110101111111110100110</code> which can be split as follows</p>
+<div class="highlight"><pre><span></span><code><span class="mf">0100</span>  <span class="mf">000</span>  <span class="mf">111</span>  <span class="mf">111010</span>    <span class="mf">1111111110100110</span>
+<span class="o">^</span>     <span class="o">^</span>         <span class="o">^</span>         <span class="o">^</span>
+<span class="n">lea</span>   <span class="n">a0</span>        <span class="p">(</span><span class="n">d16</span><span class="p">,</span><span class="n">PC</span><span class="p">)</span>  <span class="n">extension</span> <span class="n">word</span>
+</code></pre></div>
+
+<p>According to the documentation of the addressing mode, the extension word <code>1111111110100110</code> is a signed 16-bit displacement, so it is a number expressed in two's complement notation. The conversion gives <code>-0x5a</code>, which added to the instruction relative address <code>0x364</code> surprisingly gives <code>0x30a</code>.</p>
+<p>The documentation of the addressing mode, however, states that</p>
+<blockquote>
+<p>In this mode, the operand is in memory. The address of the operand is the sum of the address in the program counter (PC) and the sign-extended 16-bit displacement integer in the extension word. The value in the PC is the address of the extension word.</p>
+<p>(2.2.11, page 13)</p>
+</blockquote>
+<p>The thing that can be easily overlooked is that the PC points to the extension word and not to the instruction word. In this case, while the instruction word is at <code>0x364</code>, the extension word is at <code>0x366</code>, and <code>0x366 - 0x5a</code> gives exactly <code>0x30c</code>, which is what the Assembly syntax shows us. As you can see, the Assembler and the Disassembler have to perform some calculations to show the actual relative final value.</p>
+<h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Motorola M68000 Family Programmer's Reference Manual <a href="https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf">PDF here</a></li>
+<li>M68000 Microprocessors User's Manual <a href="https://www.nxp.com/docs/en/reference-manual/MC68000UM.pdf">PDF here</a></li>
+<li>The 68000 Principles and Programming, Leo J. Scanion, 1981</li>
+</ul>
+<h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h2>
+<p>2017-12-24: Reddit user <a href="https://new.reddit.com/user/SpaceShrimp">SpaceShrimp</a> pointed out the rage of a signed 16-bit number is <code>(-32768,32767)</code> and not <code>(-32767,32768)</code>. Thanks!</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </section>
+
+
+  <section class="footer">
+    <h2>Related Posts</h2>
+    <div class="posts mini">
+      <article class="card">
+        <a href="/blog/2019/02/19/exploring-the-amiga-8/" class="image">
+          <img src="/images/exploring-the-amiga-8.jpg" alt="exploring-the-amiga-8" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2019/02/19/exploring-the-amiga-8/"><h2 class="card-title">Exploring the Amiga - Part 8</h2></a>
+	  <p class="article-info">
+            <time datetime="2019-02-19T14:00:00+01:00">Feb 19, 2019</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2019/02/19/exploring-the-amiga-7/" class="image">
+          <img src="/images/exploring-the-amiga-7.jpg" alt="exploring-the-amiga-7" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2019/02/19/exploring-the-amiga-7/"><h2 class="card-title">Exploring the Amiga - Part 7</h2></a>
+	  <p class="article-info">
+            <time datetime="2019-02-19T13:00:00+01:00">Feb 19, 2019</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/06/25/exploring-the-amiga-6/" class="image">
+          <img src="/images/exploring-the-amiga-6.jpg" alt="exploring-the-amiga-6" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/06/25/exploring-the-amiga-6/"><h2 class="card-title">Exploring the Amiga - Part 6</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-06-25T13:00:00+01:00">Jun 25, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/06/25/exploring-the-amiga-5/" class="image">
+          <img src="/images/exploring-the-amiga-5.jpg" alt="exploring-the-amiga-5" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/06/25/exploring-the-amiga-5/"><h2 class="card-title">Exploring the Amiga - Part 5</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-06-25T12:00:00+01:00">Jun 25, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/06/14/exploring-the-amiga-4/" class="image">
+          <img src="/images/exploring-the-amiga-4.jpg" alt="exploring-the-amiga-4" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/06/14/exploring-the-amiga-4/"><h2 class="card-title">Exploring the Amiga - Part 4</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-06-14T14:30:00+01:00">Jun 14, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/06/08/exploring-the-amiga-3/" class="image">
+          <img src="/images/exploring-the-amiga-3.jpg" alt="exploring-the-amiga-3" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/06/08/exploring-the-amiga-3/"><h2 class="card-title">Exploring the Amiga - Part 3</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-06-08T12:30:00+01:00">Jun 8, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/05/28/exploring-the-amiga-2/" class="image">
+          <img src="/images/exploring-the-amiga-2.jpg" alt="exploring-the-amiga-2" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/05/28/exploring-the-amiga-2/"><h2 class="card-title">Exploring the Amiga - Part 2</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-05-28T15:00:00+01:00">May 28, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/05/28/exploring-the-amiga-1/" class="image">
+          <img src="/images/exploring-the-amiga-1.jpg" alt="exploring-the-amiga-1" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/05/28/exploring-the-amiga-1/"><h2 class="card-title">Exploring the Amiga - Part 1</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-05-28T14:00:00+01:00">May 28, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+
+  <!-- </article> -->
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+<div class="inner">
+    <!-- Menu -->
+        <nav id="menu">
+            <header class="major">
+                <h2>Menu</h2>
+            </header>
+<ul>
+    <li><a href="/index.html">Homepage</a></li>
+    <li><a href="/pages/about.html">About</a></li>
+    <li><a href="/archives/index.html">Archives</a></li>
+</ul>        </nav>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Recent posts</h2>
+            </header>
+<div class="mini-posts">
+    <article>
+        <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/" class="image"><img src="/images/public-key-cryptography-openssh-private-keys.jpg" alt="public-key-cryptography-openssh-private-keys" /></a>
+        <p><strong>Public key cryptography: OpenSSH private keys</strong> <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/" class="image"><img src="/images/stop-using-tools-as-if-they-were-solutions.jpg" alt="stop-using-tools-as-if-they-were-solutions" /></a>
+        <p><strong>Stop using tools as if they were solutions</strong> <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/" class="image"><img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" /></a>
+        <p><strong>How to write a Pelican theme for your static website</strong> <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">Read</a></p> 
+    </article>
+</div>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Categories</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/category/programming/">Programming</a></li>
+    <li><a href="/category/projects/">Projects</a></li>
+    <li><a href="/category/retro/">Retro</a></li>
+</ul>
+        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Feeds</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/atom.xml"><i class="fas fa-rss"></i> All posts</a></li>
+
+
+    <li><a href="/category/retro/atom.xml"><i class="fas fa-rss"></i> All posts in category: Retro</a></li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Tags</h2>
+            </header>
+<ul class="list-inline list-clean" id="tags-side">
+    <li class="tag font-size-2">
+        <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Get in touch</h2>
+            </header>
+<ul class="contact">
+    
+    
+    
+    <li class="fa-twitter"><a href="https://twitter.com/thedigicat">Twitter</a></li>
+    
+    
+    
+    
+    <li class="fa-github"><a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+    
+</ul>        </section>
+
+    <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright">Editorial theme by: <a href="https://html5up.net">HTML5 UP</a>.</p>
+            <p class="copyright">Cover picture by: <a href="https://pxhere.com/en/photo/1428515">An Min @ pxhere.com</a></p>
+        </footer>
+
+</div>					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="/theme/js/jquery.min.js"></script>
+			<script src="/theme/js/browser.min.js"></script>
+			<script src="/theme/js/breakpoints.min.js"></script>
+            <script src="/theme/webassets-external/fbe79d99b38a8623685ff42823edd66f_util.js"></script>
+            <script src="/theme/webassets-external/0c2f3654914fe90dd661c09240b58315_main.js"></script>
+
+<script src="/theme/webassets-external/432296cb4c7bce63d0f4f7122ec654aa_retro.js"></script>
+
+	</body>
+</html>

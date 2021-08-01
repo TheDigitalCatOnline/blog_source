@@ -1,0 +1,751 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+        <title>The Digital Cat - Python Mocks: a gentle introduction - Part 2</title>
+	<meta charset="utf-8" />
+	<meta http-equiv='content-language' content='en-gb'>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="description" content="Second part of the series on Python mocks: how to patch code">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Python Mocks: a gentle introduction - Part 2" />
+<meta name="twitter:description" content="Second part of the series on Python mocks: how to patch code" />
+<meta name="twitter:image" content="../../../../../images/python-mocks.jpg" />
+	<script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700">
+
+        <link rel="stylesheet" href="/theme/webassets-external/4a9e78055c32c64c0053d516051922e1_main.css">
+        <link rel="stylesheet" href="/theme/webassets-external/29e84bb99f5d774b43b32c32b0e1cf63_custom.css">
+        <link rel="stylesheet" href="/theme/webassets-external/bb3753b8350cbac2c66e937353842ee9_default.css">
+
+        
+        <link href="/images/global/favicon.jpg" rel="icon">
+
+
+
+<script type="application/ld+json">
+  {
+      "@context" : "https://schema.org",
+      "@type" : "Article",
+      "name" : "Python Mocks: a gentle introduction - Part 2",
+      "author" : {
+	  "@type" : "Person",
+	  "name" : "Leonardo Giordani"
+      },
+      "publisher" : {
+	  "@type" : "Organization",
+	  "name" : "The Digital Cat",
+	  "logo" : {
+	      "@type" : "ImageObject",
+	      "url" : "../../../../../images/global/logo_200.jpg",
+	      "height" : 200,
+	      "width" : 200
+	  }
+      },
+      "mainEntityOfPage": {
+	  "@type": "WebPage",
+	  "@id": "../../../../../blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/"
+      },
+      "datePublished" : "27/09/2016",
+      "dateModified" : "27/09/2016",
+      "image" : "../../../../../images/python-mocks.jpg",
+      "description" : "Second part of the series on Python mocks: how to patch code",
+      "headline" : "Second part of the series on Python mocks: how to patch code",
+      "url" : "../../../../../blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/"
+  }
+</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+<header id="header">
+  <a class="logo" href="/category/programming/" title="Programming">All posts in category Programming <i class="fas fa-link"></i></a>
+  <div class="align-right">
+
+    <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"><i class="fas fa-caret-square-left"></i></a>
+    
+    Python Mocks: a gentle introduction #2
+
+
+  </div>
+</header>
+
+<!-- <article class="post"> -->
+
+  <section id="header">
+    <header class="main">
+      <h1>Python Mocks: a gentle introduction - Part 2</h1>
+    </header>
+  </section>
+
+  <section id="post-info">
+    <p class="article-info">
+    By Leonardo Giordani
+
+    <span class="fas fa-calendar-alt"></span> <time datetime="2016-09-27T09:00:00+00:00"> 27/09/2016</time>
+
+
+    <span class="fas fa-tags"></span>
+    <a class="tag" href="/categories/decorators/">decorators</a>    <a class="tag" href="/categories/oop/">OOP</a>    <a class="tag" href="/categories/pytest/">pytest</a>    <a class="tag" href="/categories/python/">Python</a>    <a class="tag" href="/categories/python2/">Python2</a>    <a class="tag" href="/categories/python3/">Python3</a>    <a class="tag" href="/categories/tdd/">TDD</a>    <a class="tag" href="/categories/testing/">testing</a>    <br>
+    Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Python%20Mocks%3A%20a%20gentle%20introduction%20-%20Part%202&url=/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/&via=thedigicat&hashtags=decorators,oop,pytest,python,python2,python3,tdd,testing" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/&title=Python%20Mocks%3A%20a%20gentle%20introduction%20-%20Part%202&summary=Second%20part%20of%20the%20series%20on%20Python%20mocks%3A%20how%20to%20patch%20code&source=/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Python%20Mocks%3A%20a%20gentle%20introduction%20-%20Part%202&u=/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Python%20Mocks%3A%20a%20gentle%20introduction%20-%20Part%202&amp;body=/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/&title=Python%20Mocks%3A%20a%20gentle%20introduction%20-%20Part%202" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span>    </p>
+  </section>
+
+  <section id="content">
+    <p>In the <a href="../../../../../blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/">first post</a> I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the <code>return_value</code> and <code>side_effect</code> attributes, and the <code>assert_called_with()</code> method.</p>
+<p>In this post I will briefly review the remaining <code>assert_*</code> methods and some interesting attributes that allow to check the calls received by the mock object. Then I will introduce and exemplify patching, which is a very important topic in testing.</p>
+<h2 id="other-assertions-and-attributes">Other assertions and attributes<a class="headerlink" href="#other-assertions-and-attributes" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://docs.python.org/dev/library/unittest.mock.html">official documentation</a> of the mock library lists many other assertion, namely <code>assert_called_once_with()</code>, <code>assert_any_call()</code>, <code>assert_has_calls()</code>, <code>assert_not_called()</code>. If you grasped how <code>assert_called_with()</code> works, you will have no troubles in understanding how those other behave. Be sure to check the documentation to get a full description of what mock object can assert about their history after being used by your code.</p>
+<p>Together with those methods, mock objects also provide some useful attributes, two of which have been already reviewed in the first post. The remaining attributes are as expected mostly related to calls, and are <code>called</code>, <code>call_count</code>, <code>call_args</code>, <code>call_args_list</code>, <code>method_calls</code>, <code>mock_calls</code>. While these also are very well described in the official documentation, I want to point out the two <code>method_calls</code> and <code>mock_calls</code> attributes, that store the detailed list of methods which are called on the mock, and the <code>call_args_list</code> attribute that lists the parameters of every call.</p>
+<p>Do not forget that methods called on a mock object are mocks themselves, so you may first access the main mock object to get information about the called methods, and then access those methods to get the arguments they received.</p>
+<h2 id="patching">Patching<a class="headerlink" href="#patching" title="Permanent link">&para;</a></h2>
+<p>Mocks are very simple to introduce in your tests whenever your objects accept classes or instances from outside. In that case, as described, you just have to instantiate the <code>Mock</code> class and pass the resulting object to your system. However, when the external classes instantiated by your library are hardcoded this simple trick does not work. In this case you have no chance to pass a mock object instead of the real one.</p>
+<p>This is exactly the case addressed by patching. Patching, in a testing framework, means to replace a globally reachable object with a mock, thus achieving the target of having the code run unmodified, while part of it has been hot swapped, that is, replaced at run time.</p>
+<h2 id="a-warm-up-example">A warm-up example<a class="headerlink" href="#a-warm-up-example" title="Permanent link">&para;</a></h2>
+<p>Let us start with a very simple example. Patching can be complex to grasp at the beginning so it is better to learn it with trivial code. If you do not have it yet, create the testing environment <code>mockplayground</code> with the instruction given in the previous post.</p>
+<p>I want to develop a simple class that returns information about a given file. The class shall be instantiated with the file name, which can be a relative path.</p>
+<p>For the sake of brevity I will not show you every step of the TDD development of the class. Remember that TDD requires you to write a test and then implement the code, but sometimes this could be too fine grained, so do not use the TDD rules without thinking.</p>
+<p>The tests for the initialization of the class are</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fileinfo</span> <span class="kn">import</span> <span class="n">FileInfo</span>
+
+<span class="k">def</span> <span class="nf">test_init</span><span class="p">():</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;somefile.ext&#39;</span>
+    <span class="n">fi</span> <span class="o">=</span> <span class="n">FileInfo</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">fi</span><span class="o">.</span><span class="n">filename</span> <span class="o">==</span> <span class="n">filename</span>
+
+<span class="k">def</span> <span class="nf">test_init</span><span class="p">():</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;somefile.ext&#39;</span>
+    <span class="n">relative_path</span> <span class="o">=</span> <span class="s1">&#39;../</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">fi</span> <span class="o">=</span> <span class="n">FileInfo</span><span class="p">(</span><span class="n">relative_path</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">fi</span><span class="o">.</span><span class="n">filename</span> <span class="o">==</span> <span class="n">filename</span>
+</code></pre></div>
+
+<p>You can put them into the <code>tests/test_fileinfo.py</code> file. The code that makes the tests pass could be something like</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">class</span> <span class="nc">FileInfo</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Up to now I didn't introduce any new feature. Now I want the <code>get_info()</code> function to return a tuple with the file name, the original path the class was instantiated with, and the absolute path of the file.</p>
+<p>You immediately realise that you have an issue in writing the test. There is no way to easily test something as "the absolute path", since the outcome of the function called in the test is supposed to vary with the path of the test itself. Let us write part of the test</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_info</span><span class="p">():</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;somefile.ext&#39;</span>
+    <span class="n">original_path</span> <span class="o">=</span> <span class="s1">&#39;../</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">fi</span> <span class="o">=</span> <span class="n">FileInfo</span><span class="p">(</span><span class="n">original_path</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">fi</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">original_path</span><span class="p">,</span> <span class="s1">&#39;???&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>where the '???' string highlights that I cannot put something sensible to test the absolute path of the file.</p>
+<p>Patching is the way to solve this problem. You know that the function will use some code to get the absolute path of the file. So in the scope of the test only you can replace that code with different code and perform the test. Since the replacement code has a known outcome writing the test is now possible.</p>
+<p>Patching, thus, means to inform Python that in some scope you want a globally accessible module/object replaced by a mock. Let's see how we can use it in our example</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">test_get_info</span><span class="p">():</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;somefile.ext&#39;</span>
+    <span class="n">original_path</span> <span class="o">=</span> <span class="s1">&#39;../</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;os.path.abspath&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">abspath_mock</span><span class="p">:</span>
+        <span class="n">test_abspath</span> <span class="o">=</span> <span class="s1">&#39;some/abs/path&#39;</span>
+        <span class="n">abspath_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_abspath</span>
+        <span class="n">fi</span> <span class="o">=</span> <span class="n">FileInfo</span><span class="p">(</span><span class="n">original_path</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">fi</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">original_path</span><span class="p">,</span> <span class="n">test_abspath</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Remember that if you are using Python 2 you installed the <code>mock</code> module with <code>pip</code>, so your import statement becomes <code>from mock import patch</code>.</p>
+<p>You clearly see the context in which the patching happens, as it is enclosed in a <code>with</code> statement. Inside this statement the module <code>os.path.abspath</code> will be replaced by a mock created by the function <code>patch</code> and called <code>abspath_mock</code>. We can now give the function a <code>return_value</code> as we did with standard mocks in the first post and run the test.</p>
+<p>The code that make the test pass is</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FileInfo</span><span class="p">:</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Obviously to write the test you have to know that you are going to use the <code>os.path.abspath</code> function, so patching is somehow a "less pure" practice in TDD. In pure OOP/TDD you are only concerned with the external behaviour of the object, and not with its internal structure. This example, however, shows that you have to cope with some real world issues, and patching is a clean way to do it.</p>
+<h2 id="the-patching-decorator">The patching decorator<a class="headerlink" href="#the-patching-decorator" title="Permanent link">&para;</a></h2>
+<p>The <code>patch</code> function we imported from the <code>unittest.mock</code> module is very powerful, and can be used as a function decorator as well. When used in this fashion you need to change the decorated function to accept a mock as last argument.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;os.path.abspath&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_get_info</span><span class="p">(</span><span class="n">abspath_mock</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;somefile.ext&#39;</span>
+    <span class="n">original_path</span> <span class="o">=</span> <span class="s1">&#39;../</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="n">test_abspath</span> <span class="o">=</span> <span class="s1">&#39;some/abs/path&#39;</span>
+    <span class="n">abspath_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_abspath</span>
+    <span class="n">fi</span> <span class="o">=</span> <span class="n">FileInfo</span><span class="p">(</span><span class="n">original_path</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">fi</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">original_path</span><span class="p">,</span> <span class="n">test_abspath</span><span class="p">)</span>
+</code></pre></div>
+
+<p>As you can see the <code>patch</code> decorator works like a big <code>with</code> statement for the whole function. Obviously in this way you replace the target function <code>os.path.abspath</code> in the scope of the whole function. It is then up to you to decide if you need to use <code>patch</code> as a decorator or in a <code>with</code> block.</p>
+<h2 id="multiple-patches">Multiple patches<a class="headerlink" href="#multiple-patches" title="Permanent link">&para;</a></h2>
+<p>We can also patch more that one object. Say for example that we want to change the above test to check that the outcome of the <code>FileInfo.get_info()</code> method also contains the size of the file. To get the size of a file in Python we may use the <code>os.path.getsize()</code> function, which returns the size of the file in bytes.</p>
+<p>So now we have to patch <code>os.path.getsize</code> as well, and this can be done with another <code>patch</code> decorator.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;os.path.getsize&#39;</span><span class="p">)</span>
+<span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;os.path.abspath&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_get_info</span><span class="p">(</span><span class="n">abspath_mock</span><span class="p">,</span> <span class="n">getsize_mock</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;somefile.ext&#39;</span>
+    <span class="n">original_path</span> <span class="o">=</span> <span class="s1">&#39;../</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="n">test_abspath</span> <span class="o">=</span> <span class="s1">&#39;some/abs/path&#39;</span>
+    <span class="n">abspath_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_abspath</span>
+
+    <span class="n">test_size</span> <span class="o">=</span> <span class="mi">1234</span>
+    <span class="n">getsize_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_size</span>
+
+    <span class="n">fi</span> <span class="o">=</span> <span class="n">FileInfo</span><span class="p">(</span><span class="n">original_path</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">fi</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">original_path</span><span class="p">,</span> <span class="n">test_abspath</span><span class="p">,</span> <span class="n">test_size</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Please notice that the decorator which is nearest to the function is applied first. Always remember that the decorator syntax with <code>@</code> is a shortcut to replace the function with the output of the decorator, so two decorators result in</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@decorator1</span>
+<span class="nd">@decorator2</span>
+<span class="k">def</span> <span class="nf">myfunction</span><span class="p">():</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+<p>which is a shorcut for</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">myfunction</span><span class="p">():</span>
+    <span class="k">pass</span>
+<span class="n">myfunction</span> <span class="o">=</span> <span class="n">decorator1</span><span class="p">(</span><span class="n">decorator2</span><span class="p">(</span><span class="n">myfunction</span><span class="p">))</span>
+</code></pre></div>
+
+<p>This explains why, in the test code, the function receives first <code>abspath_mock</code> and then <code>getsize_mock</code>. The first decorator applied to the function is the patch of <code>os.path.abspath</code>, which appends the mock that we call <code>abspath_mock</code>. Then the patch of <code>os.path.getsize</code> is applied and this appends its own mock.</p>
+<p>The code that makes the test pass is</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FileInfo</span><span class="p">:</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+</code></pre></div>
+
+<p>We can write the above test using two <code>with</code> statements as well</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_info</span><span class="p">():</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;somefile.ext&#39;</span>
+    <span class="n">original_path</span> <span class="o">=</span> <span class="s1">&#39;../</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;os.path.abspath&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">abspath_mock</span><span class="p">:</span>
+        <span class="n">test_abspath</span> <span class="o">=</span> <span class="s1">&#39;some/abs/path&#39;</span>
+        <span class="n">abspath_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_abspath</span>
+
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;os.path.getsize&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">getsize_mock</span><span class="p">:</span>
+            <span class="n">test_size</span> <span class="o">=</span> <span class="mi">1234</span>
+            <span class="n">getsize_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_size</span>
+
+            <span class="n">fi</span> <span class="o">=</span> <span class="n">FileInfo</span><span class="p">(</span><span class="n">original_path</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">fi</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">original_path</span><span class="p">,</span> <span class="n">test_abspath</span><span class="p">,</span> <span class="n">test_size</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Using more than one <code>with</code> statement, however, makes the code difficult to read, in my opinion, so in general I prefer to avoid complex <code>with</code> trees if I do not need a limited scope of the patching.</p>
+<h2 id="patching-immutable-objects">Patching immutable objects<a class="headerlink" href="#patching-immutable-objects" title="Permanent link">&para;</a></h2>
+<p>The most widespread version of Python is CPython, which is written, as the name suggests, in C. Part of the standard library is also written in C, while the rest is written in Python itself.</p>
+<p>The objects (classes, modules, functions, etc) that are implemented in C are shared between interpreters, which is something that you can do embedding the Python interpreter in a C program, for example. This requires those objects to be immutable, so that you cannot alter them at runtime from a single interpreter.</p>
+<p>For an example of this immutability just check the following code</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">conjugate</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;int&#39; object attribute &#39;conjugate&#39; is read-only</span>
+</code></pre></div>
+
+<p>Here I'm trying to replace a method with an integer, which is pointless, but nevertheless shows the issue we are facing.</p>
+<p>What has this immutability to do with patching? What <code>patch</code> does is actually to temporarily replace an attibute of an object (method of a class, class of a module, etc), so if that object is immutable the patching action fails.</p>
+<p>A typical example of this problem is the <code>datetime</code> module, which is also one of the best candidates for patching, since the output of time functions is by definition time-varying.</p>
+<p>Let me show the problem with a simple class that logs operations. The class is the following (you can put it into a file called <code>logger.py</code>)</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">class</span> <span class="nc">Logger</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">message</span><span class="p">))</span>
+</code></pre></div>
+
+<p>This is pretty simple, but testing this code is problematic, because the <code>log()</code> method produces results that depend on the actual execution time.</p>
+<p>If we try to write a test patching <code>datetime.datetime.now</code> we have a bitter surprise. This is the test code, that you can put in <code>tests/test_logger.py</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="k">def</span> <span class="nf">test_init</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">messages</span> <span class="o">==</span> <span class="p">[]</span>
+
+<span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;datetime.datetime.now&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_log</span><span class="p">(</span><span class="n">mock_now</span><span class="p">):</span>
+    <span class="n">test_now</span> <span class="o">=</span> <span class="mi">123</span>
+    <span class="n">test_message</span> <span class="o">=</span> <span class="s2">&quot;A test message&quot;</span>
+    <span class="n">mock_now</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_now</span>
+
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">test_message</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">messages</span> <span class="o">==</span> <span class="p">[(</span><span class="n">test_now</span><span class="p">,</span> <span class="n">test_message</span><span class="p">)]</span>
+</code></pre></div>
+
+<p>and the execution of pytest returns a <code>TypeError: can't set attributes of built-in/extension type 'datetime.datetime'</code>, which is exactly a problem of immutability.</p>
+<p>There are several ways to address this problem, but all of them leverage the fact that, when you import of subclass an immutable object what you get is a "copy" of that is now mutable.</p>
+<p>The easiest example in this case is the module <code>datetime</code> itself. In the <code>test_log</code> function we try to patch directly the <code>datetime.datetime.now</code> object, affecting the builtin module <code>datetime</code>. The file <code>logger.py</code>, however, does import <code>datetime</code>, so that the latter becomes a local symbol in the <code>logger</code> module. This is exactly the key for our patching. Let us change the code to</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;logger.datetime.datetime&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_log</span><span class="p">(</span><span class="n">mock_datetime</span><span class="p">):</span>
+    <span class="n">test_now</span> <span class="o">=</span> <span class="mi">123</span>
+    <span class="n">test_message</span> <span class="o">=</span> <span class="s2">&quot;A test message&quot;</span>
+    <span class="n">mock_datetime</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_now</span>
+
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">test_message</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">messages</span> <span class="o">==</span> <span class="p">[(</span><span class="n">test_now</span><span class="p">,</span> <span class="n">test_message</span><span class="p">)]</span>
+</code></pre></div>
+
+<p>As you see running the test now the patching works. What we did was to patch <code>logger.datetime.datetime</code> instead of <code>datetime.datetime.now</code>. Two things changed, thus, in our test. First, we are patching the module imported in the <code>logger.py</code> file and not the module provided globally by the Python interpreter. Second, we have to patch the whole module because this is what is imported by the <code>logger.py</code> file. If you try to patch <code>logger.datetime.datetime.now</code> you will find that it is still immutable.</p>
+<p>Another possible solution to this problem is to create a function that invokes the immutable object and returns its value. This last function can be easily patched, because it just uses the builtin objects and thus is not immutable. This solution, however, requires to change the source code to allow testing, which is far from being desirable. Obviously it is better to introduce a small change in the code and have it tested than to leave it untested, but whenever is possible I avoid solutions that introduce code which wouldn't be required without tests.</p>
+<h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">&para;</a></h2>
+<p>In this second part of this small series on Python testing we reviewed the patching mechanism and run through some of its subtleties. Patching is a really effective technique, and patch-based tests can be found in many different packages. Take your time to become confident with mocks and patching, since they will be one of your main tools while working with Python and any other object-oriented language.</p>
+<p>As always, I strongly recommend finding some time to read the <a href="https://docs.python.org/dev/library/unittest.mock.html">official documentation</a> of the mock library.</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections</p>
+  </section>
+
+  <section class="footer">
+    <h2>Part 2 of the Python Mocks: a gentle introduction series</h2>
+    <div class="box">
+      <h5>Previous articles</h5>
+      <ul>
+        <li><a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/">Python Mocks: a gentle introduction - Part 1</a></li>
+      </ul>
+      
+    </div>
+  </section>
+
+  <section class="footer">
+    <h2>Related Posts</h2>
+    <div class="posts mini">
+      <article class="card">
+        <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/" class="image">
+          <img src="/images/python-mocks.jpg" alt="python-mocks" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"><h2 class="card-title">Python Mocks: a gentle introduction - Part 1</h2></a>
+	  <p class="article-info">
+            <time datetime="2016-03-06T18:00:00+01:00">Mar 6, 2016</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/decorators/" class="tag">decorators</a>            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python2/" class="tag">Python2</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2 class="card-title">TDD in Python with pytest - Part 5</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2 class="card-title">TDD in Python with pytest - Part 4</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2 class="card-title">TDD in Python with pytest - Part 3</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2 class="card-title">TDD in Python with pytest - Part 2</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2 class="card-title">TDD in Python with pytest - Part 1</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/12/20/cabook/" class="image">
+          <img src="/images/cabook.jpg" alt="cabook" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/12/20/cabook/"><h2 class="card-title">Clean Architectures in Python: the book</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python2/" class="tag">Python2</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>            <a href="/categories/architectures/" class="tag">architectures</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/" class="image">
+          <img src="/images/refactoring-with-tests-in-python.jpg" alt="refactoring-with-tests-in-python" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/"><h2 class="card-title">Refactoring with tests in Python: a practical example</h2></a>
+	  <p class="article-info">
+            <time datetime="2017-07-21T09:30:00+01:00">Jul 21, 2017</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/" class="image">
+          <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2 class="card-title">Clean architectures in Python: a step-by-step example</h2></a>
+	  <p class="article-info">
+            <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python2/" class="tag">Python2</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/architectures/" class="tag">architectures</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2015/05/13/python-oop-tdd-example-part1/" class="image">
+          <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2 class="card-title">A simple example of Python OOP development (with TDD) - Part 1</h2></a>
+	  <p class="article-info">
+            <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+
+  <!-- </article> -->
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+<div class="inner">
+    <!-- Menu -->
+        <nav id="menu">
+            <header class="major">
+                <h2>Menu</h2>
+            </header>
+<ul>
+    <li><a href="/index.html">Homepage</a></li>
+    <li><a href="/pages/about.html">About</a></li>
+    <li><a href="/archives/index.html">Archives</a></li>
+</ul>        </nav>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Recent posts</h2>
+            </header>
+<div class="mini-posts">
+    <article>
+        <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/" class="image"><img src="/images/public-key-cryptography-openssh-private-keys.jpg" alt="public-key-cryptography-openssh-private-keys" /></a>
+        <p><strong>Public key cryptography: OpenSSH private keys</strong> <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/" class="image"><img src="/images/stop-using-tools-as-if-they-were-solutions.jpg" alt="stop-using-tools-as-if-they-were-solutions" /></a>
+        <p><strong>Stop using tools as if they were solutions</strong> <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/" class="image"><img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" /></a>
+        <p><strong>How to write a Pelican theme for your static website</strong> <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">Read</a></p> 
+    </article>
+</div>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Categories</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/category/programming/">Programming</a></li>
+    <li><a href="/category/projects/">Projects</a></li>
+    <li><a href="/category/retro/">Retro</a></li>
+</ul>
+        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Feeds</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/atom.xml"><i class="fas fa-rss"></i> All posts</a></li>
+
+
+    <li><a href="/category/programming/atom.xml"><i class="fas fa-rss"></i> All posts in category: Programming</a></li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Tags</h2>
+            </header>
+<ul class="list-inline list-clean" id="tags-side">
+    <li class="tag font-size-2">
+        <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Get in touch</h2>
+            </header>
+<ul class="contact">
+    
+    
+    
+    <li class="fa-twitter"><a href="https://twitter.com/thedigicat">Twitter</a></li>
+    
+    
+    
+    
+    <li class="fa-github"><a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+    
+</ul>        </section>
+
+    <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright">Editorial theme by: <a href="https://html5up.net">HTML5 UP</a>.</p>
+            <p class="copyright">Cover picture by: <a href="https://pxhere.com/en/photo/1428515">An Min @ pxhere.com</a></p>
+        </footer>
+
+</div>					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="/theme/js/jquery.min.js"></script>
+			<script src="/theme/js/browser.min.js"></script>
+			<script src="/theme/js/breakpoints.min.js"></script>
+            <script src="/theme/webassets-external/fbe79d99b38a8623685ff42823edd66f_util.js"></script>
+            <script src="/theme/webassets-external/0c2f3654914fe90dd661c09240b58315_main.js"></script>
+
+
+	</body>
+</html>

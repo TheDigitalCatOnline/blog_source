@@ -1,0 +1,529 @@
+[input]
+base_directory = "output"
+url_prefix = ""
+html_selector = "section#content"
+[[input.files]]
+path = "pages/about.html"
+url = "pages/about.html"
+title = "About"
+
+[[input.files]]
+path = "blog/2021/06/03/public-key-cryptography-openssh-private-keys/index.html"
+url = "blog/2021/06/03/public-key-cryptography-openssh-private-keys/"
+title = "Public key cryptography: OpenSSH private keys"
+
+[[input.files]]
+path = "blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/index.html"
+url = "blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/"
+title = "Stop using tools as if they were solutions"
+
+[[input.files]]
+path = "blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/index.html"
+url = "blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/"
+title = "How to write a Pelican theme for your static website"
+
+[[input.files]]
+path = "blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/index.html"
+url = "blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/"
+title = "AWS Log Insights as CloudWatch metrics with Python and Terraform"
+
+[[input.files]]
+path = "blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/index.html"
+url = "blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/"
+title = "First-class objects in Python: generic code, wrappers, and factories"
+
+[[input.files]]
+path = "blog/2021/02/22/mau-a-lightweight-markup-language/index.html"
+url = "blog/2021/02/22/mau-a-lightweight-markup-language/"
+title = "Mau: a lightweight markup language"
+
+[[input.files]]
+path = "blog/2020/11/04/public-key-cryptography-ssl-certificates/index.html"
+url = "blog/2020/11/04/public-key-cryptography-ssl-certificates/"
+title = "Public key cryptography: SSL certificates"
+
+[[input.files]]
+path = "blog/2020/09/21/tdd-in-python-with-pytest-part-5/index.html"
+url = "blog/2020/09/21/tdd-in-python-with-pytest-part-5/"
+title = "TDD in Python with pytest - Part 5"
+
+[[input.files]]
+path = "blog/2020/09/17/tdd-in-python-with-pytest-part-4/index.html"
+url = "blog/2020/09/17/tdd-in-python-with-pytest-part-4/"
+title = "TDD in Python with pytest - Part 4"
+
+[[input.files]]
+path = "blog/2020/09/15/tdd-in-python-with-pytest-part-3/index.html"
+url = "blog/2020/09/15/tdd-in-python-with-pytest-part-3/"
+title = "TDD in Python with pytest - Part 3"
+
+[[input.files]]
+path = "blog/2020/09/11/tdd-in-python-with-pytest-part-2/index.html"
+url = "blog/2020/09/11/tdd-in-python-with-pytest-part-2/"
+title = "TDD in Python with pytest - Part 2"
+
+[[input.files]]
+path = "blog/2020/09/10/tdd-in-python-with-pytest-part-1/index.html"
+url = "blog/2020/09/10/tdd-in-python-with-pytest-part-1/"
+title = "TDD in Python with pytest - Part 1"
+
+[[input.files]]
+path = "blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/index.html"
+url = "blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"
+title = "Delegation: composition and inheritance in object-oriented programming"
+
+[[input.files]]
+path = "blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/index.html"
+url = "blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/"
+title = "A game of tokens: write an interpreter in Python with TDD - Part 5"
+
+[[input.files]]
+path = "blog/2020/07/18/emacs-configuration-for-python-javascript-terraform-and-blogging/index.html"
+url = "blog/2020/07/18/emacs-configuration-for-python-javascript-terraform-and-blogging/"
+title = "Emacs Configuration for Python/JavaScript, Terraform and blogging"
+
+[[input.files]]
+path = "blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/index.html"
+url = "blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/"
+title = "Flask project setup: TDD, Docker, Postgres and more - Part 3"
+
+[[input.files]]
+path = "blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/index.html"
+url = "blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/"
+title = "Flask project setup: TDD, Docker, Postgres and more - Part 2"
+
+[[input.files]]
+path = "blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/index.html"
+url = "blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/"
+title = "Flask project setup: TDD, Docker, Postgres and more - Part 1"
+
+[[input.files]]
+path = "blog/2020/04/26/object-oriented-programming-concepts-in-python/index.html"
+url = "blog/2020/04/26/object-oriented-programming-concepts-in-python/"
+title = "Object-Oriented Programming (OOP) concepts in Python"
+
+[[input.files]]
+path = "blog/2020/03/27/mixin-classes-in-python/index.html"
+url = "blog/2020/03/27/mixin-classes-in-python/"
+title = "Multiple inheritance and mixin classes in Python"
+
+[[input.files]]
+path = "blog/2020/02/16/dissecting-a-web-stack/index.html"
+url = "blog/2020/02/16/dissecting-a-web-stack/"
+title = "Dissecting a Web stack"
+
+[[input.files]]
+path = "blog/2019/11/21/punch-2-0-0/index.html"
+url = "blog/2019/11/21/punch-2-0-0/"
+title = "Punch 2.0.0 is out"
+
+[[input.files]]
+path = "blog/2019/06/07/run-a-pelican-blog/index.html"
+url = "blog/2019/06/07/run-a-pelican-blog/"
+title = "Run a blog with pelican"
+
+[[input.files]]
+path = "blog/2019/05/27/youtube-channel/index.html"
+url = "blog/2019/05/27/youtube-channel/"
+title = "The Digital Cat Youtube Channel"
+
+[[input.files]]
+path = "blog/2019/03/04/motorola-68000-addressing-modes/index.html"
+url = "blog/2019/03/04/motorola-68000-addressing-modes/"
+title = "Motorola 68000: addressing modes"
+
+[[input.files]]
+path = "blog/2019/02/19/exploring-the-amiga-8/index.html"
+url = "blog/2019/02/19/exploring-the-amiga-8/"
+title = "Exploring the Amiga - Part 8"
+
+[[input.files]]
+path = "blog/2019/02/19/exploring-the-amiga-7/index.html"
+url = "blog/2019/02/19/exploring-the-amiga-7/"
+title = "Exploring the Amiga - Part 7"
+
+[[input.files]]
+path = "blog/2018/12/20/cabook/index.html"
+url = "blog/2018/12/20/cabook/"
+title = "Clean Architectures in Python: the book"
+
+[[input.files]]
+path = "blog/2018/07/05/useful-pytest-command-line-options/index.html"
+url = "blog/2018/07/05/useful-pytest-command-line-options/"
+title = "Useful pytest command line options"
+
+[[input.files]]
+path = "blog/2018/06/25/exploring-the-amiga-6/index.html"
+url = "blog/2018/06/25/exploring-the-amiga-6/"
+title = "Exploring the Amiga - Part 6"
+
+[[input.files]]
+path = "blog/2018/06/25/exploring-the-amiga-5/index.html"
+url = "blog/2018/06/25/exploring-the-amiga-5/"
+title = "Exploring the Amiga - Part 5"
+
+[[input.files]]
+path = "blog/2018/06/14/exploring-the-amiga-4/index.html"
+url = "blog/2018/06/14/exploring-the-amiga-4/"
+title = "Exploring the Amiga - Part 4"
+
+[[input.files]]
+path = "blog/2018/06/08/exploring-the-amiga-3/index.html"
+url = "blog/2018/06/08/exploring-the-amiga-3/"
+title = "Exploring the Amiga - Part 3"
+
+[[input.files]]
+path = "blog/2018/06/02/a-game-of-tokens-solution-part-4/index.html"
+url = "blog/2018/06/02/a-game-of-tokens-solution-part-4/"
+title = "A game of tokens: solution - Part 4"
+
+[[input.files]]
+path = "blog/2018/06/02/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-4/index.html"
+url = "blog/2018/06/02/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-4/"
+title = "A game of tokens: write an interpreter in Python with TDD - Part 4"
+
+[[input.files]]
+path = "blog/2018/05/28/exploring-the-amiga-2/index.html"
+url = "blog/2018/05/28/exploring-the-amiga-2/"
+title = "Exploring the Amiga - Part 2"
+
+[[input.files]]
+path = "blog/2018/05/28/exploring-the-amiga-1/index.html"
+url = "blog/2018/05/28/exploring-the-amiga-1/"
+title = "Exploring the Amiga - Part 1"
+
+[[input.files]]
+path = "blog/2018/04/25/rsa-keys/index.html"
+url = "blog/2018/04/25/rsa-keys/"
+title = "Public key cryptography: RSA keys"
+
+[[input.files]]
+path = "blog/2018/04/06/introduction-to-hashing/index.html"
+url = "blog/2018/04/06/introduction-to-hashing/"
+title = "Introduction to hashing"
+
+[[input.files]]
+path = "blog/2017/10/31/a-game-of-tokens-solution-part-3/index.html"
+url = "blog/2017/10/31/a-game-of-tokens-solution-part-3/"
+title = "A game of tokens: solution - Part 3"
+
+[[input.files]]
+path = "blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/index.html"
+url = "blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/"
+title = "A game of tokens: write an interpreter in Python with TDD - Part 3"
+
+[[input.files]]
+path = "blog/2017/10/17/a-game-of-tokens-solution-part-2/index.html"
+url = "blog/2017/10/17/a-game-of-tokens-solution-part-2/"
+title = "A game of tokens: solution - Part 2"
+
+[[input.files]]
+path = "blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2/index.html"
+url = "blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2/"
+title = "A game of tokens: write an interpreter in Python with TDD - Part 2"
+
+[[input.files]]
+path = "blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/index.html"
+url = "blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/"
+title = "Refactoring with tests in Python: a practical example"
+
+[[input.files]]
+path = "blog/2017/07/12/a-game-of-tokens-solution-part-1/index.html"
+url = "blog/2017/07/12/a-game-of-tokens-solution-part-1/"
+title = "A game of tokens: solution - Part 1"
+
+[[input.files]]
+path = "blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/index.html"
+url = "blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/"
+title = "A game of tokens: write an interpreter in Python with TDD - Part 1"
+
+[[input.files]]
+path = "blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/index.html"
+url = "blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"
+title = "Clean architectures in Python: a step-by-step example"
+
+[[input.files]]
+path = "blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/index.html"
+url = "blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/"
+title = "Python Mocks: a gentle introduction - Part 2"
+
+[[input.files]]
+path = "blog/2016/05/31/punch-update-your-version-while-having-a-drink/index.html"
+url = "blog/2016/05/31/punch-update-your-version-while-having-a-drink/"
+title = "Punch - Update your version while having a drink"
+
+[[input.files]]
+path = "blog/2016/04/03/abstract-base-classes-in-python/index.html"
+url = "blog/2016/04/03/abstract-base-classes-in-python/"
+title = "Abstract Base Classes in Python"
+
+[[input.files]]
+path = "blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/index.html"
+url = "blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"
+title = "Python Mocks: a gentle introduction - Part 1"
+
+[[input.files]]
+path = "blog/2015/09/22/clojure-sequential-data-types-for-python-programmers/index.html"
+url = "blog/2015/09/22/clojure-sequential-data-types-for-python-programmers/"
+title = "Clojure sequential data types for Python programmers"
+
+[[input.files]]
+path = "blog/2015/09/10/python-oop-tdd-example-part2/index.html"
+url = "blog/2015/09/10/python-oop-tdd-example-part2/"
+title = "A simple example of Python OOP development (with TDD) - Part 2"
+
+[[input.files]]
+path = "blog/2015/06/22/using-gitflow-with-github-a-simple-procedure/index.html"
+url = "blog/2015/06/22/using-gitflow-with-github-a-simple-procedure/"
+title = "Using gitflow with GitHub: a simple procedure"
+
+[[input.files]]
+path = "blog/2015/05/13/python-oop-tdd-example-part1/index.html"
+url = "blog/2015/05/13/python-oop-tdd-example-part1/"
+title = "A simple example of Python OOP development (with TDD) - Part 1"
+
+[[input.files]]
+path = "blog/2015/05/13/99-scala-problems-16-20/index.html"
+url = "blog/2015/05/13/99-scala-problems-16-20/"
+title = "99 Scala Problems 16-20"
+
+[[input.files]]
+path = "blog/2015/04/23/python-decorators-metaprogramming-with-style/index.html"
+url = "blog/2015/04/23/python-decorators-metaprogramming-with-style/"
+title = "Python decorators: metaprogramming with style"
+
+[[input.files]]
+path = "blog/2015/04/14/99-scala-problems-15-duplicate-the-elements-of-a-list-a-given-number-of-times/index.html"
+url = "blog/2015/04/14/99-scala-problems-15-duplicate-the-elements-of-a-list-a-given-number-of-times/"
+title = "99 Scala Problems 15 - Duplicate the elements of a list a given number of times"
+
+[[input.files]]
+path = "blog/2015/04/14/99-scala-problems-14-duplicate-the-elements-of-a-list/index.html"
+url = "blog/2015/04/14/99-scala-problems-14-duplicate-the-elements-of-a-list/"
+title = "99 Scala Problems 14 - Duplicate the elements of a list"
+
+[[input.files]]
+path = "blog/2015/04/14/99-scala-problems-13-run-length-encoding-of-a-list-direct-solution/index.html"
+url = "blog/2015/04/14/99-scala-problems-13-run-length-encoding-of-a-list-direct-solution/"
+title = "99 Scala Problems 13 - Run-length encoding of a list (direct solution)"
+
+[[input.files]]
+path = "blog/2015/04/14/99-scala-problems-12-decode-a-run-length-encoded-list/index.html"
+url = "blog/2015/04/14/99-scala-problems-12-decode-a-run-length-encoded-list/"
+title = "99 Scala Problems 12 - Decode a run-length encoded list"
+
+[[input.files]]
+path = "blog/2015/04/14/99-scala-problems-11-modified-run-length-encoding/index.html"
+url = "blog/2015/04/14/99-scala-problems-11-modified-run-length-encoding/"
+title = "99 Scala Problems 11 - Modified run-length encoding"
+
+[[input.files]]
+path = "blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list/index.html"
+url = "blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list/"
+title = "99 Scala Problems 10 - Run-length encoding of a list."
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-index/index.html"
+url = "blog/2015/04/07/99-scala-problems-index/"
+title = "99 Scala Problems Index"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/index.html"
+url = "blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/"
+title = "99 Scala Problems 09 - Pack consecutive duplicates of list elements into sublists"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/index.html"
+url = "blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/"
+title = "99 Scala Problems 08 - Eliminate consecutive duplicates of list elements"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-07-flatten/index.html"
+url = "blog/2015/04/07/99-scala-problems-07-flatten/"
+title = "99 Scala Problems 07 - Flatten a nested list structure"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-06-palindome/index.html"
+url = "blog/2015/04/07/99-scala-problems-06-palindome/"
+title = "99 Scala Problems 06 - Find out whether a list is a palindrome"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-05-reverse/index.html"
+url = "blog/2015/04/07/99-scala-problems-05-reverse/"
+title = "99 Scala Problems 05 - Reverse a list"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-04-length/index.html"
+url = "blog/2015/04/07/99-scala-problems-04-length/"
+title = "99 Scala Problems 04 - Find the number of elements of a list"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-03-find-kth/index.html"
+url = "blog/2015/04/07/99-scala-problems-03-find-kth/"
+title = "99 Scala Problems 03 - Find the Kth element of a list"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-02-find-last-nth/index.html"
+url = "blog/2015/04/07/99-scala-problems-02-find-last-nth/"
+title = "99 Scala Problems 02 - Find the last but one element of a list"
+
+[[input.files]]
+path = "blog/2015/04/07/99-scala-problems-01-find-last-element/index.html"
+url = "blog/2015/04/07/99-scala-problems-01-find-last-element/"
+title = "99 Scala Problems 01 - Find the last element of a list"
+
+[[input.files]]
+path = "blog/2015/03/14/python-3-oop-notebooks/index.html"
+url = "blog/2015/03/14/python-3-oop-notebooks/"
+title = "Python 3 OOP Notebooks"
+
+[[input.files]]
+path = "blog/2015/02/11/default-arguments-in-python/index.html"
+url = "blog/2015/02/11/default-arguments-in-python/"
+title = "Default arguments in Python"
+
+[[input.files]]
+path = "blog/2015/01/12/accessing-attributes-in-python/index.html"
+url = "blog/2015/01/12/accessing-attributes-in-python/"
+title = "Accessing attributes in Python"
+
+[[input.files]]
+path = "blog/2014/10/14/decorators-and-metaclasses/index.html"
+url = "blog/2014/10/14/decorators-and-metaclasses/"
+title = "Advanced use of Python decorators and metaclasses"
+
+[[input.files]]
+path = "blog/2014/09/04/python-3-oop-part-6-abstract-base-classes/index.html"
+url = "blog/2014/09/04/python-3-oop-part-6-abstract-base-classes/"
+title = "Object-Oriented Programming in Python 3 - Abstract Base Classes"
+
+[[input.files]]
+path = "blog/2014/09/01/python-3-oop-part-5-metaclasses/index.html"
+url = "blog/2014/09/01/python-3-oop-part-5-metaclasses/"
+title = "Object-Oriented Programming in Python 3 - Metaclasses"
+
+[[input.files]]
+path = "blog/2014/08/21/python-3-oop-part-4-polymorphism/index.html"
+url = "blog/2014/08/21/python-3-oop-part-4-polymorphism/"
+title = "Object-Oriented Programming in Python 3 - Polymorphism"
+
+[[input.files]]
+path = "blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/index.html"
+url = "blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/"
+title = "Object-Oriented Programming in Python 3 - Composition and inheritance"
+
+[[input.files]]
+path = "blog/2014/08/20/python-3-oop-part-2-classes-and-members/index.html"
+url = "blog/2014/08/20/python-3-oop-part-2-classes-and-members/"
+title = "Object-Oriented Programming in Python 3 - Classes and members"
+
+[[input.files]]
+path = "blog/2014/08/20/python-3-oop-part-1-objects-and-types/index.html"
+url = "blog/2014/08/20/python-3-oop-part-1-objects-and-types/"
+title = "Object-Oriented Programming in Python 3 - Objects and types"
+
+[[input.files]]
+path = "blog/2014/07/04/oop-concepts-in-python-2-dot-x-part-3/index.html"
+url = "blog/2014/07/04/oop-concepts-in-python-2-dot-x-part-3/"
+title = "OOP concepts in Python 2.x - Part 3"
+
+[[input.files]]
+path = "blog/2014/05/19/method-overriding-in-python/index.html"
+url = "blog/2014/05/19/method-overriding-in-python/"
+title = "Method overriding in Python"
+
+[[input.files]]
+path = "blog/2014/03/10/oop-concepts-in-python-2-dot-x-part-2/index.html"
+url = "blog/2014/03/10/oop-concepts-in-python-2-dot-x-part-2/"
+title = "OOP concepts in Python 2.x - Part 2"
+
+[[input.files]]
+path = "blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1/index.html"
+url = "blog/2014/03/05/oop-concepts-in-python-2-dot-x-part-1/"
+title = "OOP concepts in Python 2.x - Part 1"
+
+[[input.files]]
+path = "blog/2014/02/14/digging-up-django-class-based-views-3/index.html"
+url = "blog/2014/02/14/digging-up-django-class-based-views-3/"
+title = "Digging up Django class-based views - 3"
+
+[[input.files]]
+path = "blog/2013/12/11/digging-up-django-class-based-views-2/index.html"
+url = "blog/2013/12/11/digging-up-django-class-based-views-2/"
+title = "Digging up Django class-based views - 2"
+
+[[input.files]]
+path = "blog/2013/10/28/digging-up-django-class-based-views-1/index.html"
+url = "blog/2013/10/28/digging-up-django-class-based-views-1/"
+title = "Digging up Django class-based views - 1"
+
+[[input.files]]
+path = "blog/2013/08/21/some-tips-about-amqp-direct-exchanges/index.html"
+url = "blog/2013/08/21/some-tips-about-amqp-direct-exchanges/"
+title = "Some tips about AMQP direct exchanges"
+
+[[input.files]]
+path = "blog/2013/07/25/postage-a-rabbitmq-based-component-python-library/index.html"
+url = "blog/2013/07/25/postage-a-rabbitmq-based-component-python-library/"
+title = "Postage - a RabbitMQ-based component Python library"
+
+[[input.files]]
+path = "blog/2013/06/20/the-lord-of-the-rings-an-erlang-epic/index.html"
+url = "blog/2013/06/20/the-lord-of-the-rings-an-erlang-epic/"
+title = "The Lord of the Rings: an Erlang epic"
+
+[[input.files]]
+path = "blog/2013/05/30/error-handling-in-erlang-a-primer/index.html"
+url = "blog/2013/05/30/error-handling-in-erlang-a-primer/"
+title = "Error handling in Erlang - a primer"
+
+[[input.files]]
+path = "blog/2013/04/23/concurrent-programming-6/index.html"
+url = "blog/2013/04/23/concurrent-programming-6/"
+title = "Concurrent programming - 6"
+
+[[input.files]]
+path = "blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/index.html"
+url = "blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/"
+title = "Python Generators - From Iterators to Cooperative Multitasking - 3"
+
+[[input.files]]
+path = "blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/index.html"
+url = "blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/"
+title = "Python Generators - From Iterators to Cooperative Multitasking - 2"
+
+[[input.files]]
+path = "blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/index.html"
+url = "blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/"
+title = "Python generators - from iterators to cooperative multitasking"
+
+[[input.files]]
+path = "blog/2013/03/20/versioning-an-underrated-discipline/index.html"
+url = "blog/2013/03/20/versioning-an-underrated-discipline/"
+title = "Versioning - An underrated discipline"
+
+[[input.files]]
+path = "blog/2013/02/28/concurrent-programming-5/index.html"
+url = "blog/2013/02/28/concurrent-programming-5/"
+title = "Concurrent programming - 5"
+
+[[input.files]]
+path = "blog/2013/02/13/concurrent-programming-4/index.html"
+url = "blog/2013/02/13/concurrent-programming-4/"
+title = "Concurrent programming - 4"
+
+[[input.files]]
+path = "blog/2013/02/06/concurrent-programming-3/index.html"
+url = "blog/2013/02/06/concurrent-programming-3/"
+title = "Concurrent programming - 3"
+
+[[input.files]]
+path = "blog/2013/02/04/concurrent-programming-2/index.html"
+url = "blog/2013/02/04/concurrent-programming-2/"
+title = "Concurrent programming - 2"
+
+[[input.files]]
+path = "blog/2013/01/31/concurrent-programming-1/index.html"
+url = "blog/2013/01/31/concurrent-programming-1/"
+title = "Concurrent programming - 1"
+

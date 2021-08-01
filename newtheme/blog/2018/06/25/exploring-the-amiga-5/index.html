@@ -1,0 +1,760 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+        <title>The Digital Cat - Exploring the Amiga - Part 5</title>
+	<meta charset="utf-8" />
+	<meta http-equiv='content-language' content='en-gb'>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="description" content="List management in Kickstart 1.3">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Exploring the Amiga - Part 5" />
+<meta name="twitter:description" content="List management in Kickstart 1.3" />
+<meta name="twitter:image" content="../../../../../images/exploring-the-amiga-5.jpg" />
+	<script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700">
+
+        <link rel="stylesheet" href="/theme/webassets-external/4a9e78055c32c64c0053d516051922e1_main.css">
+        <link rel="stylesheet" href="/theme/webassets-external/29e84bb99f5d774b43b32c32b0e1cf63_custom.css">
+        <link rel="stylesheet" href="/theme/webassets-external/bb3753b8350cbac2c66e937353842ee9_default.css">
+
+<link id="style-retro" rel="stylesheet" href="/theme/webassets-external/17c245c5167387c25ab55cafb75ac886_retro.css">
+        
+        <link href="/images/global/favicon.jpg" rel="icon">
+
+
+
+<script type="application/ld+json">
+  {
+      "@context" : "https://schema.org",
+      "@type" : "Article",
+      "name" : "Exploring the Amiga - Part 5",
+      "author" : {
+	  "@type" : "Person",
+	  "name" : "Leonardo Giordani"
+      },
+      "publisher" : {
+	  "@type" : "Organization",
+	  "name" : "The Digital Cat",
+	  "logo" : {
+	      "@type" : "ImageObject",
+	      "url" : "../../../../../images/global/logo_200.jpg",
+	      "height" : 200,
+	      "width" : 200
+	  }
+      },
+      "mainEntityOfPage": {
+	  "@type": "WebPage",
+	  "@id": "../../../../../blog/2018/06/25/exploring-the-amiga-5/"
+      },
+      "datePublished" : "25/06/2018",
+      "dateModified" : "26/02/2021",
+      "image" : "../../../../../images/exploring-the-amiga-5.jpg",
+      "description" : "List management in Kickstart 1.3",
+      "headline" : "List management in Kickstart 1.3",
+      "url" : "../../../../../blog/2018/06/25/exploring-the-amiga-5/"
+  }
+</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+<header id="header">
+  <a class="logo" href="/category/retro/" title="Retro">All posts in category Retro <i class="fas fa-link"></i></a>
+  <div class="align-right">
+
+    <a href="/blog/2018/06/14/exploring-the-amiga-4/"><i class="fas fa-caret-square-left"></i></a>
+    
+    Exploring the Amiga #5
+
+    <a href="/blog/2018/06/25/exploring-the-amiga-6/"><i class="fas fa-caret-square-right"></i></a>
+
+  </div>
+</header>
+
+<!-- <article class="post"> -->
+
+  <section id="header">
+    <header class="main">
+      <h1>Exploring the Amiga - Part 5</h1>
+    </header>
+  </section>
+
+  <section id="post-info">
+    <p class="article-info">
+    By Leonardo Giordani
+
+    <span class="fas fa-calendar-alt"></span> <time datetime="2018-06-25T12:00:00+01:00"> 25/06/2018</time>
+
+    <span class="fas fa-edit"></span> <time datetime="2021-02-26T08:00:00+00:00"> 26/02/2021</time>
+
+    <span class="fas fa-tags"></span>
+    <a class="tag" href="/categories/assembly/">assembly</a>    <a class="tag" href="/categories/amiga/">amiga</a>    <a class="tag" href="/categories/retroprogramming/">retroprogramming</a>    <br>
+    Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Exploring%20the%20Amiga%20-%20Part%205&url=/blog/2018/06/25/exploring-the-amiga-5/&via=thedigicat&hashtags=assembly,amiga,retroprogramming" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=/blog/2018/06/25/exploring-the-amiga-5/&title=Exploring%20the%20Amiga%20-%20Part%205&summary=List%20management%20in%20Kickstart%201.3&source=/blog/2018/06/25/exploring-the-amiga-5/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Exploring%20the%20Amiga%20-%20Part%205&u=/blog/2018/06/25/exploring-the-amiga-5/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Exploring%20the%20Amiga%20-%20Part%205&amp;body=/blog/2018/06/25/exploring-the-amiga-5/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=/blog/2018/06/25/exploring-the-amiga-5/&title=Exploring%20the%20Amiga%20-%20Part%205" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span>    </p>
+  </section>
+
+  <section id="content">
+    <p><button onclick="hideStyle()">Toggle retro style</button></p><p>Memory management is always one of the most rich and complex parts of an architecture, mainly because the available amount of memory is always less than what you would like to have. <a href="https://users.ece.cmu.edu/~koopman/titan/rules.html">Always</a>.</p><p>It is also an interesting topic because memory is generally managed by both the hardware and the software. The microprocessor may provide a memory management unit (MMU) that enforces a specific schema and the software has to implement its own algorithms on top of that.</p><p>The Amiga originally run on a Motorola 68k, which doesn't provide any memory management in hardware. This means that there is no way for the processor to block attempts to read memory by a process, a feature that wasn't present on the first Intel x86 processors as well. Intel "solved" the issue with the introduction of the protected mode in the 386 family (even though an initial version was already present on the 286 processors). Motorola provided external MMUs for the 68010 and 68020, while the 68030 and later processor feature an on-chip MMU. </p><p>The Motorola 68k is a 32-bit processor, thus registers and the address bus have that size. The memory, however, is connected to only 24 of the 32 lines of the bus, which means that the total memory space addressable by the processor is a 24-bit space, that gives 16 Megabytes instead of the possible 4 Gigabytes. That amount of memory was however enough for the period when the Amiga was designed. Consider that the most successful model of Amiga, the Amiga 500, had 500 KBytes of memory, sometimes increased to 1 Megabyte through a memory expansion.</p><p>The lack of a memory scheme enforced by the processor means that at boot time the memory is just a flat area that can be addressed directly. As we saw in the previous instalments, Exec creates its own structure in memory, generating the library node and creating the library jump table. This happens in the bigger picture of the machine initialisation, and one of the tasks performed during this initialisation is the setup of the memory management structures.</p><h2 id="the-exec-base-address">The Exec base address<a class="headerlink" href="#the-exec-base-address" title="Permanent link">¶</a></h2><p>Every Amiga programmer knows that address <code>0x4</code> contains the Exec base address, and I showed in past instalments how this is used in conjunction with the jump table to call the library functions.</p><p>The reason why the Exec base address is stored there is however seldom mentioned. As a matter of fact that address is not just a random choice.</p><p>The Motorola 68000 family reserves the first Kilobyte of memory for exception vectors, that is code that will be executed when something wrong happens. "Wrong" here means bad at hardware level, from a divide by zero to a bus error. This is enforced by the Motorola 68k architecture and thus is a feature shared by other computers and consoles based on it.</p><p>The first two of these vectors are actually used when the processor is powering-up (or in general when it resets). And the vector number 1 (the second) at offset <code>0x4</code> is the Reset Initial Program Counter.</p><p>After a reset the processor initialises the Program Counter with the address stored at <code>0x4</code> in the memory. When the CPU is switched on, however, the Kickstart ROM is copied in memory, thus the addresses 0 and 4 (first two exception vectors) are the addresses listed in the ROM itself.</p><p>The very first 8 bytes of the Kickstart ROM are</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00000000: 1111
+00000002: 4ef9 00fc 00d2            jmp     0xfc00d2.l
+</pre></div>
+</div></div><p>and you can clearly see that the long word at address <code>0x4</code> is <code>00fc 00d2</code>. This actually corresponds to the address where the initial code of the ROM is</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>000000d2: 4ff9 0004 0000            lea     0x40000.l,sp
+</pre></div>
+</div></div><p>which sets the stack pointer, but I'll keep this analysis for a future post.</p><p>The address <code>0x4</code> is then free to be used during the normal execution, since it is used only during a reset, but in that case whatever we wrote there (the Exec base address) is overwritten by the ROM code.</p><h2 id="list-headers">List headers<a class="headerlink" href="#list-headers" title="Permanent link">¶</a></h2><p>Exec manages memory and resources using <a href="https://en.wikipedia.org/wiki/Linked_list">linked</a>. As you know, to manage a linked list we need the address (pointer) of the head, of the tail, and also of the second-to-last element (the tail predecessor), to allow the tail to be detached and replaced. Actually it is evident that, given the convention that the last node is connected to the address 0, the only value we need is the address of the list head. The two additional addresses, however, can greatly simplify the code that manages the list and can greatly increase the performances, avoiding the need of a complete scan of the list to find the last element every time we want to add something to the end of the list.</p><p>The Exec library provides a nice structure to manage lists, <code>LH</code>. The structure is defined in <code>include_i/exec/lists.i</code></p><div class="code"><div class="content"><div class="highlight"><pre><span></span>   STRUCTURE    LH,0
+    APTR    LH_HEAD
+    APTR    LH_TAIL
+    APTR    LH_TAILPRED
+    UBYTE   LH_TYPE
+    UBYTE   LH_pad
+    LABEL   LH_SIZE ;word aligned
+</pre></div>
+</div></div><p>The only two fields that this structure adds compared to the previous description are <code>LH_TYPE</code>, that unsurprisingly contains the type of the data contained in the list, and <code>LH_pad</code> which is nothing but what the name suggests, a padding that allows the structure to be word aligned.</p><p>We need now to discover where Exec keeps the header for the memory list. Analysing the <code>ExecBase</code> structure contained in <code>include_i/exec/execbase.i</code> we find the following definitions</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>******* System List Headers (private!) ********************************
+
+    STRUCT  MemList,LH_SIZE
+    STRUCT  ResourceList,LH_SIZE
+    STRUCT  DeviceList,LH_SIZE
+    STRUCT  IntrList,LH_SIZE
+    STRUCT  LibList,LH_SIZE
+    STRUCT  PortList,LH_SIZE
+    STRUCT  TaskReady,LH_SIZE
+    STRUCT  TaskWait,LH_SIZE
+    STRUCT  SoftInts,SH_SIZE*5
+</pre></div>
+</div></div><p>which is exactly what we wanted. When Exec installs itself in the first part of the memory it will also initialise these headers to keep track of the corresponding resources.</p><p>It is interesting to note, however, that the ExecBase structure described in the include files is not used directly, but is more a description of what the code is going to create. This is a bit different from what higher level languages like C use to do. In C you declare a structure, you reserve memory for it, and then access its fields. In Assembly, ultimately, there is no such a concept as a structure and a field. We have only a (flat) memory and addresses.</p><p>Since ExecBase is a description of the structure of Exec once it will be installed in memory it is interesting to run through its fields and annotate the relative address of each of them.</p><p>I took the code contained in <code>include_i/exec/execbase.i</code> and I computed the address of each field. The first column contains the relative address inside the structure (thus starting from <code>0x0</code>), while the second column contains the address relative to the Exec base address. As shown in the fourth post the <code>LN</code> and <code>LIB</code> structures fill the first 34 bytes, which is why the following starting address is <code>0x22</code></p><div class="code"><div class="content"><div class="highlight"><pre><span></span>0000 0022    UWORD   SoftVer ; kickstart release number (obs.)
+0002 0024    WORD    LowMemChkSum    ; checksum of 68000 trap vectors
+0004 0026    ULONG   ChkBase ; system base pointer complement
+0008 002a    APTR    ColdCapture ; coldstart soft capture vector
+000c 002e    APTR    CoolCapture ; coolstart soft capture vector
+0010 0032    APTR    WarmCapture ; warmstart soft capture vector
+0014 0036    APTR    SysStkUpper ; system stack base   (upper bound)
+0018 003a    APTR    SysStkLower ; top of system stack (lower bound)
+001c 003e    ULONG   MaxLocMem   ; top of chip memory
+0020 0042    APTR    DebugEntry  ; global debugger entry point
+0024 0046    APTR    DebugData   ; global debugger data segment
+0028 004a    APTR    AlertData   ; alert data segment
+002c 004e    APTR    MaxExtMem   ; top of extended mem, or null if none
+
+0030 0052    WORD    ChkSum      ; for all of the above (minus 2)
+
+
+******* Interrupt Related ********************************************
+
+    LABEL   IntVects
+0032 0054    STRUCT  IVTBE,IV_SIZE
+003e 0060    STRUCT  IVDSKBLK,IV_SIZE
+004a 006c    STRUCT  IVSOFTINT,IV_SIZE
+0056 0078    STRUCT  IVPORTS,IV_SIZE
+0062 0084    STRUCT  IVCOPER,IV_SIZE
+006e 0090    STRUCT  IVVERTB,IV_SIZE
+007a 009c    STRUCT  IVBLIT,IV_SIZE
+0086 00a8    STRUCT  IVAUD0,IV_SIZE
+0092 00b4    STRUCT  IVAUD1,IV_SIZE
+009e 00c0    STRUCT  IVAUD2,IV_SIZE
+00aa 00cc    STRUCT  IVAUD3,IV_SIZE
+00b6 00d8    STRUCT  IVRBF,IV_SIZE
+00c2 00e4    STRUCT  IVDSKSYNC,IV_SIZE
+00ce 00f0    STRUCT  IVEXTER,IV_SIZE
+00da 00fc    STRUCT  IVINTEN,IV_SIZE
+00e6 0108    STRUCT  IVNMI,IV_SIZE
+
+
+******* Dynamic System Variables *************************************
+
+00f2 0114    APTR    ThisTask    ; pointer to current task (readable)
+
+00f6 0118    ULONG   IdleCount   ; idle counter
+00fa 011c    ULONG   DispCount   ; dispatch counter
+00fe 0120    UWORD   Quantum ; time slice quantum
+0100 0122    UWORD   Elapsed ; current quantum ticks
+0102 0124    UWORD   SysFlags    ; misc internal system flags
+0104 0126    BYTE    IDNestCnt   ; interrupt disable nesting count
+0105 0127    BYTE    TDNestCnt   ; task disable nesting count
+
+0106 0128    UWORD   AttnFlags   ; special attention flags (readable)
+
+0108 012a    UWORD   AttnResched ; rescheduling attention
+010a 012c    APTR    ResModules  ; pointer to resident module array
+010e 0130    APTR    TaskTrapCode    ; default task trap routine
+0112 0134    APTR    TaskExceptCode  ; default task exception code
+0116 0138    APTR    TaskExitCode    ; default task exit code
+011a 013c    ULONG   TaskSigAlloc    ; preallocated signal mask
+011e 0140    UWORD   TaskTrapAlloc   ; preallocated trap mask
+
+
+******* System List Headers (private!) ********************************
+
+0120 0142    STRUCT  MemList,LH_SIZE
+012e 0150    STRUCT  ResourceList,LH_SIZE
+013c 015e    STRUCT  DeviceList,LH_SIZE
+014a 016c    STRUCT  IntrList,LH_SIZE
+0158 017a    STRUCT  LibList,LH_SIZE
+0166 0188    STRUCT  PortList,LH_SIZE
+0174 0196    STRUCT  TaskReady,LH_SIZE
+0182 01a4    STRUCT  TaskWait,LH_SIZE
+0190 01b2    STRUCT  SoftInts,SH_SIZE*5
+
+01e0 0202    STRUCT  LastAlert,4*4
+
+01f0 0212    UBYTE   VBlankFrequency     ;(readable)
+01f1 0213    UBYTE   PowerSupplyFrequency    ;(readable)
+
+01f2 0214    STRUCT  SemaphoreList,LH_SIZE
+
+0200 0222    APTR    KickMemPtr  ; ptr to queue of mem lists
+0204 0226    APTR    KickTagPtr  ; ptr to rom tag queue
+0208 022a    APTR    KickCheckSum    ; checksum for mem and tags
+
+020c 022e    UBYTE ExecBaseReserved[10];
+0216 0238    UBYTE ExecBaseNewReserved[20];
+022a 024c    LABEL   SYSBASESIZE
+</pre></div>
+</div></div><p>According to this structure we expect to find the memory list header 322 bytes (<code>0x142</code>) after the base address, which means that this number should be mentioned somewhere in the Kickstart code.</p><p>It is not surprise indeed that the function <code>AllocMem</code> mentions it. This function is part of the Exec API that we explored in the third and fourth instalments. Following the same method described there I found the function at the address <code>0x17d0</code> in the Kickstart code</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>; memoryBlock = AllocMem(byteSize, attributes)
+; d0                     d0        d1
+
+000017d0: 522e 0127                 addq.b  #0x1,0x127(a6)
+000017d4: 48e7 3020                 movem.l d2-d3/a2,-(sp)
+000017d8: 2600                      move.l  d0,d3
+000017da: 2401                      move.l  d1,d2
+000017dc: 45ee 0142                 lea     0x142(a6),a2
+000017e0: 2452                      movea.l (a2),a2
+; ...
+</pre></div>
+</div></div><p>and in this initial part of the function we can clearly see the code that loads the effective address of <code>0x142(a6)</code>. Remember that <code>a6</code> is always supposed to contain the Exec base address.</p><p>The displacement <code>0x142</code> is also mentioned in a table towards the beginning of the code, and this is the part we are really interested in at the moment</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>; Initialise list headers
+
+000002b0: 43fa 0020                 lea     0x2d2(pc),a1
+000002b4: 3019                      move.w  (a1)+,d0
+000002b6: 6700 0086                 beq.w   0x33e
+000002ba: 41f6 0000                 lea     (0,a6,d0.w),a0
+000002be: 2088                      move.l  a0,(a0)
+000002c0: 5890                      addq.l  #0x4,(a0)
+000002c2: 42a8 0004                 clr.l   0x4(a0)
+000002c6: 2148 0008                 move.l  a0,0x8(a0)
+000002ca: 3019                      move.w  (a1)+,d0
+000002cc: 1140 000c                 move.b  d0,0xc(a0)
+000002d0: 60e2                      bra.b   0x2b4
+
+; List headers
+
+000002d2: 0142 000a
+000002d6: 0150 0008
+000002da: 015e 0003
+000002de: 017a 0009
+000002e2: 0188 0004
+000002e6: 0196 0001
+000002ea: 01a4 0001
+000002ee: 016c 0002
+000002f2: 01b2 000b
+000002f6: 01c2 000b
+000002fa: 01d2 000b
+000002fe: 01e2 000b
+00000302: 01f2 000b
+00000306: 0214 000f
+0000030a: 0000
+</pre></div>
+</div></div><p>As you can see I formatted the code to show that the values after <code>02d2</code> are data and not code. The disassembler will obviously show you some instructions but they are just misinterpretations of the binary data. AS it is usual in the Kickstart code, we have some procedure working on a set of data and the data is stored immediately after the code itself. The purpose of this procedure is that of creating the initial headers for the linked lists that Exec will use to manage the system resources.</p><p>This table is immediately followed by the table we found in the <a href="../../../../../blog/2018/06/08/exploring-the-amiga-3/">third post</a> of this series, when we were looking at the values of the <code>LIB</code> structure.</p><p>Let's comment line by line the code at <code>02b0</code></p><div class="code"><div class="content"><div class="highlight"><pre><span></span>; Initialise list headers
+
+000002b0: 43fa 0020                 lea     0x2d2(pc),a1
+000002b4: 3019                      move.w  (a1)+,d0
+000002b6: 6700 0086                 beq.w   0x33e
+000002ba: 41f6 0000                 lea     (0,a6,d0.w),a0
+000002be: 2088                      move.l  a0,(a0)
+000002c0: 5890                      addq.l  #0x4,(a0)
+000002c2: 42a8 0004                 clr.l   0x4(a0)
+000002c6: 2148 0008                 move.l  a0,0x8(a0)
+000002ca: 3019                      move.w  (a1)+,d0
+000002cc: 1140 000c                 move.b  d0,0xc(a0)
+000002d0: 60e2                      bra.b   0x2b4
+</pre></div>
+</div></div><div class="code"><div class="content"><div class="highlight"><pre><span></span>000002b0: 43fa 0020                 lea     0x2d2(pc),a1
+</pre></div>
+</div></div><p>First of all the code loads the absolute address of <code>0x2d2(pc)</code> in the <code>a1</code> register. This is exactly the beginning of the table, as shown above.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>000002b4: 3019                      move.w  (a1)+,d0
+000002b6: 6700 0086                 beq.w   0x33e
+</pre></div>
+</div></div><p>The code then loads the first value of the table (<code>0142</code>) in <code>d0</code> and increments <code>a1</code>. This suggests that we are looking at a loop. The following instruction is indeed a comparison that jumps to <code>0x33e</code> is the value is <code>0</code>. You can easily see above that the table is terminated by a <code>0000</code>.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>000002ba: 41f6 0000                 lea     (0,a6,d0.w),a0
+</pre></div>
+</div></div><p>The register <code>a0</code> is then loaded with the effective address of Exec + <code>d0</code>. This means that we use the value we just read from the table as a pointer. For the first value, then, we are looking at <code>0x142</code> bytes after the beginning of the Exec library, exactly where we expected to find the Memory List header.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>000002be: 2088                      move.l  a0,(a0)
+000002c0: 5890                      addq.l  #0x4,(a0)
+</pre></div>
+</div></div><p>An empty linked list has the head pointing to the tail and the tail pointing to zero. To do this we set the content of that address <code>(a0)</code> to the address itself (<code>a0</code>), then we increment it by 4 making it point to the tail.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>000002c2: 42a8 0004                 clr.l   0x4(a0)
+000002c6: 2148 0008                 move.l  a0,0x8(a0)
+</pre></div>
+</div></div><p>The tail itself is then cleared and the tail predecessor is set to be the head.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>000002ca: 3019                      move.w  (a1)+,d0
+000002cc: 1140 000c                 move.b  d0,0xc(a0)
+</pre></div>
+</div></div><p>The code then fetches the next word from the table (<code>000a</code>) and puts it into a field 12 bytes (<code>0xc</code>) from the beginning of the structure, that is <code>LH_TYPE</code>. The possible values of this byte can be found in <code>include_i/exec/nodes.i</code>, where we find that the value <code>0xa</code> corresponds to <code>NT_MEMORY</code>.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>;------ Node Types for LN_TYPE
+
+NT_UNKNOWN      EQU 0
+NT_TASK         EQU 1   ; Exec task
+NT_INTERRUPT    EQU 2
+NT_DEVICE       EQU 3
+NT_MSGPORT      EQU 4
+NT_MESSAGE      EQU 5   ; Indicates message currently pending
+NT_FREEMSG      EQU 6
+NT_REPLYMSG     EQU 7   ; Message has been replied
+NT_RESOURCE     EQU 8
+NT_LIBRARY      EQU 9
+NT_MEMORY       EQU 10
+NT_SOFTINT      EQU 11  ; Internal flag used by SoftInts
+NT_FONT         EQU 12
+NT_PROCESS      EQU 13  ; AmigaDOS Process
+NT_SEMAPHORE    EQU 14
+NT_SIGNALSEM    EQU 15  ; signal semaphores
+NT_BOOTNODE     EQU 16
+NT_KICKMEM      EQU 17
+NT_GRAPHICS     EQU 18
+NT_DEATHMESSAGE EQU 19
+
+NT_USER         EQU 254 ; User node types work down from here
+NT_EXTENDED     EQU 255
+</pre></div>
+</div></div><p>There is only one instruction left</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>000002d0: 60e2                      bra.b   0x2b4
+</pre></div>
+</div></div><p>which jumps back to the beginning of this short piece of code. The procedure then keeps looping on the whole table until it reaches the list terminator <code>0000</code>.</p><p>The final content of the memory at <code>0142</code> will be</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00000142: 0000 0146 ; LH_HEAD
+00000146: 0000 0000 ; LH_TAIL
+0000014a: 0000 0146 ; LH_TAILPRED
+0000014d: 0a        ; LH_TYPE
+</pre></div>
+</div></div><p>And the same happens for the remaining 7 lists from <code>ResourceList</code> to <code>TaskWait</code>. After this the Exec lists are initialised.</p><p>According to the values of <code>LN_TYPE</code> the list headers table is the following</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>000002d2: 0142 000a ; MemList (NT_MEMORY)
+000002d6: 0150 0008 ; ResourceList (NT_RESOURCE)
+000002da: 015e 0003 ; DeviceList (NT_DEVICE)
+000002de: 017a 0009 ; LibList (NT_LIBRARY)
+000002e2: 0188 0004 ; PortList (NT_MSGPORT)
+000002e6: 0196 0001 ; TaskReady (NT_TASK)
+000002ea: 01a4 0001 ; TaskWait (NT_TASK)
+000002ee: 016c 0002 ; IntrList (NT_INTERRUPT)
+000002f2: 01b2 000b ; SoftInts[0] (NT_SOFTINT)
+000002f6: 01c2 000b ; SoftInts[1] (NT_SOFTINT)
+000002fa: 01d2 000b ; SoftInts[2] (NT_SOFTINT)
+000002fe: 01e2 000b ; SoftInts[3] (NT_SOFTINT)
+00000302: 01f2 000b ; SoftInts[4] (NT_SOFTINT)
+00000306: 0214 000f ; SemaphoreList (NT_SIGNALSEM)
+0000030a: 0000
+</pre></div>
+</div></div><h2 id="whats-next">What's next<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h2><p>The next instalment of the series will cover the initial part of the system memory initialisation, both the standard one and potential expansions, introducing <code>AddMemList</code> for the first time. It will also discuss the origin of some important numbers used in the Kickstart code, <code>0x24c</code>, <code>0x400</code>, and <code>0x676</code>.</p><h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">¶</a></h2><ul><li>Microprocessor-based system design by Ricardo Gutierrez-Osuna (<a href="None">None</a>), in particular <a href="http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf">Lesson 9 - Exception processing</a></li><li>Motorola M68000 Family Programmer's Reference Manual - <a href="https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf">https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf</a></li></ul><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </section>
+
+  <section class="footer">
+    <h2>Part 5 of the Exploring the Amiga series</h2>
+    <div class="box">
+      <h5>Previous articles</h5>
+      <ul>
+        <li><a href="/blog/2018/05/28/exploring-the-amiga-1/">Exploring the Amiga - Part 1</a></li>
+        <li><a href="/blog/2018/05/28/exploring-the-amiga-2/">Exploring the Amiga - Part 2</a></li>
+        <li><a href="/blog/2018/06/08/exploring-the-amiga-3/">Exploring the Amiga - Part 3</a></li>
+        <li><a href="/blog/2018/06/14/exploring-the-amiga-4/">Exploring the Amiga - Part 4</a></li>
+      </ul>
+      
+      <h5>Next articles</h5>
+      <ul>
+        <li><a href="/blog/2018/06/25/exploring-the-amiga-6/">Exploring the Amiga - Part 6</a></li>
+        <li><a href="/blog/2019/02/19/exploring-the-amiga-7/">Exploring the Amiga - Part 7</a></li>
+        <li><a href="/blog/2019/02/19/exploring-the-amiga-8/">Exploring the Amiga - Part 8</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="footer">
+    <h2>Related Posts</h2>
+    <div class="posts mini">
+      <article class="card">
+        <a href="/blog/2019/02/19/exploring-the-amiga-8/" class="image">
+          <img src="/images/exploring-the-amiga-8.jpg" alt="exploring-the-amiga-8" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2019/02/19/exploring-the-amiga-8/"><h2 class="card-title">Exploring the Amiga - Part 8</h2></a>
+	  <p class="article-info">
+            <time datetime="2019-02-19T14:00:00+01:00">Feb 19, 2019</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2019/02/19/exploring-the-amiga-7/" class="image">
+          <img src="/images/exploring-the-amiga-7.jpg" alt="exploring-the-amiga-7" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2019/02/19/exploring-the-amiga-7/"><h2 class="card-title">Exploring the Amiga - Part 7</h2></a>
+	  <p class="article-info">
+            <time datetime="2019-02-19T13:00:00+01:00">Feb 19, 2019</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/06/25/exploring-the-amiga-6/" class="image">
+          <img src="/images/exploring-the-amiga-6.jpg" alt="exploring-the-amiga-6" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/06/25/exploring-the-amiga-6/"><h2 class="card-title">Exploring the Amiga - Part 6</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-06-25T13:00:00+01:00">Jun 25, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/06/14/exploring-the-amiga-4/" class="image">
+          <img src="/images/exploring-the-amiga-4.jpg" alt="exploring-the-amiga-4" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/06/14/exploring-the-amiga-4/"><h2 class="card-title">Exploring the Amiga - Part 4</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-06-14T14:30:00+01:00">Jun 14, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/06/08/exploring-the-amiga-3/" class="image">
+          <img src="/images/exploring-the-amiga-3.jpg" alt="exploring-the-amiga-3" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/06/08/exploring-the-amiga-3/"><h2 class="card-title">Exploring the Amiga - Part 3</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-06-08T12:30:00+01:00">Jun 8, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/05/28/exploring-the-amiga-2/" class="image">
+          <img src="/images/exploring-the-amiga-2.jpg" alt="exploring-the-amiga-2" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/05/28/exploring-the-amiga-2/"><h2 class="card-title">Exploring the Amiga - Part 2</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-05-28T15:00:00+01:00">May 28, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/05/28/exploring-the-amiga-1/" class="image">
+          <img src="/images/exploring-the-amiga-1.jpg" alt="exploring-the-amiga-1" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/05/28/exploring-the-amiga-1/"><h2 class="card-title">Exploring the Amiga - Part 1</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-05-28T14:00:00+01:00">May 28, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/amiga/" class="tag">amiga</a>            <a href="/categories/retroprogramming/" class="tag">retroprogramming</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2019/03/04/motorola-68000-addressing-modes/" class="image">
+          <img src="/images/mc68000.jpg" alt="mc68000" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2019/03/04/motorola-68000-addressing-modes/"><h2 class="card-title">Motorola 68000: addressing modes</h2></a>
+	  <p class="article-info">
+            <time datetime="2019-03-04T22:30:00+01:00">Mar 4, 2019</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/assembly/" class="tag">assembly</a>            <a href="/categories/m68000/" class="tag">M68000</a>          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+
+  <!-- </article> -->
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+<div class="inner">
+    <!-- Menu -->
+        <nav id="menu">
+            <header class="major">
+                <h2>Menu</h2>
+            </header>
+<ul>
+    <li><a href="/index.html">Homepage</a></li>
+    <li><a href="/pages/about.html">About</a></li>
+    <li><a href="/archives/index.html">Archives</a></li>
+</ul>        </nav>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Recent posts</h2>
+            </header>
+<div class="mini-posts">
+    <article>
+        <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/" class="image"><img src="/images/public-key-cryptography-openssh-private-keys.jpg" alt="public-key-cryptography-openssh-private-keys" /></a>
+        <p><strong>Public key cryptography: OpenSSH private keys</strong> <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/" class="image"><img src="/images/stop-using-tools-as-if-they-were-solutions.jpg" alt="stop-using-tools-as-if-they-were-solutions" /></a>
+        <p><strong>Stop using tools as if they were solutions</strong> <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/" class="image"><img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" /></a>
+        <p><strong>How to write a Pelican theme for your static website</strong> <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">Read</a></p> 
+    </article>
+</div>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Categories</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/category/programming/">Programming</a></li>
+    <li><a href="/category/projects/">Projects</a></li>
+    <li><a href="/category/retro/">Retro</a></li>
+</ul>
+        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Feeds</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/atom.xml"><i class="fas fa-rss"></i> All posts</a></li>
+
+
+    <li><a href="/category/retro/atom.xml"><i class="fas fa-rss"></i> All posts in category: Retro</a></li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Tags</h2>
+            </header>
+<ul class="list-inline list-clean" id="tags-side">
+    <li class="tag font-size-2">
+        <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Get in touch</h2>
+            </header>
+<ul class="contact">
+    
+    
+    
+    <li class="fa-twitter"><a href="https://twitter.com/thedigicat">Twitter</a></li>
+    
+    
+    
+    
+    <li class="fa-github"><a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+    
+</ul>        </section>
+
+    <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright">Editorial theme by: <a href="https://html5up.net">HTML5 UP</a>.</p>
+            <p class="copyright">Cover picture by: <a href="https://pxhere.com/en/photo/1428515">An Min @ pxhere.com</a></p>
+        </footer>
+
+</div>					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="/theme/js/jquery.min.js"></script>
+			<script src="/theme/js/browser.min.js"></script>
+			<script src="/theme/js/breakpoints.min.js"></script>
+            <script src="/theme/webassets-external/fbe79d99b38a8623685ff42823edd66f_util.js"></script>
+            <script src="/theme/webassets-external/0c2f3654914fe90dd661c09240b58315_main.js"></script>
+
+<script src="/theme/webassets-external/432296cb4c7bce63d0f4f7122ec654aa_retro.js"></script>
+
+	</body>
+</html>

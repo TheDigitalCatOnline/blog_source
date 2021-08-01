@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Digital Cat - Git</title><link href="/" rel="alternate"></link><link href="categories/git/atom.xml" rel="self"></link><id>/</id><updated>2019-11-21T16:00:00+01:00</updated><subtitle>Adventures of a curious cat in the land of programming</subtitle><entry><title>Punch 2.0.0 is out</title><link href="blog/2019/11/21/punch-2-0-0/" rel="alternate"></link><published>2019-11-21T16:00:00+01:00</published><updated>2019-11-21T16:00:00+01:00</updated><author><name>Leonardo Giordani</name></author><id>tag:None,2019-11-21:blog/2019/11/21/punch-2-0-0/</id><summary type="html"></summary><content type="html">&lt;p&gt;Punch 2.0.0 is out!&lt;/p&gt;
+&lt;p&gt;This is the latest release of the project that I started to replace bumpversion. Update your version while having a drink!&lt;/p&gt;
+&lt;p&gt;Punch is a configurable version updater, and you can use to automate the management of your project’s version number.&lt;/p&gt;
+&lt;p&gt;Changes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DEPRECATION&lt;/strong&gt; Punch doesn't support GLOBAL variables in the FILES variable anymore. The values given to fields in the FILES section are now simple strings and are not processed through Jinja2 anymore.&lt;/li&gt;
+&lt;li&gt;Initial drop of Python 2.x: the CI process doesn't test Python2.x anymore.&lt;/li&gt;
+&lt;li&gt;Complete review of documentation: the docs have been split in multiple files to make it easier to find information and to understand the program.&lt;/li&gt;
+&lt;li&gt;Initial implementation of automatic documentation from tests. Integration tests can now be parsed to extract examples for the documentation. See &lt;a href="https://punch.readthedocs.io/en/latest/test_examples/"&gt;Examples from the tests&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Named serializers: serializers now can be given a name through a dictionary syntax. With this change it becomes possible to select the serializer to use for the VCS. See &lt;a href="https://punch.readthedocs.io/en/latest/configuration/#globals"&gt;Configuration &amp;gt; GLOBALS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Complex serializers: standard serializers use the same pattern both for the search and for the replace actions. With complex serializers you can define two different patterns, one for each action. See &lt;a href="https://punch.readthedocs.io/en/latest/advanced/#complex-serializers"&gt;Advanced configuration &amp;gt; Complex serializers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The configuration of each file managed by Punch can override the global serializers or add new ones. See &lt;a href="https://punch.readthedocs.io/en/latest/configuration/#files"&gt;Configuration &amp;gt; FILES&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Release notes: Punch can be configured to check if a pattern based on the new version is present in the managed files. This makes it simple to check if HISTORY files have been updated without requiring to interrupt the execution of the program and later restore it. See &lt;a href="https://punch.readthedocs.io/en/latest/advanced/#release-notes"&gt;Advanced configuration &amp;gt; Release notes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Read the full documentation &lt;a href="https://punch.readthedocs.io/en/latest/"&gt;here&lt;/a&gt;&lt;/p&gt;</content><category term="Projects"></category><category term="Git"></category><category term="Python"></category><category term="Python3"></category><category term="versioning"></category></entry><entry><title>Punch - Update your version while having a drink</title><link href="blog/2016/05/31/punch-update-your-version-while-having-a-drink/" rel="alternate"></link><published>2016-05-31T16:00:00+01:00</published><updated>2016-05-31T16:00:00+01:00</updated><author><name>Leonardo Giordani</name></author><id>tag:None,2016-05-31:blog/2016/05/31/punch-update-your-version-while-having-a-drink/</id><summary type="html"></summary><content type="html">&lt;p&gt;So you completed your wonderful new project, all your test are successful (you &lt;a href="/categories/tdd/"&gt;test&lt;/a&gt; code, don't you?) and you just want to ship the new version and call it a day. Well, you just have to go and change the version number in your install script and save. Oh, right, you also have to open a feature branch, so that you may record the version update in your Git history. Well, easily done. Damn! You forgot to change the version number in the README.md file...&lt;/p&gt;
+&lt;p&gt;Managing the version number of a project is not easy. Not only you need to think about the versioning scheme and what part of the version to increase (see &lt;a href="blog/2013/03/20/versioning-an-underrated-discipline/"&gt;this post&lt;/a&gt; for some tips on this matter), but you also need to remember in which files you put the actual version number, and, depending on your workflow, to correctly manage the version control system commits.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Punch&lt;/strong&gt; is a small tool that aims to simplify the latter parts, that is the management of the version number update process. Punch is a young project but the underlying structure should be flexible enough to allow the implementation of advanced usage cases that may arise in the future.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Punch logo" src="/images/punch/icon_400x400.png"&gt;&lt;/p&gt;
+&lt;h4 id="features"&gt;Features&lt;a class="headerlink" href="#features" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Written in Python, but manages every kind of text file&lt;/li&gt;
+&lt;li&gt;May implement different versioning schemas&lt;/li&gt;
+&lt;li&gt;Currently supports integer version parts and multiple value integer parts&lt;/li&gt;
+&lt;li&gt;Version parts may be explicitly set to given values&lt;/li&gt;
+&lt;li&gt;The same version number can be represented in different ways using Jinja2 templates&lt;/li&gt;
+&lt;li&gt;Each managed file may override the global behaviour with custom settings&lt;/li&gt;
+&lt;li&gt;Can automatically commit using Git or git-flow&lt;/li&gt;
+&lt;li&gt;May optionally create annotated commits&lt;/li&gt;
+&lt;li&gt;Can simulate the version upgrade and show what is going to happen&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="installation"&gt;Installation&lt;a class="headerlink" href="#installation" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;You may install Punch in your virtual environment (or in your system) directly from PyPI&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install punch.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;and you will have the &lt;code&gt;punch&lt;/code&gt; executable available.&lt;/p&gt;
+&lt;h4 id="useful-links"&gt;Useful links&lt;a class="headerlink" href="#useful-links" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Punch official documentation: &lt;a href="https://punch.readthedocs.io/en/latest/"&gt;https://punch.readthedocs.io/en/latest/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official repository &lt;a href="https://github.com/lgiordani/punch"&gt;https://github.com/lgiordani/punch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Issues and pull requests &lt;a href="https://github.com/lgiordani/punch/issues"&gt;https://github.com/lgiordani/punch/issues&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Feel free to submit your issues or pull requests, contributions are welcome.&lt;/p&gt;</content><category term="Projects"></category><category term="Git"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category><category term="versioning"></category></entry><entry><title>Using gitflow with GitHub: a simple procedure</title><link href="blog/2015/06/22/using-gitflow-with-github-a-simple-procedure/" rel="alternate"></link><published>2015-06-22T14:00:00+01:00</published><updated>2015-06-22T14:00:00+01:00</updated><author><name>Leonardo Giordani</name></author><id>tag:None,2015-06-22:blog/2015/06/22/using-gitflow-with-github-a-simple-procedure/</id><summary type="html"></summary><content type="html">&lt;p&gt;Git is a very powerful version control system and much of its power comes from its very simple basic structures. Git is mostly a manager of blob trees and even the most complex operations are basically tree operations.&lt;/p&gt;
+&lt;p&gt;The power of Git brings also a great flexibility, which means that Git doesn't dictate a specific workflow, leaving the programmer or the team to come up with a reasonable procedure.&lt;/p&gt;
+&lt;h2 id="workflows"&gt;Workflows&lt;a class="headerlink" href="#workflows" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Two Git workflows are very widespread, for different reasons. The first is the GitHub model and the second is the gitflow one.&lt;/p&gt;
+&lt;p&gt;The GitHub model is widely used, because nowadays GitHub is the most used code management and collaboration website for open source projects. GitHub makes use of a workflow based on Pull Requests, and you can find some useful resources about it in the relative section at the end of the post.&lt;/p&gt;
+&lt;p&gt;Gitflow was proposed by Vincent Driessen in 2010 and quickly become one of the most used workflows, due to the fact that it covers most of the common needs of a developing team and is very easy to learn. Its workflow is based on different types of branches that are created when specific events occur in the team: a new feature has to be developed, a new release shall be published, a bugfix shall be quickly put in production, etc.&lt;/p&gt;
+&lt;p&gt;I personally find gitflow a very useful workflow and always use it even when I'm developing alone on a personal repository. It helps me to keep things in order and the beautiful set of tools named "gitflow AVH Edition" by Peter van der Does minimizes the number of operations I have to remember.&lt;/p&gt;
+&lt;h2 id="github-and-gitflow"&gt;GitHub and gitflow&lt;a class="headerlink" href="#github-and-gitflow" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;When working with GitHub, however, gitflow is not your best choice, mostly because of the big difference between the two ways of managing new features. GitHub wants you to put everything in a branch and submit a Pull Request, keeping the branch alive. The project maintainer then reviews the code and possibly merges your changes. At that point you are free to delete the branch and update your master.&lt;/p&gt;
+&lt;p&gt;Gitflow, on the other hand, usually makes you close features by merging into the special branch called &lt;code&gt;develop&lt;/code&gt;, because is from that branch that you create releases (that are put into &lt;code&gt;master&lt;/code&gt;). Closing a feature branch and merging the feature into &lt;code&gt;develop&lt;/code&gt; is what does not work well with GitHub, since when you close the branch your Pull Request cannot be finalized.&lt;/p&gt;
+&lt;p&gt;Sure, you can leave a gitflow feature branch open, publish it, send your Pull Request and eventually delete it without closing the feature, but this way you are just partially using gitflow, not to mention the fact that this way some commands (such as &lt;code&gt;git flow feature finish&lt;/code&gt;) become "dangerous", since they shall be avoided to preserve the GitHUb workflow integrity.&lt;/p&gt;
+&lt;p&gt;I will suggest here a procedure that allows to manage the local repository with gitflow, while hosting the remote repository on GitHub, without preventing to use gitflow features and GitHub Pull Requests.&lt;/p&gt;
+&lt;h2 id="the-basic-idea"&gt;The basic idea&lt;a class="headerlink" href="#the-basic-idea" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The concept that allows to use both workflows is very simple: gitflow, when used locally to develop new features, makes use of the sole &lt;code&gt;develop&lt;/code&gt; special branch. Every feature is created from that repository and eventually merged back there, so &lt;code&gt;develop&lt;/code&gt; for a local repository becomes a sort of big feature branch.&lt;/p&gt;
+&lt;p&gt;Given this consideration we may create a local branch that tracks a remote one with the same name, and make it our GitHub feature branch, i.e. the branch that will be used to create a Pull Request. Locally, we create a Git symbolic reference to that branch and we call the reference &lt;code&gt;develop&lt;/code&gt;, thus enabling the use of the gitflow workflow and tools.&lt;/p&gt;
+&lt;div class="big-image"&gt;
+&lt;img src="/images/github_gitflow/structure.jpg" alt="The resulting structure" /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;When we finish adding features to the local feature branch (&lt;code&gt;develop&lt;/code&gt;) we may squash the commits as usual and perform a forced push to the GitHub repository.&lt;/p&gt;
+&lt;p&gt;We may also maintain more than one GitHub feature branch, we just need to move the symbolic reference to the branch we want to work on. On every &lt;code&gt;develop&lt;/code&gt; branch we may use gitflow features just like in a standard gitflow-enabled repository.&lt;/p&gt;
+&lt;h2 id="releases"&gt;Releases&lt;a class="headerlink" href="#releases" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Obviously things change when we talk about releases. If the maintainer wants to use gitflow to create releases he or she needs to merge Pull Requests into their &lt;code&gt;develop&lt;/code&gt; branch. This is not yet possible on GitHub web interface, but is already possible with command line Git. It however breaks a little the GitHub flow so I wouldn't suggest it at the moment. This feature has been already requested to the GitHub team (see &lt;a href="https://github.com/isaacs/github/issues/18#issuecomment-25571124"&gt;this comment&lt;/a&gt;)&lt;/p&gt;
+&lt;h2 id="a-simple-procedure"&gt;A simple procedure&lt;a class="headerlink" href="#a-simple-procedure" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;To use the described procedure you just need to have a local repository with gitflow enabled, i.e. you need to have two branches &lt;code&gt;master&lt;/code&gt; and &lt;code&gt;develop&lt;/code&gt;, possibly with &lt;code&gt;master&lt;/code&gt; tracking &lt;code&gt;origin/master&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Then &lt;strong&gt;setup the repository&lt;/strong&gt; issuing the following commands&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Move to the master branch&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git checkout master
+&lt;span class="gp"&gt;$&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Rename develop to _develop&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git branch -m develop _develop 
+&lt;span class="gp"&gt;$&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Create the feature branch&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git checkout -b new_feature
+&lt;span class="gp"&gt;$&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Push the feature branch to the remote (GitHub) and track it&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git push -u origin new_feature
+&lt;span class="gp"&gt;$&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Alias the feature branch with the name develop&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git symbolic-ref refs/heads/develop refs/heads/new_feature
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When you &lt;strong&gt;need to change your working feature branch&lt;/strong&gt; just run&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Just change the target of the symbolic reference&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git symbolic-ref refs/heads/develop refs/heads/other_feature
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;and if you &lt;strong&gt;need to go back to the original state&lt;/strong&gt; execute the following commands&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Remove the symbolic reference&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git symbolic-ref --delete refs/heads/develop
+&lt;span class="gp"&gt;$&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Rename the original develop branch&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git branch -m _develop develop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To &lt;strong&gt;squash commits&lt;/strong&gt; into your feature branch and &lt;strong&gt;force push&lt;/strong&gt; run these commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Make sure we are dealing with our feature branch&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git checkout new_feature
+&lt;span class="gp"&gt;$&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Rebase on master (this is a develop, after all)&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git rebase -i master
+&lt;span class="gp"&gt;$&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Force a push on GitHub&lt;/span&gt;
+&lt;span class="gp"&gt;$ &lt;/span&gt;git push origin +new_feature
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="the-gitflow-gh-command"&gt;The &lt;code&gt;gitflow gh&lt;/code&gt; command&lt;a class="headerlink" href="#the-gitflow-gh-command" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/lgiordani/gitflow/tree/github_support"&gt;This repository&lt;/a&gt; is a fork of the official gitflow repository and inplements a new gitflow command &lt;code&gt;gh&lt;/code&gt; to easily perform what has been described in this post. The changes are implemented in the &lt;code&gt;github_support&lt;/code&gt; branch, which has been developed with the modified gitflow program itself.&lt;/p&gt;
+&lt;p&gt;As of 22-06-2015 I &lt;a href="https://github.com/petervanderdoes/gitflow/pull/208"&gt;submitted a PR&lt;/a&gt; to the official gitflow repository, but I do not know if it is going to be accepted.&lt;/p&gt;
+&lt;p&gt;If you are interested in using this feature feel free to clone my gitflow repository and report any issue either there or in the PR itself. As soon as the PR is processed, I'll update this section.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;gh&lt;/code&gt; command is described in &lt;a href="https://github.com/lgiordani/gitflow/tree/github_support#github-integration"&gt;the README&lt;/a&gt;. It currently provides six commands: enable, disable, activate, import, squash and publish.&lt;/p&gt;
+&lt;h2 id="links"&gt;Links&lt;a class="headerlink" href="#links" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The GitHUb workflow &lt;a href="https://guides.github.com/introduction/flow/"&gt;official documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The gitflow &lt;a href="http://nvie.com/posts/a-successful-git-branching-model/"&gt;original post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The gitflow AVH Edition &lt;a href="https://github.com/petervanderdoes/gitflow"&gt;official repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Some insights on &lt;a href="https://git-scm.com/book/en/v2/Git-Internals-Git-Objects"&gt;Git objects&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Another solution to work with GitHub and gitflow: &lt;a href="https://datasift.github.io/gitflow/"&gt;HubFlow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="updates"&gt;Updates&lt;a class="headerlink" href="#updates" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;2015-06-23: Added a section about a gitflow fork that implements the concepts explained in the post.&lt;/p&gt;
+&lt;h2 id="feedback"&gt;Feedback&lt;a class="headerlink" href="#feedback" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues"&gt;GitHub issues&lt;/a&gt; page is the best place to submit corrections.&lt;/p&gt;</content><category term="Programming"></category><category term="Git"></category></entry></feed>

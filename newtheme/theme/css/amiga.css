@@ -1,0 +1,23 @@
+@import url(https://fonts.googleapis.com/css?family=VT323);
+
+#main .inner section#content {
+    background-color: #00519E;
+    padding: 1em;
+    border: 1px double white;
+}
+
+#main .inner section#content * {
+    font-family: 'VT323', monospace;
+    background-color: transparent;
+    color: #f0f0f0;
+    font-size: 25px!important;
+}
+
+#main .inner section#content h1,
+#main .inner section#content h2,
+#main .inner section#content h3,
+#main .inner section#content h4,
+#main .inner section#content h5,
+#main .inner section#content h6 {
+    color: #f0f0f0!important;
+}

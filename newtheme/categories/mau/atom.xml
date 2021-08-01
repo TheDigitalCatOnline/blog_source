@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Digital Cat - Mau</title><link href="/" rel="alternate"></link><link href="categories/mau/atom.xml" rel="self"></link><id>/</id><updated>2021-02-25T18:00:00+00:00</updated><subtitle>Adventures of a curious cat in the land of programming</subtitle><entry><title>Mau: a lightweight markup language</title><link href="blog/2021/02/22/mau-a-lightweight-markup-language/" rel="alternate"></link><published>2021-02-22T10:00:00+00:00</published><updated>2021-02-25T18:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:None,2021-02-22:blog/2021/02/22/mau-a-lightweight-markup-language/</id><summary type="html">&lt;p&gt;Mau is a lightweight markup language heavily inspired by AsciiDoc that makes is very easy to write blog posts or books.&lt;/p&gt;</summary><content type="html">&lt;h2 id="what-is-mau"&gt;What is Mau?&lt;a class="headerlink" href="#what-is-mau" title="Permanent link"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Mau is a lightweight markup language heavily inspired by AsciiDoc that makes is very easy to write blog posts or books.&lt;/p&gt;&lt;p&gt;The main goal of Mau is to provide a customisable markup language, reusing the good parts of AsciiDoc and providing a pure Python 3 implementation.&lt;/p&gt;&lt;p&gt;You can find Mau's source code on &lt;a href="https://github.com/Project-Mau/mau"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;&lt;h2 id="why-not-markdown-or-asciidoc"&gt;Why not Markdown or AsciiDoc?&lt;a class="headerlink" href="#why-not-markdown-or-asciidoc" title="Permanent link"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Markdown is a very good format, and I used it for all the posts in this blog so far. I grew increasingly unsatisfied, though, because of the lack of some features and the poor amount of customisation that it provides. When I wrote the second version of my book "Clean Architectures in Python" I considered using Markdown (through Pelican), but I couldn't find a good way to create tips and warnings. Recently, Python Markdown added a feature that allows to specify the file name for the source code, but the resulting HTML cannot easily be changed, making it difficult to achieve the graphical output I wanted.&lt;/p&gt;&lt;p&gt;AsciiDoc started as a Python project, but then was abandoned and eventually resurrected by Dan Allen with Asciidoctor. AsciiDoc has a lot of features and I consider it superior to Markdown, but Asciidoctor is a Ruby program, and this made it difficult for me to use it. In addition, the standard output of Asciidoctor is a nice single HTML page but again customising it is a pain. I had to struggle to add my Google Analytics code and a &lt;code&gt;sitemap.xml&lt;/code&gt; to the book site.&lt;/p&gt;&lt;p&gt;I simply thought I could try to write my own tool, in a language that I know well (Python). It works, and I learned a lot writing it, so I'm definitely happy. I'd be delighted to know that this can be useful to other people, though.&lt;/p&gt;&lt;h2 id="what-can-mau-do"&gt;What can Mau do?&lt;a class="headerlink" href="#what-can-mau-do" title="Permanent link"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Being inspired by AsciiDoc, which in my opinion is superior to Markdown, Mau takes a lot from Stuart Rackham's language. This whole post is written in Mau, using mostly the default templates. I changed the template for the source code to accommodate my poor CSS knowledge and get to a result that I consider decent.&lt;/p&gt;&lt;h3 id="paragraphs"&gt;Paragraphs&lt;/h3&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Paragraphs don&amp;#39;t require special markup in Mau.
+A paragraph is defined by one or more consecutive lines of text.
+Newlines within a paragraph are not displayed.
+
+Leave at least one blank line to begin a new paragraph.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;Paragraphs don't require special markup in Mau. A paragraph is defined by one or more consecutive lines of text. Newlines within a paragraph are not displayed.&lt;/p&gt;&lt;p&gt;Leave at least one blank line to begin a new paragraph.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 id="comments"&gt;Comments&lt;/h3&gt;&lt;p&gt;You can comment a single line with &lt;code&gt;//&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;// This is a comment
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;p&gt;or you can comment a block of lines enclosing them between two markers &lt;code&gt;////&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;////
+This is
+a multiline
+comment
+////
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;h3 id="thematic-break"&gt;Thematic break&lt;/h3&gt;&lt;p&gt;You can insert an horizontal line using three dashes&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;---
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;hr&gt;&lt;h3 id="text-formatting"&gt;Text formatting&lt;/h3&gt;&lt;p&gt;Mau supports three inline styles triggered by &lt;code&gt;_&lt;/code&gt;, &lt;code&gt;*&lt;/code&gt;, and &lt;code&gt;`&lt;/code&gt;.&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Stars identify *strong* text.
+
+Underscores for _emphasized_ text
+
+Backticks are used for `verbatim` text.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;Stars identify &lt;strong&gt;strong&lt;/strong&gt; text.&lt;/p&gt;&lt;p&gt;Underscores for &lt;em&gt;emphasized&lt;/em&gt; text&lt;/p&gt;&lt;p&gt;Backticks are used for &lt;code&gt;verbatim&lt;/code&gt; text.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can use them together, but pay attention that verbatim is very strong in Mau.&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;You can have _*strong and empashized*_ text.
+
+You can also apply styles to _*`verbatim`*_.
+
+But verbatim will `_*preserve*_` them.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;You can have &lt;em&gt;&lt;strong&gt;strong and empashized&lt;/strong&gt;&lt;/em&gt; text.&lt;/p&gt;&lt;p&gt;You can also apply styles to &lt;em&gt;&lt;strong&gt;&lt;code&gt;verbatim&lt;/code&gt;&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;&lt;p&gt;But verbatim will &lt;code&gt;_*preserve*_&lt;/code&gt; them.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Styles can be applied to only part of a word&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;*S*trategic *H*azard *I*ntervention *E*spionage *L*ogistics *D*irectorate
+
+It is completely _counter_intuitive.
+
+There are too many `if`s in this function.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;&lt;strong&gt;S&lt;/strong&gt;trategic &lt;strong&gt;H&lt;/strong&gt;azard &lt;strong&gt;I&lt;/strong&gt;ntervention &lt;strong&gt;E&lt;/strong&gt;spionage &lt;strong&gt;L&lt;/strong&gt;ogistics &lt;strong&gt;D&lt;/strong&gt;irectorate&lt;/p&gt;&lt;p&gt;It is completely &lt;em&gt;counter&lt;/em&gt;intuitive.&lt;/p&gt;&lt;p&gt;There are too many &lt;code&gt;if&lt;/code&gt;s in this function.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Using a single style marker doesn't trigger any effect, if you need to use two of them in the sentence, though, you have to escape at least one&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;You can use _single *markers.
+
+But you \_need\_ to escape pairs.
+
+Even though you can escape \_only one_ of the two.
+
+If you have \_more than two\_ it&amp;#39;s better to just \_escape\_ all of them.
+
+Oh, this is valid for `verbatim as well.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;You can use _single *markers.&lt;/p&gt;&lt;p&gt;But you _need_ to escape pairs.&lt;/p&gt;&lt;p&gt;Even though you can escape _only one_ of the two.&lt;/p&gt;&lt;p&gt;If you have _more than two_ it's better to just _escape_ all of them.&lt;/p&gt;&lt;p&gt;Oh, this is valid for `verbatim as well.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can use inline classes to transform the text. Mau has no embedded classes, they have to be implemented in the theme.&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Using this we can [underline]#underline words#
+
+Now let&amp;#39;s create a label like [label]#this#
+
+You can use multiple classes separating them with commas: [label,success]#yeah!#
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;Using this we can &lt;span class="underline"&gt;underline words&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Now let's create a label like &lt;span class="label"&gt;this&lt;/span&gt;&lt;/p&gt;&lt;p&gt;You can use multiple classes separating them with commas: &lt;span class="label success"&gt;yeah!&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;The CSS of my theme here has the following code&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;underline&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;text-decoration&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;underline&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;label&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;background-color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;orange&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;border&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt; &lt;span class="mh"&gt;#333&lt;/span&gt; &lt;span class="kc"&gt;solid&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;label&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;success&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;background-color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;#00aa00&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;h3 id="links"&gt;Links&lt;/h3&gt;&lt;p&gt;Links beginning with &lt;code&gt;http://&lt;/code&gt; or &lt;code&gt;https://&lt;/code&gt; are automatically parsed. If you want to use a specific text for the link you need to use the macro &lt;code&gt;link&lt;/code&gt; and specify target and text.&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;https://projectmau.org - automatic!
+
+[link](https://projectmau.org,&amp;quot;Project Mau&amp;quot;)
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;&lt;a href="https://projectmau.org"&gt;https://projectmau.org&lt;/a&gt; - automatic!&lt;/p&gt;&lt;p&gt;&lt;a href="https://projectmau.org"&gt;Project Mau&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can include spaces and other special characters in the URL&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[link](&amp;quot;https://example.org/?q=[a b]&amp;quot;,&amp;quot;URL with special characters&amp;quot;)
+
+[link](&amp;quot;https://example.org/?q=%5Ba%20b%5D&amp;quot;,&amp;quot;URL with special characters&amp;quot;)
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;&lt;a href="https://example.org/?q=[a b]"&gt;URL with special characters&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://example.org/?q=%5Ba%20b%5D"&gt;URL with special characters&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 id="headers"&gt;Headers&lt;/h3&gt;&lt;p&gt;Headers are created using the character &lt;code&gt;=&lt;/code&gt;. The number of equal signs represents the level of the header&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;== Header 1
+
+=== Header 2
+
+==== Header 3
+
+===== Header 4
+
+====== Header 5
+
+======= Header 6
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;h2 id="header-1"&gt;Header 1&lt;a class="headerlink" href="#header-1" title="Permanent link"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="header-2"&gt;Header 2&lt;/h3&gt;&lt;h4 id="header-3"&gt;Header 3&lt;/h4&gt;&lt;h5 id="header-4"&gt;Header 4&lt;/h5&gt;&lt;h6 id="header-5"&gt;Header 5&lt;/h6&gt;&lt;h7 id="header-6"&gt;Header 6&lt;/h7&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Headers are automatically collected and included in the Table of Contents, but if you want to avoid it for a specific section you can exclude the header using an exclamation mark&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;====! This header is not in the TOC
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;h4 id="this-header-is-not-in-the-toc"&gt;This header is not in the TOC&lt;/h4&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 id="variables"&gt;Variables&lt;/h3&gt;&lt;p&gt;You can define variables and use them in paragraphs&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:answer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is {answer}
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;The Answer to the Ultimate Question of Life, the Universe, and Everything is 42&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can avoid variable replacement escaping curly braces&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:answer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is \{answer\}
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;The Answer to the Ultimate Question of Life, the Universe, and Everything is {answer}&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Curly braces are used a lot in programming languages, so verbatim text automatically escapes curly braces&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:answer:42
+
+The Answer to the Ultimate Question of Life, the Universe, and Everything is `{answer}`
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;The Answer to the Ultimate Question of Life, the Universe, and Everything is &lt;code&gt;{answer}&lt;/code&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Variables are replaced before parsing paragraphs, so they can contain any inline item such as styles or links&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:styled:_this is text with style_
+:homepage:https://projectmau.org
+
+For example {styled}. Read the docs at {homepage}
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;For example &lt;em&gt;this is text with style&lt;/em&gt;. Read the docs at &lt;a href="https://projectmau.org"&gt;https://projectmau.org&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Variables without a value will automatically become booleans&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:flag:
+
+The flag is {flag}.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;The flag is True.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can set a flag to false negating it&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:!flag:
+
+The flag is {flag}.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;The flag is False.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 id="blocks"&gt;Blocks&lt;/h3&gt;&lt;p&gt;Mau has the concept of blocks, which are parts of the text delimited by fences&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;----
+This is a block
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a block&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can use any sequence of 4 identical characters to delimit a block, provided this doesn't clash with other syntax like headers&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;++++
+This is a block
+++++
+
+%%%%
+This is another block
+%%%%
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a block&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="content"&gt;&lt;p&gt;This is another block&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Should you need to insert 4 identical characters on a line for some reasons, you need to escape one of them&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;\++++
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;++++&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Blocks have the concept of &lt;em&gt;secondary content&lt;/em&gt;, which is any paragraph that is adjacent to the closing fence. This paragraph is included in the block metadata and used according to the type of block (for example for callouts by &lt;code&gt;source&lt;/code&gt; blocks). The default block simply discards that content&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;----
+Content of the block
+----
+Secondary content that won&amp;#39;t be in the output
+
+This is not part of the block
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div&gt;&lt;div class="content"&gt;&lt;p&gt;Content of the block&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;This is not part of the block&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;h4 id="block-titles"&gt;Block titles&lt;/h4&gt;&lt;p&gt;Blocks can have titles&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;. The title
+----
+This is a block
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div&gt;&lt;div class="title"&gt;The title&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a block&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;h4 id="block-attributes"&gt;Block attributes&lt;/h4&gt;&lt;p&gt;Blocks can have attributes, specified before the opening fence between square brackets&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[classes=&amp;quot;callout&amp;quot;]
+----
+This is a block with the class `callout`
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a block with the class &lt;code&gt;callout&lt;/code&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Attributes can be unnamed or named, and the first unnamed attribute is the type of the block. Mau provides some special block types like &lt;code&gt;source&lt;/code&gt;, &lt;code&gt;admonition&lt;/code&gt;, and &lt;code&gt;quote&lt;/code&gt; (see the documentation below), and each one of them has a specific set of required or optional attributes.&lt;/p&gt;&lt;p&gt;You can combine title and attribute in any order&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;. Title of the block
+[classes=&amp;quot;callout&amp;quot;]
+----
+This is a block with the class `callout` and a title
+----
+
+[classes=&amp;quot;callout&amp;quot;]
+. Title of the block
+----
+This is a block with the class `callout` and a title
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div&gt;&lt;div class="title"&gt;Title of the block&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a block with the class &lt;code&gt;callout&lt;/code&gt; and a title&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="title"&gt;Title of the block&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a block with the class &lt;code&gt;callout&lt;/code&gt; and a title&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Title and attributes are consumed by the next block, so they don't need to be adjacent, should you want to separate them for some reasons&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[classes=&amp;quot;callout&amp;quot;]
+
+----
+This is a block with the class `callout`
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a block with the class &lt;code&gt;callout&lt;/code&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;h4 id="quotes"&gt;Quotes&lt;/h4&gt;&lt;p&gt;The simplest block type the Mau provides is called &lt;code&gt;quote&lt;/code&gt;. The second attribute is the attribution, and the content of the block is the quote itself.&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[quote,&amp;quot;Star Wars, 1977&amp;quot;]
+----
+Learn about the Force, Luke.
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;blockquote&gt;&lt;p&gt;Learn about the Force, Luke.&lt;/p&gt;&lt;cite&gt;Star Wars, 1977&lt;/cite&gt;&lt;/blockquote&gt;&lt;/div&gt;&lt;/div&gt;&lt;h4 id="admonitions"&gt;Admonitions&lt;/h4&gt;&lt;p&gt;Mau supports admonitions, special blocks that are meant to be rendered with an icon and a title like warnings, tips, or similar things. To create an admonition you need to use the type &lt;code&gt;admonition&lt;/code&gt; and specify a &lt;code&gt;class&lt;/code&gt;, and &lt;code&gt;icon&lt;/code&gt;, and a &lt;code&gt;label&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[admonition,source,&amp;quot;fab fa-github&amp;quot;,&amp;quot;Source code&amp;quot;]
+----
+This is my admonition
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="admonition source"&gt;&lt;i class="fab fa-github"&gt;&lt;/i&gt;&lt;div class="content"&gt;&lt;div class="title"&gt;Source code&lt;/div&gt;&lt;div&gt;&lt;p&gt;This is my admonition&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Admonition attributes can be provided with variables to simplify their usage&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:github:admonition,source,&amp;quot;fab fa-github&amp;quot;,&amp;quot;Source code&amp;quot;
+
+[{github}]
+----
+This is my admonition
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="admonition source"&gt;&lt;i class="fab fa-github"&gt;&lt;/i&gt;&lt;div class="content"&gt;&lt;div class="title"&gt;Source code&lt;/div&gt;&lt;div&gt;&lt;p&gt;This is my admonition&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Given how simple it is to build an admonition, Mau doesn't provide any admonitions like warnings or tips out of the box.&lt;/p&gt;&lt;h4 id="conditional-blocks"&gt;Conditional blocks&lt;/h4&gt;&lt;p&gt;You can wrap Mau content in a conditional block, which displays it only when the condition is met.&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:render:yes
+
+[if,render,yes]
+----
+This will be rendered
+----
+
+[if,render,no]
+----
+This will not be rendered
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;This will be rendered&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can use booleans directly without specifying the value&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:render:
+
+[if,render]
+----
+This will be rendered
+----
+
+:!render:
+
+[if,render]
+----
+This will not be rendered
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;This will be rendered&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can reverse the condition using &lt;code&gt;ifnot&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:render:
+
+[ifnot,render]
+----
+This will not be rendered
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;/div&gt;&lt;/div&gt;&lt;h4 id="source-code"&gt;Source code&lt;/h4&gt;&lt;p&gt;Literal paragraphs and source code can be printed using block type &lt;code&gt;source&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source]
+----
+This is all literal.
+
+== This is not a header
+
+[These are not attributes]
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;This is all literal.
+
+== This is not a header
+
+[These are not attributes]
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can specify the language for the highlighting&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source,python]
+----
+def header_anchor(text, level):
+    return &amp;quot;h{}-{}-{}&amp;quot;.format(
+        level, quote(text.lower())[:20], str(id(text))[:8]
+    )  # pragma: no cover
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;header_anchor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;h&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;))[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# pragma: no cover&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;h5 id="callouts"&gt;Callouts&lt;/h5&gt;&lt;p&gt;Source code supports callouts, where you add notes to specific lines of code. Callouts are listed in the code using a delimiter and their text is added to the secondary content of the block&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source,python]
+----
+def header_anchor(text, level)::1:
+    return &amp;quot;h{}-{}-{}&amp;quot;.format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;header_anchor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="callout"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;h&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;))[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="callout"&gt;2&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# pragma: no cover&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;div class="callouts"&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;1&lt;/span&gt;&lt;/td&gt;&lt;td&gt;The name of the function&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;2&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Some memory-related wizardry&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Callouts use a delimiter that can be any character, and are automatically removed from the source code. The default delimiter is &lt;code&gt;:&lt;/code&gt;, so if that clashes with the syntax of your language you can pick a different one with the attribute &lt;code&gt;callouts&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source,python,callouts=&amp;quot;|&amp;quot;]
+----
+def header_anchor(text, level):|1|
+    return &amp;quot;h{}-{}-{}&amp;quot;.format(
+        level, quote(text.lower())[:20], str(id(text))[:8]|2|
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;header_anchor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="callout"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;h&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;))[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="callout"&gt;2&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# pragma: no cover&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;div class="callouts"&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;1&lt;/span&gt;&lt;/td&gt;&lt;td&gt;The name of the function&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;2&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Some memory-related wizardry&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Callouts names are not manipulated by Mau, so you can use them our of order&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source,python]
+----
+def header_anchor(text, level)::1:
+    return &amp;quot;h{}-{}-{}&amp;quot;.format(:3:
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+1: The name of the function
+2: Some memory-related wizardry
+3: This is the return value
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;header_anchor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="callout"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;h&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="callout"&gt;3&lt;/span&gt;
+        &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;))[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="callout"&gt;2&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# pragma: no cover&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;div class="callouts"&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;1&lt;/span&gt;&lt;/td&gt;&lt;td&gt;The name of the function&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;2&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Some memory-related wizardry&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;3&lt;/span&gt;&lt;/td&gt;&lt;td&gt;This is the return value&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Callouts are not limited to digits, you can use non-numeric labels&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source,python]
+----
+def header_anchor(text, level)::step1:
+    return &amp;quot;h{}-{}-{}&amp;quot;.format(:step3:
+        level, quote(text.lower())[:20], str(id(text))[:8]:step2:
+    )  # pragma: no cover
+----
+step1: The name of the function
+step2: Some memory-related wizardry
+step3: This is the return value
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;header_anchor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="callout"&gt;step1&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;h&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="callout"&gt;step3&lt;/span&gt;
+        &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;))[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="callout"&gt;step2&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# pragma: no cover&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;div class="callouts"&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;step1&lt;/span&gt;&lt;/td&gt;&lt;td&gt;The name of the function&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;step2&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Some memory-related wizardry&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;span class="callout"&gt;step3&lt;/span&gt;&lt;/td&gt;&lt;td&gt;This is the return value&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Callouts don't need to have a definition&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source,python]
+----
+def header_anchor(text, level)::1:
+    return &amp;quot;h{}-{}-{}&amp;quot;.format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:2:
+    )  # pragma: no cover
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;header_anchor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="callout"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;h&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;))[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="callout"&gt;2&lt;/span&gt;
+    &lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# pragma: no cover&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;And you can reference them &lt;span class="callout"&gt;1&lt;/span&gt; in the text.&lt;/p&gt;&lt;h5 id="highlight-lines"&gt;Highlight lines&lt;/h5&gt;&lt;p&gt;You can highlight lines using a callout with the special name &lt;code&gt;@&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source,python]
+----
+def header_anchor(text, level)::@:
+    return &amp;quot;h{}-{}-{}&amp;quot;.format(
+        level, quote(text.lower())[:20], str(id(text))[:8]:@:
+    )  # pragma: no cover
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="hll"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;header_anchor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;h&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="hll"&gt;        &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;))[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;    &lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# pragma: no cover&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Should you prefer to list the lines you want to highlight you can use Pygments directly&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[source,python,pygments.hl_lines=&amp;quot;1,3&amp;quot;]
+----
+def header_anchor(text, level):
+    return &amp;quot;h{}-{}-{}&amp;quot;.format(
+        level, quote(text.lower())[:20], str(id(text))[:8]
+    )  # pragma: no cover
+----
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="hll"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;header_anchor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;h&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="hll"&gt;        &lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())[:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;))[:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;    &lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# pragma: no cover&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 id="lists"&gt;Lists&lt;/h3&gt;&lt;p&gt;You can create unordered lists using the character &lt;code&gt;*&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;* List item
+** Nested list item
+*** Nested list item
+* List item
+ ** Another nested list item (indented)
+* List item
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;ul&gt;&lt;li&gt;List item&lt;ul&gt;&lt;li&gt;Nested list item&lt;ul&gt;&lt;li&gt;Nested list item&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;List item&lt;ul&gt;&lt;li&gt;Another nested list item (indented)&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;List item&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;and ordered lists with the character &lt;code&gt;#&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# Step 1
+# Step 2
+## Step 2a
+## Step 2b
+# Step 3
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;ol&gt;&lt;li&gt;Step 1&lt;/li&gt;&lt;li&gt;Step 2&lt;ol&gt;&lt;li&gt;Step 2a&lt;/li&gt;&lt;li&gt;Step 2b&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Step 3&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Mixed lists are possible&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;* List item
+** Nested list item
+### Ordered item 1
+### Ordered item 2
+### Ordered item 3
+* List item
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;ul&gt;&lt;li&gt;List item&lt;ul&gt;&lt;li&gt;Nested list item&lt;ol&gt;&lt;li&gt;Ordered item 1&lt;/li&gt;&lt;li&gt;Ordered item 2&lt;/li&gt;&lt;li&gt;Ordered item 3&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;List item&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 id="footnotes"&gt;Footnotes&lt;/h3&gt;&lt;p&gt;You can insert a footnote in a paragraph using the macro &lt;code&gt;footnote&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;This is a paragraph that ends with a note[footnote](extra information here)
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a paragraph that ends with a note&lt;sup&gt;[&lt;a id="fr--5513808" href="#fd--5513808"&gt;1&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Footnotes can be inserted with the command &lt;code&gt;::footnotes:&lt;/code&gt; and are then rendered according to the template, an example could be&lt;/p&gt;&lt;div id="_footnotes"&gt;&lt;div id="fd--5513808"&gt;&lt;a href="#fr--5513808"&gt;1&lt;/a&gt; extra information here&lt;/div&gt;&lt;/div&gt;&lt;h3 id="table-of-contents"&gt;Table of contents&lt;/h3&gt;&lt;p&gt;The table of contents (TOC) can be inserted with the command &lt;code&gt;::toc:&lt;/code&gt; and is rendered according to the template, an example could be&lt;/p&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="#what-is-mau"&gt;What is Mau?&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#why-not-markdown-or-asciidoc"&gt;Why not Markdown or AsciiDoc?&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#what-can-mau-do"&gt;What can Mau do?&lt;/a&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="#paragraphs"&gt;Paragraphs&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#comments"&gt;Comments&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#thematic-break"&gt;Thematic break&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#text-formatting"&gt;Text formatting&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#links"&gt;Links&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#headers"&gt;Headers&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#variables"&gt;Variables&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#blocks"&gt;Blocks&lt;/a&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="#block-titles"&gt;Block titles&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#block-attributes"&gt;Block attributes&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#quotes"&gt;Quotes&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#admonitions"&gt;Admonitions&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#conditional-blocks"&gt;Conditional blocks&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#source-code"&gt;Source code&lt;/a&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="#callouts"&gt;Callouts&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#highlight-lines"&gt;Highlight lines&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#lists"&gt;Lists&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#footnotes"&gt;Footnotes&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#table-of-contents"&gt;Table of contents&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#images"&gt;Images&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#templates"&gt;Templates&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#pelican"&gt;Pelican&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#development"&gt;Development&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="#feedback"&gt;Feedback&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;h3 id="images"&gt;Images&lt;/h3&gt;&lt;p&gt;Images can be included with&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;&amp;lt; image:https://via.placeholder.com/150
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;p&gt;with the following result&lt;/p&gt;&lt;div class="imageblock"&gt;&lt;div class="content"&gt;&lt;img src="https://via.placeholder.com/150"&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;You can add a caption using a title&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;. This is the caption
+&amp;lt;&amp;lt; image:https://via.placeholder.com/150
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="imageblock"&gt;&lt;div class="content"&gt;&lt;img src="https://via.placeholder.com/150"&gt;&lt;div class="title"&gt;This is the caption&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;and specify the alternate text with &lt;code&gt;alt_text&lt;/code&gt;&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[alt_text=&amp;quot;Description of the image&amp;quot;]
+&amp;lt;&amp;lt; image:https://via.placeholder.com/150
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="imageblock"&gt;&lt;div class="content"&gt;&lt;img src="https://via.placeholder.com/150" alt="Description of the image"&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Images can be added inline with the macro &lt;code&gt;image&lt;/code&gt;.&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;This is a paragraph with an image [image](https://via.placeholder.com/30,alt_text=&amp;quot;A placeholder&amp;quot;)
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div class="callout"&gt;&lt;div class="title"&gt;Result&lt;/div&gt;&lt;div class="content"&gt;&lt;p&gt;This is a paragraph with an image &lt;span class="image"&gt;&lt;img src="https://via.placeholder.com/30" alt="A placeholder"&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2 id="templates"&gt;Templates&lt;a class="headerlink" href="#templates" title="Permanent link"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Mau uses Jinja templates to render the AST nodes. It provides default templates for all the elements it can render but these templates are easily overridden to change the way they are rendered or to add custom classes/elements.&lt;/p&gt;&lt;p&gt;For example the default template for the underscore marker &lt;code&gt;_&lt;/code&gt; is&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;em&amp;gt;{{ content }}&amp;lt;/em&amp;gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;p&gt;and that for quotes is&lt;/p&gt;&lt;div class="code"&gt;&lt;div class="content"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;blockquote&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;{{ content }}&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;lt;cite&amp;gt;{{ attribution }}&amp;lt;/cite&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;lt;/blockquote&amp;gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;h2 id="pelican"&gt;Pelican&lt;a class="headerlink" href="#pelican" title="Permanent link"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;A reader for Mau source files is available in Pelican, you can find the code at &lt;a href="https://github.com/getpelican/pelican-plugins/pull/1327."&gt;https://github.com/getpelican/pelican-plugins/pull/1327.&lt;/a&gt; Simply add the code to your Pelican plugins directory and activate it adding &lt;code&gt;"mau_reader"&lt;/code&gt; to &lt;code&gt;PLUGINS&lt;/code&gt; in your file &lt;code&gt;pelicanconf.py&lt;/code&gt;. The Mau reader processes only files with the &lt;code&gt;.mau&lt;/code&gt; extension, so you can use Markdown/reStructuredText and Mau at the same time.&lt;/p&gt;&lt;h2 id="development"&gt;Development&lt;a class="headerlink" href="#development" title="Permanent link"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Can Mau do &lt;code&gt;[insert feature here]&lt;/code&gt;?&lt;/p&gt;&lt;p&gt;What you see here is pretty much what Mau can do at the moment. I implemented only the features I needed to render my book (which at the moment is written using Mau syntax, transpiled with Mau to AsciiDoctor syntax and rendered with that tool). I'm planning to move to a workflow based entirely on Mau and Pelican shortly for both my blog and the book, and in the process I'm pretty sure I will find bugs and missing features, and have chances to improve the documentation.&lt;/p&gt;&lt;p&gt;If you are interested you can leave a star on the project on the &lt;a href="https://github.com/Project-Mau/mau"&gt;GitHub page&lt;/a&gt;, start using it, or contribute ideas, code, bugfixes.&lt;/p&gt;&lt;h2 id="feedback"&gt;Feedback&lt;a class="headerlink" href="#feedback" title="Permanent link"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Feel free to reach me on &lt;a href="https://twitter.com/thedigicat"&gt;Twitter&lt;/a&gt; if you have questions. The &lt;a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues"&gt;GitHub issues&lt;/a&gt; page is the best place to submit corrections.&lt;/p&gt;</content><category term="Programming"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category><category term="Mau"></category></entry></feed>

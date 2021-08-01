@@ -1,0 +1,683 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+        <title>The Digital Cat - Method overriding in Python</title>
+	<meta charset="utf-8" />
+	<meta http-equiv='content-language' content='en-gb'>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="description" content="Method overriding in Python">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Method overriding in Python" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="../../../../../images/method-overriding-in-python.jpg" />
+	<script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700">
+
+        <link rel="stylesheet" href="/theme/webassets-external/4a9e78055c32c64c0053d516051922e1_main.css">
+        <link rel="stylesheet" href="/theme/webassets-external/29e84bb99f5d774b43b32c32b0e1cf63_custom.css">
+        <link rel="stylesheet" href="/theme/webassets-external/bb3753b8350cbac2c66e937353842ee9_default.css">
+
+        
+        <link href="/images/global/favicon.jpg" rel="icon">
+
+
+
+<script type="application/ld+json">
+  {
+      "@context" : "https://schema.org",
+      "@type" : "Article",
+      "name" : "Method overriding in Python",
+      "author" : {
+	  "@type" : "Person",
+	  "name" : "Leonardo Giordani"
+      },
+      "publisher" : {
+	  "@type" : "Organization",
+	  "name" : "The Digital Cat",
+	  "logo" : {
+	      "@type" : "ImageObject",
+	      "url" : "../../../../../images/global/logo_200.jpg",
+	      "height" : 200,
+	      "width" : 200
+	  }
+      },
+      "mainEntityOfPage": {
+	  "@type": "WebPage",
+	  "@id": "../../../../../blog/2014/05/19/method-overriding-in-python/"
+      },
+      "datePublished" : "19/05/2014",
+      "dateModified" : "19/05/2014",
+      "image" : "../../../../../images/method-overriding-in-python.jpg",
+      "url" : "../../../../../blog/2014/05/19/method-overriding-in-python/"
+  }
+</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+<header id="header">
+  <a class="logo" href="/category/programming/" title="Programming">All posts in category Programming <i class="fas fa-link"></i></a>
+  <div class="align-right">
+  </div>
+</header>
+
+<!-- <article class="post"> -->
+
+  <section id="header">
+    <header class="main">
+      <h1>Method overriding in Python</h1>
+    </header>
+  </section>
+
+  <section id="post-info">
+    <p class="article-info">
+    By Leonardo Giordani
+
+    <span class="fas fa-calendar-alt"></span> <time datetime="2014-05-19T13:51:26+02:00"> 19/05/2014</time>
+
+
+    <span class="fas fa-tags"></span>
+    <a class="tag" href="/categories/python/">Python</a>    <a class="tag" href="/categories/python3/">Python3</a>    <a class="tag" href="/categories/oop/">OOP</a>    <br>
+    Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Method%20overriding%20in%20Python&url=/blog/2014/05/19/method-overriding-in-python/&via=thedigicat&hashtags=python,python3,oop" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=/blog/2014/05/19/method-overriding-in-python/&title=Method%20overriding%20in%20Python&summary=&source=/blog/2014/05/19/method-overriding-in-python/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Method%20overriding%20in%20Python&u=/blog/2014/05/19/method-overriding-in-python/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Method%20overriding%20in%20Python&amp;body=/blog/2014/05/19/method-overriding-in-python/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=/blog/2014/05/19/method-overriding-in-python/&title=Method%20overriding%20in%20Python" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span>    </p>
+  </section>
+
+  <section id="content">
+    <p>What is overriding? Overriding is the ability of a class to change the implementation of a method provided by one of its ancestors.</p>
+<p>Overriding is a very important part of OOP since it is the feature that makes inheritance exploit its full power. Through method overriding a class may "copy" another class, avoiding duplicated code, and at the same time enhance or customize part of it. Method overriding is thus a strict part of the inheritance mechanism.</p>
+<h2 id="a-quick-glance-to-inheritance">A quick glance to inheritance<a class="headerlink" href="#a-quick-glance-to-inheritance" title="Permanent link">&para;</a></h2>
+<p>As for most OOP languages, in Python inheritance works through implicit delegation: when the object cannot satisfy a request, it first tries to forward the request to its ancestors, following the specific language rules in the case of multiple inheritance.</p>
+<p>An example:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">5</span>
+
+    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+<p>As you can see the <code>Child</code> class is empty, but since it inherits from <code>Parent</code> Python takes charge of routing all method calls. So you may use the <code>get_value()</code> method of <code>Child</code> objects and everything works as expected.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Child</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+<span class="go">5</span>
+</code></pre></div>
+
+<p>Indeed <code>get_value()</code> is not exactly part of the <code>Child</code> class as if it were defined in it</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Parent</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Child</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="go">[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__doc__&#39;, &#39;__format__&#39;,</span>
+<span class="go"> &#39;__getattribute__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__module__&#39;, &#39;__new__&#39;,</span>
+<span class="go"> &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;,</span>
+<span class="go"> &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;__weakref__&#39;, &#39;get_value&#39;, &#39;value&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__doc__&#39;, &#39;__format__&#39;,</span>
+<span class="go"> &#39;__getattribute__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__module__&#39;, &#39;__new__&#39;,</span>
+<span class="go"> &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;,</span>
+<span class="go"> &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;__weakref__&#39;, &#39;get_value&#39;, &#39;value&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span>
+<span class="go">[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__doc__&#39;, &#39;__format__&#39;,</span>
+<span class="go"> &#39;__getattribute__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__module__&#39;, &#39;__new__&#39;,</span>
+<span class="go"> &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;,</span>
+<span class="go"> &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;__weakref__&#39;, &#39;get_value&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">Child</span><span class="p">)</span>
+<span class="go">[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__doc__&#39;, &#39;__format__&#39;,</span>
+<span class="go"> &#39;__getattribute__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__module__&#39;, &#39;__new__&#39;,</span>
+<span class="go"> &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;,</span>
+<span class="go"> &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;__weakref__&#39;, &#39;get_value&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Parent</span><span class="o">.</span><span class="vm">__dict__</span>
+<span class="go">dict_proxy({&#39;__module__&#39;: &#39;__main__&#39;,</span>
+<span class="go">            &#39;get_value&#39;: &lt;function get_value at 0xb69a656c&gt;,</span>
+<span class="go">            &#39;__dict__&#39;: &lt;attribute &#39;__dict__&#39; of &#39;Parent&#39; objects&gt;,</span>
+<span class="go">            &#39;__weakref__&#39;: &lt;attribute &#39;__weakref__&#39; of &#39;Parent&#39; objects&gt;,</span>
+<span class="go">            &#39;__doc__&#39;: None,</span>
+<span class="go">            &#39;__init__&#39;: &lt;function __init__ at 0xb69a6534&gt;})</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Child</span><span class="o">.</span><span class="vm">__dict__</span>
+<span class="go">dict_proxy({&#39;__module__&#39;: &#39;__main__&#39;, &#39;__doc__&#39;: None})</span>
+</code></pre></div>
+
+<p>This shows that the <code>Child</code> class does not actually contain the <code>get_value()</code> method and that a mechanism of automatic delegation is active under the hood. For an insight on this mechanism check <a href="../../../../../blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/">this post</a>.</p>
+<h2 id="method-overriding-in-action">Method overriding in action<a class="headerlink" href="#method-overriding-in-action" title="Permanent link">&para;</a></h2>
+<p>In Python method overriding occurs simply defining in the child class a method with the same name of a method in the parent class. When you define a method in the object you make the latter able to satisfy that method call, so the implementations of its ancestors do not come in play.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">5</span>
+
+    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div>
+
+<p>Now <code>Child</code> objects behave differently</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Child</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+<span class="go">6</span>
+</code></pre></div>
+
+<p>and taking a look inside the class we spot a difference</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">Parent</span><span class="o">.</span><span class="vm">__dict__</span>
+<span class="go">dict_proxy({&#39;__module__&#39;: &#39;__main__&#39;,</span>
+<span class="go">            &#39;get_value&#39;: &lt;function get_value at 0xb69a656c&gt;,</span>
+<span class="go">            &#39;__dict__&#39;: &lt;attribute &#39;__dict__&#39; of &#39;Parent&#39; objects&gt;,</span>
+<span class="go">            &#39;__weakref__&#39;: &lt;attribute &#39;__weakref__&#39; of &#39;Parent&#39; objects&gt;,</span>
+<span class="go">            &#39;__doc__&#39;: None,</span>
+<span class="go">            &#39;__init__&#39;: &lt;function __init__ at 0xb69a6534&gt;})</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Child</span><span class="o">.</span><span class="vm">__dict__</span>
+<span class="go">dict_proxy({&#39;__module__&#39;: &#39;__main__&#39;,</span>
+<span class="go">            &#39;get_value&#39;: &lt;function get_value at 0xb69a65a4&gt;,</span>
+<span class="go">            &#39;__doc__&#39;: None})</span>
+</code></pre></div>
+
+<p>since now the <code>Child</code> class actually contains a <code>get_value()</code> method with a different implementation (the id of the two functions are different).</p>
+<p>This is of uttermost importance in Python. Inheritance delegation occours automatically, but if a method is overridden the implementation of the ancestors is not considered at all. So, if you want to run the implementation of one or more of the ancestors of your class, you have to call them explicitly.</p>
+<p>Why should you want to call the implementation of objects that are deeper in the class hierarchy?</p>
+<p>You may want to call it because many times you override a method to enhance its nature, that is to improve the "quality" of the result, and to improve something you need to first access it. So, by calling the original implementation, you get the result you later want to improve.</p>
+<p>There is however a well defined reason why <strong>you must always call the original implementation</strong>. This reason may be called "hidden side effects".</p>
+<p>When you inherit from a class, you are actually inheriting a whole class hierarchy which internal structure is (or shall be considered) unknown. This means that any method call may hide a complex set of operations on the whole class hierarchy, and some of them may be vital for the library or the framework you are using.</p>
+<p>Python makes you call the original implementation of an overridden method explicitly (not differently from other object-oriented languages). This surely follows the Python idea that "Explicit is better than implicit" (<a href="http://legacy.python.org/dev/peps/pep-0020/">The Zen of Python</a>), but this advice is not just a matter of taste or some sort of programming mannerism.</p>
+<p>When you override you have to think if you want to filter the arguments for the original implementation, if you want to filter its results, or both. You typically want to filter arguments (pre-filter) if you want to change the data that the parent implementation shall process while you filter the results (post-filter) if you want to add an additional processing layer. Obviously both things may be done together in the same method. Since you have to explicitly call the parent implementation you are free to do it where you want in the code of the new method: the decision about the type of filtering you want to achieve affects the position of the call.</p>
+<h4 id="an-example-of-pre-filtering">An example of pre-filtering<a class="headerlink" href="#an-example-of-pre-filtering" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">class</span> <span class="nc">Logger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="n">message</span>
+
+<span class="k">class</span> <span class="nc">TimestampLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{ts}</span><span class="s2"> </span><span class="si">{msg}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                                      <span class="n">msg</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TimestampLogger</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The <code>TimestampLogger</code> object adds some information to the message string before calling the original implementation of its <code>log()</code> method.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;hi!&#39;</span><span class="p">)</span>
+<span class="go">hi!</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">TimestampLogger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;hi!&#39;</span><span class="p">)</span>
+<span class="go">2014-05-19T13:18:53.402123 hi!</span>
+<span class="gp">&gt;&gt;&gt; </span>
+</code></pre></div>
+
+<h4 id="an-example-of-post-filtering">An example of post-filtering<a class="headerlink" href="#an-example-of-post-filtering" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">FileCat</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">lines</span>
+
+<span class="k">class</span> <span class="nc">FileCatNoEmpty</span><span class="p">(</span><span class="n">FileCat</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">FileCatNoEmpty</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="n">nonempty_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">l</span> <span class="o">!=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">nonempty_lines</span>
+</code></pre></div>
+
+<p>When you use the <code>FileCatNoEmpty</code> object you get the result of the <code>FileCat</code> object with the empty lines stripped.</p>
+<p>As you can see while in the first example the original implementation has been called as the last thing, in the second one it is called before everything else. There is therefore no fixed position for the call of the original method, and it depends on what you want to do.</p>
+<h2 id="always-call-super">Always call super()?<a class="headerlink" href="#always-call-super" title="Permanent link">&para;</a></h2>
+<p>Shall we <em>always</em> call the original method implementation? In theory a well designed API should make it always possible but we know that boundary cases exist: the original method may have side effect that you want to avoid and sometimes the API cannot be refactored to avoid them. In those cases you may prefer to skip the call to the original implementation of the method; Python does not make it mandatory, so feel free to walk that path if you think the situation requires it. Be sure to know what you are doing, however, and document why you are completely overwriting the method.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Call the original implementation of a method you are overriding whenever possible. This meakes the underlying API work as expected. When in need of skipping the call be sure to document the reasons.</li>
+<li>Always use <code>super(cls, self)</code> for Python 2.x or <code>super()</code> for Python 3.x to call the original implementation of a method. This respects the resolution order in case of multiple inheritance and, for Python 3.x, protects from changes in the class hierarchy.</li>
+<li>If you call to the original implementation of a method do it as soon as you have all the data you need to run it.</li>
+</ul>
+<h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h2>
+<p>2014-05-21 As suggested by <a href="https://www.reddit.com/user/caseyweb">caseyweb</a> in <a href="https://www.reddit.com/r/Python/comments/25y4hu/method_overriding_in_python/chn5v1q">this comment</a> the conclusions of the post were too strong, so I updated the post with a new section ("Always call super()?") and the summary. Many thanks caseyweb!</p>
+<h2 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.python.org/3/tutorial/classes.html">Python official documentation on classes</a></li>
+</ul>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </section>
+
+
+  <section class="footer">
+    <h2>Related Posts</h2>
+    <div class="posts mini">
+      <article class="card">
+        <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/" class="image">
+          <img src="/images/first-class-objects-in-python-generic-code-wrappers-and-factories.jpg" alt="first-class-objects-in-python-generic-code-wrappers-and-factories" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/"><h2 class="card-title">First-class objects in Python: generic code, wrappers, and factories</h2></a>
+	  <p class="article-info">
+            <time datetime="2021-03-09T16:00:00+00:00">Mar 9, 2021</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python2/" class="tag">Python2</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/functional-programming/" class="tag">functional programming</a>            <a href="/categories/decorators/" class="tag">decorators</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2 class="card-title">TDD in Python with pytest - Part 5</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2 class="card-title">TDD in Python with pytest - Part 4</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2 class="card-title">TDD in Python with pytest - Part 3</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2 class="card-title">TDD in Python with pytest - Part 2</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/" class="image">
+          <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2 class="card-title">TDD in Python with pytest - Part 1</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/pytest/" class="tag">pytest</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/refactoring/" class="tag">refactoring</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/" class="image">
+          <img src="/images/delegation-composition-and-inheritance-in-object-oriented-programming.jpg" alt="delegation-composition-and-inheritance-in-object-oriented-programming" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"><h2 class="card-title">Delegation: composition and inheritance in object-oriented programming</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-08-17T09:00:00+01:00">Aug 17, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/" class="image">
+          <img src="/images/object-oriented-programming-concepts-in-python.jpg" alt="object-oriented-programming-concepts-in-python" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/"><h2 class="card-title">Object-Oriented Programming (OOP) concepts in Python</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-04-26T00:00:00+01:00">Apr 26, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/metaclasses/" class="tag">metaclasses</a>            <a href="/categories/metaprogramming/" class="tag">metaprogramming</a>            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2020/03/27/mixin-classes-in-python/" class="image">
+          <img src="/images/multiple-inheritance-and-mixin-classes-in-python.jpg" alt="multiple-inheritance-and-mixin-classes-in-python" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2020/03/27/mixin-classes-in-python/"><h2 class="card-title">Multiple inheritance and mixin classes in Python</h2></a>
+	  <p class="article-info">
+            <time datetime="2020-03-27T12:00:00+01:00">Mar 27, 2020</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/algorithms/" class="tag">algorithms</a>            <a href="/categories/django/" class="tag">Django</a>            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python3/" class="tag">Python3</a>          </p>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/blog/2018/12/20/cabook/" class="image">
+          <img src="/images/cabook.jpg" alt="cabook" />
+        </a>
+        <div class="card-body">
+          <a href="/blog/2018/12/20/cabook/"><h2 class="card-title">Clean Architectures in Python: the book</h2></a>
+	  <p class="article-info">
+            <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time>
+            <span class="fas fa-tags"></span>
+            <a href="/categories/oop/" class="tag">OOP</a>            <a href="/categories/python/" class="tag">Python</a>            <a href="/categories/python2/" class="tag">Python2</a>            <a href="/categories/python3/" class="tag">Python3</a>            <a href="/categories/tdd/" class="tag">TDD</a>            <a href="/categories/testing/" class="tag">testing</a>            <a href="/categories/architectures/" class="tag">architectures</a>          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+
+  <!-- </article> -->
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+<div class="inner">
+    <!-- Menu -->
+        <nav id="menu">
+            <header class="major">
+                <h2>Menu</h2>
+            </header>
+<ul>
+    <li><a href="/index.html">Homepage</a></li>
+    <li><a href="/pages/about.html">About</a></li>
+    <li><a href="/archives/index.html">Archives</a></li>
+</ul>        </nav>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Recent posts</h2>
+            </header>
+<div class="mini-posts">
+    <article>
+        <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/" class="image"><img src="/images/public-key-cryptography-openssh-private-keys.jpg" alt="public-key-cryptography-openssh-private-keys" /></a>
+        <p><strong>Public key cryptography: OpenSSH private keys</strong> <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/" class="image"><img src="/images/stop-using-tools-as-if-they-were-solutions.jpg" alt="stop-using-tools-as-if-they-were-solutions" /></a>
+        <p><strong>Stop using tools as if they were solutions</strong> <a href="/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/">Read</a></p> 
+    </article>
+    <article>
+        <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/" class="image"><img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" /></a>
+        <p><strong>How to write a Pelican theme for your static website</strong> <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">Read</a></p> 
+    </article>
+</div>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Categories</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/category/programming/">Programming</a></li>
+    <li><a href="/category/projects/">Projects</a></li>
+    <li><a href="/category/retro/">Retro</a></li>
+</ul>
+        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Feeds</h2>
+            </header>
+<ul class="list-clean">
+    <li><a href="/atom.xml"><i class="fas fa-rss"></i> All posts</a></li>
+
+
+    <li><a href="/category/programming/atom.xml"><i class="fas fa-rss"></i> All posts in category: Programming</a></li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Tags</h2>
+            </header>
+<ul class="list-inline list-clean" id="tags-side">
+    <li class="tag font-size-2">
+        <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag font-size-1">
+        <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag font-size-3">
+        <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag font-size-4">
+        <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag font-size-2">
+        <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul>        </section>
+
+    <!-- Section -->
+        <section>
+            <header class="major">
+                <h2>Get in touch</h2>
+            </header>
+<ul class="contact">
+    
+    
+    
+    <li class="fa-twitter"><a href="https://twitter.com/thedigicat">Twitter</a></li>
+    
+    
+    
+    
+    <li class="fa-github"><a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+    
+</ul>        </section>
+
+    <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright">Editorial theme by: <a href="https://html5up.net">HTML5 UP</a>.</p>
+            <p class="copyright">Cover picture by: <a href="https://pxhere.com/en/photo/1428515">An Min @ pxhere.com</a></p>
+        </footer>
+
+</div>					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="/theme/js/jquery.min.js"></script>
+			<script src="/theme/js/browser.min.js"></script>
+			<script src="/theme/js/breakpoints.min.js"></script>
+            <script src="/theme/webassets-external/fbe79d99b38a8623685ff42823edd66f_util.js"></script>
+            <script src="/theme/webassets-external/0c2f3654914fe90dd661c09240b58315_main.js"></script>
+
+
+	</body>
+</html>

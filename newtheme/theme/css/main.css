@@ -1,0 +1,225 @@
+/* Breakpoints */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+* {
+  box-sizing: border-box; }
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.preload * {
+  transition: none !important; }
+
+body {
+  font-family: sans-serif; }
+
+div.container {
+  position: relative;
+  display: flex; }
+
+body {
+  color: #3d4449; }
+
+/* Small screen disappearing menu */
+button#btnNav {
+  width: 50px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background: none;
+  outline: none;
+  border: none;
+  color: #ffd500;
+  cursor: pointer;
+  font-size: 1.5rem; }
+
+div.menu {
+  margin-bottom: 1rem; }
+
+div.menu header {
+  width: 100%;
+  height: 50px;
+  background: #3d4449;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; }
+
+div.menu header h1 {
+  color: #ffd500;
+  font-family: 'Roboto Slab', serif;
+  font-size: 2rem;
+  font-weight: 700; }
+
+div.menu nav .links {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  height: 100vh;
+  width: 250px;
+  background: #f0f3f5;
+  transform: translateX(-300px);
+  transition: transform 0.3s; }
+
+div.menu nav.open .links {
+  transform: translateX(0);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); }
+
+div.menu nav .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  visibility: hidden;
+  opacity: 0;
+  transition: opecity 0.3s; }
+
+div.menu nav.open .overlay {
+  visibility: visible;
+  opacity: 1; }
+
+/* Navigation menu */
+nav .link {
+  display: flex;
+  align-items: center;
+  color: #3d4449;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 12px 15px;
+  background: transform 0.2s; }
+
+nav .link > i {
+  margin-right: 15px; }
+
+nav .link.active {
+  color: #ff9900; }
+
+nav .link:hover {
+  color: #ff9900; }
+
+/* Sidebar */
+div.sidebar {
+  height: 100vh;
+  width: 300px;
+  background-color: #f0f3f5; }
+
+/* Main */
+main {
+  width: 100%;
+  margin: 0 auto; }
+
+main header {
+  background: #3d4449;
+  color: #ffd500;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem; }
+
+main img {
+  width: 100%;
+  height: 30vw;
+  max-height: 250px;
+  object-fit: cover;
+  object-position: 0 30%; }
+
+main h1 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center; }
+
+main p.subtitle {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 1rem 0; }
+
+main div.quote {
+  position: relative;
+  margin: 0 4rem;
+  text-align: center;
+  font-family: 'Open Sans', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic; }
+
+main div.quote p.source {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-style: normal; }
+
+main div.quote svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%; }
+
+/* Media */
+@media (min-width: 1024px) {
+  div.menu {
+    display: none; }
+  main {
+    width: 724px; } }
+
+@media (max-width: 1023px) {
+  main header {
+    display: none; }
+  div.sidebar {
+    display: none; }
+  div.container {
+    flex-direction: column; }
+  main h1 {
+    display: none; } }
