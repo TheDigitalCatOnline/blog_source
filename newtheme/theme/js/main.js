@@ -3,13 +3,16 @@ window.addEventListener("load", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const nav = document.querySelector("div.menu > nav");
+  const sidebar = document.querySelector("div.sidebar");
+  const overlay = document.querySelector("main .overlay");
   
-  document.querySelector("#btnNav").addEventListener("click", () => {
-    nav.classList.add("open");
+  document.querySelector("main header button").addEventListener("click", () => {
+    sidebar.classList.add("open");
+    overlay.classList.add("open");
   });
 
-  document.querySelector("div.menu nav .overlay").addEventListener("click", () => {
-    nav.classList.remove("open");
+  overlay.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("open");
   });
 });

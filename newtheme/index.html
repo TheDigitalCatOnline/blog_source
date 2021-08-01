@@ -17,34 +17,225 @@
 
   <body class="preload">
     <div class="container">
-      <div class="menu">
-	<header>
-	  <button id="btnNav" type="button">
-	    <i class="fas fa-bars"></i>
-	  </button>
-	  <h1>The Digital Cat</h1>
-	</header>
-	<nav>
-	  <div class="links">
-	    <a href="#" class="link">Home</a>
-	    <a href="#" class="link active">About</a>
-	    <a href="#" class="link">Archives</a>
-	  </div>
-	  <div class="overlay"></div>
-	</nav>
-      </div>
       <div class="sidebar">
 	<nav>
 	  <div class="links">
-	    <a href="#" class="link">Home</a>
-	    <a href="#" class="link active">About</a>
-	    <a href="#" class="link">Archives</a>
+	    <ul>
+	      <li class="link"><a href="#">Home</a></li>
+	      <li class="link active"><a href="#">About</a></li>
+	      <li class="link"><a href="#">Archives</a></li>
+	    </ul>
 	  </div>
-	  <div class="overlay"></div>
 	</nav>
+	<section>
+	  <header>
+	    <h2>Categories</h2>
+	  </header>
+	  <ul>
+	    <li><a href="#">Programming</a></li>
+	    <li><a href="#">Projects</a></li>
+	    <li><a href="#">Retro</a></li>
+	  </ul>
+	</section>
+	<section>
+          <header>
+            <h2>Feeds</h2>
+          </header>
+	  <ul>
+	    <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+	  </ul>
+	</section>
+	<section>
+          <header>
+            <h2>Tags</h2>
+          </header>
+	  <ul class="tags">
+	    <li class="tag tag-size-2">
+              <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about C" href="/categories/c/">C</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about design" href="/categories/design/">design</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about Django" href="/categories/django/">Django</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about editor" href="/categories/editor/">editor</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+	    </li>
+	    <li class="tag tag-size-1">
+              <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about generators" href="/categories/generators/">generators</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about Git" href="/categories/git/">Git</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about HTML" href="/categories/html/">HTML</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+	    </li>
+	    <li class="tag tag-size-1">
+              <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+	    </li>
+	    <li class="tag tag-size-1">
+              <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+	    </li>
+	    <li class="tag tag-size-1">
+              <a title="Posts about Python" href="/categories/python/">Python</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+	    </li>
+	    <li class="tag tag-size-1">
+              <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+	    </li>
+	    <li class="tag tag-size-2">
+              <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+	    </li>
+	    <li class="tag tag-size-1">
+              <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+	    </li>
+	    <li class="tag tag-size-1">
+              <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+	    </li>
+	    <li class="tag tag-size-1">
+              <a title="Posts about testing" href="/categories/testing/">testing</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about tools" href="/categories/tools/">tools</a>
+	    </li>
+	    <li class="tag tag-size-3">
+              <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+	    </li>
+	    <li class="tag tag-size-4">
+              <a title="Posts about video" href="/categories/video/">video</a>
+	    </li>
+	    <li class="tag tag-size-2">
+	      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+	    </li>
+	  </ul>
+        </section>
       </div>
       <main>
+	<div class="overlay"></div>
 	<header>
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
 	  <h1>The Digital Cat</h1>
 	</header>
 	<img src="/images/global/cover.jpg" alt="Cover">
