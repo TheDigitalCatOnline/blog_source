@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% if articles_page.number != 1 %} Page {{ articles_page.number }}{% endif %}{% endblock %}
+
+{% block content %}
+<img class="cover" src="/images/global/cover.jpg" alt="Cover">
+<p class="subtitle">Adventures of a curious cat in the land of programming</p>
+<div class="quote">
+  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="quote-right" class="svg-inline--fa fa-quote-right fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"></path></svg>
+  <p>I've seen things you people wouldn't believe. Attack ships on fire off the shoulder of Orion. I watched C-beams glitter in the dark near the Tannhäuser Gate. All those moments will be lost in time, like tears in rain. Time to die.</p>
+  <p class="source">Blade Runner, 1982</p>
+</div>
+<div class="page-content">
+
+  <section>
+    <header>
+      <h2>All posts</h2>
+    </header>
+    <div class="paginated-posts">
+      {% include 'includes/paginated_posts.html' %}
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Sections</h2>
+    </header>
+    <div class="sections">
+      <article>
+	<i class="fas fa-desktop"></i>
+	<div>
+	  <h2>Programming</h2>
+	  <p>Articles about programming in various languages, mainly Python but also Scala, Erlang, C. Other topics I discuss are algorithms, compilers, architectures, operating systems, testing.</p>
+	  <a href="/category/programming">More</a>
+	</div>
+      </article>
+      <article>
+	<i class="fas fa-save"></i>
+	<div>
+	  <h2>Retro</h2>
+	  <p>All my retroprogramming articles, bits and bytes, and low level investigations. Home of the "Exploring the Amiga" series. Beware of the dragons!</p>
+	  <a href="/category/retro">More</a>
+	</div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Top series</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	{% for series_name, series_articles in series.items() %}
+	{% set article = series_articles[0] %}
+	{% if article.series_info %}
+	<article class="card">
+	  <a href="{{ article.url }}">
+            <img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="{{ article.image if article.image else 'article_image_placeholder' }}" />
+	  </a>
+	  <div class="body">
+            <a href="{{ article.url }}"><h2>{{ series_name }}</h2></a>
+	    <div class="text">
+              <p>{{ article.series_info }}</p>
+	    </div>
+            <div class="actions">
+              <a class="action" href="{{ article.url }}">Start</a>
+            </div>
+	  </div>
+	</article>
+	{% endif %}
+	{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Books</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+	  <a href="https://www.pycabook.com" class="image">
+	    <img src="/images/book-clean-architectures.jpg" alt="Clean Architectures in Python">
+	  </a>
+	  <div class="body">
+	    <a href="https://leanpub.com/clean-architectures-in-python"><h2 class="card-title">Clean Architectures in Python</h2></a>
+	    <div class="text">
+	      <p>The clean architecture is the opposite of spaghetti code, where everything is interlaced and there are no single elements that can be easily detached from the rest and replaced without the whole system collapsing. The main point of the clean architecture is to make clear "what is where and why", and this should be your first concern while you design and implement a software system, whatever architecture or development methodology you want to follow.</p>
+	    </div>
+	    <div class="actions">
+	      <a class="action" href="https://www.pycabook.com">Read it online</a>
+	      <a class="action" href="https://leanpub.com/clean-architectures-in-python">Buy it</a>
+	    </div>
+	  </div>
+	</article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Videos</h2>
+    </header>
+
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+	  <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m" class="image">
+	    <img src="/images/video-tdd-in-python-with-pytest.jpg" alt="TDD in Python with pytest (playlist)">
+	  </a>
+	  <div class="body">
+	    <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m"><h2 class="card-title">TDD in Python with pytest (playlist)</h2></a>
+	    <div class="text">
+	      <p>I recorded my successful workshop "TDD in Python with pytest" and produced my first series of videos, for a grand total of 2 hours of hands-on tutorial on Test-Driven Development in Python.</p>
+	    </div>
+	    <div class="actions">
+	      <a class="action" href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T2REIrEcpGY6nT2t7Wcoj-m">Watch it</a>
+	    </div>
+	  </div>
+	</article>
+	<article class="card">
+	  <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O" class="image">
+	    <img src="/images/video-object-oriented-programming-in-python.jpg" alt="Object-oriented programming in Python (playlist)">
+	  </a>
+	  <div class="body">
+	    <a href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O"><h2 class="card-title">Object-oriented programming in Python (playlist)</h2></a>
+	    <div class="text">
+	      <p>A journey into the Python implementation of the Object-oriented paradigm, specifically tailored for beginner programmers.</p>
+	    </div>
+	    <div class="actions">
+	      <a class="action" href="https://www.youtube.com/playlist?list=PLWtCrYLGt7T3DUFPYdqrdEqzt-OCfBQ5O">Watch it</a>
+	    </div>
+	  </div>
+	</article>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Cover picture by: <a href="https://pxhere.com/en/photo/1428515">An Min @ pxhere.com</a></p>
+</footer>
+{% endblock %}

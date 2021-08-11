@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block meta_description %}
+{% if article.summary %}
+<meta name="description" content="{{ article.summary|striptags }}">
+{% else %}
+<meta name="description" content="{{ article.title|striptags }}">
+{% endif %}
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="{{ article.title|striptags }}" />
+{% if article.summary %}
+<meta name="twitter:description" content="{{ article.summary|striptags }}" />
+{% else %}
+<meta name="twitter:description" content="Read the full post on {{ SITENAME }}" />
+{% endif %}
+<meta name="twitter:image" content="{{ SITEURL }}/images/{{ article.image }}.jpg" />
+{% endblock %}
+
+{% block title %}{{ article.title|striptags }}{% endblock %}
+
+{% block custom_css %}
+{% if article.style %}
+{% set styles = article.style.split(',') %}
+{% for style in styles %}
+{% assets filters="cssmin", output="css/" + style + ".min.css", "css/" + style + ".css" %}
+<link id="style-{{ style }}" rel="stylesheet" href="/{{ ASSET_URL }}">
+{% endassets %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block custom_js %}
+{% if article.style %}
+{% set styles = article.style.split(',') %}
+{% for style in styles %}
+{% assets filters="jsmin", output="js/" + style + ".min.js", "js/" + style + ".js" %}
+<script src="/{{ ASSET_URL }}"></script>
+{% endassets %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+ {
+     "@context" : "https://schema.org",
+     "@type" : "Article",
+     "name" : "{{ article.title|striptags }}",
+     {% if article.author %}
+     "author" : {
+	 "@type" : "Person",
+	 "name" : "{{ article.author }}"
+     },
+     {% endif %}
+     "publisher" : {
+	 "@type" : "Organization",
+	 "name" : "{{ SITENAME}}",
+	 "logo" : {
+	     "@type" : "ImageObject",
+	     "url" : "{{ SITEURL }}/images/global/logo_200.jpg",
+	     "height" : 200,
+	     "width" : 200
+	 }
+     },
+     "mainEntityOfPage": {
+	 "@type": "WebPage",
+	 "@id": "{{ SITEURL }}/{{ article.url }}"
+     },
+     "datePublished" : "{{ article.locale_date }}",
+     "dateModified" : "{% if article.locale_modified %}{{ article.locale_modified }}{% else %}{{ article.locale_date }}{% endif %}",
+     "image" : "{{ SITEURL }}/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg",
+     {% if article.summary %}
+     "description" : "{{ article.summary|striptags }}",
+     "headline" : "{{ article.summary|striptags|truncate(110, False, '') }}",
+     {% endif %}
+     "url" : "{{ SITEURL }}/{{ article.url }}"
+ }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+  <header>
+    <h1>{{ article.title }}</h1>
+    <div class="post-info">
+      <p>By {{ article.author }} - <time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }}</time></p>
+      <p class="tags">
+	<a class="tag category" href="/{{ article.category.url }}" title="All posts in category {{ article.category }}">{{ article.category }}</a>
+	{% if article.tags %}
+	{% for tag in article.tags %}
+	<a class="tag" href="/{{ tag.url }}">{{ tag }}</a>
+	{% endfor %}
+	{% endif %}
+      </p>
+      <p class="share">Share on: {% include 'includes/share.html' %}</p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    {{ article.content }}
+  </div>
+
+  {% if article.series %}
+  <section class="links">
+    <header>
+      {% set text = 'Part %(index)s of the %(name)s series' %}
+      <h2>{{ text|format(index=article.series.index, name=article.series.name) }}</h2>
+    </header>
+    <div>
+      {% if article.series.all_previous %}
+      <h3>Previous articles</h3>
+      <ul>
+        {% for article in article.series.all_previous %}
+        <li><a href="/{{ article.url }}">{{ article.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      
+      {% if article.series.all_next %}
+      <h3>Next articles</h3>
+      <ul>
+        {% for article in article.series.all_next %}
+        <li><a href="/{{ article.url }}">{{ article.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if article.related_posts %}
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      {% set _other_num = 10 %}
+      <div class="posts">
+	{% for article in article.related_posts[:_other_num] %}
+	<article class="card">
+          <a href="/{{ article.url }}">
+            <img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="{{ article.image if article.image else 'article_image_placeholder' }}" />
+          </a>
+          <div class="body">
+            <a href="/{{ article.url }}"><h2>{{ article.title }}</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		{% for tag in article.tags %}
+		<a href="/{{ tag.url }}" class="tag">{{ tag }}</a>
+		{% endfor %}
+              </p>
+              <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+	    </div>
+          </div>
+	</article>
+	{% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  
+</div>
+{% endblock %}

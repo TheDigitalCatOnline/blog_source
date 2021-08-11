@@ -1,0 +1,28 @@
+<div class="pagination">
+  {% include 'includes/articles_list_pagination.html' %}
+</div>
+
+<div class="posts">
+  {% for article in (articles_page.object_list if articles_page else articles) %}
+  <article class="card">
+    <a href="/{{ article.url }}">
+      <img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="{{ article.image if article.image else 'article_image_placeholder' }}" />
+    </a>
+    <div class="body">
+      <a href="/{{ article.url }}"><h2>{{ article.title }}</h2></a>
+      <div class="info">
+      <p class="tags">
+	{% for tag in article.tags %}
+        <a href="/{{ tag.url }}" class="tag">{{ tag }}</a>
+        {% endfor %}
+      </p>
+      <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  {% include 'includes/articles_list_pagination.html' %}
+</div>
