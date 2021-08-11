@@ -733,7 +733,7 @@ class SimpleCalculator:
 
 *Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-5-multiply-two-numbers-smart,step-5-multiply-two-numbers-smart)
 
-More information about the algorithm `reduce` can be found on the MapReduce Wikipedia page https://en.wikipedia.org/wiki/MapReduce. The Python function documentation can be found at https://docs.python.org/3.6/library/functools.html#functools.reduce.
+More information about the algorithm `reduce` can be found on the MapReduce Wikipedia page https://en.wikipedia.org/wiki/MapReduce. The Python function documentation can be found at [link](https://docs.python.org/3.6/library/functools.html#functools.reduce).
 
 The above code makes the test suite pass, so we can move on and address the next problem. As happened with addition we cannot properly test that the function accepts a potentially infinite number of arguments, so we can test a reasonably high number of inputs.
 
