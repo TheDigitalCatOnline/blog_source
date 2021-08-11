@@ -71,7 +71,7 @@ __________________________ test_div_by_zero_returns_inf ________________________
 tests/test_main.py:70:  
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-self = <simple_calculator.main.SimpleCalculator object at 0x7f0b0b733990>, a = 5, b = 0
+self = <simple_calculator.main.SimpleCalculator object at 0x7f0b0b733990>, a = 5, b = 0 :1:
 
     def div(self, a, b):
 >       return a / b
@@ -80,7 +80,7 @@ E       ZeroDivisionError: division by zero
 simple_calculator/main.py:17: ZeroDivisionError
 ----
 
-Note that when an exception happens in the code and not in the test, the pytest output changes slightly. The first part of the message shows where the test fails, but then there is a second part that shows the internal code that raised the exception and provides information about the value of local variables on the first line (`self = <simple_calculator.main.SimpleCalculator object at 0x7f0b0b733990>, a = 5, b = 0`).
+Note that when an exception happens in the code and not in the test, the pytest output changes slightly. The first part of the message shows where the test fails, but then there is a second part that shows the internal code that raised the exception and provides information about the value of local variables on the first line [callout]#1#.
 
 We might implement two different solutions to satisfy this requirement and its test. The first one is to prevent `b` to be 0
 

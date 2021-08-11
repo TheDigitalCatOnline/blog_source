@@ -10,8 +10,6 @@
 :pelican.style:retro
 :pelican.summary:A review of the functions that perform memory management in Kickstart 1.3 
 
-<button onclick="hideStyle()">Toggle retro style</button>
-
 == Memory initialisation
 
 The Amiga has two types of memory. The first one is found on-board and it is traditionally referred to as "Chip Memory". This name comes from the fact that both the CPU and the custom chips have access to it, which also means that all this components have to share the access. This slows down the CPU when the custom chips are using the memory. While they can use DMA to access it without blocking the CPU, the memory cannot be accessed by multiple components at the same time.

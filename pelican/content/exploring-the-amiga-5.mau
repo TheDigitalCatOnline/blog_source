@@ -10,8 +10,6 @@
 :pelican.style:retro
 :pelican.summary:List management in Kickstart 1.3
 
-<button onclick="hideStyle()">Toggle retro style</button>
-
 Memory management is always one of the most rich and complex parts of an architecture, mainly because the available amount of memory is always less than what you would like to have. [link](https://users.ece.cmu.edu/~koopman/titan/rules.html,Always).
 
 It is also an interesting topic because memory is generally managed by both the hardware and the software. The microprocessor may provide a memory management unit (MMU) that enforces a specific schema and the software has to implement its own algorithms on top of that.

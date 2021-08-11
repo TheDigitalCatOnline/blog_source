@@ -10,8 +10,6 @@
 :pelican.style:retro
 :pelican.summary:Branching in the M68k Assembly, memory list management in Kickstart 1.3
 
-<button onclick="hideStyle()">Toggle retro style</button>
-
 == Branching
 
 As branching is one of the most important ways to control the program flow it is worth discussing how it works in the Motorola 68000 processor, and review what options we have.
