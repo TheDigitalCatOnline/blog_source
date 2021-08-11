@@ -48,10 +48,14 @@ SITEMAP = {
 
 DEFAULT_DATE_FORMAT = "%d/%m/%Y"
 
-SOCIAL = (
-    ("Twitter", "https://twitter.com/thedigicat"),
-    ("GitHub", "https://github.com/TheDigitalCatOnline"),
-)
+SOCIAL = [
+    {"name": "Twitter", "icon": "twitter", "url": "https://twitter.com/thedigicat"},
+    {
+        "name": "GitHub",
+        "icon": "github",
+        "url": "https://github.com/TheDigitalCatOnline",
+    },
+]
 
 DEFAULT_PAGINATION = 9
 PAGINATION_PATTERNS = (
@@ -77,7 +81,7 @@ EXTRA_PATH_METADATA = {
 
 TWITTER_USERNAME = "thedigicat"
 
-THEME = "../editorial"
+THEME = "../bengal"
 
 FAVICON = "images/global/favicon.jpg"
 
