@@ -145,6 +145,7 @@ div.sidebar {
     background-color: $background-colour-light;
     font-family: 'Roboto Slab', serif;
     width: $sidebar-width;
+    min-height: 100vh;
     padding: 2rem;
 }
 

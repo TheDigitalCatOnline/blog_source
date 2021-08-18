@@ -4,11 +4,11 @@
 
 {% block content %}
 <img class="cover" src="/images/global/cover.jpg" alt="Cover">
-<p class="subtitle">Adventures of a curious cat in the land of programming</p>
+<p class="subtitle">{{ SITESUBTITLE }}</p>
 <div class="quote">
   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="quote-right" class="svg-inline--fa fa-quote-right fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"></path></svg>
-  <p>I've seen things you people wouldn't believe. Attack ships on fire off the shoulder of Orion. I watched C-beams glitter in the dark near the Tannhäuser Gate. All those moments will be lost in time, like tears in rain. Time to die.</p>
-  <p class="source">Blade Runner, 1982</p>
+  <p>{{ QUOTES[0].quote }}</p>
+  <p class="source">{{ QUOTES[0].source }}</p>
 </div>
 <div class="page-content">
 
