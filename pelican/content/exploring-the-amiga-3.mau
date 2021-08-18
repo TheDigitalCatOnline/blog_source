@@ -10,8 +10,6 @@
 :pelican.style:retro
 :pelican.summary:Exec and the Kickstart 1.3 vector table
 
-<button onclick="hideStyle()">Toggle retro style</button>
-
 == Exec and the vector table
 
 The Exec library is the base library of the Amiga system. This library is loaded in memory at boot time, and it is always open and available. Once loaded, it has the same structure of any other library, that is a prefix containing the jump table in reverse order, then the actual code.

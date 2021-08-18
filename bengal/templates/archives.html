@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Archives{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Archives">
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+  <header>
+    <h1>Archives</h1>
+  </header>
+
+  <div class="post-content">
+        <div class="post-list">
+            {% for article in dates %}
+            <p>
+                <span><time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time></span>
+                <a href="/{{ article.url }}">{{ article.title }}</a>
+            </p>
+            {% endfor %}
+        </div>
+  </div>
+</div>
+{% endblock %}

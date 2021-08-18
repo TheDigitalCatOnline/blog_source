@@ -1,0 +1,31 @@
+<nav>
+  {% include 'includes/navigation/links.html' %}
+</nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+  {% include 'includes/navigation/categories.html' %}
+</section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+  {% include 'includes/navigation/feeds.html' %}
+</section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+  {% include 'includes/navigation/tags.html' %}
+</section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    {% for s in SOCIAL %}
+    <li><i class="fab fa-{{ s.icon }}" aria-hidden="true"></i> <a href="{{ s.url }}">{{ s.name }}</a></li>
+    {% endfor %}
+  </ul>
+</section>

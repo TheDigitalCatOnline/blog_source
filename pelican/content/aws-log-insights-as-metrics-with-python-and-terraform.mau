@@ -55,11 +55,6 @@ Unfortunately I quickly discovered an important limitation of Log Insights, that
 
 The standard solution to this problem suggested by AWS is to write a Lambda that runs the query and stores the value into a custom CloudWatch metric, which I can then use to satisfy my automation needs. I did it, and in this post I will show you exactly how, using Terraform, Python and Zappa, CloudWatch, and DynamoDB. At the end of the post I will also briefly discuss the cost of the solution.
 
-[callout]
-----
-Pygments seems to have issues with the latest versions of the HCL language, so I had to temporarily turn off syntax highlight on the Terraform blocks.
-----
-
 == The big picture
 
 Before I get into the details of the specific tools or solutions that I decided to implement, let me have a look at the bigger picture. The initial idea is very simple: a Lambda function can run a specific Log Insights query and store the results in a custom metric, which can in turn be used to trigger alarms and other actions.

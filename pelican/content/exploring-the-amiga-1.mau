@@ -11,8 +11,6 @@
 :pelican.style:retro
 :pelican.summary:How to disassemble Amiga binaries and a discussion of the LEA instruction and relative offsets
 
-<button onclick="hideStyle()">Toggle retro style</button>
-
 Recently I decided to give some time to retroprogramming, and in particular to explore the architecture of some famous microcomputer and consoles of the 80s and 90s. Glorious 8-bit systems like the ZX Spectrum, the Commodore 64, or the Nintendo Entertainment System. 16-bits giants the likes of the Amiga, its (eventually winning) MS-DOS-based counterparts running on the early x86 architectures, the immortal Nintendo Super Famicom and SEGA Genesis.
 
 I am deeply convinced that learning architectures is a perfect way to become a better programmer, even now that we have 64-bits processors, fifth generation languages, and Internet. Those old systems had many limitations and to get interesting results the programmer has to know the hardware and exploit every single bit of power it can deliver.

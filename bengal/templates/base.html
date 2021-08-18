@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>{{ SITENAME }} - {% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+    {% block meta_description %}{% endblock %}
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    {% assets filters="cssmin", output="css/main.min.css", "css/main.css", "css/pygments/default.css" %}
+    <link rel="stylesheet" href="/{{ ASSET_URL }}">
+    {% endassets %}
+    <link href="/{{ FAVICON }}" rel="icon">
+    
+    {% if GOOGLE_ANALYTICS_UNIVERSAL %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', '{{ GOOGLE_ANALYTICS_UNIVERSAL }}');
+    </script>
+    {% endif %}
+
+    {% if GOOGLE_TAG_MANAGER %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', '{{ GOOGLE_TAG_MANAGER }}');
+    </script>
+    {% endif %}
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+        {% include 'includes/sidebar.html' %}
+      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>{{ SITENAME }}</p>
+	</header>
+	<div class="mobile-menu navigation">
+          {% include 'includes/menu.html' %}
+	</div>
+	
+	{% block content %}{% endblock %}
+
+      </div>
+    </div>
+    {% assets filters="jsmin", output="js/packed.js", "js/main.js" %}
+    <script src="/{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+    {% block custom_js %}{% endblock %}
+  </body>
+</html>

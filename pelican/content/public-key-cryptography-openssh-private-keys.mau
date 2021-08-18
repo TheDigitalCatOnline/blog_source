@@ -17,7 +17,7 @@ Please note that all the private keys shown in this post have been trashed after
 
 Note: as the word "key" can identify several different component of the systems I will describe, I will as much as possible use the words "private key" and "encryption key". The first is the key that we generate to be used in SSH, while the second is a parameter of a (symmetric) encryption algorithm.
 
-= KDFs and protection at rest
+== KDFs and protection at rest
 
 Describing the introduction of the new format, the [link](https://www.openssh.com/txt/release-6.5,"OpenSSH changelog") says
 
@@ -33,7 +33,7 @@ Details of the new format are in the PROTOCOL.key file.
 
 Before we start dissecting the format, then, it is worth briefly discussing what a KDF is, what bcrypt is, and what it means to protect keys at rest.
 
-== Key Derivation Functions
+=== Key Derivation Functions
 
 Whenever a system is protected by a password you want to store the latter somewhere. This is clearly necessary to check the validity of the passwords that the user inputs and decide if you should grant access, but you shouldn't store the password in clear text, as a breach in the storage might compromise the whole system. The idea behind storing password securely is to run them through a hash function and store the hash: whenever someone inputs a password we can run the hash function again and compare the two hashes. However, we also want to prevent the attacker to be able to reconstruct the password from the hash, so we need a _[link](https://en.wikipedia.org/wiki/Cryptographic_hash_function,"cryptographic hash function")_, which is a hash function with added requirements to prevent an easy inversion of the process.
 
@@ -45,16 +45,16 @@ While hash functions created for things like digital signatures should be fast, 
 
 The process that converts a password into a key is called _[link](https://en.wikipedia.org/wiki/Key_derivation_function,"Key Derivation Function")_ (KDF) and despite the name it is usually a complex algorithm and not a single mathematical function. [link](https://en.wikipedia.org/wiki/PBKDF2,"PBKDF2") is an important KDF, defined as part of the specification [link](https://datatracker.ietf.org/doc/html/rfc2898,"PKCS #5"), and it can use any pseudorandom function as part of the key stretching. An important feature of PBKDF2 is that it accepts an iteration count as input, that allows to slow down the process. As we just saw, this is the key to making the algorithm slower in order to adapt to the increasing computing power available to attackers.
 
-== bcrypt
+=== bcrypt
 
 The password-hashing function known as [link](https://en.wikipedia.org/wiki/Bcrypt,"bcrypt") was created in 1999 and is based on the [link](https://en.wikipedia.org/wiki/Blowfish_(cipher\),"Blowfish") cipher created in 1993. Bcrypt is well know to be an extremely good choice thanks to the simple fact that its slowness can be increased tuning one of the parameters of the algorithm called "cost factor". This represents the number of iterations done in the setup of the underlying cipher, and its logarithmic nature makes easy to adapt the whole process to the increasing computational power available to attackers. [link](https://auth0.com/blog/hashing-in-action-understanding-bcrypt/,"This post") attempts to estimate the time to hash a password of 15 characters with a cost of 30 (the maximum is actually 31) with a decent 2017 laptop (2.8 GHz Intel Core i7 16 GB RAM). The result turns out to be around 500 days which makes you understand that bcrypt won't die easily.
 It is important to note here that bcrypt is not a KDF, but a hash function. As such, it might be part of a KDF, but not replace the whole process.
 
-== Protection at rest
+=== Protection at rest
 
 Protection [link](https://en.wikipedia.org/wiki/Data_at_rest,"at rest") refers to the scheme that ensures data is secure when it is stored. Practically speaking, when it comes to SSH keys, we refer to the fact that an attacker that can physically access a key, for example stealing a laptop, actually owns an encrypted version of the key, which can't be used without first decrypting it. As the attacker is supposed to ignore the password used to encrypt the key, the only strategy they can use is to brute-force the key, and here is where the concept of protection at rest comes into play. Actually, the [link](https://xkcd.com/538/,"other strategy") they can employ is to kidnap you and to force you to reveal the password, but this somehow falls outside the sphere of cryptographic security. 
 
-= PEM format and protection at rest
+== PEM format and protection at rest
 
 Now that I clarified some terminology, let's have a look at what the standard PEM format does to store encrypted passwords. As I explained in my post [link](\{filename\}rsa-keys.markdown,"Public key cryptography: RSA keys") a PEM file contains a text header, a text footer, and some content. The content is always an ASN.1 structure created using DER and encoded using base64.
 
@@ -70,7 +70,16 @@ We can roughly sketch the process with the following steps:
 * Encode the result with base64
 * Add a header and a footer that specify the nature of the content
 
-Let's create an encrypted key with OpenSSL and analyse it. The command I used is `openssl genpkey -aes-256-cbc -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -pass pass:foobar -out key_rsa_4096_openssl_pw` which creates a 4096 bits RSA key and encrypts it with AES using `foobar` as password. What I get is a file in the aforementioned PEM format
+Let's create an encrypted key with OpenSSL and analyse it. The command I used is
+
+[source]
+----
+openssl genpkey -aes-256-cbc -algorithm RSA\
+    -pkeyopt rsa_keygen_bits:4096 -pass pass:foobar\
+    -out key_rsa_4096_openssl_pw
+----
+
+which creates a 4096 bits RSA key and encrypts it with AES using `foobar` as password. What I get is a file in the aforementioned PEM format
 
 [source]
 %%%%
@@ -141,7 +150,7 @@ PBKDF2-params ::= SEQUENCE {
 
 As you can see in the ASN.1 dump the salt is `5BE04AE9442D08F0` [callout]#4#, the iteration count is 2048 (`0x800`) [callout]#5#, and the hash function (`prf`, pseudorandom function) is `hmacWithSHA256` [callout]#6# without any additional parameters. The value 2048 for the iterations is a default value in OpenSSL (see the definition of [link](https://github.com/openssl/openssl/blob/5bcbdee621fbf05df7431b8fbb0ea7de7054e1f0/include/openssl/evp.h#L41,"PKCS5_DEFAULT_ITER")).
 
-= OpenSSH's private key format
+== OpenSSH's private key format
 
 As we saw at the beginning of the post, the OpenSSH team came up with a custom format to store the private keys, so now that we are familiar with the nomenclature and with the way PEM stores encrypted keys, lets see what this new format can do.
 
@@ -180,7 +189,7 @@ As you can see, this is intended to be a `pkcs #5 pbkdf2 implementation` that us
 
 So, the OpenSSH private key format ultimately contains a private key encrypted with a non-standard version of PBKDF2 that uses bcrypt as its core hash function. The structure that contains the key is not ASN.1, even though it's base64 encoded and wrapped between header and footer that are similar to the PEM ones. A description of the structure can be found in [link](https://github.com/openssh/openssh-portable/blob/2dc328023f60212cd29504fc05d849133ae47355/PROTOCOL.key).
 
-== Cost factor and rounds
+=== Cost factor and rounds
 
 PBKDF2 uses the concept of _rounds_ to make the key stretching slower. This is the number of times the hash function is called internally (using as salt the output of the previous iteration), so in PBKDF2 the number of rounds or iterations is directly proportional to the slowness of the stretching operation.
 
@@ -190,7 +199,7 @@ In the OpenSSH/OpenBSD implementation things are a bit different.
 
 OpenBSD's version of bcrypt runs with a fixed cost of 6, that creates 64 iterations of the key expansion ([link](https://github.com/openbsd/src/blob/2207c4325726fdc5c4bcd0011af0fdf7d3dab137/sys/lib/libsa/bcrypt_pbkdf.c#L68,"source code")), but being an implementation of PBKDF2 it can still be hardened increasing the number of rounds ([link](https://github.com/openbsd/src/blob/2207c4325726fdc5c4bcd0011af0fdf7d3dab137/sys/lib/libsa/bcrypt_pbkdf.c#L139,"source code")). Those rounds correspond to the value given to the parameter `-a` of the `ssh-keygen` command line.
 
-== How many rounds?
+=== How many rounds?
 
 When it comes to KDFs, the advice is always to run as much iterations as possible while keeping the specific application usable, so you need to tune your SSH keys testing different values in your system. To give you some rough estimations, Wikipedia mentions that for PBKDF2 the number of iterations used by Apple and Lastpass is between 2k and 100k. It is worth reiterating though that you shouldn't aim to use other people's figures, in this case. Instead, run tests of your software and hardware.
 
@@ -206,13 +215,13 @@ ssh-keygen -a 5000 -t ed25519	31.624s
 
 A sensible value for me might be between 100 and 500, then, so that I don't have to wait too long every time I push and pull my branches from GitHub.
 
-= Can we convert private OpenSSH keys into PEM?
+== Can we convert private OpenSSH keys into PEM?
 
 As OpenSSL doesn't understand the OpenSSH private keys format, a common question among programmers and devops is if it is possible to convert it into a PEM format. As you might have guessed reading the previous sections, the answer is no. The PEM format for private keys uses PKCS#5, so it supports only the standard implementation of PBKDF2.
 
 It's interesting to note that the OpenSSL team also specifically decided not to support this new format as it is not standard (see [link](https://github.com/openssl/openssl/issues/5323)).
 
-= A poorly documented format
+== A poorly documented format
 
 PEM, PKCS #8, ASN.1, and all other formats that we use every day, included the OpenSSH public key format, are well documented and standardised in RFCs or similar documents. The OpenSSH private key format is documented in a tiny file that you can find in the source code, but doesn't offer more than a quick overview. To have a good understanding of what is going on I had to read the source code, not only of OpenSSH, but also of OpenBSD.
 
@@ -220,7 +229,7 @@ I think poor documentation like this might be acceptable in personal projects or
 
 The claim is that the new SSH private key format offers a better protection of keys at rest. I'd be very interested to see a cryptanalysis made by some expert (which I'm not). Cryptography is a tricky field, and often things that are apparently smart end up being tragically wrong.
 
-= Resources
+== Resources
 
 * OpenSSL documentation: [link](https://www.openssl.org/docs/man1.1.0/apps/asn1parse.html,asn1parse), [link](https://www.openssl.org/docs/man1.1.0/apps/genpkey.html,genpkey)
 * The [link](https://en.wikipedia.org/wiki/Base64,Base64) encoding

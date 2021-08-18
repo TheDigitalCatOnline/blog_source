@@ -1,0 +1,719 @@
+$sidebar-width: 400px;
+$header-height: 50px;
+
+/* Breakpoints */
+$bp-min-sm: 640px;
+$bp-min-md: 768px;
+$bp-min-lg: 1024px;
+$bp-min-xl: 1280px;
+$bp-min-2xl: 1536px;
+
+$bp-max-xs: $bp-min-sm - 1px;
+$bp-max-sm: $bp-min-md - 1px;
+$bp-max-md: $bp-min-lg - 1px;
+$bp-max-lg: $bp-min-xl - 1px;
+$bp-max-xl: $bp-min-2xl - 1px;
+
+$text-colour: rgb(61, 68, 73);
+
+$background-colour-light: rgb(240, 243, 245);
+$background-colour-emboss: rgb(209, 211, 212);
+$background-colour-medium: rgb(102, 114, 123);
+$background-colour-dark: rgb(61, 68, 73);
+
+$highlight-colour-light: rgb(255, 213, 0);
+$highlight-colour-medium: rgb(255, 153, 0);
+$highlight-colour-dark: rgb(199, 111, 16);
+
+$background-code: #f8f8f8;
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+* {
+    box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.preload * {
+    transition: none !important;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+div.container {
+    display: flex;
+    position: relative;
+}
+
+/* Global styles */
+
+body {
+    color: $text-colour;
+}
+
+a {
+    color: $text-colour;
+}
+
+a:hover {
+    color: $highlight-colour-medium;
+    transition: color 0.2s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 3rem;    
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+article.card div.body h2 {
+    font-size: 1.5rem;
+}
+
+div.sections article div h2 {
+    font-size: 1.5rem;
+}
+
+sup {
+    font-size: 0.9rem;
+    vertical-align: super;
+}
+
+
+/* Sidebar */
+
+div.sidebar {
+    background-color: $background-colour-light;
+    font-family: 'Roboto Slab', serif;
+    width: $sidebar-width;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Menu */
+
+div.mobile-menu {
+    display: none;
+    margin: 2rem 20%;
+}
+
+div.mobile-menu.open {
+    display: block;
+}
+
+div.mobile-menu ul {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 0.1rem;
+    justify-content: center;
+}
+
+div.mobile-menu li {
+    display: inline-flex;
+}
+
+
+div.mobile-menu section header {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+div.mobile-menu ul.tags {
+    column-gap: 1rem;
+}
+
+/* Navigation */
+
+.navigation nav {
+    margin-bottom: 2rem;
+}
+
+.navigation nav .link {
+    margin: 1rem 0;
+}
+
+.navigation nav .link a {
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.navigation nav .link.active a {
+    color: $highlight-colour-medium;
+}
+
+.navigation section {
+    border-top: 2px solid $background-colour-emboss;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.navigation section header {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.navigation section li {
+    margin: 1rem 0;
+}
+
+/* Tags */
+
+ul.tags {}
+
+ul.tags li.tag {
+    display: inline-block;
+    margin: 0.5rem 0.2rem;
+}
+
+ul.tags li.tag.tag-size-4 {
+    font-size: 0.8rem;
+}
+
+ul.tags li.tag.tag-size-3 {
+    font-size: 1rem;
+}
+
+ul.tags li.tag.tag-size-2 {
+    font-size: 1.2rem;
+}
+
+ul.tags li.tag.tag-size-1 {
+    font-size: 1.4rem;
+}
+
+/* Page */
+
+div.page {
+    font-family: 'Open Sans', serif;
+    margin: 0 auto;
+    width: 100%;
+}
+
+div.page header.primary {
+    align-items: center;
+    background: $background-colour-dark;
+    color: $highlight-colour-light;
+    display: flex;
+    height: $header-height;
+    justify-content: center;
+    position: relative;
+}
+
+div.page header.primary button {
+    background: none;
+    border: none;
+    color: $highlight-colour-light;
+    cursor: pointer;
+    font-size: 1.5rem;
+    left: 0;
+    outline: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: $header-height;
+}
+
+div.page header.primary p {
+    font-family: 'Roboto Slab', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+div.page img.cover {
+    height: 30vw;
+    margin-top: 1rem;
+    max-height: 250px;
+    object-fit: cover;
+    object-position: 0 30%;
+    width: 100%;
+}
+
+div.page p.subtitle {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 1rem 0; 
+    text-align: center;
+    text-transform: uppercase;
+}
+
+div.page div.quote {
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 400;
+    margin: 0 4rem;
+    position: relative;
+    text-align: center;
+}
+
+div.page div.quote p.source {
+    font-size: 1rem;
+    font-style: normal;
+    margin-top: 1rem;
+}
+
+div.page div.quote svg {
+    color: rgba(0, 0, 0, 0.05);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+div.page > footer {
+    border-top: 2px solid $background-colour-emboss;
+    margin: 0 1rem;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+/* Posts */
+
+div.page-content {
+    margin: 2rem 1rem;
+}
+
+div.page-content section {
+    border-top: 2px solid $background-colour-emboss;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+div.page-content div.paginated-posts {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    margin: 2rem 0;
+}
+
+div.page-content div.pagination li {
+    display: inline-block;
+    font-family: 'Roboto Slab', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0.5rem;
+}
+    
+div.page-content div.pagination li.active {
+    color: $highlight-colour-medium;
+}
+
+div.page-content h1.title {
+    margin-bottom: 2rem;
+}
+
+div.page-content section h3 {
+    margin: 1rem 0;
+}
+
+div.posts {
+    column-gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2rem;
+}
+
+/* Article card */
+
+article.card {
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Roboto Slab', serif;
+    overflow: hidden;
+}
+
+article.card img{
+    width: 100%;
+}
+
+article.card div.body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 1rem 2rem;
+}
+
+article.card div.body a {
+    font-weight: 700;
+    text-decoration: none;
+}
+
+article.card div.body div {
+    line-height: 2rem;
+}
+
+article.card div.body div.text {
+    line-height: 1.4rem;
+}
+
+article.card div.body a.action {
+    border: 3px solid $highlight-colour-medium;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    padding: 0.2rem 0.5rem;
+    text-decoration: none;
+}
+
+p.tags {
+    font-size: 1.1rem;
+    line-height: 1rem;
+}
+
+p.tags a.tag {
+    background-color: $highlight-colour-dark;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin: 0.2rem 0;
+    padding: 0.2rem 0.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+p.tags a.tag:hover {
+    background-color: $highlight-colour-medium;
+}
+
+p.tags a.category {
+    background-color: $background-colour-dark;
+}
+
+/* Sections */
+
+div.sections {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Roboto Slab', serif;
+    margin: 1rem 0;
+}
+
+div.sections article {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+div.sections article i {
+    color: $highlight-colour-medium;
+    font-size: 3rem;
+    margin: auto;
+}
+
+div.sections article div {
+    margin: 1rem;
+}
+
+div.sections article div p {
+    line-height: 1.4rem;
+    margin: 1rem 0;
+}
+
+/* Post */
+
+div.post-info {
+    line-height: 2rem;
+    margin-top: 2rem;
+}
+
+div.post-info p.share a {
+    margin: 0 0.5rem;
+}
+
+div.post-content {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    margin: 2rem 0 4rem;
+}
+
+div.post-content {
+    a {
+    color: $highlight-colour-dark;
+    }
+
+    a:hover {
+	color: $highlight-colour-medium;
+    }
+    
+    :is(h1, h2, h3, h4, h5, h6) {
+	line-height: 3rem;
+    }
+    
+    h2 {
+	margin: 3rem 0 1.5rem;
+    }
+    
+    h3 {
+	margin: 2rem 0 1rem;
+    }
+    
+    :is(h4, h5, h6) {
+	margin: 1rem 0 0.5rem;
+    }
+    
+    p {
+	hyphens: auto;
+	margin: 0 0 .8rem;
+	text-align: justify;
+    }
+    
+    ol, ul {
+	margin: 0 0 .8rem;
+	padding-left: 1.3rem;
+	text-indent: 0.2rem;
+    }
+    
+    ol {
+	list-style: decimal outside;
+    }
+    
+    ul {
+	list-style: disc outside;
+    }
+    
+    strong {
+	font-weight: 700;
+    }
+    
+    em {
+	font-style: italic;
+    }
+
+    blockquote {
+	p {
+	    font-style: italic;
+	}
+	
+	cite {
+	    font-size: 0.9rem;
+	}
+    }
+}
+
+a.headerlink {
+    margin-left: 0.3rem;
+}
+
+section.links ul {
+    line-height: 1.5rem;
+    list-style: inside;
+}
+
+/** Styles for the Mau post **/
+
+div.post-content .underline {
+    text-decoration: underline;
+}
+
+div.post-content .label {
+    background-color: orange;
+    border: 1px #333 solid;
+    padding: 0 3px;
+}
+
+div.post-content .label.success {
+    background-color: #00aa00;
+}
+
+/* Code */
+
+div.post-content code {
+    font-family: "Courier New", monospace;
+}
+
+div.post-content p code,
+div.post-content ul code,
+div.post-content ol code {
+    color: #046AFB;
+}
+
+/** Old Markdown code snippets **/
+
+div.post-content div.highlight {
+    margin: 1rem 0;
+}
+
+div.post-content div.highlight span.filename {
+    background-color: #ffb52e;
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid black;
+    border-bottom: 0px;
+}
+
+div.post-content div.highlight pre {
+    background: $background-code;
+    border: 1px solid black;
+    padding: 1em 0 1em 1em;
+    margin: 0;
+    overflow-x: auto;
+}
+
+/** New Mau code snippets and specific features **/
+
+div.code {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+div.code div.content {
+    margin: 0;
+}
+
+div.code div.content div.highlight {
+    font-family: "Courier New", monospace;
+    margin: 0;
+}
+
+div.code div.title {
+    background-color: #ffb52e;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid black;
+    border-bottom: 0px;
+}
+
+span.callout {
+    border-radius: 1rem;
+    border: 1px solid black;
+    background-color: $highlight-colour-light;
+    color: #49483e;
+    text-align: center;
+    padding: 0 .5rem;
+    display: inline-block;
+    font-weight: bold;
+}
+
+div.callout {
+    border-left: 4px solid $highlight-colour-medium;
+    margin: 2rem 0;
+    padding-left: 1rem;
+}
+
+div.callout div.content {
+    margin: 0;
+}
+
+div.callout div.title {
+    font-weight: 700;
+}
+
+div.admonition {
+    display: flex;
+    flex-direction: row; 
+    flex-basis: 0;
+}
+
+div.admonition i {
+    font-size: 2rem;
+    margin: auto 1rem;
+}
+
+div.callouts table {
+    margin-top: 1rem;
+}
+
+div.callouts table td {
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+/* Media */
+
+// >LG
+@media (min-width: $bp-min-xl) {
+    div.page header button {
+	display: none;
+    }
+
+    div.page {
+	width: $bp-min-xl - $sidebar-width;
+    }
+}
+
+// <MD
+@media (max-width: $bp-max-lg) {
+    div.sidebar {
+	display: none;
+    }
+}
+
+// <SM
+@media (max-width: $bp-max-sm) {
+    div.page-content div.posts {
+	grid-template-columns: repeat(1, 1fr);
+    }
+
+    div.sections {
+	flex-direction: column;
+    }
+}

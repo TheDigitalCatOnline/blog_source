@@ -10,3 +10,4 @@ pelican/output
 *.pyc
 notes/*
 tweet.py*
+stork-ubuntu*

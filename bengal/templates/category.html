@@ -1,0 +1,9 @@
+{% extends "articles_list_page.html" %}
+
+{% block title %}{{ category }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ SITENAME }} articles about {{ category }}">
+{% endblock %}
+
+{% block header %}All posts in category: {{ category }}{% endblock %}

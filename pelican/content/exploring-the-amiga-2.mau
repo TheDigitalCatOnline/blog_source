@@ -10,8 +10,6 @@
 :pelican.style:retro
 :pelican.summary:The jump table of libraries in the Amiga system, types and structures of Kickstart 1.3
 
-<button onclick="hideStyle()">Toggle retro style</button>
-
 == The library jump table
 
 As already mentioned when a library is loaded in memory a jump table is created just before the library base address. This table contains the addresses of the functions exposed by the library, and Exec itself has one.

@@ -302,7 +302,7 @@ $ chmod 775 manage.py
 
 As you can see I'm using `click`, which is the recommended way to implement Flask commands. As I might use it to customise subcommands of the flask main script, I decided to stick to one tool and use it for the script `manage.py` as well.
 
-The variable `APPLICATION_CONFIG` [callout]#1# is the only one that I need to specify, and its default value is `development`. From that variable I infer the name of the JSON file with the full configuration [callout]#2# and load environment variables from that. The function `flask` [callout]#3# simply wraps the command `flask` provided by Flask so that I can run `./manage.py flask <subcommand>` to run it using the configuration `development` or `APPLICATION_CONFIG="foobar" ./manage.py flask <subcommand>` to use the `foobar` one.
+The variable `APPLICATION_CONFIG` [callout]#1# is the only one that I need to specify, and its default value is `development`. From that variable I infer the name of the JSON file with the full configuration [callout]#2# and load environment variables from that. The function `flask` [callout]#3# simply wraps the command `flask` provided by Flask so that I can run `./manage.py flask &lt;subcommand&gt;` to run it using the configuration `development` or `APPLICATION_CONFIG="foobar" ./manage.py flask <subcommand>` to use the `foobar` one.
 
 A clarification, to be sure you don't confuse environment variables with each other:
 

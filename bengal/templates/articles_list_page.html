@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-content">
+  <section>
+    <header>
+      <h2>{% block header %}{% endblock %}</h2>
+    </header>
+    <div class="paginated-posts">
+      {% include 'includes/paginated_posts.html' %}
+    </div>
+  </section>
+</div>
+{% endblock content %}

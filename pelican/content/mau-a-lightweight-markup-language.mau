@@ -256,33 +256,33 @@ Headers are created using the character `=`. The number of equal signs represent
 
 [source]
 ----
-== Header 1
+= Header 1
 
-=== Header 2
+== Header 2
 
-==== Header 3
+=== Header 3
 
-===== Header 4
+==== Header 4
 
-====== Header 5
+===== Header 5
 
-======= Header 6
+====== Header 6
 ----
 
 . Result
 [callout]
 ----
-== Header 1
+= Header 1
 
-=== Header 2
+== Header 2
 
-==== Header 3
+=== Header 3
 
-===== Header 4
+==== Header 4
 
-====== Header 5
+===== Header 5
 
-======= Header 6
+====== Header 6
 ----
 
 Headers are automatically collected and included in the Table of Contents, but if you want to avoid it for a specific section you can exclude the header using an exclamation mark
@@ -306,15 +306,17 @@ You can define variables and use them in paragraphs
 ----
 :answer:42
 
-The Answer to the Ultimate Question of Life, the Universe, and Everything is {answer}
+The Answer to the Ultimate Question of Life,
+the Universe, and Everything is {answer}
 ----
 
 . Result
 [callout]
 ----
-:wanswer:42
+:answer:42
 
-The Answer to the Ultimate Question of Life, the Universe, and Everything is {wanswer}
+The Answer to the Ultimate Question of Life,
+the Universe, and Everything is {answer}
 ----
 
 You can avoid variable replacement escaping curly braces
@@ -323,7 +325,8 @@ You can avoid variable replacement escaping curly braces
 ----
 :answer:42
 
-The Answer to the Ultimate Question of Life, the Universe, and Everything is \{answer\}
+The Answer to the Ultimate Question of Life,
+the Universe, and Everything is \{answer\}
 ----
 
 . Result
@@ -331,7 +334,8 @@ The Answer to the Ultimate Question of Life, the Universe, and Everything is \{a
 ----
 :answer:42
 
-The Answer to the Ultimate Question of Life, the Universe, and Everything is \{answer\}
+The Answer to the Ultimate Question of Life,
+the Universe, and Everything is \{answer\}
 ----
 
 Curly braces are used a lot in programming languages, so verbatim text automatically escapes curly braces
@@ -340,7 +344,8 @@ Curly braces are used a lot in programming languages, so verbatim text automatic
 ----
 :answer:42
 
-The Answer to the Ultimate Question of Life, the Universe, and Everything is `{answer}`
+The Answer to the Ultimate Question of Life,
+the Universe, and Everything is `{answer}`
 ----
 
 . Result
@@ -348,7 +353,8 @@ The Answer to the Ultimate Question of Life, the Universe, and Everything is `{a
 ----
 :answer:42
 
-The Answer to the Ultimate Question of Life, the Universe, and Everything is `{answer}`
+The Answer to the Ultimate Question of Life,
+the Universe, and Everything is `{answer}`
 ----
 
 Variables are replaced before parsing paragraphs, so they can contain any inline item such as styles or links
@@ -512,7 +518,7 @@ Blocks can have attributes, specified before the opening fence between square br
 
 [source]
 ++++
-[classes="callout"]
+[callout]
 ----
 This is a block with the class `callout`
 ----
@@ -521,7 +527,7 @@ This is a block with the class `callout`
 .Result
 [callout]
 ++++
-[classes="callout"]
+[callout]
 ----
 This is a block with the class `callout`
 ----
@@ -534,12 +540,12 @@ You can combine title and attribute in any order
 [source]
 ++++
 . Title of the block
-[classes="callout"]
+[callout]
 ----
 This is a block with the class `callout` and a title
 ----
 
-[classes="callout"]
+[callout]
 . Title of the block
 ----
 This is a block with the class `callout` and a title
@@ -550,12 +556,12 @@ This is a block with the class `callout` and a title
 [callout]
 ++++
 . Title of the block
-[classes="callout"]
+[callout]
 ----
 This is a block with the class `callout` and a title
 ----
 
-[classes="callout"]
+[callout]
 . Title of the block
 ----
 This is a block with the class `callout` and a title
@@ -566,7 +572,7 @@ Title and attributes are consumed by the next block, so they don't need to be ad
 
 [source]
 ++++
-[classes="callout"]
+[callout]
 
 ----
 This is a block with the class `callout`
@@ -576,7 +582,7 @@ This is a block with the class `callout`
 .Result
 [callout]
 ++++
-[classes="callout"]
+[callout]
 
 ----
 This is a block with the class `callout`

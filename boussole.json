@@ -1,0 +1,8 @@
+{
+    "SOURCES_PATH": "bengal/static/scss",
+    "TARGET_PATH": "bengal/static/css",
+    "LIBRARY_PATHS": [],
+    "OUTPUT_STYLES": "nested",
+    "SOURCE_COMMENTS": false,
+    "EXCLUDES": []
+}
