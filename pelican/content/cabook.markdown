@@ -1,6 +1,6 @@
 Title: Clean Architectures in Python: the book
 Date: 2018-12-20 08:00:00 +0100
-Modified: 2020-12-31 09:30:00 +0000
+Modified: 2021-08-22 08:00:00 +0000
 Category: Projects
 Tags: OOP, Python, Python2, Python3, TDD, testing, architectures
 Authors: Leonardo Giordani
@@ -14,6 +14,6 @@ The second edition of the book "Clean Architectures in Python. A practical appro
 <img src="/images/cabook/cover.jpg" alt="Cover" />
 </div>
 
-You can read the book online at [www.pycabook.com](https://www.pycabook.com) or download a PDF version [from Leanpub](https://leanpub.com/clean-architectures-in-python). If you enjoy it, please tweet about it with the `#pycabook` hashtag.
+You can read the book online on the new website [The Digital Cat Books](https://www.thedigitalcatbooks.com/) or download a PDF version [from Leanpub](https://leanpub.com/clean-architectures-in-python). If you enjoy it, please tweet about it with the `#pycabook` hashtag.
 
-So far more than 14,000 readers downloaded the book. Thank you all!
+So far more than 16,000 readers downloaded the book. Thank you all!

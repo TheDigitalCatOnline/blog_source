@@ -18,7 +18,7 @@
     
     {% if GOOGLE_ANALYTICS_UNIVERSAL %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_UNIVERSAL }}"></script>
     <script>
      window.dataLayer = window.dataLayer || [];
      function gtag(){dataLayer.push(arguments);}
@@ -30,7 +30,7 @@
 
     {% if GOOGLE_TAG_MANAGER %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_TAG_MANAGER }}"></script>
     <script>
      window.dataLayer = window.dataLayer || [];
      function gtag(){dataLayer.push(arguments);}
