@@ -1,6 +1,6 @@
 Title: Clean architectures in Python: a step-by-step example
 Date: 2016-11-14 19:00:00 +0000
-Modified: 2020-12-31 08:50:00 +0000
+Modified: 2021-08-22 08:00:00 +0000
 Category: Programming
 Tags: OOP, pytest, Python, Python2, Python3, TDD, architectures
 Authors: Leonardo Giordani
@@ -20,13 +20,13 @@ I will not repeat here what he had already explained better than I can do, so I 
 * [DDD & Testing Strategy](http://www.taimila.com/blog/ddd-and-testing-strategy/) by Lauri Taimila
 * [Clean Architecture](https://www.amazon.co.uk/Clean-Architecture-Robert-C-Martin-x/dp/0134494164/ref=la_B000APG87E_1_3?s=books&ie=UTF8&qid=1479146201&sr=1-3) by Robert Martin, published by Prentice Hall.
 
-**The content of this post has been moved to [www.pycabook.com](https://www.pycabook.com)**
+**The content of this post has been moved to [The Digital Cat Books](https://www.thedigitalcatbooks.com/pycabook-introduction/)**
 
 <div class="center-image">
 <img src="/images/cabook/cover.jpg" alt="Cover" />
 </div>
 
-The second edition of the book is out and you can read it online at [www.pycabook.com](https://www.pycabook.com) or download a PDF version [from Leanpub](https://leanpub.com/clean-architectures-in-python).
+The second edition of the book is out and you can read it online on the new website [The Digital Cat Books](https://www.thedigitalcatbooks.com/) or download a PDF version [from Leanpub](https://leanpub.com/clean-architectures-in-python).
 
 ## Feedback
 

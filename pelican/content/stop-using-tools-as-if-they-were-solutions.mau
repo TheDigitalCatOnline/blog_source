@@ -1,5 +1,6 @@
 :pelican.title:Stop using tools as if they were solutions
 :pelican.date:2021-05-25 09:00:00 +0100
+:pelican.modified:2021-08-22 08:00:00 +0000
 :pelican.category:Programming
 :pelican.tags:architectures, design, tools
 :pelican.authors:Leonardo Giordani
@@ -29,7 +30,7 @@ Imagine you were tasked to build a bridge between two sides of a river. Would yo
 
 That's hardly the first thing you should ask yourself. I'm pretty sure you agree that knowing the distance that the bridge should cover is much more urgent. Also, the type and the amount of traffic that it has to carry (walkers, cars, trucks, trains) is an important factor, and you should be concerned about the budget that you are allowed.
 
-Why are these questions more important than the one about hammers? Because the answers to these questions can heavily influence the whole project. They are pillars of your architecture and not details[footnote](see "What is a software architecture?" in Clean Architectures in Python https://www.pycabook.com). My colleague Ken Pemberton always reminds me that most of the time we don't ask ourselves an even more important question: "What problem are you trying to solve?". In the example above, a bridge might not be the best solution in the first place.
+Why are these questions more important than the one about hammers? Because the answers to these questions can heavily influence the whole project. They are pillars of your architecture and not details[footnote](see "What is a software architecture?" in Clean Architectures in Python https://www.thedigitalcatbooks.com). My colleague Ken Pemberton always reminds me that most of the time we don't ask ourselves an even more important question: "What problem are you trying to solve?". In the example above, a bridge might not be the best solution in the first place.
 
 I think the process, at least when it comes to software projects, can be divided into three connected phases: decomposition, communication, implementation.
 

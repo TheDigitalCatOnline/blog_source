@@ -1,6 +1,6 @@
 :pelican.title:Flask project setup: TDD, Docker, Postgres and more - Part 1
 :pelican.date:2020-07-05 13:00:00 +0100
-:pelican.modified:2021-02-23 20:00:00 +0000
+:pelican.modified:2021-08-22 08:00:00 +0000
 :pelican.category:Programming
 :pelican.tags:AWS, Docker, Flask, HTTP, Postgres, Python, Python3, TDD, testing, WWW
 :pelican.authors:Leonardo Giordani
@@ -12,7 +12,7 @@
 
 There are tons of tutorials on Internet that tech you how to use a web framework and how to create Web applications, and many of these cover Flask, first of all the impressive [link](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world,"Flask Mega-Tutorial") by Miguel Grinberg (thanks Miguel!). 
 
-Why another tutorial, then? Recently I started working on a small personal project and decided that it was a good chance to refresh my knowledge of the framework. For this reason I temporarily dropped the [link](https://www.pycabook.com,"clean architecture") I often recommend, and started from scratch following some tutorials. My development environment quickly became very messy, and after a while I realised I was very unsatisfied by the global setup.
+Why another tutorial, then? Recently I started working on a small personal project and decided that it was a good chance to refresh my knowledge of the framework. For this reason I temporarily dropped the [link](https://www.thedigitalcatbooks.com/pycabook-introduction/,"clean architecture") I often recommend, and started from scratch following some tutorials. My development environment quickly became very messy, and after a while I realised I was very unsatisfied by the global setup.
 
 So, I decided to start from scratch again, this time writing down some requirements I want from my development setup. I also know very well how complicated the deploy of an application in production can be, so I want my setup to be "deploy-friendly" as much as possible. Having seen too many project suffer from legacy setups, and knowing that many times such issues can be avoided with a minimum amount of planning, I thought this might be interesting for other developers as well. I consider this setup by no means _better_ than others, it simply addresses different concerns.
 
