@@ -9,11 +9,11 @@
 
 Recently I started using [link](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html,"AWS CloudWatch Log Insights") and I find the tool really useful to extract data about the systems I'm running without having to set up dedicated monitoring tools, which come with their own set of permissions, rules, configuration language, and so forth.
 
-Log Insights allow you to query log outputs with a language based on regular expressions with hints of SQL and to produce tables or graphs of quantities that you need to monitor. For example, the system I am monitoring runs Celry in ECS containers that log received tasks with a line like the following
+Log Insights allow you to query log outputs with a language based on regular expressions with hints of SQL and to produce tables or graphs of quantities that you need to monitor. For example, the system I am monitoring runs Celery in ECS containers that log received tasks with a line like the following
 
 [source]
 ----
-16:39:11,156 [32mINFO [0m [34m[celery.worker.strategy][0m [01mReceived task: lib.tasks.lists.trigger_list_log_notification[9b33b464-d4f9-4909-8d4e-1a3134fead97]  [0m
+16:39:11,156 [32mINFO [0m [34m[celery.worker.strategy][0m [01mReceived task: lib.tasks.lists.trigger_list_log_notification[9b33b464-d4f9-4909-8d4e-1a3134fead97] [0m
 ----
 
 In this case the specific function in the system that was triggered is `lib.tasks.log_notification`, and I'm interested in knowing which functions are called the most, so I can easily count them with
