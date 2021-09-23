@@ -9,7 +9,7 @@ Summary:
 
 So you completed your wonderful new project, all your test are successful (you [test](/categories/tdd/) code, don't you?) and you just want to ship the new version and call it a day. Well, you just have to go and change the version number in your install script and save. Oh, right, you also have to open a feature branch, so that you may record the version update in your Git history. Well, easily done. Damn! You forgot to change the version number in the README.md file...
  
-Managing the version number of a project is not easy. Not only you need to think about the versioning scheme and what part of the version to increase (see [this post]({filename}versioning-an-underrated-discipline.markdown) for some tips on this matter), but you also need to remember in which files you put the actual version number, and, depending on your workflow, to correctly manage the version control system commits.
+Managing the version number of a project is not easy. Not only you need to think about the versioning scheme and what part of the version to increase (see [this post]({filename}versioning-an-underrated-discipline.mau) for some tips on this matter), but you also need to remember in which files you put the actual version number, and, depending on your workflow, to correctly manage the version control system commits.
 
 **Punch** is a small tool that aims to simplify the latter parts, that is the management of the version number update process. Punch is a young project but the underlying structure should be flexible enough to allow the implementation of advanced usage cases that may arise in the future.
 

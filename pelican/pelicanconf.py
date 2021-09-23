@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+from datetime import date
+
+today = date.today()
+
 AUTHOR = "Leonardo Giordani"
 SITENAME = "The Digital Cat"
 SITESUBTITLE = "Adventures of a curious cat in the land of programming"
@@ -47,6 +51,16 @@ SITEMAP = {
 }
 
 DEFAULT_DATE_FORMAT = "%d/%m/%Y"
+
+
+def order_by_modified_first(article):
+    try:
+        return today - article.modified.date()
+    except AttributeError:
+        return today - article.date.date()
+
+
+ARTICLE_ORDER_BY = order_by_modified_first
 
 SOCIAL = [
     {"name": "Twitter", "icon": "twitter", "url": "https://twitter.com/thedigicat"},

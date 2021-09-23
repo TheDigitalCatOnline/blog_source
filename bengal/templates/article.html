@@ -84,7 +84,7 @@
   <header>
     <h1>{{ article.title }}</h1>
     <div class="post-info">
-      <p>By {{ article.author }} - <time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }}</time></p>
+      <p>By {{ article.author }} - <i class="fas fa-calendar-alt"></i> <time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }}</time>{% if article.modified %} <i class="fas fa-edit"></i> Updated on <time datetime="{{ article.modified.isoformat() }}">{{ article.modified | strftime('%b %-d, %Y') }}</time>{% endif %}</p>
       <p class="tags">
 	<a class="tag category" href="/{{ article.category.url }}" title="All posts in category {{ article.category }}">{{ article.category }}</a>
 	{% if article.tags %}
@@ -150,7 +150,10 @@
 		<a href="/{{ tag.url }}" class="tag">{{ tag }}</a>
 		{% endfor %}
               </p>
-              <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time></p>
+	      {% if article.modified %}
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="{{ article.modified.isoformat() }}">{{ article.modified | strftime('%b %-d, %Y') }}</time></p>
+	      {% endif %}
 	    </div>
           </div>
 	</article>
