@@ -11,12 +11,15 @@
     <div class="body">
       <a href="/{{ article.url }}"><h2>{{ article.title }}</h2></a>
       <div class="info">
-      <p class="tags">
-	{% for tag in article.tags %}
-        <a href="/{{ tag.url }}" class="tag">{{ tag }}</a>
-        {% endfor %}
-      </p>
-      <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time>
+	<p class="tags">
+	  {% for tag in article.tags %}
+          <a href="/{{ tag.url }}" class="tag">{{ tag }}</a>
+          {% endfor %}
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="{{ article.date.isoformat() }}">{{ article.date | strftime('%b %-d, %Y') }}</time></p>
+	{% if article.modified %}
+	<p><i class="fas fa-edit"></i> Updated on <time datetime="{{ article.modified.isoformat() }}">{{ article.modified | strftime('%b %-d, %Y') }}</time></p>
+	{% endif %}
       </div>
     </div>
   </article>
