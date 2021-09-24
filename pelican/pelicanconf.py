@@ -118,7 +118,22 @@ MAU = {
             "{{ value }}"
             '{% if anchor and level <= 2 %}<a class="headerlink" href="#{{ anchor }}" title="Permanent link">¶</a>{% endif %}'
             "</h{{ level }}>"
-        )
+        ),
+        "admonition.html": (
+            '<div class="admonition {{ class }}">'
+            '<i class="fa fa-{{ icon }}"></i>'
+            '<div class="content">'
+            '<div class="title">{{ label }}</div>'
+            "<div>{{ content }}</div>"
+            "</div>"
+            "</div>"
+        ),
+        "image.html": (
+            '<div class="imageblock">'
+            '<img src="{{ uri }}"{% if alt_text %} alt="{{ alt_text }}"{% endif %}>'
+            '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
+            "</div>"
+        ),
     },
     "pygments": {"html": {}},
 }

@@ -58,7 +58,7 @@ Speaking of TDD, you should get used to mocks, that are extremely useful when it
 
 Before you move on to more complex concepts you might want to have a look at what you can build with these basic concepts of OOP and TDD:
 
-* [Clean architectures in Python: a step-by-step example]({filename}clean-architectures-in-python-a-step-by-step-example.markdown) which evolved in a free book: [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python)
+* [Clean architectures in Python: a step-by-step example]({filename}clean-architectures-in-python-a-step-by-step-example.mau) which evolved in my book "Clean Architectures in Python" available [online](https://www.thedigitalcatbooks.com/pycabook-introduction/) or [as PDF/ebook](https://leanpub.com/clean-architectures-in-python)
 
 If you made it so far you are ready to face the big players! The following are concepts for advanced programmers, so be sure you are comfortable with the previous sections before venturing here. Don't be too scared, though. These concepts are advanced but not impossible, and if you want to get better at Python you should at least understand what they are.
 

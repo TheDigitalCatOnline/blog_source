@@ -346,7 +346,7 @@ Long story short: to work as a proper HTTP server, our code should at this point
 
 Enter the Web framework!
 
-As I discussed many times (see [the book on clean architectures]({filename}cabook.markdown) or [the relative post]({filename}clean-architectures-in-python-a-step-by-step-example.markdown)) the role of the Web framework is that of _converting HTTP requests into function calls_, and function return values into HTTP responses. The framework's true nature is that of a layer that connects a working business logic to the Web, through HTTP and related protocols. The framework takes care of session management for us and maps URLs to functions, allowing us to focus on the application logic.
+As I discussed many times (see [the book on clean architectures]({filename}cabook.markdown) or [the relative post]({filename}clean-architectures-in-python-a-step-by-step-example.mau)) the role of the Web framework is that of _converting HTTP requests into function calls_, and function return values into HTTP responses. The framework's true nature is that of a layer that connects a working business logic to the Web, through HTTP and related protocols. The framework takes care of session management for us and maps URLs to functions, allowing us to focus on the application logic.
 
 In the grand scheme of an HTTP service, this is what the framework is supposed to do. Everything the framework provides out of this scope, like layers to access DBs, template engines, and interfaces to other systems, is an addition that you, as a programmer, may find useful, but is not in principle part of the reason why we added the framework to the system. We add the framework because it acts as a layer between our business logic and HTTP.
 
