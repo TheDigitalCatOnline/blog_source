@@ -1,13 +1,12 @@
 Title: TDD in Python with pytest - Part 5
 Date: 2020-09-21 10:30:00 +0200
-Modified: 2021-03-06 18:00:00 +0000
+Modified: 2021-03-06 19:00:00 +0000
 Category: Programming
 Tags: OOP, pytest, Python, Python3, refactoring, TDD, testing
 Authors: Leonardo Giordani
 Slug: tdd-in-python-with-pytest-part-5
 Series: TDD in Python with pytest
 Image: tdd-in-python-with-pytest-part-5
-Summary: 
 
 This is the fifth and last post in the series "TDD in Python with pytest" where I develop a simple project following a strict TDD methodology. The posts come from my book [Clean Architectures in Python](https://leanpub.com/clean-architectures-in-python) and have been reviewed to get rid of some bad naming choices of the version published in the book.
 
