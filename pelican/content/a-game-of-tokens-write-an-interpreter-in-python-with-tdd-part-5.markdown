@@ -6,7 +6,6 @@ Authors: Leonardo Giordani
 Slug: a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5
 Series: A game of tokens
 Image: a-game-of-tokens-5
-Summary:
 
 ## Introduction
 
