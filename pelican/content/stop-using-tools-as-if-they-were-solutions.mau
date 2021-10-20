@@ -18,7 +18,7 @@ I know that coding interviews can be very stressful and I also think that leadin
 
 But even taking into account interview anxiety, I think such an approach reveals something wrong deeper in the way we approach problems as programmers. This is the result of a culture that mistakes tools for solutions, and if I can detect it in senior programmers it means it already propagated into our teams and our companies.
 
-= The problem-solving challenge
+== The problem-solving challenge
 
 When you face a problem (_any_ problem) you need to devise a strategy to solve it. You need to have an idea of what to do before doing it, otherwise you are reacting and not acting.
 
@@ -34,7 +34,7 @@ Why are these questions more important than the one about hammers? Because the a
 
 I think the process, at least when it comes to software projects, can be divided into three connected phases: decomposition, communication, implementation.
 
-== Decomposition
+=== Decomposition
 
 Macroscopically, a _processing system_ is made of an initial state, some transformations or intermediate states, and a final state.
 
@@ -50,7 +50,7 @@ Let's look at an example. A search engine is a complicated piece of software, an
 
 I didn't describe what "quality" is, nor discussed the specific implementation of the system that stores all possible results. Those details are buried down somewhere at a certain level of zoom and are utterly useless at this level.
 
-== Communication
+=== Communication
 
 Any level of zoom in the decomposition can be described, and the amount of specific technical knowledge needed to understand the explanation should be directly proportional to the zoom level. You might have heard the quote "You do not really understand something unless you can explain it to your grandmother." I believe this might be very offensive to grandmothers, but paraphrasing it, I would say that "There should be a zoom level at which the project is understandable by anyone who doesn't have a specific knowledge of the field".
 
@@ -58,7 +58,7 @@ Indeed, the problem of technical communication is that tech-savvy gurus are usua
 
 Being a blogger and an author I want to add a consideration about communication. Explaining things is the best way to see if everything is clear in your mind, which is another way to read the previous quote (without involving grandmothers). The very same post that you are reading started as an intuition, a small list of ideas, and so far has been rewritten 6 times. In the process, I understood the topics I am discussing much better than I did when I first felt the need to write them down.
 
-== Implementation
+=== Implementation
 
 Professor Sidney Morris, in a [link]("https://www.youtube.com/watch?v=T1snRQEQuEk","very interesting video") about how to write proofs in mathematics, describes the process with these words:
 
@@ -82,7 +82,7 @@ We tend to take for granted that we can think, after all we do it all day long. 
 
 The implementation of a black box might require a lot of thinking, and we have to accept this. It might require a lot of rewrites, prove unsuccessful only after a certain amount of time, or even require a separate project to be properly managed. There are no shortcuts here.
 
-= The coding interview problem
+== The coding interview problem
 
 What do we do during a coding interview? What are we trying to understand with this excruciating exercise that puts people in a pillory for one hour? 
 
@@ -105,7 +105,7 @@ So, as a candidate, you have a responsibility to show the interviewer how you ca
 
 You need to show that you understand problems, that you can compare solutions, that you can take your risks picking one specific strategy and that if needed you can stop at a certain point and say "This is the wrong approach".
 
-= Patterns
+== Patterns
 
 Design patterns are defined by Erich Gamma and his co-authors in their seminal book[footnote](_Design Patterns: Elements of Reusable Object-Oriented Software_ by Gamma, Vlissides, Johnson, and Helm) with these words: "[...] patterns solve specific design problems and make object-oriented designs more flexible, elegant, and ultimately reusable. [...] A designer who is familiar with such patterns can apply them immediately to design problems without having to rediscover them."
 
@@ -115,7 +115,7 @@ Back to the original sentence. "I will write a class" is considered the go-to so
 
 Clearly, classes might be the best solution for some problems, but this should come at the end of your analysis. You write a class because you have data and functions that can be put together, and this is valid for any other technology. Always ask yourself: what is the reason why I use this? What is the problem that I'm trying to solve?
 
-= A dangerous culture
+== A dangerous culture
 
 We all make the same mistake here: we push (or at least accept) a culture in which we teach and learn tools as go-to solutions without teaching to identify and face problems.
 
@@ -129,7 +129,7 @@ I recommend reading a very interesting article by Joseph Gefroh, [link](https://
 
 I also recommend having a look at the [link](https://github.com/guardian/coding-exercises,"Guardian Coding Exercises") and to read the description of the repository. I think they are a good example of tests that allow the candidate and the interviewer to work together, to actually meet and to discuss a solution. There is no "right" way to solve them, and many of them cannot be solved in 45 minutes, which is usually the time given to a candidate after an initial introductory chat.
 
-= Conclusion
+== Conclusion
 
 I hope these short considerations helped you to see my point. We should all shift our gaze from the tools we have to the nature of problems and to their solutions. We are missing an important step here, which is ultimately what defines a good engineer and which is the most important thing that you can learn in your career. Observe problems, stop and think, devise a strategy, zoom out and zoom in. Learn to use tools, don't be used by them.
 
