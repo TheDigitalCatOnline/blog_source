@@ -90,7 +90,7 @@ A relational database is hundred of times richer and more complex than an HTTP e
 
 How can we avoid strong coupling? A simple solution is called _inversion of control_, and I will briefly sketch it here, and show a proper implementation in a later section of the book, when we will implement this very example.
 
-Inversion of control happens in two phases. First, the called object (the database in this case) is wrapped with a standard interface. This is a set of functionalities shared by every implementation of the target, and each interface translates the functionalities to calls to the specific language[footnote](The word _language_, here, is meant in its broader sense. It might be a programming language, but also an API, a data format, or a protocol.) of the wrapped implementation.
+Inversion of control happens in two phases. First, the called object (the database in this case) is wrapped with a standard interface. This is a set of functionalities shared by every implementation of the target, and each interface translates the functionalities to calls to the specific language[footnote]("The word _language_, here, is meant in its broader sense. It might be a programming language, but also an API, a data format, or a protocol.") of the wrapped implementation.
 
 [{TIP},"Inversion of control"]
 ----

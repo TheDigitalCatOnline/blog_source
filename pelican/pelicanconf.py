@@ -119,13 +119,27 @@ MAU = {
             '{% if anchor and level <= 2 %}<a class="headerlink" href="#{{ anchor }}" title="Permanent link">¶</a>{% endif %}'
             "</h{{ level }}>"
         ),
-        "admonition.html": (
-            '<div class="admonition {{ class }}">'
-            '<i class="fa fa-{{ icon }}"></i>'
+        "block-admonition.html": (
+            '<div class="admonition {{ kwargs.class }}">'
+            '<i class="fa fa-{{ kwargs.icon }}"></i>'
             '<div class="content">'
-            '<div class="title">{{ label }}</div>'
+            '<div class="title">{{ kwargs.label }}</div>'
             "<div>{{ content }}</div>"
             "</div>"
+            "</div>"
+        ),
+        "block-source.html": (
+            '<div{% if blocktype %} class="code"{% endif %}>'
+            '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
+            '<div class="content">{{ content }}</div>'
+            '{% if kwargs.callouts %}<div class="callouts">'
+            "<table><tbody>"
+            "{% for callout in kwargs.callouts %}<tr>"
+            "<td>{{ callout[0] }}</td>"
+            "<td>{{ callout[1] }}</td>"
+            "</tr>{% endfor %}"
+            "</tbody></table>"
+            "</div>{% endif %}"
             "</div>"
         ),
         "image.html": (
