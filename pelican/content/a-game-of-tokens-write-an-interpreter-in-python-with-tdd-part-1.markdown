@@ -82,7 +82,7 @@ The main components of our interpreter are the following:
 * **Visitor**: the output of the parser is processed by a component that will either write the equivalent in another language or execute it.
 * **Command Line Interface (CLI)**: the whole stack can be directly used by a REPL (Read, Evaluate, Print Loop), a command line interface similar to the one Python provides. There each line is lexed, parsed, and visited, and the result is printed immediately.
 
-I will provide two classes: `Token` and `TextBuffer`. These will avoid you spending too much time in creating the basic tools, and allow you to get straight into the game. Since those classes come obviously with their own test suit you are free to develop them on your own, however, starting from the same tests that I used.
+I will provide two classes: `Token` and `TextBuffer`. These will avoid you spending too much time to create the basic tools, and allow you to get straight into the game. Since those classes come obviously with their own test suite you are free to develop them on your own. You should however start from the same tests that I used, otherwise your interface might end up being incompatible witht he rest of the project.
 
 ## Initial setup
 
@@ -92,27 +92,22 @@ I prepared [this repository](https://github.com/lgiordani/smallcalc), which cont
 $ git clone https://github.com/lgiordani/smallcalc.git
 ```
 
-I created that repository using the amazing [Cookiecutter](https://github.com/audreyr/cookiecutter) project by Audrey Roy Greenfeld. The specific template I used is one that I created as a fork of the official one. You can find the source [on GitHub](https://github.com/lgiordani/cookiecutter-pypackage).
-
-Once you cloned the repository you can set up an environment with
+Once you cloned the repository, set up a Python virtual environment using your favourite method/tool and install the testing requirements
 
 ``` sh
-cd smallcalc
-python3 -m venv venv3
-source venv3/bin/activate
 pip install -r requirements/test.txt
 ```
 
-At this point you should be able to run the test suite. For this project we are going to use [py.test](http://www.pytest.org), so the command line is
+At this point you should be able to run the test suite. For this project we are going to use [pytest](http://www.pytest.org), so the command line is
 
 ``` sh
-py.test -svv
+pytest -svv
 ```
 
 or, if you want to check your code coverage,
 
 ``` sh
-py.test -svv  --cov-report term-missing --cov=smallcalc 
+pytest -svv  --cov-report term-missing --cov=smallcalc 
 ```
 
 ## Tokens
@@ -164,7 +159,7 @@ Remember that everything you find in this class has been introduced to make one 
 
 ## Buffer
 
-The second element that you will find in the initial setup is the class `TextBuffer`, that provides a very basic manager for an input text
+The second element that you will find in the initial setup is the class `TextBuffer`, that provides a very basic manager for an input text file
 
 ``` python
 class EOLError(ValueError):
@@ -241,13 +236,13 @@ class TextBuffer:
         self.line, self.column = line, column
 ```
 
-As happened for the `Token` class, you can read the tests to understand how to use the class. Basically, however, the class can `load` an input text and extract the `current_line`, the `current_char`, and the `next_char`. You can also `skip` a given number of characters, `goto` a given position, extract the current `position` and read the `tail`, which is the remaining text from the current position on.
+As happened for the `Token` class, you can read the tests to understand how to use the class. Basically, however, the class can `load` an input text and extract the `current_line`, the `current_char`, and the `next_char`. You can also `skip` a given number of characters, `goto` a given position, extract the current `position` and read the `tail`, which is the remaining text from the current position to the end of the line.
 
-This class has not been optimized or designed to manage big files or continuous streams of text. This is perfectly fine for our current project, but be aware that for a real compiler you should implement something more powerful.
+This class has not been optimized or designed to manage big files or continuous streams of text. This is perfectly fine for our current project, but be aware that for a real compiler you might want to implement something more powerful.
 
 ## CLI
 
-The third element we will need for the first part of the tutorial (that is, while we will deal with a simple calculator), is a Command Line Interface. For the moment, it just echoes any text you will input, and gracefully exit when we press Ctrl+D. There are and there will be no tests for the CLI. Testing endpoints like this is complex and not always worth the effort, as in this case.
+The third element I provide is a simple REPL ([Read–eval–print loop](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)) that at the moment just echoes any text you will input and gracefully exit when we press Ctrl+D. There are and there will be no tests for the CLI. Testing endpoints like this is complex and not always worth the effort, as in this case.
 
 The command line can be run from the project main directory with
 
@@ -259,11 +254,11 @@ python cli.py
 
 *"End? No, the journey doesn't end here."* - The Lord of the Rings: The Return of the King (2003)
 
-The first thing a Lexer shall be able to do is to load and process an empty text. This should return an `EOF` token (`End Of File`). `EOF` is used to signal that the input buffer has ended and that there is no more text to process.
+The first thing a Lexer shall be able to do is to load and process an empty text. This should return an `EOF` (`End Of File`) token. `EOF` is used to signal that the input buffer has ended and that there is no more text to process.
 
 The method `get_tokens` returns all the tokens of the input stream in a single list.
 
-Edit the `tests/test_calc_lexer.py` to contain the following code
+Add this code to `tests/test_calc_lexer.py`
 
 ``` python
 from smallcalc import tok as token
@@ -280,10 +275,12 @@ def test_get_tokens_understands_eof():
     ]
 ```
 
+To avoid misleading errors you should also create the empty file `smallcalc/calc_lexer.py`, as without that file pytest will raise an `ImportError`.
+
 This is our first test, and if you run the test suite now you will see that it fails. This is expected, as there is no code to pass the test.
 
 ``` sh
-$ py.test -svv  --cov-report term-missing --cov=smallcalc
+$ pytest -svv  --cov-report term-missing --cov=smallcalc
 ================================== FAILURES ===================================
 _______________________ test_get_tokens_understands_eof _______________________
 
@@ -297,15 +294,15 @@ tests/test_calc_lexer.py:6: AttributeError
 
 Implement now a class `CalcLexer` in the file `smallcalc/calc_lexer.py` that makes the test pass. Remember that you just need the code to pass this test. So do not implement complex systems now and go for the simplest solution (hint: the test expects that specific output).
 
-The `EOF` constant can be a simple string with the `'EOF` value.
+The `EOF` constant can be a simple string with the value `'EOF'`.
 
-It is worth executing the test suite with coverage (check the command line above), which will tell you if you overengineered your code. You should aim for 100% coverage, always.
+It is worth executing the test suite with coverage (check the command line above), which will tell you if you over-engineered your code. You should aim for 100% coverage, always.
 
 ---
 
 ### Solution
 
-The base class to pass the test leverages the provided `text_buffer.TextBuffer` class, that exposes a method `load`, directly composed here to `CalcLexer.load`. As the test is not providing a text the easiest solution is just to return the tested token. I extracted `get_token` from `get_tokens` to have a method that is specifically focused on dealing with the current token. The file `smallcalc/calc_lexer.py` is then
+To pass the test, the class `CalcLexer` can use the provided `text_buffer.TextBuffer` class, that exposes a method `load` and wrap it in `CalcLexer.load`. The test is not providing any input so the easiest solution is just to return the required token. The test requires us to implement the method `get_tokens`, but I preferred to isolate the code in a method called `get_token` and to call the latter from `get_tokens`. The file `smallcalc/calc_lexer.py` is then
 
 ``` python
 from smallcalc import text_buffer
@@ -333,6 +330,15 @@ class CalcLexer:
 ---
 
 You can see here in practice what I mentioned in the introduction about TDD. The method `get_token` returns a hardcoded `token.Token(EOF)`, because _that is enough to pass the test_. It is not enough to be a good Lexer, but if we write and pass the right tests, this will happen in time. Be smart, be strict: write the minimal code needed to pass the test.
+
+Being really strict, however, this solution is already over-engineered. The code
+
+``` python
+    def get_tokens(self):
+        return [token.Token(EOF)]
+```
+
+would be enough to pass the test. It would also be the first thing we change as soon as we add another test. So, let me amend the previous advice: be strict, with a pinch of salt.
 
 ## Level 2 - Single digit integers
 
@@ -375,7 +381,7 @@ def test_get_tokens_understands_integers():
 
 Please note that now the lexer shall output both an `EOF` and an `EOL` token, as the current line of code ends. The biggest issue you have to face here is that when you recognise a token then you have to skip it in the source text.
 
-After this test you may end up with some code duplication, as `get_token` and `get_tokens` perform similar tasks. If you haven't already, please use the first one in the second. It could also be worth doing some refactoring. Remember: you can confidently change your code, because as long as the tests pass your changes are correct! This is the true power of TDD.
+After this test you may end up with some code duplication, as `get_token` and `get_tokens` perform similar tasks. If you haven't already, please call the former from the latter. It could also be worth doing some refactoring. Remember: you can confidently change your code, because as long as the tests pass your changes are correct! This is the true power of TDD.
 
 If you refactor the code creating helper methods you should make them "private" by prefixing their name with an underscore. This also means that you do not need to test them, in principle (watch [this talk](https://www.youtube.com/watch?v=URSWYvyc42M) by Sandy Metz on this subject).
 
