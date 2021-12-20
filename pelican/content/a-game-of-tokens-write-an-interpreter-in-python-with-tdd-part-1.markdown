@@ -297,7 +297,7 @@ tests/test_calc_lexer.py:6: AttributeError
 
 Implement now a class `CalcLexer` in the file `smallcalc/calc_lexer.py` that makes the test pass. Remember that you just need the code to pass this test. So do not implement complex systems now and go for the simplest solution (hint: the test expects that specific output).
 
-The `EOF` constant can be a simple string with the `'EOF` value.
+The `EOF` constant can be a simple string with the `'EOF'` value.
 
 It is worth executing the test suite with coverage (check the command line above), which will tell you if you overengineered your code. You should aim for 100% coverage, always.
 
@@ -347,7 +347,7 @@ integer: [0-9]
 
 ### Lexer
 
-Since a calculator has to deal with numbers let us implement support for integers (we will add floating point numbers later). The first thing that we need is to recognise single-digit integers. This is the test that you have to add to `tests\test_calc_lexer.py`
+Since a calculator has to deal with numbers let us implement support for integers (we will add floating point numbers later). The first thing that we need is to recognise single-digit integers. This is the test that you have to add to `tests/test_calc_lexer.py`
 
 ``` python
 def test_get_token_understands_integers():

@@ -135,6 +135,7 @@ variable "vpc_subnets" {
 ==== Resources
 
 * [link](https://www.terraform.io/docs/configuration-0-11/variables.html,"Terraform variables").
+* An [link](https://spacelift.io/blog/how-to-use-terraform-variables, "in-depth post") that explains how to use variables in Terraform, by Sumeet Ninawe
 
 === DynamoDB
 
