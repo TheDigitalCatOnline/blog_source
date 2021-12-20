@@ -479,7 +479,7 @@ class SquareButton(Button, SingleDimensionMixin):
     pass
 ```
 
-then the `__init__` method would first be provided by `Button`, and its `super` would call the `__init__` method of `SingleDimensionMixin`. This would however result in an error, as the call `super().__init__(pos_x, pos_y, size_x, size_y)` in `Button` doesn't match the signature `def __init__(self, pos_x, pos_y, size):` of `SingleDimensionMixin`.
+then the `__init__` method would first be provided by `Button`, and its `super` would call the `__init__` method of `GraphicalEntity`. This would however result in an error, as we run `SquareButton(10, 20, 200)`, and `Button.__init__` expects four parameters.
 
 Mixins are not used only when you want to change the object's interface, though. Leveraging `super` we can achieve interesting designs like
 
@@ -579,6 +579,7 @@ I hope this post helped you to understand a bit more how multiple inheritance wo
 ## Updates
 
 2020-03-13: GitHub user [sureshvv](https://github.com/sureshvv) noticed that the `LimitSizeMixin` method `__init__` had the wrong parameters `pos_x` and `pos_y`, instead of `size_x` and `size_y`. Thanks!
+2021-12-20: [Alexander](https://github.com/akocur) fixed a mistake in the part relative to `SquareButton` and the behaviour of `super()`. Thanks!
 
 ## Feedback
 
