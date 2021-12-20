@@ -1,6 +1,6 @@
 :pelican.title:Exploring the Amiga - Part 8
 :pelican.date:2019-02-19 14:00:00 +0100
-:pelican.modified:2021-02-26 08:00:00 +0000
+:pelican.modified:2021-12-20 08:00:00 +0000
 :pelican.category:Retro
 :pelican.tags:assembly, amiga, retroprogramming
 :pelican.authors:Leonardo Giordani
@@ -326,7 +326,7 @@ When you try to manually decompile some machine code you need a cheat sheet and 
 00001454: 4e75
 ----
 
-since `fc1456` is listed as the address of the `RemLibrary` function. THe binary representation of these values is
+since `fc1456` is listed as the address of the `RemLibrary` function. The binary representation of these values is
 
 [source]
 ----
@@ -341,11 +341,67 @@ since `fc1456` is listed as the address of the `RemLibrary` function. THe binary
 
 Now, the first 4 bits of any Motorola 68k instruction are the instruction code. While multiple instructions share the same 4 bits (for example `andi` and `subi`), those bits are never used for addressing or to specify modes, so they are a good starting point.
 
-The instruction at `0x1448` starts with `0100` followed by a `0`, and this narrows the selection to either `lea` or `chk`. Both instructions use the following 3 bits to specify a register (`An` for `lea`, `Dn` for `chk`), but then the first has a fixed group `111`, while the second has a group `110`. This means that we are looking at a `lea`. The three bits I mentioned are `000`, which translates in `a0` as a target. The last 6 bits are the addressing mode and the register, and the cheat sheet tells us that `101 110` corresponds to Address Register Indirect with Displacement Mode on `a6`. `101` is labelled as `(d16, An)`, while `110` is the number 6. The following word is thus the `d16` displacement from `a6`, which means that `41ee 017a` translates to ` lea 0x17a(a6),a0`.
+The instruction at `0x1448` starts with `0100` followed by a `0`, and this narrows the selection to a bunch of instructions: some types of `move`, `negx`, `clr`, `neg`, `not`, `lea`, `chk`. Among these, only `lea` or `chk` can be followed by `0001`.
+
+Both instructions use the following 3 bits to specify a register (`An` for `lea`, `Dn` for `chk`), but then the first has a fixed group `111`, while the second has a group `110`. This means that we are looking at a `lea`.
+
+The three bits after `0100` are `000`, which translates to `a0` as a target. The last 6 bits are the addressing mode and the register, and the cheat sheet tells us that `101 110` corresponds to Address Register Indirect with Displacement Mode on `a6`. `101` is labelled as `(d16, An)`, while `110` is the number 6. The following word is thus the `d16` displacement from `a6`, which means that `41ee 017a` translates to ` lea 0x17a(a6),a0`.
+
+[source]
+----
+
+lea   a0   (d16,An)         0x17a
+ |    |       |               |
+ v    v       v      |-----------------|
+0100 000 111 101 110 0000 0001 0111 1010
+          ^       ^
+	  |       |
+	fixed     a6
+
+00001448: 41ee 017a     lea 0x17a(a6),a0
+----
 
 The second instruction starts at `0x144c` with `0110`, which is the signature of all the branch commands: `bra`, `bsr`, and all the condition-based ones like `bgt`, `blt`, and so on. Since the following 4 bits are `0001` we know this is a `bsr`, branch to subroutine. Now, in this instruction the 8 least significant bits tell us what the displacement is, and thus the type of the operand (Programmer's Manual, section 4-59, page 163). In this case they are all `0`, which means a word displacement, which is in the next 16 bits. Pay attention that, as we discussed for `lea` in the [link](\{filename}exploring-the-amiga-1.mau,"first post") the Program Counter contains the address of the first displacement word. In this case the displacement is `0x270` at address `0x144e`, so the branch address is the sum of the two, that is `0x16be`.
 
-The third instruction is again a `bsr` and following the same process we find out that the branch address is the sum between `0x82` and `0x1452`, that is `0x14d4`. The final instruction is an `rts`, as we expected, and as the decompiler correctly told us.
+[source]
+----
+
+   bsr   displacement
+    |         |
+|-------| |-------|
+0110 0001 0000 0000 0000 0010 0111 0000
+                    |-----------------|
+		             |
+			   0x270 (+ 0x144e = 0x16be)
+
+0000144c: 6100 0270     bsr.w 0x16be
+----
+
+The third instruction is again a `bsr` and following the same process we find out that the branch address is the sum between `0x82` and `0x1452`, that is `0x14d4`.
+
+[source]
+----
+
+   bsr   displacement
+    |         |
+|-------| |-------|
+0110 0001 0000 0000 0000 0000 1000 0010
+                    |-----------------|
+		             |
+			    0x82 (+ 0x1452 = 0x14d4)
+
+00001450: 6100 0082     bsr.w 0x14d4
+----
+
+The final instruction is an `rts`, as we expected, and as the decompiler correctly told us. The disassembled code is then what we used in the previous section
+
+[source]
+----
+00001448: 41ee 017a                 lea 0x17a(a6),a0
+0000144c: 6100 0270                 bsr.w 0x16be
+00001450: 6100 0082                 bsr.w 0x14d4
+00001454: 4e75                      rts     
+----
 
 The most important thing to keep in mind when manually reading instructions is the position of the Program Counter. As we already saw two times, with `lea` and with `bsr`, the PC moves as soon as the 16-bit instruction has been read, which means that when a displacement is given we have to use the address of the displacement itself as a base for our calculations.
 
