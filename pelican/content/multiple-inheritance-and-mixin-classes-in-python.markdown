@@ -579,6 +579,7 @@ I hope this post helped you to understand a bit more how multiple inheritance wo
 ## Updates
 
 2020-03-13: GitHub user [sureshvv](https://github.com/sureshvv) noticed that the `LimitSizeMixin` method `__init__` had the wrong parameters `pos_x` and `pos_y`, instead of `size_x` and `size_y`. Thanks!
+
 2021-12-20: [Alexander](https://github.com/akocur) fixed a mistake in the part relative to `SquareButton` and the behaviour of `super()`. Thanks!
 
 ## Feedback
