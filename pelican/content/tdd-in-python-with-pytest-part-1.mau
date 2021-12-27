@@ -13,7 +13,7 @@ This series of posts comes directly from my book [link](https://leanpub.com/clea
 
 So, I decided to move it here before I start working on a new version of the book. I also followed the advice of [link](https://github.com/valorien,valorien), who pointed out that the main example had some bad naming choices, and so I reworked the code.
 
-= Introduction
+== Introduction
 
 Test-Driven Development (TDD) is fortunately one of the names that I can spot most frequently when people talk about methodologies. Unfortunately, many programmers still do not follow it, fearing that it will impose a further burden on the already difficult life of a developer.
 
@@ -23,7 +23,7 @@ TDD is a _methodology_, something that can help you to create better code. But i
 
 Keep also in mind that testing is a broader concept that doesn't end with TDD, which focuses a lot on unit testing, a specific type of test that helps you to develop the API of your library/package. There are other types of tests, like integration or functional ones, that are not specifically part of the TDD methodology, strictly speaking, even though the TDD approach can be extended to any testing activity.
 
-= A real-life example
+== A real-life example
 
 Let's start with a simple example taken from a programmer's everyday life.
 
@@ -87,7 +87,7 @@ Pay attention that at this stage there is no code that implements the function `
 
 As we will see with a practical example in the next chapter, what I explained in this section will become a set of rules of the methodology.
 
-= A simple TDD project
+== A simple TDD project
 
 The project we are going to develop is available at [link](https://github.com/lgiordani/simple_calculator).
 
@@ -97,7 +97,7 @@ Methodologies are like sports or arts: you cannot learn them just by reading the
 
 The repository is tagged, and at the end of each section you will find a link to the relative tag that contains the working solution.
 
-= Setup the project
+== Setup the project
 
 Clone the project repository and move to the branch `develop`. The branch `master` contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.
 
@@ -126,7 +126,7 @@ and get an output like
 
 [source]
 ----
-=============================== test session starts ===============================
+================================ test session starts ===============================
 platform linux -- Python XXXX, pytest-XXXX, py-XXXX, pluggy-XXXX --
 cabook/venv3/bin/python3
 cachedir: .cache
@@ -134,16 +134,16 @@ rootdir: cabook/code/calc, inifile: pytest.ini
 plugins: cov-XXXX
 collected 0 items 
 
-============================== no tests ran in 0.02s ==============================
+=============================== no tests ran in 0.02s ==============================
 ----
 
-= Requirements
+== Requirements
 
 The goal of the project is to write a class `SimpleCalculator` that performs calculations: addition, subtraction, multiplication, and division. Addition and multiplication shall accept multiple arguments. Division shall return a float value, and division by zero shall return the string `"inf"`. Multiplication by zero must raise a `ValueError` exception. The class will also provide a function to compute the average of an iterable like a list. This function gets two optional upper and lower thresholds and should remove from the computation the values that fall outside these boundaries.
 
 As you can see the requirements are pretty simple, and a couple of them are definitely not "good" requirements, like the behaviour of division and multiplication. I added those requirements for the sake of example, to show how to deal with exceptions when developing in TDD.
 
-= Step 1 - Adding two numbers
+== Step 1 - Adding two numbers
 
 The first test we are going to write is one that checks if the class `SimpleCalculator` can perform an addition. Add the following code to the file `tests/test_main.py`
 
@@ -172,7 +172,7 @@ Save the file and go back to the terminal. Execute `pytest -svv` and you should 
 
 [source]
 ----
-===================================== ERRORS ======================================
+====================================== ERRORS ======================================
 _______________________ ERROR collecting tests/test_main.py _______________________
 
 [...]
@@ -181,7 +181,7 @@ tests/test_main.py:4: in <module>
     from simple_calculator.main import SimpleCalculator
 E   ImportError: cannot import name 'SimpleCalculator' from 'simple_calculator.main'
 !!!!!!!!!!!!!!!!!!!!!! Interrupted: 1 errors during collection !!!!!!!!!!!!!!!!!!!!!
-============================= 1 error in 0.20 seconds =============================
+============================== 1 error in 0.20 seconds =============================
 ----
 
 No surprise here, actually, as we just tried to use something that doesn't exist. This is good, the test is showing us that something we suppose exists actually doesn't.
@@ -213,7 +213,7 @@ Run the test again, and this time you should receive a different error, that is
 
 [source]
 ----
-=============================== test session starts ===============================
+================================ test session starts ===============================
 platform linux -- Python XXXX, pytest-XXXX, py-XXXX, pluggy-XXXX --
 cachedir: .pytest_cache
 rootdir: simple_calculator, inifile: pytest.ini
@@ -222,7 +222,7 @@ collected 1 item
 
 tests/test_main.py::test_add_two_numbers FAILED
 
-==================================== FAILURES =====================================
+===================================== FAILURES =====================================
 ______________________________ test_add_two_numbers _______________________________
 
 
@@ -233,14 +233,14 @@ ______________________________ test_add_two_numbers ____________________________
 E       AttributeError: 'SimpleCalculator' object has no attribute 'add'
 
 tests/test_main.py:9: AttributeError
-============================ 1 failed in 0.04 seconds =============================
+============================= 1 failed in 0.04 seconds =============================
 ----
 
 This is the first proper pytest failure report that we receive, so it's time to learn how to read the output. The first lines show you general information about the system where the tests are run
 
 [source]
 ----
-=============================== test session starts ===============================
+================================ test session starts ===============================
 platform linux -- Python XXXX, pytest-XXXX, py-XXXX, pluggy-XXXX --
 cachedir: .pytest_cache
 rootdir: simple_calculator, inifile: pytest.ini
@@ -361,7 +361,7 @@ I know this sound weird, but think about it for a moment: if your code works (th
 
 *Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-1-adding-two-numbers,step-1-adding-two-numbers)
 
-= Step 2 - Adding three numbers
+== Step 2 - Adding three numbers
 
 The requirements state that "Addition and multiplication shall accept multiple arguments". This means that we should be able to execute not only `add(4, 5)` like we did, but also `add(4, 5, 11)`, `add(4, 5, 11, 2)`, and so on. We can start testing this behaviour with the following test, that you should put in `tests/test_main.py`, after the previous test that we wrote.
 
@@ -507,7 +507,7 @@ This solution makes both tests pass, so the entire suite runs without errors.
 
 I can see your face, your are probably frowning at the fact that it took us 10 minutes to write a method that performs the addition of two or three numbers. On the one hand, keep in mind that I'm going at a very slow pace, this being an introduction, and for these first tests it is better to take the time to properly understand every single step. Later, when you will be used to TDD, some of these steps will be implicit. On the other hand, TDD _is_ slower than untested development, but the time that you invest writing tests now is usually negligible compared to the amount of time you would spend trying to identify and fix bugs later.
 
-= Step 3 - Adding multiple numbers
+== Step 3 - Adding multiple numbers
 
 The requirements are not yet satisfied, however, as they mention "multiple" numbers and not just three. How can we test that we can add a generic amount of numbers? We might add a `test_add_four_numbers`, a `test_add_five_numbers`, and so on, but this will cover specific cases and will never cover all of them. Sad to say, it is impossible to test that generic condition, or, at least in this case, so complex that it is not worth trying to do it.
 
@@ -587,7 +587,7 @@ Part of the TDD methodology, then, deals with "refactoring", which means changin
 *TDD rule number 4:* Write code that passes the test. Then refactor it.
 ----
 
-= Step 4 - Subtraction
+== Step 4 - Subtraction
 
 From the requirements we know that we have to implement a function to subtract numbers, but this doesn't mention multiple arguments (as it would be complex to define what subtracting 3 of more numbers actually means). The tests that implements this requirements is
 
@@ -630,7 +630,7 @@ which makes the test suite pass.
 
 *Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-4-subtraction,step-4-subtraction)
 
-= Step 5 - Multiplication
+== Step 5 - Multiplication
 
 It's time to move to multiplication, which has many similarities to addition. The requirements state that we have to provide a function to multiply numbers and that this function shall allow us to multiply multiple arguments. In TDD you should try to tackle problems one by one, possibly dividing a bigger requirement in multiple smaller ones.
 
@@ -801,17 +801,17 @@ where I define an anonymous function that accepts two inputs `x, y` and returns 
 *TDD rule number 6:* Never refactor without tests.
 ----
 
-= Final words
+== Final words
 
 Well, I think we learned a lot. We started with no knowledge of TDD and we managed to implement a fully tested class with 3 methods. We also briefly touched the topic of refactoring, which is of paramount importance in development. In the next post I will cover the remaining requirements: division, testing exceptions, and the average function.
 
-= Updates
+== Updates
 
 2021-01-03: [link](https://github.com/4myhw,George) fixed a typo, thanks!
 
 2021-08-11: [link](https://github.com/floatingpurr,"Andrea Mignone") fixed a link. Thank you!
 
-= Feedback
+== Feedback
 
 Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.
 

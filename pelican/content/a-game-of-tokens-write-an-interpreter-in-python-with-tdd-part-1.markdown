@@ -353,7 +353,7 @@ integer: [0-9]
 
 ### Lexer
 
-Since a calculator has to deal with numbers let us implement support for integers (we will add floating point numbers later). The first thing that we need is to recognise single-digit integers. This is the test that you have to add to `tests\test_calc_lexer.py`
+Since a calculator has to deal with numbers let us implement support for integers (we will add floating point numbers later). The first thing that we need is to recognise single-digit integers. This is the test that you have to add to `tests/test_calc_lexer.py`
 
 ``` python
 def test_get_token_understands_integers():
