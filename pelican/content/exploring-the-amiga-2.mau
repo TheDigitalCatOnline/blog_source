@@ -1,6 +1,6 @@
 :pelican.title:Exploring the Amiga - Part 2
 :pelican.date:2018-05-28 15:00:00 +0100
-:pelican.modified:2021-02-26 08:00:00 +0000
+:pelican.modified:2021-12-21 08:00:00 +0000
 :pelican.category:Retro
 :pelican.tags:assembly, amiga, retroprogramming
 :pelican.authors:Leonardo Giordani
@@ -326,14 +326,23 @@ SOFFSET     SET     (SOFFSET+1)&$fffffffe
 
 This can be seen in action in the `CardHandle` structure defined in `include_i/resources/card.i`. The same algorithm is implemented in other parts of the Kickstart code, for example in the `AddMemList` function that adds memory space to the free memory pool.
 
+== Markus Wandel's work
+
+After three years since I began this investigation I came across the work of Marcus Wandel ([link](http://wandel.ca)), advertised on [link]("http://amigan.1emu.net/aw/TransactorUK-sep89.pdf","Amiga Transactor September 1989"). Mr Wandel disassembled the whole Kickstart 1.2 ROM back in 1989, and you can find the result of his effort on his website at [link](http://wandel.ca/homepage/execdis/index.html). I'm currently using his comments to check what I find out on my own, because I don't want to spoil the joy of discovery, and so far they confirmed I'm on the right path.
+
+I think what Mr Wandel did is a great example of what computer science truly is. I'm sure his impressive contribution helped people to understand the Amiga system back in the ages, and it's definitely helping me 32 years later. Without the effort and the passion of people like Marcus Wandel, computer science would be just another corporate-owned environment.
+
+Marcus's name is not as famous as that of other big players, but I consider his work extremely important. Thanks Marcus for your work and thanks to all the people who contributed to the Amiga, and to the rise of microcomputers.
+
 == What's next
 
 The next article will describe in depth how the jump table of the Exec library is created through the `MakeFunctions` routine. This will be shown step by step discussing the reverse engineering method followed to discover the mechanism and the relevant code.
 
 == Resources
 
-* Amiga System Programmers Guide, Abacus - https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus
+* Amiga System Programmers Guide, Abacus - [link](https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus)
 * [link](http://amigadev.elowar.com,"AmigaOS Developer Docs")
+* [link](http://wandel.ca/homepage/execdis/index.html,"Marcus Wandel's disassmbly of Kickstart 1.2")
 
 == Feedback
 
