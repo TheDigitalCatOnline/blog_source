@@ -1,6 +1,9 @@
 $sidebar-width: 400px;
 $header-height: 50px;
 
+$font-weight-semibold: 400;
+$font-weight-bold: 700;
+
 /* Breakpoints */
 $bp-min-sm: 640px;
 $bp-min-md: 768px;
@@ -138,6 +141,13 @@ sup {
     vertical-align: super;
 }
 
+hr {
+    background: #d7d7d7;
+    border: none;
+    font-weight: 700;
+    height: 3px;
+    margin: 3rem 12rem;
+}
 
 /* Sidebar */
 
@@ -668,14 +678,49 @@ div.callout div.title {
 }
 
 div.admonition {
+    border: 2px solid black;
     display: flex;
-    flex-direction: row; 
-    flex-basis: 0;
+    flex-direction: row;
+    margin: 2rem 0;
+    padding: 1rem 0;
 }
 
 div.admonition i {
     font-size: 2rem;
     margin: auto 1rem;
+    min-width: 2rem;
+    text-align: center;
+}
+
+div.admonition div.title {
+    font-weight: $font-weight-bold;
+    font-size: 1.3rem;
+}
+
+div.admonition div.content {
+    padding-right: 1rem;
+    overflow: auto;
+}
+
+div.infobox {
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+    padding: 2rem;
+}
+
+div.infobox i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+div.infobox div.title {
+    font-weight: $font-weight-bold;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 div.callouts table {
@@ -685,6 +730,18 @@ div.callouts table {
 div.callouts table td {
     padding-right: 1rem;
     padding-bottom: 0.5rem;
+}
+
+div.imageblock {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+}
+
+div.imageblock div.title {
+    font-weight: 700;
+    margin-top: 1rem;
 }
 
 /* Media */
