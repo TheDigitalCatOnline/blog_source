@@ -7,7 +7,7 @@
 :pelican.image:public-key-cryptography-openssh-private-keys
 :pelican.summary:An in-depth discussion of the format of OpenSSH keys
 
-When you create standard RSA keys with `ssh-keygen` you end up with a private key in PEM format, and a public key in OpenSSH format. Both have been described in detail in my post [link](\{filename\}rsa-keys.markdown,"Public key cryptography: RSA keys"). In 2014, OpenSSH introduced a custom format for private keys that is apparently similar to PEM but is internally completely different. This format is used by default when you create ed25519 keys and it is expected to be the default format for all keys in the future, so it is worth having a look.
+When you create standard RSA keys with `ssh-keygen` you end up with a private key in PEM format, and a public key in OpenSSH format. Both have been described in detail in my post [link](\{filename\}rsa-keys.mau,"Public key cryptography: RSA keys"). In 2014, OpenSSH introduced a custom format for private keys that is apparently similar to PEM but is internally completely different. This format is used by default when you create ed25519 keys and it is expected to be the default format for all keys in the future, so it is worth having a look.
 
 While investigating this topic I found a lot of misconceptions and wrong or partially wrong statements on Stack Overflow, so I hope this might be a comprehensive view of what this format is, its relationship with PEM, and the tools that you can use to manipulate it.
 
@@ -56,7 +56,7 @@ Protection [link](https://en.wikipedia.org/wiki/Data_at_rest,"at rest") refers t
 
 == PEM format and protection at rest
 
-Now that I clarified some terminology, let's have a look at what the standard PEM format does to store encrypted passwords. As I explained in my post [link](\{filename\}rsa-keys.markdown,"Public key cryptography: RSA keys") a PEM file contains a text header, a text footer, and some content. The content is always an ASN.1 structure created using DER and encoded using base64.
+Now that I clarified some terminology, let's have a look at what the standard PEM format does to store encrypted passwords. As I explained in my post [link](\{filename\}rsa-keys.mau,"Public key cryptography: RSA keys") a PEM file contains a text header, a text footer, and some content. The content is always an ASN.1 structure created using DER and encoded using base64.
 
 For encrypted private keys, the ASN.1 structure is created following a standard called [link](https://datatracker.ietf.org/doc/html/rfc5208,"PKCS #8"). This standard uses an encryption scheme called PBES2 described in the specification PKCS #5, which uses a symmetric cipher and a password, previously converted into an encryption key using the KDF called PBKDF2. I hope at this point some if not all of these names ring a bell.
 
