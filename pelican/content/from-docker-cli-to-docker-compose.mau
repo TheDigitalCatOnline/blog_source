@@ -1,7 +1,7 @@
 :pelican.title:From Docker CLI to Docker Compose
-:pelican.date:2021-12-30 15:00:00 +0100
+:pelican.date:2022-02-18 17:00:00 +0100
 :pelican.category:Programming
-:pelican.tags:Docker
+:pelican.tags:Docker, infrastructure, Python
 :pelican.authors:Leonardo Giordani
 :pelican.slug:from-docker-cli-to-docker-compose
 :pelican.image:from-docker-cli-to-docker-compose
@@ -9,15 +9,13 @@
 
 In this post I will show you how and why Docker Compose is useful, building a simple application written in Python that uses PostgreSQL. I think it is worth going through such an exercise to see how technologies that we might be already familiar with actually simplify workflows that would otherwise definitely be more complicated.
 
-In the process, I will introduce TODO
-
 The name of demo application I will develop is a very unimaginative `whale`, that shouldn't clash with any other name introduced by the tools I will use. Every time you see something with `whale` in it you know that I am referring to a value that you can change according to your setup.
 
 Before we start, please create a directory to host all the files we will create. I will refer to this directory as the "project directory". 
 
 == PostgreSQL
 
-Since the application will connect to a PostgreSQL database the first thig we can explore is how to run that in a Docker container.
+Since the application will connect to a PostgreSQL database the first thing we can explore is how to run that in a Docker container.
 
 The official Postgres image can be found [link](https://hub.docker.com/_/postgres,"here"), and I highly recommend taking the time to properly read the documentation, as it contains a myriad of details that you should be familiar with.
 
@@ -27,7 +25,9 @@ For the time being, let's focus on the environment variables that the image requ
 
 The first variable is `POSTGRES_PASSWORD`, which is the only mandatory configuration value (unless you disable authentication which is not recommended). Indeed, if you run the image without setting this value, you get this message
 
-```
+[source]
+----
+$ docker run postgres
 Error: Database is uninitialized and superuser password is not specified.
        You must specify POSTGRES_PASSWORD to a non-empty value for the
        superuser. For example, "-e POSTGRES_PASSWORD=password" on "docker run".
@@ -37,7 +37,7 @@ Error: Database is uninitialized and superuser password is not specified.
 
        See PostgreSQL documentation about "trust":
        https://www.postgresql.org/docs/current/auth-trust.html
-```
+----
 
 This value is very interesting because it's a secret. So, while I will treat it as a simple configuration value in the first stages of the setup, later we will need to discuss how to manage it properly.
 
@@ -75,9 +75,11 @@ $ docker run -d \
   postgres:13
 ----
 
-As you can see I run the image in a detached mode `-d`. This image is not meant to be interactive, as Postgres is by it's very nature a daemon. To connect in an interactive way we need to use the tool `psql`, which is provided by this image.
+As you can see I run the image in [link]("https://docs.docker.com/engine/reference/run/#detached--d", "detached mode"). This image is not meant to be interactive, as Postgres is by it's very nature a daemon. To connect in an interactive way we need to use the tool `psql`, which is provided by this image. Please note that I'm running `postgres:13` only to keep the post consistent with what you will see if you read it in the future, you are clearly free to use any version of the engine.
 
-The ID of the container has been returned by `docker run` but can be retrieved at any time running `docker ps`. Using IDs is however pretty complicated, and looking at the command history is not immediately clear what you have been doing at a certain point in time. For this reason, it's always a good idea to name the containers. Stop the previous container and run it again with
+The ID of the container is returned by `docker run` but we can retrieve it any time running `docker ps`. Using IDs is however pretty complicated, and looking at the command history is not immediately clear what you have been doing at a certain point in time. For this reason, it's a good idea to name the containers.
+
+Stop the previous container and run it again with
 
 [source]
 ----
@@ -85,13 +87,13 @@ $ docker run -d \
   --name whale-postgres \
   -e POSTGRES_PASSWORD=whale_password \
   -e POSTGRES_DB=whale_db \
-  -e POSTGRES_USER=whale_user
+  -e POSTGRES_USER=whale_user \
   postgres:13
 ----
 
 [infobox, icon="info-circle", title="Stopping containers"]
 %%%%
-You can stop containers using `docker stop ID`. This gives containers a grace period to react to the `SIGTERM` signal, for example to properly close files and terminate connections, and then terminates it with `SIGKILL`. You can also force it to stop unconditionally using `docker kill ID` which sends `SIGKILL` immediately.
+You can stop containers using `docker stop ID`. This [link]("https://docs.docker.com/engine/reference/commandline/stop/#extended-description", "gives containers a grace period") to react to the `SIGTERM` signal, for example to properly close files and terminate connections, and then terminates it with `SIGKILL`. You can also force it to stop unconditionally using `docker kill ID` which sends `SIGKILL` immediately.
 
 In either case, however, you might want to remove the container, that otherwise will be kept indefinitely by Docker. This can become a problem when containers are named, as you can't reuse a name that is currently assigned to a container.
 
@@ -99,15 +101,15 @@ To remove a container you have to run `docker rm ID`, but you can leverage the f
 
 [source]
 ----
-docker stop ID | xargs docker rm
+$ docker stop ID | xargs docker rm
 ----
 
-Otherwise, you can use `docker rm -f ID`, which corresponds to `docker kill` followed by `docker rm`.
+Otherwise, you can use `docker rm -f ID`, which corresponds to `docker kill` followed by `docker rm`. If you name a container, however, you can use its name instead of the ID.
 %%%%
 
 ---
 
-Now we can connect to the database using the executable `psql` provided in the image itself. To execute a command inside a container we use `docker exec` and this time we will specify `-it` to open an interactive session. `psql` uses by default the user name `root`, and the database with the same name as the user, so we need to specify both. The command line informs me that the image is running PostgreSQL 13.5 on Debian.
+Now we can connect to the database using the executable `psql` provided in the image itself. To execute a command inside a container we use `docker exec` and this time we will specify `-it` to open an interactive session. `psql` uses by default the user name `root`, and the database with the same name as the user, so we need to specify both. The header informs me that the image is running PostgreSQL 13.5 on Debian.
 
 [source]
 ----
@@ -130,14 +132,17 @@ $ docker exec -it whale-postgres \
   cat /var/lib/postgresql/data/pg_hba.conf
 ----
 
-where you can spot the line
+where you can spot the lines
 
 [source]
 ----
-local  all  all      trust
+# TYPE  DATABASE  USER  ADDRESS  METHOD
+
+# "local" is for Unix domain socket connections only
+local   all       all            trust
 ----
 
-The official documentation about trust can be found at [link](https://www.postgresql.org/docs/current/auth-trust.html).
+You can find more information about Postgres trust in [link]("https://www.postgresql.org/docs/current/auth-trust.html", "the official documentation").
 %%%%
 
 Here, I can list all the databases with `\l`. You can see all `psql` commands and the rest of the documentation at [link](https://www.postgresql.org/docs/current/app-psql.html).
@@ -167,7 +172,9 @@ As you can see, the database called `postgres` has been created as part of the i
 
 ---
 
-If we want the database to be accessible from outside, however, we need to publish a port. The image exposes port 5432 (see the [link](https://github.com/docker-library/postgres/blob/master/Dockerfile-debian.template#L224,"source code")), which informs us where the server is listening. To publish the port towards the host system we can add `-p 5432:5432`. Stop the container (you can use its name now) and run it again with
+If we want the database to be accessible from outside we need to publish a port. The image *exposes* port 5432 (see the [link]("https://github.com/docker-library/postgres/blob/master/13/alpine/Dockerfile#L190","source code")), which tells us where the server is listening. To *publish* the port towards the host system we can add `-p 5432:5432`. Please remember that exposing a port in Docker basically means to add some metadata that informs the user of the image, but doesn't affect the way it runs.
+
+Stop the container (you can use its name now) and run it again with
 
 [source]
 ----
@@ -179,11 +186,11 @@ $ docker run -d \
   -p 5432:5432 postgres:13
 ----
 
-Running `doker ps` we can see that the container publishes the port now (`0.0.0.0:5432->5432/tcp, :::5432->5432/tcp`). We can double-check it with `ss` (`socket statistics`)
+Running `doker ps` we can see that the container publishes the port now (`0.0.0.0:5432->5432/tcp`). We can double-check it with `ss` ("socket statistics")
 
 [source]
 ----
-$ ss -plunt | grep 5432
+$ ss -nulpt | grep 5432
 tcp  LISTEN  0  4096  0.0.0.0:5432  0.0.0.0:*
 tcp  LISTEN  0  4096     [::]:5432     [::]:*
 ----
@@ -192,12 +199,14 @@ Please note that usually `ss` won't tell you the name of the process using that 
 
 [source]
 ----
-$ sudo ss -plunt | grep 5432
+$ sudo ss -nulpt | grep 5432
 tcp  LISTEN  0  4096  0.0.0.0:5432  0.0.0.0:*  users:(("docker-proxy",pid=1262717,fd=4))
 tcp  LISTEN  0  4096     [::]:5432     [::]:*  users:(("docker-proxy",pid=1262724,fd=4))
 ----
 
-If you want to publish the container's port 5432 to a different port on the host you can just use `-p ANY_NUMBER:5432`. Remember however that port numbers under 1024 are _privileged_ or _well-known_, which means that they are assigned by default to specific services ([link](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers#Well-known_ports,"listed here")). This means that while in theory you can use `-p 5432:80` for your database container, in practice this will result in a lot of headaches and a bunch of developers chasing you with spikes and shovels.
+If you want to publish the container's port 5432 to a different port on the host you can just use `-p ANY_NUMBER:5432`. Remember however that port numbers under 1024 are _privileged_ or _well-known_, which means that they are assigned by default to specific services ([link](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers#Well-known_ports,"listed here")).
+
+This means that in theory you can use `-p 80:5432` for your database container, exposing it on port 80 of your host. In practice this will result in a lot of headaches and a bunch of developers chasing you with spikes and shovels.
 
 ---
 
@@ -218,7 +227,7 @@ This is correct, as that container runs in a bridge network where `localhost` is
 
 [source]
 ----
-$ docker run -it	 \
+$ docker run -it \
   --network=host postgres:13 \
   psql -h localhost -U whale_user whale_db
 Password for user whale_user: 
@@ -228,7 +237,7 @@ Type "help" for help.
 whale_db=#
 ----
 
-Please note that `psql` asks for a password (that you know because we set it when we run the container `whale-postgres`). This happens because the tool is not run on the same node as the database server any more, so PostgreSQL doesn't trust it.
+Please note that now `psql` asks for a password (that you know because you set it when we run the container `whale-postgres`). This happens because the tool is not run on the same node as the database server any more, so PostgreSQL doesn't trust it.
 
 == Volumes
 
@@ -236,7 +245,7 @@ If we used a structured framework in Python, we could leverage an ORM like SQLAl
 
 I do not recommend this approach for a real project but it should be good enough in this case. In particular, it will allow me to demonstrate how to use volumes in Docker.
 
-Make sure the container `whale-postgres` is running with or without publishing the port (it's not important at the moment). Connect to the container using `psql` and run the following two SQL commands
+Make sure the container `whale-postgres` is running (with or without publishing the port, it's not important at the moment). Connect to the container using `psql` and run the following two SQL commands (make sure you are connected to the database `whale_db`)
 
 [source,sql]
 ----
@@ -255,7 +264,13 @@ VALUES
     (3,'Grilled Cheese');
 ----
 
-This code creates a table called `recipes` and inserts 3 rows with an `id` and a `name`. The output of the above commands should be respectively `CREATE TABLE` and `INSERT 0 3`.
+This code creates a table called `recipes` and inserts 3 rows with an `id` and a `name`. The output of the above commands should be
+
+[source]
+----
+CREATE TABLE
+INSERT 0 3
+----
 
 You can double check that the database contains the table with `\dt`
 
@@ -269,7 +284,7 @@ whale_db=# \dt
 (1 row)
 ----
 
-and that the table contains three rows with `select * from recipes`.
+and that the table contains three rows with a `select`.
 
 [source]
 ----
@@ -282,7 +297,7 @@ whale_db=# select * from recipes;
 (3 rows)
 ----
 
-Now, the problem with containers is that they do not store data permanently. While the container is running there are no issues, try now to connect again with `psql` and to run the `select`, which will show you the same data.
+Now, the problem with containers is that they do not store data permanently. While the container is running there are no issues, as a matter of fact you can terminate `psql`, connect, and run the `select` again, and you will see the same data.
 
 If we stop the container and run it again, though, we will quickly realise that the values stored in the database are gone.
 
@@ -312,16 +327,17 @@ Containers have been created with isolation in mind, which is why by default not
 
 As happened with ports, however, we need to establish some communication between containers and the host system, and we also want to keep data after the container has been destroyed. The solution in Docker is to use volumes.
 
-There are three types of volumes in Docker: host, anonymous, and named. Host volumes are a way to mount inside the container a path on the host's filesystem, and while they are useful to exchange data between the host and the container, they also often have permissions issues. Generally speaking, containers define users whose IDs are not mapped to the host's ones, which means that the files written by the container might end up belonging to non-existing users.
+There are three types of volumes in Docker: _host_, _anonymous_, and _named_. Host volumes are a way to mount inside the container a path on the host's filesystem, and while they are useful to exchange data between the host and the container, they also often have permissions issues. Generally speaking, containers define users whose IDs are not mapped to the host's ones, which means that the files written by the container might end up belonging to non-existing users.
 
-Anonymous and named volumes are are simply virtual filesystems created and managed independently from containers. These can be connected with a running container so the latter can use the data contained in them and store data that will survive its termination. The only difference between named an anonymous volumes is the name that allows you to easily manage them. For this reason, I think it's not really useful to consider anonymous volumes, and this I will focus on named ones.
+Anonymous and named volumes are are simply virtual filesystems created and managed independently from containers. These can be connected with a running container so the latter can use the data contained in them and store data that will survive its termination. The only difference between named an anonymous volumes is the name that allows you to easily manage them. For this reason, I think it's not really useful to consider anonymous volumes, which is why I will focus on named ones.
 
-You can manage volumes using `docker volume`, that provides several subcommands such as `create`, and `rm`. You can then attach a named volume to a container when you run it using the option `-v` of `docker run`. This creates the volume if it's not already existing, so this is the standard way many of us create a volume.
+You can manage volumes using `docker volume`, that provides several subcommands such as `create`, and `rm`. You can then [link]("https://docs.docker.com/engine/reference/run/#volume-shared-filesystems", "attach a named volume to a container") when you run it using the option `-v` of `docker run`. This creates the volume if it's not already existing, so this is the standard way many of us create a volume.
 
 Stop and remove the running Postgres container and run it again with a named volume
 
 [source]
 ----
+$ docker stop whale-postgres | xargs docker rm 
 $ docker run -d \
   --name whale-postgres \
   -e POSTGRES_PASSWORD=whale_password \
@@ -332,7 +348,7 @@ $ docker run -d \
   postgres:13
 ----
 
-This will create the volume named `whale_dbdata` and connect it to the path `/var/lib/postgresql/data` in the container that we are running. That path happens to be the one where Postgres stores the actual database, as you can see from [link](https://www.postgresql.org/docs/current/storage-file-layout.html,"the official documentation"). There is a specific reason why I used the prefix `whale_`, which will be clear later when we will introduce Docker Compose.
+This will create the volume named `whale_dbdata` and connect it to the path `/var/lib/postgresql/data` in the container that we are running. That path happens to be the one where Postgres stores the actual database, as you can see from [link](https://www.postgresql.org/docs/current/storage-file-layout.html,"the official documentation"). There is a specific reason why I used the prefix `whale_` for the name of the volume, which will be clear later when we will introduce Docker Compose.
 
 `docker ps` doesn't give any information on volumes, so to see what is connected to your container you need to use `docker inspect`
 
@@ -355,7 +371,7 @@ $ docker inspect whale-postgres
 [...]
 ----
 
-The value for `"Source"` is where the volume is stored in the host, that is on your computer, but generally speaking you can ignore that detail. You can see all volumes using `docker volume ls` (I use `grep` as the list is pretty long in my case)
+The value for `"Source"` is where the volume is stored in the host, that is on your computer, but generally speaking you can ignore that detail. You can see all volumes using `docker volume ls` (using `grep` if the list is long as it is in my case)
 
 [source]
 ----
@@ -393,9 +409,9 @@ $ docker exec -it whale-postgres \
 
 == Python application
 
-Great! Now that we have a database that can be restarted without losing data we ca create a Python application that interacts with it. Again, please remember that the goal of this post is to show what container orchestration is and how Docker compose can simplify it, so the application developed in this section is absolutely minimal.
+Great! Now that we have a database that can be restarted without losing data we can create a Python application that interacts with it. Again, please remember that the goal of this post is to show what container orchestration is and how Docker compose can simplify it, so the application developed in this section is absolutely minimal.
 
-I will first create an application and run it in the host, leveraging the port exposed by the container to connect to the database. Later, I will move the application in a container and TODO
+I will first create an application and run it in the host, leveraging the port exposed by the container to connect to the database. Later, I will move the application in its own container.
 
 To create the application, first create a Python virtual environment using your preferred method. I currently use `pyenv` ([link](https://github.com/pyenv/pyenv)).
 
@@ -471,7 +487,7 @@ while True:
     time.sleep(3)
 ----
 
-As you can see the code is not complicated. The application is a big infinite `while` loop that every 3 seconds establishes a connection with the DB [class](2, callout) using the configuration in [class](1, callout). After this, the query `select * from recipes` is run [class](3, callout) , all the results are printed on the standard output [class](4, callout), and the connection is closed [class](5, callout).
+As you can see the code is not complicated. The application is an endless `while` loop that every 3 seconds establishes a connection with the DB [class](2, callout) using the configuration in [class](1, callout). After this, the query `select * from recipes` is run [class](3, callout) , all the results are printed on the standard output [class](4, callout), and the connection is closed [class](5, callout).
 
 If the Postgres container is running and publishing port 5432, this application can be run directly on the host
 
@@ -490,7 +506,7 @@ and will go on indefinitely until we press `Ctrl-C` to stop it.
 
 ---
 
-For the same reasons of isolation and security, we want to run the application in a Docker container. This can be done pretty easily, we we will run into the same issues that we had when we where trying to run `psql` in a separate container. At the moment, the application tries to connect to the database on `localhost`, which is fine while the application is running on the host directly, but won't work any more once that is transported into a Docker container.
+For the same reasons of isolation and security that we discussed previously, we want to run the application in a Docker container. This can be done pretty easily, but we will run into the same issues that we had when we where trying to run `psql` in a separate container. At the moment, the application tries to connect to the database on `localhost`, which is fine while the application is running on the host directly, but won't work any more once that is transported into a Docker container.
 
 To face one problem at a time, let's first containerise the application and run it using the `host` network. Once this works, we can see how to solve the communication problem between containers.
 
@@ -576,9 +592,12 @@ $ docker image ls | grep whale
 whaleapp  latest  969b15466905  9 minutes ago  894MB
 ----
 
-You might also observe 1 minute of silence meditating on the fact that we used almost 900 megabytes of space to run 40 lines of Python. As you can see benefits come with a cost, and you should not underestimate those. 900 megabytes might not seem a lot nowadays, but if you keep building images you will soon use up the space on your hard drive or end up paying a lot for the space on your remote repository.
+[infobox, icon="info-circle", title="Size of containers"]
+%%%%
+You might want to observe 1 minute of silence meditating on the fact that we used almost 900 megabytes of space to run 40 lines of Python. As you can see benefits come with a cost, and you should not underestimate those. 900 megabytes might not seem a lot nowadays, but if you keep building images you will soon use up the space on your hard drive or end up paying a lot for the space on your remote repository.
 
 By the way, this is the reason why Docker splits image into layers and reuses them. For now we can ignore this part of the game, but remember that keeping the system clean and removing past artifacts is important.
+%%%%
 
 As I mentioned before we can run this image but we need to use the `host` network configuration.
 
@@ -610,7 +629,7 @@ $ docker network create whale
 
 As always, Docker will return the ID of the object it just created, but we can ignore it for now, as we can refer to the network by name.
 
-Stop and remove the Postgres container, and run it again in the `whale` network
+Stop and remove the Postgres container, and run it again using the network `whale`
 
 [source]
 ----
@@ -626,9 +645,9 @@ $ docker run -d \
   postgres:13
 ----
 
-Please note that there is no need to publish the port 5432 in this setup, as the host doesn't need to access the container. This might be a requirement, though, so in that case you need to add the option `-p 5432:5432` again.
+Please note that there is no need to publish the port 5432 in this setup, as the host doesn't need to access the container. Should this be a requirement, add the option `-p 5432:5432` again.
 
-As happened with volumes, `docker ps` doesn't give information about the network container are using, so you have to use `docker inspect`
+As happened with volumes, `docker ps` doesn't give information about the network that containers are using, so you have to use `docker inspect` again
 
 [source]
 ----
@@ -684,16 +703,16 @@ PING whale-postgres (172.19.0.2) 56(84) bytes of data.
 rtt min/avg/max/mdev = 0.064/0.095/0.115/0.018 ms
 ----
 
-What I did here was to run the image `whaleapp` that we built previously, but I overrode the default command and run `ping whale-postgres` instead. This is a good way to check if a host can resolve a name on the network (`dig` is another useful tool but is not installed by default).
+What I did here was to run the image `whaleapp` that we built previously, but overriding the default command and running `ping whale-postgres` instead. This is a good way to check if a host can resolve a name on the network (`dig` is another useful tool but is not installed by default in that image).
 
-As you can see the Postgres container is reachable and we also know that it currently runs with the IP 172.19.0.2. This value might be different on your system, but it will match the information you get if you run `docker network inspect whale`.
+As you can see the Postgres container is reachable and we also know that it currently runs with the IP `172.19.0.2`. This value might be different on your system, but it will match the information you get if you run `docker network inspect whale`.
 
 The point of all this talk about DNS is that we can now change the code of the Python application so that it connects to `whale-postgres` instead of `localhost`
 
 [source,python]
 ----
 connection_data = {
-    "host": "whale-postgres",
+    "host": "whale-postgres",:@:
     "database": "whale_db",
     "user": "whale_user",
     "password": "whale_password",
@@ -721,7 +740,9 @@ You can also take the network directly from another container, which is a useful
 ----
 $ docker build -t whaleapp .
 [...]
-$ docker run -it --rm --network=container:whale-postgres --name whale-app whaleapp
+$ docker run -it --rm \
+  --network=container:whale-postgres \
+  --name whale-app whaleapp
 Connecting to the PostgreSQL database...
 [(1, 'Tacos'), (2, 'Tomato Soup'), (3, 'Grilled Cheese')]
 Database connection closed.
@@ -782,15 +803,15 @@ Database connection closed.
 
 [infobox, icon="info-circle", title="Managing secrets"]
 %%%%
-A "secret" is a value that should never be shown in plain text, as it is used to grant access to a system. This can be a password or a private key such as the ones you have to run SSH, and as happens with everything related to security, managing them is complicated. Please keep in mind that security is hard and that the best attitude to have is: every time you think something in security is straightforward this means you got it wrong.
+A "secret" is a value that should never be shown in plain text, as it is used to grant access to a system. This can be a password or a private key such as the ones you have to run SSH, and as happens with everything related to security, managing them is complicated. Please keep in mind that security is hard and that the best attitude to have is: _every time you think something in security is straightforward this means you got it wrong_.
 
-Generally speaking, however, you want secrets to be encrypted and stored in a safe place where access is granted to a narrow set of people. These secrets should be accessible to your application in a secure way, and it shouldn't be possible to access the secrets hosted in the memory of the application.
+Generally speaking, you want secrets to be encrypted and stored in a safe place where access is granted to a narrow set of people. These secrets should be accessible to your application in a secure way, and it shouldn't be possible to access the secrets hosted in the memory of the application.
 
 For example, many posts online show how you can use AWS Secrets Manager to store your secrets and access them from your application using [link](https://stedolan.github.io/jq/,"jq") to fetch them at run time. While this works, if the JSON secret contains a syntax error, `jq` dumps the whole value in the standard output of the application, which means that the logs contain the secret in plain text.
 
 [link](https://hub.docker.com/_/vault,Vault) is a tool created by Hashicorp that many use to store secrets needed by containers. It is interesting to read in the description of the image that with a specific configuration the container prevents memory from being swapped to disk, which would leak the unencrypted vaules. As you see, security is hard.
 
-Orchestration tools always provide a way to manage secrets and to pass them to containers. For example, see [link](https://docs.docker.com/engine/swarm/secrets/) for Docker Swarm, [link](https://kubernetes.io/docs/concepts/configuration/secret/) for Kubernetes, and [link](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data-secrets.html) for AWS Elastic Container Service.
+Orchestration tools always provide a way to manage secrets and to pass them to containers. For example, see [link]("https://docs.docker.com/engine/swarm/secrets/", "Docker Swarm secrets"), [link]("https://kubernetes.io/docs/concepts/configuration/secret/", "Kubernetes secrets"), and [link]("https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data-secrets.html", "secrets for AWS Elastic Container Service").
 %%%%
 
 == Enter Docker Compose
@@ -815,6 +836,7 @@ whale
 
 Then create the file `docker-compose.yml` in the project directory and put the following code in it
 
+.docker-compose.yml
 [source,yaml]
 ----
 version: '3.8'
@@ -826,6 +848,7 @@ This is not a valid Docker Compose file, yet, but you can see that there is a va
 
 The first service we want to run is Postgres, and a basic configuration for that is
 
+.docker-compose.yml
 [source,yaml]
 ----
 version: '3.8'
@@ -837,14 +860,14 @@ services:
       POSTGRES_DB: whale_db
       POSTGRES_PASSWORD: whale_password
       POSTGRES_USER: whale_user
-    volumes:
+    volumes::2:
       - dbdata:/var/lib/postgresql/data
 
-volumes:
+volumes::1:
   dbdata:
 ----
 
-As you can see, this file contains the environment variables that we passed to the Postgres container and the volume configuration. The final `volumes:` declares which volumes have to be present (so it creates them if they are not), while `volumes:` inside the service `db` creates the connection just like the option `-v` did previously.
+As you can see, this file contains the environment variables that we passed to the Postgres container and the volume configuration. The final `volumes` [class](1, "callout") declares which volumes have to be present (so it creates them if they are not), while `volumes` [class](2, "callout") inside the service `db` creates the connection just like the option `-v` did previously.
 
 Now, from the project directory, you can run Docker Compose with
 
@@ -960,7 +983,7 @@ app_1  | Database connection closed.
 
 These errors come from the fact that the application container is up and running before the database is ready to serve connections. In a production setup this usually doesn't happen because the database is up and running much before the application gets deployed for the first time, and then runs (hopefully) without interruption. In a development environment, instead, such a situation is normal.
 
-Please note that you might not have experienced this problem, as it is tightly connected with the speed of Docker Compose and the containers. Time-sensitive bugs are one of the worst types to deal with, and this is the reason why managing distributed systems is hard. It is important that you realise that even though this might work now on your system, the problem is there and we should find a solution.
+Please note that this might not happen in your setup, as this is tightly connected with the speed of Docker Compose and the containers. Time-sensitive bugs are one of the worst types to deal with, and this is the reason why managing distributed systems is hard. It is important that you realise that even though this might work now on your system, the problem is there and we need to find a solution.
 
 The standard solution when part of a system depends on another is to create a _health check_ that periodically tests the first service, and to start the second service only when the check is successful. We can do this in the Compose file using `healthcheck` and `depends_on`
 
@@ -999,5 +1022,14 @@ volumes:
   dbdata:
 ----
 
-The health check for the Postgres container leverages the command line tool `pg_isready` that is successful only when the database is ready to accept connections, and tries every 10 seconds for 5 times. When you run `up -d` this time you should notice a clear delay before the application is run, but the logs won't contain any connection error.
+The health check for the Postgres container leverages the command line tool `pg_isready` that is successful only when the database is ready to accept connections, and tries every 10 seconds for 5 times. Now, when you run `up -d` this time you should notice a clear delay before the application is run, but the logs won't contain any connection error.
 
+== Final words
+
+Well, this was a long one, but I hope you enjoyed the trip and you ended up having a better picture of what problems Docker Compose solve, along with a feeling of how complicated it might be to design an architecture. Everything we did was for a "simple" development environment with a couple of containers, so you can figure what is involved when we get to live environments.
+
+== Feedback
+
+Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues,"GitHub issues") page is the best place to submit corrections.
+
+Cover picture by [link]("https://unsplash.com/@verstappen_photography?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText","Verstappen Photography") on [link]("https://unsplash.com/s/photos/crane?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText", "Unsplash").
