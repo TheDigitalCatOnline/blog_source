@@ -27,11 +27,11 @@ The TLS/SSL nomenclature is one of many sources of confusion in the complicated 
 
 ## X.509 certificates
 
-While the problem of the identity in an insecure network can be solved in several ways, the solution embraced to secure the World Wide Web is based on a standard called **X.509**. When we mention SSL certificates, we usually mean X.509 certificates used in a TLS connection, such as that created by HTTPS.
+While the problem of the identity in an insecure network can be solved in several ways, the solution embraced to secure the World Wide Web is based on a standard called **X.509**. When we mention TLS certificates, we usually mean X.509 certificates used in a TLS connection, such as that created by HTTPS.
 
 X.509 is the ITU-T standard used to represent certificates, and has been chosen to be the standard used in the TLS protocol. The standard doesn't only define the binary structure of the certificate itself, but it also defines procedures to revoke the certificates, and establishes a hierarchical system of certification known as **certificate path**, or **certificate chain**.
 
-The structure of an X.509 certificate is expressed using [ASN.1](https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One), a notation used natively by the PEM format (discussed [here]({filename}rsa-keys.markdown)). You can read the full specification in [RFC 2459](https://tools.ietf.org/html/rfc2459), in particular [Section 4](https://tools.ietf.org/html/rfc2459#section-4) "Certificate and Certificate Extensions Profile". I will refer to this later when I will have a look at a real certificate.
+The structure of an X.509 certificate is expressed using [ASN.1](https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One), a notation used natively by the PEM format (discussed [here]({filename}rsa-keys.mau)). You can read the full specification in [RFC 2459](https://tools.ietf.org/html/rfc2459), in particular [Section 4](https://tools.ietf.org/html/rfc2459#section-4) "Certificate and Certificate Extensions Profile". I will refer to this later when I will have a look at a real certificate.
 
 ## How are certificates related to HTTPS?
 
@@ -45,7 +45,7 @@ Certificates come into play when the browser establishes the TLS connection, whi
 
 The X.509 standard establishes entities called **Certificate Authorities** (CAs), and creates a hierarchy of trust called **chain** between them. The idea is that there is a set of entities that are trusted worldwide by operating systems, browsers, and other network-related software, and that these entities can trust other entities, thus creating a trust network.
 
-While the market of Certificate Authorities is dominated by three major commercial players (see the [usage statistics](https://w3techs.com/technologies/overview/ssl_certificate))there are approximately 100 organisations operating worldwide, among which some non-profit ones. Not all of these are trusted by all operating systems or browsers, though.
+While the market of Certificate Authorities is dominated by three major commercial players (see the [usage statistics](https://w3techs.com/technologies/overview/ssl_certificate)) there are approximately 100 organisations operating worldwide, among which some non-profit ones. Not all of these are trusted by all operating systems or browsers, though.
 
 The set of CAs trusted by an organisation is called **root program**. The Mozilla community runs a program that is independent from the hardware/software platform, aptly called [Mozilla's CA Certificate Program](https://wiki.mozilla.org/CA) and uses data contained in the [Common CA Database](https://www.ccadb.org/) (CCADB). Private companies such as Microsoft, Apple, and Oracle run their own root programs and software running on the respective platforms (Windows, macOS/iOS, Java) can decide to trust the CAs provided by those programs.
 
@@ -59,7 +59,7 @@ The certificates for root CAs that are part of the Mozilla root program can be r
 
 The interesting thing you can do here is to export a CA certificate. If you do it Firefox will save it in a file with extension `.crt`, that contains data in PEM format. I exported the certificate for `Amazon Root CA 1` and I ended up with the file `AmazonRootCA1.crt`. If, instead of exporting, you view the certificate, you will end up in a page that allows you to download the certificate and the chain, both in PEM format, in files with the extension `.pem`. As you see, you are not the only one who is confused.
 
-I described the PEM format [in a post on RSA keys]({filename}rsa-keys.markdown) so I won't repeat here the whole discussion about it. The [RFC 7468](https://tools.ietf.org/html/rfc7468) ("Textual Encodings of PKIX, PKCS, and CMS Structures") describes certificates in section 5. Section 4 mentions the module `id-pkix1-e` for `Certificate`, `CertificateList`, and `SubjectPublicKeyInfo` [RFC 5280](https://tools.ietf.org/html/rfc5280) ("Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile").
+I described the PEM format [in a post on RSA keys]({filename}rsa-keys.mau) so I won't repeat here the whole discussion about it. The [RFC 7468](https://tools.ietf.org/html/rfc7468) ("Textual Encodings of PKIX, PKCS, and CMS Structures") describes certificates in section 5. Section 4 mentions the module `id-pkix1-e` for `Certificate`, `CertificateList`, and `SubjectPublicKeyInfo` [RFC 5280](https://tools.ietf.org/html/rfc5280) ("Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile").
 
 The identifier `id-pkix1-e` is part of a registry of objects to be used in ASN.1 data created in the framework of the Public-Key Infrastructure using X.509 (PKIX) Working Group, that defined the infrastructure around the X.509 certificates system. Basically it's a standard way to identify binary objects and their structure. You can see a full list of all the objects in [RFC 7299](https://tools.ietf.org/html/rfc7299) ("Object Identifier Registry for the PKIX Working Group"). Not a very exciting one to read, if you ask me.
 
@@ -233,7 +233,7 @@ B2A6F9AFEC47198F503807DCA2873958F8BAD5A9F948673096EE94785E6F89A351C0308666A14566
   265:d=1  hl=2 l=   3 prim: INTEGER           :010001
 ```
 
-As we already saw for [RSA keys]({filename}rsa-keys.markdown)), OpenSSL has a specific module for important structures, and the X.509 certificates are definitely worth a module aptly called `x509`. using that we can easily decode any certificate
+As we already saw for [RSA keys]({filename}rsa-keys.mau)), OpenSSL has a specific module for important structures, and the X.509 certificates are definitely worth a module aptly called `x509`. using that we can easily decode any certificate
 
 ``` text
 $ openssl x509 -inform pem -in amazon-root-ca-1.pem -noout -text
@@ -558,7 +558,11 @@ error www-thedigitalcatonline-com.pem: verification failed
 
 Let's have a look at the signature process for x.509 certificates. The process depends on the specific algorithm used to sign the certificate, so I will use the certificate `Amazon Root CA 1` as an example, leaving to the reader the investigation about other algorithms.
 
-A signed certificate is made of two parts, the certificate itself and the signature. The signature contains an encrypted hash of the certificate. Being encrypted we can verify the signed using their public key, and once we decrypted it we can compare the hash with one that we create on the fly using the same algorithm.
+A signed certificate is made of two parts, the certificate itself and the signature. The signature contains an encrypted hash of the certificate, so the verification is done in three steps:
+
+1. Decrypt the encrypted hash using the public key
+2. Compute the hash of the certificate using the same algorithm
+3. Compare the hashes
 
 For the Amazon root certificate, we know the signature algorithm and value from the output of `openssl x509`
 
@@ -631,7 +635,7 @@ The signature algorithm part is
 03 82 01 01 00
 ```
 
-and the ASN.1 parser tells us that those bytes represent an `OBJECT IDENTIFIER` which value is `2.16.840.1.101.3.4.2.1`. Now, object identifiers are not complicated per se, they are just a way to identify algorithms and other well known components in ASN.1 structures. The description of the field [`signatureAlgorithm`](https://tools.ietf.org/html/rfc5280#section-4.1.1.2) of an x.509 certificate mentions three other RFCs that contains descriptions of the available algorithms. In particular, [RFC 4055](https://tools.ietf.org/html/rfc4055#section-2.1) contains the description of PKCS #1 one-way hash functions, one of which is
+and the ASN.1 parser tells us that those bytes represent an `OBJECT IDENTIFIER` which value is `2.16.840.1.101.3.4.2.1`. Now, object identifiers are not complicated per se, they are just a way to identify algorithms and other well known components in ASN.1 structures. The [description of the field](https://tools.ietf.org/html/rfc5280#section-4.1.1.2) `signatureAlgorithm` of an x.509 certificate mentions three other RFCs that contains descriptions of the available algorithms. In particular, [RFC 4055](https://tools.ietf.org/html/rfc4055#section-2.1) contains the description of PKCS #1 one-way hash functions, one of which is
 
 ``` text
 id-sha256  OBJECT IDENTIFIER  ::=  { joint-iso-itu-t(2)

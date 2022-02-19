@@ -141,6 +141,13 @@ sup {
     vertical-align: super;
 }
 
+hr {
+    background: #d7d7d7;
+    border: none;
+    font-weight: 700;
+    height: 3px;
+    margin: 3rem 12rem;
+}
 
 /* Sidebar */
 
@@ -701,6 +708,28 @@ div.admonition div.title {
 
 div.admonition div.content {
     padding-right: 1rem;
+    overflow: auto;
+}
+
+div.infobox {
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+    padding: 2rem;
+}
+
+div.infobox i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+div.infobox div.title {
+    font-weight: $font-weight-bold;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 div.callouts table {

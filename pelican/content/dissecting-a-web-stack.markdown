@@ -588,7 +588,7 @@ services:
       - application
 ```
 
-As you can see the name `application` that we mentioned in the nginx configuration file is not a magic string, but is the name we assigned to the Gunicorn container in the Docker Compose configuration.
+As you can see the name `application` that we mentioned in the nginx configuration file is not a magic string, but is the name we assigned to the Gunicorn container in the Docker Compose configuration. Please note that nginx listens on port 80 inside the container, but the port is published as 8080 on the host.
 
 To create this infrastructure we need to install Docker Compose in our virtual environment through `pip install docker-compose`. I also created a file named `.env` with the name of the project
 
@@ -605,7 +605,7 @@ Creating service_application_1 ... done
 Creating service_nginx_1       ... done
 ```
 
-If everything is working correctly, opening the browser and visiting `localhost` should show you the HTML page Flask is serving.
+If everything is working correctly, opening the browser and visiting `localhost:8080` should show you the HTML page Flask is serving.
 
 Through `docker-compose logs` we can check what services are doing. We can recognise the output of Gunicorn in the logs of the service named `application`
 
@@ -672,7 +672,7 @@ Attaching to service_nginx_1
 nginx_1        | [14/Feb/2020:09:00:16 +0000] localhost to: 192.168.240.4:8000: GET / HTTP/1.1 200
 ```
 
-where you can spot `to: 192.168.240.4:8000` which is the IP address of one of the application containers. If you now visit the page again multiple times you should notice a change in the upstream address, something like
+where you can spot `to: 192.168.240.4:8000` which is the IP address of one of the application containers. Please note that the IP address you see might be different, as it depends on the Docker network settings. If you now visit the page again multiple times you should notice a change in the upstream address, something like
 
 ``` sh
 $ docker-compose logs -f nginx
@@ -687,6 +687,9 @@ nginx_1        | [14/Feb/2020:09:00:17 +0000] localhost to: 192.168.240.2:8000: 
 This shows that nginx is performing load balancing, but to tell the truth this is happening through Docker's DNS, and not by an explicit action performed by the web server. We can verify this accessing the nginx container and running `dig application` (you need to run `apt update` and `apt install dnsutils` to install `dig`)
 
 ``` sh
+$ docker-compose exec nginx /bin/bash
+root@99c2f348140e:/# apt update
+root@99c2f348140e:/# apt install -y dnsutils
 root@99c2f348140e:/# dig application
 
 ; <<>> DiG 9.11.5-P4-5.1-Debian <<>> application

@@ -91,8 +91,6 @@ done
 
 Save it as `create_content.sh` and give it execution permissions with `chmod 775 create_content.sh`. At this point you can run it with `./create_content.sh` and it will create the directory `content` with 20 posts and an image for each of them. You can safely run it multiple times, it will automatically delete the previous output.
 
-The script works out of the box on Linux, but you might have issues on a Mac (I have no way to check), so I zipped an execution of the script that you can [link](/files/demo_posts.zip,"download here").
-
 If you know bash feel free to hack the script to do something more complicated, but this very simple program does everything we need to work on Pelican themes.
 
 Running `pelican -lr` and visiting http://localhost:8000 will now show a richer website.

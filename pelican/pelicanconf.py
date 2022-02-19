@@ -128,6 +128,13 @@ MAU = {
             "</div>"
             "</div>"
         ),
+        "block-infobox.html": (
+            '<div class="infobox">'
+            '<i class="fa fa-{{ kwargs.icon }}"></i>'
+            '<div class="title">{{ kwargs.title }}</div>'
+            "<div>{{ content }}</div>"
+            "</div>"
+        ),
         "block-source.html": (
             '<div{% if blocktype %} class="code"{% endif %}>'
             '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
