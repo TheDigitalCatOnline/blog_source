@@ -1,11 +1,11 @@
 :pelican.title:From Docker CLI to Docker Compose
-:pelican.date:2022-02-18 17:00:00 +0100
+:pelican.date:2022-02-19 15:00:00 +0100
 :pelican.category:Programming
-:pelican.tags:Docker, infrastructure, Python
+:pelican.tags:Docker, infrastructure, Postgres, Python
 :pelican.authors:Leonardo Giordani
 :pelican.slug:from-docker-cli-to-docker-compose
 :pelican.image:from-docker-cli-to-docker-compose
-:pelican.summary: Rants about Docker
+:pelican.summary: A hands-on post that shows how to build a system with Docker and which problems Docker Compose solves
 
 In this post I will show you how and why Docker Compose is useful, building a simple application written in Python that uses PostgreSQL. I think it is worth going through such an exercise to see how technologies that we might be already familiar with actually simplify workflows that would otherwise definitely be more complicated.
 
