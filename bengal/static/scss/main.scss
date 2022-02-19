@@ -113,7 +113,7 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto Slab', serif;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 }
 
 h1 {
@@ -144,7 +144,7 @@ sup {
 hr {
     background: #d7d7d7;
     border: none;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     height: 3px;
     margin: 3rem 12rem;
 }
@@ -186,7 +186,7 @@ div.mobile-menu li {
 div.mobile-menu section header {
     font-family: 'Roboto Slab', serif;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     text-align: center;
 }
 
@@ -206,7 +206,7 @@ div.mobile-menu ul.tags {
 
 .navigation nav .link a {
     font-size: 1.2rem;
-    font-weight: 400;
+    font-weight: $font-weight-semibold;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -223,7 +223,7 @@ div.mobile-menu ul.tags {
 
 .navigation section header {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin-bottom: 0.5rem;
 }
 
@@ -291,7 +291,7 @@ div.page header.primary button {
 div.page header.primary p {
     font-family: 'Roboto Slab', serif;
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     text-align: center;
 }
 
@@ -307,7 +307,7 @@ div.page img.cover {
 div.page p.subtitle {
     font-family: 'Roboto Slab', serif;
     font-size: 1.3rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin: 1rem 0; 
     text-align: center;
     text-transform: uppercase;
@@ -316,7 +316,7 @@ div.page p.subtitle {
 div.page div.quote {
     font-size: 1.2rem;
     font-style: italic;
-    font-weight: 400;
+    font-weight: $font-weight-semibold;
     margin: 0 4rem;
     position: relative;
     text-align: center;
@@ -367,7 +367,7 @@ div.page-content div.pagination li {
     display: inline-block;
     font-family: 'Roboto Slab', serif;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin: 0 0.5rem;
 }
     
@@ -411,7 +411,7 @@ article.card div.body {
 }
 
 article.card div.body a {
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     text-decoration: none;
 }
 
@@ -443,7 +443,7 @@ p.tags a.tag {
     cursor: pointer;
     display: inline-block;
     font-size: 0.7rem;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin: 0.2rem 0;
     padding: 0.2rem 0.5rem;
     text-decoration: none;
@@ -551,7 +551,7 @@ div.post-content {
     }
     
     strong {
-	font-weight: 700;
+	font-weight: $font-weight-bold;
     }
     
     em {
@@ -571,7 +571,7 @@ div.post-content {
     hr {
 	background: #d7d7d7;
 	border: none;
-	font-weight: 700;
+	font-weight: $font-weight-bold;
 	height: 3px;
 	margin: 3rem 12rem;
     }
@@ -683,7 +683,7 @@ div.callout div.content {
 }
 
 div.callout div.title {
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 }
 
 div.admonition {
