@@ -155,6 +155,13 @@ MAU = {
             '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
             "</div>"
         ),
+        "block-infobox.html": (
+            '<div class="infobox">'
+            '<i class="fa fa-{{ kwargs.icon }}"></i>'
+            '<div class="title">{{ kwargs.title }}</div>'
+            "<div>{{ content }}</div>"
+            "</div>"
+        ),
     },
     "pygments": {"html": {}},
 }

@@ -434,6 +434,13 @@ div.post-content blockquote p {
 div.post-content blockquote cite {
   font-size: 0.9rem; }
 
+div.post-content hr {
+  background: #d7d7d7;
+  border: none;
+  font-weight: 700;
+  height: 3px;
+  margin: 3rem 12rem; }
+
 a.headerlink {
   margin-left: 0.3rem; }
 
@@ -575,6 +582,24 @@ div.imageblock {
 div.imageblock div.title {
   font-weight: 700;
   margin-top: 1rem; }
+
+div.infobox {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  padding: 2rem; }
+
+div.infobox > i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center; }
+
+div.infobox > div.title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center; }
 
 /* Media */
 @media (min-width: 1280px) {
