@@ -2,7 +2,7 @@ Title: Dissecting a Web stack
 Date: 2020-02-16 15:00:00 +0000
 Modified: 2020-10-27 08:30:00 +0000
 Category: Programming
-Tags: architectures, concurrent programming, cryptography, infrastructure, Flask, Django, Python, SSL, HTTP, WWW, AWS
+Tags: architectures, concurrent programming, cryptography, devops, infrastructure, Flask, Django, Python, SSL, HTTP, WWW, AWS
 Authors: Leonardo Giordani
 Slug: dissecting-a-web-stack
 Image: dissecting-a-web-stack

@@ -1,7 +1,7 @@
 :pelican.title:From Docker CLI to Docker Compose
 :pelican.date:2022-02-19 15:00:00 +0100
 :pelican.category:Programming
-:pelican.tags:Docker, infrastructure, Postgres, Python
+:pelican.tags:devops, Docker, infrastructure, Postgres, Python
 :pelican.authors:Leonardo Giordani
 :pelican.slug:from-docker-cli-to-docker-compose
 :pelican.image:from-docker-cli-to-docker-compose

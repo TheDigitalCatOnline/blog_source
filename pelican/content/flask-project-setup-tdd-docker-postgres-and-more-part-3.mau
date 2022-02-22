@@ -2,7 +2,7 @@
 :pelican.date:2020-07-07 13:00:00 +0100
 :pelican.modified:2021-02-23 20:00:00 +0000
 :pelican.category:Programming
-:pelican.tags:AWS, Docker, Flask, HTTP, Postgres, pytest, Python, Python3, TDD, testing, WWW
+:pelican.tags:AWS, devops, Docker, Flask, HTTP, Postgres, pytest, Python, Python3, TDD, testing, WWW
 :pelican.authors:Leonardo Giordani
 :pelican.slug:flask-project-setup-tdd-docker-postgres-and-more-part-3
 :pelican.image:flask-project-setup-tdd-docker-postgres-and-more-part-3
