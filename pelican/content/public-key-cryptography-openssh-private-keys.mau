@@ -1,7 +1,7 @@
 :pelican.title:Public key cryptography: OpenSSH private keys
 :pelican.date:2021-06-03 14:00:00 +0100
 :pelican.category:Programming
-:pelican.tags:algorithms, cryptography, ed25519, RSA, SSH, SSL
+:pelican.tags:algorithms, cryptography, devops, ed25519, RSA, SSH, SSL
 :pelican.authors:Leonardo Giordani
 :pelican.slug:public-key-cryptography-openssh-private-keys
 :pelican.image:public-key-cryptography-openssh-private-keys
