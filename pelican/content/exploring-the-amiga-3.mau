@@ -77,7 +77,7 @@ vectors:
     function3-vectors
 ----
 
-As you can see the function at `function2` (in this example) depends on a `&lt;table&gt;` and a `&lt;start&gt;` parameters which will be contained in some register. At this point, since the address `function2` is known, there can be some code that runs the function on the table contained in the code itself
+As you can see the function at `function2` (in this example) depends on a `<table>` and a `<start>` parameters which will be contained in some register. At this point, since the address `function2` is known, there can be some code that runs the function on the table contained in the code itself
 
 [source]
 ----
@@ -98,7 +98,7 @@ vectors:
     function3-vectors
 ----
 
-where `&lt;vectors_offset&gt;` is a hardcoded offset (as the displacement of `vectors` relative to `setup` is known) and `setup` is the effective address that the `setup` routine has at runtime.
+where `<vectors_offset>` is a hardcoded offset (as the displacement of `vectors` relative to `setup` is known) and `setup` is the effective address that the `setup` routine has at runtime.
 
 This mechanism creates then a library that can install other libraries through a given function, but that can at the same time install itself.
 

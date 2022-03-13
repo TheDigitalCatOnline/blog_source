@@ -1,0 +1,1019 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Flask project setup: TDD, Docker, Postgres and more - Part 1</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="A step-by-step tutorial on how to setup a Flask project with TDD, Docker and Postgres">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Flask project setup: TDD, Docker, Postgres and more - Part 1" />
+<meta name="twitter:description" content="A step-by-step tutorial on how to setup a Flask project with TDD, Docker and Postgres" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Flask project setup: TDD, Docker, Postgres and more - Part 1</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-07-05T13:00:00+01:00"> 05/07/2020</time> <i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T10:00:00+00:00">Aug 22, 2021</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/aws/">AWS</a>
+	<a class="tag" href="/categories/devops/">devops</a>
+	<a class="tag" href="/categories/docker/">Docker</a>
+	<a class="tag" href="/categories/flask/">Flask</a>
+	<a class="tag" href="/categories/http/">HTTP</a>
+	<a class="tag" href="/categories/postgres/">Postgres</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/python3/">Python3</a>
+	<a class="tag" href="/categories/tdd/">TDD</a>
+	<a class="tag" href="/categories/testing/">testing</a>
+	<a class="tag" href="/categories/www/">WWW</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%201&url=https%3A//www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/&via=thedigicat&hashtags=aws,devops,docker,flask,http,postgres,python,python3,tdd,testing,www" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/&title=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%201&summary=A%20step-by-step%20tutorial%20on%20how%20to%20setup%20a%20Flask%20project%20with%20TDD%2C%20Docker%20and%20Postgres&source=https%3A//www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%201&u=https%3A//www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%201&amp;body=https%3A//www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/&title=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%201" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>There are tons of tutorials on Internet that tech you how to use a web framework and how to create Web applications, and many of these cover Flask, first of all the impressive <a href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">Flask Mega-Tutorial</a> by Miguel Grinberg (thanks Miguel!). </p><p>Why another tutorial, then? Recently I started working on a small personal project and decided that it was a good chance to refresh my knowledge of the framework. For this reason I temporarily dropped the <a href="https://www.thedigitalcatbooks.com/pycabook-introduction/">clean architecture</a> I often recommend, and started from scratch following some tutorials. My development environment quickly became very messy, and after a while I realised I was very unsatisfied by the global setup.</p><p>So, I decided to start from scratch again, this time writing down some requirements I want from my development setup. I also know very well how complicated the deploy of an application in production can be, so I want my setup to be "deploy-friendly" as much as possible. Having seen too many project suffer from legacy setups, and knowing that many times such issues can be avoided with a minimum amount of planning, I thought this might be interesting for other developers as well. I consider this setup by no means <em>better</em> than others, it simply addresses different concerns.</p><h2 id="what-you-will-learn">What you will learn<a class="headerlink" href="#what-you-will-learn" title="Permanent link">¶</a></h2><p>This post contains a step-by-step description of how I set up a real Flask project that I am working on. It's important that you understand that this is just one of many possible setups, and that my choices are both a matter of personal taste and dictated by some goals that I will state in this section. Changing the requirements would clearly result in a change of the structure. The target of the post is then to show that the setup of a project can take into account many things upfront, without leaving them to an undetermined future when it will likely be too late to tackle them properly.</p><p>The requirements of my setup are the following:</p><ul><li>Use the same database engine in production, in development and for tests</li><li>Run test on an ephemeral database</li><li>Run in production with no changes other that the static configuration</li><li>Have a command to initialise databases and manage migrations</li><li>Have a way to spin up "scenarios" starting from an empty database, to create a sandbox where I can test queries</li><li>Possible simulate production in the local environment</li></ul><p>As for the technologies, I will use Flask, obviously, as the web framework. I will also use Gunicorn as HTTP server (in production) and Postgres for the database part. I won't show here how to create the production infrastructure, but as I work daily with AWS, I will take into account some of its requirements, trying however not to be too committed to a specific solution.</p><h2 id="a-general-advice">A general advice<a class="headerlink" href="#a-general-advice" title="Permanent link">¶</a></h2><p>Proper setup is an investment for the future. As we do in TDD, where we decide to spend time now (writing tests) to avoid spending tenfold later (to find and correct bugs), setting up a project requires time, and might frustrate the desire of "see things happen". Proper setup is a discipline that requires patience and commitment!</p><p>If you are ready to go, join me for this journey towards a great setup of a Flask application.</p><h2 id="the-golden-rule">The golden rule<a class="headerlink" href="#the-golden-rule" title="Permanent link">¶</a></h2><p>The golden rule of any proper infrastructural work is: there has to be a single source of information. The configuration of you project shouldn't be scattered among different files or repositories (not considering secrets, that have to be stored securely). The configuration has to be accessible and easy to convert into different formats to accommodate the needs of different tools. For this reason, the configuration should be stored in a static file format like JSON, YAML, INI, or similar, which can be read and processed by different programming languages and tools.</p><p>My format of choice for this tutorial is JSON, as it can be read by both Python and Terraform, and is natively used by ECS on AWS.</p><h2 id="step-1---requirements-and-editor">Step 1 - Requirements and editor<a class="headerlink" href="#step-1---requirements-and-editor" title="Permanent link">¶</a></h2><p>My standard structure for Python requirements uses 3 files: <code>production.txt</code>, <code>development.txt</code>, and <code>testing.txt</code>. They are all stored in the same directory called <code>requirements</code>, and are hierarchically connected. </p><div class="code"><div class="title">requirements/production.txt</div><div class="content"><div class="highlight"><pre><span></span>## This file is currently empty
+</pre></div>
+</div></div><div class="code"><div class="title">requirements/testing.txt</div><div class="content"><div class="highlight"><pre><span></span>-r production.txt
+</pre></div>
+</div></div><div class="code"><div class="title">requirements/development.txt</div><div class="content"><div class="highlight"><pre><span></span>-r testing.txt
+</pre></div>
+</div></div><p>There is also a final file <code>requirements.txt</code> that points to the production one.</p><div class="code"><div class="title">requirements.txt</div><div class="content"><div class="highlight"><pre><span></span>-r requirements/production.txt
+</pre></div>
+</div></div><p>As you can see this allows me to separate the requirements to avoid installing unneeded packages, which greatly speeds up the deploy in production and keeps things as essential as possible. Production contains the minimum requirements needed to run the project, testing adds to those the packages used to test the code, and development adds to the latter the tools needed during development. A minor shortcoming of this setup is that I might not need in development everything I need in production, for example the HTTP server. I don't think this is significantly affecting my local setup, though, and if I have to decide between production and development, I prefer to keep the former lean and tidy.</p><p>I have my linters already installed system-wide, but as I'm using black to format the code I have to configure flake8 to accept what I'm doing</p><div class="code"><div class="title">.flake8</div><div class="content"><div class="highlight"><pre><span></span>[flake8]
+# Recommend matching the black line length (default 88),
+# rather than using the flake8 default of 79:
+max-line-length = 100
+ignore = E231
+</pre></div>
+</div></div><p>This is clearly a very personal choice, and you might have different requirements. Take your time to properly configure the editor and the linter(s). Remember that the editor for a programmer is like the violin for the violinist. You need to know it, and to take care of it. So, set it up properly.</p><p>At this point I also create my virtual environment and activate it.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/a6c8e7acde7d5d5d89fad22224fff707d625ebe3">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/a6c8e7acde7d5d5d89fad22224fff707d625ebe3">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://packaging.python.org/tutorials/installing-packages/">Installing packages in Python</a></li><li><a href="https://flake8.pycqa.org/en/latest/">flake8</a> - A tool for style guide enforcement</li><li><a href="https://github.com/psf/black">black</a> - The uncompromising Python code formatter</li></ul><h2 id="step-2---flask-project-boilerplate">Step 2 - Flask project boilerplate<a class="headerlink" href="#step-2---flask-project-boilerplate" title="Permanent link">¶</a></h2><p>As this will be a Flask application the first thing to do is to install Flask itself. That goes in the production requirements, as that is needed at every stage.</p><div class="code"><div class="title">requirements/production.txt</div><div class="content"><div class="highlight"><pre><span></span>Flask
+</pre></div>
+</div></div><p>Now, install the development requirements with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ pip install -r requirements/development.txt
+</pre></div>
+</div></div><p>As we saw before, that file automatically installs the testing and production requirements as well.</p><p>Then we need a directory where to keep all the code that is directly connected with the Flask framework, and where we will start creating the configuration for the application. Create the directory <code>application</code> and the file <code>config.py</code> in it.</p><div class="code"><div class="title">application/config.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base configuration&quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">ProductionConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Production configuration&quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">DevelopmentConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Development configuration&quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">TestingConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Testing configuration&quot;&quot;&quot;</span>
+
+    <span class="n">TESTING</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div></div><p>There are many ways to configure a Flask application, one of which is using Python objects. This allows me to leverage inheritance to avoid duplication (which is always good), so it's my method of choice.</p><p>It's important to understand the variables and the parameters involved in the configuration. As the documentation clearly states, <code>FLASK_ENV</code> and <code>FLASK_DEBUG</code> have to be initialised outside the application as the code might misbehave if they are changed once the engine has been started. Furthermore the variable <code>FLASK_ENV</code> can have only the two values <code>development</code> and <code>production</code>, and the main difference is in performances. The most important thing we need to be aware of is that if <code>FLASK_ENV</code> is <code>development</code>, then <code>FLASK_DEBUG</code> becomes automatically <code>True</code>. To sum up we have the following guidelines:</p><ul><li>It's pointless to set <code>DEBUG</code> and <code>ENV</code> in the application configuration, they have to be environment variables.</li><li>Generally you don't need to set <code>FLASK_DEBUG</code>, just set <code>FLASK_ENV</code> to <code>development</code>.</li><li>Testing doesn't need the debug server turned on, so you can set <code>FLASK_ENV</code> to <code>production</code> during that phase. It needs <code>TESTING</code> set to <code>True</code>, though, and that has to be done inside the application.</li></ul><p>We need now to create the application and to properly configure it.</p><div class="code"><div class="title">application/app.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+
+<span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="n">config_name</span><span class="p">):</span> <span class="callout">1</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="n">config_module</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;application.config.</span><span class="si">{</span><span class="n">config_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2">Config&quot;</span> <span class="callout">2</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="n">config_module</span><span class="p">)</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="callout">3</span>
+    <span class="k">def</span> <span class="nf">hello_world</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">&quot;Hello, World!&quot;</span>
+
+    <span class="k">return</span> <span class="n">app</span>
+</pre></div>
+</div></div><p>I decided to use an application factory <span class="callout">1</span> that accepts a string <code>config_name</code> that is then converted into the name of the config object <span class="callout">2</span>. For example, if <code>config_name</code> is <code>development</code> the variable <code>config_module</code> becomes <code>application.config.DevelopmentConfig</code> so that <code>app.config.from_object</code> can import it. I also added the standard "Hello, world!" route <span class="callout">3</span> to have a quick way to see if the server is working or not.</p><p>Last, we need something that initializes the application running the application factory and passing the correct value for the parameter <code>config_name</code>. The Flask development server can automatically use any file named <code>wsgi.py</code> in the root directory, and since WSGI is a standard specification using that makes me sure that any HTTP server we will use in production (for example Gunicorn or uWSGI) will be immediately working.</p><div class="code"><div class="title">wsgi.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">application.app</span> <span class="kn">import</span> <span class="n">create_app</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">create_app</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">])</span>
+</pre></div>
+</div></div><p>Here, I decided to read the value of <code>config_name</code> from the variable <code>FLASK_CONFIG</code>. This is not a variable requested by the framework, but I decided to use the prefix <code>FLASK_</code> anyway because it is tightly connected with the structure of the Flask application.</p><p>At this point we can happily run the Flask development server with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ <span class="nv">FLASK_CONFIG</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> flask run
+ * Environment: production
+   WARNING: This is a development server. Do not use it <span class="k">in</span> a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+</pre></div>
+</div></div><p>Please note that it says <code>Environment: production</code> because we haven't configured <code>FLASK_ENV</code> yet. If you head to <a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> with your browser you can see the greetings message.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/656621980f6f2c2aac3c526b37dca6ac32363bd5">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/656621980f6f2c2aac3c526b37dca6ac32363bd5">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://flask.palletsprojects.com/en/1.1.x/config/">Flask configuration documentation</a></li><li><a href="https://flask.palletsprojects.com/en/1.1.x/patterns/appfactories/">Flask application factories</a></li><li><a href="https://wsgi.readthedocs.io/en/latest/what.html">WSGI</a> - The Python Web Server Gateway Interface</li><li>My post <a href="https://www.thedigitalcatonline.com/blog/2020/02/16/dissecting-a-web-stack/">Dissecting a web stack</a> includes a section on WSGI</li></ul><h2 id="step-3---application-configuration">Step 3 - Application configuration<a class="headerlink" href="#step-3---application-configuration" title="Permanent link">¶</a></h2><p>As I mentioned in the introduction, I am going to use a static JSON configuration file. The choice of JSON comes from the fact that it is a widespread file format, accessible from many programming languages, included Terraform, which I plan to use to create my production infrastructure.</p><div class="code"><div class="title">config/development.json</div><div class="content"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;development&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;development&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div></div><p>I obviously need a script that extracts variables from the JSON file and converts them into environment variables, so it's time to start writing my own <code>manage.py</code> file. This is a pretty standard concept in the world of Python web frameworks, a tradition initiated by Django. The idea is to centralise all the management functions like starting/stopping the development server or managing database migrations. As in flask this is partially done by the command <code>flask</code> itself, for the time being I just need to wrap it providing suitable environment variables.</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="kn">import</span> <span class="nn">click</span>
+
+
+<span class="c1"># Ensure an environment variable exists and has a value</span>
+<span class="k">def</span> <span class="nf">setenv</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+
+
+<span class="n">setenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">,</span> <span class="s2">&quot;development&quot;</span><span class="p">)</span> <span class="callout">1</span>
+
+<span class="c1"># Read configuration from the relative JSON file</span>
+<span class="n">config_json_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span> <span class="callout">2</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="n">config_json_filename</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Convert the config into a usable Python dictionary</span>
+<span class="n">config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">config</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">setenv</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">cli</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="nd">@cli</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">context_settings</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ignore_unknown_options&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;subcommand&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">flask</span><span class="p">(</span><span class="n">subcommand</span><span class="p">):</span> <span class="callout">3</span>
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flask&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">subcommand</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">send_signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+
+<span class="n">cli</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">flask</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">cli</span><span class="p">()</span>
+</pre></div>
+</div></div><p>Remember to make the script executable with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ chmod <span class="m">775</span> manage.py
+</pre></div>
+</div></div><p>As you can see I'm using <code>click</code>, which is the recommended way to implement Flask commands. As I might use it to customise subcommands of the flask main script, I decided to stick to one tool and use it for the script <code>manage.py</code> as well.</p><p>The variable <code>APPLICATION_CONFIG</code> <span class="callout">1</span> is the only one that I need to specify, and its default value is <code>development</code>. From that variable I infer the name of the JSON file with the full configuration <span class="callout">2</span> and load environment variables from that. The function <code>flask</code> <span class="callout">3</span> simply wraps the command <code>flask</code> provided by Flask so that I can run <code>./manage.py flask SUBCOMMAND</code> to run it using the configuration <code>development</code> or <code>APPLICATION_CONFIG=&quot;foobar&quot; ./manage.py flask SUBCOMMAND</code> to use the <code>foobar</code> one.</p><p>A clarification, to be sure you don't confuse environment variables with each other:</p><ul><li><code>APPLICATION_CONFIG</code> is strictly related to my project and is used <em>only</em> to load a JSON configuration file with the name specified in the variable itself.</li><li><code>FLASK_CONFIG</code> is used to select the Python object that contains the configuration for the Flask application (see <code>application/app.py</code> and <code>application/config.py</code>). The value of the variable is converted into the name of a class.</li><li><code>FLASK_ENV</code> is a variable used by Flask itself, and its values are dictated by it. See the configuration documentation mentioned in the resources of the previous section.</li></ul><p>Now we can run the development server</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py flask run
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: <span class="m">172</span>-719-201
+</pre></div>
+</div></div><p>Note that it now says <code>Environment: development</code> because of <code>FLASK_ENV</code> has been set to <code>development</code> in the configuration. As we did before, a quick visit to <a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> shows us that everything is up and running.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/8330e792aa55d2903fd4846487c64de12530c0d3">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/8330e792aa55d2903fd4846487c64de12530c0d3">browse the files</a>.</p><h3 id="resources">Resources:</h3><ul><li><a href="https://docs.djangoproject.com/en/3.0/ref/django-admin/">Django&#x27;s management script</a></li><li><a href="https://click.palletsprojects.com/en/7.x/">Click</a> - A Python package for creating command line interfaces </li></ul><h2 id="step-4---containers-and-orchestration">Step 4 - Containers and orchestration<a class="headerlink" href="#step-4---containers-and-orchestration" title="Permanent link">¶</a></h2><p>There is no better way to simplify your development than using Docker.</p><p>There is also no better way to complicate your life than using Docker.</p><p>As you might guess, I have mixed feelings about Docker. Don't get me wrong, Linux containers are an amazing concept, and Docker is very useful. It's also a complex technology that sometimes requires a lot of work to get properly configured. In this case the setup will be pretty simple, but there is a major complication with using a database server that I will describe later.</p><p>Running the application in a Docker container allows me to isolate it and to simulate the way I will run it in production. I will use docker-compose, as I expect to have other containers running in my development setup (at least the database), so I can leverage the fact that the docker-compose configuration file can interpolate environment variables. Once again through the environment variable <code>APPLICATION_CONFIG</code> I will select the correct JSON file, load its values in environment variables and then run the docker-compose file.</p><p>First of all we need an image for the Flask application</p><div class="code"><div class="title">docker/Dockerfile</div><div class="content"><div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">python:3</span>
+
+<span class="k">ENV</span> PYTHONUNBUFFERED <span class="m">1</span>
+
+<span class="k">RUN</span> mkdir /opt/code
+<span class="k">RUN</span> mkdir /opt/requirements
+<span class="k">WORKDIR</span><span class="s"> /opt/code</span>
+
+<span class="k">ADD</span> requirements /opt/requirements
+<span class="k">RUN</span> pip install -r /opt/requirements/development.txt
+</pre></div>
+</div></div><p>As you can see the requirements directory is copied into the image, so that Docker can run the command <code>pip install</code> at creation time. The whole code directory will be mounted live into the image at run time.</p><p>This clearly means that every time we change the development requirements we need to rebuild the image. This is not a complicated process, so I will keep it as a manual process for now. To run the image we can create a configuration file for docker-compose.</p><div class="code"><div class="title">docker/development.yml</div><div class="content"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3.4&#39;</span>
+
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">build</span><span class="p">:</span>
+      <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${PWD}</span>
+      <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker/Dockerfile</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">FLASK_ENV</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${FLASK_ENV}</span>
+      <span class="nt">FLASK_CONFIG</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${FLASK_CONFIG}</span>
+    <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">flask run --host 0.0.0.0</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">${PWD}:/opt/code</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;5000:5000&quot;</span>
+</pre></div>
+</div></div><p>As you can see, the docker-compose configuration file can read environment variables natively. To run it we first need to add docker-compose itself to the development requirements.</p><div class="code"><div class="title">requirements/development.txt</div><div class="content"><div class="highlight"><pre><span></span>-r testing.txt
+
+docker-compose
+</pre></div>
+</div></div><p>Install it with <code>pip install -r requirements/development.txt</code>, then build the image with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ <span class="nv">FLASK_ENV</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> <span class="nv">FLASK_CONFIG</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> docker-compose -f docker/development.yml build web
+</pre></div>
+</div></div><p>This will take some time, as Docker has to download all the required layers and install the requirements.</p><p>We are explicitly passing environment variables here, as we have not wrapped docker-compose in the manage script yet. Once the image has been build, we can run it with the command <code>up</code></p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ <span class="nv">FLASK_ENV</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> <span class="nv">FLASK_CONFIG</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> docker-compose -f docker/development.yml up
+</pre></div>
+</div></div><p>This command gives us the following output</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>Creating network &quot;docker_default&quot; with the default driver
+Creating docker_web_1 ... done
+Attaching to docker_web_1
+web_1  |  * Environment: development
+web_1  |  * Debug mode: on
+web_1  |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+web_1  |  * Restarting with stat
+web_1  |  * Debugger is active!
+web_1  |  * Debugger PIN: 234-361-737
+</pre></div>
+</div></div><p>You can stop the containers pressing <code>Ctrl-C</code>, which gracefully tears down the system. If you run the command <code>up -d</code> docker-compose will run as a daemon, leaving you the control of the current terminal. If docker-compose is running you can <code>docker ps</code> and you should see an output similar to this</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>CONTAINER ID  IMAGE       COMMAND                 ...   PORTS                   NAMES
+c98f35635625  docker_web  &quot;flask run --host 0.…&quot;  ...   0.0.0.0:5000-&gt;5000/tcp  docker_web_1
+</pre></div>
+</div></div><p>If you need to explore the container you can login directly with </p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ docker <span class="nb">exec</span> -it docker_web_1 bash
+</pre></div>
+</div></div><p>or with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ <span class="nv">FLASK_ENV</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> <span class="nv">FLASK_CONFIG</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> docker-compose -f docker/development.yml <span class="nb">exec</span> web bash
+</pre></div>
+</div></div><p>In either case, you will end up in the directory <code>/opt/code</code> (which is the <code>WORKDIR</code> of the image), where the current directory in the host is mounted.</p><p>To tear down the containers, when running as daemon, you can run</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ <span class="nv">FLASK_ENV</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> <span class="nv">FLASK_CONFIG</span><span class="o">=</span><span class="s2">&quot;development&quot;</span> docker-compose -f docker/development.yml down
+</pre></div>
+</div></div><p>Notice that the server now says <code>Running on http://0.0.0.0:5000/</code>, as the Docker container is using that network interface to communicate with the outside world. Since the ports are mapped, however, you can head to either <a href="http://localhost:5000">http://localhost:5000</a> or <a href="http://0.0.0.0:5000">http://0.0.0.0:5000</a> with your browser.</p><p>To simplify the usage of docker-compose, I want to wrap it in the script <code>manage.py</code>, so that it automatically receives environment variables, as their number is going to increase as soon as we add a database.</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="kn">import</span> <span class="nn">click</span>
+
+<span class="n">docker_compose_file</span> <span class="o">=</span> <span class="s2">&quot;docker/development.yml&quot;</span>
+<span class="n">docker_compose_cmdline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;docker-compose&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="n">docker_compose_file</span><span class="p">]</span>
+
+
+<span class="c1"># Ensure an environment variable exists and has a value</span>
+<span class="k">def</span> <span class="nf">setenv</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+
+
+<span class="n">setenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">,</span> <span class="s2">&quot;development&quot;</span><span class="p">)</span>
+
+<span class="c1"># Read configuration from the relative JSON file</span>
+<span class="n">config_json_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="n">config_json_filename</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Convert the config into a usable Python dictionary</span>
+<span class="n">config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">config</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">setenv</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">cli</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="nd">@cli</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">context_settings</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ignore_unknown_options&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;subcommand&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">flask</span><span class="p">(</span><span class="n">subcommand</span><span class="p">):</span>
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flask&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">subcommand</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">send_signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+
+<span class="nd">@cli</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">context_settings</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ignore_unknown_options&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;subcommand&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="n">subcommand</span><span class="p">):</span>
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">subcommand</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">send_signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">cli</span><span class="p">()</span>
+</pre></div>
+</div></div><p>You might have noticed that the two functions <code>flask</code> and <code>compose</code> are basically the same code, but I resisted the temptation to refactor them because I know that the command <code>compose</code> will need some changes as soon as I add a database.</p><p>Now I can run <code>./manage.py compose up -d</code> and <code>./manage.py compose down</code> and have the environment variables automatically passed to the system.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/9e08735af6177760cd750230122a507b15c9c112">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/9e08735af6177760cd750230122a507b15c9c112">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://docs.docker.com/compose/">Docker compose</a> - A tool for defining and running multi-container Docker applications</li><li><a href="https://docs.docker.com/network/">Docker networking</a></li><li><a href="https://docs.python.org/3/library/subprocess.html">Python subprocess module</a></li></ul><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>That's enough for this first post. We started from scratch and added some boilerplate code for a Flask project, exploring what environment variables are used by the framework, then we added a configuration system, a management script, and finally we run everything in a Docker container. In the next post I will show you how to add a persistent database to the development setup and how to use an ephemeral one for the tests. If you find my posts useful please share them with whoever you thing might be interested. </p><p>Happy development!</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-12-22 I reviewed the whole tutorial and corrected several typos</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 1 of the Flask project setup series</h2>
+    </header>
+    <div>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/">Flask project setup: TDD, Docker, Postgres and more - Part 2</a></li>
+        <li><a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/">Flask project setup: TDD, Docker, Postgres and more - Part 3</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-2.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-06T13:00:00+01:00">Jul 6, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-23T20:00:00+00:00">Feb 23, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-3.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-07T13:00:00+01:00">Jul 7, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-23T20:00:00+00:00">Feb 23, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/02/16/dissecting-a-web-stack/">
+            <img src="/images/dissecting-a-web-stack.jpg" alt="dissecting-a-web-stack" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/02/16/dissecting-a-web-stack/"><h2>Dissecting a Web stack</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/architectures/" class="tag">architectures</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/django/" class="tag">Django</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+		<a href="/categories/aws/" class="tag">AWS</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-02-16T15:00:00+00:00">Feb 16, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-10-27T08:30:00+00:00">Oct 27, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/">
+            <img src="/images/from-docker-cli-to-docker-compose.jpg" alt="from-docker-cli-to-docker-compose" />
+          </a>
+          <div class="body">
+            <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/"><h2>From Docker CLI to Docker Compose</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2022-02-19T15:00:00+01:00">Feb 19, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
+            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T19:00:00+02:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">
+            <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2>TDD in Python with pytest - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">
+            <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2>TDD in Python with pytest - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
+            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Python3</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="The Digital Cat articles tagged with Python3">
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/categories/python3/atom.xml">All posts tagged with: Python3</a></li>
+
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <section>
+    <header>
+      <h2>All posts tagged with: Python3</h2>
+    </header>
+    <div class="paginated-posts">
+<div class="pagination">
+<ul>
+  <li><a class="button" href="/categories/python3/page/3/">&laquo;</a></li>
+  
+  <li><a href="/categories/python3/">1</a></li>
+  <li><a href="/categories/python3/page/2/">2</a></li>
+  <li><a href="/categories/python3/page/3/">3</a></li>
+  <li class="active">4</li>
+  <li><a href="/categories/python3/page/5/">5</a></li>
+  <li><a href="/categories/python3/page/6/">6</a></li>
+  
+  <li><a class="button" href="/categories/python3/page/5/">&raquo;</a></li>
+</ul>
+</div>
+
+<div class="posts">
+  <article class="card">
+    <a href="/blog/2014/08/20/python-3-oop-part-2-classes-and-members/">
+      <img src="/images/python-3-oop.jpg" alt="python-3-oop" />
+    </a>
+    <div class="body">
+      <a href="/blog/2014/08/20/python-3-oop-part-2-classes-and-members/"><h2>Object-Oriented Programming in Python 3 - Classes and members</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/oop/" class="tag">OOP</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2014-08-20T14:00:00+02:00">Aug 20, 2014</time></p>
+	<p><i class="fas fa-edit"></i> Updated on <time datetime="2019-05-22T23:30:00+00:00">May 22, 2019</time></p>
+      </div>
+    </div>
+  </article>
+  <article class="card">
+    <a href="/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/">
+      <img src="/images/python-3-oop.jpg" alt="python-3-oop" />
+    </a>
+    <div class="body">
+      <a href="/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/"><h2>Object-Oriented Programming in Python 3 - Composition and inheritance</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/oop/" class="tag">OOP</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2014-08-20T15:00:00+02:00">Aug 20, 2014</time></p>
+	<p><i class="fas fa-edit"></i> Updated on <time datetime="2019-05-22T23:30:00+00:00">May 22, 2019</time></p>
+      </div>
+    </div>
+  </article>
+  <article class="card">
+    <a href="/blog/2014/09/01/python-3-oop-part-5-metaclasses/">
+      <img src="/images/python-3-oop.jpg" alt="python-3-oop" />
+    </a>
+    <div class="body">
+      <a href="/blog/2014/09/01/python-3-oop-part-5-metaclasses/"><h2>Object-Oriented Programming in Python 3 - Metaclasses</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/oop/" class="tag">OOP</a>
+          <a href="/categories/metaprogramming/" class="tag">metaprogramming</a>
+          <a href="/categories/metaclasses/" class="tag">metaclasses</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2014-09-01T15:00:00+02:00">Sep 1, 2014</time></p>
+	<p><i class="fas fa-edit"></i> Updated on <time datetime="2019-05-22T23:30:00+00:00">May 22, 2019</time></p>
+      </div>
+    </div>
+  </article>
+  <article class="card">
+    <a href="/blog/2014/09/04/python-3-oop-part-6-abstract-base-classes/">
+      <img src="/images/python-3-oop.jpg" alt="python-3-oop" />
+    </a>
+    <div class="body">
+      <a href="/blog/2014/09/04/python-3-oop-part-6-abstract-base-classes/"><h2>Object-Oriented Programming in Python 3 - Abstract Base Classes</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/oop/" class="tag">OOP</a>
+          <a href="/categories/metaprogramming/" class="tag">metaprogramming</a>
+          <a href="/categories/metaclasses/" class="tag">metaclasses</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2014-09-04T10:00:00+02:00">Sep 4, 2014</time></p>
+	<p><i class="fas fa-edit"></i> Updated on <time datetime="2019-05-22T23:30:00+00:00">May 22, 2019</time></p>
+      </div>
+    </div>
+  </article>
+  <article class="card">
+    <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/">
+      <img src="/images/python-mocks.jpg" alt="python-mocks" />
+    </a>
+    <div class="body">
+      <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"><h2>Python Mocks: a gentle introduction - Part 1</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/decorators/" class="tag">decorators</a>
+          <a href="/categories/oop/" class="tag">OOP</a>
+          <a href="/categories/pytest/" class="tag">pytest</a>
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python2/" class="tag">Python2</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/tdd/" class="tag">TDD</a>
+          <a href="/categories/testing/" class="tag">testing</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2016-03-06T18:00:00+01:00">Mar 6, 2016</time></p>
+	<p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-27T23:30:00+00:00">Feb 27, 2019</time></p>
+      </div>
+    </div>
+  </article>
+  <article class="card">
+    <a href="/blog/2014/08/21/python-3-oop-part-4-polymorphism/">
+      <img src="/images/python-3-oop.jpg" alt="python-3-oop" />
+    </a>
+    <div class="body">
+      <a href="/blog/2014/08/21/python-3-oop-part-4-polymorphism/"><h2>Object-Oriented Programming in Python 3 - Polymorphism</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/oop/" class="tag">OOP</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2014-08-21T10:00:00+02:00">Aug 21, 2014</time></p>
+	<p><i class="fas fa-edit"></i> Updated on <time datetime="2018-12-21T10:40:00+00:00">Dec 21, 2018</time></p>
+      </div>
+    </div>
+  </article>
+  <article class="card">
+    <a href="/blog/2018/07/05/useful-pytest-command-line-options/">
+      <img src="/images/useful-pytest-command-line-options.jpg" alt="useful-pytest-command-line-options" />
+    </a>
+    <div class="body">
+      <a href="/blog/2018/07/05/useful-pytest-command-line-options/"><h2>Useful pytest command line options</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/pytest/" class="tag">pytest</a>
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python2/" class="tag">Python2</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/tdd/" class="tag">TDD</a>
+          <a href="/categories/testing/" class="tag">testing</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2018-07-05T11:00:00+01:00">Jul 5, 2018</time></p>
+      </div>
+    </div>
+  </article>
+  <article class="card">
+    <a href="/blog/2018/06/02/a-game-of-tokens-solution-part-4/">
+      <img src="/images/a-game-of-tokens-solutions.jpg" alt="a-game-of-tokens-solutions" />
+    </a>
+    <div class="body">
+      <a href="/blog/2018/06/02/a-game-of-tokens-solution-part-4/"><h2>A game of tokens: solution - Part 4</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/tdd/" class="tag">TDD</a>
+          <a href="/categories/testing/" class="tag">testing</a>
+          <a href="/categories/compilers/" class="tag">compilers</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-02T13:30:00+00:00">Jun 2, 2018</time></p>
+      </div>
+    </div>
+  </article>
+  <article class="card">
+    <a href="/blog/2017/10/31/a-game-of-tokens-solution-part-3/">
+      <img src="/images/a-game-of-tokens-solutions.jpg" alt="a-game-of-tokens-solutions" />
+    </a>
+    <div class="body">
+      <a href="/blog/2017/10/31/a-game-of-tokens-solution-part-3/"><h2>A game of tokens: solution - Part 3</h2></a>
+      <div class="info">
+	<p class="tags">
+          <a href="/categories/python/" class="tag">Python</a>
+          <a href="/categories/python3/" class="tag">Python3</a>
+          <a href="/categories/tdd/" class="tag">TDD</a>
+          <a href="/categories/testing/" class="tag">testing</a>
+          <a href="/categories/compilers/" class="tag">compilers</a>
+	</p>
+	<p><i class="fas fa-calendar-alt"></i> <time datetime="2017-10-31T12:00:00+00:00">Oct 31, 2017</time></p>
+      </div>
+    </div>
+  </article>
+</div>
+
+<div class="pagination">
+<ul>
+  <li><a class="button" href="/categories/python3/page/3/">&laquo;</a></li>
+  
+  <li><a href="/categories/python3/">1</a></li>
+  <li><a href="/categories/python3/page/2/">2</a></li>
+  <li><a href="/categories/python3/page/3/">3</a></li>
+  <li class="active">4</li>
+  <li><a href="/categories/python3/page/5/">5</a></li>
+  <li><a href="/categories/python3/page/6/">6</a></li>
+  
+  <li><a class="button" href="/categories/python3/page/5/">&raquo;</a></li>
+</ul>
+</div>    </div>
+  </section>
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

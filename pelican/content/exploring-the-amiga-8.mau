@@ -23,7 +23,7 @@ The Motorola 68000 flags are kept in the 5 least significant bits of the Status 
 * `V` (Overflow) is set when an arithmetic operation results in a number that cannot be represented with the size of the operand.
 * `C` (Carry) is set when an addition or a subtraction need to carry a bit (carry out or borrow).
 
-To branch according to the value of these flags we can use the `Bcc` family of instruction, where `cc` is a two-letter mnemonic that represents the condition that is under test. For example the condition `MI` stands for `MInus` and tests if the `N` flag is set. Thus, `bmi &lt;address&gt;` will branch to `&lt;address&gt;` if the result of the previous instruction was negative, because that instruction set the `N` flag.
+To branch according to the value of these flags we can use the `Bcc` family of instruction, where `cc` is a two-letter mnemonic that represents the condition that is under test. For example the condition `MI` stands for `MInus` and tests if the `N` flag is set. Thus, `bmi <address>` will branch to `<address>` if the result of the previous instruction was negative, because that instruction set the `N` flag.
 
 There are multiple families of instructions that use the CCR: `Bcc`, `DBcc`, `Scc`, and `TRAPcc`. The following table lists all the possible conditions we can test on the Motorola 68000 and their meaning
 

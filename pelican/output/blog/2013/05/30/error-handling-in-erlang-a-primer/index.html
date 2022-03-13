@@ -1,0 +1,792 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Error handling in Erlang - a primer</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Error handling in Erlang - a primer">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Error handling in Erlang - a primer" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/error-handling-in-erlang-a-primer.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Error handling in Erlang - a primer</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2013-05-30T11:41:00+01:00"> 30/05/2013</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/erlang/">Erlang</a>
+	<a class="tag" href="/categories/concurrent-programming/">concurrent programming</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Error%20handling%20in%20Erlang%20-%20a%20primer&url=https%3A//www.thedigitalcatonline.com/blog/2013/05/30/error-handling-in-erlang-a-primer/&via=thedigicat&hashtags=erlang,concurrent-programming" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2013/05/30/error-handling-in-erlang-a-primer/&title=Error%20handling%20in%20Erlang%20-%20a%20primer&summary=&source=https%3A//www.thedigitalcatonline.com/blog/2013/05/30/error-handling-in-erlang-a-primer/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Error%20handling%20in%20Erlang%20-%20a%20primer&u=https%3A//www.thedigitalcatonline.com/blog/2013/05/30/error-handling-in-erlang-a-primer/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Error%20handling%20in%20Erlang%20-%20a%20primer&amp;body=https%3A//www.thedigitalcatonline.com/blog/2013/05/30/error-handling-in-erlang-a-primer/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2013/05/30/error-handling-in-erlang-a-primer/&title=Error%20handling%20in%20Erlang%20-%20a%20primer" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <h2 id="abstract">Abstract<a class="headerlink" href="#abstract" title="Permanent link">&para;</a></h2>
+<p>This article aims to summarize Erlang error handling both in sequential and in concurrent environments. The targets of this article are novices that, like me, make their first steps into the beautiful world of Erlang. Moreover, I always find that trying to explain things makes me understand them better.</p>
+<p>Disclaimer (for Erlang gurus): I'm a complete Erlang novice so please be indulgent with me while you read my thoughts. Corrections and suggestions are welcome!</p>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>Recently I started studying Erlang; coming from a pure imperative background (C, C++, and Python) I have to say that Erlang has been a surprise and a joy. I did not find something so innovative since long, even if the pure functional part of the language was not totally new since it is available in Python too.</p>
+<p>The concept of runtime <em>system</em>, with a support for concurrency built in the language itself, the pattern matching idea and the recursion as a way to implement loops are all very intriguing, so learning them is fun (pun intended, if you do not get it review Erlang anonymous functions).</p>
+<p>One of the innovative concepts that ploughed through my imperative mind was that of <em>defensive programming</em> under its formulation in the Erlang tenet "Let it crash". This was something new, partly because I rarely found advice on system organization while learning the foundations of a programming language and partly because about 80% of the code I write has the task of avoiding programs to crash.</p>
+<p>I found <a href="http://mazenharake.wordpress.com/2009/09/14/let-it-crash-the-right-way/">this very interesting post</a> of Mazen Harake on the subject. Basically, he clarifies that the Erlang philosophy is not that of just let errors happen and propagate: the point is that the programmer should deal only with errors that are <em>documented</em>. This means that the code specification includes that error as a possibility. Well, it is not my intention to state something already well explained: go and read Mazen's post.</p>
+<p>Anyway, before discussing the Erlang way of dealing with code errors, it is necessary to firmly grasp syntax and structures that the language provides.</p>
+<h2 id="exceptions-in-erlang">Exceptions in Erlang<a class="headerlink" href="#exceptions-in-erlang" title="Permanent link">&para;</a></h2>
+<p>The simplest way to make something go wrong when dealing with a computer is to treat it like a sentient being. Joking apart, a good way to crash a program is to execute a division by zero.</p>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span>
+<span class="o">**</span> <span class="n">exception</span> <span class="nn">error</span><span class="p">:</span> <span class="n">bad</span> <span class="n">argument</span> <span class="n">in</span> <span class="n">an</span> <span class="n">arithmetic</span> <span class="n">expression</span>
+     <span class="n">in</span> <span class="n">operator</span>  <span class="n">&#39;/&#39;</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">called</span> <span class="n">as</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="mi">2</span><span class="o">&gt;</span> 
+</code></pre></div>
+
+<p>As you can see Erlang does not get mad at your provocation and simply <strong>raises and exception</strong>, i.e. signals that something went wrong, giving some details about why and where it happened. This is not different from what other languages, like Python, do.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
+<span class="go">Traceback  (most recent call last):</span>
+<span class="go">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="go">ZeroDivisionError: integer division or modulo by zero</span>
+<span class="gp">&gt;&gt;&gt; </span>
+</code></pre></div>
+
+<p>So exceptions are in Erlang, as in other languages, a "reserved channel" the language uses to propagate errors. If you code in C, you cannot leverage something like exceptions and must rely on return values. This means that you have to format the results of your functions so that they can host a wrong result too and end up returning an <code>int</code> with the error code while functions results are managed by reference.</p>
+<p>Back to Erlang. Exceptions crash you program, i.e. they make your program immediately stop, reporting the error to the system process that executed it (usually the OS GUI or a textual shell). Indeed the Erlang shell crashed when you tried to reach for the infinity.</p>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span> <span class="n">self</span><span class="p">().</span>
+<span class="o">&lt;</span><span class="mi">0</span><span class="p">.</span><span class="mi">32</span><span class="p">.</span><span class="mi">0</span><span class="o">&gt;</span>
+<span class="mi">2</span><span class="o">&gt;</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span>
+<span class="o">**</span> <span class="n">exception</span> <span class="nn">error</span><span class="p">:</span> <span class="n">bad</span> <span class="n">argument</span> <span class="n">in</span> <span class="n">an</span> <span class="n">arithmetic</span> <span class="n">expression</span>
+     <span class="n">in</span> <span class="n">operator</span>  <span class="n">&#39;/&#39;</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">called</span> <span class="n">as</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="mi">3</span><span class="o">&gt;</span> <span class="n">self</span><span class="p">().</span>
+<span class="o">&lt;</span><span class="mi">0</span><span class="p">.</span><span class="mi">35</span><span class="p">.</span><span class="mi">0</span><span class="o">&gt;</span>
+<span class="mi">4</span><span class="o">&gt;</span> 
+</code></pre></div>
+
+<p>Remember that in Erlang <code>self()</code> gives you the Erlang PID of the process (not the operating system's one). As you can see the Eshell process crashed and was restarted by some magic behind the scenes.</p>
+<p>I hear you mumble that, well, world is not perfect, and errors happen. So how do we deal with this? Shall we crash every time something wrong occurs in our code or is there some way to unravel the knot and happily continue running the code?</p>
+<p>This seems to be a question that even Erlang creators wanted to answer, and their answer was: you can, but you shouldn't always. By now, let us drop the "you shouldn't always" part and learn the basics; you can stop an exception before it crashes your pretty program. Before diving into stopping exceptions techniques, let me review the types of exception you may encounter.</p>
+<h2 id="exception-types">Exception types<a class="headerlink" href="#exception-types" title="Permanent link">&para;</a></h2>
+<p>There are three types (or classes) of exceptions in Erlang: <em>throw</em>, <em>error</em>, and <em>exit</em>.</p>
+<p>The first, throw, identifies an exception that a called function voluntarily raises (throwing it at you); such exceptions shall be documented, i.e. the documentation of the function you are calling shall state that this exception may be raised and specify under what conditions this may happen. "Shall" here means that if the programmer does not document the exception all sorts of curses will be casted on his or her code forever. As a Python programmer I strongly advice you to read "shall" as "must".</p>
+<p>The second exception type, error, signals that something very bad happened in the system, something that was unexpected to the author of the code raising the exception. Even if this type of exception can be raised explicitly, it is usually raised by the Erlang run-time system. If you recall the first example of this post, the division by zero, you can now understand why the shell printed "exception error"; that exception has not been raised by an instruction in the code of the Erlang shell, but from the run-time system itself. This type of exception also contains a stack trace, but I will not cover it in this article.</p>
+<p>The third and last exception type, exit, means that your code is being told to stop immediately.</p>
+<p>As you can see the real difference between the three types is the communication intent, not a special behaviour. So from the pure theoretical point of view an error exception can be replaced by a throw exception without any side effect. Obviously, the communication intent is not negligible: indeed, as explained before, throw exceptions are usually documented while errors are not intended for being formalized.</p>
+<p>In addition to a class, exceptions encompass a <em>reason</em>, that is a valid Erlang item (an atom, an integer, a pid, ...). The reason carries the explanation of the exception, i.e. a detailed insight in what really happened.</p>
+<h2 id="dealing-with-exceptions">Dealing with exceptions<a class="headerlink" href="#dealing-with-exceptions" title="Permanent link">&para;</a></h2>
+<p>Now that we got acquainted with Erlang exception types we may step further into exception management structures and learn how to stop exceptions from crashing our programs. The way of managing exceptions raised by a function called in our code should be familiar to Python, C++, java and Ruby developers (and to many others, probably); the basic Erlang syntax is</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span> <span class="o">&lt;</span><span class="n">expressions</span><span class="o">&gt;</span> <span class="k">of</span>
+  <span class="o">&lt;</span><span class="n">result_pattern_matching</span><span class="o">&gt;</span>
+<span class="k">catch</span>
+  <span class="o">&lt;</span><span class="n">exception_pattern_matching</span><span class="o">&gt;</span>
+<span class="k">after</span>
+  <span class="o">&lt;</span><span class="n">after_expressions</span><span class="o">&gt;</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>The large part of this structure is well known. Here, <code>&lt;expressions&gt;</code> is a series of Erlang expressions, comma-separated as usual; the <code>&lt;result_pattern_matching&gt;</code> part is a classical Erlang pattern matching structure, just like that you write in a case construct; last, the <code>&lt;after_expressions&gt;</code> is a series of Erlang expressions. The <code>&lt;exception_pattern_matching&gt;</code> part has a slightly new syntax we will cover in a moment.</p>
+<p>The structure works like in other languages: the <code>&lt;expressions&gt;</code> code is evaluated and the result is pattern matched against <code>&lt;result_pattern_matching&gt;</code> and the result is returned by the whole <code>try</code> statement. If an exception is raised when evaluating <code>&lt;expressions&gt;</code>, it is pattern matched against the code listed in <code>&lt;exception_pattern_matching&gt;</code> and the relative code is executed. Regardless of what happens in the try/catch part the code in <code>&lt;after_expressions&gt;</code> is executed, and its result is not returned.</p>
+<p>The exception matching code has a syntax that is very similar to that of the usual pattern matching, but exceptions are listed in the new form <code>ExceptionType:Reason</code>, where type and reason have been already described in the previous section. When the exception is a run-time error the reason is one of the values listed <a href="http://erlang.org/doc/reference_manual/errors.html#exit_reasons">here</a>.</p>
+<p>So the complete form of a try/catch statement in Erlang is the following, where <code>Expressions</code> is always a comma-separated list of Erlang expressions.</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span> <span class="nv">Expression1</span><span class="p">,...,</span><span class="nv">ExpressionN</span> <span class="k">of</span>
+  <span class="nv">Pattern1</span> <span class="p">[</span><span class="k">when</span> <span class="nv">Guard1</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="nv">PatternExpressions1</span><span class="p">;</span>
+  <span class="nv">Pattern2</span> <span class="p">[</span><span class="k">when</span> <span class="nv">Guard2</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="nv">PatternExpressions2</span><span class="p">;</span>
+  <span class="p">...</span>
+  <span class="nv">PatternN</span> <span class="p">[</span><span class="k">when</span> <span class="nv">GuardN</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="nv">PatternExpressionN</span>
+<span class="k">catch</span>
+  <span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">Reason1</span> <span class="p">[</span><span class="k">when</span> <span class="nv">ExceptionGuard1</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="nv">ExceptionExpressions1</span><span class="p">;</span>
+  <span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">Reason2</span> <span class="p">[</span><span class="k">when</span> <span class="nv">ExceptionGuard2</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="nv">ExceptionExpressions2</span><span class="p">;</span>
+  <span class="p">...</span>
+  <span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">ReasonN</span> <span class="p">[</span><span class="k">when</span> <span class="nv">ExceptionGuardN</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="nv">ExceptionExpressionsN</span>
+<span class="k">after</span>
+  <span class="nv">AfterExpressions</span>
+<span class="k">end</span><span class="p">.</span>
+</code></pre></div>
+
+<p>Exceptions pattern matching allows the use of the do-not-care variable <code>_</code> not only for reasons but for also for types. So the following syntax catches all exceptions of type ExceptionType</p>
+<div class="highlight"><pre><span></span><code><span class="p">...</span>
+<span class="k">catch</span>
+  <span class="nv">ExceptionType</span><span class="p">:</span> <span class="p">_</span> <span class="o">-&gt;</span> <span class="nv">ExceptionExpressions1</span><span class="p">;</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>while the following catches all exceptions</p>
+<div class="highlight"><pre><span></span><code><span class="p">...</span>
+<span class="k">catch</span>
+  <span class="p">_:_</span> <span class="o">-&gt;</span> <span class="nv">ExceptionExpressions1</span><span class="p">;</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>I will not cover here the old-style error handling mechanism with <code>catch</code>; the interested reader can find it documented <a href="http://erlang.org/doc/reference_manual/expressions.html#id79206">here</a>.</p>
+<h2 id="returning-values-from-trycatch-statements">Returning values from try/catch statements<a class="headerlink" href="#returning-values-from-trycatch-statements" title="Permanent link">&para;</a></h2>
+<p>Try/catch statements return the value of the last expression executed, that is one of <code>PatternExpression1</code>,...,<code>PatternExpressionN</code> if no exception is raised, or one of <code>ExceptionExpressions1</code>,...,<code>ExceptionExpressionsN</code>. This means that we can assign the value of the whole expression to a variable </p>
+<div class="highlight"><pre><span></span><code><span class="nv">Result</span> <span class="o">=</span> <span class="k">try</span> <span class="nv">Expression</span> <span class="k">of</span> <span class="p">...</span> <span class="k">end</span><span class="p">.</span>
+</code></pre></div>
+
+<p>Remember that <code>AfterExpressions</code> are always executed, but their final value is not returned by the statement.</p>
+<p>Since a lot of times you want to return the result of the expression after the <code>try</code> keyword, you can omit the <code>of</code> part</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span> <span class="nv">Expressions</span>
+<span class="k">catch</span>
+ <span class="p">...</span>
+<span class="k">end</span><span class="p">.</span>
+</code></pre></div>
+
+<h2 id="raising-exceptions">Raising exceptions<a class="headerlink" href="#raising-exceptions" title="Permanent link">&para;</a></h2>
+<p>Erlang provides three different BIFs to raise exceptions, profitably called like the exception type they raise: <code>throw/1</code>, <code>erlang:error/1</code>, and <code>exit/1</code>. As you see, <code>error/1</code> is not automatically imported by the system and must be called in its full form. This is a hint for us programmers: <code>error/1</code> is there and can be used, but it is not something you should need often; otherwise, you misunderstood what an error exception is in Erlang.</p>
+<p>So in most cases, if your code encounters an error condition and you need to raise an exception, you end up using <code>throw/1</code> or <code>exit/1</code>. The argument of these functions is the reason of the exception: remember that you can format the reason you attach to your exception to match your needs, you only need to document it.</p>
+<div class="highlight"><pre><span></span><code><span class="nf">my_function</span><span class="p">(</span><span class="nv">Somebadvalue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">throw</span><span class="p">({</span><span class="n">badvalue</span><span class="p">,</span> <span class="nv">Somebadvalue</span><span class="p">}).</span>
+</code></pre></div>
+
+<p>Pay attention, however, that exceptions are a double-edged sword; the fact that they return values through a reserved channel is powerful, but can lead to subtle bugs and to long debug sessions. The advice in Erlang is to spare throw() for some special cases and to try always to communicate the failure through standard function results. This is, however, part of a coding philosophy that cannot be examined in depth here.</p>
+<h2 id="exceptions-and-exit-signals">Exceptions and exit signals<a class="headerlink" href="#exceptions-and-exit-signals" title="Permanent link">&para;</a></h2>
+<p>Erlang is a run-time system, not just a language; as such, it has built-in structures and concepts that are usually provided by libraries in other languages. One of these concepts is the dependency between processes, which may be realized through <em>links</em> (and <em>monitors</em>, but I am not going to introduce them in this article). Process linking in Erlang means a very simple thing: when two processes are linked they die together, i.e. when one of the two terminates abnormally the other one is terminated too. A process can link to more than one other process, and the dying behaviour is propagated among all them.</p>
+<p>What is the point of this structure? In Erlang, you are encouraged to spawn processes to accomplish tasks, even the simplest ones. Thus, you can easily end up with a multitude of processes working together to perform some action, and if one of them crashes it is likely that others should exit too, being them dependent from it. This is not mandatory; it is all up to you to decide what processes have to be linked, but if they are they must die together.</p>
+<p>How is this accomplished? Linked processes are connected by a hidden communication channel, which carries information about their termination with so-called <em>exit signals</em>. Exit signals are invisible to the programmer, and when a process receives one of them it simply terminates, spreading the news under the form of other exit signals.</p>
+<h4 id="process-termination-and-reasons">Process termination and reasons<a class="headerlink" href="#process-termination-and-reasons" title="Permanent link">&para;</a></h4>
+<p>Exit signals are always sent when a process dies, but they carry a reason for its termination, just like exceptions. This reason is very important for the subsequent events concerning processes linked to the dying one.</p>
+<p>First of all let us look at process termination. A process in Erlang can terminate normally or abnormally: the former happens when it has no more code to execute or when it raises an exception passing as reason the atom <code>normal</code>; the latter occurs when a raised exception has a reason different from the atom <code>normal</code>.</p>
+<p>So an exit signal process contains either the atom <code>normal</code> or another reason, and it travels from the terminating process to each linked process. When it hits one of them, if the reason is not <code>normal</code> the process is terminated and sends its own exit signals to its linked processes with the same reason of the incoming one. The result is that the entire network of linked processes terminates automatically.</p>
+<p>The best way to terminate a process with a reason is to execute the BIF <code>exit(Reason)</code>. This BIF has also the form of arity 2 where you pass the pid of a process <code>exit(Pid, Reason)</code>: the addressed process will get an exit signal with the given reason. A caveat: when using <code>exit/1</code> the exit signal will contain the pid of the terminating process, when using <code>exit/2</code> the exit signal will contain the pid of the target process.</p>
+<h4 id="stopping-exit-signals">Stopping exit signals<a class="headerlink" href="#stopping-exit-signals" title="Permanent link">&para;</a></h4>
+<p>Having a way to stop an entire group of processes when one of them crashes is a big benefit, but it could be a good thing to be able to stop the propagation somewhere. Obviously, if processes are not linked they do not influence each other when terminating, but this also means that no one notices that a process terminated, which in turn means that no one will be restarting it.</p>
+<p>The whole point of linking processes is indeed the control over terminating processes. If a process runs there is a reason and if it crashes the system should investigate why it crashed and possibly restart it.</p>
+<p>Erlang gives a process the chance to receive an abnormal exit signal from a process it is linked to, without forcing it to terminate: in Erlang speech this is called <em>trapping exit signals</em> or <em>trapping exits</em>. When a process traps exits the incoming exit signals coming from linked processes are converted by the run-time system into messages that the process can fetch with a <code>receive</code> construct. Thus, a process trapping exits can be notified that a linked process died without being affected by this.</p>
+<p>A process can start trapping exits by executing the BIF <code>process_flag(trap_exit, true)</code>. It is a best practice to call it at the beginning of the process and to avoid turning it off during the execution since it makes the system difficult to debug.</p>
+<p>Once the BIF has been executed, an exit signal with the reason <code>Reason</code> coming from another process is converted in an incoming message under the form <code>{'EXIT', Pid, Reason}</code>, where Pid is the pid of the terminated process.</p>
+<h4 id="unstoppable-exit-signals">Unstoppable exit signals<a class="headerlink" href="#unstoppable-exit-signals" title="Permanent link">&para;</a></h4>
+<p>Now we can convert a process so that it does not terminate with its linked processes. This has a downside: if the process contains errors such as infinite loops or if for some reason we need to stop the entire system, the processes that trap exits cannot be stopped. For this reason, Erlang provides the special atom <code>kill</code> as a reason for an exit signal. </p>
+<p>An exit signal containing the reason <code>kill</code> cannot be trapped; thus the exit signal is unstoppable. Unconditionally terminating the entire network is however something dangerous, so when a process terminates because of an incoming <code>kill</code> exit signal it will send to its linked processes a <code>killed</code> exit signal, which can be possibly trapped.</p>
+<h2 id="conclusions">Conclusions<a class="headerlink" href="#conclusions" title="Permanent link">&para;</a></h2>
+<p>The aim of the article was to give an overview of error handling in Erlang: not everything has been covered, but a novice should find here almost everything he or she needs to step into this part of the language.</p>
+<p>There is obviously much more than this in the Erlang treasure chest. If the whole link and exit signals stuff thrilled you like it did with me, I promise you that OTP behavious (sorry, behaviors) will take your breath away.</p>
+<p>Keep in touch for other Erlang articles on <a href="/categories/erlang/">this page</a>.</p>
+  </div>
+
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2013/06/20/the-lord-of-the-rings-an-erlang-epic/">
+            <img src="/images/the-lord-of-the-rings-an-erlang-epic.jpg" alt="the-lord-of-the-rings-an-erlang-epic" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/06/20/the-lord-of-the-rings-an-erlang-epic/"><h2>The Lord of the Rings: an Erlang epic</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/erlang/" class="tag">Erlang</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-06-20T17:49:00+01:00">Jun 20, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/02/16/dissecting-a-web-stack/">
+            <img src="/images/dissecting-a-web-stack.jpg" alt="dissecting-a-web-stack" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/02/16/dissecting-a-web-stack/"><h2>Dissecting a Web stack</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/architectures/" class="tag">architectures</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/django/" class="tag">Django</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+		<a href="/categories/aws/" class="tag">AWS</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-02-16T15:00:00+00:00">Feb 16, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-10-27T08:30:00+00:00">Oct 27, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2013/04/23/concurrent-programming-6/">
+            <img src="/images/concurrent-programming.jpg" alt="concurrent-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/04/23/concurrent-programming-6/"><h2>Concurrent programming - 6</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/c/" class="tag">C</a>
+		<a href="/categories/operating-systems/" class="tag">operating systems</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-04-23T08:29:00+02:00">Apr 23, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2013/02/28/concurrent-programming-5/">
+            <img src="/images/concurrent-programming.jpg" alt="concurrent-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/02/28/concurrent-programming-5/"><h2>Concurrent programming - 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/c/" class="tag">C</a>
+		<a href="/categories/operating-systems/" class="tag">operating systems</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-02-28T17:49:00+02:00">Feb 28, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2013/02/13/concurrent-programming-4/">
+            <img src="/images/concurrent-programming.jpg" alt="concurrent-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/02/13/concurrent-programming-4/"><h2>Concurrent programming - 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/c/" class="tag">C</a>
+		<a href="/categories/operating-systems/" class="tag">operating systems</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-02-13T10:50:00+02:00">Feb 13, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2013/02/06/concurrent-programming-3/">
+            <img src="/images/concurrent-programming.jpg" alt="concurrent-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/02/06/concurrent-programming-3/"><h2>Concurrent programming - 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/c/" class="tag">C</a>
+		<a href="/categories/operating-systems/" class="tag">operating systems</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-02-06T12:25:00+02:00">Feb 6, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2013/02/04/concurrent-programming-2/">
+            <img src="/images/concurrent-programming.jpg" alt="concurrent-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/02/04/concurrent-programming-2/"><h2>Concurrent programming - 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/c/" class="tag">C</a>
+		<a href="/categories/operating-systems/" class="tag">operating systems</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-02-04T10:35:00+02:00">Feb 4, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2013/01/31/concurrent-programming-1/">
+            <img src="/images/concurrent-programming.jpg" alt="concurrent-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/01/31/concurrent-programming-1/"><h2>Concurrent programming - 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/c/" class="tag">C</a>
+		<a href="/categories/operating-systems/" class="tag">operating systems</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-01-31T16:47:00+02:00">Jan 31, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

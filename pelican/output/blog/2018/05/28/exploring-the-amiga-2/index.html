@@ -1,0 +1,853 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Exploring the Amiga - Part 2</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="The jump table of libraries in the Amiga system, types and structures of Kickstart 1.3">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Exploring the Amiga - Part 2" />
+<meta name="twitter:description" content="The jump table of libraries in the Amiga system, types and structures of Kickstart 1.3" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/exploring-the-amiga-2.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/retro/atom.xml">All posts in category: Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Exploring the Amiga - Part 2</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2018-05-28T15:00:00+01:00"> 28/05/2018</time> <i class="fas fa-edit"></i> Updated on <time datetime="2021-12-21T08:00:00+00:00">Dec 21, 2021</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/retro/" title="All posts in category Retro">Retro</a>
+	<a class="tag" href="/categories/assembly/">assembly</a>
+	<a class="tag" href="/categories/amiga/">amiga</a>
+	<a class="tag" href="/categories/retroprogramming/">retroprogramming</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Exploring%20the%20Amiga%20-%20Part%202&url=https%3A//www.thedigitalcatonline.com/blog/2018/05/28/exploring-the-amiga-2/&via=thedigicat&hashtags=assembly,amiga,retroprogramming" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2018/05/28/exploring-the-amiga-2/&title=Exploring%20the%20Amiga%20-%20Part%202&summary=The%20jump%20table%20of%20libraries%20in%20the%20Amiga%20system%2C%20types%20and%20structures%20of%20Kickstart%201.3&source=https%3A//www.thedigitalcatonline.com/blog/2018/05/28/exploring-the-amiga-2/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Exploring%20the%20Amiga%20-%20Part%202&u=https%3A//www.thedigitalcatonline.com/blog/2018/05/28/exploring-the-amiga-2/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Exploring%20the%20Amiga%20-%20Part%202&amp;body=https%3A//www.thedigitalcatonline.com/blog/2018/05/28/exploring-the-amiga-2/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2018/05/28/exploring-the-amiga-2/&title=Exploring%20the%20Amiga%20-%20Part%202" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <h2 id="the-library-jump-table">The library jump table<a class="headerlink" href="#the-library-jump-table" title="Permanent link">¶</a></h2><p>As already mentioned when a library is loaded in memory a jump table is created just before the library base address. This table contains the addresses of the functions exposed by the library, and Exec itself has one.</p><p>The jump table functions order for the Exec library is specified in one of the include files provided by the NDK, namely <code>include_i/exec/exec_lib.i</code>.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>    FUNCDEF Supervisor
+    FUNCDEF execPrivate1
+    FUNCDEF execPrivate2
+    FUNCDEF execPrivate3
+    ...
+    FUNCDEF OpenLibrary
+    ...
+</pre></div>
+</div></div><p>As you can see this file makes use of the <code>FUNCDEF</code> macro, which is not provided and has to be implemented by the coder. The idea of the macro is very simple: as the order of the jump table does not change we can just replace the first <code>FUNCDEF</code> with the offset of the first function in the library and then increment this offset with the default size of the jump address. The expected output of the macro is</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>    _LVOSupervisor     EQU     -30
+    _LVOexecPrivate1   EQU     -36
+    _LVOexecPrivate2   EQU     -42
+    _LVOexecPrivate3   EQU     -48
+    ...
+    _LVOOpenLibrary    EQU     -552
+    ...
+</pre></div>
+</div></div><p>Please note that the name of the function has been replaced by another string prepending <code>_LVO</code> to avoid clashes with the actual function definition (LVO stands for Library Vector Offset).</p><p>The above figures come from the "Special Constants" section contained in the <code>include_i/exec/libraries.i</code> file</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>*------ Special Constants ---------------------------------------
+LIB_VECTSIZE    EQU 6       ;Each library entry takes 6 bytes
+LIB_RESERVED    EQU 4       ;Exec reserves the first 4 vectors
+LIB_BASE        EQU -LIB_VECTSIZE
+LIB_USERDEF     EQU LIB_BASE-(LIB_RESERVED*LIB_VECTSIZE) ;First user func
+LIB_NONSTD      EQU LIB_USERDEF
+</pre></div>
+</div></div><p>AS you can see from the comments, Exec reserves the first 4 vectors, so the first function's address is <code>LIB_USERDEF</code>. To understand why the addresses are negative and how the offset is computed let's get a snapshot of the library once it has been loaded in memory</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>                               HIGHER MEMORY ADDRESSES
+                             +-------------------------+
+Last byte of the             | End of the library      |
+library loaded in ---------&gt; +-------------------------+
+memory                       | [...]                   |
+                             +-------------------------+
+                             | Content of the library  |
+                             +-------------------------+
+                             | Library structure       |
+Library base address ------&gt; +-------------------------+
+                             | 1st reserved vector     | 
+                             +-------------------------+ &lt;--- LIB_BASE
+                             | 2nd reserved vector     | 
+                             +-------------------------+ &lt;--+
+                             | 3rd reserved vector     |    | LIB_VECTSIZE
+                             +-------------------------+ &lt;--+
+                             | 4th reserved vector     | 
+                             +-------------------------+ 
+                             | 1st defined function    | 
+                             +-------------------------+ &lt;--- LIB_USERDEF
+                             | 2nd defined function    |
+                             +-------------------------+
+                             | [...]                   |
+                             +-------------------------+
+First byte of the            | End of the jump table   |
+library loaded in ---------&gt; +-------------------------+
+memory                         LOWER MEMORY ADDRESSES
+</pre></div>
+</div></div><p>You can find an official version of this in the <a href="http://amigadev.elowar.com/read/ADCD_2.1/AmigaMail_Vol2_guide/node0189.html">documentation </a>. Pay attention that the picture in the documentation represents memory upside down, with lower memory addresses towards the top of the page.</p><p>As you can see the library is loaded as expected from the base address towards the higher memory addresses, but at the same time the jump table is prefixed <em>in reverse order</em>. This is done to allow you to find the address of a function with a simple (negative) indexing instead of a more complex algorithm. Function number 1 is at address <code>-1 * address_size</code>, function number 2 at address <code>-2 * address_size</code>, etc.</p><p>This is why we use negative offsets to call library functions but positive ones to access the library data and structures.</p><p>You can also see from the figure where the Special Constants <code>LIB_BASE</code> and <code>LIB_USERDEF</code> are located. The actual values are</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>LIB_BASE    EQU -6
+LIB_USERDEF EQU -30
+</pre></div>
+</div></div><p>A good definition of the <code>FUNCDEF</code> macro, thus, is the following</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>    INCLUDE &quot;exec/libraries.i&quot;
+
+    MACRO   FUNCDEF
+_LVO\1      EQU      FUNC_CNT
+FUNC_CNT    SET      FUNC_CNT-LIB_VECTSIZE
+    ENDM
+
+FUNC_CNT    SET      LIB_USERDEF
+</pre></div>
+</div></div><p>The last line initialises the <code>FUNC_CNT</code> symbol with the <code>LIB_USERDEF</code> value. Then each call of the <code>FUNCDEF &lt;arg&gt;</code> macro does two things:</p><ol><li>Creates the <code>_LVO&lt;arg&gt;</code> symbol with value <code>FUNC_CNT</code> (e.g. <code>_LVOSupervisor EQU -30</code>)</li><li>Decrements the <code>FUNC_CNT</code> symbol by <code>LIB_VECTSIZE</code></li></ol><p>Please note that the example <code>FUNCDEF</code> that you can find (commented) in <code>libraries.i</code> won't work out of the box as <code>FUNC_CNT</code> is defined inside the macro itself, while it has to be already defined before the first use of the macro.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>*------ FUNCDEF is used to parse library offset tables.  Many applications
+*------ need a special version of FUNCDEF - you provide your own macro
+*------ to match your needs.  Here is an example:
+*
+*    FUNCDEF     MACRO
+*    _LVO\1      EQU    FUNC_CNT
+*    FUNC_CNT    SET    FUNC_CNT-6  * Standard offset-6 bytes each
+*    FUNC_CNT    EQU    LIB_USERDEF * Skip 4 standard vectors
+*                ENDM
+</pre></div>
+</div></div><p>You can put the <code>FUNCDEF</code> macro code in a local include file like <code>funcdef.i</code>. Including it your code allows you to use <code>_LVO</code> prefixed labels for the functions that you want to load</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>    INCLUDE &quot;funcdef.i&quot;
+    INCLUDE &quot;exec/exec_lib.i&quot;
+
+    move.l  4.w,a6
+    clr.l   d0
+    move.l  #libname,a1
+    jsr     _LVOOpenLibrary(a6)
+
+libname:
+    dc.b &quot;somename.library&quot;,0
+</pre></div>
+</div></div><p>Finally, if you want to be even more explicit you can use the <code>CALLLIB</code> macro defined in <code>libraries.i</code> and write</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>    INCLUDE &quot;funcdef.i&quot;
+    INCLUDE &quot;exec/exec_lib.i&quot;
+    INCLUDE &quot;exec/libraries.i&quot;
+
+    move.l  4.w,a6
+    clr.l   d0
+    move.l  #libname,a1
+    CALLLIB _LVOOpenLibrary
+
+libname:
+    dc.b &quot;somename.library&quot;,0
+</pre></div>
+</div></div><h2 id="the-four-reserved-vectors">The four reserved vectors<a class="headerlink" href="#the-four-reserved-vectors" title="Permanent link">¶</a></h2><p>As we saw, the Amiga system reserves 4 vectors at the beginning of the jump table of a library. These 4 spaces host 3 standard functions that shall be provided by any library, <code>Open()</code>, <code>Close()</code>, and <code>Expunge()</code>. The fourth slot is kept for possible future expansions and must contain a function that returns 0.</p><p>The offsets of these functions are contained in the <code>include_i/exec/libraries.i</code> file</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>*----------------------------------------------------------------
+*
+*   Standard Library Functions
+*
+*----------------------------------------------------------------
+
+    LIBINIT LIB_BASE
+
+    LIBDEF  LIB_OPEN
+    LIBDEF  LIB_CLOSE
+    LIBDEF  LIB_EXPUNGE ; must exist in all libraries
+    LIBDEF  LIB_EXTFUNC ; for future expansion - must return zero.
+</pre></div>
+</div></div><p>the effect of the above macros with the previous constants is</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>LIB_OPEN        EQU     -6
+LIB_CLOSE       EQU     -12
+LIB_EXPUNGE     EQU     -18
+LIB_EXTFUNC     EQU     -24
+</pre></div>
+</div></div><p>You can try to follow the definitions of the <code>LIBINIT</code> and <code>LIBDEF</code> macros to obtain the same result.</p><h2 id="types-and-structures">Types and structures<a class="headerlink" href="#types-and-structures" title="Permanent link">¶</a></h2><p>Let's see how the Exec library defines its types, which are the base components of the Amiga system. The main entry point for this investigation is the <code>include_i/exec/types.i</code> file.</p><p>When working with data structures in Assembly, everything is expressed in terms of offsets. The main idea behind structures is to create something like this</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>STRUCT1         EQU     0
+OFFS            SET     0
+FIELD1          EQU     OFFS
+OFFS            EQU     OFFS+SIZE_OF_FIELD1
+FIELD2          EQU     OFFS
+OFFS            EQU     OFFS+SIZE_OF_FIELD2
+; ...
+STRUCT1_SIZE    EQU     OFFS
+</pre></div>
+</div></div><p>which, once run through the macro expansion, creates the following code</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>STRUCT1         EQU     0
+FIELD1          EQU     0
+FIELD2          EQU     SIZE_OF_FIELD1
+FIIELD3         EQU     SIZE_OF_FIELD1+SIZE_OF_FIELD2
+; ...
+STRUCT1_SIZE    EQU     SIZE_OF_FIELD1+...+SIZE_OF_FIELDn
+</pre></div>
+</div></div><p>So, the type macros are all defined with code like this</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>TYPENAME    MACRO
+\1          EQU     SOFFSET
+SOFFSET     SET     SOFFSET+SIZE_OF_TYPE
+            ENDM
+</pre></div>
+</div></div><p>For example the <code>BYTE</code> macro is</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>BYTE        MACRO       ; byte (8 bits)
+\1          EQU     SOFFSET
+SOFFSET     SET     SOFFSET+1
+            ENDM
+</pre></div>
+</div></div><p>Note that the field is defined with <code>EQU</code> to avoid unwanted overwrites, while <code>SOFFSET</code> uses <code>SET</code> that allows to redefine the symbol.</p><p>Let's see now how a real structure is defined. A good example is <code>LN</code> defined in <code>include_i/exec/nodes.i</code> which represents a node of a linked list.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>   STRUCTURE    LN,0    ; List Node
+    APTR    LN_SUCC ; Pointer to next (successor)
+    APTR    LN_PRED ; Pointer to previous (predecessor)
+    UBYTE   LN_TYPE
+    BYTE    LN_PRI  ; Priority, for sorting
+    APTR    LN_NAME ; ID string, null terminated
+    LABEL   LN_SIZE ; Note: word aligned
+</pre></div>
+</div></div><p>The <code>STRUCTURE</code> macro is defined in <code>types.i</code> as</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>STRUCTURE   MACRO       ; structure name, initial offset
+\1          EQU     0
+SOFFSET     SET     \2
+            ENDM
+</pre></div>
+</div></div><p>And the resulting declarations, once the macros have been expanded, are the following</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>LN          EQU     0
+LN_SUCC     EQU     0
+LN_PRED     EQU     4
+LN_TYPE     EQU     8
+LN_PRI      EQU     9
+LN_NAME     EQU     10
+LN_SIZE     EQU     14
+</pre></div>
+</div></div><p>As you can see the field names are just offsets inside the structure, and there is no specific padding at the end to align the structure. In this case there is no need, as the structure size is already a multiple of a word (14 bytes).</p><h3 id="how-to-align-structures">How to align structures</h3><p>If we need to align the bytes however we can use a little binary trick. If you ignore the least significant bit of a binary number you convert it to the nearest even number (downwards). An example in Python is</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;0b1101&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;0b1100&#39;</span>
+</pre></div>
+</div></div><p>You can ignore the least significant bits with a simple bitwise AND</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="s1">&#39;0b1110&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">14</span><span class="o">&amp;</span><span class="mb">0b1100</span>
+<span class="mi">12</span>
+</pre></div>
+</div></div><p>So, given the current offset, if we increase it by one and round down to the nearest integer we are aligning the offset to multiples of a word (2 bytes). The <code>ALIGNWORD</code> macro in the <code>include_i/exec/types.i</code> file implements exactly this algorithm</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>ALIGNWORD   MACRO       ; Align structure offset to nearest word
+SOFFSET     SET     (SOFFSET+1)&amp;$fffffffe
+            ENDM
+</pre></div>
+</div></div><p>This can be seen in action in the <code>CardHandle</code> structure defined in <code>include_i/resources/card.i</code>. The same algorithm is implemented in other parts of the Kickstart code, for example in the <code>AddMemList</code> function that adds memory space to the free memory pool.</p><h2 id="markus-wandels-work">Markus Wandel's work<a class="headerlink" href="#markus-wandels-work" title="Permanent link">¶</a></h2><p>After three years since I began this investigation I came across the work of Marcus Wandel (<a href="http://wandel.ca">http://wandel.ca</a>), advertised on <a href="http://amigan.1emu.net/aw/TransactorUK-sep89.pdf">Amiga Transactor September 1989</a>. Mr Wandel disassembled the whole Kickstart 1.2 ROM back in 1989, and you can find the result of his effort on his website at <a href="http://wandel.ca/homepage/execdis/index.html">http://wandel.ca/homepage/execdis/index.html</a>. I'm currently using his comments to check what I find out on my own, because I don't want to spoil the joy of discovery, and so far they confirmed I'm on the right path.</p><p>I think what Mr Wandel did is a great example of what computer science truly is. I'm sure his impressive contribution helped people to understand the Amiga system back in the ages, and it's definitely helping me 32 years later. Without the effort and the passion of people like Marcus Wandel, computer science would be just another corporate-owned environment.</p><p>Marcus's name is not as famous as that of other big players, but I consider his work extremely important. Thanks Marcus for your work and thanks to all the people who contributed to the Amiga, and to the rise of microcomputers.</p><h2 id="whats-next">What's next<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h2><p>The next article will describe in depth how the jump table of the Exec library is created through the <code>MakeFunctions</code> routine. This will be shown step by step discussing the reverse engineering method followed to discover the mechanism and the relevant code.</p><h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">¶</a></h2><ul><li>Amiga System Programmers Guide, Abacus - <a href="https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus">https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus</a></li><li><a href="http://amigadev.elowar.com">AmigaOS Developer Docs</a></li><li><a href="http://wandel.ca/homepage/execdis/index.html">Marcus Wandel&#x27;s disassmbly of Kickstart 1.2</a></li></ul><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 2 of the Exploring the Amiga series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2018/05/28/exploring-the-amiga-1/">Exploring the Amiga - Part 1</a></li>
+      </ul>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2018/06/08/exploring-the-amiga-3/">Exploring the Amiga - Part 3</a></li>
+        <li><a href="/blog/2018/06/14/exploring-the-amiga-4/">Exploring the Amiga - Part 4</a></li>
+        <li><a href="/blog/2018/06/25/exploring-the-amiga-5/">Exploring the Amiga - Part 5</a></li>
+        <li><a href="/blog/2018/06/25/exploring-the-amiga-6/">Exploring the Amiga - Part 6</a></li>
+        <li><a href="/blog/2019/02/19/exploring-the-amiga-7/">Exploring the Amiga - Part 7</a></li>
+        <li><a href="/blog/2019/02/19/exploring-the-amiga-8/">Exploring the Amiga - Part 8</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2019/02/19/exploring-the-amiga-8/">
+            <img src="/images/exploring-the-amiga-8.jpg" alt="exploring-the-amiga-8" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/02/19/exploring-the-amiga-8/"><h2>Exploring the Amiga - Part 8</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-02-19T14:00:00+01:00">Feb 19, 2019</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-12-20T08:00:00+00:00">Dec 20, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/05/28/exploring-the-amiga-1/">
+            <img src="/images/exploring-the-amiga-1.jpg" alt="exploring-the-amiga-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/05/28/exploring-the-amiga-1/"><h2>Exploring the Amiga - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-05-28T14:00:00+01:00">May 28, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/08/exploring-the-amiga-3/">
+            <img src="/images/exploring-the-amiga-3.jpg" alt="exploring-the-amiga-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/08/exploring-the-amiga-3/"><h2>Exploring the Amiga - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-08T12:30:00+01:00">Jun 8, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/14/exploring-the-amiga-4/">
+            <img src="/images/exploring-the-amiga-4.jpg" alt="exploring-the-amiga-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/14/exploring-the-amiga-4/"><h2>Exploring the Amiga - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-14T14:30:00+01:00">Jun 14, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/25/exploring-the-amiga-5/">
+            <img src="/images/exploring-the-amiga-5.jpg" alt="exploring-the-amiga-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/25/exploring-the-amiga-5/"><h2>Exploring the Amiga - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-25T12:00:00+01:00">Jun 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/25/exploring-the-amiga-6/">
+            <img src="/images/exploring-the-amiga-6.jpg" alt="exploring-the-amiga-6" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/25/exploring-the-amiga-6/"><h2>Exploring the Amiga - Part 6</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-25T13:00:00+01:00">Jun 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2019/02/19/exploring-the-amiga-7/">
+            <img src="/images/exploring-the-amiga-7.jpg" alt="exploring-the-amiga-7" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/02/19/exploring-the-amiga-7/"><h2>Exploring the Amiga - Part 7</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-02-19T13:00:00+01:00">Feb 19, 2019</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2019/03/04/motorola-68000-addressing-modes/">
+            <img src="/images/mc68000.jpg" alt="mc68000" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/03/04/motorola-68000-addressing-modes/"><h2>Motorola 68000: addressing modes</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/m68000/" class="tag">M68000</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-03-04T22:30:00+01:00">Mar 4, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+<script src="/theme/js/retro.min.js?d41d8cd9"></script>
+  </body>
+</html>

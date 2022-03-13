@@ -1,12 +1,7 @@
 .idea
 HOWTO.md
-deploy
-laces3
-pelican-plugins
-pelican-themes
 venv
 *.pid
-pelican/output
 *.pyc
 notes/*
 tweet.py*

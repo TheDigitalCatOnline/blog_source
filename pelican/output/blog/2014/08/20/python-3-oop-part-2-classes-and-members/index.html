@@ -1,0 +1,1036 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Object-Oriented Programming in Python 3 - Classes and members</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Fundamentals of object-oriented programming in Python - classes and members">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Object-Oriented Programming in Python 3 - Classes and members" />
+<meta name="twitter:description" content="Fundamentals of object-oriented programming in Python - classes and members" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/python-3-oop.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Object-Oriented Programming in Python 3 - Classes and members</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2014-08-20T14:00:00+02:00"> 20/08/2014</time> <i class="fas fa-edit"></i> Updated on <time datetime="2019-05-22T23:30:00+00:00">May 22, 2019</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/python3/">Python3</a>
+	<a class="tag" href="/categories/oop/">OOP</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Object-Oriented%20Programming%20in%20Python%203%20-%20Classes%20and%20members&url=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-2-classes-and-members/&via=thedigicat&hashtags=python,python3,oop" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-2-classes-and-members/&title=Object-Oriented%20Programming%20in%20Python%203%20-%20Classes%20and%20members&summary=Fundamentals%20of%20object-oriented%20programming%20in%20Python%20-%20classes%20and%20members&source=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-2-classes-and-members/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Object-Oriented%20Programming%20in%20Python%203%20-%20Classes%20and%20members&u=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-2-classes-and-members/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Object-Oriented%20Programming%20in%20Python%203%20-%20Classes%20and%20members&amp;body=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-2-classes-and-members/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-2-classes-and-members/&title=Object-Oriented%20Programming%20in%20Python%203%20-%20Classes%20and%20members" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>This post is available as an <strong>IPython Notebook</strong> <a href="/notebooks/Python_3_OOP_Part_2__Classes_and_members.ipynb">here</a></p>
+<h2 id="python-classes-strike-again">Python Classes Strike Again<a class="headerlink" href="#python-classes-strike-again" title="Permanent link">&para;</a></h2>
+<p>The Python implementation of classes has some peculiarities. The bare truth is that in Python the class of an object is an object itself. You can check this by issuing <code>type()</code> on the class</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">&lt;class &#39;int&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="go">&lt;class &#39;type&#39;&gt;</span>
+</code></pre></div>
+
+<p>This shows that the <code>int</code> class is an object, an instance of the <code>type</code> class.</p>
+<p>This concept is not so difficult to grasp as it can seem at first sight: in the real world we deal with <em>concepts</em> using them like <em>things</em>: for example we can talk about the concept of "door", telling people how a door looks like and how it works. In this case the concept of door is the topic of our discussion, so in our everyday experience the <em>type</em> of an object is an object itself. In Python this can be expressed by saying that <em>everything is an object</em>.</p>
+<p>If the class of an object is itself an instance it is a concrete object and is stored somewhere in memory. Let us leverage the <em>inspection</em> capabilities of Python and its <code>id()</code> function to check the status of our objects. The <code>id()</code> built-in function returns the memory position of an object.</p>
+<p>In the first post we defined this class</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Door</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;closed&#39;</span>
+</code></pre></div>
+
+<p>First of all, let's create two instances of the <code>Door</code> class and check that the two objects are stored at different addresses</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span> <span class="o">=</span> <span class="n">Door</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door2</span> <span class="o">=</span> <span class="n">Door</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">door1</span><span class="p">))</span>
+<span class="go">&#39;0xb67e148c&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">door2</span><span class="p">))</span>
+<span class="go">&#39;0xb67e144c&#39;</span>
+</code></pre></div>
+
+<p>This confirms that the two instances are separate and unrelated.
+<strong>Please note that your values are very likely to be different from the ones I got. Being memory addresses they change at every execution.</strong> The second instance was given the same attributes of the first instance to show that the two are different objects regardless of the value of the attributes.</p>
+<p>However if we use <code>id()</code> on the class of the two instances we discover that the class is <em>exactly</em> the same</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
+<span class="go">&#39;0xb685f56c&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">door2</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
+<span class="go">&#39;0xb685f56c&#39;</span>
+</code></pre></div>
+
+<p>Well this is very important. In Python, a class is not just the schema used to build an object. Rather, the class is a shared living object, which code is accessed at run time.</p>
+<p>As we already tested, however, attributes are not stored in the class but in every instance, due to the fact that <code>__init__()</code> works on <code>self</code> when creating them. Classes, however, can be given attributes like any other object; with a terrific effort of imagination, let's call them <em>class attributes</em>.</p>
+<p>As you can expect, class attributes are shared among the class instances just like their container</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Door</span><span class="p">:</span>
+    <span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;brown&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;closed&#39;</span>
+</code></pre></div>
+
+<p>Pay attention: the <code>colour</code> attribute here is not created using <code>self</code>, so it is contained in the class and shared among instances</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span> <span class="o">=</span> <span class="n">Door</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door2</span> <span class="o">=</span> <span class="n">Door</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;brown&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;brown&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door2</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;brown&#39;</span>
+</code></pre></div>
+
+<p>Until here things are not different from the previous case. Let's see if changes of the shared value reflect on all instances</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door2</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">Door</span><span class="o">.</span><span class="n">colour</span><span class="p">))</span>
+<span class="go">&#39;0xb67e1500&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="n">colour</span><span class="p">))</span>
+<span class="go">&#39;0xb67e1500&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">door2</span><span class="o">.</span><span class="n">colour</span><span class="p">))</span>
+<span class="go">&#39;0xb67e1500&#39;</span>
+</code></pre></div>
+
+<h2 id="raiders-of-the-lost-attribute">Raiders of the Lost Attribute<a class="headerlink" href="#raiders-of-the-lost-attribute" title="Permanent link">&para;</a></h2>
+<p>Any Python object is automatically given a <code>__dict__</code> attribute, which contains its list of attributes. Let's investigate what this dictionary contains for our example objects:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="vm">__dict__</span>
+<span class="go">mappingproxy({&#39;open&#39;: &lt;function Door.open at 0xb68604ac&gt;,</span>
+<span class="go">    &#39;colour&#39;: &#39;brown&#39;,</span>
+<span class="go">    &#39;__dict__&#39;: &lt;attribute &#39;__dict__&#39; of &#39;Door&#39; objects&gt;,</span>
+<span class="go">    &#39;__weakref__&#39;: &lt;attribute &#39;__weakref__&#39; of &#39;Door&#39; objects&gt;,</span>
+<span class="go">    &#39;__init__&#39;: &lt;function Door.__init__ at 0xb7062854&gt;,</span>
+<span class="go">    &#39;__module__&#39;: &#39;__main__&#39;,</span>
+<span class="go">    &#39;__doc__&#39;: None,</span>
+<span class="go">    &#39;close&#39;: &lt;function Door.close at 0xb686041c&gt;})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__dict__</span>
+<span class="go">{&#39;number&#39;: 1, &#39;status&#39;: &#39;closed&#39;}</span>
+</code></pre></div>
+
+<p>Leaving aside the difference between a dictionary and a <code>mappingproxy</code> object, you can see that the <code>colour</code> attribute is listed among the <code>Door</code> class attributes, while <code>status</code> and <code>number</code> are listed for the instance.</p>
+<p>How comes that we can call <code>door1.colour</code>, if that attribute is not listed for that instance? This is a job performed by the magic <code>__getattribute__()</code> method; in Python the dotted syntax automatically invokes this method so when we write <code>door1.colour</code>, Python executes <code>door1.__getattribute__('colour')</code>. That method performs the  <em>attribute  lookup</em> action, i.e. finds the value of the attribute by looking in different places.</p>
+<p>The standard implementation of <code>__getattribute__()</code> searches first the internal dictionary (<code>__dict__</code>) of an object, then the type of the object itself; in this case <code>door1.__getattribute__('colour')</code> executes first <code>door1.__dict__['colour']</code> and then, since the latter raises a <code>KeyError</code> exception, <code>door1.__class__.__dict__['colour']</code></p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;colour&#39;</span><span class="p">]</span>
+<span class="go">Traceback  (most recent call last):</span>
+<span class="go">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="go">KeyError: &#39;colour&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;colour&#39;</span><span class="p">]</span>
+<span class="go">&#39;brown&#39;</span>
+</code></pre></div>
+
+<p>Indeed, if we compare the objects' equality through the <code>is</code> operator we can confirm that both <code>door1.colour</code> and <code>Door.colour</code> are exactly the same object</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">colour</span> <span class="ow">is</span> <span class="n">Door</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">True</span>
+</code></pre></div>
+
+<p>When we try to assign a value to a class attribute directly on an instance, we just put in the <code>__dict__</code> of the instance a value with that name, and this value masks the class attribute since it is found first by <code>__getattribute__()</code>. As you can see from the examples of the previous section, this is different from changing the value of the attribute on the class itself.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;colour&#39;</span><span class="p">]</span>
+<span class="go">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;colour&#39;</span><span class="p">]</span>
+<span class="go">&#39;brown&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;colour&#39;</span><span class="p">]</span>
+<span class="go">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;colour&#39;</span><span class="p">]</span>
+<span class="go">&#39;red&#39;</span>
+</code></pre></div>
+
+<h2 id="revenge-of-the-methods">Revenge of the Methods<a class="headerlink" href="#revenge-of-the-methods" title="Permanent link">&para;</a></h2>
+<p>Let's play the same game with methods. First of all you can see that, just like class attributes, methods are listed only in the class <code>__dict__</code>. Chances are that they behave the same as attributes when we get them</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">open</span> <span class="ow">is</span> <span class="n">Door</span><span class="o">.</span><span class="n">open</span>
+<span class="go">False</span>
+</code></pre></div>
+
+<p>Whoops. Let us further investigate the matter</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span>
+<span class="go">&lt;function Door.open at 0xb68604ac&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">open</span>
+<span class="go">&lt;function Door.open at 0xb68604ac&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">open</span>
+<span class="go">&lt;bound method Door.open of &lt;__main__.Door object at 0xb67e162c&gt;&gt;</span>
+</code></pre></div>
+
+<p>So, the class method is listed in the members dictionary as <em>function</em>. So far, so good. The same happens when taking it directly from the class; here Python 2 needed to introduce <em>unbound methods</em>, which are not present in Python 3. Taking it from the instance returns a <em>bound method</em>.</p>
+<p>Well, a <em>function</em> is a procedure you named and defined with the <code>def</code> statement. When you refer to a function as part of a class in Python 3 you get a plain function, without any difference from a function defined outside a class.</p>
+<p>When you get the function from an instance, however, it becomes a bound method. The name <em>method</em> simply means "a function inside an object", according to the usual OOP definitions, while <em>bound</em> signals that the method is linked to that instance. Why does Python bother with methods being bound or not? And how does Python transform a function into a bound method?</p>
+<p>First of all, if you try to call a class function you get an error</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+<span class="go">Traceback  (most recent call last):</span>
+<span class="go">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="go">TypeError: open() missing 1 required positional argument: &#39;self&#39;</span>
+</code></pre></div>
+
+<p>Yes. Indeed the function was defined to require an argument called 'self', and calling it without an argument raises an exception. This perhaps means that we can give it one instance of the class and make it work</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">door1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">status</span>
+<span class="go">&#39;open&#39;</span>
+</code></pre></div>
+
+<p>Python does not complain here, and the method works as expected. So <code>Door.open(door1)</code> is the same as <code>door1.open()</code>, and this is the difference between a plain function coming from a class an a bound method: the bound method automatically passes the instance as an argument to the function.</p>
+<p>Again, under the hood, <code>__getattribute__()</code> is working to make everything work and when we call <code>door1.open()</code>, Python actually calls <code>door1.__class__.open(door1)</code>. However, <code>door1.__class__.open</code> is a plain function, so there is something more that converts it into a bound method that Python can safely call.</p>
+<p>When you access a member of an object, Python calls <code>__getattribute__()</code> to satisfy the request. This magic method, however, conforms to a procedure known as <em>descriptor protocol</em>. For the read access <code>__getattribute__()</code> checks if the object has a <code>__get__()</code> method and calls the latter. So the converstion of a function into a bound method happens through such a mechanism. Let us review it by means of an example.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span>
+<span class="go">&lt;function Door.open at 0xb68604ac&gt;</span>
+</code></pre></div>
+
+<p>This syntax retrieves the function defined in the class; the function knows nothing about objects, but it <em>is</em> an object (remember "everything is an object"). So we can look inside it with the <code>dir()</code> built-in function</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">])</span>
+<span class="go">[&#39;__annotations__&#39;, &#39;__call__&#39;, &#39;__class__&#39;, &#39;__closure__&#39;, &#39;__code__&#39;,</span>
+<span class="go"> &#39;__defaults__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;,</span>
+<span class="go"> &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__get__&#39;, &#39;__getattribute__&#39;, &#39;__globals__&#39;,</span>
+<span class="go"> &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__kwdefaults__&#39;, &#39;__le__&#39;, &#39;__lt__&#39;,</span>
+<span class="go"> &#39;__module__&#39;, &#39;__name__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__qualname__&#39;, &#39;__reduce__&#39;,</span>
+<span class="go"> &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;,</span>
+<span class="go"> &#39;__subclasshook__&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span><span class="o">.</span><span class="fm">__get__</span>
+<span class="go">&lt;method-wrapper &#39;__get__&#39; of function object at 0xb68604ac&gt;</span>
+</code></pre></div>
+
+<p>As you can see, a <code>__get__</code> method is listed among the members of the function, and Python recognizes it as a <em>method-wrapper</em>. This method shall connect the <code>open</code> function to the <code>door1</code> instance, so we can call it passing the instance alone</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="n">door1</span><span class="p">)</span>
+<span class="go">&lt;bound method Door.open of &lt;__main__.Door object at 0xb67e162c&gt;&gt;</span>
+</code></pre></div>
+
+<p>and we get exactly what we were looking for. This complex syntax is what happens behind the scenes when we call a method of an instance.</p>
+<h2 id="when-methods-met-classes">When Methods met Classes<a class="headerlink" href="#when-methods-met-classes" title="Permanent link">&para;</a></h2>
+<p>Using <code>type()</code> on functions defined inside classes reveals some other details on their internal representation</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">open</span>
+<span class="go">&lt;function Door.open at 0xb687e074&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">open</span>
+<span class="go">&lt;bound method Door.open of &lt;__main__.Door object at 0xb6f9834c&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">Door</span><span class="o">.</span><span class="n">open</span><span class="p">)</span>
+<span class="go">&lt;class &#39;function&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="n">open</span><span class="p">)</span>
+<span class="go">&lt;class &#39;method&#39;&gt;</span>
+</code></pre></div>
+
+<p>As you can see, Python tells the two apart recognizing the first as a <em>function</em> and the second as a <em>method</em>, where the second is a function bound to an instance.</p>
+<p>What if we want to define a function that operates on the class instead of operating on the instance? As we may define class attributes, we may also define <em>class methods</em> in Python, through the <code>classmethod</code> decorator. Class methods are functions that are bound to the class and not to an instance.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Door</span><span class="p">:</span>
+    <span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;brown&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">knock</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Knock!&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;closed&#39;</span>
+</code></pre></div>
+
+<p>Such a definition makes the method callable on both the instance and the class</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">knock</span><span class="p">()</span>
+<span class="go">Knock!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">knock</span><span class="p">()</span>
+<span class="go">Knock!</span>
+</code></pre></div>
+
+<p>and Python identifies both as (bound) methods</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;knock&#39;</span><span class="p">]</span>
+<span class="go">&lt;classmethod object at 0xb67ff6ac&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">knock</span>
+<span class="go">&lt;bound method type.knock of &lt;class &#39;__main__.Door&#39;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">knock</span>
+<span class="go">&lt;bound method type.knock of &lt;class &#39;__main__.Door&#39;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">Door</span><span class="o">.</span><span class="n">knock</span><span class="p">)</span>
+<span class="go">&lt;class &#39;method&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="n">knock</span><span class="p">)</span>
+<span class="go">&lt;class &#39;method&#39;&gt;</span>
+</code></pre></div>
+
+<p>As you can see the <code>knock()</code> function accepts one argument, which is called <code>cls</code> just to remember that it is not an instance but the class itself. This means that inside the function we can operate on the class, and the class is shared among instances.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Door</span><span class="p">:</span>
+    <span class="n">colour</span> <span class="o">=</span> <span class="s1">&#39;brown&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">knock</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Knock!&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">paint</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">colour</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="n">colour</span>
+
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;closed&#39;</span>
+</code></pre></div>
+
+<p>The <code>paint()</code> classmethod now changes the class attribute <code>colour</code> which is shared among instances. Let's check how it works</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span> <span class="o">=</span> <span class="n">Door</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door2</span> <span class="o">=</span> <span class="n">Door</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;brown&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;brown&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door2</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;brown&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;white&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door2</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;white&#39;</span>
+</code></pre></div>
+
+<p>The class method can be called on the class, but this affects both the class and the instances, since the <code>colour</code> attribute of instances is taken at runtime from the shared class.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Door</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;yellow&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;yellow&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">door2</span><span class="o">.</span><span class="n">colour</span>
+<span class="go">&#39;yellow&#39;</span>
+</code></pre></div>
+
+<p>Class methods can be called on instances too, however, and their effect is the same as before. The class method is bound to the class, so it works on the latter regardless of the actual object that calls it (class or instance).</p>
+<h2 id="movie-trivia">Movie Trivia<a class="headerlink" href="#movie-trivia" title="Permanent link">&para;</a></h2>
+<p>Section titles come from the following movies: <em>The Empire Strikes Back (1980)</em>, <em>Raiders of the Lost Ark (1981)</em>, <em>Revenge of the Nerds (1984)</em>, <em>When Harry Met Sally (1989)</em>.</p>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<p>You will find a lot of documentation in <a href="https://www.reddit.com/r/Python/comments/226ahl/some_links_about_python_oop/">this Reddit post</a>. Most of the information contained in this series come from those sources.</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 2 of the Python 3 OOP series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2014/08/20/python-3-oop-part-1-objects-and-types/">Object-Oriented Programming in Python 3 - Objects and types</a></li>
+      </ul>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/">Object-Oriented Programming in Python 3 - Composition and inheritance</a></li>
+        <li><a href="/blog/2014/08/21/python-3-oop-part-4-polymorphism/">Object-Oriented Programming in Python 3 - Polymorphism</a></li>
+        <li><a href="/blog/2014/09/01/python-3-oop-part-5-metaclasses/">Object-Oriented Programming in Python 3 - Metaclasses</a></li>
+        <li><a href="/blog/2014/09/04/python-3-oop-part-6-abstract-base-classes/">Object-Oriented Programming in Python 3 - Abstract Base Classes</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/">
+            <img src="/images/first-class-objects-in-python-generic-code-wrappers-and-factories.jpg" alt="first-class-objects-in-python-generic-code-wrappers-and-factories" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/"><h2>First-class objects in Python: generic code, wrappers, and factories</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+		<a href="/categories/decorators/" class="tag">decorators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-09T16:00:00+00:00">Mar 9, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/">
+            <img src="/images/delegation-composition-and-inheritance-in-object-oriented-programming.jpg" alt="delegation-composition-and-inheritance-in-object-oriented-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"><h2>Delegation: composition and inheritance in object-oriented programming</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00">Aug 17, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T18:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
+            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T19:00:00+02:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">
+            <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2>TDD in Python with pytest - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">
+            <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2>TDD in Python with pytest - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
+            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/">
+            <img src="/images/object-oriented-programming-concepts-in-python.jpg" alt="object-oriented-programming-concepts-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/"><h2>Object-Oriented Programming (OOP) concepts in Python</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/metaclasses/" class="tag">metaclasses</a>
+		<a href="/categories/metaprogramming/" class="tag">metaprogramming</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-04-26T00:00:00+01:00">Apr 26, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>
