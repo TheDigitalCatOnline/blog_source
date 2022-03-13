@@ -221,7 +221,7 @@ The Pelican variable we are interested in is `SITENAME`, which has been initiali
 SITENAME = "The Analog Fox"
 ----
 
-We need to replace the static text with this variable three times: in the tag `&lt;title&gt;`, in the navigation bar and in the header at the top of the sidebar.
+We need to replace the static text with this variable three times: in the tag `<title>`, in the navigation bar and in the header at the top of the sidebar.
 
 .future-imperfect/templates/index.html
 [source,html+jinja]
@@ -730,7 +730,7 @@ WARNING: Caught exception:
 
 Since that is something only `index.html` can provide we need to do something more than just copying the content of `base.html`, we need to also fill in some parts, which is exactly what you can do with `block` (see [link](https://jinja.palletsprojects.com/en/2.11.x/templates/#template-inheritance,"Jinja's documentation on template inheritance")).
 
-Grab the whole content of the `&lt;div id="main"&gt;` and move it in `index.html` wrapped in `{% block content %}`
+Grab the whole content of the `<div id="main">` and move it in `index.html` wrapped in `{% block content %}`
 
 .future-imperfect/templates/index.html
 [source,html+jinja]

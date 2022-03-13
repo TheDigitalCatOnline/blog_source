@@ -1,0 +1,846 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Default arguments in Python</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Default arguments in Python">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Default arguments in Python" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/default-arguments-in-python.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Default arguments in Python</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2015-02-11T10:00:00+01:00"> 11/02/2015</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/python/">Python</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Default%20arguments%20in%20Python&url=https%3A//www.thedigitalcatonline.com/blog/2015/02/11/default-arguments-in-python/&via=thedigicat&hashtags=python" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2015/02/11/default-arguments-in-python/&title=Default%20arguments%20in%20Python&summary=&source=https%3A//www.thedigitalcatonline.com/blog/2015/02/11/default-arguments-in-python/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Default%20arguments%20in%20Python&u=https%3A//www.thedigitalcatonline.com/blog/2015/02/11/default-arguments-in-python/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Default%20arguments%20in%20Python&amp;body=https%3A//www.thedigitalcatonline.com/blog/2015/02/11/default-arguments-in-python/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2015/02/11/default-arguments-in-python/&title=Default%20arguments%20in%20Python" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>Recently I found a nasty bug in some Python code due to a misuse of default arguments. If you already know everything about default arguments and just want to laugh at the funny error feel free to jump to the end of the article. Alas, the code was written by me, but I'm pretty sure that day I was replaced by an evil clone of myself. You know, it happens sometimes. =)</p>
+<p>This post just summarizes the basics about standard and default arguments in Python functions and warns against possible pitfalls in your code. If you are just approaching Python and started writing functions I warmly recommend checking what the official Python manual says about them at the following links: <a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions">Defining Functions</a> and <a href="https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions">More on Defining Functions</a>.</p>
+<h2 id="a-quick-review-of-functions">A quick review of functions<a class="headerlink" href="#a-quick-review-of-functions" title="Permanent link">&para;</a></h2>
+<p>Python is a strongly object-oriented language, pushing this programming paradigm to its maximum. But object-oriented programming still relies on the <em>function</em> concept, that is something you can use to process data. Python has a more general concept of <em>callable</em> object, that is every object that can be called, which means <em>applied</em> on some data.</p>
+<p>Functions in Python are callable objects and at a first glance they behave the same as functions in other languages. They just get some data, called <em>arguments</em>, process them, and return a <em>result</em> (which is <code>None</code> if no <code>return</code> statement is issued).</p>
+<p>Arguments are declared (when the function is defined) as placeholders for actual objects that will be <em>passed</em> when the function will be called. In Python you do not declare the type of an argument (like you do in C or Java, for example) since Python philosophy relies on polymorphism.</p>
+<p>Remember that Python variables are <em>references</em>, that is <strong>memory addresses of actual variables</strong>. This means that Python functions always work like being "passed by address" (using a C/C++ nomenclature). When you call a function you are not <em>copying</em> the value of the arguments to the function placeholders. Instead, you are pointing the placeholder to the variable itself. This has a very important consequence: you may alter the value of the variable from inside the function.</p>
+<p>References play a very big role in Python, being the bare bones of its fully-polymorphic approach. Check <a href="https://www.thedigitalcatonline.com/blog/2014/08/21/python-3-oop-part-4-polymorphism/">this link</a> for a better explanation of this very important subject.</p>
+<p>To check your understanding of this basic behaviour of the language try to follow this simple code (where the variable <em>ph</em> stands for "placeholder")</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">print_id</span><span class="p">(</span><span class="n">ph</span><span class="p">):</span>
+<span class="gp">... </span> <span class="nb">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">ph</span><span class="p">)))</span>
+<span class="gp">... </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
+<span class="go">0x84ab460</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">0x84ab460</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">alter_value</span><span class="p">(</span><span class="n">ph</span><span class="p">):</span>
+<span class="gp">... </span> <span class="n">ph</span> <span class="o">=</span> <span class="n">ph</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">... </span> <span class="k">return</span> <span class="n">ph</span>
+<span class="gp">... </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">alter_value</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="go">&#39;0x84ab460&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="go">&#39;0x84ab470&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">alter_value</span><span class="p">(</span><span class="n">ph</span><span class="p">):</span>
+<span class="gp">... </span> <span class="n">ph</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span> <span class="k">return</span> <span class="n">ph</span>
+<span class="gp">... </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">alter_value</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">[1, 2, 3, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>
+<span class="go">[1, 2, 3, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="go">&#39;0xb701f72c&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="go">&#39;0xb701f72c&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</code></pre></div>
+
+<p>If you haven't been surprised by what's happening here you already grasped one of the most important things in Python and can safely skip the following explanation.</p>
+<p>The <code>print_id()</code> function demonstrates that placeholders inside functions are the very same variable passed at runtime (their memory addresses match).</p>
+<p>The two versions of <code>alter_value()</code> are meant to be functions that try to change the value of the passed argument. As you can see the first version of <code>alter_value()</code> does not succeed in changing the value of the variable <code>a</code>, while the second version does. Why? Indeed both act the same, trying to modify the value of the original variable passed, but some types in Python are <em>immutable</em>, and integers are among them. On the other hand, lists are not immutable, so the function does what its name pledges. (<a href="https://docs.python.org/3.4/reference/datamodel.html">here</a> you find more details on immutable types).</p>
+<p>There is a lot more to say about functions in Python, but these are the basic bricks about standard arguments.</p>
+<h2 id="default-argument-values">Default argument values<a class="headerlink" href="#default-argument-values" title="Permanent link">&para;</a></h2>
+<p>Every now and then you need to define a function that <em>may</em> accept an argument and shall behave differently whether or not the argument is present. If a language does not provide support for such cases you only have two choices: the first one is to define two different functions and to decide which is the most suitable one to call every time, the second one is to force the presence of the argument, selecting a "null" value that signals that the argument must not be used (such as <code>0</code> or <code>None</code>, for example). Both solutions are viable but suboptimal.</p>
+<p>Python, like other languages, provides support for default argument values, that is function arguments that can either be specified by the caller or left blank to automatically receive a predefined value.</p>
+<p>A very simple (and rather useless) example of default value is the following:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">message</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LOG: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+</code></pre></div>
+
+<p>This function may be run with an argument (which can be <code>None</code>)</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;File closed&quot;</span><span class="p">)</span>
+<span class="go">LOG: File closed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</code></pre></div>
+
+<p>but can also be called <em>without</em> arguments, in which case it will receive the default value set in its prototype (<code>None</code>, in this case)</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">log</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>
+</code></pre></div>
+
+<p>You can find more interesting examples in the standard library, for example in the <code>open()</code> function (check the <a href="https://docs.python.org/3.4/library/functions.html#open">official documentation</a>)</p>
+<div class="highlight"><pre><span></span><code><span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">buffering</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">closefd</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">opener</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+<p>It's evident from the prototype that a call like <code>f = open('/etc/hosts')</code> hides a lot of arguments by passing them default values (<code>mode</code>, <code>buffering</code>, <code>encoding</code>, etc), and making the function very simple to use in its standard use case.</p>
+<p>As you see from the <code>open()</code> builtin function we can use both standard and default arguments in a function, but the order in which they appear in the function prototype is fixed: all standard arguments first, then the default ones.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">a_rich_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+<p>The reason is easy to figure out: if we put an argument with a default value before a standard one, the language has no way to understand if the argument  with default value has been initialized or not. For example consider the following function definition</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">a_rich_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+<p>when calling the function <code>a_rich_function(1, 2, 4, 5)</code> what arguments are we passing? Is <code>d=4, c=5</code> or <code>c=4, e=5</code> since <code>d</code> has a default value? That order of definition is thus forbidden, and if you try Python will raise a <code>SyntaxError</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">a_rich_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="gp">... </span> <span class="k">pass</span>
+<span class="gp">... </span>
+<span class="go">  File &quot;&lt;stdin&gt;&quot;,  line 1</span>
+<span class="go">SyntaxError: non-default argument follows default argument</span>
+<span class="go">&gt;&gt;&gt;</span>
+</code></pre></div>
+
+<h2 id="default-arguments-evaluation">Default arguments evaluation<a class="headerlink" href="#default-arguments-evaluation" title="Permanent link">&para;</a></h2>
+<p>Default arguments may be provided as plain values or as the result of a function call, but the latter technique need a <strong>very big warning</strong>.</p>
+<p>While plain values are hardcoded, thus needing no evaluation except that made at compilation time, function calls are expected to be executed at run time (check <a href="https://www.reddit.com/r/Python/comments/2viygh/default_arguments_in_python/coii8bn?context=3">this comment on Reddit</a> for a better explanation of this matter). So we could write</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+
+<span class="k">def</span> <span class="nf">log_time</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">message</span><span class="p">))</span>
+</code></pre></div>
+
+<p>expecting the <code>log_time()</code> function to correctly provide the current time each time we call it. This unfortunately does not work: default arguments are evaluated at definition time (for example when you first import the module), and the result of successive calls is</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">log_time</span><span class="p">(</span><span class="s2">&quot;message 1&quot;</span><span class="p">)</span>
+<span class="go">2015-02-10T21:20:32.998647: message 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_time</span><span class="p">(</span><span class="s2">&quot;message 2&quot;</span><span class="p">)</span>
+<span class="go">2015-02-10T21:20:32.998647: message 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_time</span><span class="p">(</span><span class="s2">&quot;message 3&quot;</span><span class="p">)</span>
+<span class="go">2015-02-10T21:20:32.998647: message 3</span>
+</code></pre></div>
+
+<p>If you set the default value to a class instance the result may be even stranger, as you can read in <a href="http://docs.python-guide.org/en/latest/writing/gotchas/">The Hitchhiker’s Guide to Python!</a>. As suggested by the latter resource the usual solution is to replace the default value with <code>None</code> and to check the value of the argument inside the function</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+
+<span class="k">def</span> <span class="nf">log_time</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">=</span><span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">message</span><span class="p">))</span>
+</code></pre></div>
+
+<h2 id="conclusions">Conclusions<a class="headerlink" href="#conclusions" title="Permanent link">&para;</a></h2>
+<p>Default arguments may vastly simplify APIs, provided that you pay attention to their only "failure point", the evaluation time. Surprisingly, one of the most basic things in Python, function arguments and references, are one of the biggest source of errors, sometimes for experienced programmers too. I recommend giving references and polymorphism some study time.</p>
+<h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h2>
+<p>2015-06-10: <a href="https://www.reddit.com/user/brandjon">brandjon</a> added some useful information <a href="https://www.reddit.com/r/Python/comments/2viygh/default_arguments_in_python/coii8bn?context=3">here</a>, explaining how CPython deals with plain values and functions. I added the link to the commented section.</p>
+  </div>
+
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/">
+            <img src="/images/from-docker-cli-to-docker-compose.jpg" alt="from-docker-cli-to-docker-compose" />
+          </a>
+          <div class="body">
+            <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/"><h2>From Docker CLI to Docker Compose</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2022-02-19T15:00:00+01:00">Feb 19, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/04/25/rsa-keys/">
+            <img src="/images/rsa-keys.jpg" alt="rsa-keys" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/04/25/rsa-keys/"><h2>Public key cryptography: RSA keys</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/ssh/" class="tag">SSH</a>
+		<a href="/categories/rsa/" class="tag">RSA</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-04-25T13:00:00+01:00">Apr 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-01-23T11:00:00+00:00">Jan 23, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-05T13:00:00+01:00">Jul 5, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T10:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">
+            <img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/"><h2>How to write a Pelican theme for your static website</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/blogging/" class="tag">blogging</a>
+		<a href="/categories/markdown/" class="tag">Markdown</a>
+		<a href="/categories/pelican/" class="tag">pelican</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+		<a href="/categories/html/" class="tag">HTML</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-25T14:00:00+01:00">Mar 25, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/">
+            <img src="/images/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform.jpg" alt="aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/"><h2>AWS Log Insights as CloudWatch metrics with Python and Terraform</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/lambda/" class="tag">Lambda</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/terraform/" class="tag">Terraform</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-22T17:00:00+01:00">Mar 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/">
+            <img src="/images/first-class-objects-in-python-generic-code-wrappers-and-factories.jpg" alt="first-class-objects-in-python-generic-code-wrappers-and-factories" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/"><h2>First-class objects in Python: generic code, wrappers, and factories</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+		<a href="/categories/decorators/" class="tag">decorators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-09T16:00:00+00:00">Mar 9, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/">
+            <img src="/images/delegation-composition-and-inheritance-in-object-oriented-programming.jpg" alt="delegation-composition-and-inheritance-in-object-oriented-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"><h2>Delegation: composition and inheritance in object-oriented programming</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00">Aug 17, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T18:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

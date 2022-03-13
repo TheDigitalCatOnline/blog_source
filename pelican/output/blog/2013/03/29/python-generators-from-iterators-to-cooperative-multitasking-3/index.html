@@ -1,0 +1,933 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Python Generators - From Iterators to Cooperative Multitasking - 3</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Python Generators - From Iterators to Cooperative Multitasking - 3">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Python Generators - From Iterators to Cooperative Multitasking - 3" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/python-generators-from-iterators-to-cooperative-multitasking.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Python Generators - From Iterators to Cooperative Multitasking - 3</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2013-03-29T13:25:00+01:00"> 29/03/2013</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/generators/">generators</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%203&url=https%3A//www.thedigitalcatonline.com/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/&via=thedigicat&hashtags=python,generators" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/&title=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%203&summary=&source=https%3A//www.thedigitalcatonline.com/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%203&u=https%3A//www.thedigitalcatonline.com/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%203&amp;body=https%3A//www.thedigitalcatonline.com/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/&title=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%203" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>In this third issue we move on uncovering how generators can be the foundation of a cooperative multitasking system and show some code that implements it. Before we face this topic we will talk shortly about another interesting use of generators, namely generator expressions chains.</p>
+<h2 id="chaining-generator-expressions">Chaining generator expressions<a class="headerlink" href="#chaining-generator-expressions" title="Permanent link">&para;</a></h2>
+<p>At PyCon 2008 David M. Beazley, author of “Python Essential Reference”, made a very interesting speech about the use of generators in system administration, in other words where usually more or less complex bash scripts are involved and in particular where long pipe sequences are used.</p>
+<p>David starts from the consideration that generators, producing one element at a time, are chainable, that is a generator expression can encompass another generator expression and so on. This way he shows how to write in a very compact and reusable way components that can act as “filters” on a data set, thus following the Unix philosophy of building tools that “do one thing and do it well”, chaining them afterwards to get the needed behaviour.</p>
+<p>The slides of this presentation are freely downloadable, so I suggest the interested reader to take a look at it at the following address: <a href="http://www.dabeaz.com/generators-uk/">Generator Tricks for Systems Programmers</a>.</p>
+<h2 id="microthread-cooperative-multitasking">Microthread: cooperative multitasking<a class="headerlink" href="#microthread-cooperative-multitasking" title="Permanent link">&para;</a></h2>
+<p><em>Disclaimer: the concepts and code presented here have been heavily influenced by the Kamaelia project. You can find it <a href="http://www.kamaelia.org">here</a>.</em></p>
+<p>Let us move forward to see how (Python) generators allow us to easily build applications based on the concept of cooperative multitasking. I assume the reader is familiar with the concepts of preemption and thread-based multitasking and is aware of the pro and cons of such solutions.</p>
+<p><strong>Cooperative multitasking</strong> allows an application to hold the control of the CPU for an arbitrary time lapse, waiting for it to voluntarily release the resource to the scheduler. This is a major break with the modern approach to multitasking, where the scheduler is in charge of stopping and resuming applications without any previous agreement with them.</p>
+<p>Since application can now stop on their own initiative every issue related to shared data protection, atomicity and synchronization is greatly simplified if not removed. Applications need however a mechanism to stop running, save their internal state and later resume from the same point.</p>
+<p>Generators, indeed, through the <code>yield</code> statement implement this very behaviour, thus they may be used to create a system based on cooperative multitasking, where processes are now called <strong>microthreads</strong> to highlight that they are a lightweight form of thread.</p>
+<h4 id="microthreads">Microthreads<a class="headerlink" href="#microthreads" title="Permanent link">&para;</a></h4>
+<p>Let’s look at a simple implementation of such a system. First of all we need a <code>MicroThread</code> object, i.e. an object that can run simultaneously with other similar objects, but in a cooperative way.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MicroThread</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="mi">1</span>
+</code></pre></div>
+
+<p>An instance of this object exposes a <code>main()</code> method that, when called, returns a generator. The latter, at each call of its <code>next()</code> method simply returns <code>1</code>, freezing at the same time its execution just after the <code>yield</code> statement, still inside the infinite while loop.</p>
+<p>The object can be directly tested</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; <span class="nv">mt</span> <span class="o">=</span> MicroThread<span class="o">()</span>
+&gt;&gt;&gt; <span class="nv">g</span> <span class="o">=</span> mt.main<span class="o">()</span>
+&gt;&gt;&gt; g
+&lt;generator object main at 0xb74331e4&gt;
+&gt;&gt;&gt; g.next<span class="o">()</span>
+<span class="m">1</span>
+</code></pre></div>
+
+<p>To make the object more easily inheritable and extendable we can refactor it a little</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MicroThread</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="mi">1</span>
+</code></pre></div>
+
+<p><a href="/code/python-generators/mthread.py">source code</a></p>
+<p>Such changes let us inherit the class and extend it simply by overriding the <code>create()</code> and <code>step()</code> methods; the first is called as soon as <code>main()</code> is called, acting as a delayed initializer, while the second is executed at each call of <code>next()</code>, just before freezing the code with <code>yield</code>. Pay attention that since <code>create()</code> is called inside the generator function, you have to call <code>next()</code> once to run it after the genrator has been created. So the standard workflow with this object is</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Instance the object</span>
+<span class="n">mt</span> <span class="o">=</span> <span class="n">MicroThread</span><span class="p">()</span>
+
+<span class="c1"># Create the generator</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">mt</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+
+<span class="c1"># Initialize it</span>
+<span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+<span class="c1"># Loop over it</span>
+<span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="o">...</span>
+</code></pre></div>
+
+<p>Since <code>main()</code> is a generator function it must act as any generator and signal its exhaustion rising a <code>StopIteration</code> exception. The overridden <code>step()</code> method, thus, may raise this exception at any point (even multiple ones) to terminate the microthread.</p>
+<h4 id="scheduler">Scheduler<a class="headerlink" href="#scheduler" title="Permanent link">&para;</a></h4>
+<p>Now we need a scheduler, i.e. the system component that manages running tasks. While in a true multitasking system the scheduler is a big and complex component, in a cooperative environment it can be rather simple: its job is to execute each task and wait till they give control back. In between a task and the following the scheduler can execute other functions, but its basic workflow is very straightforward. Obviously the scheduler shall handle the <code>StopIteration</code> exception possibly raised by a task, removing it from the list of running microthreads.</p>
+<p>The core of the scheduler will be something like the following:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">active_microthreads</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+        <span class="n">scheduled_microthreads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thread</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="n">active_microthreads</span> <span class="o">=</span> <span class="n">scheduled_microthreads</span>
+<span class="n">scheduled_microthreads</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+
+<p>This snippet encompasses the behaviour described above. We have two lists, <code>active_microthreads</code> with all the tasks that shall be executed in the current loop and <code>scheduled_microthreads</code> with all the tasks that are goig to be executed in the next loop. At each loop of the scheduler all microthreads in <code>active_microthreads</code> are executed, that is they are granted one execution of their <code>next()</code> function. After this the thread is scheduled again, i.e. it is appended to the <code>scheduled_microthreads</code> list. If the thread raises the <code>StopIteration</code> exception during its execution it is simply not scheduled again. When the <code>active_microthreads</code> list is exhausted the loop ends and the scheduled threads list is transferred in the <code>active_threads</code> one; after this the loop starts again.</p>
+<p>So the first implementation of the scheduler is the following:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Scheduler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_microthreads</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_microthread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mthread</span><span class="p">):</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">mthread</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">thread</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_microthreads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thread</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_microthreads</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_microthreads</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+
+<p><a href="/code/python-generators/scheduler.py">source code</a></p>
+<p>The <code>__init__()</code> method initializes the two internal lists we talked about above. The <code>add_microthread()</code> method allows us to add a microthread to the scheduler; the method calls <code>main()</code> on each microthread we add to obtain its generator, then calls <code>next()</code> once on the latter to initialize it and finally adds it to the list of scheduled tasks.</p>
+<p>The scheduler logic is then implemented in the <code>run()</code> method, which executes the above core code in an infinite while loop.</p>
+<p>We can test the microthreads and the scheduler with this simple code</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">mthread</span>
+<span class="kn">import</span> <span class="nn">scheduler</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">TestMicroThread</span><span class="p">(</span><span class="n">mthread</span><span class="o">.</span><span class="n">MicroThread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">number</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Number:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">mt1</span> <span class="o">=</span> <span class="n">TestMicroThread</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mt2</span> <span class="o">=</span> <span class="n">TestMicroThread</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mt3</span> <span class="o">=</span> <span class="n">TestMicroThread</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ms</span> <span class="o">=</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">Scheduler</span><span class="p">()</span>
+<span class="n">ms</span><span class="o">.</span><span class="n">add_microthread</span><span class="p">(</span><span class="n">mt1</span><span class="p">)</span>
+<span class="n">ms</span><span class="o">.</span><span class="n">add_microthread</span><span class="p">(</span><span class="n">mt2</span><span class="p">)</span>
+<span class="n">ms</span><span class="o">.</span><span class="n">add_microthread</span><span class="p">(</span><span class="n">mt3</span><span class="p">)</span>
+
+<span class="n">ms</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
+
+<p><a href="/code/python-generators/test_scheduler.py">source code</a></p>
+<p>Here the <code>TestMicroThread</code> is a microthread but the <code>step()</code> method was reimplemented to print a number and wait 1 second. Three microthreads are instanced and added to the scheduler and the <code>run()</code> method of the scheduler is executed. Not surprisingly the result is the following</p>
+<div class="highlight"><pre><span></span><code>$ python test_scheduler.py
+Number: <span class="m">1</span>
+Number: <span class="m">2</span>
+Number: <span class="m">3</span>
+Number: <span class="m">1</span>
+Number: <span class="m">2</span>
+Number: <span class="m">3</span>
+<span class="o">[</span>...<span class="o">]</span>
+</code></pre></div>
+
+<p>The three microthreads are executed in a round-robin fashion, as expected from a cooperative multitasking system.</p>
+<p>Note: while all microthreads showed in this article just execute <code>yield 1</code> to freeze the code, <code>yield</code> can return any object, just like the <code>return</code> statement does, and this could be exploited to enhance the communication between microthreads and scheduler.</p>
+<h4 id="microschedulers">Microschedulers<a class="headerlink" href="#microschedulers" title="Permanent link">&para;</a></h4>
+<p>The scheduler could however be more flexible, specifically it could be converted to a microthread itself. The scheduler, when executed, will return a generator, and each call of its <code>next()</code> method will run one of its microthreads. After this the scheduler will freeze and give control back.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MicroScheduler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_microthreads</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_microthread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mthread</span><span class="p">):</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">mthread</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">thread</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_microthreads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thread</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">yield</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_microthreads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_microthreads</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_microthreads</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+
+<p><a href="/code/python-generators/mscheduler.py">source code</a></p>
+<p>It is sufficient to rename <code>run()</code> to <code>main()</code>, to match our arbitrary microthread interface, and add some <code>yield</code> statements. The first <code>yield</code> at the beginning of <code>main()</code> terminates the creation part: this scheduler has no <code>create()</code> method, but if present it should be called here. The second <code>yield</code> is called if the scheduler contains no microthreads, since it has nothing to do. The third <code>yield</code> is called after each loop of the microthread running part.</p>
+<p>These little changes allow the scheduler to be run into another scheduler, thus enabling us to create a hierarchy to easily build complex systems. At the same time the scheduler can be used as usual simply calling its <code>next()</code> method in a for loop.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">mthread</span>
+<span class="kn">import</span> <span class="nn">mscheduler</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">TestMicroThread</span><span class="p">(</span><span class="n">mthread</span><span class="o">.</span><span class="n">MicroThread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">number</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Number:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">mt1</span> <span class="o">=</span> <span class="n">TestMicroThread</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mt2</span> <span class="o">=</span> <span class="n">TestMicroThread</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mt3</span> <span class="o">=</span> <span class="n">TestMicroThread</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ms</span> <span class="o">=</span> <span class="n">mscheduler</span><span class="o">.</span><span class="n">MicroScheduler</span><span class="p">()</span>
+<span class="n">ms</span><span class="o">.</span><span class="n">add_microthread</span><span class="p">(</span><span class="n">mt1</span><span class="p">)</span>
+<span class="n">ms</span><span class="o">.</span><span class="n">add_microthread</span><span class="p">(</span><span class="n">mt2</span><span class="p">)</span>
+<span class="n">ms</span><span class="o">.</span><span class="n">add_microthread</span><span class="p">(</span><span class="n">mt3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ms</span><span class="o">.</span><span class="n">main</span><span class="p">():</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+<p><a href="/code/python-generators/test_mscheduler.py">source code</a></p>
+<p>This example is obviously very simple. However it shows how simple it is to build components of a cooperative system and let them live together in an execution space. Executing the scheduler in a different way, for example inside another generator, new microthreads can also be added live. This allows to instance system components on the fly to manage specific needs, such as incoming service requests.</p>
+<h2 id="conclusions">Conclusions<a class="headerlink" href="#conclusions" title="Permanent link">&para;</a></h2>
+<p>Obviously this sort of multitasking cannot provide an interactive execution like that used on our desktop OS or on a Web server, where human users must receive an immediate feedback of their actions. But for systems where task must simply be simultaneously executed without timing needs cooperative multitasking is a valuable solution, due to its simplicity.</p>
+<p>Another interesting scenario is that of a real multitasking system (ruled by threaded code or by the OS itself) where each task is made of small cooperating components. This way putting multiple functionalities inside a single component becomes a breeze; the code of each functionality could also be splitted in several plugins and loaded on demand.</p>
+<p>A package that implements cooperative multitasking with generator based microthreads is <a href="http://www.kamaelia.org">Kamaelia</a>, and this article has been heavily inspired by it. Other solutions you can find interesting are <a href="https://pypi.python.org/pypi/greenlet">greenlet</a>, presently the most used microthread Python library that runs on the standard unmodified Python interpreter and <a href="http://www.stackless.com/">Stackless Python</a>, a fork of Python that natively implements microthreads.</p>
+<h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h2>
+<p>2014-02-17: <a href="https://twitter.com/entropiae">Riccardo</a> spotted an error in the example code after <code>mthread.py</code> and submitted the correct version. Thanks!</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 3 of the Python generators - from iterators to cooperative multitasking series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/">Python generators - from iterators to cooperative multitasking</a></li>
+        <li><a href="/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/">Python Generators - From Iterators to Cooperative Multitasking - 2</a></li>
+      </ul>
+      
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/">
+            <img src="/images/python-generators-from-iterators-to-cooperative-multitasking.jpg" alt="python-generators-from-iterators-to-cooperative-multitasking" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/"><h2>Python Generators - From Iterators to Cooperative Multitasking - 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/generators/" class="tag">generators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-03-26T14:05:00+01:00">Mar 26, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/">
+            <img src="/images/python-generators-from-iterators-to-cooperative-multitasking.jpg" alt="python-generators-from-iterators-to-cooperative-multitasking" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/"><h2>Python generators - from iterators to cooperative multitasking</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/generators/" class="tag">generators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-03-25T10:41:00+01:00">Mar 25, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/">
+            <img src="/images/from-docker-cli-to-docker-compose.jpg" alt="from-docker-cli-to-docker-compose" />
+          </a>
+          <div class="body">
+            <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/"><h2>From Docker CLI to Docker Compose</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2022-02-19T15:00:00+01:00">Feb 19, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/04/25/rsa-keys/">
+            <img src="/images/rsa-keys.jpg" alt="rsa-keys" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/04/25/rsa-keys/"><h2>Public key cryptography: RSA keys</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/ssh/" class="tag">SSH</a>
+		<a href="/categories/rsa/" class="tag">RSA</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-04-25T13:00:00+01:00">Apr 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-01-23T11:00:00+00:00">Jan 23, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-05T13:00:00+01:00">Jul 5, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T10:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">
+            <img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/"><h2>How to write a Pelican theme for your static website</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/blogging/" class="tag">blogging</a>
+		<a href="/categories/markdown/" class="tag">Markdown</a>
+		<a href="/categories/pelican/" class="tag">pelican</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+		<a href="/categories/html/" class="tag">HTML</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-25T14:00:00+01:00">Mar 25, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/">
+            <img src="/images/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform.jpg" alt="aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/"><h2>AWS Log Insights as CloudWatch metrics with Python and Terraform</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/lambda/" class="tag">Lambda</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/terraform/" class="tag">Terraform</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-22T17:00:00+01:00">Mar 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/">
+            <img src="/images/first-class-objects-in-python-generic-code-wrappers-and-factories.jpg" alt="first-class-objects-in-python-generic-code-wrappers-and-factories" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/"><h2>First-class objects in Python: generic code, wrappers, and factories</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+		<a href="/categories/decorators/" class="tag">decorators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-09T16:00:00+00:00">Mar 9, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

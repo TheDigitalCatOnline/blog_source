@@ -1,0 +1,923 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Exploring the Amiga - Part 7</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="The complete Exec vector table, list management in Kickstart 1.3">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Exploring the Amiga - Part 7" />
+<meta name="twitter:description" content="The complete Exec vector table, list management in Kickstart 1.3" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/exploring-the-amiga-7.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/retro/atom.xml">All posts in category: Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Exploring the Amiga - Part 7</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2019-02-19T13:00:00+01:00"> 19/02/2019</time> <i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/retro/" title="All posts in category Retro">Retro</a>
+	<a class="tag" href="/categories/assembly/">assembly</a>
+	<a class="tag" href="/categories/amiga/">amiga</a>
+	<a class="tag" href="/categories/retroprogramming/">retroprogramming</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Exploring%20the%20Amiga%20-%20Part%207&url=https%3A//www.thedigitalcatonline.com/blog/2019/02/19/exploring-the-amiga-7/&via=thedigicat&hashtags=assembly,amiga,retroprogramming" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2019/02/19/exploring-the-amiga-7/&title=Exploring%20the%20Amiga%20-%20Part%207&summary=The%20complete%20Exec%20vector%20table%2C%20list%20management%20in%20Kickstart%201.3&source=https%3A//www.thedigitalcatonline.com/blog/2019/02/19/exploring-the-amiga-7/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Exploring%20the%20Amiga%20-%20Part%207&u=https%3A//www.thedigitalcatonline.com/blog/2019/02/19/exploring-the-amiga-7/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Exploring%20the%20Amiga%20-%20Part%207&amp;body=https%3A//www.thedigitalcatonline.com/blog/2019/02/19/exploring-the-amiga-7/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2019/02/19/exploring-the-amiga-7/&title=Exploring%20the%20Amiga%20-%20Part%207" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <h2 id="the-complete-exec-vector-table">The complete Exec vector table<a class="headerlink" href="#the-complete-exec-vector-table" title="Permanent link">¶</a></h2><p>In <a href="https://www.thedigitalcatonline.com/blog/2018/06/08/exploring-the-amiga-3/">the 3rd post</a> of this series I showed the Exec vectors table and the way <code>MakeFunctions</code> creates the jump table when Exec is installed in memory. In that post I focused on the first 4 reserved vectors, but it is useful to have the full table while reading the Kickstart code. This is the full vectors table for Exec 34.2 (28 Oct 1987).</p><p>The <strong></strong>Relative offset<strong></strong> column contains the offset of the function in the jump table once the library has been installed, which allows any Amiga program to call Exec functions through the <code>offset(a6)</code> syntax (e.g. <code>OpenLibrary</code> can be called by <code>jsr -0x228(a6)</code>). <strong></strong>Vector position<strong></strong> is the offset of the vector in the Kickstart 1.3 ROM (i.e. <code>0x0001a7c</code> is the position of the vector table itself), <strong></strong>Relative address<strong></strong> is the hexadecimal value stored in the table before the relocation, <strong></strong>Absolute address<strong></strong> is the function position after relocation (i.e. the wrapped sum between the table address and the relative address), and <strong></strong>Function<strong></strong> is the function name according to the include files and the Amiga documentation.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>| Relative offset | Vector position | Relative address | Absolute address | Function                 |
+|-----------------|-----------------|------------------|------------------|--------------------------|
+| -0x00           | 00001a7c        | 08a0             | 0000231c         | Open()                   |
+| -0x06           | 00001a7e        | 08a8             | 00002324         | Close()                  |
+| -0x12           | 00001a80        | 08ac             | 00002328         | Expunge()                |
+| -0x18           | 00001a82        | 08ac             | 00002328         | Reserved for future use  |
+| -0x1e           | 00001a84        | ee6a             | 000008e6         | Supervisor()             |
+| -0x24           | 00001a86        | f420             | 00000e9c         | ExitIntr()               |
+| -0x2a           | 00001a88        | f446             | 00000ec2         | Schedule()               |
+| -0x30           | 00001a8a        | 04f8             | 00001f74         | Reschedule()             |
+| -0x36           | 00001a8c        | f4a0             | 00000f1c         | Switch()                 |
+| -0x3c           | 00001a8e        | f4ea             | 00000f66         | Dispatch()               |
+| -0x42           | 00001a90        | f58e             | 0000100a         | Exception()              |
+| -0x48           | 00001a92        | f0b0             | 00000b2c         | InitCode()               |
+| -0x4e           | 00001a94        | f188             | 00000c04         | InitStruct()             |
+| -0x54           | 00001a96        | faac             | 00001528         | MakeLibrary()            |
+| -0x5a           | 00001a98        | fb36             | 000015b2         | MakeFunctions()          |
+| -0x60           | 00001a9a        | f080             | 00000afc         | FindResident()           |
+| -0x66           | 00001a9c        | f0e8             | 00000b64         | InitResident()           |
+| -0x6c           | 00001a9e        | 1596             | 00003012         | Alert()                  |
+| -0x72           | 00001aa0        | 08ee             | 0000236a         | Debug()                  |
+| -0x78           | 00001aa2        | f9ac             | 00001428         | Disable()                |
+| -0x7e           | 00001aa4        | f9ba             | 00001436         | Enable()                 |
+| -0x84           | 00001aa6        | 051a             | 00001f96         | Forbid()                 |
+| -0x8a           | 00001aa8        | 0520             | 00001f9c         | Permit()                 |
+| -0x90           | 00001aaa        | f6e2             | 0000115e         | SetSR()                  |
+| -0x96           | 00001aac        | f708             | 00001184         | SuperState()             |
+| -0x9c           | 00001aae        | f734             | 000011b0         | UserState()              |
+| -0xa2           | 00001ab0        | f74e             | 000011ca         | SetIntVector()           |
+| -0xa8           | 00001ab2        | f794             | 00001210         | AddIntServer()           |
+| -0xae           | 00001ab4        | f7d4             | 00001250         | RemIntServer()           |
+| -0xb4           | 00001ab6        | f8e0             | 0000135c         | Cause()                  |
+| -0xba           | 00001ab8        | fc5c             | 000016d8         | Allocate()               |
+| -0xc0           | 00001ac0        | fcc4             | 00001740         | Deallocate()             |
+| -0xc6           | 00001abc        | fd54             | 000017d0         | AllocMem()               |
+| -0xcc           | 00001abe        | fe00             | 0000187c         | AllocAbs()               |
+| -0xd2           | 00001ac0        | fdb0             | 0000182c         | FreeMem()                |
+| -0xd8           | 00001ac2        | fe90             | 0000190c         | AvailMem()               |
+| -0xde           | 00001ac4        | fede             | 0000195a         | AllocEntry()             |
+| -0xe4           | 00001ac6        | ff6c             | 000019e8         | FreeEntry()              |
+| -0xea           | 00001ac8        | fb6c             | 000015e8         | Insert()                 |
+| -0xf0           | 00001aca        | fb98             | 00001614         | AddHead()                |
+| -0xf6           | 00001acc        | fba8             | 00001624         | AddTail()                |
+| -0xfc           | 00001ace        | fbc0             | 0000163c         | Remove()                 |
+| -0x102          | 00001ad0        | fbce             | 0000164a         | RemHead()                |
+| -0x108          | 00001ad2        | fbde             | 0000165a         | RemTail()                |
+| -0x10e          | 00001ad4        | fbf4             | 00001670         | Enqueue()                |
+| -0x114          | 00001ad6        | fc1a             | 00001696         | FindName()               |
+| -0x11a          | 00001ad8        | 0208             | 00001c84         | AddTask()                |
+| -0x120          | 00001ada        | 02b4             | 00001d30         | RemTask()                |
+| -0x126          | 00001adc        | 0334             | 00001db0         | FindTask()               |
+| -0x12c          | 00001ade        | 0388             | 00001e04         | SetTaskPri()             |
+| -0x132          | 00001ae0        | 03e2             | 00001e5e         | SetSignal()              |
+| -0x138          | 00001ae2        | 03d8             | 00001e54         | SetExcept()              |
+| -0x13e          | 00001ae4        | 0490             | 00001f0c         | Wait()                   |
+| -0x144          | 00001ae6        | 0408             | 00001e84         | Signal()                 |
+| -0x14a          | 00001ae8        | 0584             | 00002000         | AllocSignal()            |
+| -0x150          | 00001aea        | 05bc             | 00002038         | FreeSignal()             |
+| -0x156          | 00001aec        | 054e             | 00001fca         | AllocTrap()              |
+| -0x15c          | 00001aee        | 0574             | 00001ff0         | FreeTrap()               |
+| -0x162          | 00001af0        | 00d8             | 00001b54         | AddPort()                |
+| -0x168          | 00001af2        | 00f0             | 00001b6c         | RemPort()                |
+| -0x16e          | 00001af4        | 00f4             | 00001b70         | PutMsg()                 |
+| -0x174          | 00001af6        | 016e             | 00001bea         | GetMsg()                 |
+| -0x17a          | 00001af8        | 019c             | 00001c18         | ReplyMsg()               |
+| -0x180          | 00001afa        | 01b6             | 00001c32         | WaitPort()               |
+| -0x186          | 00001afc        | 01de             | 00001c5a         | FindPort()               |
+| -0x18c          | 00001afe        | f9cc             | 00001448         | AddLibrary()             |
+| -0x192          | 00001b00        | f9da             | 00001456         | RemLibrary()             |
+| -0x198          | 00001b02        | f9f0             | 0000146c         | OldOpenLibrary()         |
+| -0x19e          | 00001b04        | fa26             | 000014a2         | CloseLibrary()           |
+| -0x1a4          | 00001b06        | fa3a             | 000014b6         | SetFunction()            |
+| -0x1aa          | 00001b08        | fa58             | 000014d4         | SumLibrary()             |
+| -0x1b0          | 00001b0a        | ec14             | 00000690         | AddDevice()              |
+| -0x1b6          | 00001b0c        | ec22             | 0000069e         | RemDevice()              |
+| -0x1bc          | 00001b0e        | ec26             | 000006a2         | OpenDevice()             |
+| -0x1c2          | 00001b10        | ec74             | 000006f0         | CloseDevice()            |
+| -0x1c8          | 00001b12        | ec9c             | 00000718         | DoIO()                   |
+| -0x1ce          | 00001b14        | ec8a             | 00000706         | SendIO()                 |
+| -0x1d4          | 00001b16        | ed0e             | 0000078a         | CheckIO()                |
+| -0x1da          | 00001b18        | ecb2             | 0000072e         | WaitIO()                 |
+| -0x1e0          | 00001b1a        | ed2a             | 000007a6         | AbortIO()                |
+| -0x1e6          | 00001b1c        | 01e8             | 00001c64         | AddResource()            |
+| -0x1ec          | 00001b1e        | 01f0             | 00001c6c         | RemResource()            |
+| -0x1f2          | 00001b20        | 01f4             | 00001c70         | OpenResource()           |
+| -0x1f8          | 00001b22        | 07b8             | 00002234         | execPrivate7()           |
+| -0x1fe          | 00001b24        | 07c2             | 0000223e         | execPrivate8()           |
+| -0x204          | 00001b26        | 07ee             | 0000226a         | execPrivate9()           |
+| -0x20a          | 00001b28        | 06a8             | 00002124         | RawDoFmt()               |
+| -0x210          | 00001b2a        | f700             | 0000117c         | GetCC()                  |
+| -0x216          | 00001b2c        | fdda             | 00001856         | TypeOfMem()              |
+| -0x21c          | 00001b2e        | 131c             | 00002d98         | Procure()                |
+| -0x222          | 00001b30        | 1332             | 00002dae         | Vacate()                 |
+| -0x228          | 00001b32        | f9f8             | 00001474         | OpenLibrary()            |
+| -0x22e          | 00001b34        | 1354             | 00002dd0         | InitSemaphore()          |
+| -0x234          | 00001b36        | 1374             | 00002df0         | ObtainSemaphore()        |
+| -0x23a          | 00001b38        | 13c4             | 00002e40         | ReleaseSemaphore()       |
+| -0x240          | 00001b3a        | 1428             | 00002ea4         | AttemptSemaphore()       |
+| -0x246          | 00001b3c        | 1458             | 00002ed4         | ObtainSemaphoreList()    |
+| -0x24c          | 00001b3e        | 14ce             | 00002f4a         | ReleaseSemaphoreList()   |
+| -0x252          | 00001b40        | 14f4             | 00002f70         | FindSemaphore()          |
+| -0x258          | 00001b42        | 14e4             | 00002f60         | AddSemaphore()           |
+| -0x25e          | 00001b44        | 14f0             | 00002f6c         | RemSemaphore()           |
+| -0x264          | 00001b46        | effc             | 00000a78         | SumKickData()            |
+| -0x26a          | 00001b48        | ffaa             | 00001a26         | AddMemList()             |
+| -0x270          | 00001b4a        | 1504             | 00002f80         | CopyMem()                |
+| -0x276          | 00001b4c        | 1500             | 00002f7c         | CopyMemQuick()           |
+|-----------------|-----------------|------------------|------------------|--------------------------|
+</pre></div>
+</div></div><h2 id="the-memory-list-header">The memory list header<a class="headerlink" href="#the-memory-list-header" title="Permanent link">¶</a></h2><p>Before we dig into the code of the <code>AddMemList</code> function to see how the memory space is added to the free memory list, let's have a look at the status of the memory list itself, as we need to be familiar with its structure to understand the rest of the process.</p><p>You might recall from the <a href="https://www.thedigitalcatonline.com/blog/2018/06/25/exploring-the-amiga-5/">fifth article</a> that the <code>MemList</code> structure is created <code>0x142</code> bytes after ExecBase, and that the structure is the following</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>    0xe +-------+ 0x150
+        |       |
+    0xd +-------+ 0x14f (LH_pad)
+        | 0xa   |
+    0xc +-------+ 0x14e (LH_TYPE)
+        | 0x142 |
+    0x8 +-------+ 0x14a (LH_TAILPRED)
+        | 0x0   |
+    0x4 +-------+ 0x146 (LH_TAIL)
+        | 0x146 |
+    0x0 +-------+ 0x142 (LH_HEAD)
+</pre></div>
+</div></div><p>This means that we can access the memory list with <code>lea 0x142(a6),a0</code>, as <code>0x142</code> is the relative address, i.e. assuming ExecBase is 0. Once the absolute address is in one of the address registers we can access the first node through <code>(a0)</code>, which is the Motorola Assembly version of the C pointer dereference operation (Address Register Indirect Mode). With <code>(a0)</code> we do not use the content of <code>a0</code>, but the content of the memory location which address is contained in <code>a0</code>.</p><p>So if <code>a0</code> is <code>0x142</code> in the previous figure, <code>(a0)</code> is <code>0x0</code> (<code>0x142</code> contains <code>0x146</code>, <code>0x146</code> contains <code>0x0</code>). It's thus convenient to think of <code>a0</code> as the pointer, and of <code>(a0)</code> as the value.</p><p>It is also interesting to note that the structure at <code>0x146</code> is very similar to the <code>LN</code> structure. Recall that the latter is defined in <code>include_i/exec/nodes.i</code> as</p><div class="code"><div class="content"><div class="highlight"><pre><span></span> STRUCTURE    LN,0    ; List Node
+    APTR    LN_SUCC ; Pointer to next (successor)
+    APTR    LN_PRED ; Pointer to previous (predecessor)
+    UBYTE   LN_TYPE
+    BYTE    LN_PRI  ; Priority, for sorting
+    APTR    LN_NAME ; ID string, null terminated
+    LABEL   LN_SIZE ; Note: word aligned
+</pre></div>
+</div></div><p>and as you can see <code>LH_TAIL</code>, <code>LH_TAILPRED</code>, and <code>LH_TYPE</code> can act as a proper node of a linked list. This is done on purpose (obviously), as the tail of the list has to be processed by the code that manages linked lists.</p><h2 id="adding-free-memory-to-the-system-list">Adding free memory to the system list<a class="headerlink" href="#adding-free-memory-to-the-system-list" title="Permanent link">¶</a></h2><p>At the end of the <a href="https://www.thedigitalcatonline.com/blog/2018/06/25/exploring-the-amiga-6/">previous post</a> we left Exec just after its code prepared the parameters of the free memory that was available on the system. As we saw in that post, this operation is always executed for the chip memory, and optionally for the fast memory if the hardware expansion is installed.</p><p>The <code>AddMemList</code> function at <code>0x1a26</code> is called with the following prototype</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>size = AddMemList(size, attributes, pri, base, name)
+D0                D0    D1          D2   A0    A1
+</pre></div>
+</div></div><p>with the purpose of adding the given memory <code>size</code>, starting from the <code>base</code> address, to the system pool. The memory <code>attributes</code> will be store in the memory block and the priority (<code>pri</code>) will be used to find the insertion point. The name is also added to the memory node to identify it.</p><p>We can split the memory addition in two different parts. <code>AddMemList</code> will create a node that contain the parameters of the memory region, then will call <code>Enqueue</code> to add it to the <code>MemList</code> linked list. When Exec bootstraps the system the memory list is empty, but these functions must work in a generic case. Actually when the system has a memory expansion (fast memory), this is the first that is added to the list, but it's immediately followed by the chip memory.</p><p>To help you to follow what happens in the function, this is a depiction of the memory area that we want to add to the system pool at the end of <code>AddMemList</code>, just before the call to <code>Enqueue</code>. The area contains a header made of three structures, <code>LN</code> (linked list node), <code>MH</code> (memory header), and <code>MC</code> (memory chunk)</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>   SIZE +---------------+
+        | Free memory   |
+        +---------------+
+        | ...           |
+        +---------------+
+        | Free memory   |
+   0x2c +---------------+ &lt;-+
+        | MC_SIZE       |   |
+   0x28 +---------------+   |
+        | MC_BYTES      |   | MC
+   0x24 +---------------+   |
+        | MC_NEXT       |   |
+   0x20 +---------------+ &lt;-+
+        | MH_FREE       |   |
+   0x1c +---------------+   |
+        | MH_UPPER      |   |
+   0x18 +---------------+   |
+        | MH_LOWER      |   | MH
+   0x14 +---------------+   |
+        | MH_FIRST      |   |
+   0x10 +---------------+   |
+        | MH_ATTRIBUTES |   |
+    0xe +---------------+ &lt;-+
+        | LN_NAME       |   |
+    0xa +---------------+   |
+        | LN_PRI        |   |
+    0x9 +---------------+   |
+        | LN_TYPE       |   | LN
+    0x8 +---------------+   |
+        | LN_PRED       |   |
+    0x4 +---------------+   |
+        | LN_SUCC       |   |
+    0x0 +---------------+ &lt;-+
+</pre></div>
+</div></div><p>It is interesting to note that, since we are managing the system memory, we cannot store information about it other than in the memory itself. The presence of management structures, then, is reducing the amount of free memory. This has to taken into account when designing a memory management system, but will not be considered in this article.</p><p>When we create the structure shown in figure, we need to ensure that the actual free memory is a multiple of a long word (8 bytes), as this is generally desirable. The memory space we are dealing with starts from 0 in the picture, but can actually be anywhere in the system memory, so it is not guaranteed that either the beginning or the end of the free memory space are aligned with long words.</p><p>The code of <code>AddMemList</code> performs the alignment in two steps. First it aligns the address of <code>MC</code> to the upper nearest long word (multiple of 8), then aligns the total size to the lower nearest long word. For example, if the starting point was 0 and the total size 64 bytes, we would leave all the values untouched:<code>LN_SUCC</code> at <code>0x0</code>, <code>MC_NEXT</code> at <code>0x20</code>, and the total size of the chunk (structure 'MC' + free memory) would be 32 bytes.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>   0x40 +---------------+ &lt;-+
+        | Free memory   |   |
+        +---------------+   | 32 bytes
+        | MC            |   |
+   0x20 +---------------+ &lt;-+
+        | MH            |   |
+        +---------------+   | 32 bytes
+        | LN            |   |
+    0x0 +---------------+ &lt;-+
+</pre></div>
+</div></div><p>If the starting point was 1 and the total size 65 bytes, however, the result would be: <code>LN_SUCC</code> at <code>0x1</code>, <code>MC_NEXT</code> at <code>0x28</code> (upper long word), and the total size of the memory would be 56 bytes (65-7 gives 58, rounded down to a multiple of 8), which means a chunk of 24 bytes</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>   0x42 +---------------+ &lt;-+
+        | Ignored       |   | 2 bytes
+   0x40 +---------------+ &lt;-+
+        | Free memory   |   |
+        +---------------+   | 24 bytes
+        | MC            |   |
+   0x28 +---------------+ &lt;-+
+        | EMPTY         |   | 7 bytes
+   0x21 +---------------+ &lt;-+
+        | MH            |   |
+        +---------------+   | 32 bytes
+        | LN            |   |
+    0x1 +---------------+ &lt;-+
+</pre></div>
+</div></div><h2 id="addmemlist-internals">AddMemList internals<a class="headerlink" href="#addmemlist-internals" title="Permanent link">¶</a></h2><p>According to the Exec vectors table, <code>AddMemList</code> can be found at <code>00001a26</code>, and ends at <code>00001a78</code>. It is immediately followed by a padding word <code>0000</code> and the vectors table itself</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a26: 2149 000a                 move.l  a1,0xa(a0)
+00001a2a: 43e8 0020                 lea     0x20(a0),a1
+00001a2e: 117c 000a 0008            move.b  #0xa,0x8(a0)
+00001a34: 1142 0009                 move.b  d2,0x9(a0)
+00001a38: 3141 000e                 move.w  d1,0xe(a0)
+00001a3c: 2209                      move.l  a1,d1
+00001a3e: 5e81                      addq.l  #0x7,d1
+00001a40: 0201 00f8                 andi.b  #-0x8,d1
+00001a44: c389                      exg     d1,a1
+00001a46: 9289                      sub.l   a1,d1
+00001a48: d081                      add.l   d1,d0
+00001a4a: 0200 00f8                 andi.b  #-0x8,d0
+00001a4e: 0480 0000 0020            subi.l  #0x20,d0
+00001a54: 2149 0010                 move.l  a1,0x10(a0)
+00001a58: 2149 0014                 move.l  a1,0x14(a0)
+00001a5c: 2209                      move.l  a1,d1
+00001a5e: d280                      add.l   d0,d1
+00001a60: 2141 0018                 move.l  d1,0x18(a0)
+00001a64: 2140 001c                 move.l  d0,0x1c(a0)
+00001a68: 2340 0004                 move.l  d0,0x4(a1)
+00001a6c: 4291                      clr.l   (a1)
+00001a6e: 2248                      movea.l a0,a1
+00001a70: 41ee 0142                 lea     0x142(a6),a0
+00001a74: 6100 fc48                 bsr.w   0x16be
+00001a78: 4e75                      rts     
+</pre></div>
+</div></div><p>Let's comment the function line by line. I will refer to the fields shown in the picture above by name, mentioning the offsets for clarity.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a26: 2149 000a                 move.l  a1,0xa(a0)
+</pre></div>
+</div></div><p>This code stores the address of the memory area name in <code>LN_NAME</code> (<code>0xa(a0)</code>).</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a2a: 43e8 0020                 lea     0x20(a0),a1
+</pre></div>
+</div></div><p>This loads the absolute address of the memory chunk (structure <code>MC</code>). The purpose of this is to align the memory chunk to a long word later in the code.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a2e: 117c 000a 0008            move.b  #0xa,0x8(a0)
+00001a34: 1142 0009                 move.b  d2,0x9(a0)
+00001a38: 3141 000e                 move.w  d1,0xe(a0)
+</pre></div>
+</div></div><p>This stores <code>0xa</code> in the <code>LN_TYPE</code> field (<code>0x8(a0)</code>). This corresponds to <code>NT_MEMORY</code> (see <code>include_i/exec/nodes.i</code>). It then copies the list priority into the <code>LN_PRI</code> field (<code>0x9(a0)</code>), and the memory attributes in the <code>MH_ATTRIBUTES</code> field (<code>0xe(a0)</code>).</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a3c: 2209                      move.l  a1,d1
+00001a3e: 5e81                      addq.l  #0x7,d1
+00001a40: 0201 00f8                 andi.b  #-0x8,d1
+00001a4e: 0480 0000 0020            subi.l  #0x20,d0
+</pre></div>
+</div></div><p>These three lines of code align the address of <code>MC</code> (<code>a1</code>) to a long word, adding 7 and removing the least significant 3 bits. Then the size of the headers (<code>0x20</code>) is removed from the total size of the memory region that was passed as an argument.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a54: 2149 0010                 move.l  a1,0x10(a0)
+00001a58: 2149 0014                 move.l  a1,0x14(a0)
+</pre></div>
+</div></div><p>Store the first free memory location (<code>a1</code>) in <code>MH_FIRST</code> (<code>0x10(a0)</code>) and in <code>MH_LOWER</code> (<code>0x14(a0)</code>).</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a5c: 2209                      move.l  a1,d1
+00001a5e: d280                      add.l   d0,d1
+00001a60: 2141 0018                 move.l  d1,0x18(a0)
+00001a64: 2140 001c                 move.l  d0,0x1c(a0)
+</pre></div>
+</div></div><p>The size of the free memory is then added to the first free address and stored in <code>MH_UPPER</code> (<code>0x18(a0)</code>). The size of the free memory is stored in <code>MH_FREE</code> (<code>0x1c(a0)</code>).</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a68: 2340 0004                 move.l  d0,0x4(a1)
+00001a6c: 4291                      clr.l   (a1)
+</pre></div>
+</div></div><p>This code creates the memory chunk in the free memory area. The size of the chunk is stored in the <code>MC_BYTES</code> field (<code>0x4(a1)</code>), and the <code>MC_NEXT</code> field is cleared.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>00001a6e: 2248                      movea.l a0,a1
+00001a70: 41ee 0142                 lea     0x142(a6),a0
+00001a74: 6100 fc48                 bsr.w   0x16be
+00001a78: 4e75                      rts     
+</pre></div>
+</div></div><p>The rest of the code prepares the call to the protected version of <code>Enqueue</code>, copying the address of the node in <code>a1</code> , the absolute address of <code>MemList</code> in <code>a0</code>, and branching to the subroutine. When <code>Enqueue</code> returns, <code>AddMemList</code> terminates and returns as well.</p><h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">¶</a></h2><ul><li>Motorola M68000 Family Programmer's Reference Manual - <a href="https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf">https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf</a></li><li>Amiga System Programmers Guide, Abacus - <a href="https://archive.org/details/Amiga">https://archive.org/details/Amiga</a><em>System</em>Programmers<em>Guide</em>1988_Abacus</li></ul><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 7 of the Exploring the Amiga series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2018/05/28/exploring-the-amiga-1/">Exploring the Amiga - Part 1</a></li>
+        <li><a href="/blog/2018/05/28/exploring-the-amiga-2/">Exploring the Amiga - Part 2</a></li>
+        <li><a href="/blog/2018/06/08/exploring-the-amiga-3/">Exploring the Amiga - Part 3</a></li>
+        <li><a href="/blog/2018/06/14/exploring-the-amiga-4/">Exploring the Amiga - Part 4</a></li>
+        <li><a href="/blog/2018/06/25/exploring-the-amiga-5/">Exploring the Amiga - Part 5</a></li>
+        <li><a href="/blog/2018/06/25/exploring-the-amiga-6/">Exploring the Amiga - Part 6</a></li>
+      </ul>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2019/02/19/exploring-the-amiga-8/">Exploring the Amiga - Part 8</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2018/05/28/exploring-the-amiga-2/">
+            <img src="/images/exploring-the-amiga-2.jpg" alt="exploring-the-amiga-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/05/28/exploring-the-amiga-2/"><h2>Exploring the Amiga - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-05-28T15:00:00+01:00">May 28, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-12-21T08:00:00+00:00">Dec 21, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2019/02/19/exploring-the-amiga-8/">
+            <img src="/images/exploring-the-amiga-8.jpg" alt="exploring-the-amiga-8" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/02/19/exploring-the-amiga-8/"><h2>Exploring the Amiga - Part 8</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-02-19T14:00:00+01:00">Feb 19, 2019</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-12-20T08:00:00+00:00">Dec 20, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/05/28/exploring-the-amiga-1/">
+            <img src="/images/exploring-the-amiga-1.jpg" alt="exploring-the-amiga-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/05/28/exploring-the-amiga-1/"><h2>Exploring the Amiga - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-05-28T14:00:00+01:00">May 28, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/08/exploring-the-amiga-3/">
+            <img src="/images/exploring-the-amiga-3.jpg" alt="exploring-the-amiga-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/08/exploring-the-amiga-3/"><h2>Exploring the Amiga - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-08T12:30:00+01:00">Jun 8, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/14/exploring-the-amiga-4/">
+            <img src="/images/exploring-the-amiga-4.jpg" alt="exploring-the-amiga-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/14/exploring-the-amiga-4/"><h2>Exploring the Amiga - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-14T14:30:00+01:00">Jun 14, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/25/exploring-the-amiga-5/">
+            <img src="/images/exploring-the-amiga-5.jpg" alt="exploring-the-amiga-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/25/exploring-the-amiga-5/"><h2>Exploring the Amiga - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-25T12:00:00+01:00">Jun 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/25/exploring-the-amiga-6/">
+            <img src="/images/exploring-the-amiga-6.jpg" alt="exploring-the-amiga-6" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/25/exploring-the-amiga-6/"><h2>Exploring the Amiga - Part 6</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/amiga/" class="tag">amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-25T13:00:00+01:00">Jun 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2019/03/04/motorola-68000-addressing-modes/">
+            <img src="/images/mc68000.jpg" alt="mc68000" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/03/04/motorola-68000-addressing-modes/"><h2>Motorola 68000: addressing modes</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">assembly</a>
+		<a href="/categories/m68000/" class="tag">M68000</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-03-04T22:30:00+01:00">Mar 4, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+<script src="/theme/js/retro.min.js?d41d8cd9"></script>
+  </body>
+</html>

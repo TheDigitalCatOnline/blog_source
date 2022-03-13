@@ -1,0 +1,882 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Object-Oriented Programming in Python 3 - Objects and types</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Fundamentals of object-oriented programming in Python - objects and types">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Object-Oriented Programming in Python 3 - Objects and types" />
+<meta name="twitter:description" content="Fundamentals of object-oriented programming in Python - objects and types" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/python-3-oop.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Object-Oriented Programming in Python 3 - Objects and types</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2014-08-20T13:00:00+02:00"> 20/08/2014</time> <i class="fas fa-edit"></i> Updated on <time datetime="2019-05-22T23:30:00+00:00">May 22, 2019</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/python3/">Python3</a>
+	<a class="tag" href="/categories/oop/">OOP</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Object-Oriented%20Programming%20in%20Python%203%20-%20Objects%20and%20types&url=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-1-objects-and-types/&via=thedigicat&hashtags=python,python3,oop" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-1-objects-and-types/&title=Object-Oriented%20Programming%20in%20Python%203%20-%20Objects%20and%20types&summary=Fundamentals%20of%20object-oriented%20programming%20in%20Python%20-%20objects%20and%20types&source=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-1-objects-and-types/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Object-Oriented%20Programming%20in%20Python%203%20-%20Objects%20and%20types&u=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-1-objects-and-types/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Object-Oriented%20Programming%20in%20Python%203%20-%20Objects%20and%20types&amp;body=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-1-objects-and-types/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-1-objects-and-types/&title=Object-Oriented%20Programming%20in%20Python%203%20-%20Objects%20and%20types" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>This post is available as an <strong>IPython Notebook</strong> <a href="/notebooks/Python_3_OOP_Part_1__Objects_and_types.ipynb">here</a></p>
+<h2 id="about-this-series">About this series<a class="headerlink" href="#about-this-series" title="Permanent link">&para;</a></h2>
+<p>Object-oriented programming (OOP) has been the leading programming paradigm for several decades now, starting from the initial attempts back in the 60s to some of the most important languages used nowadays. Being a set of programming concepts and design methodologies, OOP can never be said to be "correctly" or "fully" implemented by a language: indeed there are as many implementations as languages.</p>
+<p>So one of the most interesting aspects of OOP languages is to understand how they implement those concepts. In this post I am going to try and start analyzing the OOP implementation of the Python language. Due to the richness of the topic, however, I consider this attempt just like a set of thoughts for Python beginners trying to find their way into this beautiful (and sometimes peculiar) language.</p>
+<p>This series of posts wants to introduce the reader to the Python 3 implementation of Object Oriented Programming concepts. The content of this and the following posts will not be completely different from that of the previous "OOP Concepts in Python 2.x" series, however. The reason is that while some of the internal structures change a lot, the global philosophy doesn't, being Python 3 an <em>evolution</em> of Python 2 and not a new language.</p>
+<p>So I chose to split the previous series and to adapt the content to Python 3 instead of posting a mere list of corrections. I find this way to be more useful for new readers, that otherwise sould be forced to read the previous series.</p>
+<h3 id="print">Print<a class="headerlink" href="#print" title="Permanent link">&para;</a></h3>
+<p>One of the most noticeable changes introduced by Python 3 is the transformation of the <code>print</code> keyword into the <code>print()</code> function. This is indeed a very small change, compared to other modifications made to the internal structures, but is the most visual-striking one, and will be the source of 80% of your syntax errors when you will start writing Python 3 code.</p>
+<p>Remember that print is now a function so write <code>print(a)</code> and not <code>print a</code>.</p>
+<h2 id="back-to-the-object">Back to the Object<a class="headerlink" href="#back-to-the-object" title="Permanent link">&para;</a></h2>
+<p>Computer science deals with data and with procedures to manipulate that data. Everything, from the earliest Fortran programs to the latest mobile apps is about data and their manipulation. </p>
+<p>So if data are the ingredients and procedures are the recipes, it seems (and can be) reasonable to keep them separate.</p>
+<p>Let's do some procedural programming in Python</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># This is some data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">378</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+
+<span class="c1"># This is a procedure that computes the average</span>
+<span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">avg</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</code></pre></div>
+
+<p>As you can see the code is quite good and general: the procedure (function) operates on a sequence of data, and it returns the average of the sequence items. So far, so good: computing the average of some numbers leaves the numbers untouched and creates new data.</p>
+<p>The observation of the everyday world, however, shows that <em>complex data mutate</em>: an electrical device is on or off, a door is open or closed, the content of a bookshelf in your room changes as you buy new books.</p>
+<p>You can still manage it keeping data and procedures separate, for example</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># These are two numbered doors, initially closed</span>
+<span class="n">door1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">]</span>
+<span class="n">door2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">]</span>
+
+<span class="c1"># This procedure opens a door</span>
+<span class="k">def</span> <span class="nf">open_door</span><span class="p">(</span><span class="n">door</span><span class="p">):</span>
+    <span class="n">door</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+<span class="n">open_door</span><span class="p">(</span><span class="n">door1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">door1</span><span class="p">)</span>
+</code></pre></div>
+
+<p>I described a door as a structure containing a number and the status of the door (as you would do in languages like LISP, for example). The procedure knows how this structure is made and may alter it.</p>
+<p>This also works like a charm. Some problems arise, however, when we start building specialized types of data. What happens, for example, when I introduce a "lockable door" data type, which can be opened only when it is not locked? Let's see</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># These are two standard doors, initially closed</span>
+<span class="n">door1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">]</span>
+<span class="n">door2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">]</span>
+
+<span class="c1"># This is a lockable door, initially closed and unlocked</span>
+<span class="n">ldoor1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">,</span> <span class="s1">&#39;unlocked&#39;</span><span class="p">]</span>
+
+<span class="c1"># This procedure opens a standard door</span>
+<span class="k">def</span> <span class="nf">open_door</span><span class="p">(</span><span class="n">door</span><span class="p">):</span>
+    <span class="n">door</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+<span class="c1"># This procedure opens a lockable door</span>
+<span class="k">def</span> <span class="nf">open_ldoor</span><span class="p">(</span><span class="n">door</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">door</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;unlocked&#39;</span><span class="p">:</span>
+        <span class="n">door</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+<span class="n">open_door</span><span class="p">(</span><span class="n">door1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">door1</span><span class="p">)</span>
+
+<span class="n">open_ldoor</span><span class="p">(</span><span class="n">ldoor1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ldoor1</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Everything still works, no surprises in this code. However, as you can see, I had to find a different name for the procedure that opens a locked door since its implementation differs from the procedure that opens a standard door. But, wait... I'm still opening a door, the action is the same, and it just changes the status of the door itself. So why shall I remember that a locked door shall be opened with <code>open_ldoor()</code> instead of <code>open_door()</code> if the verb is the same?</p>
+<p>Chances are that this separation between data and procedures doesn't perfectly fit some situations. The key problem is that the "open" action is not actually <em>using</em> the door; rather it is <em>changing its state</em>. So, just like the volume control buttons of your phone, which are <em>on</em> your phone, the "open" procedure should stick to the "door" data.</p>
+<p>This is exactly what leads to the concept of <em>object</em>: an object, in the OOP context, is a structure holding data <em>and</em> procedures operating on them.</p>
+<h2 id="what-about-type">What About Type?<a class="headerlink" href="#what-about-type" title="Permanent link">&para;</a></h2>
+<p>When you talk about data you immediately need to introduce the concept of <em>type</em>. This concept may have two meanings that are worth being mentioned in computer science: the <em>behavioural</em> and the <em>structural</em> one.</p>
+<p>The behavioural meaning represents the fact that you know what something is by describing how it acts. This is the foundation of the so-called "duck typing" (here "typing" means "to give a type" and not "to type on a keyboard"): if it <del>types</del> acts like a duck, it <em>is</em> a duck.</p>
+<p>The structural meaning identifies the type of something by looking at its internal structure. So two things that act in the same way but are internally different are of different type.</p>
+<p>Both points of view can be valid, and different languages may implement and emphasize one meaning of type or the other, and even both.</p>
+<h2 id="class-games">Class Games<a class="headerlink" href="#class-games" title="Permanent link">&para;</a></h2>
+<p>Objects in Python may be built describing their structure through a <em>class</em>. A class is the programming representation of a generic object, such as "a book", "a car", "a door": when I talk about "a door" everyone can understand what I'm saying, without the need of referring to a specific door in the room.</p>
+<p>In Python, the type of an object is represented by the class used to build the object: that is, in Python the word <em>type</em> has the same meaning of the word <em>class</em>.</p>
+<p>For example, one of the built-in classes of Python is <code>int</code>, which represents an integer number</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="go">&lt;class &#39;int&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+<span class="go">&lt;class &#39;int&#39;&gt;</span>
+</code></pre></div>
+
+<p>As you can see, the built-in function <code>type()</code> returns the content of the <em>magic attribute</em> <code>__class__</code> (magic here means that its value is managed by Python itself offstage). The type of the variable <code>a</code>, or its class, is <code>int</code>. (This is a very inaccurate description of this rather complex topic, so remember that at the moment we are just scratching the surface).</p>
+<p>Once you have a class you can <em>instantiate</em> it to get a concrete object (an <em>instance</em>) of that type, i.e. an object built according to the structure of that class. The Python syntax to instantiate a class is the same of a function call</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">&lt;class &#39;int&#39;&gt;</span>
+</code></pre></div>
+
+<p>When you create an instance, you can pass some values, according to the class definition, to <em>initialize</em> it.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">7</span>
+</code></pre></div>
+
+<p>In this example, the <code>int</code> class creates an integer with value 0 when called without arguments, otherwise it uses the given argument to initialize the newly created object.</p>
+<p>Let us write a class that represents a door to match the procedural examples done in the first section</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Door</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;open&#39;</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;closed&#39;</span>
+</code></pre></div>
+
+<p>The <code>class</code> keyword defines a new class named <code>Door</code>; everything indented under <code>class</code> is part of the class. The functions you write inside the object are called <em>methods</em> and don't differ at all from standard functions; the nomenclature changes only to highlight the fact that those functions now are part of an object.</p>
+<p>Methods of a class must accept as first argument a special value called <code>self</code> (the name is a convention but please never break it).</p>
+<p>The class can be given a special method called <code>__init__()</code> which is run when the class is instantiated, receiving the arguments passed when calling the class; the general name of such a method, in the OOP context, is <em>constructor</em>, even if the <code>__init__()</code> method is not the only part of this mechanism in Python.</p>
+<p>The <code>self.number</code> and <code>self.status</code> variables are called <em>attributes</em> of the object. In Python, methods and attributes are both <em>members</em> of the object and are accessible with the dotted syntax; the difference between attributes and methods is that the latter can be called (in Python lingo you say that a method is a <em>callable</em>).</p>
+<p>As you can see the <code>__init__()</code> method shall create and initialize the attributes since they are not declared elsewhere. This is very important in Python and is strictly linked with the way the language handles the type of variables. I will detail those concepts when dealing with polymorphism in a later post.</p>
+<p>The class can be used to create a concrete object</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span> <span class="o">=</span> <span class="n">Door</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">door1</span><span class="p">)</span>
+<span class="go">&lt;class &#39;__main__.Door&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+<span class="go">closed</span>
+</code></pre></div>
+
+<p>Now <code>door1</code> is an instance of the <code>Door</code> class; <code>type()</code> returns the class as <code>__main__.Door</code> since the class was defined directly in the interactive shell, that is in the current main module.</p>
+<p>To call a method of an object, that is to run one of its internal functions, you just access it as an attribute with the dotted syntax and call it like a standard function.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">door1</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">door1</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+<span class="go">open</span>
+</code></pre></div>
+
+<p>In this case, the <code>open()</code> method of the <code>door1</code> instance has been called. No arguments have been passed to the <code>open()</code> method, but if you review the class declaration, you see that it was declared to accept an argument (<code>self</code>). When you call a method of an instance, Python automatically passes the instance itself to the method as the first argument.</p>
+<p>You can create as many instances as needed and they are completely unrelated each other. That is, the changes you make on one instance do not reflect on another instance of the same class.</p>
+<h2 id="recap">Recap<a class="headerlink" href="#recap" title="Permanent link">&para;</a></h2>
+<p>Objects are described by a <em>class</em>, which can generate one or more <em>instances</em>, unrelated each other. A class contains <em>methods</em>, which are functions, and they accept at least one argument called <code>self</code>, which is the actual instance on which the method has been called. A special method, <code>__init__()</code> deals with the initialization of the object, setting the initial value of the <em>attributes</em>.</p>
+<h2 id="movie-trivia">Movie Trivia<a class="headerlink" href="#movie-trivia" title="Permanent link">&para;</a></h2>
+<p>Section titles come from the following movies: <em>Back to the Future (1985)</em> , <em>What About Bob? (1991)</em>, <em>Wargames (1983)</em>.</p>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<p>You will find a lot of documentation in <a href="https://www.reddit.com/r/Python/comments/226ahl/some_links_about_python_oop/">this Reddit post</a>. Most of the information contained in this series come from those sources.</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 1 of the Python 3 OOP series</h2>
+    </header>
+    <div>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2014/08/20/python-3-oop-part-2-classes-and-members/">Object-Oriented Programming in Python 3 - Classes and members</a></li>
+        <li><a href="/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/">Object-Oriented Programming in Python 3 - Composition and inheritance</a></li>
+        <li><a href="/blog/2014/08/21/python-3-oop-part-4-polymorphism/">Object-Oriented Programming in Python 3 - Polymorphism</a></li>
+        <li><a href="/blog/2014/09/01/python-3-oop-part-5-metaclasses/">Object-Oriented Programming in Python 3 - Metaclasses</a></li>
+        <li><a href="/blog/2014/09/04/python-3-oop-part-6-abstract-base-classes/">Object-Oriented Programming in Python 3 - Abstract Base Classes</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/">
+            <img src="/images/first-class-objects-in-python-generic-code-wrappers-and-factories.jpg" alt="first-class-objects-in-python-generic-code-wrappers-and-factories" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/"><h2>First-class objects in Python: generic code, wrappers, and factories</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+		<a href="/categories/decorators/" class="tag">decorators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-09T16:00:00+00:00">Mar 9, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/">
+            <img src="/images/delegation-composition-and-inheritance-in-object-oriented-programming.jpg" alt="delegation-composition-and-inheritance-in-object-oriented-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"><h2>Delegation: composition and inheritance in object-oriented programming</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00">Aug 17, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T18:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
+            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T19:00:00+02:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">
+            <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2>TDD in Python with pytest - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">
+            <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2>TDD in Python with pytest - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
+            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/">
+            <img src="/images/object-oriented-programming-concepts-in-python.jpg" alt="object-oriented-programming-concepts-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/"><h2>Object-Oriented Programming (OOP) concepts in Python</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/metaclasses/" class="tag">metaclasses</a>
+		<a href="/categories/metaprogramming/" class="tag">metaprogramming</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-04-26T00:00:00+01:00">Apr 26, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

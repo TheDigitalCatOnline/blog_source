@@ -1,0 +1,871 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Python Generators - From Iterators to Cooperative Multitasking - 2</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Python Generators - From Iterators to Cooperative Multitasking - 2">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Python Generators - From Iterators to Cooperative Multitasking - 2" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/python-generators-from-iterators-to-cooperative-multitasking.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Python Generators - From Iterators to Cooperative Multitasking - 2</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2013-03-26T14:05:00+01:00"> 26/03/2013</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/generators/">generators</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%202&url=https%3A//www.thedigitalcatonline.com/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/&via=thedigicat&hashtags=python,generators" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/&title=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%202&summary=&source=https%3A//www.thedigitalcatonline.com/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%202&u=https%3A//www.thedigitalcatonline.com/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%202&amp;body=https%3A//www.thedigitalcatonline.com/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2013/03/26/python-generators-from-iterators-to-cooperative-multitasking-2/&title=Python%20Generators%20-%20From%20Iterators%20to%20Cooperative%20Multitasking%20-%202" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>After the recap of the iteration process in Python, in this post we will introduce the concept of generator, which aims to solve some problems that arise from the use of iterators.</p>
+<h2 id="generators">Generators<a class="headerlink" href="#generators" title="Permanent link">&para;</a></h2>
+<p>The for construct is generally simple to use and such a loop can be found in almost all programming languages. Its implementation, however, can be problematic in some cases. Let’s look at an example:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">num</span><span class="p">:</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="n">i</span>
+</code></pre></div>
+
+<p>At  first sight <code>sequence()</code> seems to be a good function without big defects (for the sake of simplicity error checking has been intentionally omitted - it does not work with negative numbers for example - and the code is intentionally non-pythonic).</p>
+<p>The problem concealed in such code is that the function does not execute return until the whole list has been built and until the function returns the loop does not start. Thus when the loop begins the function already processed the whole data set.</p>
+<p>While you are building normal sequences of numbers this can be considered irrelevant, even for rather long ones. The problem gets worse when the data set becomes very big or when the creation of an element is very demanding process; in the first case the function might fill the memory, whereas in the second one the whole execution can last a very long time. Both conditions happen even before the loop produces the first element.</p>
+<p>The solution can be found in the generation concept: generating, in this context, means producing only one element of the sequence at each function call. This way each call will take the minimum amount of memory and CPU time needed to create the element and the loop will start immediately.</p>
+<p>To allow the implementation of such a solution without using global variables generators have been introduced in Python. A <strong>generator</strong> is a special type of iterator, its peculiarity being the way it is built. Aside from this, generators behave the same exact way as iterators.</p>
+<p>A generator is built from every function that contains the <strong>yield</strong> statement; <code>yield</code>’s behaviour follows that of the <code>return</code> statement, i.e. it terminates the function returning a value to the caller. But whereas return permanently terminates the function, giving up local variables to the garbage collector, <code>yield</code> freezes the function’s code, allowing a later call to resume execution immediately after <code>yield</code>, with all local variables initialized as they were during the previous execution.</p>
+<p>Pay attention to the fact that the first call of a function that contains an <code>yield</code> statement returns a generator immediately, without executing a single line of the function’s code. Since a generator is an iterator it automatically exposes a next() method that, when called, will actually continue the execution of the frozen function.</p>
+<p>A simple example of generator is the following:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dec</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">num</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">yield</span> <span class="n">x</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">dec</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span>
+<span class="go">&lt;generator object dec at 0xb6abbf2c&gt;</span>
+</code></pre></div>
+
+<p>When executed, the <code>dec()</code> function returns a <strong>generator object</strong> and no lines of code have been executed (i.e. <code>x</code> has not yet been initialized).</p>
+<p>As soon as <code>next()</code> is called for the first time <code>x</code> will be initialized with the value passed to the function (8 in the example above) and the infinite loop will start. Inside it the local variable <code>x</code> will be decremented and returned to the caller by <code>yield</code>. The latter will also freeze again the code, holding the internal state, in this case the value of the variable <code>x</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">4</span>
+</code></pre></div>
+
+<p>As you can see the generator <code>g</code> remembers its previous state and acts accordingly.</p>
+<p>Since generators are iterators they are allowed to raise the <code>StopIteration</code> exception to signal their exhaustion. In the previous example the <code>dec()</code> function never raises it, thus providing an infinite generator (or infinite iterator).</p>
+<p>Another caveat: as for return a function is not limited to one statement, but can contain more than one; obviously the peculiarity of yield makes this scenario rather complex, opening at the same time remarkable possibilities such as that of easily build state machines.</p>
+<p>What happens if we call the function again, maybe with a different value of the parameter? We simply obtain a new generator object that is completely independent from the first one, although it behaves the same way.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">dec</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span>
+<span class="go">&lt;generator object dec at 0xb72e1cac&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">2</span>
+</code></pre></div>
+
+<p>Let’s recap the whole concept. A function containing the <code>yield</code> statement is called generator function and when executed returns a generator object; this is nothing more than a simple iterator, which automatically implements the freeze and resume of the function’s code.</p>
+<p>Pay attention to the fact that a generator is an iterator (it exposes <code>next()</code> and <code>__iter__()</code> methods and may raise <code>StopIteration</code>) but the opposite is not always true. A generator is an iterator built by a generator function, i.e. through the use of the <code>yield</code> statement; as explained there are other ways to build iterators.</p>
+<p>Back to the <code>sequence()</code> function showed above we can now write it as a generator function and use it to build arbitrarily long sequences and, at the limit, infinite.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">num</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">Traceback  (most recent call last):</span>
+<span class="go">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="go">  File &quot;&lt;stdin&gt;&quot;, line 5, in sequence</span>
+<span class="go">StopIteration</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="gp">... </span> <span class="nb">print</span> <span class="n">i</span>
+<span class="gp">...</span>
+<span class="go">0</span>
+<span class="go">1</span>
+<span class="go">2</span>
+</code></pre></div>
+
+<h2 id="generators-and-iterators">Generators and iterators<a class="headerlink" href="#generators-and-iterators" title="Permanent link">&para;</a></h2>
+<p>A question might arise: if generators are iterators why should we use the <code>yield</code>-based method to create them? After all, generator functions are simple to write but not so simple to manage, due to the radically different behaviour from that of standard functions. Wouldn’t it be enough to create an iterable object that at each call of the <code>next()</code> method creates the correct element of the sequence?</p>
+<p>The answer is certainly affirmative: everything you can do with generators can be done with standard iterators. There are two caveats, however.</p>
+<p>First consideration is about performances: instancing an object and calling its methods is slower than calling a function. Every time you hear talking about performance problems always think about Web services, administration or scientific tools and in general about big amounts of data. Obviously a script that manages a dozen or so files is not noticeably affected by such problems.</p>
+<p>Second consideration is about code complexity, since writing a function is simpler than writing an object. Take into account, however, that an iterable object can be enriched by custom methods that make it more flexible than a generator; for instance a <code>reset()</code> method that can restore the object to its initial state.</p>
+<h2 id="generator-expressions">Generator expressions<a class="headerlink" href="#generator-expressions" title="Permanent link">&para;</a></h2>
+<p>The two observations above identify the problems that generators can solve in a simpler way than iterators do; one of those problems concerns the processing of long arrays of data.</p>
+<p>Every Python programmer uses and hopefully appreciates the elegance of list comprehension. The following code instances with a single line 100 objects of the <code>MyObject</code> class and puts them in a list</p>
+<div class="highlight"><pre><span></span><code><span class="n">object_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">MyObject</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+</code></pre></div>
+
+<p>where the classic code would be</p>
+<div class="highlight"><pre><span></span><code><span class="n">object_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">object_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MyObject</span><span class="p">())</span>
+</code></pre></div>
+
+<p>Surely it is not a lot of code, but it is less easy to understand immediately and less elegant; less pythonic, in a word. List comprehension, however, being nothing more than an alternative syntax to express the above for loop, suffers from the same problems, particularly from performance issues we talked about earlier. Bitter enemies of list comprehensions are long lists and objects which creation is expensive.</p>
+<p>Could we take advantage of generators in this case? Yes, with <strong>generator expressions</strong>. The syntax of such expressions is identical to that of list comprehension, except for the use of round brackets instead of square ones. While list comprehension returns a list, however, a generator expression return a generator, as the name implies. The previous code could thus be written this way</p>
+<div class="highlight"><pre><span></span><code><span class="n">object_generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">MyObject</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+</code></pre></div>
+
+<p>where <code>object_generator</code> is a generator like one of those returned by a generator function. The latter form of the code would be</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">object_generator_function</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">MyObject</span><span class="p">()</span>
+
+<span class="n">object_generator</span> <span class="o">=</span> <span class="n">object_generator_function</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Which is, as happens for list comprehension and for loops, less elegant than its equivalent shortcut syntax. Obviously, returning a generator has all the advantages we described above: after the generator expression has been executed no element has yet been created. That will happen when the generator is consumed by a for loop or a similar construct.</p>
+<p>As for list comprehension, generator expressions can encompass a condition in the form</p>
+<div class="highlight"><pre><span></span><code><span class="n">generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">expression</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="n">condition</span><span class="p">)</span><span class="o">.</span>
+</code></pre></div>
+
+<p>and can also be directly used as arguments for single-argument functions, using function call brackets to mark the expression.</p>
+<div class="highlight"><pre><span></span><code><span class="n">afunction</span><span class="p">(</span><span class="n">expression</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span>
+</code></pre></div>
+
+<p>There is however no real performance improvement using such a syntax, since the generator is exhausted before passing it to the function, but the syntax is very elegant and compact.</p>
+<p>A typical example of this use is that of the so-called <strong>dictionary comprehension</strong>; from two lists of the same length, one of keys and one of values, we can obtain a dictionary with</p>
+<div class="highlight"><pre><span></span><code><span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">z</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
+</code></pre></div>
+
+<p>since <code>dict()</code> accepts an iterable of <code>(key, value)</code> tuples, which is what the generator with <code>zip()</code> returns.</p>
+<h2 id="conclusions">Conclusions<a class="headerlink" href="#conclusions" title="Permanent link">&para;</a></h2>
+<p>Generators are a very powerful tool, not only because they simplify the creation of iterators, but also for the advantage of delaying the creation of the objects in a list and for the capability of generator functions to interrupt and resume the execution. As we will see in the third post this last feature is the foundation stone of an easy approach to cooperative multitasking.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 2 of the Python generators - from iterators to cooperative multitasking series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/">Python generators - from iterators to cooperative multitasking</a></li>
+      </ul>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/">Python Generators - From Iterators to Cooperative Multitasking - 3</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/">
+            <img src="/images/python-generators-from-iterators-to-cooperative-multitasking.jpg" alt="python-generators-from-iterators-to-cooperative-multitasking" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/03/29/python-generators-from-iterators-to-cooperative-multitasking-3/"><h2>Python Generators - From Iterators to Cooperative Multitasking - 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/generators/" class="tag">generators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-03-29T13:25:00+01:00">Mar 29, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/">
+            <img src="/images/python-generators-from-iterators-to-cooperative-multitasking.jpg" alt="python-generators-from-iterators-to-cooperative-multitasking" />
+          </a>
+          <div class="body">
+            <a href="/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/"><h2>Python generators - from iterators to cooperative multitasking</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/generators/" class="tag">generators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2013-03-25T10:41:00+01:00">Mar 25, 2013</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/">
+            <img src="/images/from-docker-cli-to-docker-compose.jpg" alt="from-docker-cli-to-docker-compose" />
+          </a>
+          <div class="body">
+            <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/"><h2>From Docker CLI to Docker Compose</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2022-02-19T15:00:00+01:00">Feb 19, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/04/25/rsa-keys/">
+            <img src="/images/rsa-keys.jpg" alt="rsa-keys" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/04/25/rsa-keys/"><h2>Public key cryptography: RSA keys</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/ssh/" class="tag">SSH</a>
+		<a href="/categories/rsa/" class="tag">RSA</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-04-25T13:00:00+01:00">Apr 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-01-23T11:00:00+00:00">Jan 23, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-05T13:00:00+01:00">Jul 5, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T10:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">
+            <img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/"><h2>How to write a Pelican theme for your static website</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/blogging/" class="tag">blogging</a>
+		<a href="/categories/markdown/" class="tag">Markdown</a>
+		<a href="/categories/pelican/" class="tag">pelican</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+		<a href="/categories/html/" class="tag">HTML</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-25T14:00:00+01:00">Mar 25, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/">
+            <img src="/images/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform.jpg" alt="aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/"><h2>AWS Log Insights as CloudWatch metrics with Python and Terraform</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/lambda/" class="tag">Lambda</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/terraform/" class="tag">Terraform</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-22T17:00:00+01:00">Mar 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/">
+            <img src="/images/first-class-objects-in-python-generic-code-wrappers-and-factories.jpg" alt="first-class-objects-in-python-generic-code-wrappers-and-factories" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/"><h2>First-class objects in Python: generic code, wrappers, and factories</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+		<a href="/categories/decorators/" class="tag">decorators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-09T16:00:00+00:00">Mar 9, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

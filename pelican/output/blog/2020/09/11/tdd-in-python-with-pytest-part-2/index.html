@@ -1,0 +1,1048 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - TDD in Python with pytest - Part 2</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="This is the second post in the series TDD in Python with pytest where I develop a simple project following a strict TDD methodology. The posts come from my book Clean Architectures in Python and have been reviewed to get rid of some bad naming choices of the version published …">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="TDD in Python with pytest - Part 2" />
+<meta name="twitter:description" content="This is the second post in the series TDD in Python with pytest where I develop a simple project following a strict TDD methodology. The posts come from my book Clean Architectures in Python and have been reviewed to get rid of some bad naming choices of the version published …" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/tdd-in-python-with-pytest-part-2.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>TDD in Python with pytest - Part 2</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00"> 11/09/2020</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/oop/">OOP</a>
+	<a class="tag" href="/categories/pytest/">pytest</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/python3/">Python3</a>
+	<a class="tag" href="/categories/refactoring/">refactoring</a>
+	<a class="tag" href="/categories/tdd/">TDD</a>
+	<a class="tag" href="/categories/testing/">testing</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=TDD%20in%20Python%20with%20pytest%20-%20Part%202&url=https%3A//www.thedigitalcatonline.com/blog/2020/09/11/tdd-in-python-with-pytest-part-2/&via=thedigicat&hashtags=oop,pytest,python,python3,refactoring,tdd,testing" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2020/09/11/tdd-in-python-with-pytest-part-2/&title=TDD%20in%20Python%20with%20pytest%20-%20Part%202&summary=This%20is%20the%20second%20post%20in%20the%20series%20TDD%20in%20Python%20with%20pytest%20where%20I%20develop%20a%20simple%20project%20following%20a%20strict%20TDD%20methodology.%20The%20posts%20come%20from%20my%20book%20Clean%20Architectures%20in%20Python%20and%20have%20been%20reviewed%20to%20get%20rid%20of%20some%20bad%20naming%20choices%20of%20the%20version%20published%20%E2%80%A6&source=https%3A//www.thedigitalcatonline.com/blog/2020/09/11/tdd-in-python-with-pytest-part-2/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=TDD%20in%20Python%20with%20pytest%20-%20Part%202&u=https%3A//www.thedigitalcatonline.com/blog/2020/09/11/tdd-in-python-with-pytest-part-2/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=TDD%20in%20Python%20with%20pytest%20-%20Part%202&amp;body=https%3A//www.thedigitalcatonline.com/blog/2020/09/11/tdd-in-python-with-pytest-part-2/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2020/09/11/tdd-in-python-with-pytest-part-2/&title=TDD%20in%20Python%20with%20pytest%20-%20Part%202" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>This is the second post in the series <strong>TDD in Python with pytest</strong> where I develop a simple project following a strict TDD methodology. The posts come from my book <a href="https://leanpub.com/clean-architectures-in-python">Clean Architectures in Python</a> and have been reviewed to get rid of some bad naming choices of the version published in the book.</p><p>You can find the first post <a href="https://www.thedigitalcatonline.com/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">here</a>.</p><h2 id="step-7---division">Step 7 - Division<a class="headerlink" href="#step-7---division" title="Permanent link">¶</a></h2><p>The requirements state that there shall be a division function, and that it has to return a float value. This is a simple condition to test, as it is sufficient to divide two numbers that do not give an integer result</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_div_two_numbers_float</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mf">6.5</span>
+</pre></div>
+</div></div><p>The test suite fails with the usual error that signals a missing method. The implementation of this function is very simple as the operator <code>/</code> in Python performs a float division</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SimpleCalculator</span><span class="p">:</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+</pre></div>
+</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-7-float-division">step-7-float-division</a></p><p>If you run the test suite again all the test should pass. There is a second requirement about this operation, however, that states that division by zero shall return <code>inf</code>.</p><p>I already mentioned in the previous post that this is not a good requirement, and please don't go around telling people that I told you to create function that return either floats of strings. This is a simple requirement that I will use to show you how to deal with exceptions.</p><p>The test that comes from the requirement is simple</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_div_by_zero_returns_inf</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+</pre></div>
+</div></div><p>And the test suite fails now with this message</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>__________________________ test_div_by_zero_returns_inf ___________________________
+
+    def test_div_by_zero_returns_inf():
+        calculator = SimpleCalculator()
+
+&gt;       result = calculator.div(5, 0)
+
+tests/test_main.py:70:  
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;simple_calculator.main.SimpleCalculator object at 0x7f0b0b733990&gt;, a = 5, b = 0  <span class="callout">1</span>
+
+    def div(self, a, b):
+&gt;       return a / b
+E       ZeroDivisionError: division by zero
+
+simple_calculator/main.py:17: ZeroDivisionError
+</pre></div>
+</div></div><p>Note that when an exception happens in the code and not in the test, the pytest output changes slightly. The first part of the message shows where the test fails, but then there is a second part that shows the internal code that raised the exception and provides information about the value of local variables on the first line <span class="callout">1</span>.</p><p>We might implement two different solutions to satisfy this requirement and its test. The first one is to prevent <code>b</code> to be 0</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">b</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+</pre></div>
+</div></div><p>and the second one is to intercept the exception with a <code>try/except</code> block</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+        <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+</pre></div>
+</div></div><p>Both solutions make the test suite pass, so both are correct. I leave to you the decision about which is the best one, syntactically speaking.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-7-division-by-zero">step-7-float-division</a></p><h2 id="step-8---testing-exceptions">Step 8 - Testing exceptions<a class="headerlink" href="#step-8---testing-exceptions" title="Permanent link">¶</a></h2><p>A further requirement is that multiplication by zero must raise a <code>ValueError</code> exception. This means that we need a way to test if our code raises an exception, which is the opposite of what we did until now. In the previous tests, the condition to pass was that there was no exception in the code, while in this test the condition will be that an exception has been raised.</p><p>Again, this is a requirement I made up just for the sake of showing you how do deal with exceptions, so if you think this is a silly behaviour for a multiplication function you are probably right.</p><p>Pytest provides a context manager named <code>raises</code> that runs the code contained in it and passes only if the given exception is produced by that code.</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">test_mul_by_zero_raises_exception</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="n">calculator</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div></div><p>In this case, thus, pytest runs the line <code>calculator.mul(3, 0)</code>. If the method  doesn't raise the exception <code>ValueError</code> the test will fail. Indeed, if you run the test suite now, you will get the following failure</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>________________________ test_mul_by_zero_raises_exception ________________________
+
+    def test_mul_by_zero_raises_exception():
+        calculator = SimpleCalculator()
+
+        with pytest.raises(ValueError):
+&gt;           calculator.mul(3, 0)
+E           Failed: DID NOT RAISE &lt;class &#39;ValueError&#39;&gt;
+
+tests/test_main.py:81: Failed
+</pre></div>
+</div></div><p>which signals that the code didn't raise the expected exception.</p><p>The code that makes the test pass needs to test if one of the inputs of the function <code>mul</code> is 0. This can be done with the help of the built-in function <code>all</code>, which accepts an iterable and returns <code>True</code> only if all the values contained in it are <code>True</code>. Since in Python the value <code>0</code> is not true, we may write</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div></div><p>and make the test suite pass. The condition checks that there are no false values in the tuple <code>args</code>, that is there are no zeros.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-8-multiply-by-zero">step-8-multiply-by-zero</a></p><h2 id="step-9---a-more-complex-set-of-requirements">Step 9 - A more complex set of requirements<a class="headerlink" href="#step-9---a-more-complex-set-of-requirements" title="Permanent link">¶</a></h2><p>Until now the requirements were pretty simple, and it was was easy to map each of them directly into tests. It's time to try to tackle a more complex problem. The remaining requirements say that the class has to provide a function to compute the average of an iterable, and that this function shall accept two optional upper and lower thresholds to remove outliers.</p><p>Let's break these two requirements into a set of simpler ones</p><ol><li>The function accepts an iterable and computes the average, i.e. <code>avg([2, 5, 12, 98]) == 29.25</code></li><li>The function accepts an optional upper threshold. It must remove all the values that are greater than the threshold before computing the average, i.e. <code>avg([2, 5, 12, 98], ut=90) == avg([2, 5, 12])</code></li><li>The function accepts an optional lower threshold. It must remove all the values that are less then the threshold before computing the average, i.e. <code>avg([2, 5, 12, 98], lt=10) == avg([12, 98])</code></li><li>The upper threshold is not included when removing data, i.e. <code>avg([2, 5, 12, 98], ut=12) == avg([2, 5, 12])</code></li><li>The lower threshold is not included when removing data, i.e. <code>avg([2, 5, 12, 98], lt=5) == avg([5, 12, 98])</code></li><li>The function works with an empty list, returning <code>0</code>, i.e. <code>avg([]) == 0</code></li><li>The function works if the list is empty after outlier removal, i.e. <code>avg([12, 98], lt=15, ut=90) == 0</code></li><li>The function outlier removal works if the list is empty, i.e. <code>avg([], lt=15, ut=90) == 0</code></li></ol><p>As you can see a requirement can produce multiple tests. Some of these are clearly expressed by the requirement (numbers 1, 2, 3), some of these are choices that we make (numbers 4, 5, 6) and can be discussed, some are boundary cases that we have to discover thinking about the problem (numbers 6, 7, 8).</p><p>There is a fourth category of tests, which are the ones that come from bugs that you discover. We will discuss about those later in this chapter.</p><p>Now, if you followed the posts coding along it is time to try to tackle a problem on your own. Why don't you try to go on and implement these features? Each of the eight requirements can be directly mapped into a test, and you know how to write tests and code that passes them. The next steps show my personal solution, which is just one of the possible ones, so you can compare what you did with what I came up with to solve the tests.</p><h3 id="step-9.1---average-of-an-iterable">Step 9.1 - Average of an iterable</h3><p>Let's start adding a test for requirement number 1</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_correct_average</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">98</span><span class="p">])</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mf">29.25</span>
+</pre></div>
+</div></div><p>We feed the function <code>avg</code> a list of generic numbers, which average we calculated with an external tool. The first run of the test suite fails with the usual complaint about a missing function, and we can make the test pass with a simple use of <code>sum</code> and <code>len</code>, as both built-in functions work on iterables</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SimpleCalculator</span><span class="p">:</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">it</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</pre></div>
+</div></div><p>Here, <code>it</code> stands for iterable, as this function works with anything that supports the loop protocol.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-1-average-of-an-iterable">step-9-1-average-of-an-iterable</a></p><h3 id="step-9.2---upper-threshold">Step 9.2 - Upper threshold</h3><p>The second requirement mentions an upper threshold, but we are free with regards to the API, i.e. the requirement doesn't specify how the threshold is supposed to be specified or named. I decided to call the upper threshold parameter <code>ut</code>, so the test becomes</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_removes_upper_outliers</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">98</span><span class="p">],</span> <span class="n">ut</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">6.333333</span><span class="p">)</span>
+</pre></div>
+</div></div><p>As you can see the parameter <code>ut=90</code> is supposed to remove the element <code>98</code> from the list and then compute the average of the remaining elements. Since the result has an infinite number of digits I used the function <code>pytest.approx</code> to check the result.</p><p>The test suite fails because the function <code>avg</code> doesn't accept the parameter <code>ut</code></p><div class="code"><div class="content"><div class="highlight"><pre><span></span>_________________________ test_avg_removes_upper_outliers _________________________
+
+    def test_avg_removes_upper_outliers():
+        calculator = SimpleCalculator()
+
+&gt;       result = calculator.avg([2, 5, 12, 98], ut=90)
+E       TypeError: avg() got an unexpected keyword argument &#39;ut&#39;
+
+tests/test_main.py:95: TypeError
+</pre></div>
+</div></div><p>There are two problems now that we have to solve, as it happened for the second test we wrote in this project. The new <code>ut</code> argument needs a default value, so we have to manage that case, and then we have to make the upper threshold work. My solution is</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ut</span><span class="p">:</span>
+            <span class="n">ut</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+
+        <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">ut</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span>
+</pre></div>
+</div></div><p>The idea here is that <code>ut</code> is used to filter the iterable keeping all the elements that are less than or equal to the threshold. This means that the default value for the threshold has to be neutral with regards to this filtering operation. Using the maximum value of the iterable makes the whole algorithm work in every case, while for example using a big fixed value like <code>9999</code> would introduce a bug, as one of the elements of the iterable might be bigger than that value.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-2-upper-threshold">step-9-2-upper-threshold</a></p><h3 id="step-9.3---lower-threshold">Step 9.3 - Lower threshold</h3><p>The lower threshold is the mirror of the upper threshold, so it doesn't require many explanations. The test is</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_removes_lower_outliers</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">98</span><span class="p">],</span> <span class="n">lt</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mi">55</span><span class="p">)</span>
+</pre></div>
+</div></div><p>and the code of the function <code>avg</code> now becomes</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">lt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">lt</span><span class="p">:</span>
+            <span class="n">lt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ut</span><span class="p">:</span>
+            <span class="n">ut</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+
+        <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">lt</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">ut</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span>
+</pre></div>
+</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-3-lower-threshold">step-9-3-lower-threshold</a></p><h3 id="step-9.4-and-9.5---boundary-inclusion">Step 9.4 and 9.5 - Boundary inclusion</h3><p>As you can see from the code of the function <code>avg</code>, the upper and lower threshold are included in the comparison, so we might consider the requirements as already satisfied. TDD, however, pushes you to write a test for each requirement (as we saw it's not unusual to actually have multiple tests per requirements), and this is what we are going to do. </p><p>The reason behind this is that you might get the expected behaviour for free, like in this case, because some other code that you wrote to pass a different test provides that feature as a side effect. You don't know, however what will happen to that code in the future, so if you don't have tests that show that all your requirements are satisfied you might lose features without knowing it.</p><p>The test for the fourth requirement is</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_upper_threshold_is_included</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">98</span><span class="p">],</span> <span class="n">ut</span><span class="o">=</span><span class="mi">98</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mf">29.25</span>
+</pre></div>
+</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-4-upper-threshold-is-included">step-9-4-upper-threshold-is-included</a></p><p>while the test for the fifth one is</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_lower_threshold_is_included</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">98</span><span class="p">],</span> <span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mf">29.25</span>
+</pre></div>
+</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-5-lower-threshold-is-included">step-9-5-lower-threshold-is-included</a></p><p>And, as expected, both pass without any change in the code. Do you remember rule number 5? You should ask yourself why the tests don't fail. In this case we reasoned about that before, so we can accept that the new tests don't require any code change to pass.</p><h3 id="step-9.6---empty-list">Step 9.6 - Empty list</h3><p>Requirement number 6 is something that wasn't clearly specified in the project description so we decided to return 0 as the average of an empty list. You are free to change the requirement and decide to raise an exception, for example.</p><p>The test that implements this requirement is</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_empty_list</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([])</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div></div><p>and the test suite fails with the following error</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>_______________________________ test_avg_empty_list _______________________________
+
+    def test_avg_empty_list():
+        calculator = SimpleCalculator()
+
+&gt;       result = calculator.avg([])
+
+tests/test_main.py:127:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;simple_calculator.main.SimpleCalculator object at 0x7feeb7098a10&gt;, it = [], lt = None, ut = None
+
+    def avg(self, it, lt=None, ut=None):
+        if not lt:
+&gt;           lt = min(it)
+E           ValueError: min() arg is an empty sequence
+
+simple_calculator/main.py:26: ValueError
+</pre></div>
+</div></div><p>The function <code>min</code> that we used to compute the default lower threshold doesn't work with an empty list, so the code raises an exception. The simplest solution is to check for the length of the iterable before computing the default thresholds</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">lt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">lt</span><span class="p">:</span>
+            <span class="n">lt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ut</span><span class="p">:</span>
+            <span class="n">ut</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+
+        <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">lt</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">ut</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span>
+</pre></div>
+</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-6-empty-list">step-9-6-empty-list</a></p><p>As you can see the function <code>avg</code> is already pretty rich, but at the same time it is well structured and understandable. This obviously happens because the example is trivial, but cleaner code is definitely among the benefits of TDD.</p><h3 id="step-9.7---empty-list-after-applying-the-thresholds">Step 9.7 - Empty list after applying the thresholds</h3><p>The next requirement deals with the case in which the outlier removal process empties the list. The test is the following</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_manages_empty_list_after_outlier_removal</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">98</span><span class="p">],</span> <span class="n">lt</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div></div><p>and the test suite fails with a <code>ZeroDivisionError</code>, because the length of the iterable is now 0.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>________________ test_avg_manages_empty_list_after_outlier_removal ________________
+
+    def test_avg_manages_empty_list_after_outlier_removal():
+        calculator = SimpleCalculator()
+
+&gt;       result = calculator.avg([12, 98], lt=15, ut=90)
+
+tests/test_main.py:135:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;simple_calculator.main.SimpleCalculator object at 0x7f9e60c3ba90&gt;, it = [12, 98], lt = 15, ut = 90
+
+    def avg(self, it, lt=None, ut=None):
+        if not len(it):
+            return 0
+
+        if not lt:
+            lt = min(it)
+
+        if not ut:
+            ut = max(it)
+
+        _it = [x for x in it if x &gt;= lt and x &lt;= ut]
+
+&gt;       return sum(_it)/len(_it)
+E       ZeroDivisionError: division by zero
+
+simple_calculator/main.py:36: ZeroDivisionError
+</pre></div>
+</div></div><p>The easiest solution is to introduce a new check on the length of the iterable</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">lt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">lt</span><span class="p">:</span>
+            <span class="n">lt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ut</span><span class="p">:</span>
+            <span class="n">ut</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+
+        <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">lt</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">ut</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span>
+</pre></div>
+</div></div><p>And this code makes the test suite pass. As I stated before, code that makes the tests pass is considered correct, but you are always allowed to improve it. In this case I don't really like the repetition of the length check, so I might try to refactor the function to get a cleaner solution. Since I have all the tests that show that the requirements are satisfied, I am free to try to change the code of the function.</p><p>After some attempts I found this solution</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">lt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">_it</span> <span class="o">=</span> <span class="n">it</span><span class="p">[:]</span>
+
+        <span class="k">if</span> <span class="n">lt</span><span class="p">:</span>
+            <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">lt</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">ut</span><span class="p">:</span>
+            <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">ut</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span>
+</pre></div>
+</div></div><p>which looks reasonably clean, and makes the whole test suite pass.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-7-empty-list-after-thresholds">step-9-7-empty-list-after-thresholds</a></p><h3 id="step-9.8---empty-list-before-applying-the-thresholds">Step 9.8 - Empty list before applying the thresholds</h3><p>The last requirement checks another boundary case, which happens when the list is empty and we specify one of or both the thresholds. This test will check that the outlier removal code doesn't assume the list contains elements.</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_manages_empty_list_before_outlier_removal</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([],</span> <span class="n">lt</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div></div><p>This test doesn't fail. So, according to the TDD methodology, we should provide a reason why this happens and decide if we want to keep the test. The reason is because the two list comprehensions used to filter the elements work perfectly with empty lists. As for the test, it comes directly from a corner case, and it checks a behaviour which is not already covered by other tests. This makes me decide to keep the test.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-8-empty-list-before-thresholds">step-9-8-empty-list-before-thresholds</a></p><h3 id="step-9.9---zero-as-lowerupper-threshold">Step 9.9 - Zero as lower/upper threshold</h3><p>This is perhaps the most important step of the whole chapter, for two reasons.</p><p>First of all, the test added in this step was added by two readers of my book about clean architectures (<a href="https://github.com/faustgertz">Faust Gertz</a> and <a href="https://github.com/IrishPrime">Michael O&#x27;Neill</a>), and this shows a real TDD workflow. After you published you package (or your book, in this case) someone notices a wrong behaviour in some use case. This might be a big flaw or a tiny corner case, but in any case they can come up with a test that exposes the bug, and maybe even with a patch to the code, but the most important part is the test.</p><p>Whoever discovers the bug has a clear way to show it, and you, as an author/maintainter/developer can add that test to your suite and work on the code until that passes. The rest of the test suite will block any change in the code that disrupts the behaviour you already tested. As I already stressed multiple times, we could do the same without TDD, but if we need to change a substantial amount of code there is nothing like a test suite that can guarantee we are not re-introducing bugs (also called regressions).</p><p>Second, this step shows an important part of the TDD workflow: checking corner cases. In general you should pay a lot of attention to the boundaries of a domain, and test the behaviour of the code in those cases.</p><p>This test shows that the code doesn't manage zero-valued lower thresholds correctly</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_manages_zero_value_lower_outlier</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">lt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mf">0.5</span>
+</pre></div>
+</div></div><p>The reason is that the function <code>avg</code> contains a check like <code>if lt:</code>, which fails when <code>lt</code> is 0, as that is a false value. The check should be <code>if lt is not None:</code>, so that part of the function <code>avg</code> becomes</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>        <span class="k">if</span> <span class="n">lt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">lt</span><span class="p">]</span>
+</pre></div>
+</div></div><p>It is immediately clear that the upper threshold has the same issue, so the two tests I added are</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_manages_zero_value_lower_outlier</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">lt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mf">0.5</span>
+
+
+<span class="k">def</span> <span class="nf">test_avg_manages_zero_value_upper_outlier</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ut</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mf">0.5</span>
+</pre></div>
+</div></div><p>and the final version of <code>avg</code> is</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">lt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">_it</span> <span class="o">=</span> <span class="n">it</span><span class="p">[:]</span>
+
+        <span class="k">if</span> <span class="n">lt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">lt</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">ut</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_it</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_it</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">ut</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span>
+</pre></div>
+</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-9-zero-as-lower-upper-threshold">step-9-9-zero-as-lower-upper-threshold</a></p><h2 id="recap-of-the-tdd-rules">Recap of the TDD rules<a class="headerlink" href="#recap-of-the-tdd-rules" title="Permanent link">¶</a></h2><p>Through this very simple example we learned 6 important rules of the TDD methodology. Let us review them, now that we have some experience that can make the words meaningful</p><ol><li>Test first, code later</li><li>Add the bare minimum amount of code you need to pass the tests</li><li>You shouldn't have more than one failing test at a time</li><li>Write code that passes the test. Then refactor it.</li><li>A test should fail the first time you run it. If it doesn't ask yourself why you are adding it.</li><li>Never refactor without tests.</li></ol><h2 id="how-many-assertions">How many assertions?<a class="headerlink" href="#how-many-assertions" title="Permanent link">¶</a></h2><p>I am frequently asked "How many assertions do you put in a test?", and I consider this question important enough to discuss it in a dedicated section. To answer this question I want to briefly go back to the nature of TDD and the role of the test suite that we run.</p><p>The whole point of automated tests is to run through a set of checkpoints that can quickly reveal that there is a problem in a specific area. Mind the words "quickly" and "specific". When I run the test suite and an error occurs I'd like to be able to understand as fast as possible where the problem lies. This doesn't (always) mean that the problem will have a quick resolution, but at least I can be immediately aware of which part of the system is misbehaving.</p><p>On the other hand, we don't want to have too many test for the same condition, on the contrary we want to avoid testing the same condition more than once as tests have to be maintained. A test suite that is too fine-grained might result in too many tests failing because of the same problem in the code, which might be daunting and not very informative.</p><p>My advice is to group together assertions that can be executed after running the same setup, if they test the same process. For example, you might consider the two functions <code>add</code> and <code>sub</code> that we tested in this chapter. They require the same setup, which is to instantiate the class <code>SimpleCalculator</code> (a setup that they share with many other tests), but they are actually testing two different processes. A good sign of this is that you should rename the test to <code>test_add_or_sub</code>, and a failure in this test would require a further investigation in the test output to check which method of the class is failing.</p><p>If you have to test that a method returns positive even numbers, instead, you will have consider running the method and then writing two assertions, one that checks that the number is positive, and one that checks it is even. This makes sense, as a failure in one of the two means a failure of the whole process.</p><p>As a rule of thumb, then, consider if the test is a logical <code>AND</code> between conditions or a logical <code>OR</code>. In the former case go for multiple assertions, in the latter create multiple test functions.</p><h2 id="how-to-manage-bugs-or-missing-features">How to manage bugs or missing features<a class="headerlink" href="#how-to-manage-bugs-or-missing-features" title="Permanent link">¶</a></h2><p>In this chapter we developed the project from scratch, so the challenge was to come up with a series of small tests starting from the requirements. At a certain point in the life of your project you will have a stable version in production (this expression has many definitions, but in general it means "used by someone other than you") and you will need to maintain it. This means that people will file bug reports and feature requests, and TDD gives you a clear strategy to deal with those.</p><p>From the TDD point of view both a bug and a missing feature are cases not currently covered by a test, so I will refer to them collectively as bugs, but don't forget that I'm talking about the second ones as well. </p><p>The first thing you need to do is to write one or more tests that expose the bug. This way you can easily decide when the code that you wrote is correct or good enough. For example, let's assume that a user files an issue on the project <code>SimpleCalculator</code> saying: "The function <code>add</code> doesn't work with negative numbers". You should definitely try to get a concrete example from the user that wrote the issue and some information about the execution environment (as it is always possible that the problem comes from a different source, like for example an old version of a library your package relies on), but in the meanwhile you can come up with at least 3 tests: one that involves two negative numbers, one with a negative number as the first argument, and one with a negative numbers as the second argument.</p><p>You shouldn't write down all of them at once. Write the first test that you think might expose the issue and see if it fails. If it doesn't, discard it and write a new one. From the TDD point of view, if you don't have a failing test there is no bug, so you have to come up with at least one test that exposes the issue you are trying to solve.</p><p>At this point you can move on and try to change the code. Remember that you shouldn't have more than one failing test at a time, so start doing this as soon as you discover a test case that shows there is a problem in the code.</p><p>Once you reach a point where the test suite passes without errors stop and try to run the code in the environment where the bug was first discovered (for example sharing a branch with the user that created the ticket) and iterate the process.</p><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>I hope you found the project entertaining and that you can now appreciate the power of TDD. The journey doesn't end here, though. In the next post I will discuss the practice of writing unit tests in depth, and then introduce you to another powerful tool: mocks.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2021-01-03: <a href="https://github.com/4myhw">George</a> fixed a typo, thanks!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 2 of the TDD in Python with pytest series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">TDD in Python with pytest - Part 1</a></li>
+      </ul>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">TDD in Python with pytest - Part 3</a></li>
+        <li><a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">TDD in Python with pytest - Part 4</a></li>
+        <li><a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">TDD in Python with pytest - Part 5</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
+            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T19:00:00+02:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">
+            <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2>TDD in Python with pytest - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">
+            <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2>TDD in Python with pytest - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/">
+            <img src="/images/refactoring-with-tests-in-python.jpg" alt="refactoring-with-tests-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/"><h2>Refactoring with tests in Python: a practical example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2017-07-21T09:30:00+01:00">Jul 21, 2017</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/">
+            <img src="/images/python-mocks.jpg" alt="python-mocks" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"><h2>Python Mocks: a gentle introduction - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/decorators/" class="tag">decorators</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-03-06T18:00:00+01:00">Mar 6, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-27T23:30:00+00:00">Feb 27, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/">
+            <img src="/images/python-mocks.jpg" alt="python-mocks" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/"><h2>Python Mocks: a gentle introduction - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/decorators/" class="tag">decorators</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-09-27T09:00:00+00:00">Sep 27, 2016</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

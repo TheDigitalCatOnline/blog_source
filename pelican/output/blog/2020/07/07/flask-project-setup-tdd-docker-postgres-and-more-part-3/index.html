@@ -1,0 +1,1367 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Flask project setup: TDD, Docker, Postgres and more - Part 3</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="A step-by-step tutorial on how to setup a Flask project with TDD, Docker and Postgres">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Flask project setup: TDD, Docker, Postgres and more - Part 3" />
+<meta name="twitter:description" content="A step-by-step tutorial on how to setup a Flask project with TDD, Docker and Postgres" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/flask-project-setup-tdd-docker-postgres-and-more-part-3.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-2">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Flask project setup: TDD, Docker, Postgres and more - Part 3</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-07-07T13:00:00+01:00"> 07/07/2020</time> <i class="fas fa-edit"></i> Updated on <time datetime="2021-02-23T20:00:00+00:00">Feb 23, 2021</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/aws/">AWS</a>
+	<a class="tag" href="/categories/devops/">devops</a>
+	<a class="tag" href="/categories/docker/">Docker</a>
+	<a class="tag" href="/categories/flask/">Flask</a>
+	<a class="tag" href="/categories/http/">HTTP</a>
+	<a class="tag" href="/categories/postgres/">Postgres</a>
+	<a class="tag" href="/categories/pytest/">pytest</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/python3/">Python3</a>
+	<a class="tag" href="/categories/tdd/">TDD</a>
+	<a class="tag" href="/categories/testing/">testing</a>
+	<a class="tag" href="/categories/www/">WWW</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%203&url=https%3A//www.thedigitalcatonline.com/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/&via=thedigicat&hashtags=aws,devops,docker,flask,http,postgres,pytest,python,python3,tdd,testing,www" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/&title=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%203&summary=A%20step-by-step%20tutorial%20on%20how%20to%20setup%20a%20Flask%20project%20with%20TDD%2C%20Docker%20and%20Postgres&source=https%3A//www.thedigitalcatonline.com/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%203&u=https%3A//www.thedigitalcatonline.com/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%203&amp;body=https%3A//www.thedigitalcatonline.com/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/&title=Flask%20project%20setup%3A%20TDD%2C%20Docker%2C%20Postgres%20and%20more%20-%20Part%203" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>In this series of posts I explore the development of a Flask project with a setup that is built with efficiency and tidiness in mind, using TDD, Docker and Postgres.</p><h2 id="catch-up">Catch-up<a class="headerlink" href="#catch-up" title="Permanent link">¶</a></h2><p>In the <a href="https://www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">first</a> and <a href="https://www.thedigitalcatonline.com/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/">second</a> posts I created a Flask project with a tidy setup, using Docker to run the development environment and the tests, and mapping important commands in a management script, so that the configuration can be in a single file and drive the whole system.</p><p>In this post I will show you how to easily create scenarios, that is databases created on the fly with custom data, so that it is possible to test queries in isolation, either with the Flask application or with the command line. I will also show you how to define a configuration for production and give some hints for the deployment.</p><h2 id="step-1---creating-scenarios">Step 1 - Creating scenarios<a class="headerlink" href="#step-1---creating-scenarios" title="Permanent link">¶</a></h2><p>The idea of scenarios is simple. Sometimes you need to investigate specific use cases for bugs, or maybe increase the performances of some database queries, and you might need to do this on a customised database. This is a scenario, a Python file that populates the database with a specific set of data and that allows you to run the application or the database shell on it.</p><p>Often the development database is a copy of the production one, maybe with sensitive data stripped to avoid leaking private information, and while this gives us a realistic case where to test queries (e.g. how does the query perform on 1 million lines?) it might not help during the initial investigations, where you need to have all the data in front of you to properly understand what happens. Whoever learned how joins work in relational databases understands what I mean here.</p><p>In principle, to create a scenario we just need to spin up an empty database and to run the scenario code against it. In practice, things are not much more complicated, but there are a couple of minor issues that we need to solve.</p><p>First, I am already running a database for the development and one for the testing. The second is ephemeral, but I decided to setup the project so that I can run the tests while the development database is up, and the way I did it was using port 5432 (the standard Postgres one) for development and 5433 for testing. Spinning up scenarios adds more databases to the equation. Clearly I do not expect to run 5 scenarios at the same time while running the development and the test databases, but I make myself a rule to make something generic as soon I do it for the third time.</p><p>This means that I won't create a database for a scenario on port 5434 and will instead look for a more generic solution. This is offered me by the Docker networking model, where I can map a container port to the host but avoid assigning the destination port, and it will be chosen randomly by Docker itself among the unprivileged ones. This means that I can create a Postgres container mapping port 5432 (the port in the container) and having Docker connect it to port 32838 in the host (for example). As long as the application knows which port to use this is absolutely the same as using port 5432.</p><p>Unfortunately the Docker interface is not extremely script-friendly when it comes to providing information and I have to parse the output a bit. Practically speaking, after I spin up the containers, I will run the command <code>docker-compose port db 5432</code> which will return a string like <code>0.0.0.0:32838</code>, and I will extract the port from it. Nothing major, but these are the (sometimes many) issues you face when you orchestrate different systems together.</p><p>The new management script is</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="kn">import</span> <span class="nn">click</span>
+<span class="kn">import</span> <span class="nn">psycopg2</span>
+<span class="kn">from</span> <span class="nn">psycopg2.extensions</span> <span class="kn">import</span> <span class="n">ISOLATION_LEVEL_AUTOCOMMIT</span>
+
+
+<span class="c1"># Ensure an environment variable exists and has a value</span>
+<span class="k">def</span> <span class="nf">setenv</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+
+
+<span class="n">setenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">,</span> <span class="s2">&quot;development&quot;</span><span class="p">)</span>
+
+<span class="n">APPLICATION_CONFIG_PATH</span> <span class="o">=</span> <span class="s2">&quot;config&quot;</span>
+<span class="n">DOCKER_PATH</span> <span class="o">=</span> <span class="s2">&quot;docker&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">app_config_file</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">APPLICATION_CONFIG_PATH</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="si">}</span><span class="s2">.json&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">docker_compose_file</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCKER_PATH</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="si">}</span><span class="s2">.yml&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">configure_app</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="c1"># Read configuration from the relative JSON file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">app_config_file</span><span class="p">(</span><span class="n">config</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">config_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="c1"># Convert the config into a usable Python dictionary</span>
+    <span class="n">config_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">config_data</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">config_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">setenv</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">cli</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="nd">@cli</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">context_settings</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ignore_unknown_options&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;subcommand&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">flask</span><span class="p">(</span><span class="n">subcommand</span><span class="p">):</span>
+    <span class="n">configure_app</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">))</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flask&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">subcommand</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">send_signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">docker_compose_cmdline</span><span class="p">(</span><span class="n">commands_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">)</span>
+    <span class="n">configure_app</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="n">compose_file</span> <span class="o">=</span> <span class="n">docker_compose_file</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">compose_file</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The file </span><span class="si">{</span><span class="n">compose_file</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
+
+    <span class="n">command_line</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;docker-compose&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">,</span>
+        <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+        <span class="n">compose_file</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">commands_string</span><span class="p">:</span>
+        <span class="n">command_line</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">commands_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">command_line</span>
+
+
+<span class="nd">@cli</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">context_settings</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ignore_unknown_options&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;subcommand&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="n">subcommand</span><span class="p">):</span>
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span><span class="p">()</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">subcommand</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">send_signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">run_sql</span><span class="p">(</span><span class="n">statements</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+        <span class="n">dbname</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">),</span>
+        <span class="n">user</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">),</span>
+        <span class="n">password</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">),</span>
+        <span class="n">host</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">),</span>
+        <span class="n">port</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">set_isolation_level</span><span class="p">(</span><span class="n">ISOLATION_LEVEL_AUTOCOMMIT</span><span class="p">)</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">statement</span> <span class="ow">in</span> <span class="n">statements</span><span class="p">:</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">wait_for_logs</span><span class="p">(</span><span class="n">cmdline</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">message</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">logs</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">logs</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+
+
+<span class="nd">@cli</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">create_initial_db</span><span class="p">():</span>
+    <span class="n">configure_app</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">run_sql</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;CREATE DATABASE </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;APPLICATION_DB&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+    <span class="k">except</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">DuplicateDatabase</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The database </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;APPLICATION_DB&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> already exists and will not be recreated&quot;</span>
+        <span class="p">)</span>
+
+
+<span class="nd">@cli</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;filenames&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">filenames</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;testing&quot;</span>
+    <span class="n">configure_app</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">))</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span><span class="p">(</span><span class="s2">&quot;up -d&quot;</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span><span class="p">(</span><span class="s2">&quot;logs db&quot;</span><span class="p">)</span>
+    <span class="n">wait_for_logs</span><span class="p">(</span><span class="n">cmdline</span><span class="p">,</span> <span class="s2">&quot;ready to accept connections&quot;</span><span class="p">)</span>
+
+    <span class="n">run_sql</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;CREATE DATABASE </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;APPLICATION_DB&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pytest&quot;</span><span class="p">,</span> <span class="s2">&quot;-svv&quot;</span><span class="p">,</span> <span class="s2">&quot;--cov=application&quot;</span><span class="p">,</span> <span class="s2">&quot;--cov-report=term-missing&quot;</span><span class="p">]</span>
+    <span class="n">cmdline</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+
+
+<span class="nd">@cli</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">scenario</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="nd">@scenario</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">up</span><span class="p">(</span><span class="n">name</span><span class="p">):</span> <span class="callout">1</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;scenario_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">)</span>
+
+    <span class="n">scenario_config_source_file</span> <span class="o">=</span> <span class="n">app_config_file</span><span class="p">(</span><span class="s2">&quot;scenario&quot;</span><span class="p">)</span>
+    <span class="n">scenario_config_file</span> <span class="o">=</span> <span class="n">app_config_file</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">scenario_config_source_file</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File </span><span class="si">{</span><span class="n">scenario_config_source_file</span><span class="si">}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">scenario_config_source_file</span><span class="p">,</span> <span class="n">scenario_config_file</span><span class="p">)</span> <span class="callout">3</span>
+
+    <span class="n">scenario_docker_source_file</span> <span class="o">=</span> <span class="n">docker_compose_file</span><span class="p">(</span><span class="s2">&quot;scenario&quot;</span><span class="p">)</span>
+    <span class="n">scenario_docker_file</span> <span class="o">=</span> <span class="n">docker_compose_file</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">scenario_docker_source_file</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File </span><span class="si">{</span><span class="n">scenario_docker_source_file</span><span class="si">}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">docker_compose_file</span><span class="p">(</span><span class="s2">&quot;scenario&quot;</span><span class="p">),</span> <span class="n">scenario_docker_file</span><span class="p">)</span> <span class="callout">4</span>
+
+    <span class="n">configure_app</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;scenario_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span><span class="p">(</span><span class="s2">&quot;up -d&quot;</span><span class="p">)</span> <span class="callout">5</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span><span class="p">(</span><span class="s2">&quot;logs db&quot;</span><span class="p">)</span>
+    <span class="n">wait_for_logs</span><span class="p">(</span><span class="n">cmdline</span><span class="p">,</span> <span class="s2">&quot;ready to accept connections&quot;</span><span class="p">)</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span><span class="p">(</span><span class="s2">&quot;port db 5432&quot;</span><span class="p">)</span> <span class="callout">6</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">port</span>
+
+    <span class="n">run_sql</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;CREATE DATABASE </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;APPLICATION_DB&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+
+    <span class="n">scenario_module</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;scenarios.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">scenario_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;scenarios&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.py&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">scenario_file</span><span class="p">):</span> <span class="callout">7</span>
+        <span class="kn">import</span> <span class="nn">importlib</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;APPLICATION_SCENARIO_NAME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="n">scenario</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">scenario_module</span><span class="p">)</span>
+        <span class="n">scenario</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="callout">8</span>
+        <span class="n">docker_compose_cmdline</span><span class="p">(</span>
+            <span class="s2">&quot;exec db psql -U </span><span class="si">{}</span><span class="s2"> -d </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_DB&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Your scenario is ready. If you want to open a SQL shell run&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+
+
+<span class="nd">@scenario</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="n">name</span><span class="p">):</span> <span class="callout">2</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;scenario_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CONFIG&quot;</span><span class="p">)</span>
+
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">docker_compose_cmdline</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmdline</span><span class="p">)</span>
+
+    <span class="n">scenario_config_file</span> <span class="o">=</span> <span class="n">app_config_file</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">scenario_config_file</span><span class="p">)</span>
+
+    <span class="n">scenario_docker_file</span> <span class="o">=</span> <span class="n">docker_compose_file</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">scenario_docker_file</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">cli</span><span class="p">()</span>
+</pre></div>
+</div></div><p>where I added the commands <code>scenario up</code> <span class="callout">1</span> and <code>scenario down</code> <span class="callout">2</span>. As you can see the function <code>up</code> first copies the files <code>config/scenario.json</code> <span class="callout">3</span> and <code>docker/scenario.yml</code> <span class="callout">4</span> (that I still have to create) into files named after the scenario.</p><p>Then I run the command <code>up -d</code> <span class="callout">5</span> and wait for the database to be ready, as I already do for tests. After that, it's time to extract the port of the container with some very simple Python string processing <span class="callout">6</span> and to initialise the correct environment variable.</p><p>Last, I import and execute the Python file <span class="callout">7</span> containing the code of the scenario itself and print a friendly message with the command line to run <code>psql</code> <span class="callout">8</span> to have a Postgres shell into the newly created database.</p><p>The function <code>down</code> simply tears down the containers and removes the scenario configuration files.</p><p>The two missing config files are pretty simple. The docker compose configuration is</p><div class="code"><div class="title">docker/scenario.yml</div><div class="content"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3.4&#39;</span>
+
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">db</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">POSTGRES_DB</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span>
+      <span class="nt">POSTGRES_USER</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+      <span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;5432&quot;</span> <span class="callout">1</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">build</span><span class="p">:</span>
+      <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${PWD}</span>
+      <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker/Dockerfile</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">FLASK_ENV</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${FLASK_ENV}</span>
+      <span class="nt">FLASK_CONFIG</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${FLASK_CONFIG}</span>
+      <span class="nt">APPLICATION_DB</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${APPLICATION_DB}</span>
+      <span class="nt">POSTGRES_USER</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+      <span class="nt">POSTGRES_HOSTNAME</span><span class="p">:</span> <span class="s">&quot;db&quot;</span>
+      <span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+    <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">flask run --host 0.0.0.0</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">${PWD}:/opt/code</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;5000&quot;</span>
+</pre></div>
+</div></div><p>Here you can see that the database is ephemeral, that the port on the host is automatically assigned <span class="callout">1</span>, and that I also spin up the application (mapping it to a random port as well to avoid clashing with the development one).</p><p>The configuration file is</p><div class="code"><div class="title">config/scenario.json</div><div class="content"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;development&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;development&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;postgres&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;postgres&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;postgres&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;APPLICATION_DB&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;application&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div></div><p>which doesn't add anything new to what I already did for development and testing. </p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/dbb54d31af17866f9336199c65f1b495d879eb70">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/dbb54d31af17866f9336199c65f1b495d879eb70">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://docs.docker.com/compose/compose-file/#ports">Expose ports in docker-compose</a></li><li><a href="https://docs.docker.com/compose/reference/port/">Docker Compose port command</a> - A command to print the port exposed by a container</li><li><a href="https://www.postgresql.org/docs/current/app-psql.html">psql</a> - PostgreSQL interactive terminal</li></ul><h3 id="scenario-example-1">Scenario example 1</h3><p>Let's have a look at a very simple scenario that doesn't do anything on the database, just to understand the system. The code for the scenario is</p><div class="code"><div class="title">scenarios/foo.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;HEY! This is scenario&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;APPLICATION_SCENARIO_NAME&quot;</span><span class="p">])</span>
+</pre></div>
+</div></div><p>When I run the scenario I get the following output</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py scenario up foo
+Creating network &quot;scenario_foo_default&quot; with the default driver
+Creating scenario_foo_db_1  ... done
+Creating scenario_foo_web_1 ... done
+HEY! This is scenario foo
+Your scenario is ready. If you want to open a SQL shell run
+docker-compose -p scenario_foo -f docker/scenario_foo.yml exec db psql -U postgres -d application
+</pre></div>
+</div></div><p>The command <code>docker ps</code> shows that my development environment is happily running alongside with the scenario</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ docker ps
+CONTAINER ID  IMAGE             COMMAND                 [...]  PORTS                    NAMES
+85258892a2df  scenario_foo_web  &quot;flask run --host 0.…&quot;  [...]  0.0.0.0:32826-&gt;5000/tcp  scenario_foo_web_1
+a031b6429e07  postgres          &quot;docker-entrypoint.s…&quot;  [...]  0.0.0.0:32827-&gt;5432/tcp  scenario_foo_db_1
+1a449d23da01  development_web   &quot;flask run --host 0.…&quot;  [...]  0.0.0.0:5000-&gt;5000/tcp   development_web_1
+28aa566321b5  postgres          &quot;docker-entrypoint.s…&quot;  [...]  0.0.0.0:5432-&gt;5432/tcp   development_db_1
+</pre></div>
+</div></div><p>And the output of the command <code>scenario up foo</code> contains the string <code>HEY! This is scenario foo</code> that was printed by the file <code>foo.py</code>. We can also successfully run the suggested command</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ docker-compose -p scenario_foo -f docker/scenario_foo.yml exec db psql -U postgres -d application
+psql (12.3 (Debian 12.3-1.pgdg100+1))
+Type &quot;help&quot; for help.
+
+application=# \l
+                                  List of databases
+    Name     |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
+-------------+----------+----------+------------+------------+-----------------------
+ application | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+ postgres    | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+ template0   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+             |          |          |            |            | postgres=CTc/postgres
+ template1   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+             |          |          |            |            | postgres=CTc/postgres
+(4 rows)
+
+application=#
+</pre></div>
+</div></div><p>And inside the database we find the database <code>application</code> created explicitly for the scenario (the name is specified in <code>config/scenario.json</code>). If you don't know <code>psql</code> you can exit with <code>\q</code> or <code>Ctrl-d</code>.</p><p>Before tearing down the scenario have a look at the two files <code>config/scenario_foo.json</code> and <code>docker/scenario_foo.yml</code>. They are just copies of <code>config/scenario.json</code> and <code>docker/scenario.yml</code> but I think seeing them there might help to understand how the whole thing works. When you are done run <code>./manage.py scenario down foo</code>.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/9d9601508cfa7dc5d718d76cd0827396069035fd">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/9d9601508cfa7dc5d718d76cd0827396069035fd">browse the files</a>.</p><h3 id="scenario-example-2">Scenario example 2</h3><p>Let's do something a bit more interesting. The new scenario is contained in <code>scenarios/users.py</code></p><div class="code"><div class="title">scenarios/users.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">application.app</span> <span class="kn">import</span> <span class="n">create_app</span>
+<span class="kn">from</span> <span class="nn">application.models</span> <span class="kn">import</span> <span class="n">db</span><span class="p">,</span> <span class="n">User</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">create_app</span><span class="p">(</span><span class="s2">&quot;development&quot;</span><span class="p">)</span> <span class="callout">1</span>
+
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">app</span><span class="o">.</span><span class="n">app_context</span><span class="p">():</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">drop_all</span><span class="p">()</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">create_all</span><span class="p">()</span>
+
+        <span class="c1"># Administrator</span>
+        <span class="n">admin</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;admin@server.com&quot;</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">admin</span><span class="p">)</span> <span class="callout">2</span>
+
+        <span class="c1"># First user</span>
+        <span class="n">user1</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;user1@server.com&quot;</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+
+        <span class="c1"># Second user</span>
+        <span class="n">user2</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;user2@server.com&quot;</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user2</span><span class="p">)</span>
+
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</pre></div>
+</div></div><p>I decided to be as agnostic as possible in the scenarios, to avoid creating something too specific that eventually would not give me enough flexibility to test what I need. This means that the scenario has to create the app <span class="callout">1</span> and to use the database session explicitly <span class="callout">2</span>, as I do in this example. The application is created with the configuration <code>&quot;development&quot;</code> <span class="callout">1</span>. Remember that this is the Flask configuration that you find in <code>application/config.py</code>, not the one that is in <code>config/development.json</code>.</p><p>I can run the scenario with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py scenario up users
+</pre></div>
+</div></div><p>and then connect to the database to find my users</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ docker-compose -p scenario_users -f docker/scenario_users.yml exec db psql -U postgres -d application
+psql (12.3 (Debian 12.3-1.pgdg100+1))
+Type &quot;help&quot; for help.
+
+application=# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | users | table | postgres
+(1 row)
+
+application=# select * from users;
+ id |      email
+----+------------------
+  1 | admin@server.com
+  2 | user1@server.com
+  3 | user2@server.com
+(3 rows)
+
+application=# \q
+</pre></div>
+</div></div><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/b475c5e3d455098691fa1c736de573182d0e44ec">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/b475c5e3d455098691fa1c736de573182d0e44ec">browse the files</a>.</p><h2 id="step-2---simulating-the-production-environment">Step 2 - Simulating the production environment<a class="headerlink" href="#step-2---simulating-the-production-environment" title="Permanent link">¶</a></h2><p>As I stated at the very beginning of this mini series of posts, one of my goals was to run in development the same database that I run in production, and for this reason I went through the configuration steps that allowed me to have a Postgres container running both in development and during tests. In a real production scenario Postgres would probably run in a separate instance, for example on the RDS service in AWS, but as long as you have the connection parameters nothing changes in the configuration.</p><p>Docker actually allows us to easily simulate the production environment. If our notebook was connected 24/7 we might as well host the production there directly. Not that I recommend this nowadays, but this is how many important companies begun many years ago when cloud computing had not been here yet. Instead of installing a LAMP stack we configure containers, but the idea doesn't change.</p><p>I will then create a configuration that simulates a production environment and then give some hints on how to translate this into a proper production infrastructure. If you want to have a clear picture of the components of a web application in production read my post <a href="https://www.thedigitalcatonline.com/blog/2020/02/16/dissecting-a-web-stack/">Dissecting a web stack</a> that analyses them one by one.</p><p>The first component that we have to change here is the HTTP server. In development we use Flask's development server, and the first message that server prints is <code>WARNING: This is a development server. Do not use it in a production deployment.</code> Got it, Flask! A good choice to replace it is Gunicorn, so first of all I add it in the requirements</p><div class="code"><div class="title">requirements/production.txt</div><div class="content"><div class="highlight"><pre><span></span>Flask
+flask-sqlalchemy
+psycopg2
+flask-migrate
+<span class="hll">gunicorn
+</span></pre></div>
+</div></div><p>Then I need to create a docker-compose configuration for production</p><div class="code"><div class="title">docker/production.yml</div><div class="content"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3.4&#39;</span>
+
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">db</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">POSTGRES_DB</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span>
+      <span class="nt">POSTGRES_USER</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+      <span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;${POSTGRES_PORT}:5432&quot;</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pgdata:/var/lib/postgresql/data</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">build</span><span class="p">:</span>
+      <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${PWD}</span>
+      <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker/Dockerfile.production</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">FLASK_ENV</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${FLASK_ENV}</span>
+      <span class="nt">FLASK_CONFIG</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${FLASK_CONFIG}</span>
+      <span class="nt">APPLICATION_DB</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${APPLICATION_DB}</span>
+      <span class="nt">POSTGRES_USER</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+      <span class="nt">POSTGRES_HOSTNAME</span><span class="p">:</span> <span class="s">&quot;db&quot;</span>
+      <span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+      <span class="nt">POSTGRES_PORT</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PORT}</span>
+    <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gunicorn -w 4 -b 0.0.0.0 wsgi:app</span> <span class="callout">1</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">${PWD}:/opt/code</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;8000:8000&quot;</span> <span class="callout">2</span>
+
+<span class="nt">volumes</span><span class="p">:</span>
+  <span class="nt">pgdata</span><span class="p">:</span>
+</pre></div>
+</div></div><p>As you can see here the command that runs the application is slightly different <span class="callout">1</span>. It exposes 4 processes (<code>-w 4</code>) on the container's address 0.0.0.0 loading the object <code>app</code> from the file <code>wsgi.py</code> (<code>wsgi:app</code>). As by default Gunicorn exposes port 8000 I mapped that <span class="callout">2</span> to the same port in the host.</p><p>Then I created the file <code>Dockerfile.production</code> that defines the production image of the web application</p><div class="code"><div class="title">docker/Dockerfile.production</div><div class="content"><div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">python:3</span>
+
+<span class="k">ENV</span> PYTHONUNBUFFERED <span class="m">1</span>
+
+<span class="k">RUN</span> mkdir /opt/code
+<span class="k">RUN</span> mkdir /opt/requirements
+<span class="k">WORKDIR</span><span class="s"> /opt/code</span>
+
+<span class="k">ADD</span> requirements /opt/requirements
+<span class="k">RUN</span> pip install -r /opt/requirements/production.txt
+</pre></div>
+</div></div><p>The last thing I need is a configuration file</p><div class="code"><div class="title">config/production.json</div><div class="content"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;production&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;production&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;postgres&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;postgres&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;5432&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;postgres&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;APPLICATION_DB&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;application&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div></div><p>as you can notice this is not very different from the development one, as I just changed the values of <code>FLASK_ENV</code> and <code>FLASK_CONFIG</code>. Clearly this contains a secret that shouldn't be written in plain text, <code>POSTGRES_PASSWORD</code>, but after all this is a simulation of production. In a real environment secrets should be kept in an encrypted manager such as <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a>.</p><p>Remember that <code>FLASK_ENV</code> changes the internal settings of Flask, most notably disabling the debugger, and that <code>FLASK_CONFIG=production</code> loads the object <code>ProductionConfig</code> from <code>application/config.py</code>. That object is empty for the moment, but it might contain public configuration for the production server.</p><p>I can now build the image with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ APPLICATION_CONFIG=&quot;production&quot; ./manage.py compose build web
+</pre></div>
+</div></div><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/1c0fcf13c54ea13bb6e1307452de00529dbd57af">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/1c0fcf13c54ea13bb6e1307452de00529dbd57af">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://gunicorn.org/">Gunicorn</a> - A Python WSGI HTTP Server</li></ul><h2 id="step-3---scale-up">Step 3 - Scale up<a class="headerlink" href="#step-3---scale-up" title="Permanent link">¶</a></h2><p>Mapping the container port to the host is not a great idea, though, as it makes it impossible to scale up and down to serve more load, which is the main point of running containers in production. This might be solved in many ways in the cloud, for example in AWS you might run the container in AWS Fargate and register them in an Application Load Balancer. Another way to do it on a single host is to run a Web Server in front of your HTTP server, and this might be easily implemented  with Docker Compose.</p><p>I will add nginx and serve HTTP from there, reverse proxying the application containers through docker-compose networking. First of all the new configuration for docker-compose</p><div class="code"><div class="title">docker/production.yml</div><div class="content"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3.4&#39;</span>
+
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">db</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">POSTGRES_DB</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span>
+      <span class="nt">POSTGRES_USER</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+      <span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;${POSTGRES_PORT}:5432&quot;</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pgdata:/var/lib/postgresql/data</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">build</span><span class="p">:</span>
+      <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${PWD}</span>
+      <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker/Dockerfile.production</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">FLASK_ENV</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${FLASK_ENV}</span>
+      <span class="nt">FLASK_CONFIG</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${FLASK_CONFIG}</span>
+      <span class="nt">APPLICATION_DB</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${APPLICATION_DB}</span>
+      <span class="nt">POSTGRES_USER</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+      <span class="nt">POSTGRES_HOSTNAME</span><span class="p">:</span> <span class="s">&quot;db&quot;</span>
+      <span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+      <span class="nt">POSTGRES_PORT</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PORT}</span>
+    <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gunicorn -w 4 -b 0.0.0.0 wsgi:app</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">${PWD}:/opt/code</span>
+<span class="hll">  <span class="nt">nginx</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+</span><span class="hll">    <span class="nt">volumes</span><span class="p">:</span>
+</span><span class="hll">      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./nginx/nginx.conf:/etc/nginx/nginx.conf:ro</span>
+</span><span class="hll">    <span class="nt">ports</span><span class="p">:</span>
+</span><span class="hll">      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8080:8080</span>
+</span>
+<span class="nt">volumes</span><span class="p">:</span>
+  <span class="nt">pgdata</span><span class="p">:</span>
+</pre></div>
+</div></div><p>As you can see I added a service <code>nginx</code> that runs the default Nginx image, mapping a custom configuration file that I will create in a minute. The application container doesn't need any port mapping, as I won't access it directly from the host anymore. The Nginx configuration file is</p><div class="code"><div class="title">docker/nginx/nginx.conf</div><div class="content"><div class="highlight"><pre><span></span><span class="k">worker_processes</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="k">events</span> <span class="p">{</span> <span class="kn">worker_connections</span> <span class="mi">1024</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">http</span> <span class="p">{</span>
+
+    <span class="kn">sendfile</span> <span class="no">on</span><span class="p">;</span>
+
+    <span class="kn">upstream</span> <span class="s">app</span> <span class="p">{</span> <span class="callout">1</span>
+        <span class="kn">server</span> <span class="n">web</span><span class="p">:</span><span class="mi">8000</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kn">server</span> <span class="p">{</span>
+        <span class="kn">listen</span> <span class="mi">8080</span><span class="p">;</span> <span class="callout">2</span>
+
+        <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+            <span class="kn">proxy_pass</span>         <span class="s">http://app</span><span class="p">;</span>
+            <span class="kn">proxy_redirect</span>     <span class="no">off</span><span class="p">;</span>
+            <span class="kn">proxy_set_header</span>   <span class="s">Host</span> <span class="nv">$host</span><span class="p">;</span>
+            <span class="kn">proxy_set_header</span>   <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+            <span class="kn">proxy_set_header</span>   <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+            <span class="kn">proxy_set_header</span>   <span class="s">X-Forwarded-Host</span> <span class="nv">$server_name</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div></div><p>This is a pretty standard configuration, and in a real production environment I would add many other configuration values (most notably serving HTTPS instead of HTTP). The section <code>upstream</code> <span class="callout">1</span> leverages docker-compose networking referring to <code>web</code>, which in the internal DNS directly maps to the IPs of the service with the same name. The port 8000 comes from the default Gunicorn port that I already mentioned before. I won't run the nginx container as root on my notebook, so I expose port 8080 <span class="callout">2</span> instead of the traditional 80 for HTTP, and this is also something that might be different in a real production environment.</p><p>I can at this point run</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ APPLICATION_CONFIG=&quot;production&quot; ./manage.py compose up -d
+Starting production_db_1    ... done
+Starting production_nginx_1 ... done
+Starting production_web_1   ... done
+</pre></div>
+</div></div><p>It's interesting to have a look at the logs of the nginx container, as Nginx by default prints all the incoming requests</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ APPLICATION_CONFIG=&quot;production&quot; ./manage.py compose logs -f nginx
+Attaching to production_nginx_1
+[...]
+nginx_1  | 172.30.0.1 - - [05/Jul/2020:10:40:44 +0000] &quot;GET / HTTP/1.1&quot; 200 13 &quot;-&quot; &quot;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0&quot;
+</pre></div>
+</div></div><p>The last line is what I get when I visit localhost:8080 while the production setup is up and running.</p><p>Scaling up and down the service is now a breeze</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ APPLICATION_CONFIG=&quot;production&quot; ./manage.py compose up -d --scale web=3
+production_db_1 is up-to-date
+Starting production_web_1 ... 
+Starting production_web_1 ... done
+Creating production_web_2 ... done
+Creating production_web_3 ... done
+</pre></div>
+</div></div><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/2794ea1ca6e7c56a823ddf30201e69700f596bf2">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/2794ea1ca6e7c56a823ddf30201e69700f596bf2">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://nginx.org/en/">Nginx</a> - An HTTP and reverse proxy server (and more)</li><li><a href="https://hub.docker.com/_/nginx">Docker nginx</a> - the official nginx Docker image</li><li><a href="https://docs.docker.com/compose/reference/logs/">Docker Compose logs command</a> - A command to print container logs</li><li><a href="https://docs.docker.com/compose/reference/up/">Docker Compose up command</a> - The new way to scale containers in docker-compose</li></ul><h2 id="bonus-step---a-closer-look-at-docker-networking">Bonus step - A closer look at Docker networking<a class="headerlink" href="#bonus-step---a-closer-look-at-docker-networking" title="Permanent link">¶</a></h2><p>I mentioned that Docker Compose creates a connection between services, and used that in the configuration of the nginx container, but I understand that this might look like black magic to some people. While I believe that this is actually black magic, I also think that we can investigate it a bit, so let's open the grimoire and reveal (some of) the dark secrets of Docker networking.</p><p>While the production setup is running we can connect to the nginx container and see what is happening in real time, so first of all I run a bash shell on it</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ APPLICATION_CONFIG=&quot;production&quot; ./manage.py compose exec nginx bash
+</pre></div>
+</div></div><p>Once inside I can see my configuration file at <code>/etc/nginx/nginx.conf</code>, but this has not changed. Remember that Docker networking doesn't work as a templating engine, but with a local DNS. This means that if we try to resolve <code>web</code> from inside the container we should see multiple IPs. The command <code>dig</code> is a good tool to investigate the DNS, but it doesn't come preinstalled in the nginx container, so I need to run</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>root@33cbaea369be:/# apt update &amp;&amp; apt install dnsutils
+</pre></div>
+</div></div><p>and at this point I can run it</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>root@33cbaea369be:/# dig web
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u1-Debian &lt;&lt;&gt;&gt; web
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 30539
+;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;web.                           IN      A
+
+;; ANSWER SECTION:
+web.                    600     IN      A       172.30.0.4
+web.                    600     IN      A       172.30.0.6
+web.                    600     IN      A       172.30.0.5
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Sun Jul 05 10:58:18 UTC 2020
+;; MSG SIZE  rcvd: 78
+
+root@33cbaea369be:/#
+</pre></div>
+</div></div><p>The command outputs 3 IPs, which correspond to the 3 containers of the service <code>web</code> that I am currently running. If I scale down (from outside the container)</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ APPLICATION_CONFIG=&quot;production&quot; ./manage.py compose up -d --scale web=1
+</pre></div>
+</div></div><p>then the output of <code>dig</code> becomes</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>root@33cbaea369be:/# dig web
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u1-Debian &lt;&lt;&gt;&gt; web
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 13146
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;web.                           IN      A
+
+;; ANSWER SECTION:
+web.                    600     IN      A       172.30.0.4
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Sun Jul 05 11:01:46 UTC 2020
+;; MSG SIZE  rcvd: 40
+
+root@33cbaea369be:/#
+</pre></div>
+</div></div><h2 id="how-to-create-the-production-infrastructure">How to create the production infrastructure<a class="headerlink" href="#how-to-create-the-production-infrastructure" title="Permanent link">¶</a></h2><p>This will be a very short section, as creating infrastructure and deploying in production are complex topics, so I want to just give some hints to stimulate your research.</p><p><a href="https://aws.amazon.com/ecs/">AWS ECS</a> is basically Docker in the cloud, and the whole structure can map almost 1 to 1 to the docker-compose setup, so it is worth learning. ECS can work on explicit EC2 instances that you manage, or in <a href="https://aws.amazon.com/fargate/">Fargate</a>, which means that the EC2 instances running the containers are transparently managed by AWS itself.</p><p><a href="https://www.terraform.io/">Terraform</a> is a good tool to create infrastructure. It has many limitations, mostly coming from its custom HCL language, but it's slowly becoming better (version 0.13 will finally allow us to run for loops on modules, for example). Despite its shortcomings, it's a great tool to create static infrastructure, so I recommend working on it.</p><p>Terraform is not the right tool to deploy your code, though, as that requires a dynamic interaction with the system, so you need to setup a good Continuous Integration system. <a href="https://www.jenkins.io/">Jenkins</a> is a very well known open source CI, but I personally ended up dropping it because it doesn't seem to be designed for large scale systems. For example, it is very complicated to automate the deploy of a Jenkins server, and dynamic large scale systems should require zero manual intervention to be created. Anyway, Jenkins is a good tool to start with, but you might want to have a look at other products like <a href="https://circleci.com/">CircleCI</a> or <a href="https://buildkite.com/">Buildkite</a>.</p><p>When you create your deploy pipeline you need to do much more than just creating the image and running it, at least for real applications. You need to decide when to apply database migrations and if you have a web front-end you will also need to compile and install the JavaScript assets. Since you don't want to have downtime when you deploy you will need to look into blue/green deployments, and in general to strategies that allow you to run different versions of the application at the same time, at least for short periods of time. Or for longer periods, if you want to perform A/B testing or zonal deployments.</p><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>This is the last post of this short series. I hope you learned something useful, and that it encouraged you to properly setup your projects and to investigate technologies like Docker. As always, feel free to send me feedback or questions, and if you find my posts useful please share them with whoever you thing might be interested.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-12-22 I reviewed the whole tutorial and corrected several typos</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 3 of the Flask project setup series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">Flask project setup: TDD, Docker, Postgres and more - Part 1</a></li>
+        <li><a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/">Flask project setup: TDD, Docker, Postgres and more - Part 2</a></li>
+      </ul>
+      
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-2.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-06T13:00:00+01:00">Jul 6, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-23T20:00:00+00:00">Feb 23, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-05T13:00:00+01:00">Jul 5, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T10:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/02/16/dissecting-a-web-stack/">
+            <img src="/images/dissecting-a-web-stack.jpg" alt="dissecting-a-web-stack" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/02/16/dissecting-a-web-stack/"><h2>Dissecting a Web stack</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/architectures/" class="tag">architectures</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/django/" class="tag">Django</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+		<a href="/categories/aws/" class="tag">AWS</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-02-16T15:00:00+00:00">Feb 16, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-10-27T08:30:00+00:00">Oct 27, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
+            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T19:00:00+02:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">
+            <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2>TDD in Python with pytest - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">
+            <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2>TDD in Python with pytest - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
+            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/">
+            <img src="/images/a-game-of-tokens-5.jpg" alt="a-game-of-tokens-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/"><h2>A game of tokens: write an interpreter in Python with TDD - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/compilers/" class="tag">compilers</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-09T18:00:00+01:00">Aug 9, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/">
+            <img src="/images/a-game-of-tokens-1.jpg" alt="a-game-of-tokens-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/"><h2>A game of tokens: write an interpreter in Python with TDD - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/compilers/" class="tag">compilers</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2017-05-09T23:00:00+01:00">May 9, 2017</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-08-05T11:00:00+00:00">Aug 5, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

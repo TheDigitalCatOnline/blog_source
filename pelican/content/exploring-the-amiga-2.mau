@@ -116,9 +116,9 @@ FUNC_CNT    SET      FUNC_CNT-LIB_VECTSIZE
 FUNC_CNT    SET      LIB_USERDEF
 ----
 
-The last line initialises the `FUNC_CNT` symbol with the `LIB_USERDEF` value. Then each call of the `FUNCDEF &lt;arg&gt;` macro does two things:
+The last line initialises the `FUNC_CNT` symbol with the `LIB_USERDEF` value. Then each call of the `FUNCDEF <arg>` macro does two things:
 
-# Creates the `_LVO&lt;arg&gt;` symbol with value `FUNC_CNT` (e.g. `_LVOSupervisor EQU -30`)
+# Creates the `_LVO<arg>` symbol with value `FUNC_CNT` (e.g. `_LVOSupervisor EQU -30`)
 # Decrements the `FUNC_CNT` symbol by `LIB_VECTSIZE`
 
 Please note that the example `FUNCDEF` that you can find (commented) in `libraries.i` won't work out of the box as `FUNC_CNT` is defined inside the macro itself, while it has to be already defined before the first use of the macro.
