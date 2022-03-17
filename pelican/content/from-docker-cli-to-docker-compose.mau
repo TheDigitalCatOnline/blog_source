@@ -9,7 +9,7 @@
 
 In this post I will show you how and why Docker Compose is useful, building a simple application written in Python that uses PostgreSQL. I think it is worth going through such an exercise to see how technologies that we might be already familiar with actually simplify workflows that would otherwise definitely be more complicated.
 
-The name of demo application I will develop is a very unimaginative `whale`, that shouldn't clash with any other name introduced by the tools I will use. Every time you see something with `whale` in it you know that I am referring to a value that you can change according to your setup.
+The name of the demo application I will develop is a very unimaginative `whale`, that shouldn't clash with any other name introduced by the tools I will use. Every time you see something with `whale` in it you know that I am referring to a value that you can change according to your setup.
 
 Before we start, please create a directory to host all the files we will create. I will refer to this directory as the "project directory". 
 
@@ -186,7 +186,7 @@ $ docker run -d \
   -p 5432:5432 postgres:13
 ----
 
-Running `doker ps` we can see that the container publishes the port now (`0.0.0.0:5432->5432/tcp`). We can double-check it with `ss` ("socket statistics")
+Running `docker ps` we can see that the container publishes the port now (`0.0.0.0:5432->5432/tcp`). We can double-check it with `ss` ("socket statistics")
 
 [source]
 ----
@@ -203,6 +203,27 @@ $ sudo ss -nulpt | grep 5432
 tcp  LISTEN  0  4096  0.0.0.0:5432  0.0.0.0:*  users:(("docker-proxy",pid=1262717,fd=4))
 tcp  LISTEN  0  4096     [::]:5432     [::]:*  users:(("docker-proxy",pid=1262724,fd=4))
 ----
+
+Unfortunately, `ss` is not available on macOS. On that platform (and on Linux as well) you can use `lsof` with `grep`
+
+[source]
+----
+$ sudo lsof -i -p -n | grep 5432
+docker-pr 219643            root    4u  IPv4 2945982      0t0  TCP *:5432 (LISTEN)
+docker-pr 219650            root    4u  IPv6 2952986      0t0  TCP *:5432 (LISTEN)
+----
+
+or directly using the option `-i`
+
+[source]
+----
+$ sudo lsof -i :5432
+COMMAND      PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+docker-pr 219643 root    4u  IPv4 2945982      0t0  TCP *:postgresql (LISTEN)
+docker-pr 219650 root    4u  IPv6 2952986      0t0  TCP *:postgresql (LISTEN)
+----
+
+Please note that `docker-pr` in the output above is just `docker-proxy` truncated, matching what we saw with `ss` previously.
 
 If you want to publish the container's port 5432 to a different port on the host you can just use `-p ANY_NUMBER:5432`. Remember however that port numbers under 1024 are _privileged_ or _well-known_, which means that they are assigned by default to specific services ([link](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers#Well-known_ports,"listed here")).
 
@@ -329,7 +350,7 @@ As happened with ports, however, we need to establish some communication between
 
 There are three types of volumes in Docker: _host_, _anonymous_, and _named_. Host volumes are a way to mount inside the container a path on the host's filesystem, and while they are useful to exchange data between the host and the container, they also often have permissions issues. Generally speaking, containers define users whose IDs are not mapped to the host's ones, which means that the files written by the container might end up belonging to non-existing users.
 
-Anonymous and named volumes are are simply virtual filesystems created and managed independently from containers. These can be connected with a running container so the latter can use the data contained in them and store data that will survive its termination. The only difference between named an anonymous volumes is the name that allows you to easily manage them. For this reason, I think it's not really useful to consider anonymous volumes, which is why I will focus on named ones.
+Anonymous and named volumes are simply virtual filesystems created and managed independently from containers. These can be connected with a running container so the latter can use the data contained in them and store data that will survive its termination. The only difference between named an anonymous volumes is the name that allows you to easily manage them. For this reason, I think it's not really useful to consider anonymous volumes, which is why I will focus on named ones.
 
 You can manage volumes using `docker volume`, that provides several subcommands such as `create`, and `rm`. You can then [link]("https://docs.docker.com/engine/reference/run/#volume-shared-filesystems", "attach a named volume to a container") when you run it using the option `-v` of `docker run`. This creates the volume if it's not already existing, so this is the standard way many of us create a volume.
 
@@ -417,8 +438,8 @@ To create the application, first create a Python virtual environment using your 
 
 [source]
 ----
-pyenv virtualenv docker2
-pyenv activate docker2
+pyenv virtualenv whale_docker
+pyenv activate whale_docker
 ----
 
 Now we need to put our requirements in a file and install them. I prefer to keep things tidy from day zero, so create the directory `whaleapp` in the project directory and inside it the file `requirements.txt`.
@@ -429,7 +450,7 @@ mkdir whaleapp
 touch whaleapp/requirements.txt
 ----
 
-The only requirement we have for this simple application is `psycopg2`, so I add it to the file and then install it. Since we are installing requirements is useul to update `pip` as well.
+The only requirement we have for this simple application is `psycopg2`, so I add it to the file and then install it. Since we are installing requirements is useful to update `pip` as well.
 
 [source]
 ----
@@ -596,7 +617,7 @@ whaleapp  latest  969b15466905  9 minutes ago  894MB
 %%%%
 You might want to observe 1 minute of silence meditating on the fact that we used almost 900 megabytes of space to run 40 lines of Python. As you can see benefits come with a cost, and you should not underestimate those. 900 megabytes might not seem a lot nowadays, but if you keep building images you will soon use up the space on your hard drive or end up paying a lot for the space on your remote repository.
 
-By the way, this is the reason why Docker splits image into layers and reuses them. For now we can ignore this part of the game, but remember that keeping the system clean and removing past artifacts is important.
+By the way, this is the reason why Docker splits image into layers and reuses them. For now we can ignore this part of the game, but remember that keeping the system clean and removing past artefacts is important.
 %%%%
 
 As I mentioned before we can run this image but we need to use the `host` network configuration.
@@ -809,7 +830,7 @@ Generally speaking, you want secrets to be encrypted and stored in a safe place 
 
 For example, many posts online show how you can use AWS Secrets Manager to store your secrets and access them from your application using [link](https://stedolan.github.io/jq/,"jq") to fetch them at run time. While this works, if the JSON secret contains a syntax error, `jq` dumps the whole value in the standard output of the application, which means that the logs contain the secret in plain text.
 
-[link](https://hub.docker.com/_/vault,Vault) is a tool created by Hashicorp that many use to store secrets needed by containers. It is interesting to read in the description of the image that with a specific configuration the container prevents memory from being swapped to disk, which would leak the unencrypted vaules. As you see, security is hard.
+[link](https://hub.docker.com/_/vault,Vault) is a tool created by Hashicorp that many use to store secrets needed by containers. It is interesting to read in the description of the image that with a specific configuration the container prevents memory from being swapped to disk, which would leak the unencrypted values. As you see, security is hard.
 
 Orchestration tools always provide a way to manage secrets and to pass them to containers. For example, see [link]("https://docs.docker.com/engine/swarm/secrets/", "Docker Swarm secrets"), [link]("https://kubernetes.io/docs/concepts/configuration/secret/", "Kubernetes secrets"), and [link]("https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data-secrets.html", "secrets for AWS Elastic Container Service").
 %%%%
@@ -834,7 +855,7 @@ $ docker network remove whale
 whale
 ----
 
-Then create the file `docker-compose.yml` in the project directory and put the following code in it
+Then create the file `docker-compose.yml` in the project directory (not the app directory) and put the following code in it
 
 .docker-compose.yml
 [source,yaml]
@@ -1027,6 +1048,10 @@ The health check for the Postgres container leverages the command line tool `pg_
 == Final words
 
 Well, this was a long one, but I hope you enjoyed the trip and you ended up having a better picture of what problems Docker Compose solve, along with a feeling of how complicated it might be to design an architecture. Everything we did was for a "simple" development environment with a couple of containers, so you can figure what is involved when we get to live environments.
+
+== Updates
+
+2022-03-17: Thanks to my colleague Joanna Stadnik for a thorough review, for spotting typos, and for giving me several suggestions based on her experience. Thank you!
 
 == Feedback
 
