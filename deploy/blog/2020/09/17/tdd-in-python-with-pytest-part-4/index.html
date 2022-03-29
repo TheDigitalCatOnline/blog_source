@@ -1,0 +1,1091 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - TDD in Python with pytest - Part 4</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="TDD in Python with pytest - Part 4">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="TDD in Python with pytest - Part 4" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/tdd-in-python-with-pytest-part-4.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>TDD in Python with pytest - Part 4</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-09-17T11:30:00+02:00"> 17/09/2020</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/oop/">OOP</a>
+	<a class="tag" href="/categories/pytest/">pytest</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/python3/">Python3</a>
+	<a class="tag" href="/categories/refactoring/">refactoring</a>
+	<a class="tag" href="/categories/tdd/">TDD</a>
+	<a class="tag" href="/categories/testing/">testing</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=TDD%20in%20Python%20with%20pytest%20-%20Part%204&url=https%3A//www.thedigitalcatonline.com/blog/2020/09/17/tdd-in-python-with-pytest-part-4/&via=thedigicat&hashtags=oop,pytest,python,python3,refactoring,tdd,testing" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2020/09/17/tdd-in-python-with-pytest-part-4/&title=TDD%20in%20Python%20with%20pytest%20-%20Part%204&summary=&source=https%3A//www.thedigitalcatonline.com/blog/2020/09/17/tdd-in-python-with-pytest-part-4/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=TDD%20in%20Python%20with%20pytest%20-%20Part%204&u=https%3A//www.thedigitalcatonline.com/blog/2020/09/17/tdd-in-python-with-pytest-part-4/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=TDD%20in%20Python%20with%20pytest%20-%20Part%204&amp;body=https%3A//www.thedigitalcatonline.com/blog/2020/09/17/tdd-in-python-with-pytest-part-4/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2020/09/17/tdd-in-python-with-pytest-part-4/&title=TDD%20in%20Python%20with%20pytest%20-%20Part%204" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>This is the fourth post in the series "TDD in Python with pytest" where I develop a simple project following a strict TDD methodology. The posts come from my book <a href="https://leanpub.com/clean-architectures-in-python">Clean Architectures in Python</a> and have been reviewed to get rid of some bad naming choices of the version published in the book.</p>
+<p>You can find the first post <a href="https://www.thedigitalcatonline.com/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">here</a>.</p>
+<p>In this post I will discuss a very interesting and useful testing tool: mocks.</p>
+<h2 id="basic-concepts">Basic concepts<a class="headerlink" href="#basic-concepts" title="Permanent link">&para;</a></h2>
+<p>As we saw in the previous post the relationship between the component that we are testing and other components of the system can be complex. Sometimes idempotency and isolation are not easy to achieve, and testing outgoing commands requires to check the parameters sent to the external component, which is not trivial.</p>
+<p>The main difficulty comes from the fact that your code is actually using the external system. When you run it in production the external system will provide the data that your code needs and the whole process can work as intended. During testing, however, you don't want to be bound to the external system, for the reasons explained in the previous post, but at the same time you need it to make your code work.</p>
+<p>So, you face a complex issue. On the one hand your code is connected to the external system (be it hardcoded or chosen programmatically), but on the other hand you want it to run without the external system being active (or even present).</p>
+<p>This problem can be solved with the use of mocks. A mock, in the testing jargon, is an object that simulates the behaviour of another (more complex) object. Wherever your code connects to an external system, during testing you can replace the latter with a mock, pretending the external system is there and properly checking that your component behaves like intended.</p>
+<h2 id="first-steps">First steps<a class="headerlink" href="#first-steps" title="Permanent link">&para;</a></h2>
+<p>Let us try and work with a mock in Python and see what it can do. First of all fire up a Python shell and import the library </p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+</code></pre></div>
+
+<p>The main object that the library provides is <code>Mock</code> and you can instantiate it without any argument</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">()</span>
+</code></pre></div>
+
+<p>This object has the peculiar property of creating methods and attributes on the fly when you require them. Let us first look inside the object to get an idea of what it provides</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="p">[</span>
+    <span class="s1">&#39;assert_any_call&#39;</span><span class="p">,</span> <span class="s1">&#39;assert_called_once_with&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;assert_called_with&#39;</span><span class="p">,</span> <span class="s1">&#39;assert_has_calls&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;attach_mock&#39;</span><span class="p">,</span> <span class="s1">&#39;call_args&#39;</span><span class="p">,</span> <span class="s1">&#39;call_args_list&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;call_count&#39;</span><span class="p">,</span> <span class="s1">&#39;called&#39;</span><span class="p">,</span> <span class="s1">&#39;configure_mock&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;method_calls&#39;</span><span class="p">,</span> <span class="s1">&#39;mock_add_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;mock_calls&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;reset_mock&#39;</span><span class="p">,</span> <span class="s1">&#39;return_value&#39;</span><span class="p">,</span> <span class="s1">&#39;side_effect&#39;</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>As you can see there are some methods which are already defined into the object <code>Mock</code>. Let's try to read a non-existent attribute</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span>
+<span class="o">&lt;</span><span class="n">Mock</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mock.some_attribute&#39;</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;140222043808432&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="p">[</span>
+    <span class="s1">&#39;assert_any_call&#39;</span><span class="p">,</span> <span class="s1">&#39;assert_called_once_with&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;assert_called_with&#39;</span><span class="p">,</span> <span class="s1">&#39;assert_has_calls&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;attach_mock&#39;</span><span class="p">,</span> <span class="s1">&#39;call_args&#39;</span><span class="p">,</span> <span class="s1">&#39;call_args_list&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;call_count&#39;</span><span class="p">,</span> <span class="s1">&#39;called&#39;</span><span class="p">,</span> <span class="s1">&#39;configure_mock&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;method_calls&#39;</span><span class="p">,</span> <span class="s1">&#39;mock_add_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;mock_calls&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;reset_mock&#39;</span><span class="p">,</span> <span class="s1">&#39;return_value&#39;</span><span class="p">,</span> <span class="s1">&#39;side_effect&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;some_attribute&#39;</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>As you can see this class is somehow different from what you are used to. First of all, its instances do not raise an <code>AttributeError</code> when asked for a non-existent attribute, but they happily return another instance of <code>Mock</code> itself. Second, the attribute you tried to access has now been created inside the object and accessing it returns the same mock object as before.</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span>
+<span class="o">&lt;</span><span class="n">Mock</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mock.some_attribute&#39;</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;140222043808432&#39;</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>Mock objects are callables, which means that they may act both as attributes and as methods. If you try to call the mock, it just returns another mock with a name that includes parentheses to signal its callable nature</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Mock</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mock.some_attribute()&#39;</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;140247621475856&#39;</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>As you can understand, such objects are the perfect tool to mimic other objects or systems, since they may expose any API without raising exceptions. To use them in tests, however, we need them to behave just like the original, which implies returning sensible values or performing real operations.</p>
+<h2 id="simple-return-values">Simple return values<a class="headerlink" href="#simple-return-values" title="Permanent link">&para;</a></h2>
+<p>The simplest thing a mock can do for you is to return a given value every time you call one of its methods. This is configured setting the attribute <code>return_value</code> of a mock object</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="mi">42</span>
+</code></pre></div>
+
+<p>Now, as you can see the object does not return a mock object any more, instead it just returns the static value stored in the attribute <code>return_value</code>. Since in Python everything is an object you can return here any type of value: simple types like an integer of a string, more complex structures like dictionaries or lists, classes that you defined, instances of those, or functions.</p>
+<p>Pay attention that what the mock returns is exactly the object that it is instructed to use as return value. If the return value is a callable such as a function, calling the mock will return the function itself and not the result of the function. Let me give you an example</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">print_answer</span><span class="p">():</span>
+<span class="o">...</span>  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;42&quot;</span><span class="p">)</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">print_answer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">function</span> <span class="n">print_answer</span> <span class="n">at</span> <span class="mh">0x7f8df1e3f400</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>As you can see calling <code>some_attribute</code> just returns the value stored in <code>return_value</code>, that is the function itself. This is not exactly what we were aiming for. To make the mock call the object that we use as a return value we have to use a slightly more complex attribute called <code>side_effect</code>.</p>
+<h2 id="complex-return-values">Complex return values<a class="headerlink" href="#complex-return-values" title="Permanent link">&para;</a></h2>
+<p>The <code>side_effect</code> parameter of mock objects is a very powerful tool. It accepts three different flavours of objects: callables, iterables, and exceptions, and changes its behaviour accordingly.</p>
+<p>If you pass an exception the mock will raise it</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;A custom value error&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s2">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+  <span class="n">File</span> <span class="s2">&quot;/usr/lib/python3.6/unittest/mock.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">939</span><span class="p">,</span> <span class="ow">in</span> <span class="fm">__call__</span>
+    <span class="k">return</span> <span class="n">_mock_self</span><span class="o">.</span><span class="n">_mock_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s2">&quot;/usr/lib/python3.6/unittest/mock.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">995</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_mock_call</span>
+    <span class="k">raise</span> <span class="n">effect</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">A</span> <span class="n">custom</span> <span class="n">value</span> <span class="n">error</span>
+</code></pre></div>
+
+<p>If you pass an iterable, such as for example a generator, a plain list, tuple, or similar objects, the mock will yield the values of that iterable, i.e. return every value contained in the iterable on subsequent calls of the mock.</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s2">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+  <span class="n">File</span> <span class="s2">&quot;/usr/lib/python3.6/unittest/mock.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">939</span><span class="p">,</span> <span class="ow">in</span> <span class="fm">__call__</span>
+    <span class="k">return</span> <span class="n">_mock_self</span><span class="o">.</span><span class="n">_mock_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s2">&quot;/usr/lib/python3.6/unittest/mock.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">998</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_mock_call</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">effect</span><span class="p">)</span>
+<span class="ne">StopIteration</span>
+</code></pre></div>
+
+<p>As promised, the mock just returns every object found in the iterable (in this case a <code>range</code> object) one at a time until the generator is exhausted. According to the iterator protocol once every item has been returned the object raises the <code>StopIteration</code> exception, which means that you can safely use it in a loop.</p>
+<p>Last, if you feed <code>side_effect</code> a callable, the latter will be executed with the parameters passed when calling the attribute. Let's consider again the simple example given in the previous section</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">print_answer</span><span class="p">():</span>
+<span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;42&quot;</span><span class="p">)</span>       
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">print_answer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">()</span>
+<span class="mi">42</span>
+</code></pre></div>
+
+<p>A slightly more complex example is that of a function with arguments</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">print_number</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number:&quot;</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">print_number</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">Number</span><span class="p">:</span> <span class="mi">5</span>
+</code></pre></div>
+
+<p>As you can see the arguments passed to the attribute are directly used as arguments for the stored function. This is very powerful, especially if you stop thinking about "functions" and start considering "callables". Indeed, given the nature of Python objects we know that instantiating an object is not different from calling a function, which means that <code>side_effect</code> can be given a class and return a instance of it</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">Number</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="o">...</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">print_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="o">...</span>         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">Number</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">n</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">some_attribute</span><span class="p">(</span><span class="mi">26</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">n</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Number</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f8df1aa4470</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">n</span><span class="o">.</span><span class="n">print_value</span><span class="p">()</span>
+<span class="n">Value</span><span class="p">:</span> <span class="mi">26</span>
+</code></pre></div>
+
+<h2 id="asserting-calls">Asserting calls<a class="headerlink" href="#asserting-calls" title="Permanent link">&para;</a></h2>
+<p>As I explained in the previous post outgoing commands shall be tested checking the correctness of the message argument. This can be easily done with mocks, as these objects record every call that they receive and the arguments passed to it.</p>
+<p>Let's see a practical example</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+<span class="kn">import</span> <span class="nn">myobj</span>
+
+
+<span class="k">def</span> <span class="nf">test_connect</span><span class="p">():</span>
+    <span class="n">external_obj</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">()</span>
+
+    <span class="n">myobj</span><span class="o">.</span><span class="n">MyObj</span><span class="p">(</span><span class="n">external_obj</span><span class="p">)</span>
+
+    <span class="n">external_obj</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Here, the class <code>myobj.MyObj</code>  needs to connect to an external object, for example a remote repository or a database. The only thing we need to know for testing purposes is if the class called the method <code>connect</code> of the external object without any parameter.</p>
+<p>So the first thing we do in this test is to instantiate the mock object. This is a fake version of the external object, and its only purpose is to accept calls from the object <code>MyObj</code> under test and possibly return sensible values. Then we instantiate the class <code>MyObj</code>  passing the external object. We expect the class to call the method <code>connect</code> so we express this expectation calling <code>external_obj.connect.assert_called_with</code>.</p>
+<p>What happens behind the scenes? The class <code>MyObj</code> receives the fake external object and somewhere in its initialization process calls the method <code>connect</code> of the mock object. This call creates the method itself as a mock object. This new mock records the parameters used to call it and the subsequent call to its method <code>assert_called_with</code> checks that the method was called and that no parameters were passed.</p>
+<p>In this case an object like</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MyObj</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">):</span>
+        <span class="n">repo</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+</code></pre></div>
+
+<p>would pass the test, as the object passed as <code>repo</code> is a mock that does nothing but record the calls. As you can see, the method <code>__init__</code> actually calls <code>repo.connect</code>, and <code>repo</code> is expected to be a full-featured external object that provides <code>connect</code> in its API. Calling <code>repo.connect</code> when <code>repo</code> is a mock object, instead, silently creates the method (as another mock object) and records that the method has been called once without arguments.</p>
+<p>The method <code>assert_called_with</code> allows us to also check the parameters we passed when calling. To show this let us pretend that we expect the method <code>MyObj.setup</code> to call <code>setup(cache=True, max_connections=256)</code> on the external object. Remember that this is an outgoing command, so we are interested in checking the parameters and not the result.</p>
+<p>The new test can be something like</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_setup</span><span class="p">():</span>
+    <span class="n">external_obj</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">()</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">myobj</span><span class="o">.</span><span class="n">MyObj</span><span class="p">(</span><span class="n">external_obj</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+    <span class="n">external_obj</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_connections</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+</code></pre></div>
+
+<p>In this case an object that passes the test can be</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MyObj</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_repo</span> <span class="o">=</span> <span class="n">repo</span>
+        <span class="n">repo</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_repo</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_connections</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+</code></pre></div>
+
+<p>If we change the method <code>setup</code> to</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_repo</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+<p>the test will fail with the following error</p>
+<div class="highlight"><pre><span></span><code>E           AssertionError: Expected call: setup(cache=True, max_connections=256)
+E           Actual call: setup(cache=True)
+</code></pre></div>
+
+<p>Which I consider a very clear explanation of what went wrong during the test execution.</p>
+<p>As you can read in the official documentation, the object <code>Mock</code> provides other methods and attributes, like <code>assert_called_once_with</code>, <code>assert_any_call</code>, <code>assert_has_calls</code>, <code>assert_not_called</code>, <code>called</code>, <code>call_count</code>, and many others. Each of those explores a different aspect of the mock behaviour concerning calls. Make sure to read their description and go through the examples.</p>
+<h2 id="a-simple-example">A simple example<a class="headerlink" href="#a-simple-example" title="Permanent link">&para;</a></h2>
+<p>To learn how to use mocks in a practical case, let's work together on a new module in the <code>simple_calculator</code> package. The target is to write a class that downloads a JSON file with data on meteorites and computes some statistics on the dataset using the class <code>SimpleCalculator</code>. The file is provided by NASA at <a href="https://data.nasa.gov/resource/y77d-th95.json">this URL</a>.</p>
+<p>The class contains a method <code>get_data</code> that queries the remote server and returns the data, and a method <code>average_mass</code> that uses the method <code>SimpleCalculator.avg</code> to compute the average mass of the meteorites and return it. In a real world case, like for example in a scientific application, I would probably split the class in two. One class manages the data, updating it whenever it is necessary, and another one manages the statistics. For the sake of simplicity, however, I will keep the two functionalities together in this example.</p>
+<p>Let's see a quick example of what is supposed to happen inside our code. An excerpt of the file provided from the server is</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;fall&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fell&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;geolocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">6.08333</span><span class="p">,</span><span class="w"> </span><span class="mf">50.775</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;mass&quot;</span><span class="p">:</span><span class="s2">&quot;21&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Aachen&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;nametype&quot;</span><span class="p">:</span><span class="s2">&quot;Valid&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;recclass&quot;</span><span class="p">:</span><span class="s2">&quot;L5&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;reclat&quot;</span><span class="p">:</span><span class="s2">&quot;50.775000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;reclong&quot;</span><span class="p">:</span><span class="s2">&quot;6.083330&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="s2">&quot;1880-01-01T00:00:00.000&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;fall&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fell&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;geolocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">10.23333</span><span class="p">,</span><span class="w"> </span><span class="mf">56.18333</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;mass&quot;</span><span class="p">:</span><span class="s2">&quot;720&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Aarhus&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;nametype&quot;</span><span class="p">:</span><span class="s2">&quot;Valid&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;recclass&quot;</span><span class="p">:</span><span class="s2">&quot;H6&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;reclat&quot;</span><span class="p">:</span><span class="s2">&quot;56.183330&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;reclong&quot;</span><span class="p">:</span><span class="s2">&quot;10.233330&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="s2">&quot;1951-01-01T00:00:00.000&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">]</span><span class="w"></span>
+</code></pre></div>
+
+<p>So a good way to compute the average mass of the meteorites is</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">simple_calculator.main</span> <span class="kn">import</span> <span class="n">SimpleCalculator</span>
+
+<span class="n">URL</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;https://data.nasa.gov/resource/y77d-th95.json&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span> <span class="k">as</span> <span class="n">url</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+<span class="n">masses</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="s1">&#39;mass&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span>
+
+<span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+<span class="n">avg_mass</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_mass</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Where the list comprehension filters out those elements which do not have a attribute <code>mass</code>. This code returns the value 50190.19568930039, so that is the average mass of the meteorites contained in the file.</p>
+<p>Now we have a proof of concept of the algorithm, so we can start writing the tests. We might initially come up with a simple solution like</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_average_mass</span><span class="p">():</span>
+    <span class="n">metstats</span> <span class="o">=</span> <span class="n">MeteoriteStats</span><span class="p">()</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">metstats</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">metstats</span><span class="o">.</span><span class="n">average_mass</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mf">50190.19568930039</span>
+</code></pre></div>
+
+<p>This little test contains, however, two big issues. First of all the method <code>get_data</code> is supposed to use the Internet connection to get the data from the server. This is a typical example of an outgoing query, as we are not trying to change the state of the web server providing the data. You already know that you should not test the return value of an outgoing query, but you can see here why you shouldn't use real data when testing either. The data coming from the server can change in time, and this can invalidate your tests. </p>
+<p>Testing such a case becomes very simple with mocks. Since the class has a public method <code>get_data</code> that interacts with the external component, it is enough to temporarily replace it with a mock that provides sensible values. Create the file <code>tests/test_meteorites.py</code> and put this code in it</p>
+<div class="highlight"><span class="filename">tests/test_meteorites.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+
+<span class="kn">from</span> <span class="nn">simple_calculator.meteorites</span> <span class="kn">import</span> <span class="n">MeteoriteStats</span>
+
+
+<span class="k">def</span> <span class="nf">test_average_mass</span><span class="p">():</span>
+    <span class="n">metstats</span> <span class="o">=</span> <span class="n">MeteoriteStats</span><span class="p">()</span>
+
+    <span class="n">metstats</span><span class="o">.</span><span class="n">get_data</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">()</span>
+    <span class="n">metstats</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;fall&quot;</span><span class="p">:</span> <span class="s2">&quot;Fell&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;geolocation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">6.08333</span><span class="p">,</span> <span class="mf">50.775</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mass&quot;</span><span class="p">:</span><span class="s2">&quot;21&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Aachen&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nametype&quot;</span><span class="p">:</span><span class="s2">&quot;Valid&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;recclass&quot;</span><span class="p">:</span><span class="s2">&quot;L5&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reclat&quot;</span><span class="p">:</span><span class="s2">&quot;50.775000&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reclong&quot;</span><span class="p">:</span><span class="s2">&quot;6.083330&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;year&quot;</span><span class="p">:</span><span class="s2">&quot;1880-01-01T00:00:00.000&quot;</span><span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;fall&quot;</span><span class="p">:</span> <span class="s2">&quot;Fell&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;geolocation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">10.23333</span><span class="p">,</span> <span class="mf">56.18333</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mass&quot;</span><span class="p">:</span><span class="s2">&quot;720&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Aarhus&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nametype&quot;</span><span class="p">:</span><span class="s2">&quot;Valid&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;recclass&quot;</span><span class="p">:</span><span class="s2">&quot;H6&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reclat&quot;</span><span class="p">:</span><span class="s2">&quot;56.183330&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reclong&quot;</span><span class="p">:</span><span class="s2">&quot;10.233330&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;year&quot;</span><span class="p">:</span><span class="s2">&quot;1951-01-01T00:00:00.000&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">metstats</span><span class="o">.</span><span class="n">average_mass</span><span class="p">(</span><span class="n">metstats</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mf">370.5</span>
+</code></pre></div>
+
+<p>When we run this test we are not testing that the external server provides the correct data. We are testing the process implemented by <code>average_mass</code>, feeding the algorithm some known input. This is not different from the first tests that we implemented: in that case we were testing an addition, here we are testing a more complex algorithm, but the concept is the same.</p>
+<p>We can now write a class that passes this test. Put the following code in <code>simple_calculator/meteorites.py</code> alongside with <code>main.py</code></p>
+<div class="highlight"><span class="filename">simple_calculator/meteorites.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">simple_calculator.main</span> <span class="kn">import</span> <span class="n">SimpleCalculator</span>
+
+<span class="n">URL</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;https://data.nasa.gov/resource/y77d-th95.json&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MeteoriteStats</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span> <span class="k">as</span> <span class="n">url</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">average_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+
+        <span class="n">masses</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="s1">&#39;mass&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span>
+</code></pre></div>
+
+<p>As you can see the class contains the code we wrote as a proof of concept, slightly reworked to match the methods we used in the test. Run the test suite now, and you will see that the latest test we wrote passes.</p>
+<p>Please note that we are not testing the method <code>get_data</code>. That method uses the function <code>urllib.request.urlopen</code> that opens an Internet connection without passing through any other public object that we can replace at run time during the test. We need then a tool to replace internal parts of our objects when we run them, and this is provided by patching, which will be the topic of the next post.</p>
+<p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/meteoritestats-class">meteoritestats-class-added</a></p>
+<h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">&para;</a></h2>
+<p>Mocks are very important, and as a Python programmer you need to know the subtleties of their implementation. Aside from the technical details, however, I believe it is mandatory to master the different types of tests that I discussed in the previous post, and to learn when to use simple assertions and when to pull a bigger gun like a mock object.</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 4 of the TDD in Python with pytest series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">TDD in Python with pytest - Part 1</a></li>
+        <li><a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">TDD in Python with pytest - Part 2</a></li>
+        <li><a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">TDD in Python with pytest - Part 3</a></li>
+      </ul>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">TDD in Python with pytest - Part 5</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
+            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T19:00:00+02:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">
+            <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2>TDD in Python with pytest - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
+            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/">
+            <img src="/images/refactoring-with-tests-in-python.jpg" alt="refactoring-with-tests-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/"><h2>Refactoring with tests in Python: a practical example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2017-07-21T09:30:00+01:00">Jul 21, 2017</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/">
+            <img src="/images/python-mocks.jpg" alt="python-mocks" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"><h2>Python Mocks: a gentle introduction - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/decorators/" class="tag">decorators</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-03-06T18:00:00+01:00">Mar 6, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-27T23:30:00+00:00">Feb 27, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/">
+            <img src="/images/python-mocks.jpg" alt="python-mocks" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/"><h2>Python Mocks: a gentle introduction - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/decorators/" class="tag">decorators</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-09-27T09:00:00+00:00">Sep 27, 2016</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

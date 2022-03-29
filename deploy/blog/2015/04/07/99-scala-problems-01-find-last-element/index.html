@@ -1,0 +1,773 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - 99 Scala Problems 01 - Find the last element of a list</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Discussing how to find elements in Scala lists">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="99 Scala Problems 01 - Find the last element of a list" />
+<meta name="twitter:description" content="Discussing how to find elements in Scala lists" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/99-scala-problems.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>99 Scala Problems 01 - Find the last element of a list</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:00:00+01:00"> 07/04/2015</time> <i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/scala/">Scala</a>
+	<a class="tag" href="/categories/functional-programming/">functional programming</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=99%20Scala%20Problems%2001%20-%20Find%20the%20last%20element%20of%20a%20list&url=https%3A//www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-01-find-last-element/&via=thedigicat&hashtags=scala,functional-programming" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-01-find-last-element/&title=99%20Scala%20Problems%2001%20-%20Find%20the%20last%20element%20of%20a%20list&summary=Discussing%20how%20to%20find%20elements%20in%20Scala%20lists&source=https%3A//www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-01-find-last-element/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=99%20Scala%20Problems%2001%20-%20Find%20the%20last%20element%20of%20a%20list&u=https%3A//www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-01-find-last-element/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=99%20Scala%20Problems%2001%20-%20Find%20the%20last%20element%20of%20a%20list&amp;body=https%3A//www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-01-find-last-element/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-01-find-last-element/&title=99%20Scala%20Problems%2001%20-%20Find%20the%20last%20element%20of%20a%20list" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <h2 id="the-problem">The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
+<p><strong>P01</strong> (*) Find the last element of a list.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">last</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">8</span>
+</code></pre></div>
+
+<h2 id="initial-thoughts">Initial thoughts<a class="headerlink" href="#initial-thoughts" title="Permanent link">&para;</a></h2>
+<p>This is the very first Scala problem, but a lot of topics are covered even by such a small task.</p>
+<p>First I have to learn how to define functions. Then the problem shows two data types, namely <code>List</code> and <code>Int</code>, but it does not state that the list has to contain integers. So another point is to understand if and how Scala can deal with generic containers (that is, a list, regardless of the type of the content).</p>
+<p>Scala has a strong functional component, so it seems a good thing to try and solve the problem both with some procedural code (object-oriented or not) and with a functional approach.</p>
+<p>Well, the agenda is:</p>
+<ol>
+<li>Get some knowledge about functions syntax</li>
+<li>Learn generic containers</li>
+<li>Find a procedural and a functional solution to the problem</li>
+</ol>
+<h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h2>
+<p>A function in Scala is defined through the <code>def</code> keyword, both inside and outside an object. The language syntax seems to have a lot of possibilities and some dark corners, but it is clear that input parameters have to be specified between round brackets, and the type of the output comes after them (outside the brackets). Then an equal sign and the body of the function between braces.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">name_of_the_function</span><span class="p">(</span><span class="n">paramA</span><span class="p">:</span><span class="n">typeA</span><span class="p">,</span> <span class="n">paramB</span><span class="p">:</span><span class="n">typeB</span><span class="p">,</span> <span class="p">...):</span><span class="k">type</span> <span class="nc">=</span> <span class="p">{</span>
+    <span class="n">body</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The equal sign has an important meaning, if I remember correctly. Omitting the equal sign makes the function automatically return a <code>Unit</code> type (that is, no output), so the point seems to be: ask yourself if your function shall return something or not. The <code>Unit</code> return type may be also explicitly stated, in which case you have to add the equal sign. And interesting clarification (with two different points of view) may be found <a href="https://stackoverflow.com/questions/944111/when-to-use-the-equals-sign-in-a-scala-method-declaration">here</a>. As a beginner, I prefer to be explicit.</p>
+<h2 id="type-variables">Type variables<a class="headerlink" href="#type-variables" title="Permanent link">&para;</a></h2>
+<p>I need to declare a function that accepts a list of any kind of things. This problem falls under the term <em>polymorphism</em>, and in Scala can be achieved with <em>type variables</em>. A very quick introduction to the matter may be found <a href="https://twitter.github.io/scala_school/type-basics.html">here</a>. Basically for my problem I simply have to use the following syntax</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">func</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>where the starting <code>[A]</code> signals that the function is a sort of template with a free type <code>A</code>, unknown at the moment. The same type is used later to say that the parameter <code>l</code> is a <code>List</code> of things, and <code>A</code> is the type of each of them. Last, this function returns one value of the <code>A</code> type, since the problems requires to find one specific element of the list.</p>
+<h2 id="find-the-last-element-of-a-list">Find the last element of a list<a class="headerlink" href="#find-the-last-element-of-a-list" title="Permanent link">&para;</a></h2>
+<p>The procedural approach to this problem is to simply iterate through the list storing the last visited element, until the end of the function is reached. At that point the last visited element is also the last element of the list.</p>
+<p>A good list type, however, should also have methods to easily retrieve special elements, such as the first or the last element. According to the <a href="http://www.scala-lang.org/api/2.11.4/index.html#scala.collection.immutable.List">Scala documentation</a> the <code>List</code> type provides a <code>last()</code> method which returns ("selects") the last element.</p>
+<p>The functional approach is easy in this case. Usually functional solutions are built starting with the exit case, which for this problem is: the list contains only one element, which is the last one. This excludes the possibility for the list to be empty, so we should manage that event too. If the list has more that one element, we simply remove the first one and call the function recursively. Just like Erlang, Scala has a very powerful pattern matching mechanism, that may be leveraged to simplify expressing the algorithm.</p>
+<p>The only edge case of this algorithm is when the list is empty. In that situation no element can be found, and an exception shall be thrown (Scala nomenclature).</p>
+<h2 id="the-procedural-solution">The procedural solution<a class="headerlink" href="#the-procedural-solution" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">l</span><span class="p">.</span><span class="n">last</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Since the body of the function is so small I can also omit the braces and write</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">last</span>
+</code></pre></div>
+
+<p>There is no check for an empty list because the <code>last()</code> method already throws the <code>NoSuchElementException</code> when no element is present.</p>
+<p>There is no need to use an explicit <code>return</code> statement, as functions always return the last expression.</p>
+<h2 id="the-recursive-solution">The recursive solution<a class="headerlink" href="#the-recursive-solution" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">h</span> <span class="o">::</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="n">h</span>
+    <span class="k">case</span> <span class="n">_</span> <span class="o">::</span> <span class="n">tail</span> <span class="o">=&gt;</span> <span class="n">last</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The value returned by the function is <code>l match {}</code>, that is the execution of the pattern matching block on the input variable <code>l</code>.</p>
+<p>The first pattern divides the list in two parts: one head element (<code>h</code>) and a tail formed by nothing. This is the case in which the input list has only one element.</p>
+<p>The second matching takes the tail of the list (the first element is not even stored, it is ignored using the <code>_</code> wildcard) and calls itself on the remaining values.</p>
+<p>The last matching is selected when the first two fail, that is when the list is empty. In that case an exception shall be thrown to match the behaviour of the <code>last()</code> method. This is not mandatory, but is probably something that the programmer is accustomed to, so provided that we document it, it is a good convention to adhere to.</p>
+<p>In Scala the exception shall be created at the moment, just like a standard object, so the <code>new</code> keyword is needed before the name of the exception itself.</p>
+<h2 id="final-considerations">Final considerations<a class="headerlink" href="#final-considerations" title="Permanent link">&para;</a></h2>
+<p>My first experience with functional languages was Erlang, so I quickly learned to love <strong>pattern matching</strong> and the beauty of <strong>recursive solutions</strong>. The Scala pattern matching syntax was for me really simple to grasp. The procedural solution using the dedicated method was straightforward.</p>
+<p>The <strong>type variables</strong> syntax is very useful. I come from Python, where the polymorphic approach is pushed to its limit, and all variables are references, thus implementing type variables from the very beginning. In Scala, types are explicitly declared, so the type variables syntax allows me to use collections without binding the code to a specific type.</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 1 of the 99 Scala Problems series</h2>
+    </header>
+    <div>
+      
+      <h3>Next articles</h3>
+      <ul>
+        <li><a href="/blog/2015/04/07/99-scala-problems-02-find-last-nth/">99 Scala Problems 02 - Find the last but one element of a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-03-find-kth/">99 Scala Problems 03 - Find the Kth element of a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-04-length/">99 Scala Problems 04 - Find the number of elements of a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-05-reverse/">99 Scala Problems 05 - Reverse a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-06-palindome/">99 Scala Problems 06 - Find out whether a list is a palindrome</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-07-flatten/">99 Scala Problems 07 - Flatten a nested list structure</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/">99 Scala Problems 08 - Eliminate consecutive duplicates of list elements</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/">99 Scala Problems 09 - Pack consecutive duplicates of list elements into sublists</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list/">99 Scala Problems 10 - Run-length encoding of a list.</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-11-modified-run-length-encoding/">99 Scala Problems 11 - Modified run-length encoding</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-12-decode-a-run-length-encoded-list/">99 Scala Problems 12 - Decode a run-length encoded list</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-13-run-length-encoding-of-a-list-direct-solution/">99 Scala Problems 13 - Run-length encoding of a list (direct solution)</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-14-duplicate-the-elements-of-a-list/">99 Scala Problems 14 - Duplicate the elements of a list</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-15-duplicate-the-elements-of-a-list-a-given-number-of-times/">99 Scala Problems 15 - Duplicate the elements of a list a given number of times</a></li>
+        <li><a href="/blog/2015/05/13/99-scala-problems-16-20/">99 Scala Problems 16-20</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-02-find-last-nth/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-02-find-last-nth/"><h2>99 Scala Problems 02 - Find the last but one element of a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:05:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-03-find-kth/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-03-find-kth/"><h2>99 Scala Problems 03 - Find the Kth element of a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:10:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-04-length/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-04-length/"><h2>99 Scala Problems 04 - Find the number of elements of a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:15:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-05-reverse/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-05-reverse/"><h2>99 Scala Problems 05 - Reverse a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:20:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-06-palindome/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-06-palindome/"><h2>99 Scala Problems 06 - Find out whether a list is a palindrome</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:25:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-07-flatten/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-07-flatten/"><h2>99 Scala Problems 07 - Flatten a nested list structure</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:30:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/"><h2>99 Scala Problems 08 - Eliminate consecutive duplicates of list elements</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:35:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/"><h2>99 Scala Problems 09 - Pack consecutive duplicates of list elements into sublists</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:40:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list/"><h2>99 Scala Problems 10 - Run-length encoding of a list.</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-14T10:00:00+01:00">Apr 14, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/14/99-scala-problems-11-modified-run-length-encoding/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/14/99-scala-problems-11-modified-run-length-encoding/"><h2>99 Scala Problems 11 - Modified run-length encoding</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-14T10:30:00+01:00">Apr 14, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

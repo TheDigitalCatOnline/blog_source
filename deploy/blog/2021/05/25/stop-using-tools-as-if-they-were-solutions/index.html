@@ -1,0 +1,613 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Stop using tools as if they were solutions</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Stop using tools as if they were solutions">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Stop using tools as if they were solutions" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/stop-using-tools-as-if-they-were-solutions.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Stop using tools as if they were solutions</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2021-05-25T09:00:00+01:00"> 25/05/2021</time> <i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T09:00:00+00:00">Aug 22, 2021</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/architectures/">architectures</a>
+	<a class="tag" href="/categories/design/">design</a>
+	<a class="tag" href="/categories/tools/">tools</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Stop%20using%20tools%20as%20if%20they%20were%20solutions&url=https%3A//www.thedigitalcatonline.com/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/&via=thedigicat&hashtags=architectures,design,tools" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/&title=Stop%20using%20tools%20as%20if%20they%20were%20solutions&summary=&source=https%3A//www.thedigitalcatonline.com/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Stop%20using%20tools%20as%20if%20they%20were%20solutions&u=https%3A//www.thedigitalcatonline.com/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Stop%20using%20tools%20as%20if%20they%20were%20solutions&amp;body=https%3A//www.thedigitalcatonline.com/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2021/05/25/stop-using-tools-as-if-they-were-solutions/&title=Stop%20using%20tools%20as%20if%20they%20were%20solutions" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p><em>"I will write a class"</em>.</p><p>I can't tell you how many times I have heard this sentence from candidates during coding interviews.</p><p>What's wrong with this sentence? Nothing, out of context, but let me add this little detail: this is usually the first sentence I hear when the candidate tries to tackle a problem.</p><p>I know that coding interviews can be very stressful and I also think that leading such interviews requires a lot of effort to avoid transforming them into nitpicking sessions in which the candidate feels every single keystroke is scrutinised and analysed. As if the destiny of the whole company depended on how fast you can code a function that reverses a string!</p><p>But even taking into account interview anxiety, I think such an approach reveals something wrong deeper in the way we approach problems as programmers. This is the result of a culture that mistakes tools for solutions, and if I can detect it in senior programmers it means it already propagated into our teams and our companies.</p><h2 id="the-problem-solving-challenge">The problem-solving challenge<a class="headerlink" href="#the-problem-solving-challenge" title="Permanent link">¶</a></h2><p>When you face a problem (<em>any</em> problem) you need to devise a strategy to solve it. You need to have an idea of what to do before doing it, otherwise you are reacting and not acting.</p><p>When you practice any type of combat sport you train your body to react to specific inputs (attacks) with automatic reactions (defences, counterattacks), but you usually do it because in a real fight you don't have the time to make a conscious decision. Such "perfect" reactions, though, are the result of a constant and very focused effort to transform consciously selected actions into involuntary ones. Without training, a pure reaction is usually an average response at best.</p><p>In problem-solving we face the same challenge. Either we devise a strategy, or our approach will be clumsy and ultimately not efficient.</p><p>Imagine you were tasked to build a bridge between two sides of a river. Would your first concern be the specific type of hammers that the workers should use? After all, you can have ball-peen hammers, sledgehammers, brick hammers, and many other types. Choosing the wrong one might severely affect the performances of your workers.</p><p>That's hardly the first thing you should ask yourself. I'm pretty sure you agree that knowing the distance that the bridge should cover is much more urgent. Also, the type and the amount of traffic that it has to carry (walkers, cars, trucks, trains) is an important factor, and you should be concerned about the budget that you are allowed.</p><p>Why are these questions more important than the one about hammers? Because the answers to these questions can heavily influence the whole project. They are pillars of your architecture and not details<sup>[<a id="fr--7170177" href="#fd--7170177">1</a>]</sup>. My colleague Ken Pemberton always reminds me that most of the time we don't ask ourselves an even more important question: "What problem are you trying to solve?". In the example above, a bridge might not be the best solution in the first place.</p><p>I think the process, at least when it comes to software projects, can be divided into three connected phases: decomposition, communication, implementation.</p><h3 id="decomposition">Decomposition</h3><p>Macroscopically, a <em>processing system</em> is made of an initial state, some transformations or intermediate states, and a final state.</p><p>Usually, it's simple to identify the initial and final state, while it's harder to describe what happens between the two. So, we need to proceed iteratively, describing the system using black boxes, and then opening each one of them, zooming in to describe what happens inside.</p><p>At any zoom level, from the 10,000 feet overview down to the description of a single function, you need to identify 4 things: the <strong>input</strong>, the <strong>output</strong>, the <strong>actors</strong> and the <strong>data flow</strong>.</p><p>The input is what enters the black box. It has usually been decided at a higher level of zoom or while discussing a component that provides it as output. So, it is given, and if it turns out to be inadequate we should take a step back in the design and question how we can provide proper input. The same is valid for the output.</p><p>The actors must be black boxes that accept data and transform it, and the data flow is how information is exchanged between the actors. This is clearly where it can take a long time to find a good solution, and we might need to go back and forth several times.</p><p>Let's look at an example. A search engine is a complicated piece of software, and implementing it is not a matter of 1 hour of work. But we can decompose it pretty easily, starting from the fact that the input of the system is a query, and that the output is an ordered set of results. So, my overview of this component is the following: the user inputs a query, the query is processed and the system returns a list of results, ordered by quality.</p><p>I didn't describe what "quality" is, nor discussed the specific implementation of the system that stores all possible results. Those details are buried down somewhere at a certain level of zoom and are utterly useless at this level.</p><h3 id="communication">Communication</h3><p>Any level of zoom in the decomposition can be described, and the amount of specific technical knowledge needed to understand the explanation should be directly proportional to the zoom level. You might have heard the quote "You do not really understand something unless you can explain it to your grandmother." I believe this might be very offensive to grandmothers, but paraphrasing it, I would say that "There should be a zoom level at which the project is understandable by anyone who doesn't have a specific knowledge of the field".</p><p>Indeed, the problem of technical communication is that tech-savvy gurus are usually not able to decompose what they are working on into black boxes that are sufficiently abstract to be understandable by any human being. Please note this can happen to anyone, not only to programmers. I had to listen enough times to people working in banking, insurances, or project management (just to name a few different fields) to know that they can be unable to describe their job or specific aspects of it without using 4 obscure words every 5 words, the fifth one probably being a conjunction.</p><p>Being a blogger and an author I want to add a consideration about communication. Explaining things is the best way to see if everything is clear in your mind, which is another way to read the previous quote (without involving grandmothers). The very same post that you are reading started as an intuition, a small list of ideas, and so far has been rewritten 6 times. In the process, I understood the topics I am discussing much better than I did when I first felt the need to write them down.</p><h3 id="implementation">Implementation</h3><p>Professor Sidney Morris, in a <a href="https://www.youtube.com/watch?v=T1snRQEQuEk">very interesting video</a> about how to write proofs in mathematics, describes the process with these words:</p><div class="excerpt"><div class="content"><ul><li>Step 1: write down what we are given</li><li>Step 2: write down the definition of each technical term in what we are given</li><li>Step 3: write down what we are required to prove</li><li>Step 4: write down the definition of each technical term in what we are required to prove</li></ul>
+<p>So these 4 steps are quite easy, quite straightforward.</p>
+<p>The next step is not as easy</p>
+<ul><li>Step 5: THINK!</li></ul></div></div><p>While we don't need to aim to the same level of formality required to mathematicians who prove theorems, we can surely keep the spirit of the process: write down and define what you have, write down and define what you want to achieve. Then, think.</p><p>We tend to take for granted that we can think, after all we do it all day long. But focusing our attention on a specific topic, giving it time, exploring it, considering questions about it, evaluating possible answers, all these things are increasingly unpopular. This is not the place for a critique of our society full of noise, where ideas, products, and works of art are watched for mere seconds before getting a like and passing into oblivion. But it is worth noting that thinking is <em>not</em> easy.</p><p>The implementation of a black box might require a lot of thinking, and we have to accept this. It might require a lot of rewrites, prove unsuccessful only after a certain amount of time, or even require a separate project to be properly managed. There are no shortcuts here.</p><h2 id="the-coding-interview-problem">The coding interview problem<a class="headerlink" href="#the-coding-interview-problem" title="Permanent link">¶</a></h2><p>What do we do during a coding interview? What are we trying to understand with this excruciating exercise that puts people in a pillory for one hour? </p><p>What we should do, in my opinion, is to <em>help the candidate to show how they solve problems</em>. We should facilitate a discussion along the lines of the three points that I mentioned: decomposition, communication, implementation. As you can see implementation is not avoided, it's a coding interview because there should be a part of it in which we write code, but it should be done only after we established a decomposition of the system.</p><p>I also believe that the assignment should be purposefully too complex to implement in a single one-hour session, and this should be explicitly communicated. This forces the candidate to design instead of rushing headlong into implementing the first requirement of the exercise without reading the rest. At any point, if the candidate is unable to implement a specific step, we can also move on to other steps and fake the input. This way we get many benefits:</p><ol><li>The candidate won't feel stressed by the need of showing how good they are at coding. The design part is a friendly chat, where suggestions can be made and specific technologies/solutions might be discarded if not known to the candidate.</li><li>They won't perceive the interview as a failure because they couldn't implement a single step or because they didn't complete the assignment in time.</li><li>We can explore the way the candidate communicates, the way they decompose complex processes, how well they understand problems and, eventually, how they write code.</li><li>We can adjust the level of difficulty of the interview or explore specific topics in detail just asking the candidate to focus on a specific detail.</li></ol><p>As an interviewer, I value the decomposition phase much more than the part in which you show me how well you remember all the functions of the Python standard library in a stressful situation. The truth is that I look them up very often and I don't look down on people because they don't remember the name of a method. I have one hour to decide if you are a good addition to the company, if you can be a good teammate for my next project, and if (possibly with some training) you can be given the responsibility for part of the system. In that hour I need to capture the main traits of your approach.</p><p>Don't get me wrong, I am a terrible nitpicker and probably on the brink of being OCD about some things, such as naming or tidiness of the code. But I try to take my own advice. What is the most important thing about you that I can understand? I think it would be extremely disappointing to discover that I hired someone who knows the standard library by heart but can't pick the right technology to complete a project before the deadline.</p><p>I understand that when you are interviewed you feel like you are in a position of weakness and that you are sitting there at the mercy of an evil interviewer whose purpose is only to uncover what you don't know. I'm sorry if you had to face such interviewers. I had to, and I understand the frustration. My advice is: always remember that working for a company is a matter of giving your time and your energy in exchange for personal growth. You might be interviewing for your dream job, but if the interviewer is not interested in you and your growth it's probably not that useful for you to work with them.</p><p>So, as a candidate, you have a responsibility to show the interviewer how you can solve problems. If you show how good you are at coding, you will impress only interviewers that are interested in your coding skills, and this is, in my opinion, a very limited part of what you can do as a programmer. You need to show that you can design, and this is independent of the level you are at.</p><p>You need to show that you understand problems, that you can compare solutions, that you can take your risks picking one specific strategy and that if needed you can stop at a certain point and say "This is the wrong approach".</p><h2 id="patterns">Patterns<a class="headerlink" href="#patterns" title="Permanent link">¶</a></h2><p>Design patterns are defined by Erich Gamma and his co-authors in their seminal book<sup>[<a id="fr--4267385" href="#fd--4267385">2</a>]</sup> with these words: "[...] patterns solve specific design problems and make object-oriented designs more flexible, elegant, and ultimately reusable. [...] A designer who is familiar with such patterns can apply them immediately to design problems without having to rediscover them."</p><p>I want to focus on the words "solve specific design problems" because what I notice is that many people apply patterns without having understood the problem they are trying to solve. Even worse, they look at the world through the lens of the patterns they know, twisting the nature of problems to fit the solution they know.</p><p>Back to the original sentence. "I will write a class" is considered the go-to solution in OOP languages. What we believe is that, in an OOP language, whatever the problem, the solution is to write a class. So, our first move on the chessboard of the interview is to write a class. This is a dangerous misuse of a pattern such as data encapsulation, and an expert interviewer will checkmate us in one move. I saw candidates facing problems that could be solved in 10 minutes with two functions and a dictionary spending more than 50 minutes swamped in a multitude of classes, trying to figure out which object contained the data they needed at a certain point of the process.</p><p>Clearly, classes might be the best solution for some problems, but this should come at the end of your analysis. You write a class because you have data and functions that can be put together, and this is valid for any other technology. Always ask yourself: what is the reason why I use this? What is the problem that I'm trying to solve?</p><h2 id="a-dangerous-culture">A dangerous culture<a class="headerlink" href="#a-dangerous-culture" title="Permanent link">¶</a></h2><p>We all make the same mistake here: we push (or at least accept) a culture in which we teach and learn tools as go-to solutions without teaching to identify and face problems.</p><p>Programming languages, architectural patterns, algorithms. Those are all tools to implement solutions, they are not the solutions. You should learn them, down to the most minute details if you can, but never put them on the table before you understood the problem.</p><p>Alexis Carrel said, "A few observation and much reasoning lead to error; many observations and a little reasoning to truth."<sup>[<a id="fr--9154800" href="#fd--9154800">3</a>]</sup> The advice that I take from the French Nobel Prize winner is: what is in front of you has to be observed deeply to find out its real nature. What things are is much more important than what we think they are and how we think we should treat them ("reasoning"). And what things are, if observed properly, will also reveal ways to interact with them, to manipulate them, to solve them.</p><p>If you want a clear example of the opposite, observe a programmer (maybe you yourself) looking for help on an error the web framework or the compiler threw at them. Copy and paste the error message into Google, pick the first result (Stack Overflow), scroll down until you find some code, apply. I dare you to call this "engineering". Many times we don't even read the Stack Overflow question, we directly read the answer, not to mention the fact that many times we don't even read the error message!</p><p>I recommend reading a very interesting article by Joseph Gefroh, <a href="https://medium.com/swlh/why-your-technical-interview-is-broken-and-how-to-fix-it-7004da002aa8">Why Your Technical Interview Is Broken, and How to Fix It</a>, where he discusses the various types of skills that you can explore during an interview, and which ones you should be interested in. In particular, I couldn't agree more with his point about algorithmic interviews, as I believe they are deeply flawed.</p><p>I also recommend having a look at the <a href="https://github.com/guardian/coding-exercises">Guardian Coding Exercises</a> and to read the description of the repository. I think they are a good example of tests that allow the candidate and the interviewer to work together, to actually meet and to discuss a solution. There is no "right" way to solve them, and many of them cannot be solved in 45 minutes, which is usually the time given to a candidate after an initial introductory chat.</p><h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h2><p>I hope these short considerations helped you to see my point. We should all shift our gaze from the tools we have to the nature of problems and to their solutions. We are missing an important step here, which is ultimately what defines a good engineer and which is the most important thing that you can learn in your career. Observe problems, stop and think, devise a strategy, zoom out and zoom in. Learn to use tools, don't be used by them.</p><p>We need to push for this approach in our interviews, but also try to promote this culture in our teams and companies.</p><hr><div id="_footnotes"><div id="fd--7170177"><a href="#fr--7170177">1</a> see "What is a software architecture?" in Clean Architectures in Python <a href="https://www.thedigitalcatbooks.com">https://www.thedigitalcatbooks.com</a></div><div id="fd--4267385"><a href="#fr--4267385">2</a> <em>Design Patterns: Elements of Reusable Object-Oriented Software</em> by Gamma, Vlissides, Johnson, and Helm</div><div id="fd--9154800"><a href="#fr--9154800">3</a> <em>Réflexions sur la vie</em>, Paris, 1952</div></div>
+  </div>
+
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/02/16/dissecting-a-web-stack/">
+            <img src="/images/dissecting-a-web-stack.jpg" alt="dissecting-a-web-stack" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/02/16/dissecting-a-web-stack/"><h2>Dissecting a Web stack</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/architectures/" class="tag">architectures</a>
+		<a href="/categories/concurrent-programming/" class="tag">concurrent programming</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/django/" class="tag">Django</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+		<a href="/categories/aws/" class="tag">AWS</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-02-16T15:00:00+00:00">Feb 16, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-10-27T08:30:00+00:00">Oct 27, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/18/emacs-configuration-for-python-javascript-terraform-and-blogging/">
+            <img src="/images/emacs-configuration-for-python-javascript-terraform-and-blogging.jpg" alt="emacs-configuration-for-python-javascript-terraform-and-blogging" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/18/emacs-configuration-for-python-javascript-terraform-and-blogging/"><h2>Emacs Configuration for Python/JavaScript, Terraform and blogging</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/blogging/" class="tag">blogging</a>
+		<a href="/categories/editor/" class="tag">editor</a>
+		<a href="/categories/emacs/" class="tag">Emacs</a>
+		<a href="/categories/javascript/" class="tag">JavaScript</a>
+		<a href="/categories/markdown/" class="tag">Markdown</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/terraform/" class="tag">Terraform</a>
+		<a href="/categories/tools/" class="tag">tools</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-18T15:30:00+01:00">Jul 18, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>
