@@ -2,7 +2,7 @@
 :pelican.date:2018-04-25 13:00:00 +0100
 :pelican.modified:2022-01-23 11:00:00 +0000
 :pelican.category:Programming
-:pelican.tags:algorithms, cryptography, SSL, SSH, RSA, Python
+:pelican.tags:algorithms, cryptography, devops, SSL, SSH, RSA, Python
 :pelican.authors:Leonardo Giordani
 :pelican.slug:rsa-keys
 :pelican.image:rsa-keys

@@ -1,7 +1,7 @@
 Title: Public key cryptography: SSL certificates
 Date: 2020-11-04 23:00:00 +0100
 Category: Programming
-Tags: algorithms, cryptography, SSL, SSH, RSA, Python, WWW
+Tags: algorithms, cryptography, devops, SSL, SSH, RSA, Python, WWW
 Authors: Leonardo Giordani
 Slug: public-key-cryptography-ssl-certificates
 Image: public-key-cryptography-ssl-certificates
