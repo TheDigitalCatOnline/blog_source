@@ -1,0 +1,103 @@
+:pelican.title:Consistent Hashing and Cache Partitioning
+:pelican.date:2022-03-22 08:00:00 +0100
+:pelican.category:Programming
+:pelican.tags:algorithms, architectures, big data, cryptography, distributed systems, Python
+:pelican.authors:Leonardo Giordani
+:pelican.slug:consistent-hashing-and-cache-partitioning
+:pelican.image:consistent-hashing-and-cache-partitioning
+:pelican.summary: 
+
+* Intro to partitioning
+** Reasons for partitions and advantages
+** Node vs partition
+** Theoretical fair share (unskewed)
+** Range queries issues
+** Database vs cache
+* Consistent hashing
+** Cryptographic hashing functions are bad
+** Modulo N approach
+** Mapping on a circle
+* Consistent hashing implementation
+
+This post is an introduction to partitioning, a technique for distributed storage systems, and to consistent hashing, a specific partitioning algorithm that promotes even distribution of data, while allowing to dynamically change the number of servers and minimising the cost of the transition.
+
+My interest in partitioning dates back to 2015, when I was following courses at the MongoDB university and learned about _sharding_, the name MongoDB uses for partitioning. I was fascinated by the topic and discovered consistent hashing; I enjoyed it a lot, so much that I wrote a little demo in Python to understand it better. Later, I focused on other things and forgot the project completely, until recently, when [link]("https://github.com/drocpdp", "David Eynon") sent me a PR on GitHub to replace a deprecated testing library. So, I decided to resurrect the demo, rewrite it, and explain in this post what I understood about consistent hashing.
+
+The topic of distributed storage and data processing is arguably rich and complicated, so while I will try to give a broader context to the concepts that I will introduce, I by no mean intend to write a comprehensive guide to the subject matter. In particular, I will largely ignore the problem of performances, which is paramount when it comes to picking a data processing technique. The audience of this post are developers who do not know what partitioning and consistent hashing are and want to take their first step into those topics. At the end of the article I will provide an initial selection of other resources that dive into performance analysis and that compare alternative algorithms.
+
+== Rationale
+
+In principle, partitioning means scattering data among multiple sources to allow a real concurrency of access and a more targeted optimisation. For example, we might observe that in a given social media application there are two types of queries: some are very infrequent and involve tables related to personal data and the user profile, others are extremely frequent and pretty intensive, and are related to the content shared by the user. In this case we might decide to partition the database storing the tables related to the profile and the tables that are related to content in two different computers, A and B. This means that the infrequent queries that fetch personal data will go to server A, while the more frequent and intensive queries related to content go to server B. Suddenly we have the chance to deploy server B using a more powerful and expensive architecture without increasing the cost for tables that won't benefit from such an improvement like the ones stored in server A.
+
+TODO: figure
+
+Clearly, partitioning does not come for free. Whenever we scatter data we need to introduce an additional layer of control that will route requests to the right source. This layer might be go from simple changes to the code of our application, where you explicitly query different data sources, to a proper wrapper that automatically routes requests according to nature or the query. In any case, while this approach might increase performances, it makes the system more complicated.
+
+Generally speaking, when we design a system, there is always a series of trade-offs that we have to face and you see here a clear example of such a crossroads. On the one hand, we might scatter data in a very granular way to improve concurrency but on the other hand we make the system much more complicated to manage.
+
+TODO: figure
+
+== Design choices
+
+Any design choice in a system depends on the requirements, and when it comes to data storage the most important factors are the _nature of the data_, its _distribution_, and the _access patterns_. Consider databases and content delivery networks (CDNs): both are meant to store data, and the storage size of both can vary substantially. However, there are important differences between the two that greatly affect the design choices. Let's see some simple examples:
+
+* databases are meant to store data in a long-term fashion, while caches are by definition short-lived. This means that an important requirement for databases is data preservation, and we should do everything is in our power to avoid losing parts of the database. A cache, conversely, holds data for a short time, either predetermined by the system or forced by a change in the data source. As you can see in this case we not only take data loss as part of the equation, but we get to the point where we trigger it on purpose.
+
+* applications often make use of range queries, which means that they retrieve sets of results spanning a range of values of one of the keys; for example, you might want to see all employers within a certain range of salaries, or all users that have more than a certain amount of followers. In such cases, it makes little sense to scatter data among different physical sources, thus making the retrieval more complicated and affecting performances. Databases see very often an access pattern of this type, while caches, being usually implemented as key/value stores, do not need to take this into account.
+
+== A practical example of partitioning
+
+Let us consider a simple key/value store, for example a common address book where the key is the name of the contact and the value a rich document with their personal details. If multiple users access the store, chances are that the system will at a certain point struggle to serve all the requests, so we might want to partition the data to allow concurrent access. We can sort them alphabetically and split them in two, storing all values with a key that begins with letters A-M in one server and the rest (keys N-Z) in the second one.
+
+TODO: figure
+
+This might seem a good idea, but unfortunately we might soon discover that performances are not great. Unfortunately, our address book doesn't contain the same number of people for each letter, as (in this example) we know more people whose name starts with A or C than with X or Z. That represents a problem, as our partitioning doesn't achieve the desired outcome, that of splitting requests evenly between the two servers. If we increase the number of partitions we will just worsen the problem, to the point where a partition might be completely empty and thus receive no traffic: since the problem comes from the data distribution we need to find a way to change that property.
+
+TODO: figure
+
+One way to deal with the problem is to change the boundaries of our partitions so that we get an almost even distribution or values among them. For example we might store keys starting with A-B in the first partition, keys starting with C-D in the second, and all the rest in the third one. The problem with such a strategy is that it is highly dependent on the actual data that we are storing. Not only this means the solution has to be customised for each use case (the partitions in the example might be good for one address book and completely wrong for another), but adding data to the storage might change the distribution and invalidate the solution.
+
+TODO: figure
+
+== Hash functions to the rescue
+
+An interesting solution to the problem of distributing data evenly is represented by hash functions. As I explained in my post [link]("\{filename\}introduction-to-hashing.markdown", "Introduction to hashing") good hash functions produce a highly uniform distribution, which makes them ideal in this case. Please note that hash functions can help with _routing_ queries and not with storing data. Hash functions cannot replace the content, as they are not bijective, i.e. given two different inputs the output might be the same (collision), so they can only be used to decide _where_ to store a piece of information.
+
+We can at this point devise a storage strategy based on hash functions. We can divide the output space of the hash function (codomain) into a certain amount of partitions and be sure that each one of them will contain a similar amount of elements. For example, the hash function might output a 32-bit number, so we know that each hashed value will be between 0 and 4,294,967,295, and from here it's pretty straightforward to find partition boundaries.
+
+TODO: figure
+
+---
+
+EXAMPLE with 32-bit hash
+
+With a 32-bit hash function the output space goes from 0 to 2^32 (4,294,967,295). We can create 16 partitions numbered 0 to 15, each one containing 2^28 hash values (268,435,456).
+
+Routing is at this point very simple. Given a key `k` we can compute `hash(k) % 2^28`  (where `%` is the integer division) and this returns the number of the partition containing the value of `k`.
+
+For example, a key whose hash is 536,847,170 is routed to partition 1 (`536847170 % 2**28`)
+---
+
+Please note that introducing hash functions automatically scatters data among the available partitions independently from their original order, according to the diffusion property of hash functions. This is what makes this partitioning technique unsuitable for databases, at least in the vast majority of cases: typical queries in a database system use range queries. If you optimise your database for a certain access pattern like this, storing similar records in locations that are physically near in order to improve performances, you cannot use hash partitioning without killing performances.
+
+Conversely, using hash functions is extremely beneficial in all those cases where range queries are not involved, for example in cache systems such as Content Delivery Networks.
+
+== Caching and scale-out strategies
+
+And interesting problem that arises when designing caches such Content Delivery Networks is that of scaling the system in and out to match the current load without wasting resources. When the cache is under a light load we might want to run a small amount of servers, but as soon as the number of accesses increases we need to proportionally increase the number of cache nodes if we want to keep performances steady.
+
+Increasing or decreasing the number of nodes in a distributed cache might however be a pretty destructive action. Changing the number of nodes impacts the way data is distributed among them, which means that new nodes are supposed to contain data that they don't have (scale out), or that dying nodes disappear with the data they contain (scale in). Both scenarios result in a (potentially massive) cache invalidation which can't be taken lightly, in particular when we scale out, as we perform that operation exactly to reach the opposite goal, that is to increase performances.
+
+---
+
+EXAMPLE with 32-bit hash and scale out from 5 to 10 nodes.
+
+In the previous example we had a 32-bit hash function and 16 partitions numbered 0 to 15, each one containing 2^28 hash values (268,435,456).
+
+If we scale out to 17 partitions, increasing the pool by just by 1 node, we are potentially affecting 1/17 (`1 - 16/17`) of the keys. If we scale up to 100 nodes we are affecting 84/100 (`1 - 16/100`) of the keys. I said potentially, as we don't know if those keys are present in the cache, but you can easily see that this might have a devastating effect.
+
+---
+
+
+The partitioning technique showed in this post, called _consistent hashing_, is a great way to implement distributed caching but is not a great choice for databases, as we will see later. As I mentioned before, I won't show here any mathematical performance analysis, leaving that to other posts listed in the resources section, and I will thus discuss the generic case of "storing" and "retrieving" data.
+
