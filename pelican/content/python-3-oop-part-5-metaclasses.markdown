@@ -51,7 +51,7 @@ Since in Python everything is an object, everything is the instance of a class, 
 (<class 'object'>,)
 ```
 
-If you are not about to faint at this point chances are that you are Guido van Rossum of one of his friends down at the Python core development team (in this case let me thank you for your beautiful creation). You may get a cup of tea, if you need it.
+If you are not about to faint at this point chances are that you are Guido van Rossum or one of his friends down at the Python core development team (in this case let me thank you for your beautiful creation). You may get a cup of tea, if you need it.
 
 Jokes apart, at the very base of Python type system there are two things, `object` and `type`, which are inseparable. The previous code shows that `object` is an instance of `type`, and `type` inherits from `object`. Take your time to understand this subtle concept, as it is very important for the upcoming discussion about metaclasses.
 
@@ -127,7 +127,7 @@ True
 
 By using the `is` operator we test that the two objects are the very same structure in memory, that is their ids are the same, as explicitly shown. What actually happens is that when you issue `a = ASingleton()` the `ASingleton` class runs its `__call__()` method, which is taken from the `Singleton` type behind the class. That method recognizes that no instance has been created (`Singleton.instance` is `None`) and acts just like any standard class does. When you issue `b = ASingleton()` the very same things happen, but since `Singleton.instance` is now different from `None` its value (the previous instance) is directly returned.
 
-Metaclasses are a very powerful programming tool and leveraging them you can achieve very complex behaviours with a small effort. Their use is a must every time you are actually metaprogramming, that is you are writing code that has to drive the way your code works. Good examples are creational patterns (injecting custom class attributes depending on some configuration), testing, debugging, and performance monitoring.
+Metaclasses are a very powerful programming tool and leveraging them you can achieve very complex behaviours with a small effort. Their use is a must every time you are actually metaprogramming, that is if you are writing code that has to drive the way your code works. Good examples are creational patterns (injecting custom class attributes depending on some configuration), testing, debugging, and performance monitoring.
 
 ## Coming to Instance
 
