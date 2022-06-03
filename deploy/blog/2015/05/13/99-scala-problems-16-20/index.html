@@ -1,0 +1,893 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - 99 Scala Problems 16-20</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Discussing more list management in Scala (dropping elements, splitting the, etc.)">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="99 Scala Problems 16-20" />
+<meta name="twitter:description" content="Discussing more list management in Scala (dropping elements, splitting the, etc.)" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/99-scala-problems.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>99 Scala Problems 16-20</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T16:00:00+01:00"> 13/05/2015</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/scala/">Scala</a>
+	<a class="tag" href="/categories/functional-programming/">functional programming</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=99%20Scala%20Problems%2016-20&url=https%3A//www.thedigitalcatonline.com/blog/2015/05/13/99-scala-problems-16-20/&via=thedigicat&hashtags=scala,functional-programming" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2015/05/13/99-scala-problems-16-20/&title=99%20Scala%20Problems%2016-20&summary=Discussing%20more%20list%20management%20in%20Scala%20%28dropping%20elements%2C%20splitting%20the%2C%20etc.%29&source=https%3A//www.thedigitalcatonline.com/blog/2015/05/13/99-scala-problems-16-20/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=99%20Scala%20Problems%2016-20&u=https%3A//www.thedigitalcatonline.com/blog/2015/05/13/99-scala-problems-16-20/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=99%20Scala%20Problems%2016-20&amp;body=https%3A//www.thedigitalcatonline.com/blog/2015/05/13/99-scala-problems-16-20/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2015/05/13/99-scala-problems-16-20/&title=99%20Scala%20Problems%2016-20" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <h2 id="problem-16">Problem 16<a class="headerlink" href="#problem-16" title="Permanent link">&para;</a></h2>
+<h3 id="the-problem">The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h3>
+<p><strong>P16</strong> (**) Drop every Nth element from a list.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">drop</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="mapping">Mapping<a class="headerlink" href="#mapping" title="Permanent link">&para;</a></h3>
+<p>A first simple approach is to divide the list in small groups of up to N elements and drop the last element from each of them. This is easily achieved with the <code>grouped()</code> method of <code>List</code> types and the application of a flat mapping.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">drop</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">l</span><span class="p">.</span><span class="n">grouped</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">_</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">}.</span><span class="n">toList</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The <code>grouped()</code> method returns an iterator, which is, as in other languages, something that can visit the elements contained in a collection and yield them. When an iterator is required to be consumed all at once you can call the <code>toList()</code> method to convert it into a <code>List</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="kd">val</span> <span class="n">l</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">)</span>
+<span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">)</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">.</span><span class="n">grouped</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">res0</span><span class="p">:</span> <span class="nc">Iterator</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]]</span> <span class="o">=</span> <span class="n">non</span><span class="o">-</span><span class="n">empty</span> <span class="n">iterator</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">.</span><span class="n">grouped</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">toList</span>
+<span class="n">res1</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">),</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">),</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">),</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">))</span>
+</code></pre></div>
+
+<p><code>Iterator</code> type has <a href="http://www.scala-lang.org/api/2.11.5/index.html#scala.collection.Iterator">a lot of methods</a> in common with <code>List</code> type, most notably <code>flatMap()</code>. This last method is fed with a simple anonymous function that, using <code>take()</code>, keeps the first <code>n - 1</code> elements.</p>
+<p>A different approach may be followed using the <code>zipWithIndex()</code> method that packs each element of the list with its index (starting from 0)</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">l</span> <span class="n">zipWithIndex</span>
+<span class="n">res5</span><span class="p">:</span> <span class="nc">List</span><span class="p">[(</span><span class="nc">Symbol</span><span class="p">,</span> <span class="nc">Int</span><span class="p">)]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">((</span><span class="ss">&#39;a</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;b</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;c</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;d</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;e</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;f</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;g</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;h</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;i</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;j</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="ss">&#39;k</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+</code></pre></div>
+
+<p>After this transformation, we may apply the <code>filter()</code> method to get the right elements with a selection based on the modulo operation.</p>
+<p>The list is now made of <code>Tuple2</code> elements, as tuples in Scala aren't a collection just like lists (or like Python tuples). For performance reasons, they are implemented with a different type according to the length, like in this case. To index a <code>Tuple2</code> element we may use its <code>_1</code> and <code>_2</code> attributes (pay attention that tuples are indexed starting from 1).</p>
+<p>The filter anonymous function just checks if the index (the second element of the tuple) is a multiple of <code>n</code>. Then, with <code>map()</code> we keep the first element only (the original element); the anonymous function <code>{ _._1 }</code> is a shortcut form for <code>{ e =&gt; e._1 }</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dropZip</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">l</span><span class="p">.</span><span class="n">zipWithIndex</span> <span class="n">filter</span> <span class="p">{</span> <span class="n">e</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">_2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">}</span> <span class="n">map</span> <span class="p">{</span> <span class="n">_</span><span class="p">.</span><span class="n">_1</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="the-recursive-solution">The recursive solution<a class="headerlink" href="#the-recursive-solution" title="Permanent link">&para;</a></h3>
+<p>A recursive solution can be written based on this simple algorithm: the number N is used as a countdown, keeping elements until it reaches the value 1. Then the current element is discarded and the process continues with a countdown reset.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dropRec</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="k">def</span> <span class="nf">_dropRec</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">c</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="k">match</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nc">Nil</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">res</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">_::tail</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">_dropRec</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">h::tail</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">_dropRec</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">res:::</span><span class="nc">List</span><span class="p">(</span><span class="n">h</span><span class="p">),</span> <span class="n">tail</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">_dropRec</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nc">List</span><span class="p">(),</span> <span class="n">l</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>As you can see the case <code>(1, _::tail)</code> restarts the process ignoring the current head of the list, while the more generic <code>(_, h::tail)</code> case stores the element in the result list.</p>
+<h2 id="problem-17">Problem 17<a class="headerlink" href="#problem-17" title="Permanent link">&para;</a></h2>
+<h3 id="the-problem_1">The problem<a class="headerlink" href="#the-problem_1" title="Permanent link">&para;</a></h3>
+<p><strong>P17</strong> (*) Split a list into two parts.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">split</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span> <span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">],</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">])</span> <span class="o">=</span> <span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">),</span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">))</span>
+</code></pre></div>
+
+<h3 id="solution">Solution<a class="headerlink" href="#solution" title="Permanent link">&para;</a></h3>
+<p><code>List</code> objects provide a bunch of methods to interact with them, thus splitting may make use of several different ones. Very simple and straightforward solutions come from the <code>splitAt()</code> method</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">splitAt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+
+<p>using the two <code>take()</code> and <code>drop()</code> methods</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">l</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>or using <code>take()</code> and <code>takeRight()</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">l</span><span class="p">.</span><span class="n">takeRight</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">length</span> <span class="o">-</span> <span class="n">n</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>A list can be splitted also using recursion, however, using the given split position as a counter</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="k">def</span> <span class="nf">_split</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">c</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="k">match</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nc">Nil</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="nc">Nil</span><span class="p">)</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">h::tail</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">_split</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">res:::</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="n">h</span><span class="p">)),</span> <span class="n">tail</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">_split</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nc">List</span><span class="p">(),</span> <span class="n">l</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>where I basically keep extracting the head from <code>rem</code> appending it to <code>res</code> until the counter is 0.</p>
+<h2 id="problem-18">Problem 18<a class="headerlink" href="#problem-18" title="Permanent link">&para;</a></h2>
+<h3 id="the-problem_2">The problem<a class="headerlink" href="#the-problem_2" title="Permanent link">&para;</a></h3>
+<p><strong>Pxx</strong> (**) Extract a slice from a list.
+Given two indices, I and K, the slice is the list containing the elements from and including the Ith element up to but not including the Kth element of the original list.  Start counting the elements with 0.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="solution_1">Solution<a class="headerlink" href="#solution_1" title="Permanent link">&para;</a></h3>
+<p>As for the previous problem we may make use of the <code>List</code> type methods. The aptly named <code>slice()</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">slice</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">start</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span>
+    <span class="n">l</span><span class="p">.</span><span class="n">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</code></pre></div>
+
+<p>or a combination of <code>drop()</code> and <code>take()</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">slice</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">i</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">l</span> <span class="n">take</span> <span class="n">k</span> <span class="n">drop</span> <span class="n">i</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The recursive solution first drops the required number of elements from the head of the list. When the first index is exhausted the function starts dropping elements from the tail (using <code>init()</code>). The number of elements to be dropped is computed as <code>k - i</code> when the internal function is called.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">slice</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">i</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="k">def</span> <span class="nf">_slice</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">cl</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">cr</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">cr</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="k">match</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">rem</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cr</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">_slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rem</span><span class="p">.</span><span class="n">init</span><span class="p">)</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">cr</span><span class="p">,</span> <span class="n">h::rem</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">_slice</span><span class="p">(</span><span class="n">cl</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cr</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">_slice</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="problem-19">Problem 19<a class="headerlink" href="#problem-19" title="Permanent link">&para;</a></h2>
+<h3 id="the-problem_3">The problem<a class="headerlink" href="#the-problem_3" title="Permanent link">&para;</a></h3>
+<p><strong>P19</strong> (**) Rotate a list N places to the left.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">rotate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">)</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">,</span> <span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">))</span>
+<span class="n">res1</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;j</span><span class="p">,</span> <span class="ss">&#39;k</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;f</span><span class="p">,</span> <span class="ss">&#39;g</span><span class="p">,</span> <span class="ss">&#39;h</span><span class="p">,</span> <span class="ss">&#39;i</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="solution_2">Solution<a class="headerlink" href="#solution_2" title="Permanent link">&para;</a></h3>
+<p>Rotating a list has some caveats. First one must consider wrapping, so the first thing I did is to calculate the actual shift with the modulo operation. The second thing is that rotation can happen in both directions, and the case of negative shift can be converted to a positive one just adding the shift to the length of the list (being the shift negative this is actually a subtraction). Eventually we can perform the rotation which requires a composition of the output of <code>drop()</code> and <code>take()</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rotate</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="n">wrapn</span> <span class="o">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">n</span> <span class="o">%</span> <span class="n">l</span><span class="p">.</span><span class="n">length</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">wrapn</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">rotate</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">length</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+    <span class="k">else</span> <span class="n">l</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">wrapn</span><span class="p">)</span><span class="n">:::l</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">wrapn</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="problem-20">Problem 20<a class="headerlink" href="#problem-20" title="Permanent link">&para;</a></h2>
+<h3 id="the-problem_4">The problem<a class="headerlink" href="#the-problem_4" title="Permanent link">&para;</a></h3>
+<p><strong>P20</strong> (*) Remove the Kth element from a list.
+Return the list and the removed element in a Tuple.  Elements are numbered from 0.</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">removeAt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span> <span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">],</span> <span class="nc">Symbol</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">),</span><span class="ss">&#39;b</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="solution_3">Solution<a class="headerlink" href="#solution_3" title="Permanent link">&para;</a></h3>
+<p>There are two edge conditions in this problem. The first is when the list is empty, and the second is when we are asking for an index outside the list. Since an empty list has length 0 both conditions can be summarized checking if the requested index is greater or equal than the length of the list (the "or equal" part comes from the fact that lists are indexed starting from 0).</p>
+<p>The simplest solution uses <code>take()</code> and <code>drop()</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">removeAt</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">A</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">length</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>
+    <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="n">:::l</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="n">tail</span><span class="p">,</span> <span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The problem with boundaries comes from the use of <code>tail()</code>, that cannot be applied to an empty list, while <code>take()</code> and <code>drop()</code> seamlessly work on empty lists and negative indexes. So using the <code>take()</code> counterpart <code>takeRight()</code> we could write</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">removeAt</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">A</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="n">:::l</span><span class="p">.</span><span class="n">takeRight</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">length</span> <span class="o">-</span> <span class="n">n</span><span class="p">),</span> <span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>which automatically raises an <code>IndexOutOfBoundsException</code> when the requested index is outside the list. If we want a <code>NoSuchElementException</code>, however, we have to wrap the code with a <code>try</code> statement.</p>
+<p>We can also use mapping, even if in this case its use is probably overkill</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">removeAt</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">A</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">zipWithIndex</span> <span class="n">filter</span> <span class="p">{</span> <span class="n">e</span> <span class="o">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">_2</span> <span class="o">!=</span> <span class="n">n</span> <span class="p">}</span> <span class="n">map</span> <span class="p">{</span> <span class="n">_</span><span class="p">.</span><span class="n">_1</span> <span class="p">},</span> <span class="n">l</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>this solution raises an <code>IndexOutOfBoundsException</code> when the index is outside the list, just like the previous one.</p>
+<p>A recursive solution may use the index as a countdown value to get elements until the requested one pops up, then skipping it and getting the rest of the list.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">removeAtR</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">A</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="k">def</span> <span class="nf">_removeAtR</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">k</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="nc">A</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="k">match</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h::tail</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">return</span> <span class="p">(</span><span class="n">res:::tail</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nc">Nil</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">h::tail</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">return</span> <span class="n">_removeAtR</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">res:::</span><span class="nc">List</span><span class="p">(</span><span class="n">h</span><span class="p">),</span> <span class="n">tail</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">_removeAtR</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nc">List</span><span class="p">(),</span> <span class="n">l</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="final-considerations">Final considerations<a class="headerlink" href="#final-considerations" title="Permanent link">&para;</a></h2>
+<p>Problem 16 introduced me to new <strong>list methods</strong> <code>filter()</code> and <code>zipWithIndex()</code>. I met <strong>iterators</strong> and <strong>tuples</strong> for the first time and learned how to deal with them on a basic level.  Problem 17 introduced the new <code>splitAt()</code> method and let me review <code>take()</code>, <code>takeRight()</code> and <code>drop()</code>. The recursive solution makes use of everything has been already discovered solving the previous problems. With problem 18 I learned a new method of the <code>List</code> type, <code>slice()</code>. The recursive solution is pretty straightforward but matching a tuple of three values requires some attention. I appreciate the <strong>syntactic sugar</strong> that allows to drop parenthesis when calling a function with a single argument, it makes the call resemble natural language. Problems 19 and 20 are just applications of the same methods.</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 16 of the 99 Scala Problems series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2015/04/07/99-scala-problems-01-find-last-element/">99 Scala Problems 01 - Find the last element of a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-02-find-last-nth/">99 Scala Problems 02 - Find the last but one element of a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-03-find-kth/">99 Scala Problems 03 - Find the Kth element of a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-04-length/">99 Scala Problems 04 - Find the number of elements of a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-05-reverse/">99 Scala Problems 05 - Reverse a list</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-06-palindome/">99 Scala Problems 06 - Find out whether a list is a palindrome</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-07-flatten/">99 Scala Problems 07 - Flatten a nested list structure</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/">99 Scala Problems 08 - Eliminate consecutive duplicates of list elements</a></li>
+        <li><a href="/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/">99 Scala Problems 09 - Pack consecutive duplicates of list elements into sublists</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list/">99 Scala Problems 10 - Run-length encoding of a list.</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-11-modified-run-length-encoding/">99 Scala Problems 11 - Modified run-length encoding</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-12-decode-a-run-length-encoded-list/">99 Scala Problems 12 - Decode a run-length encoded list</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-13-run-length-encoding-of-a-list-direct-solution/">99 Scala Problems 13 - Run-length encoding of a list (direct solution)</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-14-duplicate-the-elements-of-a-list/">99 Scala Problems 14 - Duplicate the elements of a list</a></li>
+        <li><a href="/blog/2015/04/14/99-scala-problems-15-duplicate-the-elements-of-a-list-a-given-number-of-times/">99 Scala Problems 15 - Duplicate the elements of a list a given number of times</a></li>
+      </ul>
+      
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-01-find-last-element/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-01-find-last-element/"><h2>99 Scala Problems 01 - Find the last element of a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:00:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-02-find-last-nth/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-02-find-last-nth/"><h2>99 Scala Problems 02 - Find the last but one element of a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:05:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-03-find-kth/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-03-find-kth/"><h2>99 Scala Problems 03 - Find the Kth element of a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:10:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-04-length/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-04-length/"><h2>99 Scala Problems 04 - Find the number of elements of a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:15:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-05-reverse/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-05-reverse/"><h2>99 Scala Problems 05 - Reverse a list</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:20:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-06-palindome/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-06-palindome/"><h2>99 Scala Problems 06 - Find out whether a list is a palindrome</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:25:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-07-flatten/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-07-flatten/"><h2>99 Scala Problems 07 - Flatten a nested list structure</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:30:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-08-eliminate-consecutive-duplicates/"><h2>99 Scala Problems 08 - Eliminate consecutive duplicates of list elements</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:35:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/"><h2>99 Scala Problems 09 - Pack consecutive duplicates of list elements into sublists</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-07T09:40:00+01:00">Apr 7, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list/">
+            <img src="/images/99-scala-problems.jpg" alt="99-scala-problems" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/04/14/99-scala-problems-10-run-length-encoding-of-a-list/"><h2>99 Scala Problems 10 - Run-length encoding of a list.</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/scala/" class="tag">Scala</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-04-14T10:00:00+01:00">Apr 14, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-28T10:00:00+00:00">Feb 28, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

@@ -1,4 +1,5 @@
 pelican
+pelican-mau-reader
 pelican-related-posts
 pelican-series
 pelican-share-post
@@ -7,7 +8,6 @@ pelican-tag-cloud
 pelican-webassets
 
 markdown
-mau
 
 punch.py
 

@@ -6,3 +6,5 @@ venv
 notes/*
 tweet.py*
 stork-ubuntu*
+
+pelican/output

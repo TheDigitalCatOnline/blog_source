@@ -1,0 +1,705 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Introduction to hashing</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="What is hashing and why is it important? What are hash functions and how can we define a good one?">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Introduction to hashing" />
+<meta name="twitter:description" content="What is hashing and why is it important? What are hash functions and how can we define a good one?" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/introduction-to-hashing.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Introduction to hashing</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2018-04-06T11:30:00+01:00"> 06/04/2018</time> <i class="fas fa-edit"></i> Updated on <time datetime="2020-10-28T11:00:00+01:00">Oct 28, 2020</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/algorithms/">algorithms</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Introduction%20to%20hashing&url=https%3A//www.thedigitalcatonline.com/blog/2018/04/06/introduction-to-hashing/&via=thedigicat&hashtags=algorithms" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2018/04/06/introduction-to-hashing/&title=Introduction%20to%20hashing&summary=What%20is%20hashing%20and%20why%20is%20it%20important%3F%20What%20are%20hash%20functions%20and%20how%20can%20we%20define%20a%20good%20one%3F&source=https%3A//www.thedigitalcatonline.com/blog/2018/04/06/introduction-to-hashing/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Introduction%20to%20hashing&u=https%3A//www.thedigitalcatonline.com/blog/2018/04/06/introduction-to-hashing/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Introduction%20to%20hashing&amp;body=https%3A//www.thedigitalcatonline.com/blog/2018/04/06/introduction-to-hashing/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2018/04/06/introduction-to-hashing/&title=Introduction%20to%20hashing" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>Have you ever used dictionaries or maps in your language of choice, or have you ever met a mysterious MD5 code while downloading a file from a server? Maybe you are a programmer, and using Git to manage your code you ended up dealing with strange numbers called SHA1, and surely you heard at least a couple of times the term <em>cache</em>, which probably needed to be emptied in your browser.</p>
+<p>What do all these concept have in common?</p>
+<p>In this post I want to introduce you to the concept of <em>hashing</em>, which is one of the basic topics a good programmer shall know. Hashes are such an important topic in computer science that lacking knowledge in this field means being confused about a wide range of other subjects, like cryptography and security. Data structures, Bitcoin and blockchains, HTTPS, all these topics have hashing as one of their building blocks. As you can see, it is worth mastering the concept.</p>
+<p>This will obviously be only a humble introduction to the subject matter, as the whole concept is too broad for a single post. You can start a serious study of this important part of computer science reading the Wikipedia articles liked at the bottom of the page and reading a good book (or taking a course) in either cryptography or data structures.</p>
+<h2 id="a-practical-example">A practical example<a class="headerlink" href="#a-practical-example" title="Permanent link">&para;</a></h2>
+<p>Let me give you a concrete example of hashing before we analyse the matter in depth.</p>
+<p>I want to download a big file from Internet, for example a Linux distribution. I already downloaded it in the past, but I'm not sure if the version I have is the same available for download now. The file has been renamed, so the original name has been lost. I might obviously just download it again, install it and manually check the version.</p>
+<p>I wonder if there is a simpler solution, one that can possibly be automated. Downloading an ISO file from Internet is nowadays very cheap, but manually checking for the version isn't, at least in terms of time. I might also download it and compare all the files contained in both the new and the old ISO images, but then again, this process is not very fast.</p>
+<p>The best solution would be for the server to provide a sort of label that <em>depends only on the data</em> in a mathematical and <em>deterministic</em> way. I might then run the same algorithm on the file I already downloaded and get a label that can be easily compared with the one provided by the server. If the process of computing the label is fast enough this might be the perfect solution.</p>
+<p>A typical algorithm used for this purpose is MD5, and the label computed by the server could be something like <code>ef67d799b71de37423202c587662c87f</code>. Computing the MD5 of a 600 MB file takes less than a couple of seconds on a modern computer, so I can check if the file I own is the same the server provides in a very short time.</p>
+<p>You can test MD5 on your own using the <code>md5sum</code> program that comes with all Linux distributions or other Unix-based systems. Open a terminal and run the following command</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;This is a simple input string&quot;</span> <span class="p">|</span> md5sum
+</code></pre></div>
+
+<p>and the result will be <code>8a7cc3b47880b5ef880ac6ef30785a1a</code>, independently of your operating system.</p>
+<p>MD5 is one of many <strong>hash functions</strong> that have been invented to deal with problems like the one I exemplified. Recently, I had the need to synchronise daily two AWS S3 buckets containing more than 60 gigabytes of files. Without hash functions it would be impossible to quickly identify the files that need to be copied.</p>
+<p>The rest of the post is dedicated to the exploration of such an important and intriguing part of contemporary technology.</p>
+<h2 id="hash-functions">Hash functions<a class="headerlink" href="#hash-functions" title="Permanent link">&para;</a></h2>
+<p>Let's start from the formal definition of hash function:</p>
+<blockquote>
+<p><em>A hash function is any function that can be used to map data of arbitrary size to data of fixed size</em></p>
+</blockquote>
+<p>This description may sound intimidating at first, but it is actually pretty simple. Let's consider a dictionary where you want to look up a word that you don't know, like for example "quagmire". What you do is to jump directly to a section labelled "Q" in the dictionary, then quickly identify the part of the section where words that start with "QU" are, and promptly find the word. Congratulations, you just used a hash function! </p>
+<p><img alt="Image 01" src="/images/introduction_to_hashing/hash1.jpg"></p>
+<p>Getting the first letter of the word is, as a matter of fact, <em>a function</em> (an operation) <em>that maps</em> (connects) <em>data of arbitrary size</em> (words) <em>to data of fixed size</em> (a single letter of the alphabet). Using this method we can connect any word (also invented ones!) to a letter of the alphabet.</p>
+<p>Before we move on, I want to stress one aspect that is clear from the previous example. Through a hash function we can connect a set of potentially infinite values (all the words that we can create) with a finite set (the letters of an alphabet). This is the most important concept we have to keep in mind when dealing with hashing.</p>
+<h2 id="uniqueness">Uniqueness<a class="headerlink" href="#uniqueness" title="Permanent link">&para;</a></h2>
+<p>The result of a hash function is not unique, which means that two different inputs may give the same output. This is pretty easy to understand in the dictionary example, where multiple words can give as a result the same letter, as multiple words begin with that letter.</p>
+<p>It is also evident that <strong>hash functions cannot produce unique results by design</strong>. The goal of a hash function is to map an infinite set with a finite set, so it is obvious that multiple elements of the infinite set will map to the same element in the finite one.</p>
+<p>Let me give you a very simple example. Let's create a hash function that returns the first 32 bits (4 bytes) of the input, padding them with zeros if the input is shorter that 32 bits. I will use the ASCII standard to convert strings of characters into hexadecimal numbers, so every letter is represented by 1 byte.</p>
+<div class="highlight"><pre><span></span><code>&quot;This is a string&quot; ----&gt; 54 68 69 73 20 69 73 20 61 20 73 74 72 69 6e 67 ----------&gt; 54 68 69 73
+&quot;One&quot; -----------------&gt; 4f 6e 65 -------------------------------------------------&gt; 4f 6e 65 00
+&quot;The quick brown fox&quot; -&gt; 54 68 65 20 71 75 69 63 6b 20 62 72 6f 77 6e 20 66 6f 78 -&gt; 54 68 65 20
+&quot;The lazy dog&quot; --------&gt; 54 68 65 20 6c 61 7a 79 20 64 6f 67 ----------------------&gt; 54 68 65 20
+</code></pre></div>
+
+<p>As you can see we have multiple input strings with different lengths, and while the first three produce different output values the last one produces the same value as the third one. This is straightforward, as the two strings start with the same four characters and our hash function considers only those to compute its result.</p>
+<p>Such an event is called <em>collision</em> and it is a direct effect of the non-uniqueness of hash values. <strong>It will always happen, with hash functions, that different values produce the same output</strong>, and it is important to understand that this is not because our hash function is trivial, but this is in <em>the very nature of hash functions</em>, for strict mathematical reasons.</p>
+<p>Collisions are not intrinsically bad, but we have to be aware they can happen when we develop algorithms that use hash functions. If we are writing a dictionary for a human language where 80% of the words starts with "A" it is pointless to use the first letter to partition the book because the first section would be almost as big as the whole tome. This may seem too imaginative an example, but when we manage data structures problems such this arise more often than not.</p>
+<p><img alt="Image 02" src="/images/introduction_to_hashing/hash2.jpg"></p>
+<p>In this last example avoiding collisions is easy. We just need to increase the number of characters that we consider until there are no clashes on the right. This is a very empirical way to sort the problem, though, and it's possible only because we are dealing with a narrow set of inputs and a very simple hash function. In the next section we will discuss how more complicated hash functions deal with this problem.</p>
+<h2 id="digital-hash-functions">Digital hash functions<a class="headerlink" href="#digital-hash-functions" title="Permanent link">&para;</a></h2>
+<p>As we saw the definition of hash functions involves functions, which are mappings. In other words we just need to describe a process that couples objects from the infinite source set of inputs to the finite destination set of outputs. Taking the fist letter of a word is such a process, but other examples may be grouping people according to the colour of the eyes or cataloguing films by production year. Among the various processes that we can use a big role is played by digital processes, that is functions that involve some operation on binary numbers.</p>
+<p>When we <em>digitalise</em> something we represent it with a sequence of bits, and once this is done there is no real difference between strings, images, videos, sounds, programs. Everything in a computer is ultimately a sequence of bits, and those sequences can be sliced and changed with pure numerical functions such as additions and multiplications.</p>
+<h2 id="cryptographic-hash-functions">Cryptographic hash functions<a class="headerlink" href="#cryptographic-hash-functions" title="Permanent link">&para;</a></h2>
+<p>Hash functions play a decisive role in security and in cryptography, and can be found in algorithms that provide authentication, i.e. secure ways to demonstrate the authenticity of some data. While the actual cryptographic techniques are not in the scope of this article, it is important to know that hash functions used for cryptographic purposes are not different, in principle, from hash functions used for other tasks that do not require any degree of security. <em>Cryptographic hash functions</em>, however, must have some specific properties that give the function a certain degree of "robustness". Being able to find the input of a hash function given the output, for example, would be catastrophic for some security algorithms that rely on the infeasibility of such an operation.</p>
+<h2 id="good-hash-functions">"Good" hash functions<a class="headerlink" href="#good-hash-functions" title="Permanent link">&para;</a></h2>
+<p>The definition of hash function is pretty inclusive as the only required property is that of returning a fixed-length output. Hash functions used in practice may however have other properties. Such properties may be desirable or mandatory depending on the application, so functions that are extremely good for cryptography may be a poor choice for data structures like dictionaries. </p>
+<p>Let me briefly describe some of the most important properties that you should be aware of.</p>
+<h3 id="determinism">Determinism<a class="headerlink" href="#determinism" title="Permanent link">&para;</a></h3>
+<p>Given the algorithm (with its parameters) and given the input data, the hash <strong>must always be the same</strong>. The result of the hashing function depends only on the data itself, and not on other external factors like for example time or computer system.</p>
+<p>Pay attention to the fact that this definition considers the algorithm and its parameters. This means that we can include external factors in the computation, but they have to be fixed for the whole life of the result itself.</p>
+<p><img alt="Image 03" src="/images/introduction_to_hashing/hash3.jpg"></p>
+<p>Let's consider a system that uses a hash to speed up searches in some arrays. For several reasons the hashing algorithm employs an initial random seed that is derived from the boot time. As long as the system is running (i.e. it is not rebooted), the algorithm is consistent, and we may consider the random seed as a constant parameter. We may also persist the hashes on a storage, because when we load them they are still perfectly valid. As soon as the system is rebooted, however, the whole set of hashes created during the previous execution becomes invalid and meaningless. This is not the case, though, if the hashing function bases its computation on the actual data only.</p>
+<h3 id="diffusion">Diffusion<a class="headerlink" href="#diffusion" title="Permanent link">&para;</a></h3>
+<p>Changing one single bit of the source data shall results in a <strong>complete change</strong> of the hash number. Compare for example the MD5 hash values of two similar strings</p>
+<div class="highlight"><pre><span></span><code>The quick brown fox jumps over the lazy dog =&gt; 37c4b87edffc5d198ff5a185cee7ee09
+The quick brown fox jumps over the lazy cog =&gt; 15546a0bcace46fd5e12ec29adca5e70
+</code></pre></div>
+
+<p>As you can see when a single input byte is different (the letter <code>d</code> in <code>dog</code> becomes a <code>c</code>), the whole result changes.</p>
+<p>This implies that every part of the output is computed considering all the bits of the input. A function that returns the first <code>n</code> bits of the input does not have a good diffusion, as two different strings may return exactly the same hash if they have the same first <code>n</code> bits (see the example given above when I spoke about uniqueness). This property is important for cryptographic hash function.</p>
+<h3 id="minimal-change-continuity">Minimal change (continuity)<a class="headerlink" href="#minimal-change-continuity" title="Permanent link">&para;</a></h3>
+<p>An interesting property of some hash functions is that <strong>similar input values map to similar hash values</strong>. The exact definition of "similar" may vary, but in general we might associate it with the number of changes from the first output to the second. This behaviour is handy in some searching algorithms, where it is important that similar objects are stored near each other.</p>
+<p>Note that this property is somehow the opposite of diffusion, thus demonstrating that not all these properties might be found in a single hash function.</p>
+<h3 id="uniformity">Uniformity<a class="headerlink" href="#uniformity" title="Permanent link">&para;</a></h3>
+<p>A hash function has a given finite number of possible outputs, because the output has a finite length. When a hash function is uniform, producing the output for each possible input produces a <strong>uniform distribution of outputs</strong>, that is there is no output value that is used more often than others. When designing data structures this is often the desirable behaviour, since it leads to an uniform use of resources, for example memory, leading to an uniform behaviour of other algorithms that work on the same structure, like search. </p>
+<p><img alt="Image 04" src="/images/introduction_to_hashing/hash4.jpg"></p>
+<p>Uniformity is obviously linked to the number of collisions produced by a hash function, and a perfectly uniform hash function will have the same number of collisions for each output value. Increasing the number of possible output values, thus, results in a uniform reduction of collisions.</p>
+<h3 id="non-invertible">Non-invertible<a class="headerlink" href="#non-invertible" title="Permanent link">&para;</a></h3>
+<p>Inverting a function means to create a function that returns the original input given the output. For example multiplication by 2 is an invertible function, as given the result we may easily divide by 2 and retrieve the original input.</p>
+<p>With non-injective functions the only caveat is that there are multiple inputs that return the same output, but this doesn't prevent the creation of an inverse function. For example, 3 squared gives 9 and since the inverse of the square function is the square root, we can apply it to the result and retrieve the possible inputs, that is +3 and -3.</p>
+<p>With non-invertible functions <strong>there is no simple way to find the input given the output</strong>. Mathematically we speak of <em>one-way functions</em>, as computing the inverse is either impossible of infeasible. Mind that "infeasible" has a well-defined meaning in mathematics, but I will not go deeper into it in this article. It will be sufficient to consider it as "too hard to compute in a reasonable time with the current state of technology". Cryptographic hash functions must be non-invertible.</p>
+<p><img alt="Image 05" src="/images/introduction_to_hashing/hash5.jpg"></p>
+<h3 id="collisions-resistant">Collisions-resistant<a class="headerlink" href="#collisions-resistant" title="Permanent link">&para;</a></h3>
+<p>A hash function is said to be collision-resistant when <strong>it is hard to find two different inputs that produce the same hash value</strong>. Mind that the definition of "hard" here is the same as that of "infeasible" in the previous section. This property is very important in cryptography, where collisions can be exploited to crack a cipher.</p>
+<h2 id="theoretical-and-practical-inputs">Theoretical and practical inputs<a class="headerlink" href="#theoretical-and-practical-inputs" title="Permanent link">&para;</a></h2>
+<p>It is important to understand that the analysis of a hash function can be made considering either theoretical or practical inputs. Theoretical inputs are all the possible inputs, like "all the possible strings", while a set of practical inputs might be "the names of a group of people". The latter might be very large but it is not infinite. </p>
+<p>Obviously, a hash function that provides interesting properties when dealing with theoretical inputs will show the same properties when applied to practical inputs, but often such functions are complex and slow. Not to mention that it is very difficult to create them.</p>
+<p>Let me show you an example. As we saw above, a hash function that returns the first letter of a string is not a very good one. It lacks the diffusion property, for instance, an its uniformity is questionable, as all the strings that begin with the same letter will produce the same hash, leading to a large number of collisions. This is bad for data structures, so such a function is in theory not optimal.</p>
+<p>However, if we are working on a set of strings like</p>
+<div class="highlight"><pre><span></span><code>A poor workman blames his tool
+Barking dogs seldom bite
+Common sense ain&#39;t common
+Doctors make the worst patients
+...
+You can&#39;t teach an old dog new tricks
+</code></pre></div>
+
+<p>where it is known (or evident) that each string begins with a different letter, suddenly our hash function becomes a perfect choice to build a searchable data structure, because <strong>given this input set</strong> there are no collisions. So, an analysis of the practical inputs is always paramount when we consider hash functions, as theoretically poor functions may perform very well on specific sets of inputs.</p>
+<p>A very good example of such an analysis can be found in the source code of the Python language. The implementation of dictionaries contains an in-depth discussion of the choices made when implementing the hashing mechanism behind those structures. You can find it <a href="https://github.com/python/cpython/blob/3.8/Objects/dictobject.c#L135">here</a>. If you never approached data structures I recommend starting from a simpler explanation, however, as you might be intimidated by that discussion. You will find a good basic tutorial on hash tables in any data structures course or textbook.</p>
+<h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">&para;</a></h2>
+<p>As I said this is just a very quick and humble introduction to hashing. I think you cannot call yourself a programmer nowadays without knowing something about hashing, and what I summarized in this post is enough to understand hash uses like Bitcoin or SSL. If you want to study the topic in depth, however, I recommend taking a course or reading a book on data structures.</p>
+<h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Hash_function">Hash function</a>  on Wikipedia</li>
+<li><a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">Cryptographic hash function</a> on Wikipedia</li>
+<li><a href="https://www.youtube.com/watch?v=tLkHk__-M6Q">A lesson on hash functions</a> by Prof. Christof Paar</li>
+<li>MIT Professor Srinivas Devadas on <a href="https://www.youtube.com/watch?v=KqqOXndnvic">Cryptographic hash functions</a></li>
+<li>Wiley &amp; Sons publishes a book on <a href="https://www.amazon.co.uk/Structures-Algorithms-Python-Michael-Goodrich/dp/1118290275">Data Structures and Algorithms in Python</a></li>
+<li>O'Reilly publishes a book on <a href="https://www.amazon.com/Mastering-Algorithms-Techniques-Sorting-Encryption/dp/1565924533/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1523009383&amp;sr=1-1&amp;keywords=Mastering+Algorithms+with+C">Mastering Algorithms with C: Useful Techniques from Sorting to Encryption</a></li>
+</ul>
+<h3 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h3>
+<p>2018-04-28 <a href="https://www.reddit.com/user/gixslayer">gixslayer</a> and <a href="https://www.reddit.com/user/SevenGlass">SevenGlass</a> discussed on reddit the right command line for the <code>md5sum</code> example on Windows. See https://www.reddit.com/r/programming/comments/8fbepo/introduction_to_hashing/dy316go</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2018/04/25/rsa-keys/">
+            <img src="/images/rsa-keys.jpg" alt="rsa-keys" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/04/25/rsa-keys/"><h2>Public key cryptography: RSA keys</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/ssh/" class="tag">SSH</a>
+		<a href="/categories/rsa/" class="tag">RSA</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-04-25T13:00:00+01:00">Apr 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-01-23T11:00:00+00:00">Jan 23, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/">
+            <img src="/images/public-key-cryptography-openssh-private-keys.jpg" alt="public-key-cryptography-openssh-private-keys" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/"><h2>Public key cryptography: OpenSSH private keys</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/ed25519/" class="tag">ed25519</a>
+		<a href="/categories/rsa/" class="tag">RSA</a>
+		<a href="/categories/ssh/" class="tag">SSH</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-06-03T14:00:00+01:00">Jun 3, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/11/04/public-key-cryptography-ssl-certificates/">
+            <img src="/images/public-key-cryptography-ssl-certificates.jpg" alt="public-key-cryptography-ssl-certificates" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/11/04/public-key-cryptography-ssl-certificates/"><h2>Public key cryptography: SSL certificates</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/ssh/" class="tag">SSH</a>
+		<a href="/categories/rsa/" class="tag">RSA</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-11-04T23:00:00+01:00">Nov 4, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/03/27/mixin-classes-in-python/">
+            <img src="/images/multiple-inheritance-and-mixin-classes-in-python.jpg" alt="multiple-inheritance-and-mixin-classes-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/03/27/mixin-classes-in-python/"><h2>Multiple inheritance and mixin classes in Python</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/django/" class="tag">Django</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-03-27T12:00:00+01:00">Mar 27, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-04-08T12:00:00+01:00">Apr 8, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

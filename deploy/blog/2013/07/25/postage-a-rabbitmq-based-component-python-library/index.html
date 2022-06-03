@@ -1,0 +1,1102 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Postage - a RabbitMQ-based component Python library</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Postage - a RabbitMQ-based component Python library">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Postage - a RabbitMQ-based component Python library" />
+<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/postage-a-rabbitmq-based-component-python-library.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/projects/atom.xml">All posts in category: Projects</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Postage - a RabbitMQ-based component Python library</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2013-07-25T15:50:00+01:00"> 25/07/2013</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/projects/" title="All posts in category Projects">Projects</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/pika/">Pika</a>
+	<a class="tag" href="/categories/rabbitmq/">RabbitMQ</a>
+	<a class="tag" href="/categories/postage/">Postage</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Postage%20-%20a%20RabbitMQ-based%20component%20Python%20library&url=https%3A//www.thedigitalcatonline.com/blog/2013/07/25/postage-a-rabbitmq-based-component-python-library/&via=thedigicat&hashtags=python,pika,rabbitmq,postage" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2013/07/25/postage-a-rabbitmq-based-component-python-library/&title=Postage%20-%20a%20RabbitMQ-based%20component%20Python%20library&summary=&source=https%3A//www.thedigitalcatonline.com/blog/2013/07/25/postage-a-rabbitmq-based-component-python-library/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Postage%20-%20a%20RabbitMQ-based%20component%20Python%20library&u=https%3A//www.thedigitalcatonline.com/blog/2013/07/25/postage-a-rabbitmq-based-component-python-library/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Postage%20-%20a%20RabbitMQ-based%20component%20Python%20library&amp;body=https%3A//www.thedigitalcatonline.com/blog/2013/07/25/postage-a-rabbitmq-based-component-python-library/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2013/07/25/postage-a-rabbitmq-based-component-python-library/&title=Postage%20-%20a%20RabbitMQ-based%20component%20Python%20library" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p><a href="https://github.com/pika/pika">Pika</a> is a wonderful pure Python implementation of the AMQP protocol. Using it you can exploit the full power of your RabbitMQ installation from your Python code.</p>
+<p>When using pika to develop a component-based system I tried to write some code to simplify its use: the result is <a href="https://github.com/lgiordani/postage">Postage</a>, a Python library that provides higher level structures such as a message format, components fingerprint, rich producer and consumers.</p>
+<p>Most notably it provides a handler mechanism for consumers that makes message processing a breeze.</p>
+<p>Postage is freely available under the GPL2. It is based on the pika BlockingConnection since I had no experience with other adapters. If you want to hack it, feel free to <a href="https://github.com/lgiordani/postage">fork it on Github</a> and submit a pull request.</p>
+<h2 id="a-simple-ping-example">A simple ping example<a class="headerlink" href="#a-simple-ping-example" title="Permanent link">&para;</a></h2>
+<p>I'll describe here a very simple example of a producer/consumer system using Postage; I'll write a server that answers ping messages and a program that sends them. First I will implement a simple server that receives ping messages without answering, to introduce the reader to the base structures, then I will evolve it.</p>
+<p>To execute the program you need a working RabbitMQ system, check the RabbitMQ documentation to install and run it. Postage assumes that your system is configured with the standard values (a "/" virtualhost, "guest" user and password). If not check <a href="https://github.com/lgiordani/postage#environment-variables">this paragraph</a> of the documentation.</p>
+<h4 id="setting-up-the-exchange">Setting up the exchange<a class="headerlink" href="#setting-up-the-exchange" title="Permanent link">&para;</a></h4>
+<p>Put the following code in a <code>facilities.py</code> file:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">postage</span> <span class="kn">import</span> <span class="n">messaging</span>
+
+<span class="k">class</span> <span class="nc">PingExchange</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">Exchange</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the exchange that receives ping messages.&quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;ping-exchange&quot;</span>
+    <span class="n">exchange_type</span> <span class="o">=</span> <span class="s2">&quot;direct&quot;</span>
+    <span class="n">passive</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">durable</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">auto_delete</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+
+<p>This imports the messaging part of Postage and declares a <code>PingExchange</code>, which is a simple direct RabbitMQ exchange, which name is <code>ping-exchange</code>. Remember that in a AMQP system exchanges are unique by name and virtualhost, i.e. given a virtualhost the name of the exchange uniquely identifies it.</p>
+<h4 id="setting-up-the-producer">Setting up the producer<a class="headerlink" href="#setting-up-the-producer" title="Permanent link">&para;</a></h4>
+<p>Just below the exchange object we declare a producer, a class that can send a given set of messages:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingProducer</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">GenericProducer</span><span class="p">):</span>
+    <span class="n">eks</span> <span class="o">=</span> <span class="p">[(</span><span class="n">PingExchange</span><span class="p">,</span> <span class="s1">&#39;ping_rk&#39;</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">build_message_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">MessageCommand</span><span class="p">(</span><span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>First of all our producer inherits from <code>GenericProducer</code>, a rich object that manages low-level stuff such as connection to the AMQP broker (RabbitMQ), exchange declaration and message creation.</p>
+<p>The <code>eks</code> class attribute is a list of exchange/routing key couples (tuples); we list here all the exchanges that will receive our messages when the object will send them and for each exchange we give a routing key. Recall that routing keys are used to label messages so that the exchange can route them to the subscribing queues (according to the rules of the exchange type). Here, we declare that the messages of our producer are going to be sent to the <code>PingExchange</code> exchange with the <code>ping_rk</code> routing key.</p>
+<p>Then we declare a <code>build_message_ping()</code> method, which simply builds a new message and returns it. The latter is a command message that in Postage lingo means a message that contains an action the receiver shall execute (a fire-and-forget call).</p>
+<h4 id="the-producer">The producer<a class="headerlink" href="#the-producer" title="Permanent link">&para;</a></h4>
+<p>The program that sends ping messages is very straightforward; it shall declare a message producer and use it to send the message. Create the <code>send_ping.py</code> file and write the following code</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">postage</span> <span class="kn">import</span> <span class="n">messaging</span>
+<span class="kn">import</span> <span class="nn">facilities</span>
+
+<span class="n">fingerprint</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">Fingerprint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ping_sender&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>After the usual imports, I create a fingerprint for this program. As explained in <a href="https://github.com/lgiordani/postage#fingerprint">the documentation</a>, a fingerprint is a collection of useful information about the component that sends messages. It can be easily customized since all Postage objects expect it to be a dictionary, so any object that behaves like a dictionary works. The standard <code>Fingerprint</code> provided by Postage collects some useful properties from the OS and the RabbitMQ installation; here we customize the <code>name</code> value that otherwise would be set to <code>None</code>. The fingerprint, once loaded in a producer, will be automatically attached to any message the producer will send.</p>
+<div class="highlight"><pre><span></span><code><span class="n">producer</span> <span class="o">=</span> <span class="n">facilities</span><span class="o">.</span><span class="n">PingProducer</span><span class="p">(</span><span class="n">fingerprint</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">message_ping</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The <code>PingProducer</code> we declared in <code>facilities.py</code> is instanced, and its <code>message_ping()</code> method is invoked.
+If you review the above paragraph you will notice that you never defined a <code>message_ping()</code> method; this is automatically implemented by the <code>GenericProducer</code> class from the <code>build_message_ping()</code> method. The class performs many actions under the hood: it executes some code to set up the correct RabbitMQ structures, calls your method to get the actual message data, attaches the fingerprint to the message, and serializes the message data. Eventually, the producer sends the message to the exchange defined in the class (<code>PingExchange</code>) with the linked routing key (<code>ping_rk</code>).</p>
+<h4 id="the-server-program">The server program<a class="headerlink" href="#the-server-program" title="Permanent link">&para;</a></h4>
+<p>Now we will write a component that receives ping command messages and performs some action accordingly. Open a <code>receive_ping.py</code> file and write the following code</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">postage</span> <span class="kn">import</span> <span class="n">messaging</span>
+<span class="kn">from</span> <span class="nn">postage</span> <span class="kn">import</span> <span class="n">microthreads</span>
+
+<span class="kn">import</span> <span class="nn">facilities</span>
+
+<span class="n">fingerprint</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">Fingerprint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ping_receiver&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>that loads the modules we need and builds the fingerprint of this application. Creating a receiver means declaring a class that inherits from <code>MessageProcessor</code> and implements a method for each incoming message we want to process.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingReceiver</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageProcessor</span><span class="p">):</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a ping!&quot;</span>
+</code></pre></div>
+
+<p>As you can see here the <code>msg_ping()</code> method is declared as a handler for the command message <code>ping</code>; the name of the method is arbitrary, but it has to accept one parameter, namely the content of the incoming message (more on this later). In this case, when the object receives a ping message it just prints out a string.</p>
+<div class="highlight"><pre><span></span><code><span class="n">eqks</span> <span class="o">=</span> <span class="p">[(</span><span class="n">facilities</span><span class="o">.</span><span class="n">PingExchange</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;ping_queue&#39;</span><span class="p">,</span> <span class="s1">&#39;ping_rk&#39;</span><span class="p">)])]</span>
+<span class="n">receiver</span> <span class="o">=</span> <span class="n">PingReceiver</span><span class="p">(</span><span class="n">fingerprint</span><span class="o">.</span><span class="n">as_dict</span><span class="p">(),</span> <span class="n">eqks</span><span class="p">,</span>
+                        <span class="kc">None</span><span class="p">,</span> <span class="n">messaging</span><span class="o">.</span><span class="n">global_vhost</span><span class="p">)</span>
+</code></pre></div>
+
+<p>To start the receiver we have to connect it to an exchange; recall that the AMQP mechanism requires you to declare a queue and to connect it to an exchange through a key, which format depends on the exchange type. Being the <code>PingExchange</code> a direct exchange we want to connect to it with the exact routing key we want to match, that is <code>ping_rk</code>. The <code>eqks</code> structure is rather complex and may result overblown in such a simple context: it is a list of tuples in the form <code>(exchange_class, qk_list)</code> that links the given exchange class to a list of queues; the latter list contains tuples in the form <code>(queue_name, key)</code>. Each queue listed here connects to the exchange and fetches messages that match the linked key.</p>
+<p>In this case, we simply subscribe the <code>facilities.PingExchange</code> exchange with a <code>ping_queue</code> queue receiving messages routed with the <code>ping_rk</code> key.</p>
+<p>The receiver is then instanced. The arguments we pass are the fingerprint dictionary, the eqks we just discussed, a HUP tuple (Host, User, Password) to connect to RabbitMQ and the RabbitMQ virtualhost we want to use. In this case, we stick to the <a href="https://github.com/lgiordani/postage#environment-variables">default HUP</a> and to the default virtualhost.</p>
+<div class="highlight"><pre><span></span><code><span class="n">scheduler</span> <span class="o">=</span> <span class="n">microthreads</span><span class="o">.</span><span class="n">MicroScheduler</span><span class="p">()</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">add_microthread</span><span class="p">(</span><span class="n">receiver</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">main</span><span class="p">():</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+<p>This code creates a scheduler and adds the receiver, which is a <code>microthreads.Microthread</code>, then starts the execution loop.</p>
+<h4 id="execution">Execution<a class="headerlink" href="#execution" title="Permanent link">&para;</a></h4>
+<p>Open two different shells on your system and execute the receiver in the first</p>
+<div class="highlight"><pre><span></span><code>$ python receive_ping.py 
+postage.messaging: global_vhost set to /
+</code></pre></div>
+
+<p>and the sender in the second</p>
+<div class="highlight"><pre><span></span><code>$ python send_ping.py 
+postage.messaging: global_vhost set to /
+$  
+</code></pre></div>
+
+<p>The receiver shall at this point notify that a message has been sent</p>
+<div class="highlight"><pre><span></span><code>$ python receive_ping.py 
+postage.messaging: global_vhost set to /
+Got a ping!
+</code></pre></div>
+
+<p>which is what we expected. You can stop the receiver with <code>Ctrl-C</code>, this kills the Pika connection somehow abruptly, but I am not going to implement in this article a good signal management.</p>
+<h4 id="adding-message-parameters">Adding message parameters<a class="headerlink" href="#adding-message-parameters" title="Permanent link">&para;</a></h4>
+<p>Now we want to add a parameter to the message we send, namely the time at which the message was sent. To do this we make some changes to <code>facilities.py</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">PingProducer</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">GenericProducer</span><span class="p">):</span>
+    <span class="n">eks</span> <span class="o">=</span> <span class="p">[(</span><span class="n">PingExchange</span><span class="p">,</span> <span class="s1">&#39;ping_rk&#39;</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">build_message_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">MessageCommand</span><span class="p">(</span><span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">build_message_timed_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">MessageCommand</span><span class="p">(</span><span class="s1">&#39;timed_ping&#39;</span><span class="p">,</span>
+                                        <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()})</span>
+</code></pre></div>
+
+<p>As you can see I just added the <code>build_message_timed_ping()</code> method, which sends a <code>timed_ping</code> command, but this time I added a <code>parameters</code> dictionary that encompasses all the parameters of the command. Remember that all the structures you put in a message are serialized in JSON by default so they must be processable by <code>json.dumps()</code>; if you need to send very complex structures you can customize Postage to use another encoder, either a customized JSON or a completely different one; see <a href="https://github.com/lgiordani/postage#encoder">the documentation</a>.</p>
+<p>The receiver has to be modified accordingly:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingReceiver</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageProcessor</span><span class="p">):</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a ping!&quot;</span>
+
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;timed_ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_timed_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a timed ping! Time is </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<p>Here the new method, <code>msg_timed_ping()</code>, prints a different message extracting the parameters from the message content.
+Last, you need to add the actual call that sends the message to <code>send_ping.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">producer</span> <span class="o">=</span> <span class="n">facilities</span><span class="o">.</span><span class="n">PingProducer</span><span class="p">(</span><span class="n">fingerprint</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">message_ping</span><span class="p">()</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">message_timed_ping</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The execution shows that everything works as expected</p>
+<div class="highlight"><pre><span></span><code>$ python receive_ping.py 
+postage.messaging: global_vhost set to /
+Got a ping!
+Got a timed ping! Time is 1374826309.06
+</code></pre></div>
+
+<h4 id="adding-call-parameters">Adding call parameters<a class="headerlink" href="#adding-call-parameters" title="Permanent link">&para;</a></h4>
+<p>If you want to allow the user to pass a parameter when sending the message, you just need to accept and use it in your <code>build_message_NAME()</code> method. In <code>facilities.py</code> add:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingProducer</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">GenericProducer</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">build_message_custom_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">custom_value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">MessageCommand</span><span class="p">(</span><span class="s1">&#39;custom_ping&#39;</span><span class="p">,</span>
+                                    <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;custom_value&#39;</span><span class="p">:</span><span class="n">custom_value</span><span class="p">})</span>
+</code></pre></div>
+
+<p>Add a handler in the receiver (<code>receive_ping.py</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingReceiver</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageProcessor</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_custom_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a custom ping! The custom value is </span><span class="si">%s</span><span class="s2">&quot;</span>\
+              <span class="o">%</span><span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">][</span><span class="s1">&#39;custom_value&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<p>And exploit it when sending the message (<code>send_ping.py</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="n">producer</span><span class="o">.</span><span class="n">message_custom_ping</span><span class="p">((</span><span class="s2">&quot;Just ping me&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+
+<p>When you execute it you get:</p>
+<div class="highlight"><pre><span></span><code>$ python receive_ping.py 
+postage.messaging: global_vhost set to /
+Got a ping!
+Got a timed ping! Time is 1374832738.18
+Got a custom ping! The custom value is [u&#39;Just ping me&#39;, 1]
+</code></pre></div>
+
+<p>Pay attention to JSON, which does not tell apart tuples from lists.</p>
+<h4 id="rpc-calls-to-the-rescue">RPC calls to the rescue<a class="headerlink" href="#rpc-calls-to-the-rescue" title="Permanent link">&para;</a></h4>
+<p>The ping mechanism is not really working until the server answers the message. To answer incoming messages we can implement two different strategies; the first is the asynchronous one, which leverages fire-and-forget messages, the second uses RPC calls. While the first is simpler to implement at a system level (you just send messages as usual), it is complex on the user side since it requires the programmer to structure the whole program in an asynchronous way. The second approach, resembling usual function calls, is easier to understand and include in a program; it has many downsides and caveats, however, so do not abuse it.</p>
+<p>For the sake of simplicity let us implement a RPC version of the ping mechanism. First we add a specific message to the producer</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingProducer</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">GenericProducer</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">build_rpc_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">RpcCommand</span><span class="p">(</span><span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Things are not very different from the previous cases here: we use the <code>build_rpc_NAME()</code> form of the method then we return an RpcCommand, instead of a MessageCommand. Beware that, alas!, nomenclature here is a little misleading: both are messages in the sense of "something that will be sent on the AMQP network", but while MessageCommand does not expect an answer, RpcCommand does.</p>
+<p>I want to point out that the name of the message is <code>ping</code> just like the previous one; Postage tells the two messages apart using the name (<code>ping</code>), the type (<code>command</code>) and the category (<code>rpc</code> or <code>message</code>), although the latter is somewhat concealed.</p>
+<p>The receiver needs a new handler to process the incoming RPC <code>ping</code> message:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingReceiver</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageProcessor</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">RpcHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_rpc_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">reply_func</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a ping! Answering...&quot;</span>
+        <span class="n">reply_func</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageResult</span><span class="p">(</span><span class="s1">&#39;Pong&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+<p>Accordingly, there is an RPC version of <code>MessageHandler</code>, <code>RpcHandler</code>. The method has to accept an additional parameter that is a reply function; the latter can be called at any time from the method, allowing it to perform some cleanup after answering if needed. In this case, it simply sends a <code>MessageResult</code> object back with <code>'Pong'</code> as value.</p>
+<p>In <code>send_ping.py</code> you can now make a remote call:</p>
+<div class="highlight"><pre><span></span><code><span class="n">answer</span> <span class="o">=</span> <span class="n">producer</span><span class="o">.</span><span class="n">rpc_ping</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">answer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;success&#39;</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="s2">&quot;Answer: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+<span class="k">elif</span> <span class="n">answer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;exception&#39;</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="s2">&quot;An exception occoured! (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<p>The first part is straightforward: you call the RPC just like a local function. What you get is always a <code>MessageResult</code> object or derived (<code>MessageResultError</code> or <code>MessageResultException</code>). Be warned that the API here is awkward, to be indulgent. I wrote it, but probably the good-coder-in-me (TM) was on holiday that time; <a href="https://github.com/lgiordani/postage/issues/1">I am going to fix it</a> in a short time.</p>
+<p>Anyway, you have to check the answer to be sure that the call was successful; never, never, never trust RPC calls, network is in the middle and everything can happen (yes, even someone tripping over the network cable).</p>
+<p>If the receiver is unreachable the producer waits some time and then tries the call again: by default it waits 30 seconds and tries again 4 times; after all that it returns a <code>MessageResultException</code> containing a <code>TimeoutError</code> exception. You can try it changing the decorator of <code>msg_rpc_ping()</code> to match <code>ping_other</code> (or whatever) instead of <code>ping</code>. After two minutes, you will get your exception. You can easily customize these values by setting the value of <code>GenericProducer.rpc_timeout</code> and <code>GenericProducer.max_retry</code>.</p>
+<h4 id="handlers-unleashed">Handlers unleashed<a class="headerlink" href="#handlers-unleashed" title="Permanent link">&para;</a></h4>
+<p>Message handlers are powerful, but there is a couple of tricks more in Postage. The first one is <code>MessageHandlerFullBody</code> that you can use exactly like <code>MessageHandler</code>; the difference is that the decorated method does not receive the message content (the <code>content</code> key of the body) but the full body. You can leverage this to access the underlying message structure: this allows you to access the fingerprint included in the message, which contains precious information about the process that sent the message. Let's show how it works; add a new handler to the receiver:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingReceiver</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageProcessor</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandlerFullBody</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_ping_full</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+        <span class="n">fingerprint</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;fingerprint&#39;</span><span class="p">]</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a ping from </span><span class="si">%s</span><span class="s2"> running on </span><span class="si">%s</span><span class="s2"> with pid </span><span class="si">%s</span><span class="s2">&quot;</span>\
+              <span class="o">%</span><span class="p">(</span><span class="n">fingerprint</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">fingerprint</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span> <span class="n">fingerprint</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<p>Here, we handle the <code>ping</code> command, just like the method <code>msg_ping()</code> does; indeed nothing stops you to write more than a handler for a given message, but remember that they are processed in random order. Obviously we need to give the decorated method a different name, otherwise the second one will redefine the first one. Being decorated with <code>MessageHandlerFullBody</code> the method receives the full body of the message and can access the fingerprint.</p>
+<p>Executing it we get:</p>
+<div class="highlight"><pre><span></span><code>$ python receive_ping.py 
+postage.messaging: global_vhost set to staging
+Got a ping from ping_sender running on yoda with pid 26812
+Got a ping!
+</code></pre></div>
+
+<p>As we expected both handlers have been activated by the incoming message, and, not surprisingly, they have been processed out of order.</p>
+<p>The second trick handlers have in store for you is the Handler class. Instead of decorating a method you can define a class that inherits from <code>Handler</code> and decorate that; this class shall at least define a <code>call()</code> method without arguments (aside from <code>self</code>) that will be executed when the relative message arrives. This class can access <code>self.data</code>, which is the data passed by the decorator (either the message content or the full body), <code>self.reply_func</code> that defaults to <code>None</code> for non-RPC messages, and <code>self.processor</code> that is the underlying <code>MessageProcessor</code> object hosting the handler.</p>
+<p>To show how it works let's add another handler to the receiver:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PingReceiver</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageProcessor</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">MsgPing</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="s2">&quot;Got a ping - processed by </span><span class="si">%s</span><span class="s2"> hosted by </span><span class="si">%s</span><span class="s2">&quot;</span>\
+                  <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">processor</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+</code></pre></div>
+
+<p>You can see that the definition of a basic handler class is pretty simple. When executed this gives the following:</p>
+<div class="highlight"><pre><span></span><code>$ python receive_ping.py 
+postage.messaging: global_vhost set to staging
+Got a ping - processed by &lt;class &#39;__main__.MsgPing&#39;&gt;
+             hosted by &lt;class &#39;__main__.PingReceiver&#39;&gt;
+Got a ping from ping_sender running on yoda with pid 27596
+Got a ping!
+</code></pre></div>
+
+<p>Leveraging the full body access and the class handlers you can write advanced filters on incoming messages, and add interesting features like runtime configuration of your handlers or configuration through incoming messages.</p>
+<h2 id="full-code">Full code<a class="headerlink" href="#full-code" title="Permanent link">&para;</a></h2>
+<p>This is the full code of the discussed examples.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">postage</span> <span class="kn">import</span> <span class="n">messaging</span>
+
+<span class="k">class</span> <span class="nc">PingExchange</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">Exchange</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the exchange that receives ping messages.&quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;ping-exchange&quot;</span>
+    <span class="n">exchange_type</span> <span class="o">=</span> <span class="s2">&quot;direct&quot;</span>
+    <span class="n">passive</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">durable</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">auto_delete</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">class</span> <span class="nc">PingProducer</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">GenericProducer</span><span class="p">):</span>
+    <span class="c1"># Send messages to this exchange with this routing key</span>
+    <span class="n">eks</span> <span class="o">=</span> <span class="p">[(</span><span class="n">PingExchange</span><span class="p">,</span> <span class="s1">&#39;ping_rk&#39;</span><span class="p">)]</span>
+
+    <span class="c1"># Send a &#39;ping&#39; command</span>
+    <span class="k">def</span> <span class="nf">build_message_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">MessageCommand</span><span class="p">(</span><span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Send a &#39;timed_ping&#39; command</span>
+    <span class="c1"># Parameters: time</span>
+    <span class="k">def</span> <span class="nf">build_message_timed_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">MessageCommand</span><span class="p">(</span><span class="s1">&#39;timed_ping&#39;</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()})</span>
+
+    <span class="c1"># Send a &#39;custom_ping&#39; command</span>
+    <span class="c1"># Parameters: custom_value</span>
+    <span class="k">def</span> <span class="nf">build_message_custom_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">custom_value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">MessageCommand</span><span class="p">(</span><span class="s1">&#39;custom_ping&#39;</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;custom_value&#39;</span><span class="p">:</span><span class="n">custom_value</span><span class="p">})</span>
+
+    <span class="c1"># Send a &#39;ping&#39; RPC command</span>
+    <span class="k">def</span> <span class="nf">build_rpc_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">messaging</span><span class="o">.</span><span class="n">RpcCommand</span><span class="p">(</span><span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><a href="/code/postage/facilities.py">source code</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">postage</span> <span class="kn">import</span> <span class="n">messaging</span>
+<span class="kn">import</span> <span class="nn">facilities</span>
+
+<span class="c1"># Build the fingerprint of this application</span>
+<span class="n">fingerprint</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">Fingerprint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ping_sender&quot;</span><span class="p">)</span>
+
+<span class="c1"># Instance the ping producer</span>
+<span class="n">producer</span> <span class="o">=</span> <span class="n">facilities</span><span class="o">.</span><span class="n">PingProducer</span><span class="p">(</span><span class="n">fingerprint</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+
+<span class="c1"># Send a &#39;ping&#39; command</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">message_ping</span><span class="p">()</span>
+
+<span class="c1"># Send a &#39;timed_ping&#39; command</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">message_timed_ping</span><span class="p">()</span>
+
+<span class="c1"># Send a &#39;custom_ping&#39; command</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">message_custom_ping</span><span class="p">((</span><span class="s2">&quot;Just ping me&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Send a &#39;ping&#39; RPC call</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">producer</span><span class="o">.</span><span class="n">rpc_ping</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">answer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;success&#39;</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="s2">&quot;Answer: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+<span class="k">elif</span> <span class="n">answer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;exception&#39;</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="s2">&quot;An exception occoured! (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<p><a href="/code/postage/send_ping.py">source code</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">postage</span> <span class="kn">import</span> <span class="n">messaging</span>
+<span class="kn">from</span> <span class="nn">postage</span> <span class="kn">import</span> <span class="n">microthreads</span>
+
+<span class="kn">import</span> <span class="nn">facilities</span>
+
+<span class="c1"># Build the fingerprint of this application</span>
+<span class="n">fingerprint</span> <span class="o">=</span> <span class="n">messaging</span><span class="o">.</span><span class="n">Fingerprint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ping_receiver&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">PingReceiver</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageProcessor</span><span class="p">):</span>
+    <span class="c1"># Process an incoming &#39;ping&#39; command</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a ping!&quot;</span>
+
+    <span class="c1"># Process an incoming &#39;timed_ping&#39; command</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;timed_ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_timed_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a timed ping! Time is </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Process an incoming &#39;custom_ping&#39; command</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_custom_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a custom ping! The custom value is </span><span class="si">%s</span><span class="s2">&quot;</span>\
+        <span class="o">%</span><span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">][</span><span class="s1">&#39;custom_value&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Process an incoming &#39;ping&#39; RPC command</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">RpcHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_rpc_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">reply_func</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a ping! Answering...&quot;</span>
+        <span class="n">reply_func</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">MessageResult</span><span class="p">(</span><span class="s1">&#39;Pong&#39;</span><span class="p">))</span>
+
+    <span class="c1"># Process the full body of an incoming &#39;ping&#39; command</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandlerFullBody</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">msg_ping_full</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+        <span class="n">fingerprint</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;fingerprint&#39;</span><span class="p">]</span>
+        <span class="nb">print</span> <span class="s2">&quot;Got a ping from </span><span class="si">%s</span><span class="s2"> running on </span><span class="si">%s</span><span class="s2"> with pid </span><span class="si">%s</span><span class="s2">&quot;</span>\
+        <span class="o">%</span><span class="p">(</span><span class="n">fingerprint</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">fingerprint</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span> <span class="n">fingerprint</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Process an incoming &#39;ping&#39; command with a class handler</span>
+    <span class="nd">@messaging</span><span class="o">.</span><span class="n">MessageHandler</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">MsgPing</span><span class="p">(</span><span class="n">messaging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="s2">&quot;Got a ping - processed by </span><span class="si">%s</span><span class="s2"> hosted by </span><span class="si">%s</span><span class="s2">&quot;</span>\
+        <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">processor</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+
+<span class="c1"># Exchange/Queue/Key</span>
+<span class="n">eqks</span> <span class="o">=</span> <span class="p">[(</span><span class="n">facilities</span><span class="o">.</span><span class="n">PingExchange</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;ping_queue&#39;</span><span class="p">,</span> <span class="s1">&#39;ping_rk&#39;</span><span class="p">)])]</span>
+
+<span class="c1"># Instance the receiver</span>
+<span class="n">receiver</span> <span class="o">=</span> <span class="n">PingReceiver</span><span class="p">(</span><span class="n">fingerprint</span><span class="o">.</span><span class="n">as_dict</span><span class="p">(),</span> <span class="n">eqks</span><span class="p">,</span> 
+            <span class="kc">None</span><span class="p">,</span> <span class="n">messaging</span><span class="o">.</span><span class="n">global_vhost</span><span class="p">)</span>
+
+<span class="c1"># Instance the scheduler and run the receiver</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">microthreads</span><span class="o">.</span><span class="n">MicroScheduler</span><span class="p">()</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">add_microthread</span><span class="p">(</span><span class="n">receiver</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">main</span><span class="p">():</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+<p><a href="/code/postage/receive_ping.py">source code</a></p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>Postage aims to make it simple to write components in Python to fully exploit the power of RabbitMQ. It is highly customizable, and its handler mechanism keeps the code compact.</p>
+<p>Even if the API is already in its third implementation, you can see that it is still not perfect so stay tuned for upcoming versions. Feel free to fork the project, to submit issues or pull request, or to contact me for any question.</p>
+<p>Oh, did I remember to tell you to never trust RPC calls? =)</p>
+  </div>
+
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/">
+            <img src="/images/from-docker-cli-to-docker-compose.jpg" alt="from-docker-cli-to-docker-compose" />
+          </a>
+          <div class="body">
+            <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/"><h2>From Docker CLI to Docker Compose</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2022-02-19T15:00:00+01:00">Feb 19, 2022</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-03-17T10:00:00+00:00">Mar 17, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/04/25/rsa-keys/">
+            <img src="/images/rsa-keys.jpg" alt="rsa-keys" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/04/25/rsa-keys/"><h2>Public key cryptography: RSA keys</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/cryptography/" class="tag">cryptography</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/ssl/" class="tag">SSL</a>
+		<a href="/categories/ssh/" class="tag">SSH</a>
+		<a href="/categories/rsa/" class="tag">RSA</a>
+		<a href="/categories/python/" class="tag">Python</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-04-25T13:00:00+01:00">Apr 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-01-23T11:00:00+00:00">Jan 23, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/">
+            <img src="/images/clean-architectures.jpg" alt="clean-architectures" />
+          </a>
+          <div class="body">
+            <a href="/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/"><h2>Clean architectures in Python: a step-by-step example</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-05T13:00:00+01:00">Jul 5, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T10:00:00+00:00">Aug 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/">
+            <img src="/images/how-to-write-a-pelican-theme-for-your-static-website.jpg" alt="how-to-write-a-pelican-theme-for-your-static-website" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/25/how-to-write-a-pelican-theme-for-your-static-website/"><h2>How to write a Pelican theme for your static website</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/blogging/" class="tag">blogging</a>
+		<a href="/categories/markdown/" class="tag">Markdown</a>
+		<a href="/categories/pelican/" class="tag">pelican</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+		<a href="/categories/html/" class="tag">HTML</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-25T14:00:00+01:00">Mar 25, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/">
+            <img src="/images/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform.jpg" alt="aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/"><h2>AWS Log Insights as CloudWatch metrics with Python and Terraform</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/infrastructure/" class="tag">infrastructure</a>
+		<a href="/categories/lambda/" class="tag">Lambda</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/terraform/" class="tag">Terraform</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-22T17:00:00+01:00">Mar 22, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/">
+            <img src="/images/first-class-objects-in-python-generic-code-wrappers-and-factories.jpg" alt="first-class-objects-in-python-generic-code-wrappers-and-factories" />
+          </a>
+          <div class="body">
+            <a href="/blog/2021/03/09/first-class-objects-in-python-generic-code-wrappers-and-factories/"><h2>First-class objects in Python: generic code, wrappers, and factories</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/functional-programming/" class="tag">functional programming</a>
+		<a href="/categories/decorators/" class="tag">decorators</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2021-03-09T16:00:00+00:00">Mar 9, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/">
+            <img src="/images/delegation-composition-and-inheritance-in-object-oriented-programming.jpg" alt="delegation-composition-and-inheritance-in-object-oriented-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"><h2>Delegation: composition and inheritance in object-oriented programming</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00">Aug 17, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T18:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

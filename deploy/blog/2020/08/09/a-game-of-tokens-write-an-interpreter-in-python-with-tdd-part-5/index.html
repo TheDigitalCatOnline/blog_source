@@ -1,0 +1,1414 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - A game of tokens: write an interpreter in Python with TDD - Part 5</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="Introduction¶ This is part 5 of A game of tokens, a series of posts where I build an interpreter in Python following a pure TDD methodology and engaging you in a sort of a game: I give you the tests and you have to write the code that passes them …">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="A game of tokens: write an interpreter in Python with TDD - Part 5" />
+<meta name="twitter:description" content="Introduction¶ This is part 5 of A game of tokens, a series of posts where I build an interpreter in Python following a pure TDD methodology and engaging you in a sort of a game: I give you the tests and you have to write the code that passes them …" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/a-game-of-tokens-5.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?63e1c1d2">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>A game of tokens: write an interpreter in Python with TDD - Part 5</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-08-09T18:00:00+01:00"> 09/08/2020</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/pytest/">pytest</a>
+	<a class="tag" href="/categories/python/">Python</a>
+	<a class="tag" href="/categories/python3/">Python3</a>
+	<a class="tag" href="/categories/tdd/">TDD</a>
+	<a class="tag" href="/categories/testing/">testing</a>
+	<a class="tag" href="/categories/compilers/">compilers</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%205&url=https%3A//www.thedigitalcatonline.com/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/&via=thedigicat&hashtags=pytest,python,python3,tdd,testing,compilers" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/&title=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%205&summary=Introduction%C2%B6%0AThis%20is%20part%205%20of%20A%20game%20of%20tokens%2C%20a%20series%20of%20posts%20where%20I%20build%20an%20interpreter%20in%20Python%20following%20a%20pure%20TDD%20methodology%20and%20engaging%20you%20in%20a%20sort%20of%20a%20game%3A%20I%20give%20you%20the%20tests%20and%20you%20have%20to%20write%20the%20code%20that%20passes%20them%20%E2%80%A6&source=https%3A//www.thedigitalcatonline.com/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%205&u=https%3A//www.thedigitalcatonline.com/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%205&amp;body=https%3A//www.thedigitalcatonline.com/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/&title=A%20game%20of%20tokens%3A%20write%20an%20interpreter%20in%20Python%20with%20TDD%20-%20Part%205" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This is part 5 of <a href="https://www.thedigitalcatonline.com/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/">A game of tokens</a>, a series of posts where I build an interpreter in Python following a pure TDD methodology and engaging you in a sort of a game: I give you the tests and you have to write the code that passes them. After part 4 I had a long hiatus because I focused on other projects, but now I resurrected this series and I'm moving on.</p>
+<p>First of all I reviewed the first 4 posts, merging the posts that contained the solutions. While this is definitely better for me, I think it might be better for the reader as well, this way it should be easier to follow along. Remember however that you learn if you do, not if you read!</p>
+<p>Secondly, I was wondering in which direction to go, and I decided to shamelessly follow the steps of Ruslan Spivak, who first inspired this set of posts and who set off to build an Pascal interpreter; you can find the impressive series of posts Ruslan wrote on <a href="https://ruslanspivak.com">his website</a>. Thank you Ruslan for the great posts!</p>
+<p>So, let's go Pascal!</p>
+<h2 id="tools-update">Tools update<a class="headerlink" href="#tools-update" title="Permanent link">&para;</a></h2>
+<p>I introduced black into my development toolset, so I used it to reformat the code</p>
+<div class="highlight"><pre><span></span><code>black smallcalc/*.py tests/*.py
+</code></pre></div>
+
+<p>And added a configuration file <code>.flake8</code> for Flake8 to avoid the two tools to clash</p>
+<div class="highlight"><pre><span></span><code><span class="k">[flake8]</span><span class="w"></span>
+<span class="c1"># Recommend matching the black line length (default 88),</span><span class="w"></span>
+<span class="c1"># rather than using the flake8 default of 79:</span><span class="w"></span>
+<span class="na">max-line-length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">100</span><span class="w"></span>
+<span class="na">ignore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">E231 E741</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="level-17-reserved-keywords-and-new-assignment">Level 17 - Reserved keywords and new assignment<a class="headerlink" href="#level-17-reserved-keywords-and-new-assignment" title="Permanent link">&para;</a></h2>
+<p>Since Pascal has reserved keywords, I need tokens that have the keyword itself as value (something similar to Erlang's atoms). For this reason I changed <code>test_empty_token_has_length_zero</code> into</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_empty_token_has_the_length_of_the_type_itself</span><span class="p">():</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="s2">&quot;sometype&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;sometype&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">bool</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+</code></pre></div>
+
+<p>and modified the code in the class <code>Token</code> to pass it</p>
+<div class="highlight"><pre><span></span><code>   <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The keywords I will introduce in this post are <code>BEGIN</code> and <code>END</code>, so I need a test that shows they are supported</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_begin_and_end</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN END&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">BEGIN</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">END</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOL</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOF</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
+
+<p>The block <code>BEGIN ... END</code> is a generic compound block in Pascal (more on this later), and a Pascal program is made of that plus a final dot. Since the dot is already used for floats I need a test that shows it is correctly lexed.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_final_dot</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN END.&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">BEGIN</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">END</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">DOT</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOL</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOF</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
+
+<p>Last, Pascal assignments are sligthly different from what we already implemented, as they use the symbol <code>:=</code> instead of just <code>=</code>. We face a choice here, as we have to decide where to put the logic of our programming language: shall the lexer identify <code>:</code> and <code>=</code> separately, and let the parser deal with the two tokens in sequence, or shall we make the lexer emit an <code>ASSIGNMENT</code> token directly? I went for the first one, so that the lexer can be kept simple (no lookahead in it), but you are obviously free to try something different. For me the test that checks the assignment is</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_assignment_and_semicolon</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;a := 5;&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOL</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOF</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
+
+<p>You may have noticed I also decided to check for the semicolon in this test. Even here, we might discuss if it's meaningful to test two different things together, and generally speaking I'm in favour of a high granularity in tests, which however means that I try to avoid testing <em>unrelated</em> and <em>complicated</em> features together. In Pascal, the semicolon is used to separate statements, so it is likely be found at the end of something like an assignment. For this reason, and considering that it's a small feature, I put it in a context inside this test, and will extract it if more complex requirements arise in the future.</p>
+<p>The parser has to be changed to support the new assignment, and to do that we first need to change the tests. The symbol <code>=</code> has to be replaced with <code>:=</code> in the following tests: <code>test_parse_assignment</code>, <code>test_parse_assignment_with_expression</code>, <code>test_parse_assignment_expression_with_variables</code>, and <code>test_parse_line_supports_assigment</code>.</p>
+<h3 id="solution">Solution<a class="headerlink" href="#solution" title="Permanent link">&para;</a></h3>
+<p>Supporting reserved keywords is just a matter of defining specific token types for them</p>
+<div class="highlight"><pre><span></span><code><span class="n">BEGIN</span> <span class="o">=</span> <span class="s2">&quot;BEGIN&quot;</span>
+<span class="n">DOT</span> <span class="o">=</span> <span class="s2">&quot;DOT&quot;</span>
+
+<span class="n">RESERVED_KEYWORDS</span> <span class="o">=</span> <span class="p">[</span><span class="n">BEGIN</span><span class="p">,</span> <span class="n">END</span><span class="p">]</span>
+</code></pre></div>
+
+<p>and changing the method <code>_process_name</code> in order to detect them</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">_process_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[a-zA-Z_]+&quot;</span><span class="p">)</span>
+
+    <span class="n">match</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">tail</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">token_string</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">token_string</span> <span class="ow">in</span> <span class="n">RESERVED_KEYWORDS</span><span class="p">:</span>
+        <span class="n">tok</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">token_string</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tok</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">NAME</span><span class="p">,</span> <span class="n">token_string</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_token_and_skip</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
+</code></pre></div>
+
+<p>I decided to put the logic in this method because after all reserved keywords are exactly names with a specific meaning. I might have created a dedicated method <code>_process_keyword</code> but it would basically have been a copy of <code>_process_name</code> so this solution makes sense to me.</p>
+<p>To support the final dot I added a token for it</p>
+<div class="highlight"><pre><span></span><code><span class="n">DOT</span> <span class="o">=</span> <span class="s2">&quot;DOT&quot;</span>
+</code></pre></div>
+
+<p>and a processing method</p>
+<div class="highlight"><pre><span></span><code>   <span class="k">def</span> <span class="nf">_process_dot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\.$&quot;</span><span class="p">)</span>
+
+        <span class="n">match</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">tail</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_token_and_skip</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">DOT</span><span class="p">))</span>
+</code></pre></div>
+
+<p>which is then introduced with a high priority in <code>get_token</code></p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">eof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_eof</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">eof</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">eof</span>
+
+        <span class="n">eol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_eol</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">eol</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">eol</span>
+
+        <span class="n">dot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_dot</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dot</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dot</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_whitespace</span><span class="p">()</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_name</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">name</span>
+
+        <span class="n">number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_number</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">number</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">number</span>
+
+        <span class="n">literal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_literal</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">literal</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">literal</span>
+</code></pre></div>
+
+<p>To pass the parser tests I just need to change the implementation of <code>parse_assignment</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parse_assignment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_variable</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">))</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_expression</span><span class="p">()</span>
+</code></pre></div>
+
+<h2 id="level-18-statements-and-compound-statements">Level 18 - Statements and compound statements<a class="headerlink" href="#level-18-statements-and-compound-statements" title="Permanent link">&para;</a></h2>
+<p>In Pascal a compound statement is a list of statements enclosed between <code>BEGIN</code> and <code>END</code>, so the final grammar we want to have in this post is</p>
+<div class="highlight"><pre><span></span><code>compound_statement : BEGIN statement_list END
+
+statement_list : statement | statement SEMI statement_list
+
+statement : compound_statement | assignment_statement | empty
+
+assignment_statement : variable ASSIGN expr
+</code></pre></div>
+
+<p>As you can see this is a recursive definition, as the <code>statement_list</code> contains one or more <code>statement</code>, and each of them can be a <code>compound_statement</code>. The following is indeed a valid Pascal program</p>
+<div class="highlight"><pre><span></span><code><span class="k">BEGIN</span>
+    <span class="k">BEGIN</span>
+        <span class="k">BEGIN</span>
+            <span class="nb">writeln</span><span class="p">(</span><span class="err">&quot;</span><span class="n">Valid</span><span class="err">!&quot;</span><span class="p">)</span>
+        <span class="k">END</span>
+    <span class="k">END</span>
+<span class="k">END</span><span class="o">.</span>
+</code></pre></div>
+
+<p>Recursive algorithms are not simple, and it takes some time to tackle them properly. Let's try to implement one small feature at a time. The first test is that <code>parse_statement</code> should be able to parse assignments</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_statement_assignment</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;x := 5&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>In future, statements will be more than just assignments, so this test is the first of many others that we will eventually have for <code>parse_statement</code>. The second test we need is that a compound statement can contain an empty list of statements.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_empty_compound_statement</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN END&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_compound_statement</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span> <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+</code></pre></div>
+
+<p>After this is done, I want to test that the compound statement can contains one single statement</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_compound_statement_one_statement</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN x:= 5 END&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_compound_statement</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>and multiple statements separated by semicolon</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_compound_statement_multiple_statements</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN x:= 5; y:=6; z:=7 END&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_compound_statement</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<h3 id="solution_1">Solution<a class="headerlink" href="#solution_1" title="Permanent link">&para;</a></h3>
+<p>To pass the first test it is sufficient to add a method <code>parse_statement</code> that calls <code>parse_assignment</code></p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_assignment</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The second test requires a bit more code. I need to define a method <code>parse_compound_statement</code> and this has to return a specific new type of node. A compound statement is s list of statements that have to be executed in order, so it's time to define a class <code>CompoundStatementNode</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CompoundStatementNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+
+    <span class="n">node_type</span> <span class="o">=</span> <span class="s2">&quot;compound_statement&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">statements</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statements</span> <span class="o">=</span> <span class="n">statements</span> <span class="k">if</span> <span class="n">statements</span> <span class="k">else</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span><span class="p">,</span>
+            <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">statement</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="k">for</span> <span class="n">statement</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statements</span><span class="p">],</span>
+        <span class="p">}</span>
+</code></pre></div>
+
+<p>and at this point <code>parse_compound_statement</code> is trivial, at least for now</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_compound_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">BEGIN</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">END</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">CompoundStatementNode</span><span class="p">()</span>
+</code></pre></div>
+
+<p>With the third test we have to add the processing of a single statement. As this is optional, it's a good use case for our lexer as a context manager</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_compound_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">BEGIN</span><span class="p">))</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="p">:</span>
+            <span class="n">statement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">statement_node</span><span class="p">:</span>
+                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statement_node</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">END</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">CompoundStatementNode</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+</code></pre></div>
+
+<p>And finally, for the fourth test, I have to process optional further statements separated by semicolons. For this, I make use of the method <code>peek_token</code> to look ahead and see if there is another statement to process</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_compound_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">BEGIN</span><span class="p">))</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="p">:</span>
+            <span class="n">statement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">statement_node</span><span class="p">:</span>
+                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statement_node</span><span class="p">)</span>
+
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">peek_token</span><span class="p">()</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">))</span>
+
+                <span class="n">statement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">statement_node</span><span class="p">:</span>
+                    <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statement_node</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">END</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">CompoundStatementNode</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="level-19-recursive-compound-statements">Level 19 - Recursive compound statements<a class="headerlink" href="#level-19-recursive-compound-statements" title="Permanent link">&para;</a></h2>
+<p>To verify that compound statements are actually recursive, we can add this test</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_compound_statement_multiple_statements_with_compund_statement</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN x:= 5; BEGIN y := 6 END ; z:=7 END&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_compound_statement</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span>
+                    <span class="p">}</span>
+                <span class="p">],</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>where the second statement is a compound statement itself. After this is done we can test the visitor (<code>tests/test_calc_visitor.py</code>) and see if we can process single statements</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_visitor_compound_statement_one_statement</span><span class="p">():</span>
+    <span class="n">ast</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="n">v</span> <span class="o">=</span> <span class="n">cvis</span><span class="o">.</span><span class="n">CalcVisitor</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">ast</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">isvariable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;integer&quot;</span>
+</code></pre></div>
+
+<p>Multiple statements</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_visitor_compound_statement_multiple_statements</span><span class="p">():</span>
+    <span class="n">ast</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="n">v</span> <span class="o">=</span> <span class="n">cvis</span><span class="o">.</span><span class="n">CalcVisitor</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">ast</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">isvariable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;integer&quot;</span>
+
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">isvariable</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;integer&quot;</span>
+
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">isvariable</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;integer&quot;</span>
+</code></pre></div>
+
+<p>and recursive compound statements</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_visitor_compound_statement_multiple_statements_with_compund_statement</span><span class="p">():</span>
+    <span class="n">ast</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span>
+                    <span class="p">}</span>
+                <span class="p">],</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="n">v</span> <span class="o">=</span> <span class="n">cvis</span><span class="o">.</span><span class="n">CalcVisitor</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">ast</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">isvariable</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;integer&quot;</span>
+
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">isvariable</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;integer&quot;</span>
+
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">isvariable</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">valueof</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span>
+    <span class="k">assert</span> <span class="n">v</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;integer&quot;</span>
+</code></pre></div>
+
+<h3 id="solution_2">Solution<a class="headerlink" href="#solution_2" title="Permanent link">&para;</a></h3>
+<p>Before I added the first test I quickly refactored the code to follow the grammar a bit more closely, introducing <code>parse_statement_list</code> and calling it from <code>parse_compound_statement</code>. This is just a matter of isolating the part of the code that deals with the list of statements in its own method</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_statement_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">statement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">statement_node</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statement_node</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">peek_token</span><span class="p">()</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">))</span>
+
+            <span class="n">statement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">statement_node</span><span class="p">:</span>
+                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statement_node</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">nodes</span>
+
+    <span class="k">def</span> <span class="nf">parse_compound_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">BEGIN</span><span class="p">))</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="p">:</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement_list</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">END</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">CompoundStatementNode</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+</code></pre></div>
+
+<p>after this I introduce the new test, and to pass it I need to change <code>parse_statement</code> so that it parses either an assignment or a compound statement</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_assignment</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_compound_statement</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Before I move to the visitor, I want to discuss a choice that I have here. The current version of the method <code>parse_statement_list</code></p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_statement_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">statement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">statement_node</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statement_node</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">peek_token</span><span class="p">()</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">))</span>
+
+            <span class="n">statement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">statement_node</span><span class="p">:</span>
+                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statement_node</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">nodes</span>
+</code></pre></div>
+
+<p>might be easily written in a recursive way, to better match the grammar, becoming</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_statement_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">statement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_statement</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">statement_node</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statement_node</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">LITERAL</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">))</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_statement_list</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">nodes</span>
+</code></pre></div>
+
+<p>As you can see if you replace the code all the test pass, so the solution is technically correct. While recursive algorithms are elegant and compact, however, in this case I will stick to the first version. Using a recursive approach introduces a limit to the number of calls, and while in this little project we won't probably have this issue, I think it is worth mentioning it. Both solutions are correct, though, so feel free to choose the recursive path if you happen to like it more.</p>
+<p>The tests for the visitor can be passed with a minimal change, as the visitor itself just needs to be aware of <code>compound_statement</code> nodes and to know how to process them. So, I added a new condition to the method <code>visit</code></p>
+<div class="highlight"><pre><span></span><code>        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">:</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;statements&quot;</span><span class="p">]]</span>
+</code></pre></div>
+
+<p>which passes all the three new tests added for the visitor.</p>
+<h2 id="level-20-pascal-programs-and-case-insensitive-names">Level 20 - Pascal programs and case insensitive names<a class="headerlink" href="#level-20-pascal-programs-and-case-insensitive-names" title="Permanent link">&para;</a></h2>
+<p>A Pascal program ends with a dot, so we should introduce a new endpoint <code>parse_program</code> and test that it works. The first test verifies that we can parse an empty program</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_empty_program</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN END.&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_program</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span> <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+</code></pre></div>
+
+<p>and the second tests that the final dot can't be missing</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="kn">from</span> <span class="nn">smallcalc.calc_lexer</span> <span class="kn">import</span> <span class="n">TokenError</span>
+
+
+<span class="k">def</span> <span class="nf">test_parse_program_requires_the_final_dot</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN END&quot;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">TokenError</span><span class="p">):</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">parse_program</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Notice that I imported <code>pytest</code> and the <code>TokenError</code> exception to build a negative test (i.e. to test something that fails). The last test verifies a non-empty program can be parsed</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_program_with_nested_statements</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;BEGIN x:= 5; BEGIN y := 6 END ; z:=7 END.&quot;</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_program</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compound_statement&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;statements&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span>
+                    <span class="p">}</span>
+                <span class="p">],</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>When all these tests pass we are almost done for this post, and we just need to make the parser treat names in a case insensitive way. In Pascal, both variables and keywords are case-insensitive, so <code>BEGIN</code> and <code>begin</code> are the same keyword (or <code>BeGiN</code>, though I think this might be a misinterpretation of the concept of "snake case" =) ), and the same is valid for variables: you can define <code>MYVAR</code> and use <code>myvar</code>.</p>
+<p>To test this behaviour I changed the test <code>test_get_tokens_understands_uppercase_letters</code> into <code>test_get_tokens_is_case_insensitive</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_is_case_insensitive</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;SomeVar&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s2">&quot;somevar&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOL</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOF</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
+
+<p>and added the test for the two keywords we defined so far</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_begin_and_end_case_insensitive</span><span class="p">():</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;begin end&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">BEGIN</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">END</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOL</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">EOF</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
+
+<h3 id="solution_3">Solution<a class="headerlink" href="#solution_3" title="Permanent link">&para;</a></h3>
+<p>To parse a program we need to introduce the aptly named endpoint <code>parse_program</code>, which just parses a compound statement (the program) and the final dot.</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_program</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">compound_statement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_compound_statement</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">clex</span><span class="o">.</span><span class="n">DOT</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">compound_statement</span>
+</code></pre></div>
+
+<p>As for the case insensitive names, it's just a matter of changing the method <code>_process_name</code></p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[a-zA-Z_]+&quot;</span><span class="p">)</span>
+
+        <span class="n">match</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">tail</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">token_string</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">token_string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">in</span> <span class="n">RESERVED_KEYWORDS</span><span class="p">:</span>
+            <span class="n">tok</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">token_string</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tok</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">NAME</span><span class="p">,</span> <span class="n">token_string</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_token_and_skip</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Note that I decided to keep internally keywords with uppercase names and variables with lowercase ones. This is really just a matter of personal taste at this point of the project (and probably will always be), so feel free to follow the structure you like the most.</p>
+<h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">&para;</a></h2>
+<p>That was something! I was honestly impressed by how easily I could introduce changes in the language and add new feature, a testimony that the TDD methodology is a really powerful tool to have in your belt. Thanks again to <a href="https://ruslanspivak.com/pages/about/">Ruslan Spivak</a> for his work and his inspiring posts!</p>
+<p>The code I developed in this post is available on the GitHub repository tagged with <code>part5</code> (<a href="https://github.com/lgiordani/smallcalc/tree/part5">link</a>).</p>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
+<p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+  </div>
+
+  <section class="links">
+    <header>
+      <h2>Part 5 of the A game of tokens series</h2>
+    </header>
+    <div>
+      <h3>Previous articles</h3>
+      <ul>
+        <li><a href="/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/">A game of tokens: write an interpreter in Python with TDD - Part 1</a></li>
+        <li><a href="/blog/2017/10/01/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-2/">A game of tokens: write an interpreter in Python with TDD - Part 2</a></li>
+        <li><a href="/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/">A game of tokens: write an interpreter in Python with TDD - Part 3</a></li>
+        <li><a href="/blog/2018/06/02/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-4/">A game of tokens: write an interpreter in Python with TDD - Part 4</a></li>
+      </ul>
+      
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/">
+            <img src="/images/a-game-of-tokens-1.jpg" alt="a-game-of-tokens-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2017/05/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1/"><h2>A game of tokens: write an interpreter in Python with TDD - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/compilers/" class="tag">compilers</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2017-05-09T23:00:00+01:00">May 9, 2017</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-08-05T11:00:00+00:00">Aug 5, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/">
+            <img src="/images/a-game-of-tokens-3.jpg" alt="a-game-of-tokens-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2017/10/31/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-3/"><h2>A game of tokens: write an interpreter in Python with TDD - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/compilers/" class="tag">compilers</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2017-10-31T11:00:00+00:00">Oct 31, 2017</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-08-05T11:00:00+00:00">Aug 5, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
+            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
+            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T19:00:00+02:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-2.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-06T13:00:00+01:00">Jul 6, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-23T20:00:00+00:00">Feb 23, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/">
+            <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-3.jpg" alt="flask-project-setup-tdd-docker-postgres-and-more-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/"><h2>Flask project setup: TDD, Docker, Postgres and more - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/aws/" class="tag">AWS</a>
+		<a href="/categories/devops/" class="tag">devops</a>
+		<a href="/categories/docker/" class="tag">Docker</a>
+		<a href="/categories/flask/" class="tag">Flask</a>
+		<a href="/categories/http/" class="tag">HTTP</a>
+		<a href="/categories/postgres/" class="tag">Postgres</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/www/" class="tag">WWW</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-07-07T13:00:00+01:00">Jul 7, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-23T20:00:00+00:00">Feb 23, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">
+            <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2>TDD in Python with pytest - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">
+            <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2>TDD in Python with pytest - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
+            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2019/05/27/youtube-channel/">
+            <img src="/images/youtube-channel.jpg" alt="youtube-channel" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/05/27/youtube-channel/"><h2>The Digital Cat Youtube Channel</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/video/" class="tag">video</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-05-27T12:00:00+01:00">May 27, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>
