@@ -14,4 +14,4 @@ rm -fR ${DEPLOY_DIR}/*
 cp -R ${OUTPUT_DIR}/* ${DEPLOY_DIR}
 
 AWS_PROFILE=${AWS_PROFILE} s3cmd sync ${DEPLOY_DIR}/ s3://${S3_BUCKET} --acl-public --delete-removed --no-mime-magic
-awsv2 --profile ${AWS_PROFILE} cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION} --paths "/*"
+aws --profile ${AWS_PROFILE} cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION} --paths "/*"
