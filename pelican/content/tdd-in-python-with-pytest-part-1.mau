@@ -767,7 +767,7 @@ So, after these considerations, we can be happy that the second test already pas
 *TDD rule number 5:* A test should fail the first time you run it. If it doesn't, ask yourself why you are adding it.
 ----
 
-Step 6 - Refactoring
+== Step 6 - Refactoring
 
 Previously, I introduced the concept of refactoring, which means changing the code without altering the results. How can you be sure you are not altering the behaviour of your code? Well, this is what the tests are for. If the new code keeps passing the test suite you can be sure that you didn't remove any feature.
 
