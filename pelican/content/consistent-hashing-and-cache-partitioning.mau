@@ -1,7 +1,7 @@
 :pelican.title:Consistent Hashing and Cache Partitioning
 :pelican.date:2022-03-22 08:00:00 +0100
 :pelican.category:Programming
-:pelican.tags:algorithms, architectures, big data, cryptography, distributed systems, Python
+:pelican.tags:algorithms, architectures, big data, cryptography, devops, distributed systems, Python
 :pelican.authors:Leonardo Giordani
 :pelican.slug:consistent-hashing-and-cache-partitioning
 :pelican.image:consistent-hashing-and-cache-partitioning
@@ -23,35 +23,37 @@ This post is an introduction to partitioning, a technique for distributed storag
 
 My interest in partitioning dates back to 2015, when I was following courses at the MongoDB university and learned about _sharding_, the name MongoDB uses for partitioning. I was fascinated by the topic and discovered consistent hashing; I enjoyed it a lot, so much that I wrote a little demo in Python to understand it better. Later, I focused on other things and forgot the project completely, until recently, when [link]("https://github.com/drocpdp", "David Eynon") sent me a PR on GitHub to replace a deprecated testing library. So, I decided to resurrect the demo, rewrite it, and explain in this post what I understood about consistent hashing.
 
-The topic of distributed storage and data processing is arguably rich and complicated, so while I will try to give a broader context to the concepts that I will introduce, I by no mean intend to write a comprehensive guide to the subject matter. In particular, I will largely ignore the problem of performances, which is paramount when it comes to picking a data processing technique. The audience of this post are developers who do not know what partitioning and consistent hashing are and want to take their first step into those topics. At the end of the article I will provide an initial selection of other resources that dive into performance analysis and that compare alternative algorithms.
+The topic of distributed storage and data processing is arguably rich and complicated, so while I will try to give a broader context to the concepts that I will introduce, I by no mean intend to write a comprehensive guide to the subject matter. The audience of this post are developers who do not know what partitioning and consistent hashing are and want to take their first step into those topics.
 
 == Rationale
 
-In principle, partitioning means scattering data among multiple sources to allow a real concurrency of access and a more targeted optimisation. For example, we might observe that in a given social media application there are two types of queries: some are very infrequent and involve tables related to personal data and the user profile, others are extremely frequent and pretty intensive, and are related to the content shared by the user. In this case we might decide to partition the database storing the tables related to the profile and the tables that are related to content in two different computers, A and B. This means that the infrequent queries that fetch personal data will go to server A, while the more frequent and intensive queries related to content go to server B. Suddenly we have the chance to deploy server B using a more powerful and expensive architecture without increasing the cost for tables that won't benefit from such an improvement like the ones stored in server A.
+In principle, partitioning means scattering data among multiple sources to allow real concurrency of access and a more targeted optimisation. For example, we might observe that in a given social media application there are two types of queries: some are very infrequent and involve tables related to personal data and the user profile, others are extremely frequent and pretty intensive, and are related to the content shared by the user. In this case we might decide to partition the database storing the tables related to the profile and the tables that are related to content in two different systems, A and B (here, the word _system_ might be freely replaced by _computer_, _database_, _storage system_, or other similar components).
+
+This means that the infrequent queries that fetch personal data will go to server A, while the more frequent and intensive queries related to content go to server B. Suddenly we have the chance to deploy server B using more powerful and expensive hardware, or a better performing architecture, without increasing the cost for tables that won't benefit from such an improvement like the ones stored in server A.
 
 TODO: figure
 
-Clearly, partitioning does not come for free. Whenever we scatter data we need to introduce an additional layer of control that will route requests to the right source. This layer might be go from simple changes to the code of our application, where you explicitly query different data sources, to a proper wrapper that automatically routes requests according to nature or the query. In any case, while this approach might increase performances, it makes the system more complicated.
+Clearly, partitioning does not come for free. Whenever we scatter data we need to introduce an additional layer of control that will route requests to the right source. This layer might be implemented in very different ways: it might be a simple change to the code of our application, with conditional structures that query different data sources, a middleware that automatically routes requests according to nature or the query, or even a wrapper around the storage that hides the partitioning from the external world. In any case, while this approach might increase performances, it makes the overall architecture more complicated.
 
-Generally speaking, when we design a system, there is always a series of trade-offs that we have to face and you see here a clear example of such a crossroads. On the one hand, we might scatter data in a very granular way to improve concurrency but on the other hand we make the system much more complicated to manage.
+Generally speaking, when we design a system, there is always a series of trade-offs that we have to face and you see here a clear example of such a crossroads. On the one hand, we might scatter data in a very granular way to improve concurrency but on the other hand we make the system more complicated to manage.
 
-TODO: figure
+TODO: figure trade-off
 
 == Design choices
 
-Any design choice in a system depends on the requirements, and when it comes to data storage the most important factors are the _nature of the data_, its _distribution_, and the _access patterns_. Consider databases and content delivery networks (CDNs): both are meant to store data, and the storage size of both can vary substantially. However, there are important differences between the two that greatly affect the design choices. Let's see some simple examples:
+Every design choice in a system depends on the requirements, and when it comes to data storage the most important factors are the _nature of the data_, its _distribution_, and the _access patterns_. Consider for example databases and content delivery networks (CDNs): both are meant to store data, and the storage size of both can vary substantially. However, there are important differences between the two that greatly affect the design choices. Let's see some simple examples:
 
-* databases are meant to store data in a long-term fashion, while caches are by definition short-lived. This means that an important requirement for databases is data preservation, and we should do everything is in our power to avoid losing parts of the database. A cache, conversely, holds data for a short time, either predetermined by the system or forced by a change in the data source. As you can see in this case we not only take data loss as part of the equation, but we get to the point where we trigger it on purpose.
+* databases are meant to store data in a long-term fashion, while caches like CDNs are by definition short-lived. This means that an important requirement for databases is data preservation, and we should do everything is in our power to avoid losing parts of the database. A cache, conversely, holds data for a short time, either predetermined by the system or forced by a change in the data source. As you can see in this case we not only take data loss as part of the equation, but we get to the point where we trigger it on purpose.
 
 * applications often make use of range queries, which means that they retrieve sets of results spanning a range of values of one of the keys; for example, you might want to see all employers within a certain range of salaries, or all users that have more than a certain amount of followers. In such cases, it makes little sense to scatter data among different physical sources, thus making the retrieval more complicated and affecting performances. Databases see very often an access pattern of this type, while caches, being usually implemented as key/value stores, do not need to take this into account.
 
 == A practical example of partitioning
 
-Let us consider a simple key/value store, for example a common address book where the key is the name of the contact and the value a rich document with their personal details. If multiple users access the store, chances are that the system will at a certain point struggle to serve all the requests, so we might want to partition the data to allow concurrent access. We can sort them alphabetically and split them in two, storing all values with a key that begins with letters A-M in one server and the rest (keys N-Z) in the second one.
+Let us consider a simple key/value store, for example a common address book where the key is the name of the contact and the value a rich document with their personal details. If multiple users access the store, chances are that the system will at a certain point struggle to serve all the requests, so we might want to partition the data to allow concurrent access. We can for example sort them alphabetically and split them in two, storing all values with a key that begins with letters A-M in one server and the rest (keys N-Z) in the second one.
 
 TODO: figure
 
-This might seem a good idea, but unfortunately we might soon discover that performances are not great. Unfortunately, our address book doesn't contain the same number of people for each letter, as (in this example) we know more people whose name starts with A or C than with X or Z. That represents a problem, as our partitioning doesn't achieve the desired outcome, that of splitting requests evenly between the two servers. If we increase the number of partitions we will just worsen the problem, to the point where a partition might be completely empty and thus receive no traffic: since the problem comes from the data distribution we need to find a way to change that property.
+This might seem a good idea, but we might soon discover that performances are not great. Unfortunately, our address book doesn't contain the same number of people for each letter, as (in this example) we know more people whose name starts with A or C than with X or Z. That represents a problem, as our partitioning doesn't achieve the desired outcome, that of splitting requests evenly between the two servers. If we increase the number of partitions we will just worsen the problem, to the point where a partition might be completely empty and thus receive no traffic: since the problem comes from the data distribution we need to find a way to change that property.
 
 TODO: figure
 
@@ -61,43 +63,228 @@ TODO: figure
 
 == Hash functions to the rescue
 
-An interesting solution to the problem of distributing data evenly is represented by hash functions. As I explained in my post [link]("\{filename\}introduction-to-hashing.markdown", "Introduction to hashing") good hash functions produce a highly uniform distribution, which makes them ideal in this case. Please note that hash functions can help with _routing_ queries and not with storing data. Hash functions cannot replace the content, as they are not bijective, i.e. given two different inputs the output might be the same (collision), so they can only be used to decide _where_ to store a piece of information.
+An interesting solution to the problem of distributing data evenly is represented by hash functions. As I explained in my post [link]("\{filename\}introduction-to-hashing.markdown", "Introduction to hashing") good hash functions produce a highly uniform distribution, which makes them ideal in this case. Please note that hash functions can help with _routing queries_ and not with _storing data_. Hash functions cannot replace the content, as they are not bijective, i.e. given two different inputs the output might be the same (collision), so they can only be used to decide _where_ to store a piece of information.
 
-We can at this point devise a storage strategy based on hash functions. We can divide the output space of the hash function (codomain) into a certain amount of partitions and be sure that each one of them will contain a similar amount of elements. For example, the hash function might output a 32-bit number, so we know that each hashed value will be between 0 and 4,294,967,295, and from here it's pretty straightforward to find partition boundaries.
+We can at this point devise a storage strategy based on hash functions. We can divide the output space of the hash function (codomain) into a certain amount of partitions and be sure that each one of them will contain a similar amount of elements. For example, the hash function might output a 32-bit number, so we know that each hashed value will be between 0 and 4,294,967,295, and from here it's pretty straightforward to find partition boundaries. For example, we can create 16 partitions numbered 0 to 15, each one containing 2^28 hash values (268,435,456).
 
 TODO: figure
 
----
+Routing is at this point very simple. Given a key `k` we can compute `hash(k) % 2^28`  (where `%` is the integer division, also called `mod`) and this returns the number of the partition containing the value of `k`. For example, a key whose hash is `536847170` is routed to partition 1 (`536847170 % 2^28`) and a key whose hash is `2438567182` will be routed to partition 9.
 
-EXAMPLE with 32-bit hash
+== Partitioning use cases
 
-With a 32-bit hash function the output space goes from 0 to 2^32 (4,294,967,295). We can create 16 partitions numbered 0 to 15, each one containing 2^28 hash values (268,435,456).
+Hash functions are definitely interesting but they are not be the perfect solution in every case. Let's have a brief look at three different types of system that might benefit from partitioning and discuss their specific requirements.
 
-Routing is at this point very simple. Given a key `k` we can compute `hash(k) % 2^28`  (where `%` is the integer division) and this returns the number of the partition containing the value of `k`.
+=== Load balancers
 
-For example, a key whose hash is 536,847,170 is routed to partition 1 (`536847170 % 2**28`)
----
+Pure load balancers solve a simple problem: to spread requests evenly across multiple identical servers. This changes the terms of the problem, as you cannot really pick the wrong server, and no routing can result in an error. However, spreading the load unevenly can result in performance loss, and possibly also service failure. For example, if a server gets overloaded queries might hit a timeout while waiting to be served.
 
-Please note that introducing hash functions automatically scatters data among the available partitions independently from their original order, according to the diffusion property of hash functions. This is what makes this partitioning technique unsuitable for databases, at least in the vast majority of cases: typical queries in a database system use range queries. If you optimise your database for a certain access pattern like this, storing similar records in locations that are physically near in order to improve performances, you cannot use hash partitioning without killing performances.
+For this reason, when load balancing is not content-aware, like for example in a simple HTTP server scenario, round-robin partitioning is a good choice. The system just assigns new requests to server on a rotation basis, which ensures a perfectly even distribution. For example, this algorithm is the default choice for AWS Application Load Balancers.
+
+Clearly, load balancers can be more complicated and feature-rich even without becoming content aware. The aforementioned AWS ALBs, for example, support also the "least outstanding requests" algorithm, that in simple words make them choose the server with the smallest workload.
+
+=== Caches
+
+Caches are systems that temporarily store data whose retrieval is expensive, either for the user of for the provider. For example, if a system runs a long query on a database caching the result will be beneficial both for the system, which on a repeated run will get the result much faster, and for the database, as the load of the new query is zero.
+
+Caches can be found everywhere and vary dramatically in size, but here we are mostly interested in distributed systems, so the main example are Content Delivery Networks. A CDN
+
+=== Databases
+
+As for databases, I already mentioned that the most important problem is range queries or, if you prefer, content-aware partitioning. In general, you can't partition a database without taking into account the content, as this would kill performances.
+
+
+
+Please note that introducing hash functions automatically scatters data among the available partitions independently from their original order, according to the diffusion property of hash functions. This is what makes it more complicated (though not impossible) to use this partitioning technique for databases, as typical queries in a database system use ranges. If you optimise your database for a certain access pattern like this, storing similar records in locations that are physically near in order to improve performances, you cannot use hash partitioning.
 
 Conversely, using hash functions is extremely beneficial in all those cases where range queries are not involved, for example in cache systems such as Content Delivery Networks.
 
-== Caching and scale-out strategies
+== Caching and scaling strategies
 
-And interesting problem that arises when designing caches such Content Delivery Networks is that of scaling the system in and out to match the current load without wasting resources. When the cache is under a light load we might want to run a small amount of servers, but as soon as the number of accesses increases we need to proportionally increase the number of cache nodes if we want to keep performances steady.
+An interesting problem that arises when designing caches such Content Delivery Networks is that of scaling the system in and out to match the current load without wasting resources. When the cache is under a light load we might want to run a small amount of servers, but as soon as the number of accesses increases we need to proportionally increase the number of cache nodes if we want to keep performances steady.
 
 Increasing or decreasing the number of nodes in a distributed cache might however be a pretty destructive action. Changing the number of nodes impacts the way data is distributed among them, which means that new nodes are supposed to contain data that they don't have (scale out), or that dying nodes disappear with the data they contain (scale in). Both scenarios result in a (potentially massive) cache invalidation which can't be taken lightly, in particular when we scale out, as we perform that operation exactly to reach the opposite goal, that is to increase performances.
 
----
+In particular, the `hash(k) % N` method presented in the previous section has terrible performances when it comes to scaling. Let's see a practical example of that and calculate the actual figures.
 
-EXAMPLE with 32-bit hash and scale out from 5 to 10 nodes.
+=== Scaling out with hash partitioning
 
-In the previous example we had a 32-bit hash function and 16 partitions numbered 0 to 15, each one containing 2^28 hash values (268,435,456).
+Please bear in mind that any time you consider a process or an algorithm you should have a look at how it behaves in the worst possible condition, to have a glimpse of what you might run into when you use it. For this reason, the following example considers a scale out scenario in which all cache nodes are completely full. The best case is obviously when all nodes are empty, but in that case we don't need to scale out at all.
 
-If we scale out to 17 partitions, increasing the pool by just by 1 node, we are potentially affecting 1/17 (`1 - 16/17`) of the keys. If we scale up to 100 nodes we are affecting 84/100 (`1 - 16/100`) of the keys. I said potentially, as we don't know if those keys are present in the cache, but you can easily see that this might have a devastating effect.
+Let's consider a 32-bit hash function and 16 partitions numbered 0 to 15, each one containing 2^28 hash values (268,435,456).
 
----
+If we scale out to 17 partitions, increasing the pool by just by 1 node, each node will now contain a smaller part of the global data space, as now we split it among more nodes. In particular, each node used to contain 1/16 of the global data, and will now contain 1/17 of it. However, our biggest problem is managing the transition between the initial setup and the new one. As partition boundaries change, we clearly need to move data between nodes, so let's have a look at how many keys need to be hosted by a different node.
 
+Warning: the following paragraphs contain calculations that might be very boring, so if you are not interested in this level of the analysis just skip it and go to the final result at the end of the example.
 
-The partitioning technique showed in this post, called _consistent hashing_, is a great way to implement distributed caching but is not a great choice for databases, as we will see later. As I mentioned before, I won't show here any mathematical performance analysis, leaving that to other posts listed in the resources section, and I will thus discuss the generic case of "storing" and "retrieving" data.
+The first node hosted 1/16 of the data space, keys from `0` to `268435455`, but will now contain less, as the maximum hash in the new setup is `252645135` (rounded). This new quantity corresponds to 1/17 of the whole space. To simplify the example it is useful to convert everything into a common unit of measure: the node used to contain 17/272 of the space (1/16) and contains now 16/272 (1/17) of it.
+
+This means that 1/272 of the whole data space has to be moved to the second node, corresponding to the keys from `252645135` to `268435455`. It is important to note that these keys cannot be moved to the newly added node, but have to be moved to the second node because the algorithm we use maps keys to nodes in order.
+
+This means that the second node will receive 1/272 of the whole data space. Since it originally also contained 17/272 of the whole space it now theoretically should contain 18/272 of it. However, as it happened for the first node, we want to balance the content and reduce it to 16/272, so now we have 2/272 of it that we want to move to the third node.
+
+TODO: figure
+
+So, we move 1/272 from node 1 to node 2, 2/272 from node 2 to node 3, 3/272 from node 3 to node 4, and going on with the example we end up moving 16/272 (1/17) from the 16th node to the 17th, which fills it with the correct amount of keys. However, in doing so we moved 136/272 (1/272 + 2/272 + 3/272 + ... + 16/272) of the data between nodes, which is exactly 50% of it.
+
+So, for any initial size and a scale out of 1 single node we have to move 50% of the data stored in our cache, and it might only get worse increasing the number of final nodes, until we end up having to move almost 100% of it. A similar effect plagues scaling in, where one or more nodes are removed from the pool, and the keys they contain have to be migrated to the remaining nodes, creating a ripple effect to redistribute the keys according to the algorithm.
+
+== TODOTODO
+
+While the idea of using hash functions looks great, we quickly found that the trivial implementation has very poor performances in a dynamic setting. As we clearly saw in the previous section, the problem is that upon scaling more than half of the keys have to be moved across nodes, so if we could find a way to avoid this we could still use hash functions to scatter data uniformly across the nodes.
+
+As you might have already figured out the issue comes from the attempt to keep all nodes perfectly balanced. The algorithm `hash(k) % N` distributes keys evenly (as long as the hash function has a good diffusion), but this is a double-edged sword. The balance is extremely beneficial in a static environment, but it is also the Achilles heel when we change the number of nodes. Maintaining balance is an important feature, and we can't give up on that requirement. However, to find a better solution we can temporarily drop it and explore our options.
+
+If we don't care about balancing nodes we can solve the problem with a different approach. Instead of using the integer division to find the slot we can keep a table of the minimum hash served by each slot and route requests according to that. Each row of the table will have a minimum hash and the node that serves them.
+
+TODO: figure
+
+This means that when we increase the number of slots we can just drop a new slot anywhere and assign to it all the keys that fall under its domain. This means that the new node will become the owner of keys that belonged to another node as it happened before, but with an important difference. Now all keys come from a single other node, and the amount of keys moved is a fraction of those contained in it (which is much less than half of the keys). In the worst case, we need to move all keys contained in a node, which once again is much less than half of the keys.
+
+TODO: figure
+
+As you can see, this relieves the load of one single node as, according to what we said before, we are not trying to balance the load of the whole cluster. If we could use this technique to cover multiple spaces with a single added node, though, we could relieve the load of more than one other node. In principle this is simple: we just need to add multiple rows with the same node to the table.
+
+TODO: figure
+
+So, in theory the process can be described by these rules:
+
+* Every time we add a node we identify a certain number of hashes that are the minimum hashes served by that node and write it in the table.
+* When we need to route a key we hash it, then look up in the table which node is serving it.
+* Every time we add a node we need to move keys away from existing nodes but this won't cause any ripple effect to the nearby nodes.
+
+There is only a final component that is missing, that is the method used to identify the hashes served by a node when we add it. We need to find an algorithm that scatters the domain of a node across the whole hash space.
+
+== Consistent hashing
+
+Finally, let me introduce consistent hashing as a technique to implement the process described above. As we saw previously, any time we need to scatter data across a given space, hash functions are a good choice, and they can be used in this case as well. Consistent hashing defines a set of `M` hash functions that are applied to _the name of the node_, thus generating a set of `M` hash values. Let's see an example, bearing in mind that the specific function can change among implementations.
+
+All our nodes are called `server-X` with `X` being a letter of the English alphabet, thus giving us `server-a`, `server-b`, and so on. We decided to create 5 slots per server numbered form 0 to 4, which are generated appending `-Y` to the name, where `Y` is the number of the slot, and hashing the resulting label with a certain hash function (whose range goes from `0x0000000` to `0xfffffff`, that is from 0 to 268,435,455). For `server-a` we have the following values (please note that I prepended zeros for ease of comparison).
+
+[source]
+----
+server-a-0 -> 041516261
+server-a-1 -> 206420218
+server-a-2 -> 212767123
+server-a-3 -> 204673795
+server-a-4 -> 181372612
+----
+
+We will then do the same with `server-b`
+
+[source]
+----
+server-b-0 -> 021441058
+server-b-1 -> 011298547
+server-b-2 -> 222368848
+server-b-3 -> 003536690
+server-b-4 -> 106201185
+----
+
+These hash values are the minimum hash served by a node, so we might sort them and come up with the routing table
+
+[source]
+----
+003536690 -> server-b-3 -> server-b (7761857)
+011298547 -> server-b-1 -> server-b (10142511)
+021441058 -> server-b-0 -> server-b (20075203)
+041516261 -> server-a-0 -> server-a (64684924)
+106201185 -> server-b-4 -> server-b (75171427)
+181372612 -> server-a-4 -> server-a (23301183)
+204673795 -> server-a-3 -> server-a (1746423)
+206420218 -> server-a-1 -> server-a (6346905)
+212767123 -> server-a-2 -> server-a (9601725)
+222368848 -> server-b-2 -> server-b (46066607)
+----
+
+We decided to use those values as the minimum hash served by the node, which means that a key whose hash is `020404850` will be served by `server-b-1`, which corresponds to `server-b`.
+
+[source]
+----
+003536690 -> server-b-3 -> server-b
+011298547 -> server-b-1 -> server-b
+                             ^
+			     |
+020404850 -------------------+
+
+021441058 -> server-b-0 -> server-b
+041516261 -> server-a-0 -> server-a
+----
+
+There are two problems here. First, the lowest value is not 0, which means that there are 3,536,690 hashes which are not served by any slot. Second, the distribution doesn't really cover the space evenly, as some nodes receives too many keys compared to others. (e.g. `server-b-4` versus `server-a-1`.
+
+The first problem is solved by consistent hashing mapping the hash function space on a circle, that is assigning the orphaned initial values to the last slot. Here, the lowest value of the hash function `0x0000000` corresponds to 0 degrees and the highest possible value `0xfffffff` to 360 degrees. However, since we are moving on a circle it is normally a good idea to normalise the key space between 0 and 1.
+
+TODO: figure
+
+The second problem instead is solved increasing the number of slots per server dramatically (e.g. thousands). Remember that slots are just allocation spaces here and not servers, so the number of slots is just a parameter used to generate the routes table. The upper limit for the number of slots is clearly the hash key space, as above that number some slots would clash potentially leading to routing errors, but this is usually not a problem as real hash functions have a pretty large codomain. Even the simple one that I used here has more than 268 million outputs, which means that with 10 servers I can generate approximately 16 million slots each before reaching the threshold.
+
+== Consistent hashing and scaling
+
+The interesting thing about consistent hashing is it's amazing behaviour in a dynamic environment. When we add a new node we need to generate the hash values for that and put them in the routing table, and at that point we need to migrate all the keys that fall under the domain of the newly created slots.
+
+[source]
+----
+server-c-0 -> 164960444
+server-c-1 -> 44128853
+server-c-2 -> 143251771
+server-c-3 -> 26327625
+server-c-4 -> 217067055
+
+003536690 -> server-b-3 -> server-b (7761857)
+011298547 -> server-b-1 -> server-b (10142511)
+021441058 -> server-b-0 -> server-b (4886567)  LOSES 15188636 keys
+                                                       |
+026327625 -> server-c-3 -> server-c (15188636) <-------+
+
+041516261 -> server-a-0 -> server-a (2612592)  LOSES 62072332 keys
+                                                       |
+044128853 -> server-c-1 -> server-c (62072332) <-------+
+
+106201185 -> server-b-4 -> server-b (37050586) LOSES 38120841 keys
+                                                       | |
+143251771 -> server-c-2 -> server-c (21708673) <-------+ |
+164960444 -> server-c-0 -> server-c (16412168) <---------+
+
+181372612 -> server-a-4 -> server-a (23301183)
+204673795 -> server-a-3 -> server-a (1746423)
+206420218 -> server-a-1 -> server-a (6346905)
+
+212767123 -> server-a-2 -> server-a (4299932)  LOSES 5301793 keys
+                                                       |
+217067055 -> server-c-4 -> server-c (5301793)  <-------+
+
+222368848 -> server-b-2 -> server-b (46066607)
+----
+
+The worst case here is that in which the newly added slots almost completely overlap the slots of a previous node. Leaving aside the fact that this would indicate an extremely worrying issue in the hash function, performance wise this would result in the global replacement of a node with another. If you remember the performances of `hash(k) % N` you will quickly realise that this is much better. Moreover, the more server we have the less impact this operation has since each node will contain on average less keys.
+
+Let's have a look at an example. We are using 10 servers with 5000 slots each, and we scale out to 11 servers, adding a node. In the worst case scenario this would result in moving all the keys of one of the existing nodes, that is 1/10 of them. If we have 100 servers and scale out to 101 we will move in the worst case 1/100 of the keys.
+
+== Code
+
+The table I maintain is `[(lower_hash, node)]`
+The two main problems when adding new nodes is to compute the positions of all subnodes and to simplify that into a list of hash and node. Two adjacent subnodes can belong to the same node.
+
+[source]
+----
+0, node0-subnode0
+0.1, node1-subnode0
+0.2, node1-subnode1
+0.3, node0-subnode 1
+----
+
+In this case `(0.1, node1-subnode0)` and `(0.2, node1-subnode1)` should me merged to give
+
+[source]
+----
+0, node0
+0.1, node1
+0.3, node0
+----
+
+The second problem it to compute which keys should be migrated from old nodes to new nodes. TODO
+
+== Python code
+
 
