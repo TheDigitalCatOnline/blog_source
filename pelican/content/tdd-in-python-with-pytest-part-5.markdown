@@ -169,7 +169,7 @@ class FileInfo:
         )
 ```
 
-When this code is executed by the test the function `os.path.abspath` is replaced at run time by the mock that we prepared there, which basically ignores the input value `self.filename` and returns the fixed value it was instructed to use.
+When this code is executed by the test the function `os.path.abspath` is replaced at run time by the mock that we prepared there, which basically ignores the input value `self.original_path` and returns the fixed value it was instructed to use.
 
 **Git tag:** [patch-with-context-manager](https://github.com/lgiordani/fileinfo/tree/patch-with-context-manager)
 
