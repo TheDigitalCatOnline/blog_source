@@ -583,6 +583,9 @@ div.imageblock div.title {
   font-weight: 700;
   margin-top: 1rem; }
 
+div.imageblock img {
+  width: 80%; }
+
 div.infobox {
   border: 2px solid black;
   display: flex;
