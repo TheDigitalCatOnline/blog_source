@@ -1,17 +1,18 @@
 #!/bin/bash
 
-src_dir="drawio"
-dst_dir="pelican/content/images"
-
-src_format="drawio"
-dst_format="jpg"
+src_dir="images"
+dst_dir="static/images"
 
 if [[ ! -d ${src_dir} ]]; then echo "Directory ${src_dir} missing. Please run this from the root of the project"; exit 1; fi
 
-for src_file in $(find ${src_dir} -type f -iname "*.${src_format}"); do
+for src_file in $(find ${src_dir} -type f); do
     border=50
 
-    dst_file=$(echo ${src_file} | sed -r -e s,"^${src_dir}","${dst_dir}", -e s,"\.${src_format}$",".${dst_format}",)
+    if [[ ! -z $(basename ${src_file} | grep -E "\.drawio$") ]]; then
+	dst_file=$(echo ${src_file} | sed -r -e s,"^${src_dir}","${dst_dir}", -e s,"\.drawio$",".jpg",)
+    else
+	dst_file=$(echo ${src_file} | sed -r -e s,"^${src_dir}","${dst_dir}",)
+    fi
 
     if [[ ${dst_file} -nt ${src_file} ]]; then continue; fi
 
@@ -32,33 +33,10 @@ for src_file in $(find ${src_dir} -type f -iname "*.${src_format}"); do
     mkdir -p $(dirname ${dst_file})
 
     echo "Processing ${src_file}"
-    drawio -x -b ${border} -f ${dst_format} -o ${dst_file} ${src_file} 2>/dev/null
-    mogrify -shave 3x3 ${dst_file}
+    if [[ ! -z $(basename ${src_file} | grep -E "\.drawio$") ]]; then
+	drawio -x -b ${border} -f ${dst_format} -o ${dst_file} ${src_file} 2>/dev/null
+	mogrify -shave 3x3 ${dst_file}
+    else
+	cp ${src_file} ${dst_file}
+    fi
 done
-
-
-# for course in $(find ${src_dir} -mindepth 1 -maxdepth 1 -type d -printf "%P\n"); do
-
-#     for image in $(find ${src_dir}/${course} -type f -iname "*.${src_format}" -printf "%P\n"); do
-# 	border=50
-
-# 	src_image=${src_dir}/${course}/${image}
-# 	custom_script=$(dirname ${src_image})/custom.sh
-# 	if [[ -f ${custom_script} ]]
-# 	then
-# 	    # echo "Sourcing ${custom_script}"
-# 	    source ${custom_script}
-# 	fi
-
-# 	dst_image=$(echo "{dst_dir}/${course}/${image}" | sed -r -e s,"\.${src_format}$",".${dst_format}",)
-
-# 	mkdir -p $(dirname ${dst_image})
-	
-# 	if [[ ${src_image} -nt ${dst_image} ]]
-# 	then
-# 	    echo "Processing ${src_image}"
-# 	    drawio -x -b ${border} -f ${dst_format} -o ${dst_image} ${src_image} 2>/dev/null
-# 	    mogrify -shave 3x3 ${dst_image}
-# 	fi
-#     done
-# done
