@@ -1,7 +1,7 @@
 #!/bin/bash
 
 src_dir="images"
-dst_dir="static/images"
+dst_dir="pelican/content/images"
 
 if [[ ! -d ${src_dir} ]]; then echo "Directory ${src_dir} missing. Please run this from the root of the project"; exit 1; fi
 
@@ -32,9 +32,9 @@ for src_file in $(find ${src_dir} -type f); do
 
     mkdir -p $(dirname ${dst_file})
 
-    echo "Processing ${src_file}"
+    echo "Processing ${src_file} --> ${dst_file}"
     if [[ ! -z $(basename ${src_file} | grep -E "\.drawio$") ]]; then
-	drawio -x -b ${border} -f ${dst_format} -o ${dst_file} ${src_file} 2>/dev/null
+	drawio -x -b ${border} -f jpg -o ${dst_file} ${src_file} 2>/dev/null
 	mogrify -shave 3x3 ${dst_file}
     else
 	cp ${src_file} ${dst_file}
