@@ -3,6 +3,7 @@ HOWTO.md
 venv
 *.pid
 *.pyc
+*.bkp
 notes/*
 tweet.py*
 stork-ubuntu*
