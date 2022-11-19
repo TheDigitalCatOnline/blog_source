@@ -602,10 +602,10 @@ In the next post I will guide you through the addition of the `SizeBinary` class
 2015-09-22 [Christopher McCormack](https://github.com/cmccormack) spotted an error about binary indexing: "starts from the leftmost element" should be "starts from the rightmost element". Now it has been fixed. Thanks Christopher!
 
 2016-12-20 [dndln](https://github.com/dndln) found an error in the 'Binary operations' section. The `test_binary_get_bit()` test included the assertion `assert binary[9] == '0'` which cannot be successful, since leading zeros are stripped, as stated in the previous section 'My Solution'. The attached code files were already correct. Thanks a lot for pointing it out!
-`
+
 
 ## Feedback
 
-The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+The [GitHub issues](https://github.com/TheDigitalCatOnline/blog_source/issues) page is the best place to submit corrections.
 
 

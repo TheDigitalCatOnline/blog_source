@@ -174,4 +174,4 @@ You will find a lot of documentation in [this Reddit post](https://www.reddit.co
 
 ## Feedback
 
-The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+The [GitHub issues](https://github.com/TheDigitalCatOnline/blog_source/issues) page is the best place to submit corrections.

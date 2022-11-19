@@ -26,7 +26,7 @@ You can find the notebook of each post here
 
 or download the whole series as a [zip file](/notebooks/Python_3_OOP_Notebooks.zip)
 
-As everything on this blog, notebooks are released under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](http://creativecommons.org/licenses/by-sa/4.0/). Feel free to submit corrections to the [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page.
+As everything on this blog, notebooks are released under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](http://creativecommons.org/licenses/by-sa/4.0/). Feel free to submit corrections to the [GitHub issues](https://github.com/TheDigitalCatOnline/blog_source/issues) page.
 
 This is a preview of the notebooks in action
 

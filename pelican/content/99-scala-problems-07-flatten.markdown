@@ -145,7 +145,7 @@ Pay attention to the fact that this function has to drop the type check just lik
 
 ## Updates
 
-2020-02-15: Thanks [Raja](https://github.com/mighty-raj) for spotting the error with nested lists. You can see his considerations [here](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues/15)
+2020-02-15: Thanks [Raja](https://github.com/mighty-raj) for spotting the error with nested lists. You can see his considerations [here](https://github.com/TheDigitalCatOnline/blog_source/issues/15)
 
 ## Final considerations
 
@@ -153,5 +153,5 @@ Pay attention to the fact that this function has to drop the type check just lik
 
 ## Feedback
 
-The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+The [GitHub issues](https://github.com/TheDigitalCatOnline/blog_source/issues) page is the best place to submit corrections.
 

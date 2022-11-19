@@ -40,4 +40,4 @@ This problem didn't involve new concepts, but allowed me to test again **mapping
 
 ## Feedback
 
-The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+The [GitHub issues](https://github.com/TheDigitalCatOnline/blog_source/issues) page is the best place to submit corrections.

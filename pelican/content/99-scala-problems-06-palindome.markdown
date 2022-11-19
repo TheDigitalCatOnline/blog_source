@@ -162,5 +162,5 @@ The palindrome problem was straightforward, but this time I had the occasion to 
 
 ## Feedback
 
-The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+The [GitHub issues](https://github.com/TheDigitalCatOnline/blog_source/issues) page is the best place to submit corrections.
 

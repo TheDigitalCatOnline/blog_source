@@ -441,7 +441,9 @@ Mocks are a very powerful tool that allows us to test code that contains outgoin
 
 2021-03-06 GitHub user [4myhw](https://github.com/4myhw) spotted an inconsistency between the code on GitHub and the code in the post. Thanks!
 
+2022-11-19 GitHub user [rioj7](https://github.com/rioj7) found and corrected a typo. Thanks!
+
 ## Feedback
 
-Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues) page is the best place to submit corrections.
+Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/blog_source/issues) page is the best place to submit corrections.
 

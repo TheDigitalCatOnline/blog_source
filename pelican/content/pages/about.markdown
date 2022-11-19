@@ -32,4 +32,4 @@ Each error is a lesson... if someone corrects you. So please notify me any mista
 
 * [Twitter](https://twitter.com/thedigicat)
 * [GitHub](https://github.com/TheDigitalCatOnline)
-* [Blog issues](https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues)
+* [Blog issues](https://github.com/TheDigitalCatOnline/blog_source/issues)
