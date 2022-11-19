@@ -722,6 +722,15 @@ second_prime_number = key.q
 q_inv_crt = key.u
 ----
 
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
+----
+
 == Final words
 
 I keep finding on StackOverflow (and on other boards) messages of users that are confused by RSA keys, the output of the various tools, and by the subtle but important differences between the formats, so I hope this post helped you to get a better understanding of the matter.

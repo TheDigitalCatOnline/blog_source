@@ -513,6 +513,15 @@ application=# \q
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/b475c5e3d455098691fa1c736de573182d0e44ec,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/b475c5e3d455098691fa1c736de573182d0e44ec,"browse the files").
 
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
+----
+
 == Step 2 - Simulating the production environment
 
 As I stated at the very beginning of this mini series of posts, one of my goals was to run in development the same database that I run in production, and for this reason I went through the configuration steps that allowed me to have a Postgres container running both in development and during tests. In a real production scenario Postgres would probably run in a separate instance, for example on the RDS service in AWS, but as long as you have the connection parameters nothing changes in the configuration.
@@ -856,6 +865,15 @@ web.                    600     IN      A       172.30.0.4
 ;; MSG SIZE  rcvd: 40
 
 root@33cbaea369be:/#
+----
+
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
 ----
 
 == How to create the production infrastructure

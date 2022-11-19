@@ -204,7 +204,7 @@ As you can see the decorator `patch` works like a big `with` statement for the w
 
 ## Multiple patches
 
-You can patch more that one object in the same test. For example, consider the case where the method `get_info` calls `os.path.getsize` in addition to `os.path.abspath`m in order to return the size of the file. You have at this point two different outgoing queries, and you have to replace both with mocks to make your class work during the test.
+You can patch more that one object in the same test. For example, consider the case where the method `get_info` calls `os.path.getsize` in addition to `os.path.abspath` in order to return the size of the file. You have at this point two different outgoing queries, and you have to replace both with mocks to make your class work during the test.
 
 This can be easily done with an additional `patch` decorator
 

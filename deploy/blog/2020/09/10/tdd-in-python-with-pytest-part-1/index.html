@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="/theme/css/main.min.css?11abb51c">
+    <link rel="stylesheet" href="/theme/css/main.min.css?f6765de3">
     <link href="/images/global/favicon.jpg" rel="icon">
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -58,6 +58,7 @@
     </a>
     <div class="body">
       <h2>First-class objects in Python</h2>
+      <p>Higher-order functions, wrappers, and factories</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
       </div>
@@ -70,7 +71,8 @@
       <img src="/images/8-technologies.jpg" />
     </a>
     <div class="body">
-      <h2>8 Technologies You Need to Learn NOW</h2>
+      <h2>How do you become a DevOps Engineer?</h2>
+      <p>A curated list of 8 technologies you need to learn</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
       </div>
@@ -564,7 +566,21 @@ collected 0 items
 
 =============================== no tests ran in 0.02s ==============================
 </pre></div>
-</div></div><h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">¶</a></h2><p>The goal of the project is to write a class <code>SimpleCalculator</code> that performs calculations: addition, subtraction, multiplication, and division. Addition and multiplication shall accept multiple arguments. Division shall return a float value, and division by zero shall return the string <code>&quot;inf&quot;</code>. Multiplication by zero must raise a <code>ValueError</code> exception. The class will also provide a function to compute the average of an iterable like a list. This function gets two optional upper and lower thresholds and should remove from the computation the values that fall outside these boundaries.</p><p>As you can see the requirements are pretty simple, and a couple of them are definitely not "good" requirements, like the behaviour of division and multiplication. I added those requirements for the sake of example, to show how to deal with exceptions when developing in TDD.</p><h2 id="step-1---adding-two-numbers">Step 1 - Adding two numbers<a class="headerlink" href="#step-1---adding-two-numbers" title="Permanent link">¶</a></h2><p>The first test we are going to write is one that checks if the class <code>SimpleCalculator</code> can perform an addition. Add the following code to the file <code>tests/test_main.py</code></p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">simple_calculator.main</span> <span class="kn">import</span> <span class="n">SimpleCalculator</span> <span class="callout">1</span>
+</div></div>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">¶</a></h2><p>The goal of the project is to write a class <code>SimpleCalculator</code> that performs calculations: addition, subtraction, multiplication, and division. Addition and multiplication shall accept multiple arguments. Division shall return a float value, and division by zero shall return the string <code>&quot;inf&quot;</code>. Multiplication by zero must raise a <code>ValueError</code> exception. The class will also provide a function to compute the average of an iterable like a list. This function gets two optional upper and lower thresholds and should remove from the computation the values that fall outside these boundaries.</p><p>As you can see the requirements are pretty simple, and a couple of them are definitely not "good" requirements, like the behaviour of division and multiplication. I added those requirements for the sake of example, to show how to deal with exceptions when developing in TDD.</p><h2 id="step-1---adding-two-numbers">Step 1 - Adding two numbers<a class="headerlink" href="#step-1---adding-two-numbers" title="Permanent link">¶</a></h2><p>The first test we are going to write is one that checks if the class <code>SimpleCalculator</code> can perform an addition. Add the following code to the file <code>tests/test_main.py</code></p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">simple_calculator.main</span> <span class="kn">import</span> <span class="n">SimpleCalculator</span> <span class="callout">1</span>
 
 <span class="k">def</span> <span class="nf">test_add_two_numbers</span><span class="p">():</span> <span class="callout">2</span>
     <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
@@ -836,7 +852,21 @@ tests/test_main.py:44: AttributeError
 
     <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">362880</span>
 </pre></div>
-</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-5-multiply-many-numbers">step-5-multiply-many-numbers</a></p><p>We might use 100 arguments as we did with addition, but the multiplication of all numbers from 1 to 100 gives a result with 156 digits and I don't really need to clutter the tests file with such a monstrosity. As I said, testing multiple arguments is testing a boundary, and the idea is that if the algorithm works for 2 numbers and for 10 it will work for 10 thousands arguments as well.</p><p>If we run the test suite now all tests pass, and <em>this should worry you</em>.</p><p>Yes, you shouldn't be happy. When you follow TDD each new test that you add should fail. If it doesn't fail you should ask yourself if it is worth adding that test or not. This is because chances are that you are adding a useless test and we don't want to add useless code, because code has to be maintained, so the less the better.</p><p>In this case, however, we know why the test already passes. We implemented a smarter algorithm as a solution for the first test knowing that we would end up trying to solve a more generic problem. And the value of this new test is that it shows that multiple arguments can be used, while the first test doesn't.</p><p>So, after these considerations, we can be happy that the second test already passes.</p><div class="callout"><div class="content"><p><strong>TDD rule number 5:</strong> A test should fail the first time you run it. If it doesn't, ask yourself why you are adding it.</p></div></div><h2 id="step-6---refactoring">Step 6 - Refactoring<a class="headerlink" href="#step-6---refactoring" title="Permanent link">¶</a></h2><p>Previously, I introduced the concept of refactoring, which means changing the code without altering the results. How can you be sure you are not altering the behaviour of your code? Well, this is what the tests are for. If the new code keeps passing the test suite you can be sure that you didn't remove any feature.</p><p>In theory, refactoring shouldn't add any new behaviour to the code, as it should be an idempotent transformation. There is no real practical way to check this, and we will not bother with it now. You should be concerned with this if you are discussing security, as your code shouldn't add any entry point you don't want to be there. In this case you will need tests that check the absence of features instead of their presence.</p><p>This means that if you have no tests you shouldn't refactor. But, after all, if you have no tests you shouldn't have any code, either, so refactoring shouldn't be a problem you have. If you have some code without tests (I know you have it, I do), you should seriously consider writing tests for it, at least before changing it. More on this in a later section.</p><p>For the time being, let's see if we can work on the code of the class <code>SimpleCalculator</code> without altering the results. I do not really like the definition of the function <code>mul2</code> inside the function <code>mul</code>. It is obviously perfectly fine and valid, but for the sake of example I will pretend we have to get rid of it.</p><p>Python provides support for anonymous functions with the operator <code>lambda</code>, so I might replace the code of <code>mul</code> with</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-5-multiply-many-numbers">step-5-multiply-many-numbers</a></p><p>We might use 100 arguments as we did with addition, but the multiplication of all numbers from 1 to 100 gives a result with 156 digits and I don't really need to clutter the tests file with such a monstrosity. As I said, testing multiple arguments is testing a boundary, and the idea is that if the algorithm works for 2 numbers and for 10 it will work for 10 thousands arguments as well.</p><p>If we run the test suite now all tests pass, and <em>this should worry you</em>.</p><p>Yes, you shouldn't be happy. When you follow TDD each new test that you add should fail. If it doesn't fail you should ask yourself if it is worth adding that test or not. This is because chances are that you are adding a useless test and we don't want to add useless code, because code has to be maintained, so the less the better.</p><p>In this case, however, we know why the test already passes. We implemented a smarter algorithm as a solution for the first test knowing that we would end up trying to solve a more generic problem. And the value of this new test is that it shows that multiple arguments can be used, while the first test doesn't.</p><p>So, after these considerations, we can be happy that the second test already passes.</p><div class="callout"><div class="content"><p><strong>TDD rule number 5:</strong> A test should fail the first time you run it. If it doesn't, ask yourself why you are adding it.</p></div></div>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="step-6---refactoring">Step 6 - Refactoring<a class="headerlink" href="#step-6---refactoring" title="Permanent link">¶</a></h2><p>Previously, I introduced the concept of refactoring, which means changing the code without altering the results. How can you be sure you are not altering the behaviour of your code? Well, this is what the tests are for. If the new code keeps passing the test suite you can be sure that you didn't remove any feature.</p><p>In theory, refactoring shouldn't add any new behaviour to the code, as it should be an idempotent transformation. There is no real practical way to check this, and we will not bother with it now. You should be concerned with this if you are discussing security, as your code shouldn't add any entry point you don't want to be there. In this case you will need tests that check the absence of features instead of their presence.</p><p>This means that if you have no tests you shouldn't refactor. But, after all, if you have no tests you shouldn't have any code, either, so refactoring shouldn't be a problem you have. If you have some code without tests (I know you have it, I do), you should seriously consider writing tests for it, at least before changing it. More on this in a later section.</p><p>For the time being, let's see if we can work on the code of the class <code>SimpleCalculator</code> without altering the results. I do not really like the definition of the function <code>mul2</code> inside the function <code>mul</code>. It is obviously perfectly fine and valid, but for the sake of example I will pretend we have to get rid of it.</p><p>Python provides support for anonymous functions with the operator <code>lambda</code>, so I might replace the code of <code>mul</code> with</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
 
 
 <span class="k">class</span> <span class="nc">SimpleCalculator</span><span class="p">:</span>

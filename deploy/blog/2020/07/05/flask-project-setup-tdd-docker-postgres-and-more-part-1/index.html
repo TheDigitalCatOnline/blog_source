@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="/theme/css/main.min.css?11abb51c">
+    <link rel="stylesheet" href="/theme/css/main.min.css?f6765de3">
     <link href="/images/global/favicon.jpg" rel="icon">
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -58,6 +58,7 @@
     </a>
     <div class="body">
       <h2>First-class objects in Python</h2>
+      <p>Higher-order functions, wrappers, and factories</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
       </div>
@@ -70,7 +71,8 @@
       <img src="/images/8-technologies.jpg" />
     </a>
     <div class="body">
-      <h2>8 Technologies You Need to Learn NOW</h2>
+      <h2>How do you become a DevOps Engineer?</h2>
+      <p>A curated list of 8 technologies you need to learn</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
       </div>
@@ -608,7 +610,21 @@ ignore = E231
  * Debug mode: off
  * Running on http://127.0.0.1:5000/ <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
 </pre></div>
-</div></div><p>Please note that it says <code>Environment: production</code> because we haven't configured <code>FLASK_ENV</code> yet. If you head to <a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> with your browser you can see the greetings message.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/656621980f6f2c2aac3c526b37dca6ac32363bd5">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/656621980f6f2c2aac3c526b37dca6ac32363bd5">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://flask.palletsprojects.com/en/1.1.x/config/">Flask configuration documentation</a></li><li><a href="https://flask.palletsprojects.com/en/1.1.x/patterns/appfactories/">Flask application factories</a></li><li><a href="https://wsgi.readthedocs.io/en/latest/what.html">WSGI</a> - The Python Web Server Gateway Interface</li><li>My post <a href="https://www.thedigitalcatonline.com/blog/2020/02/16/dissecting-a-web-stack/">Dissecting a web stack</a> includes a section on WSGI</li></ul><h2 id="step-3---application-configuration">Step 3 - Application configuration<a class="headerlink" href="#step-3---application-configuration" title="Permanent link">¶</a></h2><p>As I mentioned in the introduction, I am going to use a static JSON configuration file. The choice of JSON comes from the fact that it is a widespread file format, accessible from many programming languages, included Terraform, which I plan to use to create my production infrastructure.</p><div class="code"><div class="title">config/development.json</div><div class="content"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
+</div></div><p>Please note that it says <code>Environment: production</code> because we haven't configured <code>FLASK_ENV</code> yet. If you head to <a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> with your browser you can see the greetings message.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/656621980f6f2c2aac3c526b37dca6ac32363bd5">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/656621980f6f2c2aac3c526b37dca6ac32363bd5">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://flask.palletsprojects.com/en/1.1.x/config/">Flask configuration documentation</a></li><li><a href="https://flask.palletsprojects.com/en/1.1.x/patterns/appfactories/">Flask application factories</a></li><li><a href="https://wsgi.readthedocs.io/en/latest/what.html">WSGI</a> - The Python Web Server Gateway Interface</li><li>My post <a href="https://www.thedigitalcatonline.com/blog/2020/02/16/dissecting-a-web-stack/">Dissecting a web stack</a> includes a section on WSGI</li></ul>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="step-3---application-configuration">Step 3 - Application configuration<a class="headerlink" href="#step-3---application-configuration" title="Permanent link">¶</a></h2><p>As I mentioned in the introduction, I am going to use a static JSON configuration file. The choice of JSON comes from the fact that it is a widespread file format, accessible from many programming languages, included Terraform, which I plan to use to create my production infrastructure.</p><div class="code"><div class="title">config/development.json</div><div class="content"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
 <span class="w">  </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span><span class="w"></span>
@@ -801,7 +817,21 @@ c98f35635625  docker_web  &quot;flask run --host 0.…&quot;  ...   0.0.0.0:5000
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">cli</span><span class="p">()</span>
 </pre></div>
-</div></div><p>You might have noticed that the two functions <code>flask</code> and <code>compose</code> are basically the same code, but I resisted the temptation to refactor them because I know that the command <code>compose</code> will need some changes as soon as I add a database.</p><p>Now I can run <code>./manage.py compose up -d</code> and <code>./manage.py compose down</code> and have the environment variables automatically passed to the system.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/9e08735af6177760cd750230122a507b15c9c112">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/9e08735af6177760cd750230122a507b15c9c112">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://docs.docker.com/compose/">Docker compose</a> - A tool for defining and running multi-container Docker applications</li><li><a href="https://docs.docker.com/network/">Docker networking</a></li><li><a href="https://docs.python.org/3/library/subprocess.html">Python subprocess module</a></li></ul><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>That's enough for this first post. We started from scratch and added some boilerplate code for a Flask project, exploring what environment variables are used by the framework, then we added a configuration system, a management script, and finally we run everything in a Docker container. In the next post I will show you how to add a persistent database to the development setup and how to use an ephemeral one for the tests. If you find my posts useful please share them with whoever you thing might be interested. </p><p>Happy development!</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-12-22 I reviewed the whole tutorial and corrected several typos</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+</div></div><p>You might have noticed that the two functions <code>flask</code> and <code>compose</code> are basically the same code, but I resisted the temptation to refactor them because I know that the command <code>compose</code> will need some changes as soon as I add a database.</p><p>Now I can run <code>./manage.py compose up -d</code> and <code>./manage.py compose down</code> and have the environment variables automatically passed to the system.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/9e08735af6177760cd750230122a507b15c9c112">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/9e08735af6177760cd750230122a507b15c9c112">browse the files</a>.</p>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h3 id="resources">Resources</h3><ul><li><a href="https://docs.docker.com/compose/">Docker compose</a> - A tool for defining and running multi-container Docker applications</li><li><a href="https://docs.docker.com/network/">Docker networking</a></li><li><a href="https://docs.python.org/3/library/subprocess.html">Python subprocess module</a></li></ul><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>That's enough for this first post. We started from scratch and added some boilerplate code for a Flask project, exploring what environment variables are used by the framework, then we added a configuration system, a management script, and finally we run everything in a Docker container. In the next post I will show you how to add a persistent database to the development setup and how to use an ephemeral one for the tests. If you find my posts useful please share them with whoever you thing might be interested. </p><p>Happy development!</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-12-22 I reviewed the whole tutorial and corrected several typos</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
   <section class="links">

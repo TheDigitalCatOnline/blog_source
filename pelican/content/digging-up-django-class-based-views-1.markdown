@@ -16,7 +16,7 @@ If you are a novice Python programmer, and just approached Django to start your 
 If you need to brush up on these concepts you might find useful to read the following posts here on the blog:
 
 * [Object-Oriented Programming in Python 3]({filename}python-3-oop-part-1-objects-and-types.markdown)
-* [Method overriding in Python]({filename}method-overriding-in-python.markdown)
+* [Method overriding in Python]({filename}method-overriding-in-python.mau)
 
 ## What are CBVs?
 

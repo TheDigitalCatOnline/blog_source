@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="/theme/css/main.min.css?11abb51c">
+    <link rel="stylesheet" href="/theme/css/main.min.css?f6765de3">
     <link href="/images/global/favicon.jpg" rel="icon">
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -58,6 +58,7 @@
     </a>
     <div class="body">
       <h2>First-class objects in Python</h2>
+      <p>Higher-order functions, wrappers, and factories</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
       </div>
@@ -70,7 +71,8 @@
       <img src="/images/8-technologies.jpg" />
     </a>
     <div class="body">
-      <h2>8 Technologies You Need to Learn NOW</h2>
+      <h2>How do you become a DevOps Engineer?</h2>
+      <p>A curated list of 8 technologies you need to learn</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
       </div>
@@ -519,7 +521,7 @@
   <header>
     <h1>Delegation: composition and inheritance in object-oriented programming</h1>
     <div class="post-info">
-      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00"> 17/08/2020</time> <i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T18:00:00+00:00">Mar 6, 2021</time></p>
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00"> 17/08/2020</time> <i class="fas fa-edit"></i> Updated on <time datetime="2022-10-03T08:00:00+00:00">Oct 3, 2022</time></p>
       <p class="tags">
 	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
 	<a class="tag" href="/categories/oop/">OOP</a>
@@ -535,7 +537,21 @@
   </header>
   
   <div class="post-content">
-    <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2><p>Object-oriented programming (OOP) is a methodology that was introduced in the 60s, though as for many other concepts related to programming languages it is difficult to give a proper date. While recent years have witnessed a second youth of functional languages, object-oriented is still a widespread paradigm among successful programming languages, and for good reasons. OOP is not the panacea for all the architectural problems in software development, but if used correctly can give a solid foundation to any system.</p><p>It might sound obvious, but if you use an object-oriented language or a language with strong OOP traits, you have to learn this paradigm well. Being very active in the Python community, I see how many times young programmers are introduced to the language, the main features, and the most important libraries and frameworks, <em>without a proper and detailed description of OOP and how OOP is implemented in the language</em>.</p><p>The <em>implementation</em> part is particularly important, as OOP is a set of concepts and features that are expressed theoretically and then implemented in the language, with specific traits or choices. It is very important, then, to keep in mind that the concepts behind OOP are generally shared among OOP languages, but are not tenets, and are subject to interpretation.</p><p>What is the core of OOP? Many books and tutorials mention the three pillars encapsulation, delegation, and polymorphism, but I believe these are traits of a more central concept, which is the <strong>collaboration of entities</strong>. In a well-designed OO system, we can observe a set of actors that send messages to each other to keep the system alive, responsive, and consistent.</p><p>These actors have a state, the data, and give access to it through an interface: this is <strong>encapsulation</strong>. Each actor can use functionalities implemented by another actor sending a message (calling a method) and when the relationship between the two is stable we have <strong>delegation</strong>. As communication happens through messages, actors are not concerned with the nature of the recipients, only with their interface, and this is <strong>polymorphism</strong>.</p><p>Alan Kay, in his "The Early History of Smalltalk", says</p><div class="callout"><div class="content"><p>In computer terms, Smalltalk is a recursion on the notion of computer itself. Instead of dividing "computer stuff" into things each less strong than the whole — like data structures, procedures, and functions which are the usual paraphernalia of programming languages — each Smalltalk object is a recursion on the entire possibilities of the computer. Thus its semantics are a bit like having thousands and thousands of computers all hooked together by a very fast network.</p></div></div><p>I find this extremely enlightening, as it reveals the idea behind the three pillars, and the reason why we do or don't do certain things in OOP, why we consider good to provide some automatic behaviours or to forbid specific solutions.</p><p>By the way, if you replace the word "object" with "microservice" in the quote above, you might be surprised by the description of a very modern architecture for cloud-based systems. Once again, concepts in computer science are like fractals, they are self-similar and pop up in unexpected places.</p><p>In this post, I want to focus on the second of the pillars of object-oriented programming: <strong>delegation</strong>. I will discuss its nature and the main two strategies we can follow to implement it: <strong>composition</strong> and <strong>inheritance</strong>. I will provide examples in Python and show how the powerful OOP implementation of this language opens the door to interesting atypical solutions.</p><p>For the rest of this post, I will consider objects as mini computers and the system in which they live a "very fast network", using the words of Alan Kay. Data contained in an object is the state of the computer, its methods are the input/output devices, and calling methods is the same thing as sending a message to another computer through the network.</p><h2 id="delegation-in-oop">Delegation in OOP<a class="headerlink" href="#delegation-in-oop" title="Permanent link">¶</a></h2><p>Delegation is the mechanism through which an actor assigns a task or part of a task to another actor. This is not new in computer science, as any program can be split into blocks and each block generally depends on the previous ones. Furthermore, code can be isolated in libraries and reused in different parts of a program, implementing this "task assignment". In an OO system the assignee is not just the code of a function, but a full-fledged object, another actor.</p><p>The main concept to retain here is that the reason behind delegation is <strong>code reuse</strong>. We want to avoid code repetition, as it is often the source of regressions; fixing a bug in one of the repetitions doesn't automatically fix it in all of them, so keeping one single version of each algorithm is paramount to ensure the consistency of a system. Delegation helps us to keep our actors small and specialised, which makes the whole architecture more flexible and easier to maintain (if properly implemented). Changing a very big subsystem to satisfy a new requirement might affect other parts system in bad ways, so the smaller the subsystems the better (up to a certain point, where we incur in the opposite problem, but this shall be discussed in another post).</p><p>There is a <strong>dichotomy</strong> in delegation, as it can be implemented following two different strategies, which are orthogonal from many points of view, and I believe that one of the main problems that object-oriented systems have lies in the use of the wrong strategy, in particular the overuse of inheritance. When we create a system using an object-oriented language we need to keep in mind this dichotomy at every step of the design.</p><p>There are four areas or points of views that I want to introduce to help you to visualise delegation between actors: <strong>visibility</strong>, <strong>control</strong>, <strong>relationship</strong>, and <strong>entities</strong>. As I said previously, while these concepts apply to systems at every scale, and in particular to every object-oriented language, I will provide examples in Python.</p><h3 id="visibility-state-sharing">Visibility: state sharing</h3><p>The first way to look at delegation is through the lenses of state sharing. As I said before the data contained in an object can be seen as its state, and if hearing this you think about components in a frontend framework or state machines you are on the right path. The state of a computer, its memory or the data on the mass storage, can usually be freely accessed by <em>internal</em> systems, while the access is mediated for <em>external</em> ones. Indeed, the level of access to the state is probably one of the best ways to define internal and external systems in a software or hardware architecture.</p><p>When using inheritance, the child class shares its whole state with the parent class. Let's have a look at a simple example</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">:</span>
+    <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2><p>Object-oriented programming (OOP) is a methodology that was introduced in the 60s, though as for many other concepts related to programming languages it is difficult to give a proper date. While recent years have witnessed a second youth of functional languages, object-oriented is still a widespread paradigm among successful programming languages, and for good reasons. OOP is not the panacea for all the architectural problems in software development, but if used correctly can give a solid foundation to any system.</p><p>It might sound obvious, but if you use an object-oriented language or a language with strong OOP traits, you have to learn this paradigm well. Being very active in the Python community, I see how many times young programmers are introduced to the language, the main features, and the most important libraries and frameworks, <em>without a proper and detailed description of OOP and how OOP is implemented in the language</em>.</p><p>The <em>implementation</em> part is particularly important, as OOP is a set of concepts and features that are expressed theoretically and then implemented in the language, with specific traits or choices. It is very important, then, to keep in mind that the concepts behind OOP are generally shared among OOP languages, but are not tenets, and are subject to interpretation.</p><p>What is the core of OOP? Many books and tutorials mention the three pillars encapsulation, delegation, and polymorphism, but I believe these are traits of a more central concept, which is the <strong>collaboration of entities</strong>. In a well-designed OO system, we can observe a set of actors that send messages to each other to keep the system alive, responsive, and consistent.</p><p>These actors have a state, the data, and give access to it through an interface: this is <strong>encapsulation</strong>. Each actor can use functionalities implemented by another actor sending a message (calling a method) and when the relationship between the two is stable we have <strong>delegation</strong>. As communication happens through messages, actors are not concerned with the nature of the recipients, only with their interface, and this is <strong>polymorphism</strong>.</p><p>Alan Kay, in his "The Early History of Smalltalk", says</p><div class="callout"><div class="content"><p>In computer terms, Smalltalk is a recursion on the notion of computer itself. Instead of dividing "computer stuff" into things each less strong than the whole — like data structures, procedures, and functions which are the usual paraphernalia of programming languages — each Smalltalk object is a recursion on the entire possibilities of the computer. Thus its semantics are a bit like having thousands and thousands of computers all hooked together by a very fast network.</p></div></div><p>I find this extremely enlightening, as it reveals the idea behind the three pillars, and the reason why we do or don't do certain things in OOP, why we consider good to provide some automatic behaviours or to forbid specific solutions.</p><p>By the way, if you replace the word "object" with "microservice" in the quote above, you might be surprised by the description of a very modern architecture for cloud-based systems. Once again, concepts in computer science are like fractals, they are self-similar and pop up in unexpected places.</p><p>In this post, I want to focus on the second of the pillars of object-oriented programming: <strong>delegation</strong>. I will discuss its nature and the main two strategies we can follow to implement it: <strong>composition</strong> and <strong>inheritance</strong>. I will provide examples in Python and show how the powerful OOP implementation of this language opens the door to interesting atypical solutions.</p><p>For the rest of this post, I will consider objects as mini computers and the system in which they live a "very fast network", using the words of Alan Kay. Data contained in an object is the state of the computer, its methods are the input/output devices, and calling methods is the same thing as sending a message to another computer through the network.</p>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="delegation-in-oop">Delegation in OOP<a class="headerlink" href="#delegation-in-oop" title="Permanent link">¶</a></h2><p>Delegation is the mechanism through which an actor assigns a task or part of a task to another actor. This is not new in computer science, as any program can be split into blocks and each block generally depends on the previous ones. Furthermore, code can be isolated in libraries and reused in different parts of a program, implementing this "task assignment". In an OO system the assignee is not just the code of a function, but a full-fledged object, another actor.</p><p>The main concept to retain here is that the reason behind delegation is <strong>code reuse</strong>. We want to avoid code repetition, as it is often the source of regressions; fixing a bug in one of the repetitions doesn't automatically fix it in all of them, so keeping one single version of each algorithm is paramount to ensure the consistency of a system. Delegation helps us to keep our actors small and specialised, which makes the whole architecture more flexible and easier to maintain (if properly implemented). Changing a very big subsystem to satisfy a new requirement might affect other parts system in bad ways, so the smaller the subsystems the better (up to a certain point, where we incur in the opposite problem, but this shall be discussed in another post).</p><p>There is a <strong>dichotomy</strong> in delegation, as it can be implemented following two different strategies, which are orthogonal from many points of view, and I believe that one of the main problems that object-oriented systems have lies in the use of the wrong strategy, in particular the overuse of inheritance. When we create a system using an object-oriented language we need to keep in mind this dichotomy at every step of the design.</p><p>There are four areas or points of views that I want to introduce to help you to visualise delegation between actors: <strong>visibility</strong>, <strong>control</strong>, <strong>relationship</strong>, and <strong>entities</strong>. As I said previously, while these concepts apply to systems at every scale, and in particular to every object-oriented language, I will provide examples in Python.</p><h3 id="visibility-state-sharing">Visibility: state sharing</h3><p>The first way to look at delegation is through the lenses of state sharing. As I said before the data contained in an object can be seen as its state, and if hearing this you think about components in a frontend framework or state machines you are on the right path. The state of a computer, its memory or the data on the mass storage, can usually be freely accessed by <em>internal</em> systems, while the access is mediated for <em>external</em> ones. Indeed, the level of access to the state is probably one of the best ways to define internal and external systems in a software or hardware architecture.</p><p>When using inheritance, the child class shares its whole state with the parent class. Let's have a look at a simple example</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span> <span class="callout">3</span>
 
@@ -713,7 +729,21 @@
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">bicycle</span> <span class="o">=</span> <span class="n">Bicycle</span><span class="p">()</span>
 </pre></div>
-</div></div><p>Now, when we run <code>bicycle.gear_up</code> the delegation happens between <code>bicycle</code>, and instance, and <code>Gears</code>, a class. We might extend this forward to have a class which class methods call class methods of another class, but I won't give an example of this because it sounds a bit convoluted and probably not very reasonable to do. But it can be done.</p><p>So, we might devise a pattern here and say that in composition there is no rule that states the nature of the entities involved in the delegation, but that most of the time this happens between instances.</p><p>Note for advanced readers: in Python, classes are instances of a metaclass, usually <code>type</code>, and <code>type</code> is an instance of itself, so it is correct to say that composition happens always between instances.</p><h2 id="bad-signs">Bad signs<a class="headerlink" href="#bad-signs" title="Permanent link">¶</a></h2><p>Now that we looked at the two delegations strategies from different points of view, it's time to discuss what happens when you use the wrong one. You might have heard of the "composition over inheritance" mantra, which comes from the fact that inheritance is often overused. This wasn't and is not helped by the fact that OOP is presented as encapsulation, inheritance, and polymorphism; open a random OOP post or book and you will see this with your own eyes.</p><p>Please, bloggers, authors, mentors, teachers, and overall programmers: <strong>stop considering inheritance the only delegation system in OOP</strong>.</p><p>That said, I think we should avoid going from one extreme to the opposite, and in general learn to use the tools languages give us. So, let's learn how to recognise the "smell" of bad code!</p><p>You are incorrectly using inheritance when:</p><ul><li>There is a clash between attributes with the same name and different meanings. In this case, you are incorrectly sharing the state of a parent class with the child one (visibility). With composition the state of another object is namespaced and it's always clear which attribute you are dealing with.</li><li>You feel the need to remove methods from the child class. This is typically a sign that you are polluting the class interface (relationship) with the content of the parent class. using composition makes it easy to expose only the methods that you want to delegate.</li></ul><p>You are incorrectly using composition when:</p><ul><li>You have to map too many methods from the container class to the contained one, to expose them. The two objects might benefit from the automatic delegation mechanism (control) provided by inheritance, with the child class overriding the methods that should behave differently.</li><li>You are composing instances, but creating many class methods so that the container can access them. This means that the nature of the delegation is more related to the code and the object might benefit from inheritance, where the classes delegate the method calls, instead of relying on the relationship between instances.</li></ul><p>Overall, code smells for inheritance are the need to override or delete attributes and methods, changes in one class affecting too many other classes in the inheritance tree, big classes that contain heavily unrelated methods. For composition: too many methods that just wrap methods of the contained instances, the need to pass too many arguments to methods, classes that are too empty and that just contain one instance of another class.</p><h2 id="domain-modelling">Domain modelling<a class="headerlink" href="#domain-modelling" title="Permanent link">¶</a></h2><p>We all know that there are few cases (in computer science as well as in life) where we can draw a clear line between two options and that most of the time the separation is blurry. There are many grey shades between black and white.</p><p>The same applies to composition and inheritance. While the nature of the relationship often can guide us to the best solution, we are not always dealing with the representation of real objects, and even when we do we always have to keep in mind that we are <em>modelling</em> them, not implementing them perfectly.</p><p>As a colleague of mine told me once, we have to represent reality with our code, but we have to avoid representing it too faithfully, to avoid bringing reality's limitations into our programs.</p><p>I believe this is very true, so I think that when it comes to choosing between composition an inheritance we need to be guided by the nature of the relationship <em>in our system</em>. In this, object-oriented programming and database design are very similar. When you design a database you have to think about the domain and the way you extract information, not (only) about the real-world objects that you are modelling.</p><p>Let's consider a quick example, bearing in mind that I'm only scratching the surface of something about which people write entire books. Let's pretend we are designing a web application that manages companies and their owners, and we started with the consideration that and <code>Owner</code>, well, <em>owns</em> the <code>Company</code>. This is a clear composition relationship.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Company</span><span class="p">:</span>
+</div></div><p>Now, when we run <code>bicycle.gear_up</code> the delegation happens between <code>bicycle</code>, and instance, and <code>Gears</code>, a class. We might extend this forward to have a class which class methods call class methods of another class, but I won't give an example of this because it sounds a bit convoluted and probably not very reasonable to do. But it can be done.</p><p>So, we might devise a pattern here and say that in composition there is no rule that states the nature of the entities involved in the delegation, but that most of the time this happens between instances.</p><p>Note for advanced readers: in Python, classes are instances of a metaclass, usually <code>type</code>, and <code>type</code> is an instance of itself, so it is correct to say that composition happens always between instances.</p><h2 id="bad-signs">Bad signs<a class="headerlink" href="#bad-signs" title="Permanent link">¶</a></h2><p>Now that we looked at the two delegations strategies from different points of view, it's time to discuss what happens when you use the wrong one. You might have heard of the "composition over inheritance" mantra, which comes from the fact that inheritance is often overused. This wasn't and is not helped by the fact that OOP is presented as encapsulation, inheritance, and polymorphism; open a random OOP post or book and you will see this with your own eyes.</p><p>Please, bloggers, authors, mentors, teachers, and overall programmers: <strong>stop considering inheritance the only delegation system in OOP</strong>.</p><p>That said, I think we should avoid going from one extreme to the opposite, and in general learn to use the tools languages give us. So, let's learn how to recognise the "smell" of bad code!</p><p>You are incorrectly using inheritance when:</p><ul><li>There is a clash between attributes with the same name and different meanings. In this case, you are incorrectly sharing the state of a parent class with the child one (visibility). With composition the state of another object is namespaced and it's always clear which attribute you are dealing with.</li><li>You feel the need to remove methods from the child class. This is typically a sign that you are polluting the class interface (relationship) with the content of the parent class. using composition makes it easy to expose only the methods that you want to delegate.</li></ul><p>You are incorrectly using composition when:</p><ul><li>You have to map too many methods from the container class to the contained one, to expose them. The two objects might benefit from the automatic delegation mechanism (control) provided by inheritance, with the child class overriding the methods that should behave differently.</li><li>You are composing instances, but creating many class methods so that the container can access them. This means that the nature of the delegation is more related to the code and the object might benefit from inheritance, where the classes delegate the method calls, instead of relying on the relationship between instances.</li></ul><p>Overall, code smells for inheritance are the need to override or delete attributes and methods, changes in one class affecting too many other classes in the inheritance tree, big classes that contain heavily unrelated methods. For composition: too many methods that just wrap methods of the contained instances, the need to pass too many arguments to methods, classes that are too empty and that just contain one instance of another class.</p>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="domain-modelling">Domain modelling<a class="headerlink" href="#domain-modelling" title="Permanent link">¶</a></h2><p>We all know that there are few cases (in computer science as well as in life) where we can draw a clear line between two options and that most of the time the separation is blurry. There are many grey shades between black and white.</p><p>The same applies to composition and inheritance. While the nature of the relationship often can guide us to the best solution, we are not always dealing with the representation of real objects, and even when we do we always have to keep in mind that we are <em>modelling</em> them, not implementing them perfectly.</p><p>As a colleague of mine told me once, we have to represent reality with our code, but we have to avoid representing it too faithfully, to avoid bringing reality's limitations into our programs.</p><p>I believe this is very true, so I think that when it comes to choosing between composition an inheritance we need to be guided by the nature of the relationship <em>in our system</em>. In this, object-oriented programming and database design are very similar. When you design a database you have to think about the domain and the way you extract information, not (only) about the real-world objects that you are modelling.</p><p>Let's consider a quick example, bearing in mind that I'm only scratching the surface of something about which people write entire books. Let's pretend we are designing a web application that manages companies and their owners, and we started with the consideration that and <code>Owner</code>, well, <em>owns</em> the <code>Company</code>. This is a clear composition relationship.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Company</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 
@@ -893,6 +923,59 @@
     <div class="paginated-posts">
       <div class="posts">
 	<article class="card">
+          <a href="/blog/2015/01/12/accessing-attributes-in-python/">
+            <img src="/images/accessing-attributes-in-python.jpg" alt="accessing-attributes-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/01/12/accessing-attributes-in-python/"><h2>Accessing attributes in Python</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-01-12T17:00:00+01:00">Jan 12, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T14:00:00+01:00">Oct 8, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2014/05/19/method-overriding-in-python/">
+            <img src="/images/method-overriding-in-python.jpg" alt="method-overriding-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2014/05/19/method-overriding-in-python/"><h2>Method overriding in Python</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2014-05-19T13:51:26+02:00">May 19, 2014</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T13:00:00+00:00">Oct 8, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/03/27/mixin-classes-in-python/">
+            <img src="/images/multiple-inheritance-and-mixin-classes-in-python.jpg" alt="multiple-inheritance-and-mixin-classes-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/03/27/mixin-classes-in-python/"><h2>Multiple inheritance and mixin classes in Python</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/django/" class="tag">Django</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-03-27T12:00:00+01:00">Mar 27, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T14:00:00+01:00">Oct 8, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
           <a href="/blog/2021/03/09/first-class-objects-in-python/">
             <img src="/images/first-class-objects-in-python.jpg" alt="first-class-objects-in-python" />
           </a>
@@ -1033,63 +1116,6 @@
 		<a href="/categories/testing/" class="tag">testing</a>
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
-            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/">
-            <img src="/images/object-oriented-programming-concepts-in-python.jpg" alt="object-oriented-programming-concepts-in-python" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/"><h2>Object-Oriented Programming (OOP) concepts in Python</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/metaclasses/" class="tag">metaclasses</a>
-		<a href="/categories/metaprogramming/" class="tag">metaprogramming</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-04-26T00:00:00+01:00">Apr 26, 2020</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/03/27/mixin-classes-in-python/">
-            <img src="/images/multiple-inheritance-and-mixin-classes-in-python.jpg" alt="multiple-inheritance-and-mixin-classes-in-python" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/03/27/mixin-classes-in-python/"><h2>Multiple inheritance and mixin classes in Python</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/algorithms/" class="tag">algorithms</a>
-		<a href="/categories/django/" class="tag">Django</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-03-27T12:00:00+01:00">Mar 27, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-04-08T12:00:00+01:00">Apr 8, 2020</time></p>
 	    </div>
           </div>
 	</article>

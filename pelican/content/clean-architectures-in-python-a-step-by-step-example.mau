@@ -157,6 +157,15 @@ The main immediate advantage of a layered architecture, however, is testability.
 
 We know that the Web framework receives an HTTP request [callout]#1# with a specific target and a specific query string, and that it has to call [callout]#2# a method on the use case passing specific parameters. When the use case returns data [callout]#3#, the Web framework has to convert that into an HTTP response [callout]#4#. Since this is a test we can have a fake use case, that is an object that just mimics what the use case does without really implementing the business logic. We will then test that the Web framework calls the method [callout]#2# with the correct parameters, and that the HTTP response [callout]#4# contains the correct data in the proper format, and all this will happen without involving any other part of the system.
 
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
+----
+
 == Clean Architectures in Python: the book
 
 I hope you found this introduction useful. What you read so far was the first chapter of the book "Clean Architectures in Python" that you can read online at [link](https://www.thedigitalcatbooks.com/pycabook-introduction/,"The Digital Cat Books"). The book is available as PDF and ebook [link](https://leanpub.com/clean-architectures-in-python,"on Leanpub").

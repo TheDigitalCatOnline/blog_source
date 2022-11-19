@@ -137,6 +137,15 @@ collected 0 items
 =============================== no tests ran in 0.02s ==============================
 ----
 
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
+----
+
 == Requirements
 
 The goal of the project is to write a class `SimpleCalculator` that performs calculations: addition, subtraction, multiplication, and division. Addition and multiplication shall accept multiple arguments. Division shall return a float value, and division by zero shall return the string `"inf"`. Multiplication by zero must raise a `ValueError` exception. The class will also provide a function to compute the average of an iterable like a list. This function gets two optional upper and lower thresholds and should remove from the computation the values that fall outside these boundaries.
@@ -765,6 +774,15 @@ So, after these considerations, we can be happy that the second test already pas
 [callout]
 ----
 *TDD rule number 5:* A test should fail the first time you run it. If it doesn't, ask yourself why you are adding it.
+----
+
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
 ----
 
 == Step 6 - Refactoring

@@ -5,21 +5,49 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.thedigitalcatonline.com/</loc>
-<lastmod>2022-10-03T23:35:55-00:00</lastmod>
+<lastmod>2022-11-19T17:08:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.thedigitalcatonline.com/archives/</loc>
-<lastmod>2022-10-03T23:35:55-00:00</lastmod>
+<lastmod>2022-11-19T17:08:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.thedigitalcatonline.com/pages/about.html</loc>
-<lastmod>2022-10-03T23:35:55-00:00</lastmod>
+<lastmod>2022-11-19T17:08:14-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/</loc>
+<lastmod>2022-10-08T14:00:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/blog/2014/05/19/method-overriding-in-python/</loc>
+<lastmod>2022-10-08T13:00:00+00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/blog/2020/03/27/mixin-classes-in-python/</loc>
+<lastmod>2022-10-08T14:00:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/</loc>
+<lastmod>2022-10-03T08:00:00+00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -118,13 +146,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.thedigitalcatonline.com/blog/2021/03/22/aws-log-insights-as-cloudwatch-metrics-with-python-and-terraform/</loc>
 <lastmod>2021-03-22T17:00:00+01:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://www.thedigitalcatonline.com/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/</loc>
-<lastmod>2021-03-06T18:00:00+00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -293,13 +314,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.thedigitalcatonline.com/blog/2020/04/26/object-oriented-programming-concepts-in-python/</loc>
 <lastmod>2020-04-26T00:00:00+01:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://www.thedigitalcatonline.com/blog/2020/03/27/mixin-classes-in-python/</loc>
-<lastmod>2020-04-08T12:00:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -634,13 +648,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/</loc>
-<lastmod>2015-01-12T17:00:00+01:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>https://www.thedigitalcatonline.com/blog/2014/10/14/decorators-and-metaclasses/</loc>
 <lastmod>2014-10-14T09:43:08+02:00</lastmod>
 <changefreq>monthly</changefreq>
@@ -650,13 +657,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.thedigitalcatonline.com/blog/2014/07/04/oop-concepts-in-python-2-dot-x-part-3/</loc>
 <lastmod>2014-07-04T13:00:00+02:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://www.thedigitalcatonline.com/blog/2014/05/19/method-overriding-in-python/</loc>
-<lastmod>2014-05-19T13:51:26+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -768,7 +768,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.thedigitalcatonline.com/category/programming/</loc>
-<lastmod>2022-09-18T23:00:00+00:09</lastmod>
+<lastmod>2022-10-08T14:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -789,27 +789,41 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.thedigitalcatonline.com/categories/python/</loc>
-<lastmod>2022-09-18T23:00:00+00:09</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://www.thedigitalcatonline.com/categories/python2/</loc>
-<lastmod>2022-09-18T23:00:00+00:09</lastmod>
+<lastmod>2022-10-08T14:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.thedigitalcatonline.com/categories/python3/</loc>
-<lastmod>2022-09-18T23:00:00+00:09</lastmod>
+<lastmod>2022-10-08T14:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.thedigitalcatonline.com/categories/oop/</loc>
+<lastmod>2022-10-08T14:00:00+00:09</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/categories/algorithms/</loc>
+<lastmod>2022-10-08T14:00:00+00:09</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/categories/django/</loc>
+<lastmod>2022-10-08T14:00:00+00:09</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/categories/python2/</loc>
 <lastmod>2022-09-18T23:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -825,13 +839,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.thedigitalcatonline.com/categories/decorators/</loc>
 <lastmod>2022-09-18T23:00:00+00:09</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://www.thedigitalcatonline.com/categories/algorithms/</loc>
-<lastmod>2022-08-23T12:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1075,13 +1082,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://www.thedigitalcatonline.com/categories/django/</loc>
-<lastmod>2020-10-27T08:30:00+00:09</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>https://www.thedigitalcatonline.com/categories/compilers/</loc>
 <lastmod>2020-08-09T18:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
@@ -1223,7 +1223,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.thedigitalcatonline.com/authors/leonardo-giordani/</loc>
-<lastmod>2022-09-18T23:00:00+00:09</lastmod>
+<lastmod>2022-10-08T14:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

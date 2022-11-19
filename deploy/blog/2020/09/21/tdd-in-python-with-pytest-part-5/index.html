@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="/theme/css/main.min.css?11abb51c">
+    <link rel="stylesheet" href="/theme/css/main.min.css?f6765de3">
     <link href="/images/global/favicon.jpg" rel="icon">
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -58,6 +58,7 @@
     </a>
     <div class="body">
       <h2>First-class objects in Python</h2>
+      <p>Higher-order functions, wrappers, and factories</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
       </div>
@@ -70,7 +71,8 @@
       <img src="/images/8-technologies.jpg" />
     </a>
     <div class="body">
-      <h2>8 Technologies You Need to Learn NOW</h2>
+      <h2>How do you become a DevOps Engineer?</h2>
+      <p>A curated list of 8 technologies you need to learn</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
       </div>
@@ -687,7 +689,7 @@ collected 0 items
 <p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/fileinfo/tree/patch-with-function-decorator">patch-with-function-decorator</a></p>
 <p>As you can see the decorator <code>patch</code> works like a big <code>with</code> statement for the whole function. The argument <code>abspath_mock</code> passed to the test becomes internally the mock that replaces <code>os.path.abspath</code>. Obviously this way you replace <code>os.path.abspath</code> for the whole function, so you have to decide case by case which form of the function <code>patch</code> you need to use.</p>
 <h2 id="multiple-patches">Multiple patches<a class="headerlink" href="#multiple-patches" title="Permanent link">&para;</a></h2>
-<p>You can patch more that one object in the same test. For example, consider the case where the method <code>get_info</code> calls <code>os.path.getsize</code> in addition to <code>os.path.abspath</code>m in order to return the size of the file. You have at this point two different outgoing queries, and you have to replace both with mocks to make your class work during the test.</p>
+<p>You can patch more that one object in the same test. For example, consider the case where the method <code>get_info</code> calls <code>os.path.getsize</code> in addition to <code>os.path.abspath</code> in order to return the size of the file. You have at this point two different outgoing queries, and you have to replace both with mocks to make your class work during the test.</p>
 <p>This can be easily done with an additional <code>patch</code> decorator</p>
 <div class="highlight"><span class="filename">tests/test_fileinfo.py</span><pre><span></span><code><span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;os.path.getsize&#39;</span><span class="p">)</span>
 <span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;os.path.abspath&#39;</span><span class="p">)</span>

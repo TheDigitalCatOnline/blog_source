@@ -774,6 +774,15 @@ rm -fR ${VENV_DIRECTORY}
 aws --region=${REGION} lambda update-function-code --function-name ${FUNCTION_NAME}  --zip-file "fileb://${LAMBDA_PACKAGE}"
 ----
 
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
+----
+
 == Costs
 
 I will follow here the [link](https://aws.amazon.com/lambda/pricing/, "AWS guide on Lambda pricing") and the calculations published in 2018 by my colleague João Neves on [link](https://silvaneves.org/how-much-does-a-lambda-cost.html, "his blog").

@@ -110,6 +110,15 @@ Both solutions make the test suite pass, so both are correct. I leave to you the
 
 *Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-7-division-by-zero,step-7-float-division)
 
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
+----
+
 == Step 8 - Testing exceptions
 
 A further requirement is that multiplication by zero must raise a `ValueError` exception. This means that we need a way to test if our code raises an exception, which is the opposite of what we did until now. In the previous tests, the condition to pass was that there was no exception in the code, while in this test the condition will be that an exception has been raised.
@@ -606,6 +615,15 @@ Through this very simple example we learned 6 important rules of the TDD methodo
 # Write code that passes the test. Then refactor it.
 # A test should fail the first time you run it. If it doesn't ask yourself why you are adding it.
 # Never refactor without tests.
+
+[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+----
+== First-class objects in Python
+
+Higher-order functions, wrappers, and factories
+
+Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
+----
 
 == How many assertions?
 

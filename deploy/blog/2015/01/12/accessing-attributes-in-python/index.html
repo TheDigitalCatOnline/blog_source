@@ -6,17 +6,17 @@
     <meta http-equiv='content-language' content='en-gb'>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
-<meta name="description" content="Accessing attributes in Python">
+<meta name="description" content="The behaviour of Python code may result surprising to new programmers.">
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@thedigicat" />
 <meta name="twitter:title" content="Accessing attributes in Python" />
-<meta name="twitter:description" content="Read the full post on The Digital Cat" />
+<meta name="twitter:description" content="The behaviour of Python code may result surprising to new programmers." />
 <meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/accessing-attributes-in-python.jpg" />
     <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="/theme/css/main.min.css?11abb51c">
+    <link rel="stylesheet" href="/theme/css/main.min.css?f6765de3">
     <link href="/images/global/favicon.jpg" rel="icon">
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -58,6 +58,7 @@
     </a>
     <div class="body">
       <h2>First-class objects in Python</h2>
+      <p>Higher-order functions, wrappers, and factories</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
       </div>
@@ -70,7 +71,8 @@
       <img src="/images/8-technologies.jpg" />
     </a>
     <div class="body">
-      <h2>8 Technologies You Need to Learn NOW</h2>
+      <h2>How do you become a DevOps Engineer?</h2>
+      <p>A curated list of 8 technologies you need to learn</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
       </div>
@@ -519,7 +521,7 @@
   <header>
     <h1>Accessing attributes in Python</h1>
     <div class="post-info">
-      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2015-01-12T17:00:00+01:00"> 12/01/2015</time></p>
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2015-01-12T17:00:00+01:00"> 12/01/2015</time> <i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T14:00:00+01:00">Oct 8, 2022</time></p>
       <p class="tags">
 	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
 	<a class="tag" href="/categories/python/">Python</a>
@@ -527,7 +529,7 @@
 	<a class="tag" href="/categories/oop/">OOP</a>
       </p>
       <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Accessing%20attributes%20in%20Python&url=https%3A//www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/&via=thedigicat&hashtags=python,python3,oop" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
-<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/&title=Accessing%20attributes%20in%20Python&summary=&source=https%3A//www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/&title=Accessing%20attributes%20in%20Python&summary=The%20behaviour%20of%20Python%20code%20may%20result%20surprising%20to%20new%20programmers.&source=https%3A//www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
 <span><a class="" href="https://news.ycombinator.com/submitlink?t=Accessing%20attributes%20in%20Python&u=https%3A//www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
 <span><a class="" href="mailto:?subject=Accessing%20attributes%20in%20Python&amp;body=https%3A//www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
 <span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2015/01/12/accessing-attributes-in-python/&title=Accessing%20attributes%20in%20Python" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
@@ -535,59 +537,50 @@
   </header>
   
   <div class="post-content">
-    <p>Python is a language that tries to push the object-oriented paradigm to its maximum. This means that its object model is very powerful compared to that of other languages, but also that the behaviour of Python code may result surprising to new programmers.</p>
-<p>In this post I want to review the methods that Python provides to access object attributes, trying to provide a comprehensive overview of the matter to everyone wants to start programming in this beautiful language.</p>
-<h2 id="what-are-attributes">What are attributes<a class="headerlink" href="#what-are-attributes" title="Permanent link">&para;</a></h2>
-<p>Since the nomenclature may vary from language to language, let me name things. In Python we call <em>attribute</em> everything is contained inside an object. In Python there is no real distinction between plain data and functions, being both objects, so what I will say about attributes is perfectly valid even for methods.</p>
-<p>As a working example, in this post I will use the following class. It represents a book with a title and an author. It also provides a <code>get_entry()</code> method which returns a string representation of the book.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Book</span><span class="p">:</span>
+    <p>Python is a language that tries to push the object-oriented paradigm to its maximum. This means that its object model is very powerful compared to that of other languages, but also that the behaviour of Python code may result surprising to new programmers.</p><p>In this post I want to review the methods that Python provides to access object attributes, trying to provide a comprehensive overview of the matter to everyone wants to start programming in this beautiful language.</p><h2 id="what-are-attributes">What are attributes?<a class="headerlink" href="#what-are-attributes" title="Permanent link">¶</a></h2><p>Since the nomenclature may vary from language to language, let me name things. In Python we call <em>attribute</em> everything is contained inside an object. In Python there is no real distinction between plain data and functions, being both objects, so what I will say about attributes is perfectly valid even for methods.</p><p>As a working example, in this post I will use the following class. It represents a book with a title and an author. It also provides a <code>get_entry()</code> method which returns a string representation of the book.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Book</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">author</span>
 
     <span class="k">def</span> <span class="nf">get_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> by </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Every instance of this class will contain three attributes, namely <code>title</code>, <code>author</code>, and <code>get_entry</code>, in addition to the standard attributes provided by the <code>object</code> ancestor.</p>
-<p><strong>Python 2 users</strong>: remember that in Python 2 you have to specify that <code>Book</code> is a new-style class writing <code>class Book(object):</code></p>
-<h2 id="basic-attribute-access">Basic attribute access<a class="headerlink" href="#basic-attribute-access" title="Permanent link">&para;</a></h2>
-<p>In Python you may call an attribute of an object using the widely accepted dotted-syntax</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
+</pre></div>
+</div></div><p>Every instance of this class will contain three attributes, namely <code>title</code>, <code>author</code>, and <code>get_entry</code>, in addition to the standard attributes provided by the <code>object</code> ancestor.</p><p><strong>Python 2 users</strong>: remember that in Python 2 you have to specify that <code>Book</code> is a new-style class writing <code>class Book(object):</code></p><h2 id="basic-attribute-access">Basic attribute access<a class="headerlink" href="#basic-attribute-access" title="Permanent link">¶</a></h2><p>In Python you may call an attribute of an object using the widely accepted dotted-syntax</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">title</span>
 <span class="go">&#39;Pawn of Prophecy&#39;</span>
-</code></pre></div>
-
-<p>As already mentioned, this mechanism works with methods too.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">get_entry</span>
+</pre></div>
+</div></div><p>As already mentioned, this mechanism works with methods too.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">get_entry</span>
 <span class="go">&lt;bound method Book.get_entry of &lt;__main__.Book object at 0xb703952c&gt;&gt;</span>
-</code></pre></div>
-
-<p>Here I intentionally omitted the calling brackets (parentheses) to show what happens when accessing the method. For a in-depth explanation of the difference between functions and bound methods read <a href="https://www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-2-classes-and-members/">this post</a>.</p>
-<p>When an object does not contain the attribute we are looking for, Python raises an <code>AttributeError</code> exception</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">publisher</span>
+</pre></div>
+</div></div><p>Here I intentionally omitted the calling brackets (parentheses) to show what happens when accessing the method. For a in-depth explanation of the difference between functions and bound methods read <a href="https://www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-2-classes-and-members/">this post</a>.</p><p>When an object does not contain the attribute we are looking for, Python raises an <code>AttributeError</code> exception</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">publisher</span>
 <span class="go">Traceback  (most recent call last):</span>
 <span class="go">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
 <span class="go">AttributeError: &#39;Book&#39; object has no attribute &#39;publisher&#39;</span>
 <span class="go">&gt;&gt;&gt;</span>
-</code></pre></div>
-
-<p>Remember also that Python objects provide a wide range of automatically created attributes such as <code>__class__</code> or <code>__doc__</code>. These attributes can be read exactly like standard attributes, since in Python the double underscore prefix and suffix is just a gentleman agreement between programmers.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="vm">__class__</span>
+</pre></div>
+</div></div><p>Remember also that Python objects provide a wide range of automatically created attributes such as <code>__class__</code> or <code>__doc__</code>. These attributes can be read exactly like standard attributes, since in Python the double underscore prefix and suffix is just a gentleman agreement between programmers.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="vm">__class__</span>
 <span class="go">&lt;class &#39;__main__.Book&#39;&gt;</span>
-</code></pre></div>
-
-<p>When you try to change the value of an attribute (you <em>write</em> the attribute) the syntax does not change.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
+</pre></div>
+</div></div><p>When you try to change the value of an attribute (you <em>write</em> the attribute) the syntax does not change.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;David Carroll Eddings&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">author</span>
 <span class="go">&#39;David Carroll Eddings&#39;</span>
-</code></pre></div>
-
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
-<p>Sometimes you want to have an attribute which value comes from other attributes or, in general, which value shall be computed at the moment. The standard way to deal with this situation is to create a method, called <em>getter</em>, just like I did with <code>get_entry()</code>. </p>
-<p>In Python you can "mask" the method, aliasing it with a data attribute, which in this case is called <em>property</em>.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</pre></div>
+</div></div>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">¶</a></h2><p>Sometimes you want to have an attribute which value comes from other attributes or, in general, which value shall be computed at the moment. The standard way to deal with this situation is to create a method, called <em>getter</em>, just like I did with <code>get_entry()</code>. </p><p>In Python you can "mask" the method, aliasing it with a data attribute, which in this case is called <em>property</em>.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">author</span>
@@ -596,16 +589,12 @@
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> by </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">)</span>
 
     <span class="n">entry</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_entry</span><span class="p">)</span>
-</code></pre></div>
-
-<p>The above syntax defines an <code>entry</code> attribute which automatically calls <code>self.get_entry()</code> when read.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
+</pre></div>
+</div></div><p>The above syntax defines an <code>entry</code> attribute which automatically calls <code>self.get_entry()</code> when read.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">entry</span>
 <span class="go">&#39;Pawn of Prophecy by David Eddings&#39;</span>
-</code></pre></div>
-
-<p>Properties allow to specify also a write method (a <em>setter</em>), that is automatically called when you try to change the value of the property itself.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</pre></div>
+</div></div><p>Properties allow to specify also a write method (a <em>setter</em>), that is automatically called when you try to change the value of the property itself.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">author</span>
@@ -619,10 +608,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; by &quot;</span><span class="p">)</span>
 
     <span class="n">entry</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_entry</span><span class="p">,</span> <span class="n">_set_entry</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Please note that the set method shall accept the value as its second parameter. When getters and setters are masked by a property it may be a good thing to make their name start with an underscore, just to signal that they are not intended to be used directly. Remember however that this has no special meaning for the language, being just a convention between programmers.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
+</pre></div>
+</div></div><p>Please note that the set method shall accept the value as its second parameter. When getters and setters are masked by a property it may be a good thing to make their name start with an underscore, just to signal that they are not intended to be used directly. Remember however that this has no special meaning for the language, being just a convention between programmers.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">entry</span>
 <span class="go">&#39;Pawn of Prophecy by David Eddings&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">entry</span> <span class="o">=</span> <span class="s2">&quot;Queen of Sorcery by David Carroll Eddings&quot;</span>
@@ -635,42 +622,26 @@
 <span class="go">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
 <span class="go">  File &quot;&lt;stdin&gt;&quot;, line 9, in _set_entry</span>
 <span class="go">ValueError: Entries shall be formatted as &#39;&lt;title&gt; by &lt;author&gt;&#39;</span>
-</code></pre></div>
-
-<p>While attributes are usually defined in the instance through the <code>__init__()</code> method (part of the constructor mechanism), properties are part of the class itself.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">Book</span><span class="o">.</span><span class="n">title</span>
+</pre></div>
+</div></div><p>While attributes are usually defined in the instance through the <code>__init__()</code> method (part of the constructor mechanism), properties are part of the class itself.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Book</span><span class="o">.</span><span class="n">title</span>
 <span class="go">Traceback  (most recent call last):</span>
 <span class="go">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
 <span class="go">AttributeError: type object &#39;Book&#39; has no attribute &#39;title&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Book</span><span class="o">.</span><span class="n">entry</span>
 <span class="go">&lt;property object at 0xb676a374&gt;</span>
-</code></pre></div>
-
-<p>Remember however that all instances of that class share the same <em>property object</em>, which is a sort of automatic binding between attributes and methods, and not the value of the attribute itself.</p>
-<h2 id="softcoding-attribute-access">Softcoding attribute access<a class="headerlink" href="#softcoding-attribute-access" title="Permanent link">&para;</a></h2>
-<p>When you write a basic attribute access like I did in the first section you are <em>hardcoding</em> the attribute name. The attribute you are looking for is part of the source code itself, and shall be known at coding time.</p>
-<p>What happens if you want to access an attribute whose name is contained in a variable as a string? This usually happens when writing debuggers or inspection tools that let the user interactively specify the attributes they want to see.</p>
-<p>To perform this "indirect" access Python provides the <code>getattr()</code> builtin function, which accepts an object and the name of an attribute.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">getattr</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
+</pre></div>
+</div></div><p>Remember however that all instances of that class share the same <em>property object</em>, which is a sort of automatic binding between attributes and methods, and not the value of the attribute itself.</p><h2 id="softcoding-attribute-access">Softcoding attribute access<a class="headerlink" href="#softcoding-attribute-access" title="Permanent link">¶</a></h2><p>When you write a basic attribute access like I did in the first section you are <em>hardcoding</em> the attribute name. The attribute you are looking for is part of the source code itself, and shall be known at coding time.</p><p>What happens if you want to access an attribute whose name is contained in a variable as a string? This usually happens when writing debuggers or inspection tools that let the user interactively specify the attributes they want to see.</p><p>To perform this "indirect" access Python provides the <code>getattr()</code> builtin function, which accepts an object and the name of an attribute.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">getattr</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
 <span class="go">&#39;Pawn of Prophecy&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">getattr</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s1">&#39;get_entry&#39;</span><span class="p">)</span>
 <span class="go">&lt;bound method Book.get_entry of &lt;__main__.Book object at 0xb703952c&gt;&gt;</span>
-</code></pre></div>
-
-<p>This type of attribute access may be useful even when accessing a lot of attributes, allowing to write simple for loops or list comprehensions</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">]:</span>
+</pre></div>
+</div></div><p>This type of attribute access may be useful even when accessing a lot of attributes, allowing to write simple for loops or list comprehensions</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">]:</span>
 <span class="gp">... </span> <span class="nb">getattr</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
 <span class="gp">... </span>
 <span class="go">&#39;Pawn of Prophecy&#39;</span>
 <span class="go">&#39;David Eddings&#39;</span>
-</code></pre></div>
-
-<p>While this type of access is perfectly valid in Python you should not use it as long as you can use the direct dotted access. Writing tricky code may seem very smart, but when it comes to debugging "the simpler the better".</p>
-<h2 id="avoiding-to-fail">Avoiding to fail<a class="headerlink" href="#avoiding-to-fail" title="Permanent link">&para;</a></h2>
-<p>When you try to access an attribute that does not exist, either with the dotted syntax or with <code>getattr()</code>, Python gives you a last chance before raising the <code>AttributeError</code> exception. It calls the <code>__getattr__()</code> special method (pay attention to the double underscores) passing it the name of the attribute: in the previous example, when accessing <code>b.publisher</code>, Python calls <code>b.__getattr__('publisher')</code>. </p>
-<p>In this case, since the <code>Book</code> class or its ancestors do not define the <code>__getattr__()</code> method, the attribute access fails and Python raises the exception.</p>
-<p>Let us try to define the method, just to show that it actually works</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</pre></div>
+</div></div><p>While this type of access is perfectly valid in Python you should not use it as long as you can use the direct dotted access. Writing tricky code may seem very smart, but when it comes to debugging "the simpler the better".</p><h2 id="avoiding-to-fail">Avoiding to fail<a class="headerlink" href="#avoiding-to-fail" title="Permanent link">¶</a></h2><p>When you try to access an attribute that does not exist, either with the dotted syntax or with <code>getattr()</code>, Python gives you a last chance before raising the <code>AttributeError</code> exception. It calls the <code>__getattr__()</code> special method (pay attention to the double underscores) passing it the name of the attribute: in the previous example, when accessing <code>b.publisher</code>, Python calls <code>b.__getattr__(&#x27;publisher&#x27;)</code>. </p><p>In this case, since the <code>Book</code> class or its ancestors do not define the <code>__getattr__()</code> method, the attribute access fails and Python raises the exception.</p><p>Let us try to define the method, just to show that it actually works</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">author</span>
@@ -680,26 +651,28 @@
 
     <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">None</span>
-</code></pre></div>
-
-<p><strong>WARNING</strong>: this is just an example to show how <code>__getattr__()</code> works. The code presented here shall <em>not</em> be considered a good example of Python programming.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
+</pre></div>
+</div></div><p><strong></strong>WARNING<strong></strong>: this is just an example to show how <code>__getattr__()</code> works. The code presented here shall <em>not</em> be considered a good example of Python programming.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Pawn of Prophecy&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;David Eddings&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">title</span>
 <span class="go">&#39;Pawn of Prophecy&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">publisher</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">somename</span>
-</code></pre></div>
-
-<p>As you can see the <code>publisher</code> and <code>somename</code> attributes are correctly accessed even if they do not actually exist inside the object.</p>
-<p>To find a good use for <code>__getattr__()</code> and <code>getattr()</code> we need to step into something a bit more complex, which is the explicit delegation mechanism involved in a composition between objects. You may find more details on this topic in <a href="https://www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/">this post</a>. </p>
-<p>Both <code>getattr()</code> and <code>__getattr__()</code> have their counterpart to manage writing access, namely <code>setattr()</code> and <code>__setattr__()</code>.</p>
-<h2 id="the-deepest-secret">The deepest secret<a class="headerlink" href="#the-deepest-secret" title="Permanent link">&para;</a></h2>
-<p>Every Python object (starting from <code>object</code> itself) contains a very special method called <code>__getattribute__()</code> which should never be called explicitly or overridden. This method implements the attribute resolution inside the object, provides the attribute lookup through the inheritance hierarchy, resolves properties, calls <code>__getattr__()</code> and if needed raises the <code>AttributeError</code> exception.</p>
-<p>Due to the very complex nature of this method, and the uttermost importance of its role in making Python objects run, you shall never, never try to override it. If you find yourself in a situation where dealing explicitly with <code>__getattribute__()</code> is needed, you may be pretty sure that you did something wrong.</p>
-<h2 id="conclusions">Conclusions<a class="headerlink" href="#conclusions" title="Permanent link">&para;</a></h2>
-<p>As you can figure, 95% of your Python code will be based on standard dotted attribute access. Knowing other ways to manage attributes (properties) and being aware of what happens behind the scenes (<code>getattr</code>, <code>__getattr__()</code>, and <code>__getattribute__()</code>) is however essential to master the whole power of Python, which can sometimes lead to very elegant solutions that are otherwise very difficult to achieve.</p>
-<h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h2>
-<p>2015-01-16: Thanks to <a href="https://twitter.com/astronouth7303">Jamie</a> who spotted a wrong <code>__setattribute__()</code> method presented in the last section.</p>
+</pre></div>
+</div></div><p>As you can see the <code>publisher</code> and <code>somename</code> attributes are correctly accessed even if they do not actually exist inside the object.</p><p>To find a good use for <code>__getattr__()</code> and <code>getattr()</code> we need to step into something a bit more complex, which is the explicit delegation mechanism involved in a composition between objects. You may find more details on this topic in <a href="https://www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/">this post</a>.</p><p>Both <code>getattr()</code> and <code>__getattr__()</code> have their counterpart to manage writing access, namely <code>setattr()</code> and <code>__setattr__()</code>.</p>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="the-deepest-secret">The deepest secret<a class="headerlink" href="#the-deepest-secret" title="Permanent link">¶</a></h2><p>Every Python object (starting from <code>object</code> itself) contains a very special method called <code>__getattribute__()</code> which should never be called explicitly or overridden. This method implements the attribute resolution inside the object, provides the attribute lookup through the inheritance hierarchy, resolves properties, calls <code>__getattr__()</code> and if needed raises the <code>AttributeError</code> exception.</p><p>Due to the very complex nature of this method, and the uttermost importance of its role in making Python objects run, you shall never, never try to override it. If you find yourself in a situation where dealing explicitly with <code>__getattribute__()</code> is needed, you may be pretty sure that you did something wrong.</p><h2 id="conclusions">Conclusions<a class="headerlink" href="#conclusions" title="Permanent link">¶</a></h2><p>As you can easily understand, 95% of your Python code will be based on standard dotted attribute access. Knowing other ways to manage attributes (properties) and being aware of what happens behind the scenes (<code>getattr</code>, <code>__getattr__()</code>, and <code>__getattribute__()</code>) is however essential to master the whole power of Python, which can sometimes lead to very elegant solutions that are otherwise very difficult to achieve.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2015-01-16: Thanks to <a href="https://twitter.com/astronouth7303">Jamie</a> who spotted a wrong <code>__setattribute__()</code> method presented in the last section.</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
 
@@ -709,6 +682,59 @@
     </header>
     <div class="paginated-posts">
       <div class="posts">
+	<article class="card">
+          <a href="/blog/2014/05/19/method-overriding-in-python/">
+            <img src="/images/method-overriding-in-python.jpg" alt="method-overriding-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2014/05/19/method-overriding-in-python/"><h2>Method overriding in Python</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2014-05-19T13:51:26+02:00">May 19, 2014</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T13:00:00+00:00">Oct 8, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/03/27/mixin-classes-in-python/">
+            <img src="/images/multiple-inheritance-and-mixin-classes-in-python.jpg" alt="multiple-inheritance-and-mixin-classes-in-python" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/03/27/mixin-classes-in-python/"><h2>Multiple inheritance and mixin classes in Python</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/algorithms/" class="tag">algorithms</a>
+		<a href="/categories/django/" class="tag">Django</a>
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-03-27T12:00:00+01:00">Mar 27, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T14:00:00+01:00">Oct 8, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/">
+            <img src="/images/delegation-composition-and-inheritance-in-object-oriented-programming.jpg" alt="delegation-composition-and-inheritance-in-object-oriented-programming" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"><h2>Delegation: composition and inheritance in object-oriented programming</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00">Aug 17, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-03T08:00:00+00:00">Oct 3, 2022</time></p>
+	    </div>
+          </div>
+	</article>
 	<article class="card">
           <a href="/blog/2021/03/09/first-class-objects-in-python/">
             <img src="/images/first-class-objects-in-python.jpg" alt="first-class-objects-in-python" />
@@ -768,23 +794,6 @@
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
 	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/">
-            <img src="/images/delegation-composition-and-inheritance-in-object-oriented-programming.jpg" alt="delegation-composition-and-inheritance-in-object-oriented-programming" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"><h2>Delegation: composition and inheritance in object-oriented programming</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00">Aug 17, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T18:00:00+00:00">Mar 6, 2021</time></p>
 	    </div>
           </div>
 	</article>
@@ -867,44 +876,6 @@
 		<a href="/categories/testing/" class="tag">testing</a>
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
-            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/">
-            <img src="/images/object-oriented-programming-concepts-in-python.jpg" alt="object-oriented-programming-concepts-in-python" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/04/26/object-oriented-programming-concepts-in-python/"><h2>Object-Oriented Programming (OOP) concepts in Python</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/metaclasses/" class="tag">metaclasses</a>
-		<a href="/categories/metaprogramming/" class="tag">metaprogramming</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-04-26T00:00:00+01:00">Apr 26, 2020</time></p>
 	    </div>
           </div>
 	</article>

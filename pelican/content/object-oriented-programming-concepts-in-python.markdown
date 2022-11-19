@@ -44,8 +44,8 @@ These are all part of the same series of posts, so you can read them in order to
 
 To get more comfortable with classes and delegation you can review them with these two simple articles:
 
-* [Accessing attributes in Python]({filename}accessing-attributes-in-python.markdown)
-* [Method overriding in Python]({filename}method-overriding-in-python.markdown)
+* [Accessing attributes in Python]({filename}accessing-attributes-in-python.mau)
+* [Method overriding in Python]({filename}method-overriding-in-python.mau)
 
 The following posts are simple but very useful exercises of OOP design, and they also use test-driven development (TDD)
 
@@ -64,7 +64,7 @@ If you made it so far you are ready to face the big players! The following are c
 
 * Metaclasses: [Object-Oriented Programming in Python 3 - Metaclasses]({filename}python-3-oop-part-5-metaclasses.markdown) and [Advanced use of Python decorators and metaclasses]({filename}decorators-and-metaclasses.markdown)
 * Abstract Base Classes: [Object-Oriented Programming in Python 3 - Abstract Base Classes]({filename}python-3-oop-part-6-abstract-base-classes.markdown) and [Python decorators: metaprogramming with style]({filename}python-decorators-metaprogramming-with-style.markdown)
-* Multiple inheritance: [Multiple inheritance and mixin classes in Python]({filename}multiple-inheritance-and-mixin-classes-in-python.markdown)
+* Multiple inheritance: [Multiple inheritance and mixin classes in Python]({filename}multiple-inheritance-and-mixin-classes-in-python.mau)
 
 ## Final words
 

@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="/theme/css/main.min.css?11abb51c">
+    <link rel="stylesheet" href="/theme/css/main.min.css?f6765de3">
     <link href="/images/global/favicon.jpg" rel="icon">
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -58,6 +58,7 @@
     </a>
     <div class="body">
       <h2>First-class objects in Python</h2>
+      <p>Higher-order functions, wrappers, and factories</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
       </div>
@@ -70,7 +71,8 @@
       <img src="/images/8-technologies.jpg" />
     </a>
     <div class="body">
-      <h2>8 Technologies You Need to Learn NOW</h2>
+      <h2>How do you become a DevOps Engineer?</h2>
+      <p>A curated list of 8 technologies you need to learn</p>
       <div class="actions">
         <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
       </div>
@@ -730,7 +732,21 @@ postgres=#
 
 postgres=# 
 </pre></div>
-</div></div><p>Last, note that the application database configured with <code>APPLICATION_DB</code> is not present because we haven't created it yet. All the environment variables prefixed by <code>POSTGRES_</code> are used automatically by the Docker image to perform the initial configuration, which is why the database <code>postgres</code> is already there.</p><p>You can exit <code>psql</code> with Ctrl-D or <code>exit</code>.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/e1af82cb302d669b1559b788c92aafeab1b427d5">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/e1af82cb302d669b1559b788c92aafeab1b427d5">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://hub.docker.com/_/postgres">Postgres Docker image</a></li><li><a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/">Flask-SQLAlchemy</a> - A Flask extension to work with SQLAlchemy</li><li><a href="https://docs.sqlalchemy.org/en/13/dialects/postgresql.html">SQLAlchemy and PostgreSQL</a> - The Python SQL Toolkit and ORM</li></ul><h2 id="step-2---connecting-the-application-and-the-database">Step 2 - Connecting the application and the database<a class="headerlink" href="#step-2---connecting-the-application-and-the-database" title="Permanent link">¶</a></h2><p>To connect the Flask application with the database running in the container we need to initialise a <code>SQLAlchemy</code> object and add it to the application factory.</p><div class="code"><div class="title">application/models.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
+</div></div><p>Last, note that the application database configured with <code>APPLICATION_DB</code> is not present because we haven't created it yet. All the environment variables prefixed by <code>POSTGRES_</code> are used automatically by the Docker image to perform the initial configuration, which is why the database <code>postgres</code> is already there.</p><p>You can exit <code>psql</code> with Ctrl-D or <code>exit</code>.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/e1af82cb302d669b1559b788c92aafeab1b427d5">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/e1af82cb302d669b1559b788c92aafeab1b427d5">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://hub.docker.com/_/postgres">Postgres Docker image</a></li><li><a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/">Flask-SQLAlchemy</a> - A Flask extension to work with SQLAlchemy</li><li><a href="https://docs.sqlalchemy.org/en/13/dialects/postgresql.html">SQLAlchemy and PostgreSQL</a> - The Python SQL Toolkit and ORM</li></ul>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="step-2---connecting-the-application-and-the-database">Step 2 - Connecting the application and the database<a class="headerlink" href="#step-2---connecting-the-application-and-the-database" title="Permanent link">¶</a></h2><p>To connect the Flask application with the database running in the container we need to initialise a <code>SQLAlchemy</code> object and add it to the application factory.</p><div class="code"><div class="title">application/models.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
 
 <span class="n">db</span> <span class="o">=</span> <span class="n">SQLAlchemy</span><span class="p">()</span>
 </pre></div>
@@ -1496,7 +1512,21 @@ Indexes:
     &quot;users_pkey&quot; PRIMARY KEY, btree (id)
     &quot;users_email_key&quot; UNIQUE CONSTRAINT, btree (email)
 </pre></div>
-</div></div><p>You can also open your browser and head to <a href="http://localhost:5000/users">http://localhost:5000/users</a> to see the new route in action. After this we can safely commit my code and move on with the next requirement.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec">browse the files</a>.</p><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>I hope this post already showed you why a good setup can make the difference. The project is clean and wrapping the command in the management script plus the centralised config proved to be a good choice as it allowed me to solve the problem of migrations and testing in (what I think is) an elegant way. In the next post I'll show you how to easily create scenarios where you can test queries with only specific data in the database. If you find my posts useful please share them with whoever you thing might be interested.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-07-13 <a href="https://github.com/Alladin9393">Vlad Pavlichek</a> found and fixed a typo in the post, where <code>manage.py</code> was missing the extension <code>.py</code>. Thanks Vlad!</p><p>2020-12-22 I reviewed the whole tutorial and corrected several typos</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+</div></div><p>You can also open your browser and head to <a href="http://localhost:5000/users">http://localhost:5000/users</a> to see the new route in action. After this we can safely commit my code and move on with the next requirement.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec">browse the files</a>.</p>
+            <div class="advertisement">
+                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
+                  <img src="/images/first-class-objects/cover.jpg" />
+                </a>
+                <div class="body">
+                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+<p>Higher-order functions, wrappers, and factories</p>
+<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
+                  <div class="actions">
+                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
+                  </div>
+                </div>
+            </div>
+            <h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>I hope this post already showed you why a good setup can make the difference. The project is clean and wrapping the command in the management script plus the centralised config proved to be a good choice as it allowed me to solve the problem of migrations and testing in (what I think is) an elegant way. In the next post I'll show you how to easily create scenarios where you can test queries with only specific data in the database. If you find my posts useful please share them with whoever you thing might be interested.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-07-13 <a href="https://github.com/Alladin9393">Vlad Pavlichek</a> found and fixed a typo in the post, where <code>manage.py</code> was missing the extension <code>.py</code>. Thanks Vlad!</p><p>2020-12-22 I reviewed the whole tutorial and corrected several typos</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
   <section class="links">

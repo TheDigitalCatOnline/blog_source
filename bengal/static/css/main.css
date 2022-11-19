@@ -492,19 +492,16 @@ div.code {
   display: flex;
   flex-direction: column;
   margin: 1rem 0; }
-
-div.code div.content {
-  margin: 0; }
-
-div.code div.content div.highlight {
-  font-family: "Courier New", monospace;
-  margin: 0; }
-
-div.code div.title {
-  background-color: #ffb52e;
-  padding: 0.2rem 0.5rem;
-  border: 1px solid black;
-  border-bottom: 0px; }
+  div.code div.title {
+    background-color: #ffb52e;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid black;
+    border-bottom: 0px; }
+  div.code div.content {
+    margin: 0; }
+    div.code div.content div.highlight {
+      font-family: "Courier New", monospace;
+      margin: 0; }
 
 span.callout {
   border-radius: 1rem;
@@ -533,58 +530,57 @@ div.admonition {
   flex-direction: row;
   margin: 2rem 0;
   padding: 1rem 0; }
+  div.admonition i {
+    font-size: 2rem;
+    margin: auto 1rem;
+    min-width: 2rem;
+    text-align: center; }
+  div.admonition div.title {
+    font-weight: 700;
+    font-size: 1.3rem; }
+  div.admonition div.content {
+    padding-right: 1rem;
+    overflow: auto; }
 
-div.admonition i {
-  font-size: 2rem;
-  margin: auto 1rem;
-  min-width: 2rem;
-  text-align: center; }
-
-div.admonition div.title {
-  font-weight: 700;
-  font-size: 1.3rem; }
-
-div.admonition div.content {
-  padding-right: 1rem;
-  overflow: auto; }
-
-div.infobox {
+div.advertisement {
   border: 2px solid black;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 2rem 0;
   padding: 2rem; }
-
-div.infobox i {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  text-align: center; }
-
-div.infobox div.title {
-  font-weight: 700;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: center; }
+  div.advertisement img {
+    width: 200px; }
+  div.advertisement div.body {
+    margin-left: 2rem; }
+    div.advertisement div.body h2 {
+      margin: 0;
+      margin-bottom: 1.5rem;
+      text-align: center; }
+    div.advertisement div.body div.actions {
+      text-align: center; }
+      div.advertisement div.body div.actions a.action {
+        border: 3px solid #ff9900;
+        border-radius: 0.5rem;
+        font-size: 1.2rem;
+        padding: 0.2rem 0.5rem;
+        text-decoration: none; }
 
 div.callouts table {
   margin-top: 1rem; }
-
-div.callouts table td {
-  padding-right: 1rem;
-  padding-bottom: 0.5rem; }
+  div.callouts table td {
+    padding-right: 1rem;
+    padding-bottom: 0.5rem; }
 
 div.imageblock {
   align-items: center;
   display: flex;
   flex-direction: column;
   margin: 2rem 0; }
-
-div.imageblock div.title {
-  font-weight: 700;
-  margin-top: 1rem; }
-
-div.imageblock img {
-  width: 80%; }
+  div.imageblock div.title {
+    font-weight: 700;
+    margin-top: 1rem; }
+  div.imageblock img {
+    width: 80%; }
 
 div.infobox {
   border: 2px solid black;
@@ -592,17 +588,15 @@ div.infobox {
   flex-direction: column;
   margin: 2rem 0;
   padding: 2rem; }
-
-div.infobox > i {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  text-align: center; }
-
-div.infobox > div.title {
-  font-weight: 700;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: center; }
+  div.infobox i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center; }
+  div.infobox div.title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center; }
 
 /* Media */
 @media (min-width: 1280px) {

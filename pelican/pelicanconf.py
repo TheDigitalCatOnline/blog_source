@@ -135,6 +135,21 @@ MAU = {
             "<div>{{ content }}</div>"
             "</div>"
         ),
+        "block-advertisement.html": (
+            """
+            <div class="advertisement">
+                <a href="{{ kwargs.target }}">
+                  <img src="{{ kwargs.image }}" />
+                </a>
+                <div class="body">
+                  {{ content }}
+                  <div class="actions">
+                    <a class="action" href="{{ kwargs.target }}">{{ kwargs.action }}</a>
+                  </div>
+                </div>
+            </div>
+            """
+        ),
         "block-source.html": (
             '<div{% if blocktype %} class="code"{% endif %}>'
             '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
