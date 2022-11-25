@@ -21,7 +21,6 @@ The package we are going to write will provide a class that represents binary nu
 A quick example of what the package shall do:
 
 ``` pycon
-0123456789
 >>> b = Binary('0101110001')
 >>> hex(b)
 '0x171'
@@ -37,7 +36,7 @@ A quick example of what the package shall do:
 
 ## Python and bases
 
-Binary system is just a _representation_ of numbers with base 2, just like hexadecimal (base 16) and decimal (base 10). Python can already natively deal with different bases, even if internally numbers are always stored as decimal integers. Let us check it
+Binary system is just a _representation_ of numbers with base 2, just like hexadecimal (base 16) and decimal (base 10). Python can already natively deal with different bases, even if internally numbers are always stored as binary integers (more precise as numbers with base 2<sup>30</sup> and each digit as a binary number). Let us check it
 
 ``` pycon
 >>> a = 5
@@ -83,7 +82,7 @@ Simple tasks are the best way to try and use new development methodologies, so t
 * **Regression** checks: when you change the code to develop new features they shall not break the behaviour of the previous package versions.
 * **TODO list**: until all tests run successfully you have something still waiting to be implemented.
 
-I suggest you to follow this post until we wrote some tests (section "Writing some tests" included), then **write your own class, trying to make it pass all the tests**. This way, actually developing something, you can really learn both TDD and Python. Then you can check your code against mine and perhaps provide a far better solution that the one found by me.
+I suggest you to follow this post until we have some tests (section "Writing some tests" included), then **write your own class, trying to make it pass all the tests**. This way, actually developing something, you can really learn both TDD and Python. Then you can check your code against mine and perhaps provide a far better solution than the one found by me.
 
 ## Development environment
 
@@ -93,7 +92,7 @@ Let us set up a simple environment for the upcoming development. First of all cr
 ~$ virtualenv -p python3 venv
 ```
 
-then activate the virtualenv and install py.test, which is what we will use to write tests.
+then activate the virtualenv and install pytest, which is what we will use to execute tests.
 
 ``` bash
 ~$ source venv/bin/activate
@@ -109,7 +108,7 @@ Then create a directory for the package, the `__init__.py` file and a directory 
 (venv)~/binary$ mkdir tests
 ```
 
-Finally, let us check that everything is correctly working. Py.test does not find any test so it should exit without errors.
+Finally, let us check that everything is working correctly. py.test does not find any test so it should exit without errors.
 
 ``` bash
 (venv)~/binary$ py.test
@@ -122,7 +121,7 @@ collected 0 items
 
 where `[...]` will be filled with information about your execution environment.
 
-## Py.test
+## py.test
 
 The approach used by py.test is very straightforward: to test your library you just have to write some functions that use it. Those functions shall run without raising any exception; if a test (a function) runs without raising an exception it passes, otherwise it fails. Let us start writing a very simple test to learn the basic syntax. Create a `tests/test_binary.py` file and write the following code
 
@@ -308,7 +307,7 @@ class Binary:
     pass
 ```
 
-Now running py.test shows that all tests can be run and that all them fail (I will just show the first one)
+Now running py.test shows that all tests can be run and that all of them fail (I will just show the first one)
 
 ``` bash
 (venv)~/binary$ PYTHONPATH=. py.test -v
@@ -331,7 +330,7 @@ tests/test_binary.py:5: TypeError
 =================== 13 failed in 0.03 seconds ==================
 ```
 
-So now you can start writing code and use your test battery to check if it works as expected. Obviously "as expected" means that all the tests you wrote pass, but this does not imply you covered all cases. TDD is an iterative methodology: when you find a bug or a missing feature you first write a good test or a set of tests that address the matter and then produce some code that make the tests pass.
+So now you can start writing code and use your test battery to check if it works as expected. Obviously "as expected" means that all the tests you have pass, but this does not imply you covered all cases. TDD is an iterative methodology: when you find a bug or a missing feature you first write a good test or a set of tests that address the matter and then produce some code that make the tests pass.
 
 **At this point you are warmly encouraged to write the code by yourself** and to check your product with the given battery of tests. Just download the first version of the tests file ([`test_binary_ver1.py`](/code/python-oop-tdd-part1/test_binary_ver1.py)) and put it in the `tests/` directory. Then read it carefully to understand what the requirements are and start writing the class. When you think you are done with a part of it just run the tests and see if everything works well, then move on.
 
@@ -453,7 +452,7 @@ def test_binary_shl_pos():
 
 The first two tests check that adding both an integer and a `Binary` to a `Binary` works as expected. The division checks two different cases: because integer division produces a remainder, which is not considered here. The `test_binary_get_bit` function tests indexing and is one of the few tests that contain more than one assertion. Please note that binary indexing, unlike standard sequence indexing in Python, starts from the rightmost element.
 
-Bitwise and arithmetic operations are implemented using Python magic methods. Please check [the official documentation](https://docs.python.org/3.4/library/operator.html) for a complete list of operators and related methods.
+Bitwise and arithmetic operations are implemented using Python magic methods. Please check [the official documentation](https://docs.python.org/3/library/operator.html) for a complete list of operators and related methods.
 
 **Now download the file [`test_binary_ver2.py`](/code/python-oop-tdd-part1/test_binary_ver2.py) and use it to develop the new features.**
 
@@ -521,7 +520,7 @@ def test_binary_slice():
 
 **You will find the new tests in the [`test_binary_ver3.py`](/code/python-oop-tdd-part1/test_binary_ver3.py) file.**
 
-Running the tests shows that the `__getitem__()` function does not provide support for `slice` objects, raising the exception `TypeError: unsupported operand type(s) for +: 'slice' and 'int'`. Checking [the documentation](https://docs.python.org/3.4/reference/datamodel.html#object.__getitem__) of `__getitem__()` we notice that it shall manage both integers and `slice` objects (this is the missing part) and that it shall raise `IndexError` for illegal indexes to make for loops work. So I immediately add a test for this rule
+Running the tests shows that the `__getitem__()` function does not provide support for `slice` objects, raising the exception `TypeError: unsupported operand type(s) for +: 'slice' and 'int'`. Checking [the documentation](https://docs.python.org/3/reference/datamodel.html#object.__getitem__) of `__getitem__()` we notice that it shall manage both integers and `slice` objects (this is the missing part) and that it shall raise `IndexError` for illegal indexes to make for loops work. So I immediately add a test for this rule
 
 ``` python
 def test_binary_illegal_index():
@@ -582,7 +581,7 @@ def split(self, bits):
 * [Py.test project layouts](https://pytest.org/latest/goodpractises.html).
 * Jeff Knupp on [open sourcing a Python project](http://www.jeffknupp.com/blog/2013/08/16/open-sourcing-a-python-project-the-right-way/).
 * The Python [`collections.abc` module documentation](https://docs.python.org/3/library/collections.abc.html).
-* [Python operators documentation](https://docs.python.org/3.4/library/operator.html).
+* [Python operators documentation](https://docs.python.org/3/library/operator.html).
 
 The code developed in this post can be found here:
 
@@ -603,6 +602,7 @@ In the next post I will guide you through the addition of the `SizeBinary` class
 
 2016-12-20 [dndln](https://github.com/dndln) found an error in the 'Binary operations' section. The `test_binary_get_bit()` test included the assertion `assert binary[9] == '0'` which cannot be successful, since leading zeros are stripped, as stated in the previous section 'My Solution'. The attached code files were already correct. Thanks a lot for pointing it out!
 
+2022-11-25 [rioj7](https://github.com/rioj7) found several typos and corrected them. He also contributed a better explanation for the internal representation of decimal numbers. Thanks!
 
 ## Feedback
 
