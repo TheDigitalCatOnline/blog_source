@@ -34,7 +34,7 @@ An object that follows the sequence API in Python has the following traits, amon
 
 A derived feature which is provided by sequences is that they can be sliced, i.e. part of them can be extracted as a collection of the same type.
 
-These features are paramount because they allow Python to define a common interface for loops. This is obviously shared with mostly every programming language, but Clojure implements it in a slightly different way. A Python class shall implement some "magic" methods to expose the sequence API. To get a starting picture of the steps involved read [this post]({filename}python-oop-tdd-example-part1.markdown), where I discuss the implementation of a binary number type in Python.
+These features are paramount because they allow Python to define a common interface for loops. This is obviously shared with mostly every programming language, but Clojure implements it in a slightly different way. A Python class shall implement some "magic" methods to expose the sequence API. To get a starting picture of the steps involved read [this post]({filename}python-oop-tdd-example-part1.mau), where I discuss the implementation of a binary number type in Python.
 
 ## A matter of definitions
 

@@ -9,7 +9,7 @@ Summary: A curated list of useful command line options of the Python unit testin
 
 I recently gave a workshop on "TDD in Python with pytest", where I developed a very simple Python project together with the attendees following a TDD approach. It's a good way to introduce TDD, I think. I wrote each test together with the attendees, and then I left them the task of writing the Python code that passes the test. This way I could show TDD in action, introducing pytest features like the `pytest.raises` context manager or the use of `assert` while they become useful for the actual tests.
 
-This is the approach that I follow in some of my posts on TDD here on the blog, for example [A simple example of Python OOP development (with TDD)]({filename}python-oop-tdd-example-part1.markdown) and [A game of tokens: write an interpreter in Python with TDD - Part 1]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1.markdown).
+This is the approach that I follow in some of my posts on TDD here on the blog, for example [A simple example of Python OOP development (with TDD)]({filename}python-oop-tdd-example-part1.mau) and [A game of tokens: write an interpreter in Python with TDD - Part 1]({filename}a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-1.markdown).
 
 Part of the workshop was dedicated to pytest command line options and in general to what pytest can do as a testing framework. Unfortunately there was no time to go through this part, so I promised some of the attendees to give them a written version of it. This post is the fulfilment of that promise.
 

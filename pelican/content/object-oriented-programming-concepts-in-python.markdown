@@ -49,7 +49,7 @@ To get more comfortable with classes and delegation you can review them with the
 
 The following posts are simple but very useful exercises of OOP design, and they also use test-driven development (TDD)
 
-* [A simple example of Python OOP development (with TDD) - Part 1]({filename}python-oop-tdd-example-part1.markdown) and [A simple example of Python OOP development (with TDD) - Part 2]({filename}python-oop-tdd-example-part2.markdown)
+* [A simple example of Python OOP development (with TDD) - Part 1]({filename}python-oop-tdd-example-part1.mau) and [A simple example of Python OOP development (with TDD) - Part 2]({filename}python-oop-tdd-example-part2.mau)
 * [Refactoring with tests in Python: a practical example]({filename}refactoring-with-tests-in-python-a-practical-example.markdown)
 
 Speaking of TDD, you should get used to mocks, that are extremely useful when it comes to test objects that work together:
