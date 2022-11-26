@@ -5,21 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.thedigitalcatonline.com/</loc>
-<lastmod>2022-11-19T17:08:14-00:00</lastmod>
+<lastmod>2022-11-26T16:22:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.thedigitalcatonline.com/archives/</loc>
-<lastmod>2022-11-19T17:08:14-00:00</lastmod>
+<lastmod>2022-11-26T16:22:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.thedigitalcatonline.com/pages/about.html</loc>
-<lastmod>2022-11-19T17:08:14-00:00</lastmod>
+<lastmod>2022-11-26T16:22:40-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/blog/2015/05/13/python-oop-tdd-example-part1/</loc>
+<lastmod>2022-11-26T16:00:00+00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/</loc>
+<lastmod>2022-11-26T17:00:00+00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -599,13 +613,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/</loc>
-<lastmod>2015-09-10T20:00:00+01:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>https://www.thedigitalcatonline.com/blog/2015/06/22/using-gitflow-with-github-a-simple-procedure/</loc>
 <lastmod>2015-06-22T14:00:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
@@ -615,13 +622,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.thedigitalcatonline.com/blog/2015/05/13/99-scala-problems-16-20/</loc>
 <lastmod>2015-05-13T16:00:00+01:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://www.thedigitalcatonline.com/blog/2015/05/13/python-oop-tdd-example-part1/</loc>
-<lastmod>2015-05-13T17:00:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -768,7 +768,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.thedigitalcatonline.com/category/programming/</loc>
-<lastmod>2022-10-08T14:00:00+00:09</lastmod>
+<lastmod>2022-11-26T17:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -788,22 +788,43 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://www.thedigitalcatonline.com/categories/oop/</loc>
+<lastmod>2022-11-26T17:00:00+00:09</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/categories/pytest/</loc>
+<lastmod>2022-11-26T16:00:00+00:09</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://www.thedigitalcatonline.com/categories/python/</loc>
-<lastmod>2022-10-08T14:00:00+00:09</lastmod>
+<lastmod>2022-11-26T17:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.thedigitalcatonline.com/categories/python3/</loc>
-<lastmod>2022-10-08T14:00:00+00:09</lastmod>
+<lastmod>2022-11-26T17:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://www.thedigitalcatonline.com/categories/oop/</loc>
-<lastmod>2022-10-08T14:00:00+00:09</lastmod>
+<loc>https://www.thedigitalcatonline.com/categories/tdd/</loc>
+<lastmod>2022-11-26T17:00:00+00:09</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.thedigitalcatonline.com/categories/testing/</loc>
+<lastmod>2022-11-26T17:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -942,29 +963,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://www.thedigitalcatonline.com/categories/pytest/</loc>
-<lastmod>2021-09-24T12:00:00+00:09</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://www.thedigitalcatonline.com/categories/tdd/</loc>
-<lastmod>2021-09-24T12:00:00+00:09</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>https://www.thedigitalcatonline.com/categories/versioning/</loc>
 <lastmod>2021-09-23T12:00:00+00:09</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://www.thedigitalcatonline.com/categories/testing/</loc>
-<lastmod>2021-08-22T10:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1223,7 +1223,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.thedigitalcatonline.com/authors/leonardo-giordani/</loc>
-<lastmod>2022-10-08T14:00:00+00:09</lastmod>
+<lastmod>2022-11-26T17:00:00+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

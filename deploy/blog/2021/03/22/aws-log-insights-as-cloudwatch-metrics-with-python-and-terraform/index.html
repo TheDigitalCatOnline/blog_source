@@ -1030,7 +1030,7 @@ aws --region<span class="o">=</span><span class="si">${</span><span class="nv">R
                   </div>
                 </div>
             </div>
-            <h2 id="costs">Costs<a class="headerlink" href="#costs" title="Permanent link">¶</a></h2><p>I will follow here the <a href="https://aws.amazon.com/lambda/pricing/">AWS guide on Lambda pricing</a> and the calculations published in 2018 by my colleague João Neves on <a href="https://silvaneves.org/how-much-does-a-lambda-cost.html">his blog</a>.</p><p>I assume the following:</p><ul><li>The Lambda runs 4 queries, so we have 5 invocations (1 for the main Lambda and 4 asynchronous tasks)</li><li>Each invocation runs for 5 seconds. The current average time of each invocation in my AWS accounts is 4.6 seconds</li><li>I run the Lambda every 2 minutes</li></ul><p>Requests: <code>5 invocations/event * 30 events/hour * 24 hours/day * 31 days/month = 111600 requests</code></p><p>Duration: <code>0.128 GB/request * 111600 requests * 5 seconds = 71424 GB-second</code></p><p>Total: <code>$0.20 * 111600 / 10^6 + $0.0000166667 * 71424 ~= $1.22/month</code></p><p>As you can see, for applications like this it's extremely convenient to use a serverless solution like Lambda functions.</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+            <h2 id="costs">Costs<a class="headerlink" href="#costs" title="Permanent link">¶</a></h2><p>I will follow here the <a href="https://aws.amazon.com/lambda/pricing/">AWS guide on Lambda pricing</a> and the calculations published in 2018 by my colleague João Neves on <a href="https://silvaneves.org/how-much-does-a-lambda-cost.html">his blog</a>.</p><p>I assume the following:</p><ul><li>The Lambda runs 4 queries, so we have 5 invocations (1 for the main Lambda and 4 asynchronous tasks)</li><li>Each invocation runs for 5 seconds. The current average time of each invocation in my AWS accounts is 4.6 seconds</li><li>I run the Lambda every 2 minutes</li></ul><p>Requests: <code>5 invocations/event * 30 events/hour * 24 hours/day * 31 days/month = 111600 requests</code></p><p>Duration: <code>0.128 GB/request * 111600 requests * 5 seconds = 71424 GB-second</code></p><p>Total: <code>$0.20 * 111600 / 10^6 + $0.0000166667 * 71424 ~= $1.22/month</code></p><p>As you can see, for applications like this it's extremely convenient to use a serverless solution like Lambda functions.</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
 
@@ -1184,6 +1184,45 @@ aws --region<span class="o">=</span><span class="si">${</span><span class="nv">R
           </div>
 	</article>
 	<article class="card">
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T16:00:00+00:00">Nov 26, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/09/10/python-oop-tdd-example-part2/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/09/10/python-oop-tdd-example-part2/"><h2>A simple example of Python OOP development (with TDD) - Part 2 </h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-09-10T20:00:00+01:00">Sep 10, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T17:00:00+00:00">Nov 26, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
           <a href="/blog/2015/01/12/accessing-attributes-in-python/">
             <img src="/images/accessing-attributes-in-python.jpg" alt="accessing-attributes-in-python" />
           </a>
@@ -1214,42 +1253,6 @@ aws --region<span class="o">=</span><span class="si">${</span><span class="nv">R
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2014-05-19T13:51:26+02:00">May 19, 2014</time></p>
 	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T13:00:00+00:00">Oct 8, 2022</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/03/27/mixin-classes-in-python/">
-            <img src="/images/multiple-inheritance-and-mixin-classes-in-python.jpg" alt="multiple-inheritance-and-mixin-classes-in-python" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/03/27/mixin-classes-in-python/"><h2>Multiple inheritance and mixin classes in Python</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/algorithms/" class="tag">algorithms</a>
-		<a href="/categories/django/" class="tag">Django</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-03-27T12:00:00+01:00">Mar 27, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T14:00:00+01:00">Oct 8, 2022</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/">
-            <img src="/images/delegation-composition-and-inheritance-in-object-oriented-programming.jpg" alt="delegation-composition-and-inheritance-in-object-oriented-programming" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/08/17/delegation-composition-and-inheritance-in-object-oriented-programming/"><h2>Delegation: composition and inheritance in object-oriented programming</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-17T09:00:00+01:00">Aug 17, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-03T08:00:00+00:00">Oct 3, 2022</time></p>
 	    </div>
           </div>
 	</article>

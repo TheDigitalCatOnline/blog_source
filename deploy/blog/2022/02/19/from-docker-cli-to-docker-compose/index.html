@@ -1122,7 +1122,7 @@ app_1  | Database connection closed.
 <span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">dbdata</span><span class="p">:</span><span class="w"></span>
 </pre></div>
-</div></div><p>The health check for the Postgres container leverages the command line tool <code>pg_isready</code> that is successful only when the database is ready to accept connections, and tries every 10 seconds for 5 times. Now, when you run <code>up -d</code> this time you should notice a clear delay before the application is run, but the logs won't contain any connection error.</p><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>Well, this was a long one, but I hope you enjoyed the trip and you ended up having a better picture of what problems Docker Compose solve, along with a feeling of how complicated it might be to design an architecture. Everything we did was for a "simple" development environment with a couple of containers, so you can figure what is involved when we get to live environments.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2022-03-17: Thanks to my colleague Joanna Stadnik for a thorough review, for spotting typos, and for giving me several suggestions based on her experience. Thank you!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p><p>Cover picture by <a href="https://unsplash.com/@verstappen_photography?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Verstappen Photography</a> on <a href="https://unsplash.com/s/photos/crane?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div></div><p>The health check for the Postgres container leverages the command line tool <code>pg_isready</code> that is successful only when the database is ready to accept connections, and tries every 10 seconds for 5 times. Now, when you run <code>up -d</code> this time you should notice a clear delay before the application is run, but the logs won't contain any connection error.</p><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>Well, this was a long one, but I hope you enjoyed the trip and you ended up having a better picture of what problems Docker Compose solve, along with a feeling of how complicated it might be to design an architecture. Everything we did was for a "simple" development environment with a couple of containers, so you can figure what is involved when we get to live environments.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2022-03-17: Thanks to my colleague Joanna Stadnik for a thorough review, for spotting typos, and for giving me several suggestions based on her experience. Thank you!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p><p>Cover picture by <a href="https://unsplash.com/@verstappen_photography?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Verstappen Photography</a> on <a href="https://unsplash.com/s/photos/crane?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
   </div>
 
 
@@ -1336,19 +1336,22 @@ app_1  | Database connection closed.
           </div>
 	</article>
 	<article class="card">
-          <a href="/blog/2015/01/12/accessing-attributes-in-python/">
-            <img src="/images/accessing-attributes-in-python.jpg" alt="accessing-attributes-in-python" />
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
           </a>
           <div class="body">
-            <a href="/blog/2015/01/12/accessing-attributes-in-python/"><h2>Accessing attributes in Python</h2></a>
+            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
 	    <div class="info">
 	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
 		<a href="/categories/python/" class="tag">Python</a>
 		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
               </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-01-12T17:00:00+01:00">Jan 12, 2015</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T14:00:00+01:00">Oct 8, 2022</time></p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T16:00:00+00:00">Nov 26, 2022</time></p>
 	    </div>
           </div>
 	</article>

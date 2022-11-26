@@ -921,7 +921,7 @@
 </pre></div>
 </div></div><p>It is clear that <code>TemplateResponseMixin</code> just adds to any class the two methods <code>get_template_names</code> and <code>render_to_response</code>. The latter is called in the <code>get</code> method of <code>TemplateView</code> to create the response. Let's have a look at a simplified schema of the calls:</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>GET request --&gt; TemplateView.dispatch --&gt; View.dispatch --&gt; TemplateView.get --&gt; TemplateResponseMixin.render_to_response
 </pre></div>
-</div></div><p>It might look complicated, but try to follow the code a couple of times and the whole picture will start to make sense. The important thing I want to stress is that the code in <code>TemplateResponseMixin</code> is available for any class that wants to have the feature of rendering a template, for example <code>DetailView</code> (<a href="https://github.com/django/django/blob/3.0/django/views/generic/detail.py#L164">CODE</a>), which receives the feature of showing the details of a single object by <code>SingleObjectTemplateResponseMixin</code>, which inherits from <code>TemplateResponseMixin</code>, overriding its method <code>get_template_names</code> (<a href="https://github.com/django/django/blob/3.0/django/views/generic/detail.py#L111">CODE</a>).</p><p>As we discussed before, mixins cannot be too generic, and here we see a good example of a mixin designed to work on specific classes. <code>TemplateResponseMixin</code> has to be applied to classes that contain <code>self.request</code> (<a href="https://github.com/django/django/blob/3.0/django/views/generic/base.py#L133">CODE</a>), and while this doesn't mean exclusively classes derived from <code>View</code>, it is clear that it has been designed to augment that specific type.</p><h2 id="takeaway-points">Takeaway points<a class="headerlink" href="#takeaway-points" title="Permanent link">¶</a></h2><ul><li>Inheritance is designed to promote code reuse but can lead to the opposite result</li><li>Multiple inheritance allows us to keep the inheritance tree simple</li><li>Multiple inheritance leads to possible problems that are solved in Python through the MRO</li><li>Interfaces (either implicit or explicit) should be part of your design</li><li>Mixin classes are used to add simple changes to classes</li><li>Mixins are implemented in Python using multiple inheritance: they have great expressive power but require careful design.</li></ul><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>I hope this post helped you to understand a bit more how multiple inheritance works, and to be less scared by it. I also hope I managed to show you that classes have to be carefully designed and that there is a lot to consider when you create a class system. Once again, please don't forget composition, it's a powerful and too often forgotten tool.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-03-13: GitHub user <a href="https://github.com/sureshvv">sureshvv</a> noticed that the <code>LimitSizeMixin</code> method <code>__init__</code> had the wrong parameters <code>pos_x</code> and <code>pos_y</code>, instead of <code>size_x</code> and <code>size_y</code>. Thanks!</p><p>2021-12-20: <a href="https://github.com/akocur">Alexander</a> fixed a mistake in the part relative to <code>SquareButton</code> and the behaviour of <code>super()</code>. Thanks!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+</div></div><p>It might look complicated, but try to follow the code a couple of times and the whole picture will start to make sense. The important thing I want to stress is that the code in <code>TemplateResponseMixin</code> is available for any class that wants to have the feature of rendering a template, for example <code>DetailView</code> (<a href="https://github.com/django/django/blob/3.0/django/views/generic/detail.py#L164">CODE</a>), which receives the feature of showing the details of a single object by <code>SingleObjectTemplateResponseMixin</code>, which inherits from <code>TemplateResponseMixin</code>, overriding its method <code>get_template_names</code> (<a href="https://github.com/django/django/blob/3.0/django/views/generic/detail.py#L111">CODE</a>).</p><p>As we discussed before, mixins cannot be too generic, and here we see a good example of a mixin designed to work on specific classes. <code>TemplateResponseMixin</code> has to be applied to classes that contain <code>self.request</code> (<a href="https://github.com/django/django/blob/3.0/django/views/generic/base.py#L133">CODE</a>), and while this doesn't mean exclusively classes derived from <code>View</code>, it is clear that it has been designed to augment that specific type.</p><h2 id="takeaway-points">Takeaway points<a class="headerlink" href="#takeaway-points" title="Permanent link">¶</a></h2><ul><li>Inheritance is designed to promote code reuse but can lead to the opposite result</li><li>Multiple inheritance allows us to keep the inheritance tree simple</li><li>Multiple inheritance leads to possible problems that are solved in Python through the MRO</li><li>Interfaces (either implicit or explicit) should be part of your design</li><li>Mixin classes are used to add simple changes to classes</li><li>Mixins are implemented in Python using multiple inheritance: they have great expressive power but require careful design.</li></ul><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>I hope this post helped you to understand a bit more how multiple inheritance works, and to be less scared by it. I also hope I managed to show you that classes have to be carefully designed and that there is a lot to consider when you create a class system. Once again, please don't forget composition, it's a powerful and too often forgotten tool.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-03-13: GitHub user <a href="https://github.com/sureshvv">sureshvv</a> noticed that the <code>LimitSizeMixin</code> method <code>__init__</code> had the wrong parameters <code>pos_x</code> and <code>pos_y</code>, instead of <code>size_x</code> and <code>size_y</code>. Thanks!</p><p>2021-12-20: <a href="https://github.com/akocur">Alexander</a> fixed a mistake in the part relative to <code>SquareButton</code> and the behaviour of <code>super()</code>. Thanks!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
 
@@ -982,6 +982,45 @@
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2014-02-14T16:13:41+01:00">Feb 14, 2014</time></p>
 	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-03-16T07:00:00+00:00">Mar 16, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T16:00:00+00:00">Nov 26, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/09/10/python-oop-tdd-example-part2/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/09/10/python-oop-tdd-example-part2/"><h2>A simple example of Python OOP development (with TDD) - Part 2 </h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-09-10T20:00:00+01:00">Sep 10, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T17:00:00+00:00">Nov 26, 2022</time></p>
 	    </div>
           </div>
 	</article>
@@ -1074,48 +1113,6 @@
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-11-14T19:00:00+00:00">Nov 14, 2016</time></p>
 	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-09-24T12:00:00+00:00">Sep 24, 2021</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2018/12/20/cabook/">
-            <img src="/images/cabook.jpg" alt="cabook" />
-          </a>
-          <div class="body">
-            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python2/" class="tag">Python2</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-		<a href="/categories/architectures/" class="tag">architectures</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
-            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
 	    </div>
           </div>
 	</article>

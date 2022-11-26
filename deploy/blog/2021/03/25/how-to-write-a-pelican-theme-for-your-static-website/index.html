@@ -1172,7 +1172,7 @@ Tags: tag6,tag11,tag8
                   </div>
                 </div>
             </div>
-            <h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2><p>As I promised, I showed you how to use Jinja tags and Pelican variables, and we went from a purely static template to a rich dynamic one. There are several things that you might want to investigate and implement now:</p><ul><li>Both <code>index.html</code> and <code>article.html</code> contain a great amount of common code (the part that displays the article). Try to work on that to isolate the shared code and remove the duplication. Remember that they are not exactly the same, so you might want to investigate the tag <code>with</code> provided by Jinja.</li><li>Tags and categories. Pelican creates pages with all the articles that belong to a specific category or tag, and they work exactly like the index page. The documentation of the variables available in those pages can be found at <a href="https://docs.getpelican.com/en/latest/themes.html#category-html">https://docs.getpelican.com/en/latest/themes.html#category-html</a> and <a href="https://docs.getpelican.com/en/latest/themes.html#tag-html">https://docs.getpelican.com/en/latest/themes.html#tag-html</a>. You should try to create a page that lists all the articles with a certain tag and connect it to the tag button at the end of each article.</li><li>Pelican can create pages of content (as opposed to articles), and you might want to show those in the navigation bar. You can find the documentation of the <code>Page</code> objects at <a href="https://docs.getpelican.com/en/latest/themes.html#page">https://docs.getpelican.com/en/latest/themes.html#page</a>. Create an "About me" page and link it there.</li><li>If you want to publish the website you probably want to minify assets to save bandwidth and reduce the loading time. Have a look at <code>webassets</code> (<a href="https://github.com/pelican-plugins/webassets">https://github.com/pelican-plugins/webassets</a>), a plugin that makes assets management as easy as pie.</li><li>Speaking of plugins, Pelican has a huge number of them. The developers are in the process of transitioning them to a new better format, so you will find the main plugins at <a href="https://github.com/pelican-plugins">https://github.com/pelican-plugins</a> and the rest at <a href="https://github.com/getpelican/pelican-plugins">https://github.com/getpelican/pelican-plugins</a>. I recommend having a look at <code>sitemap</code>, which is very easy to setup and provides an important tool for search engines to discover your site.</li><li>When it comes to deploying the static website you should definitely read <a href="https://docs.getpelican.com/en/latest/publish.html">Pelican&#x27;s documentation</a>, as the management scripts support several backends.</li></ul><p>Last, but hopefully not least, the code of this blog is public and can be found at <a href="https://github.com/TheDigitalCatOnline/blog_source">https://github.com/TheDigitalCatOnline/blog_source</a>. While the overall setup contains a bit of legacy code (I started a while ago and many things have changed in the meanwhile), the theme <code>editorial</code> is pretty new, so feel free to have a look at it and to get inspired (<a href="https://github.com/TheDigitalCatOnline/blog_source/tree/master/editorial">https://github.com/TheDigitalCatOnline/blog_source/tree/master/editorial</a>).</p><p>I hope this was useful. Remember that Pelican is open source, and you can always get in touch with the maintainers to ask questions or to submit enhancements. Also remember to drop a line on Twitter to the author of any template you will use (thanks are always welcome) and to link to the source on the website. Happy blogging!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+            <h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2><p>As I promised, I showed you how to use Jinja tags and Pelican variables, and we went from a purely static template to a rich dynamic one. There are several things that you might want to investigate and implement now:</p><ul><li>Both <code>index.html</code> and <code>article.html</code> contain a great amount of common code (the part that displays the article). Try to work on that to isolate the shared code and remove the duplication. Remember that they are not exactly the same, so you might want to investigate the tag <code>with</code> provided by Jinja.</li><li>Tags and categories. Pelican creates pages with all the articles that belong to a specific category or tag, and they work exactly like the index page. The documentation of the variables available in those pages can be found at <a href="https://docs.getpelican.com/en/latest/themes.html#category-html">https://docs.getpelican.com/en/latest/themes.html#category-html</a> and <a href="https://docs.getpelican.com/en/latest/themes.html#tag-html">https://docs.getpelican.com/en/latest/themes.html#tag-html</a>. You should try to create a page that lists all the articles with a certain tag and connect it to the tag button at the end of each article.</li><li>Pelican can create pages of content (as opposed to articles), and you might want to show those in the navigation bar. You can find the documentation of the <code>Page</code> objects at <a href="https://docs.getpelican.com/en/latest/themes.html#page">https://docs.getpelican.com/en/latest/themes.html#page</a>. Create an "About me" page and link it there.</li><li>If you want to publish the website you probably want to minify assets to save bandwidth and reduce the loading time. Have a look at <code>webassets</code> (<a href="https://github.com/pelican-plugins/webassets">https://github.com/pelican-plugins/webassets</a>), a plugin that makes assets management as easy as pie.</li><li>Speaking of plugins, Pelican has a huge number of them. The developers are in the process of transitioning them to a new better format, so you will find the main plugins at <a href="https://github.com/pelican-plugins">https://github.com/pelican-plugins</a> and the rest at <a href="https://github.com/getpelican/pelican-plugins">https://github.com/getpelican/pelican-plugins</a>. I recommend having a look at <code>sitemap</code>, which is very easy to setup and provides an important tool for search engines to discover your site.</li><li>When it comes to deploying the static website you should definitely read <a href="https://docs.getpelican.com/en/latest/publish.html">Pelican&#x27;s documentation</a>, as the management scripts support several backends.</li></ul><p>Last, but hopefully not least, the code of this blog is public and can be found at <a href="https://github.com/TheDigitalCatOnline/blog_source">https://github.com/TheDigitalCatOnline/blog_source</a>. While the overall setup contains a bit of legacy code (I started a while ago and many things have changed in the meanwhile), the theme <code>editorial</code> is pretty new, so feel free to have a look at it and to get inspired (<a href="https://github.com/TheDigitalCatOnline/blog_source/tree/master/editorial">https://github.com/TheDigitalCatOnline/blog_source/tree/master/editorial</a>).</p><p>I hope this was useful. Remember that Pelican is open source, and you can always get in touch with the maintainers to ask questions or to submit enhancements. Also remember to drop a line on Twitter to the author of any template you will use (thanks are always welcome) and to link to the source on the website. Happy blogging!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
 
@@ -1345,6 +1345,45 @@ Tags: tag6,tag11,tag8
           </div>
 	</article>
 	<article class="card">
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T16:00:00+00:00">Nov 26, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/09/10/python-oop-tdd-example-part2/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/09/10/python-oop-tdd-example-part2/"><h2>A simple example of Python OOP development (with TDD) - Part 2 </h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-09-10T20:00:00+01:00">Sep 10, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T17:00:00+00:00">Nov 26, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
           <a href="/blog/2015/01/12/accessing-attributes-in-python/">
             <img src="/images/accessing-attributes-in-python.jpg" alt="accessing-attributes-in-python" />
           </a>
@@ -1357,42 +1396,6 @@ Tags: tag6,tag11,tag8
 		<a href="/categories/oop/" class="tag">OOP</a>
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-01-12T17:00:00+01:00">Jan 12, 2015</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T14:00:00+01:00">Oct 8, 2022</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2014/05/19/method-overriding-in-python/">
-            <img src="/images/method-overriding-in-python.jpg" alt="method-overriding-in-python" />
-          </a>
-          <div class="body">
-            <a href="/blog/2014/05/19/method-overriding-in-python/"><h2>Method overriding in Python</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2014-05-19T13:51:26+02:00">May 19, 2014</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T13:00:00+00:00">Oct 8, 2022</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/03/27/mixin-classes-in-python/">
-            <img src="/images/multiple-inheritance-and-mixin-classes-in-python.jpg" alt="multiple-inheritance-and-mixin-classes-in-python" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/03/27/mixin-classes-in-python/"><h2>Multiple inheritance and mixin classes in Python</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/algorithms/" class="tag">algorithms</a>
-		<a href="/categories/django/" class="tag">Django</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-03-27T12:00:00+01:00">Mar 27, 2020</time></p>
 	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-10-08T14:00:00+01:00">Oct 8, 2022</time></p>
 	    </div>
           </div>

@@ -1708,7 +1708,7 @@ expression: integer (addsymbol expression)
 <h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h2>
 <p>2017-12-24: Victor Uriarte (<a href="https://github.com/vmuriart">vmuriart</a>) spotted an important issue in a previous version of the post. The last two tests (<code>test_parse_expression_with_multiple_operations</code> and <code>test_visitor_expression_with_multiple_operations</code>) used a right-growing tree instead of a left-growing one. The problem with a right-growing tree is that an operator affects <em>everything</em> is on the right side, that is the whole rest of the operation. Thus, an operation like <code>10 - 1 + 1</code> would become <code>10 - (1 + 1)</code>, and the result is obviously different. I fixed the tests and the solution I give in the next posts. You can read Victor's issue <a href="https://github.com/lgiordani/smallcalc/issues/4">here</a>. Thanks Victor for spotting it!</p>
 <h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
-<p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/thedigitalcatonline.github.com/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+<p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
   <section class="links">
@@ -1769,6 +1769,26 @@ expression: integer (addsymbol expression)
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2017-10-31T11:00:00+00:00">Oct 31, 2017</time></p>
 	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2020-08-05T11:00:00+00:00">Aug 5, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          </a>
+          <div class="body">
+            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T16:00:00+00:00">Nov 26, 2022</time></p>
 	    </div>
           </div>
 	</article>
@@ -1923,26 +1943,6 @@ expression: integer (addsymbol expression)
 		<a href="/categories/testing/" class="tag">testing</a>
               </p>
 	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2019/05/27/youtube-channel/">
-            <img src="/images/youtube-channel.jpg" alt="youtube-channel" />
-          </a>
-          <div class="body">
-            <a href="/blog/2019/05/27/youtube-channel/"><h2>The Digital Cat Youtube Channel</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python2/" class="tag">Python2</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-		<a href="/categories/video/" class="tag">video</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-05-27T12:00:00+01:00">May 27, 2019</time></p>
 	    </div>
           </div>
 	</article>
