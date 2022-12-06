@@ -54,9 +54,9 @@ volumes:
   pgdata::3:
 ----
 
-The variables starting with `POSTGRES_` are requested by the PostgreSQL Docker image. In particular, remember that `POSTGRESQL_DB` [callout]#1# is the database that gets created by default when you create the image, and also the one that contains data on other databases as well, so for the application we usually want to use a different one.
+The variables starting with `POSTGRES_` are requested by the PostgreSQL Docker image. In particular, remember that `POSTGRESQL_DB` [class]("1","callout") is the database that gets created by default when you create the image, and also the one that contains data on other databases as well, so for the application we usually want to use a different one.
 
-Notice also that I'm creating a persistent volume for the service `db` [callout]#2# [callout]#3#, so that the content of the database is not lost when we tear down the container. For this service I'm using the default image, so no build step is needed.
+Notice also that I'm creating a persistent volume for the service `db` [class]("2","callout") [class]("3","callout"), so that the content of the database is not lost when we tear down the container. For this service I'm using the default image, so no build step is needed.
 
 To orchestrate this setup we need to add those variables to the JSON configuration
 
@@ -97,7 +97,7 @@ To orchestrate this setup we need to add those variables to the JSON configurati
 
 These are all development variables so there are no secrets. In production we will need a way to keep the secrets in a safe place and convert them into environment variables. The [link](https://aws.amazon.com/secrets-manager/,"AWS Secrets Manager") for example can directly map secrets into environment variables passed to the containers, saving you from having to explicitly connect to the service with the API.
 
-You may have noticed the variable `POSTGRES_HOSTNAME` [callout]#1#, which is not used in the Docker Compose file. Generally we want the database to be accessible by utility scripts, so we want to record the host name where the database is running. As we will see shortly, other Docker containers do not need this, but migrations will.
+You may have noticed the variable `POSTGRES_HOSTNAME` [class]("1","callout"), which is not used in the Docker Compose file. Generally we want the database to be accessible by utility scripts, so we want to record the host name where the database is running. As we will see shortly, other Docker containers do not need this, but migrations will.
 
 We can run the commands `./manage.py compose up -d` and `./manage.py compose down` here to check that the database container works properly. Please note that the first time you run the command `compose -d` Docker will create the volume and build the Postgres image, and this might take some time.
 
@@ -156,7 +156,7 @@ class TestingConfig(Config):
     TESTING = True
 ----
 
-As you can see, here I use the variable `APPLICATION_DB` [callout]#1# and not `POSTGRES_DB`, so I need to specify that as well in the config file. The reason, as I mentioned before, is that we prefer to separate the default database, used by Postgres to manage all other databases, from the one used specifically by our application.
+As you can see, here I use the variable `APPLICATION_DB` [class]("1","callout") and not `POSTGRES_DB`, so I need to specify that as well in the config file. The reason, as I mentioned before, is that we prefer to separate the default database, used by Postgres to manage all other databases, from the one used specifically by our application.
 
 .config/development.json
 [source,json]
@@ -559,10 +559,10 @@ if __name__ == "__main__":
 
 Notable changes are
 
-* The environment configuration code is now in the function `configure_app` [callout]#1#. This allows me to force the variable `APPLICATION_CONFIG` inside the script [callout]#2# and then configure the environment, which saves me from having to call tests with `APPLICATION_CONFIG=testing flask test`.
+* The environment configuration code is now in the function `configure_app` [class]("1","callout"). This allows me to force the variable `APPLICATION_CONFIG` inside the script [class]("2","callout") and then configure the environment, which saves me from having to call tests with `APPLICATION_CONFIG=testing flask test`.
 * Both commands `flask` and `compose` use the configuration `development`. Since that is the default value of the variable `APPLICATION_CONFIG` they just have to call the function `configure_app`.
-* The docker-compose command line is needed both in the commands `compose` and in `test`, so I isolated some code into a function called `docker_compose_cmdline` [callout]#3# which returns a list as needed by `subprocess` functions. The command line now uses also the option `-p` (project name) [callout]#4# to give a prefix to the containers. This way we can run tests while running the development server.
-* The command `test` forces `APPLICATION_CONFIG` to be `testing` [callout]#5#, which loads the file `config/testing.json`, then runs docker-compose using the file `docker/testing.yml` (both file have not been created yet), runs the pytest command line, and tears down the testing database container. Before running the tests the script waits for the service to be available [callout]#6#. Postgres doesn't allow connection until the database is ready to accept them.
+* The docker-compose command line is needed both in the commands `compose` and in `test`, so I isolated some code into a function called `docker_compose_cmdline` [class]("3","callout") which returns a list as needed by `subprocess` functions. The command line now uses also the option `-p` (project name) [class]("4","callout") to give a prefix to the containers. This way we can run tests while running the development server.
+* The command `test` forces `APPLICATION_CONFIG` to be `testing` [class]("5","callout"), which loads the file `config/testing.json`, then runs docker-compose using the file `docker/testing.yml` (both file have not been created yet), runs the pytest command line, and tears down the testing database container. Before running the tests the script waits for the service to be available [class]("6","callout"). Postgres doesn't allow connection until the database is ready to accept them.
 
 .config/testing.json
 [source,json]
@@ -603,9 +603,9 @@ Notable changes are
 ]
 ----
 
-Note that here I specified the value `5433` for `POSTGRES_PORT` [callout]#1#. This allows us to spin up the test database container while the development one is running, as that will use port `5432` and you can't have two different containers using the same port on the host. A more general solution could be to leave Docker pick a random host port for the container and then use that, but this requires a bit more code to be properly implemented, so I will come back to this problem when setting up the scenarios.
+Note that here I specified the value `5433` for `POSTGRES_PORT` [class]("1","callout"). This allows us to spin up the test database container while the development one is running, as that will use port `5432` and you can't have two different containers using the same port on the host. A more general solution could be to leave Docker pick a random host port for the container and then use that, but this requires a bit more code to be properly implemented, so I will come back to this problem when setting up the scenarios.
 
-Also note that I set the variable `POSTGRES_HOSTNAME` to `localhost` in this file [callout]#2#. We will run the tests on the local machine and not in a container, so we can't use the DNS provided by Docker Compose.
+Also note that I set the variable `POSTGRES_HOSTNAME` to `localhost` in this file [class]("2","callout"). We will run the tests on the local machine and not in a container, so we can't use the DNS provided by Docker Compose.
 
 The last piece of setup that we need is the orchestration configuration for Docker Compose
 
@@ -818,7 +818,7 @@ if __name__ == "__main__":
     cli()
 ----
 
-As you can see I took the opportunity to write the command `create_initial_db` [callout]#1# as well, that just runs the very same SQL command that creates the testing database, but in any configuration I will use. 
+As you can see I took the opportunity to write the command `create_initial_db` [class]("1","callout") as well, that just runs the very same SQL command that creates the testing database, but in any configuration I will use. 
 
 Before moving on I think it's time to refactor the file `manage.py`. Refactoring is not mandatory, but I feel like some parts of the script are not generic enough, and when I will add the scenarios I will definitely need my functions to be flexible.
 
@@ -992,9 +992,9 @@ if __name__ == "__main__":
 
 Notable changes:
 
-* I created two new functions `app_config_file` [callout]#1# and `docker_compose_file` [callout]#2# that encapsulate the creation of the file paths.
-* I isolated the code that waits for a message in the database container logs, creating the function `wait_for_logs` [callout]#3#.
-* The command `docker_compose_cmdline` [callout]#4# now receives a string and converts it into a list internally. This way expressing commands is more natural, as it doesn't require the ugly list syntax that `subprocess` works with.
+* I created two new functions `app_config_file` [class]("1","callout") and `docker_compose_file` [class]("2","callout") that encapsulate the creation of the file paths.
+* I isolated the code that waits for a message in the database container logs, creating the function `wait_for_logs` [class]("3","callout").
+* The command `docker_compose_cmdline` [class]("4","callout") now receives a string and converts it into a list internally. This way expressing commands is more natural, as it doesn't require the ugly list syntax that `subprocess` works with.
 
 === Git commit
 

@@ -80,7 +80,7 @@ E       ZeroDivisionError: division by zero
 simple_calculator/main.py:17: ZeroDivisionError
 ----
 
-Note that when an exception happens in the code and not in the test, the pytest output changes slightly. The first part of the message shows where the test fails, but then there is a second part that shows the internal code that raised the exception and provides information about the value of local variables on the first line [callout]#1#.
+Note that when an exception happens in the code and not in the test, the pytest output changes slightly. The first part of the message shows where the test fails, but then there is a second part that shows the internal code that raised the exception and provides information about the value of local variables on the first line [class]("1","callout").
 
 We might implement two different solutions to satisfy this requirement and its test. The first one is to prevent `b` to be 0
 

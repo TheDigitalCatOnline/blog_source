@@ -78,7 +78,7 @@ class Child(Parent):
 Parent: value is 5
 ----
 
-As you can see, `describe` is defined in `Parent` [callout]#1#, so when the instance `cld` calls it [callout]#2#, its class `Child` delegates the call to the class `Parent`. This, in turn, uses `_value` as if it was defined locally [callout]#3#, while it is defined in `cld`. This works because, from the point of view of the state, `Parent` has complete access to the state of `Child`. Please note that the state is not even enclosed in a name space, as the state of the child class _becomes_ the state of the parent class.
+As you can see, `describe` is defined in `Parent` [class]("1","callout"), so when the instance `cld` calls it [class]("2","callout"), its class `Child` delegates the call to the class `Parent`. This, in turn, uses `_value` as if it was defined locally [class]("3","callout"), while it is defined in `cld`. This works because, from the point of view of the state, `Parent` has complete access to the state of `Child`. Please note that the state is not even enclosed in a name space, as the state of the child class _becomes_ the state of the parent class.
 
 Composition, on the other side, keeps the state completely private and makes the delegated object see only what is explicitly shared through message passing. A simple example of this is
 
@@ -104,7 +104,7 @@ class Process:
 Logger: value is 5
 ----
 
-Here, instances of `Process` have an attribute `_value` [callout]#1# that is shared with the class`Logger` only when it comes to calling `Logger.log` [callout]#2# inside their `info` method. `Logger` objects have no visibility of the state of `Process` objects unless it is explicitly shared.
+Here, instances of `Process` have an attribute `_value` [class]("1","callout") that is shared with the class`Logger` only when it comes to calling `Logger.log` [class]("2","callout") inside their `info` method. `Logger` objects have no visibility of the state of `Process` objects unless it is explicitly shared.
 
 Note for advanced readers: I'm clearly mixing the concepts of instance and class here, and blatantly ignoring the resulting inconsistencies. The state of an instance is not the same thing as the state of a class, and it should also be mentioned that classes are themselves instances of metaclasses, at least in Python. What I want to point out here is that access to attributes is granted automatically to inherited classes because of the way `__getattribute__` and bound methods work, while in composition such mechanisms are not present and the effect is that the state is not shared.
 
@@ -160,7 +160,7 @@ Window 'Terminal' is 800x600
 Transparency is set to 70
 ----
 
-When we call `twin.info`, Python is running `TransparentWindow`'s implementation of that method [callout]#1# and is not automatically delegating anything to `Window` even though the latter has a method with that name [callout]#2#. Indeed, we have to explicitly call it through `super` when we want to reuse it [callout]#3#. When we use `resize`, though, the implicit delegation kicks in and we end up with the execution of `Window.resize`. Please note that this delegation doesn't propagate to the next calls. When `Window.resize` calls `self.info` this runs `TransparentWindow.info`, as the original call was made from that class.
+When we call `twin.info`, Python is running `TransparentWindow`'s implementation of that method [class]("1","callout") and is not automatically delegating anything to `Window` even though the latter has a method with that name [class]("2","callout"). Indeed, we have to explicitly call it through `super` when we want to reuse it [class]("3","callout"). When we use `resize`, though, the implicit delegation kicks in and we end up with the execution of `Window.resize`. Please note that this delegation doesn't propagate to the next calls. When `Window.resize` calls `self.info` this runs `TransparentWindow.info`, as the original call was made from that class.
 
 Composition is on the other end of the spectrum, as any delegation performed through composed objects has to be explicit. Let's see an example
 
@@ -197,7 +197,7 @@ When we instantiate a `Page` and call `info` everything works
 {'title': 'New post', 'body': {'length': 34}}
 ----
 
-but as you can see, `Page.info` has to explicitly mention `Body.info` through `self._body` [callout]#1#, as we had to do when using inheritance with `super`. Composition is not different from inheritance when methods are overridden, at least in Python.
+but as you can see, `Page.info` has to explicitly mention `Body.info` through `self._body` [class]("1","callout"), as we had to do when using inheritance with `super`. Composition is not different from inheritance when methods are overridden, at least in Python.
 
 
 === Relationship: to be vs to have
@@ -289,7 +289,7 @@ class Bicycle:
 >>> bicycle = Bicycle()
 ----
 
-As you can see here, an instance of `Bicycle` contains an instance of `Gears` [callout]#1# and this allows us to create a delegation in the methods `gear_up` [callout]#2# and `gear_down` [callout]#3#. The delegation, however, happens between `bicycle` and `bicycle.gears` which are instances.
+As you can see here, an instance of `Bicycle` contains an instance of `Gears` [class]("1","callout") and this allows us to create a delegation in the methods `gear_up` [class]("2","callout") and `gear_down` [class]("3","callout"). The delegation, however, happens between `bicycle` and `bicycle.gears` which are instances.
 
 It is also possible, at least in Python, to have composition using pure classes, which is useful when the class is a pure helper or a simple container of methods (I'm not going to discuss here the benefits or the disadvantages of such a solution)
 

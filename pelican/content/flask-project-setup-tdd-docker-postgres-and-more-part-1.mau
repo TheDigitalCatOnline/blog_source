@@ -174,7 +174,7 @@ def create_app(config_name)::1:
     return app
 ----
 
-I decided to use an application factory [callout]#1# that accepts a string `config_name` that is then converted into the name of the config object [callout]#2#. For example, if `config_name` is `development` the variable `config_module` becomes `application.config.DevelopmentConfig` so that `app.config.from_object` can import it. I also added the standard "Hello, world!" route [callout]#3# to have a quick way to see if the server is working or not.
+I decided to use an application factory [class]("1","callout") that accepts a string `config_name` that is then converted into the name of the config object [class]("2","callout"). For example, if `config_name` is `development` the variable `config_module` becomes `application.config.DevelopmentConfig` so that `app.config.from_object` can import it. I also added the standard "Hello, world!" route [class]("3","callout") to have a quick way to see if the server is working or not.
 
 Last, we need something that initializes the application running the application factory and passing the correct value for the parameter `config_name`. The Flask development server can automatically use any file named `wsgi.py` in the root directory, and since WSGI is a standard specification using that makes me sure that any HTTP server we will use in production (for example Gunicorn or uWSGI) will be immediately working.
 
@@ -311,7 +311,7 @@ $ chmod 775 manage.py
 
 As you can see I'm using `click`, which is the recommended way to implement Flask commands. As I might use it to customise subcommands of the flask main script, I decided to stick to one tool and use it for the script `manage.py` as well.
 
-The variable `APPLICATION_CONFIG` [callout]#1# is the only one that I need to specify, and its default value is `development`. From that variable I infer the name of the JSON file with the full configuration [callout]#2# and load environment variables from that. The function `flask` [callout]#3# simply wraps the command `flask` provided by Flask so that I can run `./manage.py flask SUBCOMMAND` to run it using the configuration `development` or `APPLICATION_CONFIG="foobar" ./manage.py flask SUBCOMMAND` to use the `foobar` one.
+The variable `APPLICATION_CONFIG` [class]("1","callout") is the only one that I need to specify, and its default value is `development`. From that variable I infer the name of the JSON file with the full configuration [class]("2","callout") and load environment variables from that. The function `flask` [class]("3","callout") simply wraps the command `flask` provided by Flask so that I can run `./manage.py flask SUBCOMMAND` to run it using the configuration `development` or `APPLICATION_CONFIG="foobar" ./manage.py flask SUBCOMMAND` to use the `foobar` one.
 
 A clarification, to be sure you don't confuse environment variables with each other:
 

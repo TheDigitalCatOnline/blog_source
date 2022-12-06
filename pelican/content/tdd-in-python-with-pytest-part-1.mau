@@ -169,9 +169,9 @@ def test_add_two_numbers()::2:
     assert result == 9
 ----
 
-As you can see the first thing we do is to import the class `SimpleCalculator` [callout]#1# that we are supposed to write. This class doesn't exist yet, don't worry, you didn't skip any passage.
+As you can see the first thing we do is to import the class `SimpleCalculator` [class]("1","callout") that we are supposed to write. This class doesn't exist yet, don't worry, you didn't skip any passage.
 
-The test is a standard function [callout]#2# (this is how pytest works), and the function name shall begin with `test_` so that pytest can automatically discover all the tests. I tend to give my tests a descriptive name, so it is easier later to come back and understand what the test is about with a quick glance. You are free to follow the style you prefer but in general remember that naming components in a proper way is one of the most difficult things in programming. So better to get a handle on it as soon as possible.
+The test is a standard function [class]("2","callout") (this is how pytest works), and the function name shall begin with `test_` so that pytest can automatically discover all the tests. I tend to give my tests a descriptive name, so it is easier later to come back and understand what the test is about with a quick glance. You are free to follow the style you prefer but in general remember that naming components in a proper way is one of the most difficult things in programming. So better to get a handle on it as soon as possible.
 
 The body of the test function is pretty simple. The class `SimpleCalculator` is instantiated, and the method `add` of the instance is called with two numbers, 4 and 5. The result is stored in the variable `result`, which is later the subject of the test itself. The statement `assert result == 9` first computes `result == 9` which is a boolean, with a value that is either `True` or `False`. The keyword `assert`, then, silently passes if the argument is `True`, but raises an exception if it is `False`.
 

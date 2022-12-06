@@ -277,11 +277,11 @@ if __name__ == "__main__":
     cli()
 ----
 
-where I added the commands `scenario up` [callout]#1# and `scenario down` [callout]#2#. As you can see the function `up` first copies the files `config/scenario.json` [callout]#3# and `docker/scenario.yml` [callout]#4# (that I still have to create) into files named after the scenario.
+where I added the commands `scenario up` [class]("1","callout") and `scenario down` [class]("2","callout"). As you can see the function `up` first copies the files `config/scenario.json` [class]("3","callout") and `docker/scenario.yml` [class]("4","callout") (that I still have to create) into files named after the scenario.
 
-Then I run the command `up -d` [callout]#5# and wait for the database to be ready, as I already do for tests. After that, it's time to extract the port of the container with some very simple Python string processing [callout]#6# and to initialise the correct environment variable.
+Then I run the command `up -d` [class]("5","callout") and wait for the database to be ready, as I already do for tests. After that, it's time to extract the port of the container with some very simple Python string processing [class]("6","callout") and to initialise the correct environment variable.
 
-Last, I import and execute the Python file [callout]#7# containing the code of the scenario itself and print a friendly message with the command line to run `psql` [callout]#8# to have a Postgres shell into the newly created database.
+Last, I import and execute the Python file [class]("7","callout") containing the code of the scenario itself and print a friendly message with the command line to run `psql` [class]("8","callout") to have a Postgres shell into the newly created database.
 
 The function `down` simply tears down the containers and removes the scenario configuration files.
 
@@ -319,7 +319,7 @@ services:
       - "5000"
 ----
 
-Here you can see that the database is ephemeral, that the port on the host is automatically assigned [callout]#1#, and that I also spin up the application (mapping it to a random port as well to avoid clashing with the development one).
+Here you can see that the database is ephemeral, that the port on the host is automatically assigned [class]("1","callout"), and that I also spin up the application (mapping it to a random port as well to avoid clashing with the development one).
 
 The configuration file is
 
@@ -474,7 +474,7 @@ def run():
         db.session.commit()
 ----
 
-I decided to be as agnostic as possible in the scenarios, to avoid creating something too specific that eventually would not give me enough flexibility to test what I need. This means that the scenario has to create the app [callout]#1# and to use the database session explicitly [callout]#2#, as I do in this example. The application is created with the configuration `"development"` [callout]#1#. Remember that this is the Flask configuration that you find in `application/config.py`, not the one that is in `config/development.json`.
+I decided to be as agnostic as possible in the scenarios, to avoid creating something too specific that eventually would not give me enough flexibility to test what I need. This means that the scenario has to create the app [class]("1","callout") and to use the database session explicitly [class]("2","callout"), as I do in this example. The application is created with the configuration `"development"` [class]("1","callout"). Remember that this is the Flask configuration that you find in `application/config.py`, not the one that is in `config/development.json`.
 
 I can run the scenario with
 
@@ -582,7 +582,7 @@ volumes:
   pgdata:
 ----
 
-As you can see here the command that runs the application is slightly different [callout]#1#. It exposes 4 processes (`-w 4`) on the container's address 0.0.0.0 loading the object `app` from the file `wsgi.py` (`wsgi:app`). As by default Gunicorn exposes port 8000 I mapped that [callout]#2# to the same port in the host.
+As you can see here the command that runs the application is slightly different [class]("1","callout"). It exposes 4 processes (`-w 4`) on the container's address 0.0.0.0 loading the object `app` from the file `wsgi.py` (`wsgi:app`). As by default Gunicorn exposes port 8000 I mapped that [class]("2","callout") to the same port in the host.
 
 Then I created the file `Dockerfile.production` that defines the production image of the web application
 
@@ -741,7 +741,7 @@ http {
 }
 ----
 
-This is a pretty standard configuration, and in a real production environment I would add many other configuration values (most notably serving HTTPS instead of HTTP). The section `upstream` [callout]#1# leverages docker-compose networking referring to `web`, which in the internal DNS directly maps to the IPs of the service with the same name. The port 8000 comes from the default Gunicorn port that I already mentioned before. I won't run the nginx container as root on my notebook, so I expose port 8080 [callout]#2# instead of the traditional 80 for HTTP, and this is also something that might be different in a real production environment.
+This is a pretty standard configuration, and in a real production environment I would add many other configuration values (most notably serving HTTPS instead of HTTP). The section `upstream` [class]("1","callout") leverages docker-compose networking referring to `web`, which in the internal DNS directly maps to the IPs of the service with the same name. The port 8000 comes from the default Gunicorn port that I already mentioned before. I won't run the nginx container as root on my notebook, so I expose port 8080 [class]("2","callout") instead of the traditional 80 for HTTP, and this is also something that might be different in a real production environment.
 
 I can at this point run
 
