@@ -203,7 +203,7 @@ $ FLASK_CONFIG="development" flask run
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ----
 
-Please note that it says `Environment: production` because we haven't configured `FLASK_ENV` yet. If you head to http://127.0.0.1:5000/ with your browser you can see the greetings message.
+Please note that it says `Environment: production` because we haven't configured `FLASK_ENV` yet. If you head to [link]("http://127.0.0.1:5000/") with your browser you can see the greetings message.
 
 === Git commit
 
@@ -332,7 +332,7 @@ $ ./manage.py flask run
  * Debugger PIN: 172-719-201
 ----
 
-Note that it now says `Environment: development` because of `FLASK_ENV` has been set to `development` in the configuration. As we did before, a quick visit to http://127.0.0.1:5000/ shows us that everything is up and running.
+Note that it now says `Environment: development` because of `FLASK_ENV` has been set to `development` in the configuration. As we did before, a quick visit to [link]("http://127.0.0.1:5000/") shows us that everything is up and running.
 
 === Git commit
 
@@ -466,7 +466,7 @@ To tear down the containers, when running as daemon, you can run
 $ FLASK_ENV="development" FLASK_CONFIG="development" docker-compose -f docker/development.yml down
 ----
 
-Notice that the server now says `Running on http://0.0.0.0:5000/`, as the Docker container is using that network interface to communicate with the outside world. Since the ports are mapped, however, you can head to either http://localhost:5000 or http://0.0.0.0:5000 with your browser.
+Notice that the server now says `Running on http://0.0.0.0:5000/`, as the Docker container is using that network interface to communicate with the outside world. Since the ports are mapped, however, you can head to either [link]("http://localhost:5000") or [link]("http://0.0.0.0:5000") with your browser.
 
 To simplify the usage of docker-compose, I want to wrap it in the script `manage.py`, so that it automatically receives environment variables, as their number is going to increase as soon as we add a database.
 
@@ -575,5 +575,4 @@ Happy development!
 
 == Feedback
 
-Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/blog_source/issues,"GitHub issues") page is the best place to submit corrections.
-
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.

@@ -407,9 +407,9 @@ The most important thing to keep in mind when manually reading instructions is t
 
 == Resources
 
-* Motorola M68000 Family Programmer's Reference Manual - https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
-* Motorola 68000 Opcodes Cheat Sheet - http://goldencrystal.free.fr/M68kOpcodes-v2.3.pdf
+* Motorola M68000 Family Programmer's Reference Manual - [link]("https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf")
+* Motorola 68000 Opcodes Cheat Sheet - [link]("http://goldencrystal.free.fr/M68kOpcodes-v2.3.pdf")
 
 == Feedback
 
-Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/blog_source/issues,"GitHub issues") page is the best place to submit corrections.
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.

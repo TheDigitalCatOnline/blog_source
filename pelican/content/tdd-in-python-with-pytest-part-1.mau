@@ -256,7 +256,7 @@ rootdir: simple_calculator, inifile: pytest.ini
 plugins: cov-XXXX
 ----
 
-You can see here the operating system and a short list of the versions of the main packages involved in running pytest: Python, pytest itself, `py` (https://py.readthedocs.io/en/latest/) and `pluggy` (https://pluggy.readthedocs.io/en/latest/). You can also see here where pytest is reading its configuration from (`pytest.ini`), and the pytest plugins that are installed. As this header is standard I will omit it from the output that I will show in the rest of the chapter.
+You can see here the operating system and a short list of the versions of the main packages involved in running pytest: Python, pytest itself, `py` ([link]("https://py.readthedocs.io/en/latest/")) and `pluggy` ([link]("https://pluggy.readthedocs.io/en/latest/")). You can also see here where pytest is reading its configuration from (`pytest.ini`), and the pytest plugins that are installed. As this header is standard I will omit it from the output that I will show in the rest of the chapter.
 
 The second part of the output shows the list of files containing tests and the result of each test
 
@@ -742,7 +742,7 @@ class SimpleCalculator:
 
 *Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-5-multiply-two-numbers-smart,step-5-multiply-two-numbers-smart)
 
-More information about the algorithm `reduce` can be found on the MapReduce Wikipedia page https://en.wikipedia.org/wiki/MapReduce. The Python function documentation can be found at [link](https://docs.python.org/3.6/library/functools.html#functools.reduce).
+More information about the algorithm `reduce` can be found on the MapReduce Wikipedia page [link]("https://en.wikipedia.org/wiki/MapReduce"). The Python function documentation can be found at [link](https://docs.python.org/3.6/library/functools.html#functools.reduce).
 
 The above code makes the test suite pass, so we can move on and address the next problem. As happened with addition we cannot properly test that the function accepts a potentially infinite number of arguments, so we can test a reasonably high number of inputs.
 
@@ -831,5 +831,4 @@ Well, I think we learned a lot. We started with no knowledge of TDD and we manag
 
 == Feedback
 
-Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/blog_source/issues,"GitHub issues") page is the best place to submit corrections.
-
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.

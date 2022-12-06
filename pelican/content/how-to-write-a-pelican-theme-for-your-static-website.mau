@@ -52,7 +52,7 @@ For this project I will only run the blog locally, so I didn't configure any spe
 Done. Your new project is available at /home/leo/devel/theanalogfox
 ----
 
-If you run `pelican -lr` now and visit http://localhost:8000 with your browser you will see the first page of the blog rendered with the default theme.
+If you run `pelican -lr` now and visit [link]("http://localhost:8000") with your browser you will see the first page of the blog rendered with the default theme.
 
 == Demo content
 
@@ -93,7 +93,7 @@ Save it as `create_content.sh` and give it execution permissions with `chmod 775
 
 If you know bash feel free to hack the script to do something more complicated, but this very simple program does everything we need to work on Pelican themes.
 
-Running `pelican -lr` and visiting http://localhost:8000 will now show a richer website.
+Running `pelican -lr` and visiting [link]("http://localhost:8000") will now show a richer website.
 
 [advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
@@ -1054,4 +1054,4 @@ Happy blogging!
 
 == Feedback
 
-Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/blog_source/issues,"GitHub issues") page is the best place to submit corrections.
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.

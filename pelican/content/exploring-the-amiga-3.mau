@@ -231,7 +231,7 @@ The structure is at address `0x030c` and we are looking for and instruction like
 ----
 The 68000 does not allow you to execute a MOVE instruction with a destination relative to the program counter (PC). In the view of the 68000 designers, code should not patch itself. If you must change a table in the middle of code, you must point to it with an instruction like LEA TABLE(PC),An and then alter it through An. (Self-modifying code is especially bad for 68000 programs that may someday run on the 68020, because the 68020's instruction cache normally assumes that code is pure.
 
-(from http://www.easy68k.com/paulrsm/doc/trick68k.htm)
+(from [link]("http://www.easy68k.com/paulrsm/doc/trick68k.htm"))
 ----
 
 At address `0x0364` we find the following code
@@ -315,9 +315,9 @@ In the next article I will show the code of the 4 Exec base functions and discus
 
 == Resources
 
-* Amiga System Programmers Guide, Abacus - https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus
-* [link](http://amigadev.elowar.com,"AmigaOS Developer Docs")
-* Amiga Forever package sold by Cloanto [link](https://www.amigaforever.com,here)
+* Amiga System Programmers Guide, Abacus - [link]("https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus")
+* [link]("http://amigadev.elowar.com","AmigaOS Developer Docs")
+* Amiga Forever package sold by Cloanto [link]("https://www.amigaforever.com",here)
 
 == Updates
 
@@ -325,4 +325,4 @@ In the next article I will show the code of the 4 Exec base functions and discus
 
 == Feedback
 
-Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/blog_source/issues,"GitHub issues") page is the best place to submit corrections.
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.

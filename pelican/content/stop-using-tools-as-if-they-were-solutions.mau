@@ -30,7 +30,7 @@ Imagine you were tasked to build a bridge between two sides of a river. Would yo
 
 That's hardly the first thing you should ask yourself. I'm pretty sure you agree that knowing the distance that the bridge should cover is much more urgent. Also, the type and the amount of traffic that it has to carry (walkers, cars, trucks, trains) is an important factor, and you should be concerned about the budget that you are allowed.
 
-Why are these questions more important than the one about hammers? Because the answers to these questions can heavily influence the whole project. They are pillars of your architecture and not details[footnote](see "What is a software architecture?" in Clean Architectures in Python https://www.thedigitalcatbooks.com). My colleague Ken Pemberton always reminds me that most of the time we don't ask ourselves an even more important question: "What problem are you trying to solve?". In the example above, a bridge might not be the best solution in the first place.
+Why are these questions more important than the one about hammers? Because the answers to these questions can heavily influence the whole project. They are pillars of your architecture and not details[footnote](see "What is a software architecture?" in Clean Architectures in Python [link]("https://www.thedigitalcatbooks.com")). My colleague Ken Pemberton always reminds me that most of the time we don't ask ourselves an even more important question: "What problem are you trying to solve?". In the example above, a bridge might not be the best solution in the first place.
 
 I think the process, at least when it comes to software projects, can be divided into three connected phases: decomposition, communication, implementation.
 
@@ -138,3 +138,7 @@ We need to push for this approach in our interviews, but also try to promote thi
 ---
 
 ::footnotes:
+
+== Feedback
+
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.

@@ -333,9 +333,9 @@ The next article will discuss the reason behind the address `0x4` used for the E
 
 == Resources
 
-* Motorola M68000 Family Programmer's Reference Manual - https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
-* [link](http://amigadev.elowar.com,"AmigaOS Developer Docs")
+* Motorola M68000 Family Programmer's Reference Manual - [link]("https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf")
+* [link]("http://amigadev.elowar.com","AmigaOS Developer Docs")
 
 == Feedback
 
-Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/blog_source/issues,"GitHub issues") page is the best place to submit corrections.
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.

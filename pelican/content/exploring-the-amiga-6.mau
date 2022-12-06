@@ -387,9 +387,9 @@ It's time to show the complete Exec vector table, as we are going to use and ana
 == Resources
 
 * Microprocessor-based system design by Ricardo Gutierrez-Osuna ([link](http://courses.cs.tamu.edu/rgutier/ceg411_f01/,slides)), in particular [link](http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf,"Lesson 9 - Exception processing")
-* Motorola M68000 Family Programmer's Reference Manual - https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
-* Amiga System Programmers Guide, Abacus - https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus
+* Motorola M68000 Family Programmer's Reference Manual - [link]("https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf")
+* Amiga System Programmers Guide, Abacus - [link]("https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus")
 
 == Feedback
 
-Feel free to reach me on [link](https://twitter.com/thedigicat,Twitter) if you have questions. The [link](https://github.com/TheDigitalCatOnline/blog_source/issues,"GitHub issues") page is the best place to submit corrections.
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
