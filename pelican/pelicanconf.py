@@ -60,7 +60,7 @@ def order_by_modified_first(article):
         return today - article.date.date()
 
 
-ARTICLE_ORDER_BY = order_by_modified_first
+# ARTICLE_ORDER_BY = order_by_modified_first
 
 SOCIAL = [
     {"name": "Twitter", "icon": "twitter", "url": "https://twitter.com/thedigicat"},

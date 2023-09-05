@@ -1,5 +1,6 @@
 :pelican.title:TDD in Python with pytest - Part 2
 :pelican.date:2020-09-11 10:30:00 +0200
+:pelican.modified:2023-09-03 19:00:00 +0200
 :pelican.category:Programming
 :pelican.tags:OOP, pytest, Python, Python3, refactoring, TDD, testing
 :pelican.authors:Leonardo Giordani
@@ -109,15 +110,6 @@ and the second one is to intercept the exception with a `try/except` block
 Both solutions make the test suite pass, so both are correct. I leave to you the decision about which is the best one, syntactically speaking.
 
 *Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-7-division-by-zero,step-7-float-division)
-
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
 
 == Step 8 - Testing exceptions
 
@@ -605,6 +597,54 @@ and the final version of `avg` is
 
 *Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-9-9-zero-as-lower-upper-threshold,step-9-9-zero-as-lower-upper-threshold)
 
+=== Step 9.10 - Refactoring for generators
+
+One of the readers of this series, [link]("https://github.com/labdmitriy", "Dmitry Labazkin"), was following the series and noticed that the final implementation has some drawbacks, namely:
+
+* According to the requirements, this method should accept any iterable, but the implementation can't process generators (which are iterators and also iterables). For example, the function `len()` cannot be used with generators.
+* The iterable is copied, which is something we try to avoid to reduce memory usage.
+* Globally, the iterator is read 4 times, which affects performances.
+
+These are interesting points, and he provides an implementation that solves them all. It's important to mention that the first point is closely related to requirements, so it should be represented by a unit test, while the other two are connected with performances and cannot be tested with pytest. However, any refactoring that produces code we consider better (for example from the performances point of view) can be tested by the existing tests. In other words, we can provide an alternative implementation and still make sure it works correctly.
+
+Dmitry adds a test to check that generators are supported
+
+.tests/test_main.py
+[source,python]
+----
+def test_avg_accepts_generators():
+    calculator = SimpleCalculator()
+    result = calculator.avg(i for i in [2, 5, 12, 98])
+    assert result == 29.25
+----
+
+His implementation of the function `avg()` passes that test and the previous ones we wrote
+
+.simple_calculator/main.py
+[source,python]
+----
+    def avg(self, it, lt=None, ut=None):
+        count = 0
+        total = 0
+
+        for number in it:
+            if lt is not None and number < lt:
+                continue
+            if ut is not None and number > ut:
+                continue
+            count += 1
+            total += number
+
+        if count == 0:
+            return 0
+
+        return total / count
+----
+
+One might argue that this implementation is less _pythonic_ as it doesn't use fancy list comprehensions, but again, that is a matter of style (and performances). The point about generators is correct, but if that wasn't included in the requirements we might accept either implementation. I personally believe this new implementation is much better than the previous one, as I like to keep a low memory fingerprint, but if we were sure the calculator is used only on small sequences the concern might be overkill.
+
+*Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-9-10-refactoring-for-generators,step-9-10-refactoring-for-generators)
+
 == Recap of the TDD rules
 
 Through this very simple example we learned 6 important rules of the TDD methodology. Let us review them, now that we have some experience that can make the words meaningful
@@ -615,15 +655,6 @@ Through this very simple example we learned 6 important rules of the TDD methodo
 # Write code that passes the test. Then refactor it.
 # A test should fail the first time you run it. If it doesn't ask yourself why you are adding it.
 # Never refactor without tests.
-
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
 
 == How many assertions?
 
@@ -653,6 +684,45 @@ At this point you can move on and try to change the code. Remember that you shou
 
 Once you reach a point where the test suite passes without errors stop and try to run the code in the environment where the bug was first discovered (for example sharing a branch with the user that created the ticket) and iterate the process.
 
+== The problem of types
+
+Other than contributing to the TDD steps, Dmitry Labazkin asked some relevant questions about types, that I will summarise here. You can read his original questions in [link]("https://github.com/TheDigitalCatOnline/blog_source/issues/11", "issue #11") and [link]("https://github.com/TheDigitalCatOnline/blog_source/issues/12", "issue #12").
+
+The question of type checking is thorny, and since this is an introductory series I will discuss it briefly and give some pointers. Don't get me wrong, though. As I will say later, this is one of the most important topics we can discuss in computer science.
+
+Overall the problem Dmitry raises is that operators like addition and multiplication are valid for types other than integers (like floats) and also non-numeric ones (like strings). In Python, it is possible to multiply a string by a number and obtain a concatenation of that number of copies of the original string. At the same time, however, subtraction and division are not defined for strings, so some of the questions we can ask are:
+
+* can `SimpleCalculator` be used on non-integer numeric types?
+* can `SimpleCalculator` be used on non-numeric types?
+* shall we explicitly check in the code that the input values belong to a certain type?
+* shall we write tests to rule out other types?
+
+As I said, such questions are deceptively simple, so let's tackle them step by step.
+
+Let's assume it makes sense for our class to work with numeric types. In Python there is no way to prevent a program from calling `SimpleCalculator().add("string1", "string2")`, which would fail as the current implementation uses the built-in function `sum` that doesn't work on strings (unless you call it with a specific initial value). However, calling `SimpleCalculator().mul("abc", 3)` would result in `"abcabcabc"`, as the internal implementation quietly supports strings.
+
+Given the inconsistency, we might be tempted to rule out non-numeric types explicitly. In other words, we might want to add code to our calculator that _actively checks_ if we are passing a non-numeric type. In that case we shall also add tests for those types, according to the TDD methodology, as no code can be added without tests.
+
+The reason why this topic is thorny is because Python relies heavily on _polymorphism_, which means that it is more interested in the _behaviour_ of an object more than in its _nature_. In other words, an object can be considered a number because _it is an instance_ of `int` or `float`, for example, but it could just be a class we made up that _behaves like_ one of those types. Using Abstract Base Classes like [link]("https://docs.python.org/3/library/numbers.html", "numbers") is useful to check if an object is an instance of one of the types encompassed by the hierarchy (again, types such as `int` and `float`) but doesn't automatically include everything that behaves like a number. We can create a class that behaves like `int` without belonging to the hierarchy of `numbers`.
+
+Ultimately, this is the reason why Python programmers have to remember that the operator `+` can be used with types like `int`, `string`, and `list`, but cannot be used with dictionaries. Conversely, `len` can be used on dictionaries and lists, but cannot be used on integers. We need to remember it, as these operators are polymorphic (there is no operator `int+` or `float+`) but don't make sense or are not implemented for some types.
+
+Those basic operators and functions raise an exception when the wrong type is passed, so we might be tempted to do the same and explicitly raise an exception when the wrong type is passed to `SimpleCalculator`. Again, the focus is on behaviour and implementation. If our implementation doesn't work with instances of certain classes an exception will occur already, and we don't need to do it explicitly. The aforementioned snipped `SimpleCalculator().add("string1", "string2")` would raise a `TypeError` because the underlying `sum` doesn't like strings. We don't need to do it explicitly.
+
+In conclusion, my answers to the questions above are:
+
+Can `SimpleCalculator` be used on non-integer numeric types? Probably, given the implementation is not specific to integers, but if we want to be sure we should add some tests to expose the functionality. So far, according to TDD, the class is certified to work with integers only. In this case, I might want to add some tests to show that it works with floats. But if someone feeds the class float-like objects that for some reason do not support the operator `/` some part of the calculator won't work, and there is no way to test all those conditions.
+
+Can `SimpleCalculator` be used on non-numeric types? Yes, to a certain extent. `mul` can be used on sequences, for example. It is a calculator, though, so it doesn't make much sense to try to use it on non-numeric types. Users can feed the calculator any sort of non-numeric types and we cannot do anything to prevent it.
+
+Shall we explicitly check in the code that the input values belong to a certain type? This goes against the nature of Python: if a certain function or method doesn't work with a specific type an exception will be raised.
+
+Shall we write tests to rule out other types? Since it is basically impossible to write code that narrows the set of accepted types it is also impossible to write _useful_ tests to check this. We can check that it doesn't work on strings, but what about other sequences? We can check it doesn't work with classes that inherit from `Sequence`, but what about classes that do not and behave the same?
+
+In a dynamically typed language like Python, polymorphism and operator overloading are embedded in the language. I think the deeply polymorphic nature of Python is one of the most important aspects any user of this language should understand. It is an incredibly sharp double-edged sword, as it is at the same time extremely powerful and dangerous. "Everything is an object" might sound very simple at first, but it hides a degree of complexity that sooner of later has to be faced by those who want to be proficient with the language.
+
+I wrote some posts that might help you to understand these topics. You can find them grouped [link](\{filename}object-oriented-programming-concepts-in-python.markdown, "here").
+
 == Final words
 
 I hope you found the project entertaining and that you can now appreciate the power of TDD. The journey doesn't end here, though. In the next post I will discuss the practice of writing unit tests in depth, and then introduce you to another powerful tool: mocks.
@@ -660,6 +730,8 @@ I hope you found the project entertaining and that you can now appreciate the po
 == Updates
 
 2021-01-03: [link](https://github.com/4myhw,George) fixed a typo, thanks!
+
+2023-09-03: [link]("https://github.com/labdmitriy", "Dmitry Labazkin") provided a new test for the method `avg` and a better implementation. He also asked relevant questions about type checking that I addressed in a new section. Thanks Dmitry!
 
 == Feedback
 
