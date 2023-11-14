@@ -1,0 +1,584 @@
+:pelican.title:Design and implement a flexible VPC on AWS
+:pelican.date:2023-10-16 11:00:00 +0100
+:pelican.category:Programming
+:pelican.tags:AWS, infrastructure, networking, architecture, Terraform
+:pelican.authors:Leonardo Giordani
+:pelican.slug:design-and-implement-a-flexible-vpc-on-aws
+:pelican.image:design-and-implement-a-flexible-vpc-on-aws
+:pelican.summary: An example of network design with an implementation using AWS VPC
+
+Designing networks is not an easy task, and while cloud computing removes the hassle (and also a bit the fun) of moving around switches and cables, it left untouched the complexity of planning a good structure. But, what does "good structure" mean?
+
+I think this is crucial question in engineering. A well-designed (or well-architected) system cannot be defined once and for all, because its nature, structure, and components depend on the requirements. Hence the usual answer: "it depends".
+
+In this post I want to give an example of some business requirements and of the structure of a network that might satisfy them.
+
+For the implementation I will work with [link]("https://aws.amazon.com/vpc/", "AWS VPC"), which has several advantages. First of all, AWS is one of the major cloud providers, and this might help beginners to better understand how it works. Second, most of the components of a VPC are free of charge, which means that anyone can apply the structure I will show without having to pay. The only component that AWS will charge you for is a NAT gateway, but the price is around 0.045 $/hour, which means that with a single dollar you can enjoy a trip on a well-architected VPC for approximately 22 hours. After that time you can always remove the NAT and keep working on the free part of your VPC.
+
+== A quick recap of IP and CIDRs
+
+You should be familiar with the IP protocol to use VPC effectively, but if your knowledge is rusty I give you a quick recap.
+
+IPv4 addresses are made of 32 bits, thus spanning 2^32^ values, between 0 and 4,294,967,295 (2^32^-1). To simplify their usage, we split IPv4 addresses into 4 chunks of 8 bits (octets) and convert each into a decimal number which is thus between 0 and 255 (2^8^-1). The classic form of an IPv4 address is thus `A.B.C.D`, e.g. `1.2.3.4`, `134.32.175.52`, `255.255.0.0`.
+
+When considering ranges of addresses, giving the first and last address might be tedious and difficult to read. The CIDR notation was introduced to simplify this. A CIDR (Classless Inter-Domain Routing) is expressed in the form `A.B.C.D/N`, where `N` is a number of bits between 0 and 32 and represents how many bits of the address remain fixed. A CIDR like `134.73.28.196/32` represents only the address `134.73.28.196`, as 32 bits out of 32 are fixed. Conversely, the CIDR `0.0.0.0/0` represents all IPv4 addresses as 0 bits out of 32 are fixed.
+
+The range of addresses corresponding to a CIDR is in general not easy to compute manually, but those corresponding to the 4 octets are trivial
+
+* The CIDR `A.B.C.D/32` corresponds to the address `A.B.C.D`.
+* The CIDR `A.B.C.0/24` corresponds to the addresses between `A.B.C.0` and `A.B.C.255` (255 addresses, 2^32-24^ or 2^8^). Here, the first 24 bits (the 3 octets `A`, `B`, and `C`) are fixed.
+* The CIDR `A.B.0.0/16` corresponds to the addresses between `A.B.0.0` and `A.B.255.255` (65,536 addresses, 2^32-16^ or 2^16^). Here, the first 16 bits (the 2 octets `A` and `B`) are fixed.
+* The CIDR `A.0.0.0/8` corresponds to the addresses between `A.0.0.0` and `A.255.255.255` (16,777,216 addresses, 2^32-8^ or 2^24^). Here, the first 8 bits (the octet `A`) are fixed.
+
+Please note that by convention we set the variable octets to 0. The CIDR `A.B.C.0/24` is exactly the same as the CIDR `A.B.C.D/24`, as the octet `D` is not fixed. For this reason it's deceiving and useless to set it. For example, I would never write `153.23.95.34/24`, as this means all addresses between `153.23.95.0` and `153.23.95.255`, so the final `34` is just misleading. `153.23.95.0/24` is much better in this case.
+
+You can use the [link]("https://jodies.de/ipcalc", "IP Calculator") by Krischan Jodies to explore CIDRs.
+
+As the number of IPv4 addresses quickly proved to be insufficient we developed IPv6, but in the meantime we also created private network spaces. In IPv4 there are 3 different ranges of addresses that are considered "private", which means that they can be duplicated and that they are not reachable from the Internet. The difference between public and private addresses is the same between "London, UK" (there is only one in the world) and "kitchen" (every house has one).
+
+The three private ranges in IPv4 are:
+
+* `192.168.0.0/16` - 65536 addresses between `192.168.0.0` and `192.168.255.255`
+* `172.16.0.0/12` - 1,048,576 addresses between `172.16.0.0` and `172.31.255.255` (this is not easily computed manually because 12 is not a multiple of 8)
+* `10.0.0.0/8` - 16,777,216 addresses between `10.0.0.0` and `10.255.255.255`
+
+This means that IP addresses like `192.168.6.1`, `172.17.123.45`, and `10.34.168.20` are all private. Take care of the second range, as it goes from `172.16` to `172.31`, so an address like `172.32.123.45` is definitely public.
+
+Now that your knowledge of IP addresses has been fully restored we can dive into network design.
+
+== Requirements
+
+As I mentioned in the introduction, the most important part of a system design are requirements, both the present and the future ones.
+
+If you design a road, it is crucial to understand how many vehicles will travel on it per minute (or per hour, day, month) and the type of vehicle. I'm not an expert of highway engineering, but I'm sure a road for mining trucks has to be different from a cycle lane, and the same is true for a computer system. Surely you want to store information in a database, but the size and the type of it depend on the amount of data you have, the usage pattern, the required reliability, and so on.
+
+We are designing a network that will host cloud computing resources such as computing instances, databases, load balancers, and so on. I will globally refer to them as _resources_ or _instances_, without paying to much attention to the concrete nature of each of them. From the networking point of view they are all just a bunch of network cards.
+
+As an example, we have the following business requirements for a company called ZooSoft:
+
+* There are currently *three main products*: Alligator Accounting, Barracuda Blogging, Coyote CAD.
+* There might be *more products* in the future, we are in the first design stages of Dragonfly Draw and Echidna Email.
+* We need *four environments* for each product: Live, Staging, Demo, UAT.
+** Live is the application accessed by clients
+** Staging is a clone of Live that is used to run extensive pre-release tests and to perform initial support debugging
+** Demo runs the application with the same configuration as Live but with fake data, used to showcase the application to new customers
+** UAT contains on-demand instances used by developers and QA to test new features
+* Some data or services are *shared among the products*, and the infrastructure team needs a space where to deploy their tools.
+
+== Initial analysis
+
+As you see, I highlighted some of the most important points we need to keep in mind.
+
+* *There are currently 3 products*. Not a single one, not 1 hundred. It is important to understand this number because we probably want to have separate spaces for each product, with different teams working on each one. If the company had one single product we might expect it to create a new one in the future, but it might not be that urgent to have space to grow. On the other hand, if the company had already 100 products we might want to design things with a completely different approach.
+* *There might be more products in the future*. Again, it is important to have a good idea of the future requirements, as most of the problems of a system will come when the usage patterns change. It's generally a good idea to leave space for growth, but overdoing it might lead to a waste of resources and ultimately money. Understanding the growth expectation is paramount to find a good balance between inflexibility and waste of resources.
+* *There are 4 different usage patterns for each application*, each one with its own requirements. The Live environment clearly needs a lot of power and redundancy to provide a stable service for users, while environments like UAT and Demo will certainly have more relaxed parameters in terms of availability or reliability.
+* *We need space to deploy internal tools* used to monitor the application and to test new solutions. The architecture of the application might change in the future so we need space to try out different structures and products.
+
+In general, it's a good idea to *isolate anything that doesn't need to be shared* across teams or products, as it reduces the risk of errors and exposes less resources to attacks. In AWS, the concept of account allows us to completely separate environments at the infrastructure level. Resources in separate accounts can still communicate, but this requires a certain amount of work to set up the connection, which ultimately promotes isolation.
+
+So, the initial idea might be to give each product a different account. However, we also have 4 different environments for each product, and given the relative simplicity involved in the creation of an AWS account it sounds like a good idea to have one of them for each combination of product and environment. AWS provides a tool called [link]("https://aws.amazon.com/controltower/", "Control Tower") that can greatly simplify the creation and management of accounts, which makes this choice even more reasonable.
+
+A VPC (Virtual Private Network) is, as the name suggests, a private network that allows different products to use the same IP address pool without clashing, which is not new to anyone is familiar with private IP address spaces. This means that we could easily create in each account a VPC with a CIDR `10.0.0.0/8` that grants 2^24^ (more than 16M) different IP addresses, plenty enough to host instances and databases for any type of application.
+
+However, it might be useful in the future to connect different VPCs, for example to perform data migrations, and this is done in AWS through [link]("https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html", "VPC peering"). In simple words, this is a way to create a single network out of two different VPCs, but it can't be done if the two VPCs have overlapping CIDR blocks. This means that while we keep VPCs separate in different accounts, we might also want to assign different CIDRs to each one.
+
+Avoiding overlap clearly reduces the size of a VPC, so let's have a look at some figures to have an idea of what we can create.
+
+If we assign to each account a CIDR `10.X.0.0/16`, with X being a number assigned to the specific account, we can create up to 256 different accounts (from `10.0.0.0/16` to `10.255.0.0/16`). Out of an abundance of caution we might reserve the first 10 CIDRs for future use and internal needs, which leaves us with 246 non-overlapping CIDRs (from `10.10.0.0/16` to `10.255.0.0/16`). This means that we have space for several combinations of product/environment, for example we might have up to 41 products with 6 environments each or 30 products with 8 environments each (with leftovers).
+
+Since at the moment we have 3 products with 4 environments each, this choice looks reasonable. At the same time, a `/16` CIDR grants us space for 2^^16 (65536) resources, which again looks more than enough to host a standard web application.
+
+== Assignment plan
+
+To simplify the schema, let's grant space for 20 products and group CIDRs by environment. This means we will have 20 CIDRs for Live environments, 20 for Staging, and so on. The assignment plan is then
+
+[source]
+----
+10.0.0.0/16  reserved
+...
+10.9.0.0/16  reserved
+
+10.10.0.0/16 alligator-accounting-live
+10.11.0.0/16 barracuda-blogging-live
+10.12.0.0/16 coyote-cad-live
+...
+
+10.30.0.0/16 alligator-accounting-staging
+10.31.0.0/16 barracuda-blogging-staging
+10.32.0.0/16 coyote-cad-staging
+...
+
+10.50.0.0/16 alligator-accounting-demo
+10.51.0.0/16 barracuda-blogging-demo
+10.52.0.0/16 coyote-cad-demo
+...
+
+10.70.0.0/16 alligator-accounting-uat
+10.71.0.0/16 barracuda-blogging-uat
+10.72.0.0/16 coyote-cad-uat
+...
+
+10.250.0.0/16 infrastructure-team
+...
+10.255.0.0/16 infrastructure-team
+----
+
+As I mentioned, the initial CIDRs are reserved for future use, but we also kept the final 6 CIDRs for the needs of the infrastructure team. Keep in mind that this is only an example and that we are clearly free to change any of these figure to match our needs more closely. Each one of these CIDRs will be assigned to a specific account.
+
+Should we create new products we will continue with the same pattern, e.g.
+
+[source]
+----
+10.0.0.0/16  reserved
+...
+
+10.10.0.0/16 alligator-accounting-live
+10.11.0.0/16 barracuda-blogging-live
+10.12.0.0/16 coyote-cad-live
+10.13.0.0/16 dragonfly-draw-live:@:
+...
+
+10.30.0.0/16 alligator-accounting-staging
+10.31.0.0/16 barracuda-blogging-staging
+10.32.0.0/16 coyote-cad-staging
+10.33.0.0/16 dragonfly-draw-staging:@:
+...
+
+10.50.0.0/16 alligator-accounting-demo
+10.51.0.0/16 barracuda-blogging-demo
+10.52.0.0/16 coyote-cad-demo
+10.53.0.0/16 dragonfly-draw-demo:@:
+...
+
+10.70.0.0/16 alligator-accounting-uat
+10.71.0.0/16 barracuda-blogging-uat
+10.72.0.0/16 coyote-cad-uat
+10.73.0.0/16 dragonfly-draw-uat:@:
+...
+
+10.250.0.0/16 infrastructure-team
+...
+----
+
+We are planning to use IaC tools to implement this, but it's nevertheless interesting to spot the patterns in this schema that make it easier to debug network connections.
+
+All environments of a certain type belong to a specific range, so an address like `10.15.123.456` is definitely in a Live environment. At the same time, IP addresses across the same product have the same final digit in the second part of the address, so if `10.12.456.789` is a Live instance, the corresponding Staging instance will have an address like `10.32.X.Y`.
+
+While this is not crucial, I wouldn't underestimate the value of a regular structure that can give precious information at a glance. While debugging during an emergency things like this might be a blessing.
+
+The last thing to note is that in this schema the 160 CIDRs between `10.90.0.0/16` and `10.249.0.0/16` are not allocated. This might give you a better idea of how wide a `10.0.0.0/8` network space is! Such accounts can be used to host up to other 8 environments for each product.
+
+== Address space
+
+Let's focus on a single CIDR in the form `10.N.0.0/16`. As we know this provides 65536 addresses (2^16^) that we need to split into subnets. In AWS, subnets correspond to different Availability Zones, that are "distinct locations within an AWS Region that are engineered to be isolated from failures in other Availability Zones" (from the docs). In other words, they are separate data centres built so that if one blows up the others should be unaffected. I guess this depends on the size of the explosion, but within reason this is the idea.
+
+So, each account gets 65536 addresses (`/16`), split into:
+
+* 1 public subnet for the NAT gateway to live in (`nat`).
+* 3 private subnets for the computing resources (`private_a`, `private_b`, `private_c`).
+* 3 public subnets for the load balancer (`public_a`, `public_b`, `public_c`).
+* 1 public subnet for the bastion instance (`bastion`).
+
+Now, if you are not familiar with subnets they are the simplest of concepts. You get the address space of a network (say for example `10.10.0.0/16`, that is the addresses from `10.10.0.0` to `10.10.255.255`) and split it into chunks. The fact that each chunk is assigned to a different data centre is an AWS addition and is not part of the definition of subnet in principle. However, the reason behind subnetting is exactly to create small _physical_ networks that are therefore more efficient. If two computers are on the same subnet the routing of IP packets exchanged by them is simpler and thus faster. For similar reasons, and to increase security, it's a good idea to keep your subnets as small as possible.
+
+In this case, we might create subnets in a `/23` space (512 addresses each), which looks wide enough to host the web applications of ZooSoft. Before we have a look at the actual figures let me clarify what this means. I assume each application (Alligator Accounting, Barracuda Blogging, and so on) has been containerised, maybe using ECS or EKS, which however means that there are EC2 instances behind the scenes running the containers. If we are using Fargate we do not provide EC2 instances and in that case we might set up our network in a different way.
+
+EC2 instances are computers, and they all have at least one network interface, which corresponds to an IP address. So, when I say that a subnet contains 512 addresses I mean that in a single subnet I can run up to 507 EC2 instances (remember that AWS reserves some addresses, see [link](https://docs.aws.amazon.com/vpc/latest/userguide/subnet-sizing.html)). Assuming instances with 8 GiB of memory each (e.g. `m7g.large`) and containers that require 1 GiB of memory we can easily host 3042 containers (507*6) leaving 2 GiB for each instance to host newly created containers (for example to run blue-green deployments). These are clearly examples and you have to adapt them to the requirements of your specific application, but I hope you get an idea of how to roughly estimate this sort of quantities.
+
+Remember that in AWS the difference between public and private networks is only in the gateway they are connected to. Public networks are connected to an Internet Gateway and thus are reachable from Internet, while private networks are either disconnected from Internet or connected with a NAT, which allows them to access Internet but not to be accessed from outside.
+
+The `bastion` subnet might or might not be useful. In general, `bastion` hosts are very secure instances that can be accessed using SSH, and from which you can access the rest of the instances. As from the point of view of security they are a weak point of the whole infrastructure you might not want to have them or replace them with more ephemeral solutions. In any case, I left the network there as an example of a space that hosts tools not directly connected with the application.
+
+Let's have a deeper look at the figures. A `/16` space can be split into 128 `/23` spaces (2^23-16^), but given the list of subnets I showed before we need only 8 of them, which leaves again a lot of space for further expansion, and there are two types of expansion we might consider. One is increasing the number of subnets, the other is increasing the size of subnets themselves. With the amount of space granted by the current size of the networks we have plenty of options to cover both cases. We might reach a good balance between the size of the network and the number of networks increasing the potential size to `/21` (2048 addresses), which grants us space for 32 subnetworks.
+
+Here, I show a possible schema for the account `alligator-accounting-live` that is granted the space `10.10.0.0/16`.
+
+[source]
+----
+NAME       CIDR           ADDRESSES                     NUM ADDRESSES
+
+reserved   10.10.0.0/21   (10.10.0.0  - 10.10.7.255)    {2048}
+
+nat        10.10.8.0/23   (10.10.8.0  - 10.10.9.255)    {512}
+	   expandable to
+           10.10.8.0/21   (10.10.8.0  - 10.10.15.255)   {2048}
+           PUBLIC
+
+reserved   10.10.16.0/21  (10.10.10.0 - 10.10.15.255)   {2048}
+
+reserved   10.10.24.0/21  (10.10.10.0 - 10.10.31.255)   {2048}
+
+private-a  10.10.32.0/23  (10.10.32.0 - 10.10.33.255)   {512}
+	   expandable to
+           10.10.32.0/21  (10.10.32.0 - 10.10.39.255)   {2048}
+
+private-b  10.10.40.0/23  (10.10.40.0 - 10.10.41.255)   {512}
+	   expandable to
+           10.10.40.0/21  (10.10.40.0 - 10.10.47.255)   {2048}
+
+private-c  10.10.48.0/23  (10.10.48.0 - 10.10.49.255)   {512}
+	   expandable to
+           10.10.48.0/21  (10.10.48.0 - 10.10.55.255)   {2048}
+
+reserved   10.10.56.0/21  (10.10.56.0 - 10.10.63.255)   {2048}
+           RESERVED PRIVATE 4
+
+reserved   10.10.63.0/21  (10.10.63.0 - 10.10.71.255)   {2048}
+           RESERVED PRIVATE 5
+
+...
+
+reserved   10.10.128.0/21 (10.10.128.0 - 10.10.135.255) {2048}
+           RESERVED PRIVATE 13
+
+public-a   10.10.136.0/23 (10.10.136.0 - 10.10.137.255) {512}
+	   expandable to
+           10.10.136.0/21 (10.10.136.0 - 10.10.143.255) {2048}
+           PUBLIC
+
+public-b   10.10.144.0/23 (10.10.144.0 - 10.10.145.255) {512}
+	   expandable to
+           10.10.144.0/21 (10.10.144.0 - 10.10.151.255) {2048}
+           PUBLIC
+
+public-c   10.10.152.0/23 (10.10.152.0 - 10.10.153.255) {512}
+	   expandable to
+           10.10.152.0/21 (10.10.152.0 - 10.10.159.255) {2048}
+           PUBLIC
+
+reserved   10.10.160.0/21 (10.10.160.0 - 10.10.167.255) {2048}
+           RESERVED PUBLIC 4
+
+reserved   10.10.168.0/21 (10.10.167.0 - 10.10.175.255) {2048}
+           RESERVED PUBLIC 5
+
+...
+
+reserved   10.10.232.0/21 (10.10.232.0 - 10.10.239.255) {2048}
+           RESERVED PUBLIC 13
+
+bastion    10.10.240.0/23(10.10.240.0 - 10.10.241.255)  {512}
+	   expandable to
+           10.10.240.0/21 (10.10.240.0 - 10.10.247.255) {2048}
+           PUBLIC
+
+reserved   10.10.248.0/21(10.10.248.0 - 10.10.255.255)  {2048}
+----
+
+== Routing
+
+Routing of each VPC is very simple:
+
+* All resources in the private subnets will be routed into the NAT to grant them Internet access but to isolate them from outside.
+* All resources in the public subnets will be routed into the default Internet Gateway.
+* The NAT network has to be public, so it is routed into the default Internet Gateway.
+* The bastion subnet is public, so it routed into the default Internet Gateway.
+
+The NAT is a device that translates internet addresses, hiding the internal ones through some clever hacking of TCP/IP. This means that it has to live in a public network so that it can access the Internet.
+
+The bastion (if present) is a machine that can be accessed from Internet, so it has to be in a public subnet. It's customary to grant access to the bastion to a specific set of IPs (e.g. the personal IPs of some developers) but this is done through Security Groups.
+
+== Relevant figures
+
+In summary the current design grants us the following:
+
+* 246 non-overlapping accounts
+* 20 different products each with 12 environments
+* 32 subnets for each account
+* 512 addresses per subnet, upgradable to 2048 without overlapping
+
+== A simple Terraform module
+
+The following code is a simple Terraform module intended to showcase how to create a well-designed VPC with that tool. I decided to avoid using complex loops or other clever hacks to keep it simple and accessible to anyone might be moving their first steps into AWS, VPC, network design, and Terraform. You are clearly free to build on top of it and to come up with a different or more clever implementation.
+
+Remember that the NAT is the only resource that is not free of charge, so don't leave it up and running if don't use it. Don't be afraid of creating one and having a look in the AWS console though.
+
+I assume the following files are all created in the same directory that I will conventionally call `modules/vpc`.
+
+=== VPC
+
+.`modules/vpc/vpc.tf`
+[source,terraform]
+----
+resource "aws_vpc" "main" {
+  cidr_block = "${var.cidr_prefix}.0.0/16"
+
+  tags = {
+    Name = var.name
+  }
+}
+----
+
+.`modules/vpc/variables.tf`
+[source,terraform]
+----
+variable "cidr_prefix" {
+  description = "The first two octets of the CIDR, e.g. 10.10 (will become 10.10.0.0/16)"
+  type        = string
+}
+
+variable "name" {
+  description = "The name of this VPC and the prefix/tag for its related resources"
+  type        = string
+}
+----
+
+When you call the module you will have to pass these two variables, e.g.
+
+.`alligator-accounting-live/vpc/main.tf`
+[source,terraform]
+----
+module "vpc" {
+  source = "../../modules/vpc"
+
+  cidr_prefix = "10.10"
+  name        = "alligator-accounting-live"
+}
+----
+
+=== Internet Gateway 
+
+.`modules/vpc/gateway.tf`
+[source,terraform]
+----
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = var.name
+  }
+}
+----
+
+=== Subnets
+
+.`modules/vpc/subnets.tf`
+[source,terraform]
+----
+resource "aws_subnet" "nat" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "${var.cidr_prefix}.8.0/23"
+
+  availability_zone = "eu-west-1a"
+
+  tags = {
+    Name = "${var.name}-nat"
+  }
+}
+
+resource "aws_subnet" "private_a" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "${var.cidr_prefix}.32.0/23"
+  availability_zone = "eu-west-1a"
+
+  tags = {
+    Name = "${var.name}-private-a"
+    Tier = "private"
+  }
+}
+
+resource "aws_subnet" "private_b" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "${var.cidr_prefix}.40.0/23"
+  availability_zone = "eu-west-1b"
+
+  tags = {
+    Name = "${var.name}-private-b"
+    Tier = "private"
+  }
+}
+
+resource "aws_subnet" "private_c" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "${var.cidr_prefix}.48.0/23"
+  availability_zone = "eu-west-1c"
+
+  tags = {
+    Name = "${var.name}-private-c"
+    Tier = "private"
+  }
+}
+
+resource "aws_subnet" "public_a" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "${var.cidr_prefix}.136.0/23"
+  availability_zone = "eu-west-1a"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "${var.name}-public-a"
+    Tier = "public"
+  }
+}
+
+resource "aws_subnet" "public_b" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "${var.cidr_prefix}.144.0/23"
+  availability_zone = "eu-west-1b"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "${var.name}-public-b"
+    Tier = "public"
+  }
+}
+
+resource "aws_subnet" "public_c" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "${var.cidr_prefix}.152.0/23"
+  availability_zone = "eu-west-1c"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "${var.name}-public-c"
+    Tier = "public"
+  }
+}
+
+resource "aws_subnet" "bastion" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "${var.cidr_prefix}.240.0/23"
+  availability_zone       = "eu-west-1a"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "${var.name}-bastion"
+    Tier = "bastion"
+  }
+}
+----
+
+We need to associate the public subnets with the Internet Gateway.
+
+.`modules/vpc/gateway.tf`
+[source,terraform]
+----
+[...]
+
+resource "aws_route_table" "main" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main.id
+  }
+
+  tags = {
+    Name = "${var.name} Internet Gateway"
+  }
+}
+
+
+resource "aws_route_table_association" "public_a_to_igw" {
+  subnet_id      = aws_subnet.public_a.id
+  route_table_id = aws_route_table.main.id
+}
+
+resource "aws_route_table_association" "public_b_to_igw" {
+  subnet_id      = aws_subnet.public_b.id
+  route_table_id = aws_route_table.main.id
+}
+
+resource "aws_route_table_association" "public_c_to_igw" {
+  subnet_id      = aws_subnet.public_c.id
+  route_table_id = aws_route_table.main.id
+}
+
+resource "aws_route_table_association" "bastion_to_igw" {
+  subnet_id      = aws_subnet.bastion.id
+  route_table_id = aws_route_table.main.id
+}
+----
+
+=== NAT Gateway
+
+We need a NAT to grant private networks access to the Internet.
+
+.`modules/vpc/nat.tf`
+[source,terraform]
+----
+resource "aws_eip" "nat_gateway" {
+  vpc = true
+
+  tags = {
+    Name = var.name
+  }
+}
+
+resource "aws_route_table_association" "nat_to_igw" {
+  subnet_id      = aws_subnet.nat.id
+  route_table_id = aws_route_table.main.id
+}
+
+resource "aws_nat_gateway" "nat_gateway" {
+  allocation_id = aws_eip.nat_gateway.id
+  subnet_id     = aws_subnet.nat.id
+
+  depends_on = [aws_internet_gateway.main]
+
+  tags = {
+    Name = var.name
+  }
+}
+
+resource "aws_route_table" "nat_gateway" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gateway.id
+  }
+
+  tags = {
+    Name = "${var.name} NAT Gateway"
+  }
+}
+
+resource "aws_route_table_association" "private_a_to_nat" {
+  subnet_id      = aws_subnet.private_a.id
+  route_table_id = aws_route_table.nat_gateway.id
+}
+
+resource "aws_route_table_association" "private_b_to_nat" {
+  subnet_id      = aws_subnet.private_b.id
+  route_table_id = aws_route_table.nat_gateway.id
+}
+
+resource "aws_route_table_association" "private_c_to_nat" {
+  subnet_id      = aws_subnet.private_c.id
+  route_table_id = aws_route_table.nat_gateway.id
+}
+----
+
+== Subnet groups
+
+As an optional step, you might want to create _subnet groups_ for RDS. In AWS, you can create RDS instances in public networks out of the box, but if you want to put them in a private network (and _you want_ to put them there) you need to build a subnet group. See [link]("https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html", "the documentation").
+
+.`modules/vpc/subnets.tf`
+[source,terraform]
+----
+resource "aws_db_subnet_group" "rds_group" {
+  name = "rds_private"
+  subnet_ids = [
+    aws_subnet.private_a.id,
+    aws_subnet.private_b.id,
+    aws_subnet.private_c.id
+  ]
+
+  tags = {
+    Name = "${var.name} RDS subnet group"
+  }
+}
+----
+
+== Final words
+
+I hope this was a useful and interesting trip into network design. As an example, this might sound trivial and simple compared to what is needed in certain contexts, but it is definitely a good setup that you can build on. I think VPC is often overlooked as it is assumed developers are familiar with networks. As networking is a crucial part of a system and will pop up in other technologies like Docker or Kubernetes, I recommend any mid-level or senior developer to make sure they are familiar with the main concepts of IP. Happy learning!
+
+== Feedback
+
+Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+
+Photo by [link]("https://unsplash.com/@nate_dumlao?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash", "Nathan Dumlao") on [link]("https://unsplash.com/photos/kEOLkJksbc8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash", "Unsplash").
+
+  
