@@ -7,7 +7,7 @@ pelican-sitemap
 pelican-tag-cloud
 pelican-webassets
 
-markdown
+Markdown==3.3.6
 
 punch.py
 

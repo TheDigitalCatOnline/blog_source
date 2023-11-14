@@ -29,7 +29,7 @@ DISPLAY_TAGS_ON_SIDEBAR = False
 
 RELATED_POSTS_MAX = 10
 
-JINJA_ENVIRONMENT = {"extensions": ["jinja2.ext.with_", "jinja2.ext.do"]}
+JINJA_ENVIRONMENT = {"extensions": ["jinja2.ext.do"]}
 
 ARTICLE_URL = "blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/"
 ARTICLE_SAVE_AS = ARTICLE_URL + "index.html"
@@ -116,7 +116,9 @@ MAU = {
         "header.html": (
             '<h{{ level }} id="{{ anchor }}">'
             "{{ value }}"
-            '{% if anchor and level <= 2 %}<a class="headerlink" href="#{{ anchor }}" title="Permanent link">¶</a>{% endif %}'
+            "{% if anchor and level <= 2 %}"
+            '<a class="headerlink" href="#{{ anchor }}" title="Permanent link">¶</a>'
+            "{% endif %}"
             "</h{{ level }}>"
         ),
         "block-admonition.html": (
@@ -150,28 +152,33 @@ MAU = {
             </div>
             """
         ),
-        "block-source.html": (
-            '<div{% if blocktype %} class="code"{% endif %}>'
+        "source.html": (
+            '<div class="code">'
             '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
-            '<div class="content">{{ content }}</div>'
-            '{% if kwargs.callouts %}<div class="callouts">'
+            '<div class="content">'
+            '<div class="highlight">'
+            "<pre>"
+            "{% for line, callout in code %}"
+            "{{ line }}{% if callout %} {{ callout }}{% endif %}\n"
+            "{% endfor %}"
+            "</pre>"
+            "</div> "
+            "</div> "
+            '{% if callouts %}<div class="callouts">'
             "<table><tbody>"
-            "{% for callout in kwargs.callouts %}<tr>"
-            "<td>{{ callout[0] }}</td>"
-            "<td>{{ callout[1] }}</td>"
-            "</tr>{% endfor %}"
+            "{% for callout in callouts %}{{ callout }}{% endfor %}"
             "</tbody></table>"
             "</div>{% endif %}"
             "</div>"
         ),
-        "image.html": (
+        "content_image.html": (
             '<div class="imageblock">'
             '<img src="{{ uri }}"{% if alt_text %} alt="{{ alt_text }}"{% endif %}>'
             '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
             "</div>"
         ),
     },
-    "pygments": {"html": {}},
+    "pygments": {"html": {"nowrap": True}},
 }
 
 QUOTES = [
