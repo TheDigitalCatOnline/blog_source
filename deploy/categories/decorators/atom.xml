@@ -1,265 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The Digital Cat - decorators</title><link href="https://www.thedigitalcatonline.com/" rel="alternate"></link><link href="https://www.thedigitalcatonline.com/categories/decorators/atom.xml" rel="self"></link><id>https://www.thedigitalcatonline.com/</id><updated>2022-09-18T23:00:00+00:00</updated><subtitle>Adventures of a curious cat in the land of programming</subtitle><entry><title>First-class objects in Python - Higher-order functions, wrappers, and factories</title><link href="https://www.thedigitalcatonline.com/blog/2021/03/09/first-class-objects-in-python/" rel="alternate"></link><published>2021-03-09T16:00:00+00:00</published><updated>2022-09-18T23:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2021-03-09:/blog/2021/03/09/first-class-objects-in-python/</id><content type="html">&lt;p&gt;My new book "First-class objects in Python" is out! Grab your &lt;strong&gt;FREE&lt;/strong&gt; copy &lt;a href="https://www.thedigitalcat.academy/freebie-first-class-objects"&gt;here&lt;/a&gt;!&lt;/p&gt;&lt;div class="imageblock"&gt;&lt;img src="/images/first-class-objects-in-python.jpg"&gt;&lt;/div&gt;</content><category term="Programming"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category><category term="OOP"></category><category term="functional programming"></category><category term="decorators"></category></entry><entry><title>Python Mocks: a gentle introduction - Part 1</title><link href="https://www.thedigitalcatonline.com/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/" rel="alternate"></link><published>2016-03-06T18:00:00+01:00</published><updated>2019-02-27T23:30:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2016-03-06:/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/</id><summary type="html">&lt;p&gt;An introduction to mocks in Python: basic concepts and how to use them for tests&lt;/p&gt;</summary><content type="html">&lt;p&gt;As already stressed in the two introductory posts on TDD (you can find them &lt;a href="/categories/tdd/"&gt;here&lt;/a&gt;) testing requires to write some code that uses the functions and objects you are going to develop. This means that you need to isolate a given (external) function that is part of your public API and demonstrate that it works with standard inputs and in edge cases.&lt;/p&gt;
-&lt;p&gt;For example, if you are going to develop an object that stores percentages (such as for example poll results), you should test the following conditions: the class can store a standard percentage such as 42%, the class shall give an error if you try to store a negative percentage, the class shall give an error if you store a percentage greater than 100%.&lt;/p&gt;
-&lt;p&gt;Tests shall be &lt;em&gt;idempotent&lt;/em&gt; and &lt;em&gt;isolated&lt;/em&gt;. Idempotent in mathematics and computer science identifies a process that can be run multiple times without changing the status of the system. Isolated means that a test shall not change its behaviour depending on previous executions of itself, nor depend on the previous execution (or missing execution) of other tests.&lt;/p&gt;
-&lt;p&gt;Such restrictions, which guarantee that your tests are not passing due to a temporary configuration of the system or the order in which they are run, can raise big issues when dealing with external libraries and systems, or with intrinsically mutable concepts such as time. In the testing discipline, such issues are mostly faced using mocks, that is objects that pretend to be other objects.&lt;/p&gt;
-&lt;p&gt;In this series of posts I am going to review the Python &lt;code&gt;mock&lt;/code&gt; library and exemplify its use. I will not cover everything you may do with mock, obviously, but hopefully I'll give you the information you need to start using this powerful library.&lt;/p&gt;
-&lt;h2 id="installation"&gt;Installation&lt;a class="headerlink" href="#installation" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;First of all, &lt;code&gt;mock&lt;/code&gt; is a Python library which development started around 2008. It was selected to be included in the standard library as of Python 3.3, which however does not prevent you to use other libraries if you prefer.&lt;/p&gt;
-&lt;p&gt;Python 3 users, thus, are not required to take any step, while for Python 2 projects you are still required to issue a &lt;code&gt;pip install mock&lt;/code&gt; to install it into the system or the current virtualenv.&lt;/p&gt;
-&lt;p&gt;You may find the official documentation &lt;a href="https://docs.python.org/dev/library/unittest.mock.html"&gt;here&lt;/a&gt;. It is very detailed, and as always I strongly recommend taking your time to run through it.&lt;/p&gt;
-&lt;h2 id="basic-concepts"&gt;Basic concepts&lt;a class="headerlink" href="#basic-concepts" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;A mock, in the testing lingo, is an object that simulates the behaviour of another (more complex) object. When you (unit)test an object of your library you need sometimes to access other systems your object want to connect to, but you do not really want to be forced to run them, for several reasons.&lt;/p&gt;
-&lt;p&gt;The first one is that connecting with external systems means having a complex testing environment, that is you are dropping the isolation requirement of you tests. If your object wants to connect with a website, for example, you are forced to have a running Internet connection, and if the remote website is down you cannot test your library.&lt;/p&gt;
-&lt;p&gt;The second reason is that the setup of an external system is usually slow in comparison with the speed of unit tests. We expect to run hundred of tests in seconds, and if we have to fetch information from a remote server for each of them the time easily increases by several orders of magnitude. Remember: having slow tests means that you cannot run them while you develop, which in turn means that you will not really use them for TDD.&lt;/p&gt;
-&lt;p&gt;The third reason is more subtle, and has to to with the mutable nature of an external system, thus I'll postpone the discussion of this issue for the moment.&lt;/p&gt;
-&lt;p&gt;Let us try and work with a mock in Python and see what it can do. First of all fire up a Python shell or a &lt;a href="http://jupyter.org"&gt;Jupyter Notebook&lt;/a&gt; and import the library &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;If you are using Python 2 you have to install it and use&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;mock&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The main object that the library provides is &lt;code&gt;Mock&lt;/code&gt; and you can instantiate it without any argument&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Mock&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This object has the peculiar property of creating methods and attributes on the fly when you require them. Let us first look inside the object to take a glance of what it provides&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="go"&gt;[&amp;#39;assert_any_call&amp;#39;, &amp;#39;assert_called_once_with&amp;#39;, &amp;#39;assert_called_with&amp;#39;, &amp;#39;assert_has_calls&amp;#39;, &amp;#39;attach_mock&amp;#39;, &amp;#39;call_args&amp;#39;, &amp;#39;call_args_list&amp;#39;, &amp;#39;call_count&amp;#39;, &amp;#39;called&amp;#39;, &amp;#39;configure_mock&amp;#39;, &amp;#39;method_calls&amp;#39;, &amp;#39;mock_add_spec&amp;#39;, &amp;#39;mock_calls&amp;#39;, &amp;#39;reset_mock&amp;#39;, &amp;#39;return_value&amp;#39;, &amp;#39;side_effect&amp;#39;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As you can see there are some methods which are already defined into the &lt;code&gt;Mock&lt;/code&gt; object. Let us read a non-existent attribute&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;
-&lt;span class="go"&gt;&amp;lt;Mock name=&amp;#39;mock.some_attribute&amp;#39; id=&amp;#39;140222043808432&amp;#39;&amp;gt;&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="go"&gt;[&amp;#39;assert_any_call&amp;#39;, &amp;#39;assert_called_once_with&amp;#39;, &amp;#39;assert_called_with&amp;#39;, &amp;#39;assert_has_calls&amp;#39;, &amp;#39;attach_mock&amp;#39;, &amp;#39;call_args&amp;#39;, &amp;#39;call_args_list&amp;#39;, &amp;#39;call_count&amp;#39;, &amp;#39;called&amp;#39;, &amp;#39;configure_mock&amp;#39;, &amp;#39;method_calls&amp;#39;, &amp;#39;mock_add_spec&amp;#39;, &amp;#39;mock_calls&amp;#39;, &amp;#39;reset_mock&amp;#39;, &amp;#39;return_value&amp;#39;, &amp;#39;side_effect&amp;#39;, &amp;#39;some_attribute&amp;#39;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Well, as you can see this class is somehow different from what you are accustomed to. First of all its instances do not raise an &lt;code&gt;AttributeError&lt;/code&gt; when asked for a non-existent attribute, but they happily return another instance of &lt;code&gt;Mock&lt;/code&gt; itself. Second, the attribute you tried to access has now been created inside the object and accessing it returns the same mock object as before.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;
-&lt;span class="go"&gt;&amp;lt;Mock name=&amp;#39;mock.some_attribute&amp;#39; id=&amp;#39;140222043808432&amp;#39;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Mock objects are callables, which means that they may act both as attributes and as methods. If you try to call the mock it just returns you another mock with a name that includes parentheses to signal its callable nature&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="go"&gt;&amp;lt;Mock name=&amp;#39;mock.some_attribute()&amp;#39; id=&amp;#39;140247621475856&amp;#39;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As you can understand, such objects are the perfect tool to mimic other objects or systems, since they may expose any API without raising exceptions. To use them in tests, however, we need them to behave just like the original, which implies returning sensible values or performing operations.&lt;/p&gt;
-&lt;h2 id="return-value"&gt;Return value&lt;a class="headerlink" href="#return-value" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;The simplest thing a mock can do for you is to return a given value every time you call it. This is configured setting the &lt;code&gt;return_value&lt;/code&gt; attribute of a mock object&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;42&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="go"&gt;42&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now the object does not return a mock object any more, instead it just returns the static value stored in the &lt;code&gt;return_value&lt;/code&gt; attribute. Obviously you can also store a callable such as a function or an object, and the method will return it, but it will not run it. Let me give you an example&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_answer&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;42&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;print_answer&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="go"&gt;&amp;lt;function print_answer at 0x7f8df1e3f400&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As you can see calling &lt;code&gt;some_attribute()&lt;/code&gt; just returns the value stored in &lt;code&gt;return_value&lt;/code&gt;, that is the function itself. To return values that come from a function we have to use a slightly more complex attribute of mock objects called &lt;code&gt;side_effect&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id="side-effect"&gt;Side effect&lt;a class="headerlink" href="#side-effect" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;The &lt;code&gt;side_effect&lt;/code&gt; parameter of mock objects is a very powerful tool. It accepts three different flavours of objects, callables, iterables, and exceptions, and changes its behaviour accordingly.&lt;/p&gt;
-&lt;p&gt;If you pass an exception the mock will raise it&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;A custom value error&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="gt"&gt;Traceback (most recent call last):&lt;/span&gt;
-  File &lt;span class="nb"&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;1&lt;/span&gt;, in &lt;span class="n"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;
-  File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;902&lt;/span&gt;, in &lt;span class="n"&gt;__call__&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_mock_self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;958&lt;/span&gt;, in &lt;span class="n"&gt;_mock_call&lt;/span&gt;
-    &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;effect&lt;/span&gt;
-&lt;span class="gr"&gt;ValueError&lt;/span&gt;: &lt;span class="n"&gt;A custom value error&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;If you pass an iterable, such as for example a generator, or a plain list, tuple, or similar objects, the mock will yield the values of that iterable, i.e. return every value contained in the iterable on subsequent calls of the mock. Let me give you an example&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="go"&gt;0&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="go"&gt;1&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="go"&gt;2&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="gt"&gt;Traceback (most recent call last):&lt;/span&gt;
-  File &lt;span class="nb"&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;1&lt;/span&gt;, in &lt;span class="n"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;
-  File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;902&lt;/span&gt;, in &lt;span class="n"&gt;__call__&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_mock_self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;961&lt;/span&gt;, in &lt;span class="n"&gt;_mock_call&lt;/span&gt;
-    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;effect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="gr"&gt;StopIteration&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As promised, the mock just returns every object found in the iterable (in this case a &lt;code&gt;range&lt;/code&gt; object) once at a time until the generator is exhausted. According to the iterator protocol (see &lt;a href="https://www.thedigitalcatonline.com/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/"&gt;this post&lt;/a&gt;) once every item has been returned the object raises the &lt;code&gt;StopIteration&lt;/code&gt; exception, which means that you can correctly use it in a loop.&lt;/p&gt;
-&lt;p&gt;The last and perhaps most used case is that of passing a callable to &lt;code&gt;side_effect&lt;/code&gt;, which shamelessly executes it with its own same parameters. This is very powerful, especially if you stop thinking about "functions" and start considering "callables". Indeed, &lt;code&gt;side_effect&lt;/code&gt; also accepts a class and calls it, that is it can instantiate objects. Let us consider a simple example with a function without arguments&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_answer&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;42&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;       
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;print_answer&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="go"&gt;42&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;A slightly more complex example: a function with arguments&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_number&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Number:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;print_number&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="go"&gt;Number: 5&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;And finally an example with a class&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Number&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_value&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Value:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="gp"&gt;... &lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Number&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;26&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;
-&lt;span class="go"&gt;&amp;lt;__main__.Number object at 0x7f8df1aa4470&amp;gt;&lt;/span&gt;
-&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print_value&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="go"&gt;Value: 26&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id="testing-with-mocks"&gt;Testing with mocks&lt;a class="headerlink" href="#testing-with-mocks" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Now we know how to build a mock and how to give it a static return value or make it call a callable object. It is time to see how to use a mock in a test and what facilities do mocks provide. I'm going to use &lt;a href="http://pytest.org"&gt;pytest&lt;/a&gt; as a testing framework. You can find a quick introduction to pytest and TDD &lt;a href="/categories/tdd/"&gt;here&lt;/a&gt;).&lt;/p&gt;
-&lt;h3 id="setup"&gt;Setup&lt;a class="headerlink" href="#setup" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;If you want to quickly setup a pytest playground you may execute this code in a terminal (you need to have Python 3 and virtualenv installed in your system) &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir mockplayground
-&lt;span class="nb"&gt;cd&lt;/span&gt; mockplayground
-virtualenv venv3 -p python3
-&lt;span class="nb"&gt;source&lt;/span&gt; venv3/bin/activate
-pip install --upgrade pip
-pip install pytest
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[pytest]&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; pytest.ini
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;norecursedirs=venv*&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; pytest.ini
-mkdir tests
-touch myobj.py
-touch tests/test_mock.py
-&lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code&gt;PYTHONPATH&lt;/code&gt; environment variable is an easy way to avoid having to setup a whole Python project to just test some simple code.&lt;/p&gt;
-&lt;h3 id="the-three-test-types"&gt;The three test types&lt;a class="headerlink" href="#the-three-test-types" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;According to Sandy Metz we need to test only three types of messages (calls) between objects:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Incoming queries (assertion on result)&lt;/li&gt;
-&lt;li&gt;Incoming commands (assertion on direct public side effects)&lt;/li&gt;
-&lt;li&gt;Outgoing commands (expectation on call and arguments)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;You can see the original talk &lt;a href="https://www.youtube.com/watch?v=URSWYvyc42M"&gt;here&lt;/a&gt; or read the slides &lt;a href="https://speakerdeck.com/skmetz/magic-tricks-of-testing-railsconf"&gt;here&lt;/a&gt;. The final table is shown in slide number 176.&lt;/p&gt;
-&lt;p&gt;As you can see when dealing with external objects we are only interested in knowing IF a method was called and WHAT PARAMETERS the caller passed to the object. We are not testing if the remote object returns the correct result, this is faked by the mock, which indeed returns exactly the result we need.&lt;/p&gt;
-&lt;p&gt;So the purpose of the methods provided by mock objects is to allow us to check what methods we called on the mock itself and what parameters we used in the call.&lt;/p&gt;
-&lt;h3 id="asserting-calls"&gt;Asserting calls&lt;a class="headerlink" href="#asserting-calls" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;To show how to use Python mocks in testing I will follow the TDD methodology, writing tests first and then writing the code that makes the tests pass. In this post I want to give you a simple overview of the mock objects, so I will not implement a real world use case, and the code will be very trivial. In the second part of this series I will test and implement a real class, in order to show some more interesting use cases.&lt;/p&gt;
-&lt;p&gt;The first thing we are usually interested in when dealing with an external object is to know that a given method has been called on it. Python mocks provide the &lt;code&gt;assert_called_with()&lt;/code&gt; method to check this condition.&lt;/p&gt;
-&lt;p&gt;The use case we are going to test is the following. &lt;em&gt;We instantiate the &lt;code&gt;myobj.MyObj&lt;/code&gt; class, which requires an external object. The class shall call the &lt;code&gt;connect()&lt;/code&gt; method of the external object without any parameter.&lt;/em&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;myobj&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_instantiation&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="n"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Mock&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="n"&gt;myobj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;MyObj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;external_obj&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;external_obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assert_called_with&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code&gt;myobj.MyObj&lt;/code&gt; class, in this simple example, needs to connect to an external object, for example a remote repository or a database. The only thing we need to know for testing purposes is if the class called the &lt;code&gt;connect()&lt;/code&gt; method of the external object without any parameter.&lt;/p&gt;
-&lt;p&gt;So the first thing we do in this test is to instantiate the mock object. This is a fake version of the external object, and its only purpose is to accept calls from the &lt;code&gt;MyObj&lt;/code&gt; object under test and return sensible values. Then we instantiate the &lt;code&gt;MyObj&lt;/code&gt; class passing the external object. We expect the class to call the &lt;code&gt;connect()&lt;/code&gt; method so we express this expectation calling &lt;code&gt;external_obj.connect.assert_called_with()&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;What happens behind the scenes? The &lt;code&gt;MyObj&lt;/code&gt; class receives the external object and somewhere is its initialization process calls the &lt;code&gt;connect()&lt;/code&gt; method of the mock object and this creates the method itself as a mock object. This new mock records the parameters used to call it and the subsequent call to &lt;code&gt;assert_called_with()&lt;/code&gt; checks that the method was called and that no parameters were passed.&lt;/p&gt;
-&lt;p&gt;Running pytest the test obviously fails.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
-&lt;span class="o"&gt;==========================================&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; session &lt;span class="nv"&gt;starts&lt;/span&gt; &lt;span class="o"&gt;==========================================&lt;/span&gt;
-platform linux -- Python &lt;span class="m"&gt;3&lt;/span&gt;.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
-rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
-collected &lt;span class="m"&gt;1&lt;/span&gt; items 
-
-tests/test_mock.py &lt;span class="nv"&gt;F&lt;/span&gt;
-
-&lt;span class="o"&gt;===============================================&lt;/span&gt; &lt;span class="nv"&gt;FAILURES&lt;/span&gt; &lt;span class="o"&gt;================================================&lt;/span&gt;
-___________________________________________ test_instantiation __________________________________________
-
-    def test_instantiation&lt;span class="o"&gt;()&lt;/span&gt;:
-        &lt;span class="nv"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mock.Mock&lt;span class="o"&gt;()&lt;/span&gt;
-&amp;gt;       myobj.MyObj&lt;span class="o"&gt;(&lt;/span&gt;external_obj&lt;span class="o"&gt;)&lt;/span&gt;
-E       AttributeError: &lt;span class="s1"&gt;&amp;#39;module&amp;#39;&lt;/span&gt; object has no attribute &lt;span class="s1"&gt;&amp;#39;MyObj&amp;#39;&lt;/span&gt;
-
-tests/test_mock.py:6: &lt;span class="nv"&gt;AttributeError&lt;/span&gt;
-&lt;span class="o"&gt;=======================================&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; failed &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.03 &lt;span class="nv"&gt;seconds&lt;/span&gt; &lt;span class="o"&gt;========================================&lt;/span&gt;
-$
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Putting this code in &lt;code&gt;myobj.py&lt;/code&gt; is enough to make the test pass&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyObj&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As you can see, the &lt;code&gt;__init__()&lt;/code&gt; method actually calls &lt;code&gt;repo.connect()&lt;/code&gt;, where &lt;code&gt;repo&lt;/code&gt; is expected to be a full-featured external object that provides a given API. In this case (for the moment) the API is just its &lt;code&gt;connect()&lt;/code&gt; method. Calling &lt;code&gt;repo.connect()&lt;/code&gt; when &lt;code&gt;repo&lt;/code&gt; is a mock object silently creates the method as a mock object, as shown before.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;assert_called_with()&lt;/code&gt; method also allows us to check the parameters we passed when calling. To show this let us pretend that we expect the &lt;code&gt;MyObj.setup()&lt;/code&gt; method to call &lt;code&gt;setup(cache=True, max_connections=256)&lt;/code&gt; on the external object. As you can see we pass a couple of arguments (namely &lt;code&gt;cache&lt;/code&gt; and &lt;code&gt;max_connections&lt;/code&gt;) to the called method, and we want to be sure that the call was exactly in this form. The new test is thus&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_setup&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="n"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Mock&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;myobj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;MyObj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;external_obj&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="n"&gt;external_obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assert_called_with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_connections&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;256&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As usual the first run fails. Be sure to check this, it is part of the TDD methodology. You must have a test that DOES NOT PASS, then write some code that make it pass.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
-&lt;span class="o"&gt;==========================================&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; session &lt;span class="nv"&gt;starts&lt;/span&gt; &lt;span class="o"&gt;==========================================&lt;/span&gt;
-platform linux -- Python &lt;span class="m"&gt;3&lt;/span&gt;.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
-rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
-collected &lt;span class="m"&gt;2&lt;/span&gt; items 
-
-tests/test_mock.py .F
-
-&lt;span class="o"&gt;===============================================&lt;/span&gt; &lt;span class="nv"&gt;FAILURES&lt;/span&gt; &lt;span class="o"&gt;================================================&lt;/span&gt;
-______________________________________________ test_setup _______________________________________________
-
-    def test_setup&lt;span class="o"&gt;()&lt;/span&gt;:
-        &lt;span class="nv"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mock.Mock&lt;span class="o"&gt;()&lt;/span&gt;
-        &lt;span class="nv"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; myobj.MyObj&lt;span class="o"&gt;(&lt;/span&gt;external_obj&lt;span class="o"&gt;)&lt;/span&gt;
-&amp;gt;       obj.setup&lt;span class="o"&gt;()&lt;/span&gt;
-E       AttributeError: &lt;span class="s1"&gt;&amp;#39;MyObj&amp;#39;&lt;/span&gt; object has no attribute &lt;span class="s1"&gt;&amp;#39;setup&amp;#39;&lt;/span&gt;
-
-tests/test_mock.py:14: &lt;span class="nv"&gt;AttributeError&lt;/span&gt;
-&lt;span class="o"&gt;==================================&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; failed, &lt;span class="m"&gt;1&lt;/span&gt; passed &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.03 &lt;span class="nv"&gt;seconds&lt;/span&gt; &lt;span class="o"&gt;===================================&lt;/span&gt;
-$
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;To show you what type of check the mock object provides let me implement a partially correct solution&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyObj&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_repo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;
-        &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As you can see the external object has been stored in &lt;code&gt;self._repo&lt;/code&gt; and the call to &lt;code&gt;self._repo.setup()&lt;/code&gt; is not exactly what the test expects, lacking the &lt;code&gt;max_connections&lt;/code&gt; parameter. Running pytest we obtain the following result (I removed most of the pytest output)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;E           AssertionError: Expected call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True, &lt;span class="nv"&gt;max_connections&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-E           Actual call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;and you see that the error message is very clear about what we expected and what happened in our code.&lt;/p&gt;
-&lt;p&gt;As you can read in the official documentation, the &lt;code&gt;Mock&lt;/code&gt; object also provides the following methods and attributes: &lt;code&gt;assert_called_once_with&lt;/code&gt;, &lt;code&gt;assert_any_call&lt;/code&gt;, &lt;code&gt;assert_has_calls&lt;/code&gt;, &lt;code&gt;assert_not_called&lt;/code&gt;, &lt;code&gt;called&lt;/code&gt;, &lt;code&gt;call_count&lt;/code&gt;. Each of them explores a different aspect of the mock behaviour concerning calls, make sure to check their description and the examples provided along.&lt;/p&gt;
-&lt;h2 id="final-words"&gt;Final words&lt;a class="headerlink" href="#final-words" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;In this first part of the series I described the behaviour of mock objects and the methods they provide to simulate return values and to test calls. They are a very powerful tool that allows you to avoid creating complex and slow tests that depend on external facilities to run, thus missing the main purpose of tests, which is that of &lt;em&gt;continuously&lt;/em&gt; helping you to check your code.&lt;/p&gt;
-&lt;p&gt;In the next issue of the series I will explore the automatic creation of mock methods from a given object and the very important patching mechanism provided by the &lt;code&gt;patch&lt;/code&gt; decorator and context manager.&lt;/p&gt;
-&lt;h2 id="updates"&gt;Updates&lt;a class="headerlink" href="#updates" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;2019-02-27: &lt;a href="https://github.com/schneeemensch"&gt;schneeemensch&lt;/a&gt; spotted a mistake in the code of the "Return value" section, where &lt;code&gt;m.some_attribute.side_effect()&lt;/code&gt; was used instead of &lt;code&gt;m.some_attribute()&lt;/code&gt;. Thanks!&lt;/p&gt;
-&lt;h2 id="feedback"&gt;Feedback&lt;a class="headerlink" href="#feedback" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;The &lt;a href="https://github.com/TheDigitalCatOnline/blog_source/issues"&gt;GitHub issues&lt;/a&gt; page is the best place to submit corrections.&lt;/p&gt;</content><category term="Programming"></category><category term="decorators"></category><category term="OOP"></category><category term="pytest"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category><category term="TDD"></category><category term="testing"></category></entry><entry><title>Python Mocks: a gentle introduction - Part 2</title><link href="https://www.thedigitalcatonline.com/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/" rel="alternate"></link><published>2016-09-27T09:00:00+00:00</published><updated>2016-09-27T09:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2016-09-27:/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/</id><summary type="html">&lt;p&gt;Second part of the series on Python mocks: how to patch code&lt;/p&gt;</summary><content type="html">&lt;p&gt;In the &lt;a href="https://www.thedigitalcatonline.com/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"&gt;first post&lt;/a&gt; I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the &lt;code&gt;return_value&lt;/code&gt; and &lt;code&gt;side_effect&lt;/code&gt; attributes, and the &lt;code&gt;assert_called_with()&lt;/code&gt; method.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Digital Cat - decorators</title><link href="https://www.thedigitalcatonline.com/" rel="alternate"></link><link href="https://www.thedigitalcatonline.com/categories/decorators/atom.xml" rel="self"></link><id>https://www.thedigitalcatonline.com/</id><updated>2022-09-18T23:00:00+00:00</updated><subtitle>Adventures of a curious cat in the land of programming</subtitle><entry><title>First-class objects in Python - Higher-order functions, wrappers, and factories</title><link href="https://www.thedigitalcatonline.com/blog/2021/03/09/first-class-objects-in-python/" rel="alternate"></link><published>2021-03-09T16:00:00+00:00</published><updated>2022-09-18T23:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2021-03-09:/blog/2021/03/09/first-class-objects-in-python/</id><content type="html">&lt;p&gt;My new book "First-class objects in Python" is out! Grab your &lt;strong&gt;FREE&lt;/strong&gt; copy &lt;a href="https://www.thedigitalcat.academy/freebie-first-class-objects"&gt;here&lt;/a&gt;!&lt;/p&gt;&lt;div class="imageblock"&gt;&lt;img src="/images/first-class-objects-in-python.jpg"&gt;&lt;/div&gt;</content><category term="Programming"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category><category term="OOP"></category><category term="functional programming"></category><category term="decorators"></category></entry><entry><title>Python Mocks: a gentle introduction - Part 2</title><link href="https://www.thedigitalcatonline.com/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/" rel="alternate"></link><published>2016-09-27T09:00:00+00:00</published><updated>2016-09-27T09:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2016-09-27:/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/</id><summary type="html">&lt;p&gt;Second part of the series on Python mocks: how to patch code&lt;/p&gt;</summary><content type="html">&lt;p&gt;In the &lt;a href="https://www.thedigitalcatonline.com/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"&gt;first post&lt;/a&gt; I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the &lt;code&gt;return_value&lt;/code&gt; and &lt;code&gt;side_effect&lt;/code&gt; attributes, and the &lt;code&gt;assert_called_with()&lt;/code&gt; method.&lt;/p&gt;
 &lt;p&gt;In this post I will briefly review the remaining &lt;code&gt;assert_*&lt;/code&gt; methods and some interesting attributes that allow to check the calls received by the mock object. Then I will introduce and exemplify patching, which is a very important topic in testing.&lt;/p&gt;
 &lt;h2 id="other-assertions-and-attributes"&gt;Other assertions and attributes&lt;a class="headerlink" href="#other-assertions-and-attributes" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The &lt;a href="https://docs.python.org/dev/library/unittest.mock.html"&gt;official documentation&lt;/a&gt; of the mock library lists many other assertion, namely &lt;code&gt;assert_called_once_with()&lt;/code&gt;, &lt;code&gt;assert_any_call()&lt;/code&gt;, &lt;code&gt;assert_has_calls()&lt;/code&gt;, &lt;code&gt;assert_not_called()&lt;/code&gt;. If you grasped how &lt;code&gt;assert_called_with()&lt;/code&gt; works, you will have no troubles in understanding how those other behave. Be sure to check the documentation to get a full description of what mock object can assert about their history after being used by your code.&lt;/p&gt;
@@ -718,7 +458,267 @@ E           Actual call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class
 &lt;h2 id="sources"&gt;Sources&lt;a class="headerlink" href="#sources" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The official documentation of the &lt;code&gt;abc&lt;/code&gt; module is very well written. &lt;a href="https://docs.python.org/3.5/library/abc.html"&gt;Here&lt;/a&gt; you find the version for Python 3.5. I also suggest to read the original &lt;a href="https://www.python.org/dev/peps/pep-3119"&gt;PEP 3119&lt;/a&gt; and the related &lt;a href="https://www.python.org/dev/peps/pep-3141"&gt;PEP 3141&lt;/a&gt; for a deeper understanding of the topic.&lt;/p&gt;
 &lt;h2 id="feedback"&gt;Feedback&lt;a class="headerlink" href="#feedback" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;The &lt;a href="https://github.com/TheDigitalCatOnline/blog_source/issues"&gt;GitHub issues&lt;/a&gt; page is the best place to submit corrections.&lt;/p&gt;</content><category term="Programming"></category><category term="decorators"></category><category term="metaclasses"></category><category term="metaprogramming"></category><category term="Notebook"></category><category term="OOP"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category></entry><entry><title>Python decorators: metaprogramming with style</title><link href="https://www.thedigitalcatonline.com/blog/2015/04/23/python-decorators-metaprogramming-with-style/" rel="alternate"></link><published>2015-04-23T13:00:00+01:00</published><updated>2015-04-23T13:00:00+01:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2015-04-23:/blog/2015/04/23/python-decorators-metaprogramming-with-style/</id><summary type="html"></summary><content type="html">&lt;p&gt;This post is the result of a lot of personal research on Python decorators, meta- and functional programming. I want however to thank Bruce Eckel and the people behind the open source book "Python 3 Patterns, Recipes and Idioms" for a lot of precious information on the subject. See the Resources section at the end of the post to check their work.&lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://github.com/TheDigitalCatOnline/blog_source/issues"&gt;GitHub issues&lt;/a&gt; page is the best place to submit corrections.&lt;/p&gt;</content><category term="Programming"></category><category term="decorators"></category><category term="metaclasses"></category><category term="metaprogramming"></category><category term="Notebook"></category><category term="OOP"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category></entry><entry><title>Python Mocks: a gentle introduction - Part 1</title><link href="https://www.thedigitalcatonline.com/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/" rel="alternate"></link><published>2016-03-06T18:00:00+01:00</published><updated>2019-02-27T23:30:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2016-03-06:/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/</id><summary type="html">&lt;p&gt;An introduction to mocks in Python: basic concepts and how to use them for tests&lt;/p&gt;</summary><content type="html">&lt;p&gt;As already stressed in the two introductory posts on TDD (you can find them &lt;a href="/categories/tdd/"&gt;here&lt;/a&gt;) testing requires to write some code that uses the functions and objects you are going to develop. This means that you need to isolate a given (external) function that is part of your public API and demonstrate that it works with standard inputs and in edge cases.&lt;/p&gt;
+&lt;p&gt;For example, if you are going to develop an object that stores percentages (such as for example poll results), you should test the following conditions: the class can store a standard percentage such as 42%, the class shall give an error if you try to store a negative percentage, the class shall give an error if you store a percentage greater than 100%.&lt;/p&gt;
+&lt;p&gt;Tests shall be &lt;em&gt;idempotent&lt;/em&gt; and &lt;em&gt;isolated&lt;/em&gt;. Idempotent in mathematics and computer science identifies a process that can be run multiple times without changing the status of the system. Isolated means that a test shall not change its behaviour depending on previous executions of itself, nor depend on the previous execution (or missing execution) of other tests.&lt;/p&gt;
+&lt;p&gt;Such restrictions, which guarantee that your tests are not passing due to a temporary configuration of the system or the order in which they are run, can raise big issues when dealing with external libraries and systems, or with intrinsically mutable concepts such as time. In the testing discipline, such issues are mostly faced using mocks, that is objects that pretend to be other objects.&lt;/p&gt;
+&lt;p&gt;In this series of posts I am going to review the Python &lt;code&gt;mock&lt;/code&gt; library and exemplify its use. I will not cover everything you may do with mock, obviously, but hopefully I'll give you the information you need to start using this powerful library.&lt;/p&gt;
+&lt;h2 id="installation"&gt;Installation&lt;a class="headerlink" href="#installation" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;First of all, &lt;code&gt;mock&lt;/code&gt; is a Python library which development started around 2008. It was selected to be included in the standard library as of Python 3.3, which however does not prevent you to use other libraries if you prefer.&lt;/p&gt;
+&lt;p&gt;Python 3 users, thus, are not required to take any step, while for Python 2 projects you are still required to issue a &lt;code&gt;pip install mock&lt;/code&gt; to install it into the system or the current virtualenv.&lt;/p&gt;
+&lt;p&gt;You may find the official documentation &lt;a href="https://docs.python.org/dev/library/unittest.mock.html"&gt;here&lt;/a&gt;. It is very detailed, and as always I strongly recommend taking your time to run through it.&lt;/p&gt;
+&lt;h2 id="basic-concepts"&gt;Basic concepts&lt;a class="headerlink" href="#basic-concepts" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;A mock, in the testing lingo, is an object that simulates the behaviour of another (more complex) object. When you (unit)test an object of your library you need sometimes to access other systems your object want to connect to, but you do not really want to be forced to run them, for several reasons.&lt;/p&gt;
+&lt;p&gt;The first one is that connecting with external systems means having a complex testing environment, that is you are dropping the isolation requirement of you tests. If your object wants to connect with a website, for example, you are forced to have a running Internet connection, and if the remote website is down you cannot test your library.&lt;/p&gt;
+&lt;p&gt;The second reason is that the setup of an external system is usually slow in comparison with the speed of unit tests. We expect to run hundred of tests in seconds, and if we have to fetch information from a remote server for each of them the time easily increases by several orders of magnitude. Remember: having slow tests means that you cannot run them while you develop, which in turn means that you will not really use them for TDD.&lt;/p&gt;
+&lt;p&gt;The third reason is more subtle, and has to to with the mutable nature of an external system, thus I'll postpone the discussion of this issue for the moment.&lt;/p&gt;
+&lt;p&gt;Let us try and work with a mock in Python and see what it can do. First of all fire up a Python shell or a &lt;a href="http://jupyter.org"&gt;Jupyter Notebook&lt;/a&gt; and import the library &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you are using Python 2 you have to install it and use&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;mock&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The main object that the library provides is &lt;code&gt;Mock&lt;/code&gt; and you can instantiate it without any argument&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Mock&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This object has the peculiar property of creating methods and attributes on the fly when you require them. Let us first look inside the object to take a glance of what it provides&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;#39;assert_any_call&amp;#39;, &amp;#39;assert_called_once_with&amp;#39;, &amp;#39;assert_called_with&amp;#39;, &amp;#39;assert_has_calls&amp;#39;, &amp;#39;attach_mock&amp;#39;, &amp;#39;call_args&amp;#39;, &amp;#39;call_args_list&amp;#39;, &amp;#39;call_count&amp;#39;, &amp;#39;called&amp;#39;, &amp;#39;configure_mock&amp;#39;, &amp;#39;method_calls&amp;#39;, &amp;#39;mock_add_spec&amp;#39;, &amp;#39;mock_calls&amp;#39;, &amp;#39;reset_mock&amp;#39;, &amp;#39;return_value&amp;#39;, &amp;#39;side_effect&amp;#39;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see there are some methods which are already defined into the &lt;code&gt;Mock&lt;/code&gt; object. Let us read a non-existent attribute&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;Mock name=&amp;#39;mock.some_attribute&amp;#39; id=&amp;#39;140222043808432&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;#39;assert_any_call&amp;#39;, &amp;#39;assert_called_once_with&amp;#39;, &amp;#39;assert_called_with&amp;#39;, &amp;#39;assert_has_calls&amp;#39;, &amp;#39;attach_mock&amp;#39;, &amp;#39;call_args&amp;#39;, &amp;#39;call_args_list&amp;#39;, &amp;#39;call_count&amp;#39;, &amp;#39;called&amp;#39;, &amp;#39;configure_mock&amp;#39;, &amp;#39;method_calls&amp;#39;, &amp;#39;mock_add_spec&amp;#39;, &amp;#39;mock_calls&amp;#39;, &amp;#39;reset_mock&amp;#39;, &amp;#39;return_value&amp;#39;, &amp;#39;side_effect&amp;#39;, &amp;#39;some_attribute&amp;#39;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Well, as you can see this class is somehow different from what you are accustomed to. First of all its instances do not raise an &lt;code&gt;AttributeError&lt;/code&gt; when asked for a non-existent attribute, but they happily return another instance of &lt;code&gt;Mock&lt;/code&gt; itself. Second, the attribute you tried to access has now been created inside the object and accessing it returns the same mock object as before.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;Mock name=&amp;#39;mock.some_attribute&amp;#39; id=&amp;#39;140222043808432&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Mock objects are callables, which means that they may act both as attributes and as methods. If you try to call the mock it just returns you another mock with a name that includes parentheses to signal its callable nature&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;Mock name=&amp;#39;mock.some_attribute()&amp;#39; id=&amp;#39;140247621475856&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can understand, such objects are the perfect tool to mimic other objects or systems, since they may expose any API without raising exceptions. To use them in tests, however, we need them to behave just like the original, which implies returning sensible values or performing operations.&lt;/p&gt;
+&lt;h2 id="return-value"&gt;Return value&lt;a class="headerlink" href="#return-value" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The simplest thing a mock can do for you is to return a given value every time you call it. This is configured setting the &lt;code&gt;return_value&lt;/code&gt; attribute of a mock object&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;42&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;42&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now the object does not return a mock object any more, instead it just returns the static value stored in the &lt;code&gt;return_value&lt;/code&gt; attribute. Obviously you can also store a callable such as a function or an object, and the method will return it, but it will not run it. Let me give you an example&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_answer&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;42&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;print_answer&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;function print_answer at 0x7f8df1e3f400&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see calling &lt;code&gt;some_attribute()&lt;/code&gt; just returns the value stored in &lt;code&gt;return_value&lt;/code&gt;, that is the function itself. To return values that come from a function we have to use a slightly more complex attribute of mock objects called &lt;code&gt;side_effect&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="side-effect"&gt;Side effect&lt;a class="headerlink" href="#side-effect" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;side_effect&lt;/code&gt; parameter of mock objects is a very powerful tool. It accepts three different flavours of objects, callables, iterables, and exceptions, and changes its behaviour accordingly.&lt;/p&gt;
+&lt;p&gt;If you pass an exception the mock will raise it&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;A custom value error&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gt"&gt;Traceback (most recent call last):&lt;/span&gt;
+  File &lt;span class="nb"&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;1&lt;/span&gt;, in &lt;span class="n"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;
+  File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;902&lt;/span&gt;, in &lt;span class="n"&gt;__call__&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_mock_self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;958&lt;/span&gt;, in &lt;span class="n"&gt;_mock_call&lt;/span&gt;
+    &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;effect&lt;/span&gt;
+&lt;span class="gr"&gt;ValueError&lt;/span&gt;: &lt;span class="n"&gt;A custom value error&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you pass an iterable, such as for example a generator, or a plain list, tuple, or similar objects, the mock will yield the values of that iterable, i.e. return every value contained in the iterable on subsequent calls of the mock. Let me give you an example&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;0&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;1&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;2&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gt"&gt;Traceback (most recent call last):&lt;/span&gt;
+  File &lt;span class="nb"&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;1&lt;/span&gt;, in &lt;span class="n"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;
+  File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;902&lt;/span&gt;, in &lt;span class="n"&gt;__call__&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_mock_self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;961&lt;/span&gt;, in &lt;span class="n"&gt;_mock_call&lt;/span&gt;
+    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;effect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gr"&gt;StopIteration&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As promised, the mock just returns every object found in the iterable (in this case a &lt;code&gt;range&lt;/code&gt; object) once at a time until the generator is exhausted. According to the iterator protocol (see &lt;a href="https://www.thedigitalcatonline.com/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/"&gt;this post&lt;/a&gt;) once every item has been returned the object raises the &lt;code&gt;StopIteration&lt;/code&gt; exception, which means that you can correctly use it in a loop.&lt;/p&gt;
+&lt;p&gt;The last and perhaps most used case is that of passing a callable to &lt;code&gt;side_effect&lt;/code&gt;, which shamelessly executes it with its own same parameters. This is very powerful, especially if you stop thinking about "functions" and start considering "callables". Indeed, &lt;code&gt;side_effect&lt;/code&gt; also accepts a class and calls it, that is it can instantiate objects. Let us consider a simple example with a function without arguments&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_answer&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;42&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;       
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;print_answer&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;42&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A slightly more complex example: a function with arguments&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_number&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Number:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;print_number&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;Number: 5&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And finally an example with a class&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Number&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_value&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Value:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Number&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;some_attribute&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;side_effect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;26&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;__main__.Number object at 0x7f8df1aa4470&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print_value&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;Value: 26&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="testing-with-mocks"&gt;Testing with mocks&lt;a class="headerlink" href="#testing-with-mocks" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Now we know how to build a mock and how to give it a static return value or make it call a callable object. It is time to see how to use a mock in a test and what facilities do mocks provide. I'm going to use &lt;a href="http://pytest.org"&gt;pytest&lt;/a&gt; as a testing framework. You can find a quick introduction to pytest and TDD &lt;a href="/categories/tdd/"&gt;here&lt;/a&gt;).&lt;/p&gt;
+&lt;h3 id="setup"&gt;Setup&lt;a class="headerlink" href="#setup" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If you want to quickly setup a pytest playground you may execute this code in a terminal (you need to have Python 3 and virtualenv installed in your system) &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir mockplayground
+&lt;span class="nb"&gt;cd&lt;/span&gt; mockplayground
+virtualenv venv3 -p python3
+&lt;span class="nb"&gt;source&lt;/span&gt; venv3/bin/activate
+pip install --upgrade pip
+pip install pytest
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[pytest]&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; pytest.ini
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;norecursedirs=venv*&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; pytest.ini
+mkdir tests
+touch myobj.py
+touch tests/test_mock.py
+&lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;PYTHONPATH&lt;/code&gt; environment variable is an easy way to avoid having to setup a whole Python project to just test some simple code.&lt;/p&gt;
+&lt;h3 id="the-three-test-types"&gt;The three test types&lt;a class="headerlink" href="#the-three-test-types" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;According to Sandy Metz we need to test only three types of messages (calls) between objects:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Incoming queries (assertion on result)&lt;/li&gt;
+&lt;li&gt;Incoming commands (assertion on direct public side effects)&lt;/li&gt;
+&lt;li&gt;Outgoing commands (expectation on call and arguments)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can see the original talk &lt;a href="https://www.youtube.com/watch?v=URSWYvyc42M"&gt;here&lt;/a&gt; or read the slides &lt;a href="https://speakerdeck.com/skmetz/magic-tricks-of-testing-railsconf"&gt;here&lt;/a&gt;. The final table is shown in slide number 176.&lt;/p&gt;
+&lt;p&gt;As you can see when dealing with external objects we are only interested in knowing IF a method was called and WHAT PARAMETERS the caller passed to the object. We are not testing if the remote object returns the correct result, this is faked by the mock, which indeed returns exactly the result we need.&lt;/p&gt;
+&lt;p&gt;So the purpose of the methods provided by mock objects is to allow us to check what methods we called on the mock itself and what parameters we used in the call.&lt;/p&gt;
+&lt;h3 id="asserting-calls"&gt;Asserting calls&lt;a class="headerlink" href="#asserting-calls" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;To show how to use Python mocks in testing I will follow the TDD methodology, writing tests first and then writing the code that makes the tests pass. In this post I want to give you a simple overview of the mock objects, so I will not implement a real world use case, and the code will be very trivial. In the second part of this series I will test and implement a real class, in order to show some more interesting use cases.&lt;/p&gt;
+&lt;p&gt;The first thing we are usually interested in when dealing with an external object is to know that a given method has been called on it. Python mocks provide the &lt;code&gt;assert_called_with()&lt;/code&gt; method to check this condition.&lt;/p&gt;
+&lt;p&gt;The use case we are going to test is the following. &lt;em&gt;We instantiate the &lt;code&gt;myobj.MyObj&lt;/code&gt; class, which requires an external object. The class shall call the &lt;code&gt;connect()&lt;/code&gt; method of the external object without any parameter.&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;myobj&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_instantiation&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Mock&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;myobj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;MyObj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;external_obj&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;external_obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assert_called_with&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;myobj.MyObj&lt;/code&gt; class, in this simple example, needs to connect to an external object, for example a remote repository or a database. The only thing we need to know for testing purposes is if the class called the &lt;code&gt;connect()&lt;/code&gt; method of the external object without any parameter.&lt;/p&gt;
+&lt;p&gt;So the first thing we do in this test is to instantiate the mock object. This is a fake version of the external object, and its only purpose is to accept calls from the &lt;code&gt;MyObj&lt;/code&gt; object under test and return sensible values. Then we instantiate the &lt;code&gt;MyObj&lt;/code&gt; class passing the external object. We expect the class to call the &lt;code&gt;connect()&lt;/code&gt; method so we express this expectation calling &lt;code&gt;external_obj.connect.assert_called_with()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;What happens behind the scenes? The &lt;code&gt;MyObj&lt;/code&gt; class receives the external object and somewhere is its initialization process calls the &lt;code&gt;connect()&lt;/code&gt; method of the mock object and this creates the method itself as a mock object. This new mock records the parameters used to call it and the subsequent call to &lt;code&gt;assert_called_with()&lt;/code&gt; checks that the method was called and that no parameters were passed.&lt;/p&gt;
+&lt;p&gt;Running pytest the test obviously fails.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
+&lt;span class="o"&gt;==========================================&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; session &lt;span class="nv"&gt;starts&lt;/span&gt; &lt;span class="o"&gt;==========================================&lt;/span&gt;
+platform linux -- Python &lt;span class="m"&gt;3&lt;/span&gt;.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
+rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
+collected &lt;span class="m"&gt;1&lt;/span&gt; items 
+
+tests/test_mock.py &lt;span class="nv"&gt;F&lt;/span&gt;
+
+&lt;span class="o"&gt;===============================================&lt;/span&gt; &lt;span class="nv"&gt;FAILURES&lt;/span&gt; &lt;span class="o"&gt;================================================&lt;/span&gt;
+___________________________________________ test_instantiation __________________________________________
+
+    def test_instantiation&lt;span class="o"&gt;()&lt;/span&gt;:
+        &lt;span class="nv"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mock.Mock&lt;span class="o"&gt;()&lt;/span&gt;
+&amp;gt;       myobj.MyObj&lt;span class="o"&gt;(&lt;/span&gt;external_obj&lt;span class="o"&gt;)&lt;/span&gt;
+E       AttributeError: &lt;span class="s1"&gt;&amp;#39;module&amp;#39;&lt;/span&gt; object has no attribute &lt;span class="s1"&gt;&amp;#39;MyObj&amp;#39;&lt;/span&gt;
+
+tests/test_mock.py:6: &lt;span class="nv"&gt;AttributeError&lt;/span&gt;
+&lt;span class="o"&gt;=======================================&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; failed &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.03 &lt;span class="nv"&gt;seconds&lt;/span&gt; &lt;span class="o"&gt;========================================&lt;/span&gt;
+$
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Putting this code in &lt;code&gt;myobj.py&lt;/code&gt; is enough to make the test pass&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyObj&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see, the &lt;code&gt;__init__()&lt;/code&gt; method actually calls &lt;code&gt;repo.connect()&lt;/code&gt;, where &lt;code&gt;repo&lt;/code&gt; is expected to be a full-featured external object that provides a given API. In this case (for the moment) the API is just its &lt;code&gt;connect()&lt;/code&gt; method. Calling &lt;code&gt;repo.connect()&lt;/code&gt; when &lt;code&gt;repo&lt;/code&gt; is a mock object silently creates the method as a mock object, as shown before.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;assert_called_with()&lt;/code&gt; method also allows us to check the parameters we passed when calling. To show this let us pretend that we expect the &lt;code&gt;MyObj.setup()&lt;/code&gt; method to call &lt;code&gt;setup(cache=True, max_connections=256)&lt;/code&gt; on the external object. As you can see we pass a couple of arguments (namely &lt;code&gt;cache&lt;/code&gt; and &lt;code&gt;max_connections&lt;/code&gt;) to the called method, and we want to be sure that the call was exactly in this form. The new test is thus&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_setup&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Mock&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;myobj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;MyObj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;external_obj&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;external_obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assert_called_with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_connections&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;256&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As usual the first run fails. Be sure to check this, it is part of the TDD methodology. You must have a test that DOES NOT PASS, then write some code that make it pass.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
+&lt;span class="o"&gt;==========================================&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; session &lt;span class="nv"&gt;starts&lt;/span&gt; &lt;span class="o"&gt;==========================================&lt;/span&gt;
+platform linux -- Python &lt;span class="m"&gt;3&lt;/span&gt;.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
+rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
+collected &lt;span class="m"&gt;2&lt;/span&gt; items 
+
+tests/test_mock.py .F
+
+&lt;span class="o"&gt;===============================================&lt;/span&gt; &lt;span class="nv"&gt;FAILURES&lt;/span&gt; &lt;span class="o"&gt;================================================&lt;/span&gt;
+______________________________________________ test_setup _______________________________________________
+
+    def test_setup&lt;span class="o"&gt;()&lt;/span&gt;:
+        &lt;span class="nv"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mock.Mock&lt;span class="o"&gt;()&lt;/span&gt;
+        &lt;span class="nv"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; myobj.MyObj&lt;span class="o"&gt;(&lt;/span&gt;external_obj&lt;span class="o"&gt;)&lt;/span&gt;
+&amp;gt;       obj.setup&lt;span class="o"&gt;()&lt;/span&gt;
+E       AttributeError: &lt;span class="s1"&gt;&amp;#39;MyObj&amp;#39;&lt;/span&gt; object has no attribute &lt;span class="s1"&gt;&amp;#39;setup&amp;#39;&lt;/span&gt;
+
+tests/test_mock.py:14: &lt;span class="nv"&gt;AttributeError&lt;/span&gt;
+&lt;span class="o"&gt;==================================&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; failed, &lt;span class="m"&gt;1&lt;/span&gt; passed &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.03 &lt;span class="nv"&gt;seconds&lt;/span&gt; &lt;span class="o"&gt;===================================&lt;/span&gt;
+$
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To show you what type of check the mock object provides let me implement a partially correct solution&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyObj&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_repo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;repo&lt;/span&gt;
+        &lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see the external object has been stored in &lt;code&gt;self._repo&lt;/code&gt; and the call to &lt;code&gt;self._repo.setup()&lt;/code&gt; is not exactly what the test expects, lacking the &lt;code&gt;max_connections&lt;/code&gt; parameter. Running pytest we obtain the following result (I removed most of the pytest output)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;E           AssertionError: Expected call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True, &lt;span class="nv"&gt;max_connections&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+E           Actual call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;and you see that the error message is very clear about what we expected and what happened in our code.&lt;/p&gt;
+&lt;p&gt;As you can read in the official documentation, the &lt;code&gt;Mock&lt;/code&gt; object also provides the following methods and attributes: &lt;code&gt;assert_called_once_with&lt;/code&gt;, &lt;code&gt;assert_any_call&lt;/code&gt;, &lt;code&gt;assert_has_calls&lt;/code&gt;, &lt;code&gt;assert_not_called&lt;/code&gt;, &lt;code&gt;called&lt;/code&gt;, &lt;code&gt;call_count&lt;/code&gt;. Each of them explores a different aspect of the mock behaviour concerning calls, make sure to check their description and the examples provided along.&lt;/p&gt;
+&lt;h2 id="final-words"&gt;Final words&lt;a class="headerlink" href="#final-words" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;In this first part of the series I described the behaviour of mock objects and the methods they provide to simulate return values and to test calls. They are a very powerful tool that allows you to avoid creating complex and slow tests that depend on external facilities to run, thus missing the main purpose of tests, which is that of &lt;em&gt;continuously&lt;/em&gt; helping you to check your code.&lt;/p&gt;
+&lt;p&gt;In the next issue of the series I will explore the automatic creation of mock methods from a given object and the very important patching mechanism provided by the &lt;code&gt;patch&lt;/code&gt; decorator and context manager.&lt;/p&gt;
+&lt;h2 id="updates"&gt;Updates&lt;a class="headerlink" href="#updates" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;2019-02-27: &lt;a href="https://github.com/schneeemensch"&gt;schneeemensch&lt;/a&gt; spotted a mistake in the code of the "Return value" section, where &lt;code&gt;m.some_attribute.side_effect()&lt;/code&gt; was used instead of &lt;code&gt;m.some_attribute()&lt;/code&gt;. Thanks!&lt;/p&gt;
+&lt;h2 id="feedback"&gt;Feedback&lt;a class="headerlink" href="#feedback" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;a href="https://github.com/TheDigitalCatOnline/blog_source/issues"&gt;GitHub issues&lt;/a&gt; page is the best place to submit corrections.&lt;/p&gt;</content><category term="Programming"></category><category term="decorators"></category><category term="OOP"></category><category term="pytest"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category><category term="TDD"></category><category term="testing"></category></entry><entry><title>Python decorators: metaprogramming with style</title><link href="https://www.thedigitalcatonline.com/blog/2015/04/23/python-decorators-metaprogramming-with-style/" rel="alternate"></link><published>2015-04-23T13:00:00+01:00</published><updated>2015-04-23T13:00:00+01:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2015-04-23:/blog/2015/04/23/python-decorators-metaprogramming-with-style/</id><summary type="html"></summary><content type="html">&lt;p&gt;This post is the result of a lot of personal research on Python decorators, meta- and functional programming. I want however to thank Bruce Eckel and the people behind the open source book "Python 3 Patterns, Recipes and Idioms" for a lot of precious information on the subject. See the Resources section at the end of the post to check their work.&lt;/p&gt;
 &lt;h2 id="is-python-functional"&gt;Is Python functional?&lt;a class="headerlink" href="#is-python-functional" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Well, no. Python is a strong object-oriented programming language and is not really going to mix OOP and functional like, for example, Scala (which is a very good language, by the way).&lt;/p&gt;
 &lt;p&gt;However, Python provides &lt;em&gt;some&lt;/em&gt; features taken from functional programming. &lt;a href="https://www.thedigitalcatonline.com/blog/2013/03/25/python-generators-from-iterators-to-cooperative-multitasking/"&gt;Generators and iterators&lt;/a&gt; are one of them, and Python is not the only non pure functional programming language to have them in their toolbox.&lt;/p&gt;

@@ -112,6 +112,9 @@
     <li class="tag tag-size-4">
       <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about architecture" href="/categories/architecture/">architecture</a>
+    </li>
     <li class="tag tag-size-3">
       <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
     </li>
@@ -215,6 +218,9 @@
       <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
     </li>
     <li class="tag tag-size-4">
+      <a title="Posts about networking" href="/categories/networking/">networking</a>
+    </li>
+    <li class="tag tag-size-4">
       <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
     </li>
     <li class="tag tag-size-1">
@@ -271,7 +277,7 @@
     <li class="tag tag-size-2">
       <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
     </li>
-    <li class="tag tag-size-4">
+    <li class="tag tag-size-3">
       <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
     </li>
     <li class="tag tag-size-2">
@@ -338,6 +344,9 @@
     <li class="tag tag-size-4">
       <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about architecture" href="/categories/architecture/">architecture</a>
+    </li>
     <li class="tag tag-size-3">
       <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
     </li>
@@ -441,6 +450,9 @@
       <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
     </li>
     <li class="tag tag-size-4">
+      <a title="Posts about networking" href="/categories/networking/">networking</a>
+    </li>
+    <li class="tag tag-size-4">
       <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
     </li>
     <li class="tag tag-size-1">
@@ -497,7 +509,7 @@
     <li class="tag tag-size-2">
       <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
     </li>
-    <li class="tag tag-size-4">
+    <li class="tag tag-size-3">
       <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
     </li>
     <li class="tag tag-size-2">
@@ -521,7 +533,7 @@
   <header>
     <h1>TDD in Python with pytest - Part 2</h1>
     <div class="post-info">
-      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00"> 11/09/2020</time></p>
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00"> 11/09/2020</time> <i class="fas fa-edit"></i> Updated on <time datetime="2023-09-03T19:00:00+02:00">Sep 3, 2023</time></p>
       <p class="tags">
 	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
 	<a class="tag" href="/categories/oop/">OOP</a>
@@ -591,21 +603,7 @@ simple_calculator/main.py:17: ZeroDivisionError
         <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
 </pre></div>
-</div></div><p>Both solutions make the test suite pass, so both are correct. I leave to you the decision about which is the best one, syntactically speaking.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-7-division-by-zero">step-7-float-division</a></p>
-            <div class="advertisement">
-                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
-                  <img src="/images/first-class-objects/cover.jpg" />
-                </a>
-                <div class="body">
-                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
-<p>Higher-order functions, wrappers, and factories</p>
-<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
-                  <div class="actions">
-                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
-                  </div>
-                </div>
-            </div>
-            <h2 id="step-8---testing-exceptions">Step 8 - Testing exceptions<a class="headerlink" href="#step-8---testing-exceptions" title="Permanent link">¶</a></h2><p>A further requirement is that multiplication by zero must raise a <code>ValueError</code> exception. This means that we need a way to test if our code raises an exception, which is the opposite of what we did until now. In the previous tests, the condition to pass was that there was no exception in the code, while in this test the condition will be that an exception has been raised.</p><p>Again, this is a requirement I made up just for the sake of showing you how do deal with exceptions, so if you think this is a silly behaviour for a multiplication function you are probably right.</p><p>Pytest provides a context manager named <code>raises</code> that runs the code contained in it and passes only if the given exception is produced by that code.</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+</div></div><p>Both solutions make the test suite pass, so both are correct. I leave to you the decision about which is the best one, syntactically speaking.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-7-division-by-zero">step-7-float-division</a></p><h2 id="step-8---testing-exceptions">Step 8 - Testing exceptions<a class="headerlink" href="#step-8---testing-exceptions" title="Permanent link">¶</a></h2><p>A further requirement is that multiplication by zero must raise a <code>ValueError</code> exception. This means that we need a way to test if our code raises an exception, which is the opposite of what we did until now. In the previous tests, the condition to pass was that there was no exception in the code, while in this test the condition will be that an exception has been raised.</p><p>Again, this is a requirement I made up just for the sake of showing you how do deal with exceptions, so if you think this is a silly behaviour for a multiplication function you are probably right.</p><p>Pytest provides a context manager named <code>raises</code> that runs the code contained in it and passes only if the given exception is produced by that code.</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
 
 <span class="p">[</span><span class="o">...</span><span class="p">]</span>
 
@@ -854,21 +852,29 @@ simple_calculator/main.py:36: ZeroDivisionError
 
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">_it</span><span class="p">)</span>
 </pre></div>
-</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-9-zero-as-lower-upper-threshold">step-9-9-zero-as-lower-upper-threshold</a></p><h2 id="recap-of-the-tdd-rules">Recap of the TDD rules<a class="headerlink" href="#recap-of-the-tdd-rules" title="Permanent link">¶</a></h2><p>Through this very simple example we learned 6 important rules of the TDD methodology. Let us review them, now that we have some experience that can make the words meaningful</p><ol><li>Test first, code later</li><li>Add the bare minimum amount of code you need to pass the tests</li><li>You shouldn't have more than one failing test at a time</li><li>Write code that passes the test. Then refactor it.</li><li>A test should fail the first time you run it. If it doesn't ask yourself why you are adding it.</li><li>Never refactor without tests.</li></ol>
-            <div class="advertisement">
-                <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
-                  <img src="/images/first-class-objects/cover.jpg" />
-                </a>
-                <div class="body">
-                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
-<p>Higher-order functions, wrappers, and factories</p>
-<p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
-                  <div class="actions">
-                    <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
-                  </div>
-                </div>
-            </div>
-            <h2 id="how-many-assertions">How many assertions?<a class="headerlink" href="#how-many-assertions" title="Permanent link">¶</a></h2><p>I am frequently asked "How many assertions do you put in a test?", and I consider this question important enough to discuss it in a dedicated section. To answer this question I want to briefly go back to the nature of TDD and the role of the test suite that we run.</p><p>The whole point of automated tests is to run through a set of checkpoints that can quickly reveal that there is a problem in a specific area. Mind the words "quickly" and "specific". When I run the test suite and an error occurs I'd like to be able to understand as fast as possible where the problem lies. This doesn't (always) mean that the problem will have a quick resolution, but at least I can be immediately aware of which part of the system is misbehaving.</p><p>On the other hand, we don't want to have too many test for the same condition, on the contrary we want to avoid testing the same condition more than once as tests have to be maintained. A test suite that is too fine-grained might result in too many tests failing because of the same problem in the code, which might be daunting and not very informative.</p><p>My advice is to group together assertions that can be executed after running the same setup, if they test the same process. For example, you might consider the two functions <code>add</code> and <code>sub</code> that we tested in this chapter. They require the same setup, which is to instantiate the class <code>SimpleCalculator</code> (a setup that they share with many other tests), but they are actually testing two different processes. A good sign of this is that you should rename the test to <code>test_add_or_sub</code>, and a failure in this test would require a further investigation in the test output to check which method of the class is failing.</p><p>If you have to test that a method returns positive even numbers, instead, you will have consider running the method and then writing two assertions, one that checks that the number is positive, and one that checks it is even. This makes sense, as a failure in one of the two means a failure of the whole process.</p><p>As a rule of thumb, then, consider if the test is a logical <code>AND</code> between conditions or a logical <code>OR</code>. In the former case go for multiple assertions, in the latter create multiple test functions.</p><h2 id="how-to-manage-bugs-or-missing-features">How to manage bugs or missing features<a class="headerlink" href="#how-to-manage-bugs-or-missing-features" title="Permanent link">¶</a></h2><p>In this chapter we developed the project from scratch, so the challenge was to come up with a series of small tests starting from the requirements. At a certain point in the life of your project you will have a stable version in production (this expression has many definitions, but in general it means "used by someone other than you") and you will need to maintain it. This means that people will file bug reports and feature requests, and TDD gives you a clear strategy to deal with those.</p><p>From the TDD point of view both a bug and a missing feature are cases not currently covered by a test, so I will refer to them collectively as bugs, but don't forget that I'm talking about the second ones as well. </p><p>The first thing you need to do is to write one or more tests that expose the bug. This way you can easily decide when the code that you wrote is correct or good enough. For example, let's assume that a user files an issue on the project <code>SimpleCalculator</code> saying: "The function <code>add</code> doesn't work with negative numbers". You should definitely try to get a concrete example from the user that wrote the issue and some information about the execution environment (as it is always possible that the problem comes from a different source, like for example an old version of a library your package relies on), but in the meanwhile you can come up with at least 3 tests: one that involves two negative numbers, one with a negative number as the first argument, and one with a negative numbers as the second argument.</p><p>You shouldn't write down all of them at once. Write the first test that you think might expose the issue and see if it fails. If it doesn't, discard it and write a new one. From the TDD point of view, if you don't have a failing test there is no bug, so you have to come up with at least one test that exposes the issue you are trying to solve.</p><p>At this point you can move on and try to change the code. Remember that you shouldn't have more than one failing test at a time, so start doing this as soon as you discover a test case that shows there is a problem in the code.</p><p>Once you reach a point where the test suite passes without errors stop and try to run the code in the environment where the bug was first discovered (for example sharing a branch with the user that created the ticket) and iterate the process.</p><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>I hope you found the project entertaining and that you can now appreciate the power of TDD. The journey doesn't end here, though. In the next post I will discuss the practice of writing unit tests in depth, and then introduce you to another powerful tool: mocks.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2021-01-03: <a href="https://github.com/4myhw">George</a> fixed a typo, thanks!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+</div></div><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-9-zero-as-lower-upper-threshold">step-9-9-zero-as-lower-upper-threshold</a></p><h3 id="step-9.10---refactoring-for-generators">Step 9.10 - Refactoring for generators</h3><p>One of the readers of this series, <a href="https://github.com/labdmitriy">Dmitry Labazkin</a>, was following the series and noticed that the final implementation has some drawbacks, namely:</p><ul><li>According to the requirements, this method should accept any iterable, but the implementation can't process generators (which are iterators and also iterables). For example, the function <code>len()</code> cannot be used with generators.</li><li>The iterable is copied, which is something we try to avoid to reduce memory usage.</li><li>Globally, the iterator is read 4 times, which affects performances.</li></ul><p>These are interesting points, and he provides an implementation that solves them all. It's important to mention that the first point is closely related to requirements, so it should be represented by a unit test, while the other two are connected with performances and cannot be tested with pytest. However, any refactoring that produces code we consider better (for example from the performances point of view) can be tested by the existing tests. In other words, we can provide an alternative implementation and still make sure it works correctly.</p><p>Dmitry adds a test to check that generators are supported</p><div class="code"><div class="title">tests/test_main.py</div><div class="content"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_avg_accepts_generators</span><span class="p">():</span>
+    <span class="n">calculator</span> <span class="o">=</span> <span class="n">SimpleCalculator</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">98</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mf">29.25</span>
+</pre></div>
+</div></div><p>His implementation of the function <code>avg()</code> passes that test and the previous ones we wrote</p><div class="code"><div class="title">simple_calculator/main.py</div><div class="content"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">lt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ut</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">lt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">number</span> <span class="o">&lt;</span> <span class="n">lt</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">ut</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">number</span> <span class="o">&gt;</span> <span class="n">ut</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">number</span>
+
+        <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">total</span> <span class="o">/</span> <span class="n">count</span>
+</pre></div>
+</div></div><p>One might argue that this implementation is less <em>pythonic</em> as it doesn't use fancy list comprehensions, but again, that is a matter of style (and performances). The point about generators is correct, but if that wasn't included in the requirements we might accept either implementation. I personally believe this new implementation is much better than the previous one, as I like to keep a low memory fingerprint, but if we were sure the calculator is used only on small sequences the concern might be overkill.</p><p><strong>Git tag:</strong> <a href="https://github.com/lgiordani/simple_calculator/tree/step-9-10-refactoring-for-generators">step-9-10-refactoring-for-generators</a></p><h2 id="recap-of-the-tdd-rules">Recap of the TDD rules<a class="headerlink" href="#recap-of-the-tdd-rules" title="Permanent link">¶</a></h2><p>Through this very simple example we learned 6 important rules of the TDD methodology. Let us review them, now that we have some experience that can make the words meaningful</p><ol><li>Test first, code later</li><li>Add the bare minimum amount of code you need to pass the tests</li><li>You shouldn't have more than one failing test at a time</li><li>Write code that passes the test. Then refactor it.</li><li>A test should fail the first time you run it. If it doesn't ask yourself why you are adding it.</li><li>Never refactor without tests.</li></ol><h2 id="how-many-assertions">How many assertions?<a class="headerlink" href="#how-many-assertions" title="Permanent link">¶</a></h2><p>I am frequently asked "How many assertions do you put in a test?", and I consider this question important enough to discuss it in a dedicated section. To answer this question I want to briefly go back to the nature of TDD and the role of the test suite that we run.</p><p>The whole point of automated tests is to run through a set of checkpoints that can quickly reveal that there is a problem in a specific area. Mind the words "quickly" and "specific". When I run the test suite and an error occurs I'd like to be able to understand as fast as possible where the problem lies. This doesn't (always) mean that the problem will have a quick resolution, but at least I can be immediately aware of which part of the system is misbehaving.</p><p>On the other hand, we don't want to have too many test for the same condition, on the contrary we want to avoid testing the same condition more than once as tests have to be maintained. A test suite that is too fine-grained might result in too many tests failing because of the same problem in the code, which might be daunting and not very informative.</p><p>My advice is to group together assertions that can be executed after running the same setup, if they test the same process. For example, you might consider the two functions <code>add</code> and <code>sub</code> that we tested in this chapter. They require the same setup, which is to instantiate the class <code>SimpleCalculator</code> (a setup that they share with many other tests), but they are actually testing two different processes. A good sign of this is that you should rename the test to <code>test_add_or_sub</code>, and a failure in this test would require a further investigation in the test output to check which method of the class is failing.</p><p>If you have to test that a method returns positive even numbers, instead, you will have consider running the method and then writing two assertions, one that checks that the number is positive, and one that checks it is even. This makes sense, as a failure in one of the two means a failure of the whole process.</p><p>As a rule of thumb, then, consider if the test is a logical <code>AND</code> between conditions or a logical <code>OR</code>. In the former case go for multiple assertions, in the latter create multiple test functions.</p><h2 id="how-to-manage-bugs-or-missing-features">How to manage bugs or missing features<a class="headerlink" href="#how-to-manage-bugs-or-missing-features" title="Permanent link">¶</a></h2><p>In this chapter we developed the project from scratch, so the challenge was to come up with a series of small tests starting from the requirements. At a certain point in the life of your project you will have a stable version in production (this expression has many definitions, but in general it means "used by someone other than you") and you will need to maintain it. This means that people will file bug reports and feature requests, and TDD gives you a clear strategy to deal with those.</p><p>From the TDD point of view both a bug and a missing feature are cases not currently covered by a test, so I will refer to them collectively as bugs, but don't forget that I'm talking about the second ones as well. </p><p>The first thing you need to do is to write one or more tests that expose the bug. This way you can easily decide when the code that you wrote is correct or good enough. For example, let's assume that a user files an issue on the project <code>SimpleCalculator</code> saying: "The function <code>add</code> doesn't work with negative numbers". You should definitely try to get a concrete example from the user that wrote the issue and some information about the execution environment (as it is always possible that the problem comes from a different source, like for example an old version of a library your package relies on), but in the meanwhile you can come up with at least 3 tests: one that involves two negative numbers, one with a negative number as the first argument, and one with a negative numbers as the second argument.</p><p>You shouldn't write down all of them at once. Write the first test that you think might expose the issue and see if it fails. If it doesn't, discard it and write a new one. From the TDD point of view, if you don't have a failing test there is no bug, so you have to come up with at least one test that exposes the issue you are trying to solve.</p><p>At this point you can move on and try to change the code. Remember that you shouldn't have more than one failing test at a time, so start doing this as soon as you discover a test case that shows there is a problem in the code.</p><p>Once you reach a point where the test suite passes without errors stop and try to run the code in the environment where the bug was first discovered (for example sharing a branch with the user that created the ticket) and iterate the process.</p><h2 id="the-problem-of-types">The problem of types<a class="headerlink" href="#the-problem-of-types" title="Permanent link">¶</a></h2><p>Other than contributing to the TDD steps, Dmitry Labazkin asked some relevant questions about types, that I will summarise here. You can read his original questions in <a href="https://github.com/TheDigitalCatOnline/blog_source/issues/11">issue #11</a> and <a href="https://github.com/TheDigitalCatOnline/blog_source/issues/12">issue #12</a>.</p><p>The question of type checking is thorny, and since this is an introductory series I will discuss it briefly and give some pointers. Don't get me wrong, though. As I will say later, this is one of the most important topics we can discuss in computer science.</p><p>Overall the problem Dmitry raises is that operators like addition and multiplication are valid for types other than integers (like floats) and also non-numeric ones (like strings). In Python, it is possible to multiply a string by a number and obtain a concatenation of that number of copies of the original string. At the same time, however, subtraction and division are not defined for strings, so some of the questions we can ask are:</p><ul><li>can <code>SimpleCalculator</code> be used on non-integer numeric types?</li><li>can <code>SimpleCalculator</code> be used on non-numeric types?</li><li>shall we explicitly check in the code that the input values belong to a certain type?</li><li>shall we write tests to rule out other types?</li></ul><p>As I said, such questions are deceptively simple, so let's tackle them step by step.</p><p>Let's assume it makes sense for our class to work with numeric types. In Python there is no way to prevent a program from calling <code>SimpleCalculator().add(&quot;string1&quot;, &quot;string2&quot;)</code>, which would fail as the current implementation uses the built-in function <code>sum</code> that doesn't work on strings (unless you call it with a specific initial value). However, calling <code>SimpleCalculator().mul(&quot;abc&quot;, 3)</code> would result in <code>&quot;abcabcabc&quot;</code>, as the internal implementation quietly supports strings.</p><p>Given the inconsistency, we might be tempted to rule out non-numeric types explicitly. In other words, we might want to add code to our calculator that <em>actively checks</em> if we are passing a non-numeric type. In that case we shall also add tests for those types, according to the TDD methodology, as no code can be added without tests.</p><p>The reason why this topic is thorny is because Python relies heavily on <em>polymorphism</em>, which means that it is more interested in the <em>behaviour</em> of an object more than in its <em>nature</em>. In other words, an object can be considered a number because <em>it is an instance</em> of <code>int</code> or <code>float</code>, for example, but it could just be a class we made up that <em>behaves like</em> one of those types. Using Abstract Base Classes like <a href="https://docs.python.org/3/library/numbers.html">numbers</a> is useful to check if an object is an instance of one of the types encompassed by the hierarchy (again, types such as <code>int</code> and <code>float</code>) but doesn't automatically include everything that behaves like a number. We can create a class that behaves like <code>int</code> without belonging to the hierarchy of <code>numbers</code>.</p><p>Ultimately, this is the reason why Python programmers have to remember that the operator <code>+</code> can be used with types like <code>int</code>, <code>string</code>, and <code>list</code>, but cannot be used with dictionaries. Conversely, <code>len</code> can be used on dictionaries and lists, but cannot be used on integers. We need to remember it, as these operators are polymorphic (there is no operator <code>int+</code> or <code>float+</code>) but don't make sense or are not implemented for some types.</p><p>Those basic operators and functions raise an exception when the wrong type is passed, so we might be tempted to do the same and explicitly raise an exception when the wrong type is passed to <code>SimpleCalculator</code>. Again, the focus is on behaviour and implementation. If our implementation doesn't work with instances of certain classes an exception will occur already, and we don't need to do it explicitly. The aforementioned snipped <code>SimpleCalculator().add(&quot;string1&quot;, &quot;string2&quot;)</code> would raise a <code>TypeError</code> because the underlying <code>sum</code> doesn't like strings. We don't need to do it explicitly.</p><p>In conclusion, my answers to the questions above are:</p><p>Can <code>SimpleCalculator</code> be used on non-integer numeric types? Probably, given the implementation is not specific to integers, but if we want to be sure we should add some tests to expose the functionality. So far, according to TDD, the class is certified to work with integers only. In this case, I might want to add some tests to show that it works with floats. But if someone feeds the class float-like objects that for some reason do not support the operator <code>/</code> some part of the calculator won't work, and there is no way to test all those conditions.</p><p>Can <code>SimpleCalculator</code> be used on non-numeric types? Yes, to a certain extent. <code>mul</code> can be used on sequences, for example. It is a calculator, though, so it doesn't make much sense to try to use it on non-numeric types. Users can feed the calculator any sort of non-numeric types and we cannot do anything to prevent it.</p><p>Shall we explicitly check in the code that the input values belong to a certain type? This goes against the nature of Python: if a certain function or method doesn't work with a specific type an exception will be raised.</p><p>Shall we write tests to rule out other types? Since it is basically impossible to write code that narrows the set of accepted types it is also impossible to write <em>useful</em> tests to check this. We can check that it doesn't work on strings, but what about other sequences? We can check it doesn't work with classes that inherit from <code>Sequence</code>, but what about classes that do not and behave the same?</p><p>In a dynamically typed language like Python, polymorphism and operator overloading are embedded in the language. I think the deeply polymorphic nature of Python is one of the most important aspects any user of this language should understand. It is an incredibly sharp double-edged sword, as it is at the same time extremely powerful and dangerous. "Everything is an object" might sound very simple at first, but it hides a degree of complexity that sooner of later has to be faced by those who want to be proficient with the language.</p><p>I wrote some posts that might help you to understand these topics. You can find them grouped <a href="https://www.thedigitalcatonline.com/blog/2020/04/26/object-oriented-programming-concepts-in-python/">here</a>.</p><h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>I hope you found the project entertaining and that you can now appreciate the power of TDD. The journey doesn't end here, though. In the next post I will discuss the practice of writing unit tests in depth, and then introduce you to another powerful tool: mocks.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2021-01-03: <a href="https://github.com/4myhw">George</a> fixed a typo, thanks!</p><p>2023-09-03: <a href="https://github.com/labdmitriy">Dmitry Labazkin</a> provided a new test for the method <code>avg</code> and a better implementation. He also asked relevant questions about type checking that I addressed in a new section. Thanks Dmitry!</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
   <section class="links">
@@ -918,27 +924,6 @@ simple_calculator/main.py:36: ZeroDivisionError
           </div>
 	</article>
 	<article class="card">
-          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
-            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T19:00:00+02:00">Feb 26, 2021</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
           <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">
             <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
           </a>
@@ -979,6 +964,27 @@ simple_calculator/main.py:36: ZeroDivisionError
           </div>
 	</article>
 	<article class="card">
+          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
+            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/refactoring/" class="tag">refactoring</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2023-09-03T19:00:00+02:00">Sep 3, 2023</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
           <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/">
             <img src="/images/refactoring-with-tests-in-python.jpg" alt="refactoring-with-tests-in-python" />
           </a>
@@ -999,22 +1005,23 @@ simple_calculator/main.py:36: ZeroDivisionError
           </div>
 	</article>
 	<article class="card">
-          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
-            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
+          <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/">
+            <img src="/images/python-mocks.jpg" alt="python-mocks" />
           </a>
           <div class="body">
-            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
+            <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/"><h2>Python Mocks: a gentle introduction - Part 2</h2></a>
 	    <div class="info">
 	      <p class="tags">
+		<a href="/categories/decorators/" class="tag">decorators</a>
 		<a href="/categories/oop/" class="tag">OOP</a>
 		<a href="/categories/pytest/" class="tag">pytest</a>
 		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python2/" class="tag">Python2</a>
 		<a href="/categories/python3/" class="tag">Python3</a>
 		<a href="/categories/tdd/" class="tag">TDD</a>
 		<a href="/categories/testing/" class="tag">testing</a>
               </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T16:00:00+00:00">Nov 26, 2022</time></p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-09-27T09:00:00+00:00">Sep 27, 2016</time></p>
 	    </div>
           </div>
 	</article>
@@ -1041,42 +1048,43 @@ simple_calculator/main.py:36: ZeroDivisionError
           </div>
 	</article>
 	<article class="card">
-          <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/">
-            <img src="/images/python-mocks.jpg" alt="python-mocks" />
+          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
+            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
           </a>
           <div class="body">
-            <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/"><h2>Python Mocks: a gentle introduction - Part 2</h2></a>
+            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
 	    <div class="info">
 	      <p class="tags">
-		<a href="/categories/decorators/" class="tag">decorators</a>
 		<a href="/categories/oop/" class="tag">OOP</a>
 		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T16:00:00+00:00">Nov 26, 2022</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/12/20/cabook/">
+            <img src="/images/cabook.jpg" alt="cabook" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/oop/" class="tag">OOP</a>
 		<a href="/categories/python/" class="tag">Python</a>
 		<a href="/categories/python2/" class="tag">Python2</a>
 		<a href="/categories/python3/" class="tag">Python3</a>
 		<a href="/categories/tdd/" class="tag">TDD</a>
 		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/architectures/" class="tag">architectures</a>
               </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-09-27T09:00:00+00:00">Sep 27, 2016</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2015/09/10/python-oop-tdd-example-part2/">
-            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
-          </a>
-          <div class="body">
-            <a href="/blog/2015/09/10/python-oop-tdd-example-part2/"><h2>A simple example of Python OOP development (with TDD) - Part 2 </h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-09-10T20:00:00+01:00">Sep 10, 2015</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T17:00:00+00:00">Nov 26, 2022</time></p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
 	    </div>
           </div>
 	</article>
