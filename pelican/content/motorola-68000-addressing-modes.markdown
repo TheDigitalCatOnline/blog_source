@@ -202,7 +202,7 @@ Note: this mode is sometimes called "Register Indirect with Offset".
 
 #### Address Register Indirect with Index
 
-* Assembly syntax: `(d8,Dn,An)`
+* Assembly syntax: `(d8,An,Dn)`
 * EA Mode field: `110`
 * EA Register field: Register number
 * Extension words: 1
@@ -210,7 +210,7 @@ Note: this mode is sometimes called "Register Indirect with Offset".
 Besides an addressing mode that mimics C-style loops and a way to perform random access of arrays through a 16-bit displacement, the MC68000 provides a double-indexed array access with this addressing mode. The base address contained in one of the address registers is added to the content of a 16/32-bit register and an 8-bit index. This address mode requires 1 extension word that contains the 8-bit index; only the 8 least significant bits of the extension words are kept and sign-extended to 32-bits before any calculation.
 
 ``` m68k
-cmpi.w  #0x1111,(0x4,d0,a1)
+cmpi.w  #0x1111,(0x4,a1,d0)
 ```
 
 ```
