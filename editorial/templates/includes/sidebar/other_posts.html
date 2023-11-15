@@ -1,9 +1,0 @@
-{% set _other_num = 3 %}
-<div class="mini-posts">
-    {% for article in articles[:_other_num] %}
-    <article>
-        <a href="/{{ article.url }}" class="image"><img src="/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" alt="{{ article.image if article.image else 'article_image_placeholder' }}" /></a>
-        <p><strong>{{ article.title }}</strong> <a href="/{{ article.url }}">Read</a></p> 
-    </article>
-    {% endfor %}
-</div>

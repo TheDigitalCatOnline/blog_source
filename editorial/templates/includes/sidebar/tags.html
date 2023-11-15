@@ -1,8 +1,0 @@
-{% set tags = tag_cloud | sort(attribute='0') %}
-<ul class="list-inline list-clean" id="tags-side">
-    {% for tag in tags %}
-    <li class="tag font-size-{{ tag.1 }}">
-        <a title="Posts about {{ tag.0 }}" href="/{{ tag.0.url }}">{{ tag.0 }}</a>
-    </li>
-    {% endfor %}
-</ul>
