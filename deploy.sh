@@ -6,6 +6,8 @@ DEPLOY_DIR="deploy"
 S3_BUCKET="www.thedigitalcatonline.com"
 CLOUDFRONT_DISTRIBUTION="E1VK6I0BH0G8RZ"
 
+boussole compile
+
 cd pelican
 make publish
 cd ..
