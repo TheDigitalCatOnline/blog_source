@@ -460,6 +460,8 @@ The thing that can be easily overlooked is that the PC points to the extension w
 
 2017-12-24: Reddit user [SpaceShrimp](https://new.reddit.com/user/SpaceShrimp) pointed out the rage of a signed 16-bit number is `(-32768,32767)` and not `(-32767,32768)`. Thanks!
 
+2023-11-16: [René W. Olsen](https://github.com/rolsen74) spotted a mistake in the Address Register Indirect with Index, where the two registers `An` and `Dn` were swapped. Thanks René!
+
 ## Feedback
 
 Feel free to reach me on [Twitter](https://twitter.com/thedigicat) if you have questions. The [GitHub issues](https://github.com/TheDigitalCatOnline/blog_source/issues) page is the best place to submit corrections.
