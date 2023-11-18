@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -574,43 +560,43 @@
 <p>To use the described procedure you just need to have a local repository with gitflow enabled, i.e. you need to have two branches <code>master</code> and <code>develop</code>, possibly with <code>master</code> tracking <code>origin/master</code>.</p>
 <p>Then <strong>setup the repository</strong> issuing the following commands</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="c1"># Move to the master branch</span>
-<span class="gp">$ </span>git checkout master
+<span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>master
 <span class="gp">$</span>
 <span class="gp">$ </span><span class="c1"># Rename develop to _develop</span>
-<span class="gp">$ </span>git branch -m develop _develop 
+<span class="gp">$ </span>git<span class="w"> </span>branch<span class="w"> </span>-m<span class="w"> </span>develop<span class="w"> </span>_develop<span class="w"> </span>
 <span class="gp">$</span>
 <span class="gp">$ </span><span class="c1"># Create the feature branch</span>
-<span class="gp">$ </span>git checkout -b new_feature
+<span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new_feature
 <span class="gp">$</span>
 <span class="gp">$ </span><span class="c1"># Push the feature branch to the remote (GitHub) and track it</span>
-<span class="gp">$ </span>git push -u origin new_feature
+<span class="gp">$ </span>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>new_feature
 <span class="gp">$</span>
 <span class="gp">$ </span><span class="c1"># Alias the feature branch with the name develop</span>
-<span class="gp">$ </span>git symbolic-ref refs/heads/develop refs/heads/new_feature
+<span class="gp">$ </span>git<span class="w"> </span>symbolic-ref<span class="w"> </span>refs/heads/develop<span class="w"> </span>refs/heads/new_feature
 </code></pre></div>
 
 <p>When you <strong>need to change your working feature branch</strong> just run</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="c1"># Just change the target of the symbolic reference</span>
-<span class="gp">$ </span>git symbolic-ref refs/heads/develop refs/heads/other_feature
+<span class="gp">$ </span>git<span class="w"> </span>symbolic-ref<span class="w"> </span>refs/heads/develop<span class="w"> </span>refs/heads/other_feature
 </code></pre></div>
 
 <p>and if you <strong>need to go back to the original state</strong> execute the following commands</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="c1"># Remove the symbolic reference</span>
-<span class="gp">$ </span>git symbolic-ref --delete refs/heads/develop
+<span class="gp">$ </span>git<span class="w"> </span>symbolic-ref<span class="w"> </span>--delete<span class="w"> </span>refs/heads/develop
 <span class="gp">$</span>
 <span class="gp">$ </span><span class="c1"># Rename the original develop branch</span>
-<span class="gp">$ </span>git branch -m _develop develop
+<span class="gp">$ </span>git<span class="w"> </span>branch<span class="w"> </span>-m<span class="w"> </span>_develop<span class="w"> </span>develop
 </code></pre></div>
 
 <p>To <strong>squash commits</strong> into your feature branch and <strong>force push</strong> run these commands:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="c1"># Make sure we are dealing with our feature branch</span>
-<span class="gp">$ </span>git checkout new_feature
+<span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>new_feature
 <span class="gp">$</span>
 <span class="gp">$ </span><span class="c1"># Rebase on master (this is a develop, after all)</span>
-<span class="gp">$ </span>git rebase -i master
+<span class="gp">$ </span>git<span class="w"> </span>rebase<span class="w"> </span>-i<span class="w"> </span>master
 <span class="gp">$</span>
 <span class="gp">$ </span><span class="c1"># Force a push on GitHub</span>
-<span class="gp">$ </span>git push origin +new_feature
+<span class="gp">$ </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>+new_feature
 </code></pre></div>
 
 <h2 id="the-gitflow-gh-command">The <code>gitflow gh</code> command<a class="headerlink" href="#the-gitflow-gh-command" title="Permanent link">&para;</a></h2>

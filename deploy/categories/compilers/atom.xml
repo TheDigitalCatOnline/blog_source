@@ -7,15 +7,15 @@
 &lt;p&gt;So, let's go Pascal!&lt;/p&gt;
 &lt;h2 id="tools-update"&gt;Tools update&lt;a class="headerlink" href="#tools-update" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I introduced black into my development toolset, so I used it to reformat the code&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;black smallcalc/*.py tests/*.py
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;black&lt;span class="w"&gt; &lt;/span&gt;smallcalc/*.py&lt;span class="w"&gt; &lt;/span&gt;tests/*.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And added a configuration file &lt;code&gt;.flake8&lt;/code&gt; for Flake8 to avoid the two tools to clash&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[flake8]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="c1"&gt;# Recommend matching the black line length (default 88),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="c1"&gt;# rather than using the flake8 default of 79:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;max-line-length&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;100&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;ignore&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;E231 E741&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[flake8]&lt;/span&gt;
+&lt;span class="c1"&gt;# Recommend matching the black line length (default 88),&lt;/span&gt;
+&lt;span class="c1"&gt;# rather than using the flake8 default of 79:&lt;/span&gt;
+&lt;span class="na"&gt;max-line-length&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;100&lt;/span&gt;
+&lt;span class="na"&gt;ignore&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;E231 E741&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="level-17-reserved-keywords-and-new-assignment"&gt;Level 17 - Reserved keywords and new assignment&lt;a class="headerlink" href="#level-17-reserved-keywords-and-new-assignment" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
@@ -172,11 +172,11 @@ assignment_statement : variable ASSIGN expr
 
 &lt;p&gt;As you can see this is a recursive definition, as the &lt;code&gt;statement_list&lt;/code&gt; contains one or more &lt;code&gt;statement&lt;/code&gt;, and each of them can be a &lt;code&gt;compound_statement&lt;/code&gt;. The following is indeed a valid Pascal program&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;BEGIN&lt;/span&gt;
-    &lt;span class="k"&gt;BEGIN&lt;/span&gt;
-        &lt;span class="k"&gt;BEGIN&lt;/span&gt;
-            &lt;span class="nb"&gt;writeln&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;Valid&lt;/span&gt;&lt;span class="err"&gt;!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="k"&gt;END&lt;/span&gt;
-    &lt;span class="k"&gt;END&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;BEGIN&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;BEGIN&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;writeln&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;Valid&lt;/span&gt;&lt;span class="err"&gt;!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;END&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;END&lt;/span&gt;
 &lt;span class="k"&gt;END&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -1643,7 +1643,7 @@ assignment_statement : variable ASSIGN expr
 
 &lt;p&gt;As you can see the idea is for both methods to require a parameter, either the token or the type. The code that passes these tests is made by a custom exception in &lt;code&gt;smallcalc/calc_lexer.py&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TokenError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; The expected token cannot be found &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; The expected token cannot be found &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;and, in the &lt;code&gt;CalcLexer&lt;/code&gt; class in the same file&lt;/p&gt;
@@ -2984,19 +2984,19 @@ line : assignment | expression
 &lt;p&gt;I will provide two classes: &lt;code&gt;Token&lt;/code&gt; and &lt;code&gt;TextBuffer&lt;/code&gt;. These will avoid you spending too much time to create the basic tools, and allow you to get straight into the game. Since those classes come obviously with their own test suite you are free to develop them on your own. You should however start from the same tests that I used, otherwise your interface might end up being incompatible witht he rest of the project.&lt;/p&gt;
 &lt;h2 id="initial-setup"&gt;Initial setup&lt;a class="headerlink" href="#initial-setup" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I prepared &lt;a href="https://github.com/lgiordani/smallcalc"&gt;this repository&lt;/a&gt;, which contains everything you need to start the project.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ git clone https://github.com/lgiordani/smallcalc.git
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://github.com/lgiordani/smallcalc.git
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Once you cloned the repository, set up a Python virtual environment using your favourite method/tool and install the testing requirements&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install -r requirements/test.txt
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;requirements/test.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;At this point you should be able to run the test suite. For this project we are going to use &lt;a href="http://www.pytest.org"&gt;pytest&lt;/a&gt;, so the command line is&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pytest -svv
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pytest&lt;span class="w"&gt; &lt;/span&gt;-svv
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;or, if you want to check your code coverage,&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pytest -svv  --cov-report term-missing --cov&lt;span class="o"&gt;=&lt;/span&gt;smallcalc 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pytest&lt;span class="w"&gt; &lt;/span&gt;-svv&lt;span class="w"&gt;  &lt;/span&gt;--cov-report&lt;span class="w"&gt; &lt;/span&gt;term-missing&lt;span class="w"&gt; &lt;/span&gt;--cov&lt;span class="o"&gt;=&lt;/span&gt;smallcalc&lt;span class="w"&gt; &lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="tokens"&gt;Tokens&lt;a class="headerlink" href="#tokens" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
@@ -3044,12 +3044,12 @@ line : assignment | expression
 &lt;p&gt;The second element that you will find in the initial setup is the class &lt;code&gt;TextBuffer&lt;/code&gt;, that provides a very basic manager for an input text file&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;EOLError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 
-    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; Signals that the buffer is reading after the end of a line.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; Signals that the buffer is reading after the end of a line.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
 
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;EOFError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 
-    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; Signals that the buffer is reading after the end of the text.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; Signals that the buffer is reading after the end of the text.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
 
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TextBuffer&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -3121,7 +3121,7 @@ line : assignment | expression
 &lt;h2 id="cli"&gt;CLI&lt;a class="headerlink" href="#cli" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The third element I provide is a simple REPL (&lt;a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop"&gt;Read–eval–print loop&lt;/a&gt;) that at the moment just echoes any text you will input and gracefully exit when we press Ctrl+D. There are and there will be no tests for the CLI. Testing endpoints like this is complex and not always worth the effort, as in this case.&lt;/p&gt;
 &lt;p&gt;The command line can be run from the project main directory with&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python cli.py
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python&lt;span class="w"&gt; &lt;/span&gt;cli.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="level-1-end-of-file"&gt;Level 1 - End of file&lt;a class="headerlink" href="#level-1-end-of-file" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
@@ -3145,16 +3145,16 @@ line : assignment | expression
 
 &lt;p&gt;To avoid misleading errors you should also create the empty file &lt;code&gt;smallcalc/calc_lexer.py&lt;/code&gt;, as without that file pytest will raise an &lt;code&gt;ImportError&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;This is our first test, and if you run the test suite now you will see that it fails. This is expected, as there is no code to pass the test.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ pytest -svv  --cov-report term-missing --cov&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;smallcalc&lt;/span&gt;
-&lt;span class="o"&gt;==================================&lt;/span&gt; &lt;span class="nv"&gt;FAILURES&lt;/span&gt; &lt;span class="o"&gt;===================================&lt;/span&gt;
-_______________________ test_get_tokens_understands_eof _______________________
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;pytest&lt;span class="w"&gt; &lt;/span&gt;-svv&lt;span class="w"&gt;  &lt;/span&gt;--cov-report&lt;span class="w"&gt; &lt;/span&gt;term-missing&lt;span class="w"&gt; &lt;/span&gt;--cov&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;smallcalc&lt;/span&gt;
+&lt;span class="o"&gt;==================================&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;FAILURES&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;===================================&lt;/span&gt;
+_______________________&lt;span class="w"&gt; &lt;/span&gt;test_get_tokens_understands_eof&lt;span class="w"&gt; &lt;/span&gt;_______________________
 
-    def test_get_tokens_understands_eof&lt;span class="o"&gt;()&lt;/span&gt;:
-&amp;gt;       &lt;span class="nv"&gt;l&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; clex.CalcLexer&lt;span class="o"&gt;()&lt;/span&gt;
-E       AttributeError: module &lt;span class="s1"&gt;&amp;#39;smallcalc.calc_lexer&amp;#39;&lt;/span&gt; has no attribute &lt;span class="s1"&gt;&amp;#39;CalcLexer&amp;#39;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;def&lt;span class="w"&gt; &lt;/span&gt;test_get_tokens_understands_eof&lt;span class="o"&gt;()&lt;/span&gt;:
+&amp;gt;&lt;span class="w"&gt;       &lt;/span&gt;&lt;span class="nv"&gt;l&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;clex.CalcLexer&lt;span class="o"&gt;()&lt;/span&gt;
+E&lt;span class="w"&gt;       &lt;/span&gt;AttributeError:&lt;span class="w"&gt; &lt;/span&gt;module&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smallcalc.calc_lexer&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;has&lt;span class="w"&gt; &lt;/span&gt;no&lt;span class="w"&gt; &lt;/span&gt;attribute&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;CalcLexer&amp;#39;&lt;/span&gt;
 
-tests/test_calc_lexer.py:6: &lt;span class="nv"&gt;AttributeError&lt;/span&gt;
-&lt;span class="o"&gt;=====================&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; failed, &lt;span class="m"&gt;29&lt;/span&gt; passed &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.08 &lt;span class="nv"&gt;seconds&lt;/span&gt; &lt;span class="o"&gt;=====================&lt;/span&gt;
+tests/test_calc_lexer.py:6:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;AttributeError&lt;/span&gt;
+&lt;span class="o"&gt;=====================&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;failed,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;29&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;passed&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.08&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;seconds&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=====================&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Implement now a class &lt;code&gt;CalcLexer&lt;/code&gt; in the file &lt;code&gt;smallcalc/calc_lexer.py&lt;/code&gt; that makes the test pass. Remember that you just need the code to pass this test. So do not implement complex systems now and go for the simplest solution (hint: the test expects that specific output).&lt;/p&gt;
@@ -3296,9 +3296,9 @@ integer: [0-9]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Test it to check that everything works. If your code passes the tests I gave you, the result is guaranteed.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ python cli.py 
-smallcalc :&amp;gt; &lt;span class="m"&gt;3&lt;/span&gt;
-&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;integer&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;cli.py&lt;span class="w"&gt; &lt;/span&gt;
+smallcalc&lt;span class="w"&gt; &lt;/span&gt;:&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;integer&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Let me recap what we just created. We wrote a lexer, which is a component that splits the input text in different tokens with a meaning, and we instructed it to react to single-digits integers. Then, we created a parser, which is the component that tries to make sense of several tokens put together, applying syntactical rules. Last, the visitor runs through the output of the parser and actually performs the actions that the grammar describes. All this to just print out an integer? Seems overkill! It is, actually, but there is a lot to come, and this separation of levels will come handy.&lt;/p&gt;
@@ -3533,9 +3533,9 @@ expression: integer addsymbol integer
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And a quick test of the CLI confirms that everything works fine&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ python cli.py 
-smallcalc :&amp;gt; &lt;span class="m"&gt;2&lt;/span&gt;+4
-&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;integer&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;cli.py&lt;span class="w"&gt; &lt;/span&gt;
+smallcalc&lt;span class="w"&gt; &lt;/span&gt;:&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;+4
+&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;integer&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Everything? Well, not exactly. If I type just a single integer in the CLI the whole program crashes with an exception. If your solution doesn't blow up with a single integer, it means that you (probably) overengineered it a little. This is fine, but if you had implemented just what was needed to pass the tests the result would have been an error in that case.&lt;/p&gt;
@@ -3868,9 +3868,9 @@ expression: integer addsymbol integer
 
 &lt;p&gt;This time, however, we are at the end of the processing chain, and we have to deal with the difference symbol, namely to actually subtract numbers. To make this test pass, thus, you will need to change something in your &lt;code&gt;CalcVisitor&lt;/code&gt; class.&lt;/p&gt;
 &lt;p&gt;Once your code passes this test, a quick test of the CLI shows that everything works as intended&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ python cli.py 
-smallcalc :&amp;gt; &lt;span class="m"&gt;4&lt;/span&gt; - &lt;span class="m"&gt;6&lt;/span&gt;
-&lt;span class="o"&gt;(&lt;/span&gt;-2, &lt;span class="s1"&gt;&amp;#39;integer&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;cli.py&lt;span class="w"&gt; &lt;/span&gt;
+smallcalc&lt;span class="w"&gt; &lt;/span&gt;:&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt;-2,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;integer&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;and since we rely on Python to perform the actual subtraction we get negative numbers for free. Pay attention: we can have negative numbers in the results, but we cannot input negative numbers. This is something that we will have to add later.&lt;/p&gt;

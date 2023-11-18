@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -558,78 +544,74 @@
   </header>
   
   <div class="post-content">
-    <p>In this series of posts I explore the development of a Flask project with a setup that is built with efficiency and tidiness in mind, using TDD, Docker and Postgres.</p><h2 id="catch-up">Catch-up<a class="headerlink" href="#catch-up" title="Permanent link">¶</a></h2><p>In the <a href="https://www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">previous post</a> we started from an empty project and learned how to add the minimal code to run a Flask project. Then we created a static configuration file and a management script that wraps the commands <code>flask</code> and <code>docker-compose</code> to run the application with a specific configuration.</p><p>In this post I will show you how to run a production-ready database alongside your code in a Docker container, both in your development setup and for the tests.</p><h2 id="step-1---adding-a-database-container">Step 1 - Adding a database container<a class="headerlink" href="#step-1---adding-a-database-container" title="Permanent link">¶</a></h2><p>A database is an integral part of a web application, so in this step I will add my database of choice, Postgres, to the project setup. To do this I need to add a service in the docker-compose configuration file</p><div class="code"><div class="title">docker/development.yml</div><div class="content"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.4&#39;</span><span class="w"></span>
+    <p>In this series of posts I explore the development of a Flask project with a setup that is built with efficiency and tidiness in mind, using TDD, Docker and Postgres.</p><h2 id="catch-up-7f97">Catch-up<a class="headerlink" href="#catch-up-7f97" title="Permanent link">¶</a></h2><p>In the <a href="https://www.thedigitalcatonline.com/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/">previous post</a> we started from an empty project and learned how to add the minimal code to run a Flask project. Then we created a static configuration file and a management script that wraps the commands <code>flask</code> and <code>docker-compose</code> to run the application with a specific configuration.</p><p>In this post I will show you how to run a production-ready database alongside your code in a Docker container, both in your development setup and for the tests.</p><h2 id="step-1---adding-a-database-container-4920">Step 1 - Adding a database container<a class="headerlink" href="#step-1---adding-a-database-container-4920" title="Permanent link">¶</a></h2><p>A database is an integral part of a web application, so in this step I will add my database of choice, Postgres, to the project setup. To do this I need to add a service in the docker-compose configuration file</p><div class="code"><div class="title">docker/development.yml</div><div class="content"><div class="highlight"><pre><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.4&#39;</span>
 
-<span class="nt">services</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">db</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span><span class="w"></span>
-<span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span><span class="w"></span> <span class="callout">1</span>
-<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span><span class="w"></span>
-<span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;${POSTGRES_PORT}:5432&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pgdata:/var/lib/postgresql/data</span><span class="w"></span> <span class="callout">2</span>
-<span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${PWD}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker/Dockerfile</span><span class="w"></span>
-<span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">FLASK_ENV</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FLASK_ENV}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">FLASK_CONFIG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FLASK_CONFIG}</span><span class="w"></span>
-<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flask run --host 0.0.0.0</span><span class="w"></span>
-<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${PWD}:/opt/code</span><span class="w"></span>
-<span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5000:5000&quot;</span><span class="w"></span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span> <span class="callout">1</span>
+<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;${POSTGRES_PORT}:5432&quot;</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pgdata:/var/lib/postgresql/data</span> <span class="callout">2</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${PWD}</span>
+<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker/Dockerfile</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">FLASK_ENV</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FLASK_ENV}</span>
+<span class="w">      </span><span class="nt">FLASK_CONFIG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FLASK_CONFIG}</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flask run --host 0.0.0.0</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${PWD}:/opt/code</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5000:5000&quot;</span>
 
-<span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">pgdata</span><span class="p">:</span><span class="w"></span> <span class="callout">3</span>
-</pre></div>
-</div></div><p>The variables starting with <code>POSTGRES_</code> are requested by the PostgreSQL Docker image. In particular, remember that <code>POSTGRESQL_DB</code> <span class="callout">1</span> is the database that gets created by default when you create the image, and also the one that contains data on other databases as well, so for the application we usually want to use a different one.</p><p>Notice also that I'm creating a persistent volume for the service <code>db</code> <span class="callout">2</span> <span class="callout">3</span>, so that the content of the database is not lost when we tear down the container. For this service I'm using the default image, so no build step is needed.</p><p>To orchestrate this setup we need to add those variables to the JSON configuration</p><div class="code"><div class="title">config/development.json</div><div class="content"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">,</span><span class="w"></span> <span class="callout">1</span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5432&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">]</span><span class="w"></span>
-</pre></div>
-</div></div><p>These are all development variables so there are no secrets. In production we will need a way to keep the secrets in a safe place and convert them into environment variables. The <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a> for example can directly map secrets into environment variables passed to the containers, saving you from having to explicitly connect to the service with the API.</p><p>You may have noticed the variable <code>POSTGRES_HOSTNAME</code> <span class="callout">1</span>, which is not used in the Docker Compose file. Generally we want the database to be accessible by utility scripts, so we want to record the host name where the database is running. As we will see shortly, other Docker containers do not need this, but migrations will.</p><p>We can run the commands <code>./manage.py compose up -d</code> and <code>./manage.py compose down</code> here to check that the database container works properly. Please note that the first time you run the command <code>compose -d</code> Docker will create the volume and build the Postgres image, and this might take some time.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>CONTAINER ID  IMAGE       COMMAND                 ...  PORTS                   NAMES
+<span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pgdata</span><span class="p">:</span> <span class="callout">3</span>
+</pre></div> </div> </div><p>The variables starting with <code>POSTGRES_</code> are requested by the PostgreSQL Docker image. In particular, remember that <code>POSTGRESQL_DB</code> <span class="callout">1</span> is the database that gets created by default when you create the image, and also the one that contains data on other databases as well, so for the application we usually want to use a different one.</p><p>Notice also that I&#x27;m creating a persistent volume for the service <code>db</code> <span class="callout">2</span> <span class="callout">3</span>, so that the content of the database is not lost when we tear down the container. For this service I&#x27;m using the default image, so no build step is needed.</p><p>To orchestrate this setup we need to add those variables to the JSON configuration</p><div class="code"><div class="title">config/development.json</div><div class="content"><div class="highlight"><pre><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">,</span> <span class="callout">1</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5432&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div> </div> </div><p>These are all development variables so there are no secrets. In production we will need a way to keep the secrets in a safe place and convert them into environment variables. The <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a> for example can directly map secrets into environment variables passed to the containers, saving you from having to explicitly connect to the service with the API.</p><p>You may have noticed the variable <code>POSTGRES_HOSTNAME</code> <span class="callout">1</span>, which is not used in the Docker Compose file. Generally we want the database to be accessible by utility scripts, so we want to record the host name where the database is running. As we will see shortly, other Docker containers do not need this, but migrations will.</p><p>We can run the commands <code>./manage.py compose up -d</code> and <code>./manage.py compose down</code> here to check that the database container works properly. Please note that the first time you run the command <code>compose -d</code> Docker will create the volume and build the Postgres image, and this might take some time.</p><div class="code"><div class="content"><div class="highlight"><pre>CONTAINER ID  IMAGE       COMMAND                 ...  PORTS                   NAMES
 9b5828dccd1c  docker_web  &quot;flask run --host 0.…&quot;  ...  0.0.0.0:5000-&gt;5000/tcp  docker_web_1
 4440a18a1527  postgres    &quot;docker-entrypoint.s…&quot;  ...  0.0.0.0:5432-&gt;5432/tcp  docker_db_1
-</pre></div>
-</div></div><p>Now we need to connect the application to the database and to do this we can leverage flask-sqlalchemy. As we will use this at every stage of the life of the application, the requirement goes among the production ones. We also need psycopg2 as it is the library used to connect to Postgres.</p><div class="code"><div class="title">requirements/production.txt</div><div class="content"><div class="highlight"><pre><span></span>Flask
+</pre></div> </div> </div><p>Now we need to connect the application to the database and to do this we can leverage flask-sqlalchemy. As we will use this at every stage of the life of the application, the requirement goes among the production ones. We also need psycopg2 as it is the library used to connect to Postgres.</p><div class="code"><div class="title">requirements/production.txt</div><div class="content"><div class="highlight"><pre>Flask
 <span class="hll">flask-sqlalchemy
 </span><span class="hll">psycopg2
-</span></pre></div>
-</div></div><p>Remember to run <code>pip install -r requirements/development.txt</code> to install the requirements locally and <code>./manage.py compose build web</code> to rebuild the image.</p><p>At this point I need to create a connection string in the configuration of the application. The connection string parameters come from the same environment variables used to spin up the container <code>db</code></p><div class="code"><div class="title">application/config.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+</pre></div> </div> </div><p>Remember to run <code>pip install -r requirements/development.txt</code> to install the requirements locally and <code>./manage.py compose build web</code> to rebuild the image.</p><p>At this point I need to create a connection string in the configuration of the application. The connection string parameters come from the same environment variables used to spin up the container <code>db</code></p><div class="code"><div class="title">application/config.py</div><div class="content"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
 
 <span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base configuration&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base configuration&quot;&quot;&quot;</span>
 
     <span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">]</span>
     <span class="n">password</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">]</span>
@@ -644,94 +626,90 @@
 
 
 <span class="k">class</span> <span class="nc">ProductionConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Production configuration&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Production configuration&quot;&quot;&quot;</span>
 
 
 <span class="k">class</span> <span class="nc">DevelopmentConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Development configuration&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Development configuration&quot;&quot;&quot;</span>
 
 
 <span class="k">class</span> <span class="nc">TestingConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Testing configuration&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Testing configuration&quot;&quot;&quot;</span>
 
     <span class="n">TESTING</span> <span class="o">=</span> <span class="kc">True</span>
-</pre></div>
-</div></div><p>As you can see, here I use the variable <code>APPLICATION_DB</code> <span class="callout">1</span> and not <code>POSTGRES_DB</code>, so I need to specify that as well in the config file. The reason, as I mentioned before, is that we prefer to separate the default database, used by Postgres to manage all other databases, from the one used specifically by our application.</p><div class="code"><div class="title">config/development.json</div><div class="content"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5432&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="hll"><span class="w">  </span><span class="p">{</span><span class="w"></span>
-</span><span class="hll"><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;APPLICATION_DB&quot;</span><span class="p">,</span><span class="w"></span>
-</span><span class="hll"><span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application&quot;</span><span class="w"></span>
-</span><span class="hll"><span class="w">  </span><span class="p">}</span><span class="w"></span>
-</span><span class="p">]</span><span class="w"></span>
-</pre></div>
-</div></div><p>At this point the application container needs to access some of the Postgres environment variables and the <code>APPLICATION_DB</code> one</p><div class="code"><div class="title">docker/development.yml</div><div class="content"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.4&#39;</span><span class="w"></span>
+</pre></div> </div> </div><p>As you can see, here I use the variable <code>APPLICATION_DB</code> <span class="callout">1</span> and not <code>POSTGRES_DB</code>, so I need to specify that as well in the config file. The reason, as I mentioned before, is that we prefer to separate the default database, used by Postgres to manage all other databases, from the one used specifically by our application.</p><div class="code"><div class="title">config/development.json</div><div class="content"><div class="highlight"><pre><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;development&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5432&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="hll"><span class="w">  </span><span class="p">{</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;APPLICATION_DB&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application&quot;</span>
+</span><span class="hll"><span class="w">  </span><span class="p">}</span>
+</span><span class="p">]</span>
+</pre></div> </div> </div><p>At this point the application container needs to access some of the Postgres environment variables and the <code>APPLICATION_DB</code> one</p><div class="code"><div class="title">docker/development.yml</div><div class="content"><div class="highlight"><pre><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.4&#39;</span>
 
-<span class="nt">services</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">db</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span><span class="w"></span>
-<span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span><span class="w"></span>
-<span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;${POSTGRES_PORT}:5432&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pgdata:/var/lib/postgresql/data</span><span class="w"></span>
-<span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${PWD}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker/Dockerfile</span><span class="w"></span>
-<span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">FLASK_ENV</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FLASK_ENV}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">FLASK_CONFIG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FLASK_CONFIG}</span><span class="w"></span>
-<span class="hll"><span class="w">      </span><span class="nt">APPLICATION_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${APPLICATION_DB}</span><span class="w"></span>
-</span><span class="hll"><span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span><span class="w"></span>
-</span><span class="hll"><span class="w">      </span><span class="nt">POSTGRES_HOSTNAME</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;db&quot;</span><span class="w"></span>
-</span><span class="hll"><span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span><span class="w"></span>
-</span><span class="hll"><span class="w">      </span><span class="nt">POSTGRES_PORT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PORT}</span><span class="w"></span>
-</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flask run --host 0.0.0.0</span><span class="w"></span>
-<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${PWD}:/opt/code</span><span class="w"></span>
-<span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5000:5000&quot;</span><span class="w"></span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span>
+<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;${POSTGRES_PORT}:5432&quot;</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pgdata:/var/lib/postgresql/data</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${PWD}</span>
+<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker/Dockerfile</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">FLASK_ENV</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FLASK_ENV}</span>
+<span class="w">      </span><span class="nt">FLASK_CONFIG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FLASK_CONFIG}</span>
+<span class="hll"><span class="w">      </span><span class="nt">APPLICATION_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${APPLICATION_DB}</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">POSTGRES_HOSTNAME</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;db&quot;</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">POSTGRES_PORT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PORT}</span>
+</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flask run --host 0.0.0.0</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${PWD}:/opt/code</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5000:5000&quot;</span>
 
-<span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">pgdata</span><span class="p">:</span><span class="w"></span>
-</pre></div>
-</div></div><p>Please note that the container <code>web</code> receives the environment variables we pass to the Postgres container because it requires them to connect to the db. The variable <code>POSTGRES_HOSTNAME</code> is passed to give the application the address of the database, and thanks to Docker Compose internal DNS we can simply pass the name of the container. We could not pass the value <code>localhost</code>, as the application, which is running in a container, cannot access the host through that address (unless we use other network modes, which is not ideal).</p><p>Running compose now spins up both Flask and Postgres, but the application is not properly connected to the database yet.</p><p>Let's have a look inside the DB to see what our configuration created. First run <code>./manage.py compose up -d</code> to spin up the containers, then connect to the Postgres DB with <code>./manage.py compose exec db psql -U postgres</code>. Please note that we have to specify the user with <code>-U</code>. The default value is <code>root</code>, but we changed it to <code>postgres</code> with the variable <code>POSTGRES_USER</code>.</p><p>You should see a command line like</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py compose exec db psql -U postgres
+<span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pgdata</span><span class="p">:</span>
+</pre></div> </div> </div><p>Please note that the container <code>web</code> receives the environment variables we pass to the Postgres container because it requires them to connect to the db. The variable <code>POSTGRES_HOSTNAME</code> is passed to give the application the address of the database, and thanks to Docker Compose internal DNS we can simply pass the name of the container. We could not pass the value <code>localhost</code>, as the application, which is running in a container, cannot access the host through that address (unless we use other network modes, which is not ideal).</p><p>Running compose now spins up both Flask and Postgres, but the application is not properly connected to the database yet.</p><p>Let&#x27;s have a look inside the DB to see what our configuration created. First run <code>./manage.py compose up -d</code> to spin up the containers, then connect to the Postgres DB with <code>./manage.py compose exec db psql -U postgres</code>. Please note that we have to specify the user with <code>-U</code>. The default value is <code>root</code>, but we changed it to <code>postgres</code> with the variable <code>POSTGRES_USER</code>.</p><p>You should see a command line like</p><div class="code"><div class="content"><div class="highlight"><pre>$ ./manage.py compose exec db psql -U postgres
 psql (13.0 (Debian 13.0-1.pgdg100+1))
 Type &quot;help&quot; for help.
 
 postgres=#
-</pre></div>
-</div></div><p>Also note that by default we are logging into the database called <code>postgres</code>, which was configured by the variable <code>POSTGRES_DB</code>. We can list the databases with <code>\l</code></p><div class="code"><div class="content"><div class="highlight"><pre><span></span>postgres=# \l
+</pre></div> </div> </div><p>Also note that by default we are logging into the database called <code>postgres</code>, which was configured by the variable <code>POSTGRES_DB</code>. We can list the databases with <code>\l</code></p><div class="code"><div class="content"><div class="highlight"><pre>postgres=# \l
                                  List of databases
    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
 -----------+----------+----------+------------+------------+-----------------------
@@ -743,14 +721,13 @@ postgres=#
 (3 rows)
 
 postgres=# 
-</pre></div>
-</div></div><p>Last, note that the application database configured with <code>APPLICATION_DB</code> is not present because we haven't created it yet. All the environment variables prefixed by <code>POSTGRES_</code> are used automatically by the Docker image to perform the initial configuration, which is why the database <code>postgres</code> is already there.</p><p>You can exit <code>psql</code> with Ctrl-D or <code>exit</code>.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/e1af82cb302d669b1559b788c92aafeab1b427d5">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/e1af82cb302d669b1559b788c92aafeab1b427d5">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://hub.docker.com/_/postgres">Postgres Docker image</a></li><li><a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/">Flask-SQLAlchemy</a> - A Flask extension to work with SQLAlchemy</li><li><a href="https://docs.sqlalchemy.org/en/13/dialects/postgresql.html">SQLAlchemy and PostgreSQL</a> - The Python SQL Toolkit and ORM</li></ul>
+</pre></div> </div> </div><p>Last, note that the application database configured with <code>APPLICATION_DB</code> is not present because we haven&#x27;t created it yet. All the environment variables prefixed by <code>POSTGRES_</code> are used automatically by the Docker image to perform the initial configuration, which is why the database <code>postgres</code> is already there.</p><p>You can exit <code>psql</code> with Ctrl-D or <code>exit</code>.</p><h3 id="git-commit-3262">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/e1af82cb302d669b1559b788c92aafeab1b427d5">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/e1af82cb302d669b1559b788c92aafeab1b427d5">browse the files</a>.</p><h3 id="resources-9e89">Resources</h3><ul><li><a href="https://hub.docker.com/_/postgres">Postgres Docker image</a></li><li><a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/">Flask-SQLAlchemy</a> - A Flask extension to work with SQLAlchemy</li><li><a href="https://docs.sqlalchemy.org/en/13/dialects/postgresql.html">SQLAlchemy and PostgreSQL</a> - The Python SQL Toolkit and ORM</li></ul>
             <div class="advertisement">
                 <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
                   <img src="/images/first-class-objects/cover.jpg" />
                 </a>
                 <div class="body">
-                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+                  <h2 id="first-class-objects-in-python-fffa">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python-fffa" title="Permanent link">¶</a></h2>
 <p>Higher-order functions, wrappers, and factories</p>
 <p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
                   <div class="actions">
@@ -758,11 +735,10 @@ postgres=#
                   </div>
                 </div>
             </div>
-            <h2 id="step-2---connecting-the-application-and-the-database">Step 2 - Connecting the application and the database<a class="headerlink" href="#step-2---connecting-the-application-and-the-database" title="Permanent link">¶</a></h2><p>To connect the Flask application with the database running in the container we need to initialise a <code>SQLAlchemy</code> object and add it to the application factory.</p><div class="code"><div class="title">application/models.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
+            <h2 id="step-2---connecting-the-application-and-the-database-20bf">Step 2 - Connecting the application and the database<a class="headerlink" href="#step-2---connecting-the-application-and-the-database-20bf" title="Permanent link">¶</a></h2><p>To connect the Flask application with the database running in the container we need to initialise a <code>SQLAlchemy</code> object and add it to the application factory.</p><div class="code"><div class="title">application/models.py</div><div class="content"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
 
 <span class="n">db</span> <span class="o">=</span> <span class="n">SQLAlchemy</span><span class="p">()</span>
-</pre></div>
-</div></div><div class="code"><div class="title">application/app.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+</pre></div> </div> </div><div class="code"><div class="title">application/app.py</div><div class="content"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 
 
 <span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="n">config_name</span><span class="p">):</span>
@@ -782,19 +758,16 @@ postgres=#
         <span class="k">return</span> <span class="s2">&quot;Hello, World!&quot;</span>
 
     <span class="k">return</span> <span class="n">app</span>
-</pre></div>
-</div></div><p>A pretty standard way to manage the database in Flask is to use flask-migrate, that adds some commands that allow us to create migrations and apply them.</p><p>With flask-migrate you have to create the migrations folder once and for all with <code>flask db init</code> and then, every time you change your models, run <code>flask db migrate -m &quot;Some message&quot;</code> and <code>flask db upgrade</code>. As both <code>db init</code> and <code>db migrate</code> create files in the current directory we now face a problem that every Docker-based setup has to face: file permissions.</p><p>The situation is the following: the application is running in the Docker container as root, and there is no connection between the users namespace in the container and that of the host. The result is that if the Docker container creates files in a directory that is mounted from the host (like the one that contains the application code in our example), those files will result as belonging to <code>root</code>. While this doesn't make impossible to work (we usually can become <code>root</code> on our development machines), it is annoying to say the least. The solution is to run those commands from outside the container, but this requires the Flask application to be configured.</p><p>Fortunately I wrapped the command <code>flask</code> in the script <code>manage.py</code>, which loads all the required environment variables. Let's add flask-migrate to the production requirements</p><div class="code"><div class="title">requirements/production.txt</div><div class="content"><div class="highlight"><pre><span></span>Flask
+</pre></div> </div> </div><p>A pretty standard way to manage the database in Flask is to use flask-migrate, that adds some commands that allow us to create migrations and apply them.</p><p>With flask-migrate you have to create the migrations folder once and for all with <code>flask db init</code> and then, every time you change your models, run <code>flask db migrate -m "Some message"</code> and <code>flask db upgrade</code>. As both <code>db init</code> and <code>db migrate</code> create files in the current directory we now face a problem that every Docker-based setup has to face: file permissions.</p><p>The situation is the following: the application is running in the Docker container as root, and there is no connection between the users namespace in the container and that of the host. The result is that if the Docker container creates files in a directory that is mounted from the host (like the one that contains the application code in our example), those files will result as belonging to <code>root</code>. While this doesn&#x27;t make impossible to work (we usually can become <code>root</code> on our development machines), it is annoying to say the least. The solution is to run those commands from outside the container, but this requires the Flask application to be configured.</p><p>Fortunately I wrapped the command <code>flask</code> in the script <code>manage.py</code>, which loads all the required environment variables. Let&#x27;s add flask-migrate to the production requirements</p><div class="code"><div class="title">requirements/production.txt</div><div class="content"><div class="highlight"><pre>Flask
 flask-sqlalchemy
 psycopg2
 <span class="hll">flask-migrate
-</span></pre></div>
-</div></div><p>Remember to run <code>pip install -r requirements/development.txt</code> to install the requirements locally and <code>./manage.py compose build web</code> to rebuild the image. Please note that you need the executable <code>pg_config</code> and some other development tools installed in your system. If you get an error message from <code>pip</code> please check the documentation of your operating system to find out what to do to install the required packages. For Ubuntu Linux I had to run <code>sudo apt install build-essential python3-dev libpq-dev</code>.</p><p>Now we can initialise a <code>Migrate</code> object and add it to the application factory</p><div class="code"><div class="title">application/models.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
+</pre></div> </div> </div><p>Remember to run <code>pip install -r requirements/development.txt</code> to install the requirements locally and <code>./manage.py compose build web</code> to rebuild the image. Please note that you need the executable <code>pg_config</code> and some other development tools installed in your system. If you get an error message from <code>pip</code> please check the documentation of your operating system to find out what to do to install the required packages. For Ubuntu Linux I had to run <code>sudo apt install build-essential python3-dev libpq-dev</code>.</p><p>Now we can initialise a <code>Migrate</code> object and add it to the application factory</p><div class="code"><div class="title">application/models.py</div><div class="content"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
 <span class="hll"><span class="kn">from</span> <span class="nn">flask_migrate</span> <span class="kn">import</span> <span class="n">Migrate</span>
 </span>
 <span class="n">db</span> <span class="o">=</span> <span class="n">SQLAlchemy</span><span class="p">()</span>
 <span class="hll"><span class="n">migrate</span> <span class="o">=</span> <span class="n">Migrate</span><span class="p">()</span>
-</span></pre></div>
-</div></div><div class="code"><div class="title">application/app.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+</pre></div> </div> </div><div class="code"><div class="title">application/app.py</div><div class="content"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 
 
 <span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="n">config_name</span><span class="p">):</span>
@@ -815,8 +788,7 @@ psycopg2
         <span class="k">return</span> <span class="s2">&quot;Hello, World!&quot;</span>
 
     <span class="k">return</span> <span class="n">app</span>
-</pre></div>
-</div></div><p>I can now run the database initialisation script</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py flask db init
+</pre></div> </div> </div><p>I can now run the database initialisation script</p><div class="code"><div class="content"><div class="highlight"><pre>$ ./manage.py flask db init
   Creating directory /home/leo/devel/flask-tutorial/migrations ...  done
   Creating directory /home/leo/devel/flask-tutorial/migrations/versions ...  done
   Generating /home/leo/devel/flask-tutorial/migrations/env.py ...  done
@@ -824,14 +796,12 @@ psycopg2
   Generating /home/leo/devel/flask-tutorial/migrations/script.py.mako ...  done
   Generating /home/leo/devel/flask-tutorial/migrations/alembic.ini ...  done
   Please edit configuration/connection/logging settings in &#39;/home/leo/devel/flask-tutorial/migrations/alembic.ini&#39; before proceeding.
-</pre></div>
-</div></div><p>And, when we will start creating models we will use the commands <code>./manage.py flask db migrate</code> and <code>./manage.py flask db upgrade</code>. You will find a complete example at the end of this post.</p><p>For the time being let's have a brief look at what was created here. The command <code>db init</code> created the directory <code>migrations</code> and inside it some default configuration files and templates. The migration scripts will be created in the directory <code>migrations/versions</code> but at the moment that directory is empty, as we have no models and we run no migrations (only the initialisation of the system). No changes have been made to the database. The command <code>db init</code> can be run even without running containers (you can remove the directory <code>migrations</code> and try it).</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/ee7e2b32fb85b9a22b3e4ddb5de4e27e58884c25">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/ee7e2b32fb85b9a22b3e4ddb5de4e27e58884c25">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/">Flask-SQLAlchemy</a> - A Flask extension to work with SQLAlchemy</li><li><a href="https://flask-migrate.readthedocs.io/en/latest/">Flask-Migrate</a> - A Flask extension to handle database migrations with Alembic.</li></ul><h2 id="step-3---testing-setup">Step 3 - Testing setup<a class="headerlink" href="#step-3---testing-setup" title="Permanent link">¶</a></h2><p>I want to use a TDD approach as much as possible when developing my applications, so I need to setup a good testing environment upfront, and it has to be as ephemeral as possible. It is not unusual in big projects to create (or scale up) infrastructure components explicitly to run tests, and through Docker and docker-compose we can easily do the same. Namely, I will:</p><ol><li>Spin up a test database in a container without permanent volumes</li><li>Initialise it</li><li>Run all the tests against it</li><li>Tear down the container</li></ol><p>This approach has one big advantage, which is that it requires no previous setup and can this be executed on infrastructure created on the fly. It also has disadvantages, however, as it can slow down the testing part of the application, which should be as fast as possible in a TDD setup. Tests that involve the database, however, should be considered integration tests, and not run continuously in a TDD process, which is impossible (or very hard) when using a framework that merges the concept of entity and database model. If you want to know more about this read <a href="https://leanpub.com/clean-architectures-in-python">the book</a> that I wrote on the subject.</p><p>Another advantage of this setup is it that we might need other things during the test, e.g. Celery, other databases, other servers. They can all be created through the docker-compose file.</p><p>Generally speaking testing is an umbrella under which many different things can happen. As I will use pytest I can run the full suite, but I might want to select specific tests, mentioning a single file or using the powerful option <code>-k</code> that allows me to select tests by pattern-matching their name. For this reason I want to map the management command line to that of pytest.</p><p>Let's add pytest to the testing requirements, along with a couple of packages to monitor the test coverage</p><div class="code"><div class="title">requirements/testing.txt</div><div class="content"><div class="highlight"><pre><span></span>-r production.txt
+</pre></div> </div> </div><p>And, when we will start creating models we will use the commands <code>./manage.py flask db migrate</code> and <code>./manage.py flask db upgrade</code>. You will find a complete example at the end of this post.</p><p>For the time being let&#x27;s have a brief look at what was created here. The command <code>db init</code> created the directory <code>migrations</code> and inside it some default configuration files and templates. The migration scripts will be created in the directory <code>migrations/versions</code> but at the moment that directory is empty, as we have no models and we run no migrations (only the initialisation of the system). No changes have been made to the database. The command <code>db init</code> can be run even without running containers (you can remove the directory <code>migrations</code> and try it).</p><h3 id="git-commit-3262">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/ee7e2b32fb85b9a22b3e4ddb5de4e27e58884c25">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/ee7e2b32fb85b9a22b3e4ddb5de4e27e58884c25">browse the files</a>.</p><h3 id="resources-9e89">Resources</h3><ul><li><a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/">Flask-SQLAlchemy</a> - A Flask extension to work with SQLAlchemy</li><li><a href="https://flask-migrate.readthedocs.io/en/latest/">Flask-Migrate</a> - A Flask extension to handle database migrations with Alembic.</li></ul><h2 id="step-3---testing-setup-1cb6">Step 3 - Testing setup<a class="headerlink" href="#step-3---testing-setup-1cb6" title="Permanent link">¶</a></h2><p>I want to use a TDD approach as much as possible when developing my applications, so I need to setup a good testing environment upfront, and it has to be as ephemeral as possible. It is not unusual in big projects to create (or scale up) infrastructure components explicitly to run tests, and through Docker and docker-compose we can easily do the same. Namely, I will:</p><ol><li>Spin up a test database in a container without permanent volumes</li><li>Initialise it</li><li>Run all the tests against it</li><li>Tear down the container</li></ol><p>This approach has one big advantage, which is that it requires no previous setup and can this be executed on infrastructure created on the fly. It also has disadvantages, however, as it can slow down the testing part of the application, which should be as fast as possible in a TDD setup. Tests that involve the database, however, should be considered integration tests, and not run continuously in a TDD process, which is impossible (or very hard) when using a framework that merges the concept of entity and database model. If you want to know more about this read <a href="https://leanpub.com/clean-architectures-in-python">the book</a> that I wrote on the subject.</p><p>Another advantage of this setup is it that we might need other things during the test, e.g. Celery, other databases, other servers. They can all be created through the docker-compose file.</p><p>Generally speaking testing is an umbrella under which many different things can happen. As I will use pytest I can run the full suite, but I might want to select specific tests, mentioning a single file or using the powerful option <code>-k</code> that allows me to select tests by pattern-matching their name. For this reason I want to map the management command line to that of pytest.</p><p>Let&#x27;s add pytest to the testing requirements, along with a couple of packages to monitor the test coverage</p><div class="code"><div class="title">requirements/testing.txt</div><div class="content"><div class="highlight"><pre>-r production.txt
 
 <span class="hll">pytest
 </span><span class="hll">coverage
 </span><span class="hll">pytest-cov
-</span></pre></div>
-</div></div><p>As you can see I also use the coverage plugin to keep an eye on how well I cover the code with the tests. Remember to run <code>pip install -r requirements/development.txt</code> to install the requirements locally and <code>./manage.py compose build web</code> to rebuild the image.</p><p>Warning: before you change the script <code>manage.py</code> make sure you terminate all the running containers running <code>./manage.py compose down</code>. The next version will change the naming convention for containers and you might end up with some stale containers and run into issues with the database.</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+</pre></div> </div> </div><p>As you can see I also use the coverage plugin to keep an eye on how well I cover the code with the tests. Remember to run <code>pip install -r requirements/development.txt</code> to install the requirements locally and <code>./manage.py compose build web</code> to rebuild the image.</p><p>Warning: before you change the script <code>manage.py</code> make sure you terminate all the running containers running <code>./manage.py compose down</code>. The next version will change the naming convention for containers and you might end up with some stale containers and run into issues with the database.</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span class="ch">#! /usr/bin/env python</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -936,55 +906,52 @@ psycopg2
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">cli</span><span class="p">()</span>
-</pre></div>
-</div></div><p>Notable changes are</p><ul><li>The environment configuration code is now in the function <code>configure_app</code> <span class="callout">1</span>. This allows me to force the variable <code>APPLICATION_CONFIG</code> inside the script <span class="callout">2</span> and then configure the environment, which saves me from having to call tests with <code>APPLICATION_CONFIG=testing flask test</code>.</li><li>Both commands <code>flask</code> and <code>compose</code> use the configuration <code>development</code>. Since that is the default value of the variable <code>APPLICATION_CONFIG</code> they just have to call the function <code>configure_app</code>.</li><li>The docker-compose command line is needed both in the commands <code>compose</code> and in <code>test</code>, so I isolated some code into a function called <code>docker_compose_cmdline</code> <span class="callout">3</span> which returns a list as needed by <code>subprocess</code> functions. The command line now uses also the option <code>-p</code> (project name) <span class="callout">4</span> to give a prefix to the containers. This way we can run tests while running the development server.</li><li>The command <code>test</code> forces <code>APPLICATION_CONFIG</code> to be <code>testing</code> <span class="callout">5</span>, which loads the file <code>config/testing.json</code>, then runs docker-compose using the file <code>docker/testing.yml</code> (both file have not been created yet), runs the pytest command line, and tears down the testing database container. Before running the tests the script waits for the service to be available <span class="callout">6</span>. Postgres doesn't allow connection until the database is ready to accept them.</li></ul><div class="code"><div class="title">config/testing.json</div><div class="content"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;production&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;testing&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span><span class="w"></span> <span class="callout">2</span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5433&quot;</span><span class="w"></span> <span class="callout">1</span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;APPLICATION_DB&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">]</span><span class="w"></span>
-</pre></div>
-</div></div><p>Note that here I specified the value <code>5433</code> for <code>POSTGRES_PORT</code> <span class="callout">1</span>. This allows us to spin up the test database container while the development one is running, as that will use port <code>5432</code> and you can't have two different containers using the same port on the host. A more general solution could be to leave Docker pick a random host port for the container and then use that, but this requires a bit more code to be properly implemented, so I will come back to this problem when setting up the scenarios.</p><p>Also note that I set the variable <code>POSTGRES_HOSTNAME</code> to <code>localhost</code> in this file <span class="callout">2</span>. We will run the tests on the local machine and not in a container, so we can't use the DNS provided by Docker Compose.</p><p>The last piece of setup that we need is the orchestration configuration for Docker Compose</p><div class="code"><div class="title">docker/testing.yml</div><div class="content"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.4&#39;</span><span class="w"></span>
+</pre></div> </div> </div><p>Notable changes are</p><ul><li>The environment configuration code is now in the function <code>configure_app</code> <span class="callout">1</span>. This allows me to force the variable <code>APPLICATION_CONFIG</code> inside the script <span class="callout">2</span> and then configure the environment, which saves me from having to call tests with <code>APPLICATION_CONFIG=testing flask test</code>.</li><li>Both commands <code>flask</code> and <code>compose</code> use the configuration <code>development</code>. Since that is the default value of the variable <code>APPLICATION_CONFIG</code> they just have to call the function <code>configure_app</code>.</li><li>The docker-compose command line is needed both in the commands <code>compose</code> and in <code>test</code>, so I isolated some code into a function called <code>docker_compose_cmdline</code> <span class="callout">3</span> which returns a list as needed by <code>subprocess</code> functions. The command line now uses also the option <code>-p</code> (project name) <span class="callout">4</span> to give a prefix to the containers. This way we can run tests while running the development server.</li><li>The command <code>test</code> forces <code>APPLICATION_CONFIG</code> to be <code>testing</code> <span class="callout">5</span>, which loads the file <code>config/testing.json</code>, then runs docker-compose using the file <code>docker/testing.yml</code> (both file have not been created yet), runs the pytest command line, and tears down the testing database container. Before running the tests the script waits for the service to be available <span class="callout">6</span>. Postgres doesn&#x27;t allow connection until the database is ready to accept them.</li></ul><div class="code"><div class="title">config/testing.json</div><div class="content"><div class="highlight"><pre><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_ENV&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;production&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FLASK_CONFIG&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;testing&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_DB&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_USER&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_HOSTNAME&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span> <span class="callout">2</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PORT&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5433&quot;</span> <span class="callout">1</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;APPLICATION_DB&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div> </div> </div><p>Note that here I specified the value <code>5433</code> for <code>POSTGRES_PORT</code> <span class="callout">1</span>. This allows us to spin up the test database container while the development one is running, as that will use port <code>5432</code> and you can&#x27;t have two different containers using the same port on the host. A more general solution could be to leave Docker pick a random host port for the container and then use that, but this requires a bit more code to be properly implemented, so I will come back to this problem when setting up the scenarios.</p><p>Also note that I set the variable <code>POSTGRES_HOSTNAME</code> to <code>localhost</code> in this file <span class="callout">2</span>. We will run the tests on the local machine and not in a container, so we can&#x27;t use the DNS provided by Docker Compose.</p><p>The last piece of setup that we need is the orchestration configuration for Docker Compose</p><div class="code"><div class="title">docker/testing.yml</div><div class="content"><div class="highlight"><pre><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.4&#39;</span>
 
-<span class="nt">services</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">db</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span><span class="w"></span>
-<span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span><span class="w"></span>
-<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span><span class="w"></span>
-<span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;${POSTGRES_PORT}:5432&quot;</span><span class="w"></span>
-</pre></div>
-</div></div><p>Now we can run <code>./manage.py test</code> and get</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>Creating network &quot;testing_default&quot; with the default driver
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_DB}</span>
+<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_USER}</span>
+<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${POSTGRES_PASSWORD}</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;${POSTGRES_PORT}:5432&quot;</span>
+</pre></div> </div> </div><p>Now we can run <code>./manage.py test</code> and get</p><div class="code"><div class="content"><div class="highlight"><pre>Creating network &quot;testing_default&quot; with the default driver
 Creating testing_db_1 ... done
 ========================== test session starts =========================
 platform linux -- Python 3.7.5, pytest-5.4.3, py-1.8.2, pluggy-0.13.1
@@ -1009,8 +976,7 @@ TOTAL                      28     28     0%
 Stopping testing_db_1 ... done
 Removing testing_db_1 ... done
 Removing network testing_default
-</pre></div>
-</div></div><p>Note that the command first creates the testing database container <code>testing_db_1</code>, then runs pytest, and finally stops and remove the container. This is exactly what we wanted to achieve to run tests in isolation. At the moment, however there are no tests, and the testing database is empty.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/1de9666f8d06e4061ba3513b1eadd869b6a8dd3d">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/1de9666f8d06e4061ba3513b1eadd869b6a8dd3d">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://docs.pytest.org/en/latest/">pytest</a> - A full-featured Python testing framework</li><li><a href="https://www.thedigitalcatonline.com/blog/2018/07/05/useful-pytest-command-line-options/">Useful pytest command line options</a></li></ul><h2 id="step-4---initialise-the-testing-database">Step 4 - Initialise the testing database<a class="headerlink" href="#step-4---initialise-the-testing-database" title="Permanent link">¶</a></h2><p>When you develop a web application and then run it in production, you typically create the database once and then upgrade it through migrations. When running tests we need to create the database every time, so I need to add a way to run SQL commands on the testing database before I run pytest.</p><p>As running sql commands directly on the the database is often useful I will create a function that wraps the boilerplate for the connection. The command that creates the initial database at that point will be trivial.</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+</pre></div> </div> </div><p>Note that the command first creates the testing database container <code>testing_db_1</code>, then runs pytest, and finally stops and remove the container. This is exactly what we wanted to achieve to run tests in isolation. At the moment, however there are no tests, and the testing database is empty.</p><h3 id="git-commit-3262">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/1de9666f8d06e4061ba3513b1eadd869b6a8dd3d">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/1de9666f8d06e4061ba3513b1eadd869b6a8dd3d">browse the files</a>.</p><h3 id="resources-9e89">Resources</h3><ul><li><a href="https://docs.pytest.org/en/latest/">pytest</a> - A full-featured Python testing framework</li><li><a href="https://www.thedigitalcatonline.com/blog/2018/07/05/useful-pytest-command-line-options/">Useful pytest command line options</a></li></ul><h2 id="step-4---initialise-the-testing-database-5870">Step 4 - Initialise the testing database<a class="headerlink" href="#step-4---initialise-the-testing-database-5870" title="Permanent link">¶</a></h2><p>When you develop a web application and then run it in production, you typically create the database once and then upgrade it through migrations. When running tests we need to create the database every time, so I need to add a way to run SQL commands on the testing database before I run pytest.</p><p>As running sql commands directly on the the database is often useful I will create a function that wraps the boilerplate for the connection. The command that creates the initial database at that point will be trivial.</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span class="ch">#! /usr/bin/env python</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -1150,8 +1116,7 @@ Removing network testing_default
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">cli</span><span class="p">()</span>
-</pre></div>
-</div></div><p>As you can see I took the opportunity to write the command <code>create_initial_db</code> <span class="callout">1</span> as well, that just runs the very same SQL command that creates the testing database, but in any configuration I will use. </p><p>Before moving on I think it's time to refactor the file <code>manage.py</code>. Refactoring is not mandatory, but I feel like some parts of the script are not generic enough, and when I will add the scenarios I will definitely need my functions to be flexible.</p><p>The new script is</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+</pre></div> </div> </div><p>As you can see I took the opportunity to write the command <code>create_initial_db</code> <span class="callout">1</span> as well, that just runs the very same SQL command that creates the testing database, but in any configuration I will use. </p><p>Before moving on I think it&#x27;s time to refactor the file <code>manage.py</code>. Refactoring is not mandatory, but I feel like some parts of the script are not generic enough, and when I will add the scenarios I will definitely need my functions to be flexible.</p><p>The new script is</p><div class="code"><div class="title">manage.py</div><div class="content"><div class="highlight"><pre><span class="ch">#! /usr/bin/env python</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -1312,15 +1277,13 @@ Removing network testing_default
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">cli</span><span class="p">()</span>
-</pre></div>
-</div></div><p>Notable changes:</p><ul><li>I created two new functions <code>app_config_file</code> <span class="callout">1</span> and <code>docker_compose_file</code> <span class="callout">2</span> that encapsulate the creation of the file paths.</li><li>I isolated the code that waits for a message in the database container logs, creating the function <code>wait_for_logs</code> <span class="callout">3</span>.</li><li>The command <code>docker_compose_cmdline</code> <span class="callout">4</span> now receives a string and converts it into a list internally. This way expressing commands is more natural, as it doesn't require the ugly list syntax that <code>subprocess</code> works with.</li></ul><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/1781b43a872e9518ae179e30e9e640a059d87cf6">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/1781b43a872e9518ae179e30e9e640a059d87cf6">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://www.psycopg.org/docs/">Psycopg</a> – PostgreSQL database adapter for Python</li></ul><h2 id="step-5---fixtures-for-tests">Step 5 - Fixtures for tests<a class="headerlink" href="#step-5---fixtures-for-tests" title="Permanent link">¶</a></h2><p>Pytest uses fixtures for tests, so we should prepare some basic ones that will be generally useful. First let's include <code>pytest-flask</code>, which provides already some basic fixtures</p><div class="code"><div class="title">requirements/testing.txt</div><div class="content"><div class="highlight"><pre><span></span>-r production.txt
+</pre></div> </div> </div><p>Notable changes:</p><ul><li>I created two new functions <code>app_config_file</code> <span class="callout">1</span> and <code>docker_compose_file</code> <span class="callout">2</span> that encapsulate the creation of the file paths.</li><li>I isolated the code that waits for a message in the database container logs, creating the function <code>wait_for_logs</code> <span class="callout">3</span>.</li><li>The command <code>docker_compose_cmdline</code> <span class="callout">4</span> now receives a string and converts it into a list internally. This way expressing commands is more natural, as it doesn&#x27;t require the ugly list syntax that <code>subprocess</code> works with.</li></ul><h3 id="git-commit-3262">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/1781b43a872e9518ae179e30e9e640a059d87cf6">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/1781b43a872e9518ae179e30e9e640a059d87cf6">browse the files</a>.</p><h3 id="resources-9e89">Resources</h3><ul><li><a href="https://www.psycopg.org/docs/">Psycopg</a> – PostgreSQL database adapter for Python</li></ul><h2 id="step-5---fixtures-for-tests-50a8">Step 5 - Fixtures for tests<a class="headerlink" href="#step-5---fixtures-for-tests-50a8" title="Permanent link">¶</a></h2><p>Pytest uses fixtures for tests, so we should prepare some basic ones that will be generally useful. First let&#x27;s include <code>pytest-flask</code>, which provides already some basic fixtures</p><div class="code"><div class="title">requirements/testing.txt</div><div class="content"><div class="highlight"><pre>-r production.txt
 
 pytest
 coverage
 pytest-cov
 <span class="hll">pytest-flask
-</span></pre></div>
-</div></div><p>Then add the fixtures <code>app</code> and <code>database</code> to the file <code>tests/conftest.py</code>. The first is required by pytest-flask itself (it's used by other fixtures) and the second one is useful every time you need to interact with the database itself.</p><div class="code"><div class="title">tests/conftest.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+</pre></div> </div> </div><p>Then add the fixtures <code>app</code> and <code>database</code> to the file <code>tests/conftest.py</code>. The first is required by pytest-flask itself (it&#x27;s used by other fixtures) and the second one is useful every time you need to interact with the database itself.</p><div class="code"><div class="title">tests/conftest.py</div><div class="content"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pytest</span>
 
 <span class="kn">from</span> <span class="nn">application.app</span> <span class="kn">import</span> <span class="n">create_app</span>
 <span class="kn">from</span> <span class="nn">application.models</span> <span class="kn">import</span> <span class="n">db</span>
@@ -1340,8 +1303,7 @@ pytest-cov
         <span class="n">db</span><span class="o">.</span><span class="n">create_all</span><span class="p">()</span>
 
     <span class="k">yield</span> <span class="n">db</span>
-</pre></div>
-</div></div><p>Remember to create the empty file <code>tests/__init__.py</code> to make pytest correctly load the code.</p><p>As you can see, the fixture <code>database</code> uses the methods <code>drop_all</code> and <code>create_all</code> to reset the database. The reason is that this fixture is recreated for each function, and we can't be sure a previous function left the database clean. As a matter of fact, we might be almost sure of the opposite.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/6f30e869ae040420c3b3b94d414b5dd841217c0d">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/6f30e869ae040420c3b3b94d414b5dd841217c0d">browse the files</a>.</p><h3 id="resources">Resources</h3><ul><li><a href="https://docs.pytest.org/en/stable/fixture.html">pytest fixtures</a> - One of the most powerful features of pytest</li><li><a href="https://pytest-flask.readthedocs.io/en/latest/">pytest-flask</a> - A plugin for pytest that simplifies testing Flask applications</li><li><a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/">Flask-SQLAlchemy API</a></li></ul><h2 id="bonus-step---a-full-tdd-example">Bonus step - A full TDD example<a class="headerlink" href="#bonus-step---a-full-tdd-example" title="Permanent link">¶</a></h2><p>Before wrapping up this post, I want to give you a full example of the TDD process that I would follow given the current state of the setup, which is already complete enough to start the development of an application. Let's pretend my goal is that of adding a <code>User</code> model that can be created with an <code>id</code> (primary key) and an <code>email</code> fields.</p><p>First of all I write a test that creates a user in the database and then retrieves it, checking its attributes</p><div class="code"><div class="title">tests/test_user.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">application.models</span> <span class="kn">import</span> <span class="n">User</span>
+</pre></div> </div> </div><p>Remember to create the empty file <code>tests/__init__.py</code> to make pytest correctly load the code.</p><p>As you can see, the fixture <code>database</code> uses the methods <code>drop_all</code> and <code>create_all</code> to reset the database. The reason is that this fixture is recreated for each function, and we can&#x27;t be sure a previous function left the database clean. As a matter of fact, we might be almost sure of the opposite.</p><h3 id="git-commit-3262">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/6f30e869ae040420c3b3b94d414b5dd841217c0d">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/6f30e869ae040420c3b3b94d414b5dd841217c0d">browse the files</a>.</p><h3 id="resources-9e89">Resources</h3><ul><li><a href="https://docs.pytest.org/en/stable/fixture.html">pytest fixtures</a> - One of the most powerful features of pytest</li><li><a href="https://pytest-flask.readthedocs.io/en/latest/">pytest-flask</a> - A plugin for pytest that simplifies testing Flask applications</li><li><a href="https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/">Flask-SQLAlchemy API</a></li></ul><h2 id="bonus-step---a-full-tdd-example-19ec">Bonus step - A full TDD example<a class="headerlink" href="#bonus-step---a-full-tdd-example-19ec" title="Permanent link">¶</a></h2><p>Before wrapping up this post, I want to give you a full example of the TDD process that I would follow given the current state of the setup, which is already complete enough to start the development of an application. Let&#x27;s pretend my goal is that of adding a <code>User</code> model that can be created with an <code>id</code> (primary key) and an <code>email</code> fields.</p><p>First of all I write a test that creates a user in the database and then retrieves it, checking its attributes</p><div class="code"><div class="title">tests/test_user.py</div><div class="content"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">application.models</span> <span class="kn">import</span> <span class="n">User</span>
 
 
 <span class="k">def</span> <span class="nf">test__create_user</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
@@ -1353,52 +1315,50 @@ pytest-cov
     <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 
     <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="n">email</span>
-</pre></div>
-</div></div><p>Running this test results in an error, because the module <code>User</code> does not exist</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py <span class="nb">test</span>
-Creating network <span class="s2">&quot;testing_default&quot;</span> with the default driver
-Creating testing_db_1 ... <span class="k">done</span>
-<span class="o">=======================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">======================================</span>
-platform linux -- Python <span class="m">3</span>.7.5, pytest-5.4.3, py-1.9.0, pluggy-0.13.1 --
+</pre></div> </div> </div><p>Running this test results in an error, because the module <code>User</code> does not exist</p><div class="code"><div class="content"><div class="highlight"><pre>$<span class="w"> </span>./manage.py<span class="w"> </span><span class="nb">test</span>
+Creating<span class="w"> </span>network<span class="w"> </span><span class="s2">&quot;testing_default&quot;</span><span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>driver
+Creating<span class="w"> </span>testing_db_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+<span class="o">=======================================</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>session<span class="w"> </span><span class="nv">starts</span><span class="w"> </span><span class="o">======================================</span>
+platform<span class="w"> </span>linux<span class="w"> </span>--<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.7.5,<span class="w"> </span>pytest-5.4.3,<span class="w"> </span>py-1.9.0,<span class="w"> </span>pluggy-0.13.1<span class="w"> </span>--
 /home/leo/devel/flask-tutorial/venv3/bin/python3
-cachedir: .pytest_cache
-rootdir: /home/leo/devel/flask-tutorial
-plugins: flask-1.0.0, cov-2.10.0
-collected <span class="m">0</span> items / <span class="m">1</span> <span class="nv">error</span>
-<span class="o">=============================================</span> <span class="nv">ERRORS</span> <span class="o">=============================================</span>
-___________________________ ERROR collecting tests/tests/test_user.py ___________________________
-ImportError <span class="k">while</span> importing <span class="nb">test</span> module <span class="s1">&#39;/home/leo/devel/flask-tutorial/tests/tests/test_user.py&#39;</span>.
-Hint: make sure your <span class="nb">test</span> modules/packages have valid Python names.
+cachedir:<span class="w"> </span>.pytest_cache
+rootdir:<span class="w"> </span>/home/leo/devel/flask-tutorial
+plugins:<span class="w"> </span>flask-1.0.0,<span class="w"> </span>cov-2.10.0
+collected<span class="w"> </span><span class="m">0</span><span class="w"> </span>items<span class="w"> </span>/<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="nv">error</span>
+<span class="o">=============================================</span><span class="w"> </span><span class="nv">ERRORS</span><span class="w"> </span><span class="o">=============================================</span>
+___________________________<span class="w"> </span>ERROR<span class="w"> </span>collecting<span class="w"> </span>tests/tests/test_user.py<span class="w"> </span>___________________________
+ImportError<span class="w"> </span><span class="k">while</span><span class="w"> </span>importing<span class="w"> </span><span class="nb">test</span><span class="w"> </span>module<span class="w"> </span><span class="s1">&#39;/home/leo/devel/flask-tutorial/tests/tests/test_user.py&#39;</span>.
+Hint:<span class="w"> </span>make<span class="w"> </span>sure<span class="w"> </span>your<span class="w"> </span><span class="nb">test</span><span class="w"> </span>modules/packages<span class="w"> </span>have<span class="w"> </span>valid<span class="w"> </span>Python<span class="w"> </span>names.
 Traceback:
-venv3/lib/python3.7/site-packages/_pytest/python.py:511: <span class="k">in</span> _importtestmodule
-    <span class="nv">mod</span> <span class="o">=</span> self.fspath.pyimport<span class="o">(</span><span class="nv">ensuresyspath</span><span class="o">=</span>importmode<span class="o">)</span>
-venv3/lib/python3.7/site-packages/py/_path/local.py:704: <span class="k">in</span> pyimport
-    __import__<span class="o">(</span>modname<span class="o">)</span>
-venv3/lib/python3.7/site-packages/_pytest/assertion/rewrite.py:152: <span class="k">in</span> exec_module
-    exec<span class="o">(</span>co, module.__dict__<span class="o">)</span>
-tests/tests/test_user.py:1: <span class="k">in</span> &lt;module&gt;
-    from application.models import User
-<span class="hll">E   ImportError: cannot import name <span class="s1">&#39;User&#39;</span> from <span class="s1">&#39;application.models&#39;</span>
-</span>	<span class="o">(</span>/home/leo/devel/flask-tutorial/application/models.py<span class="o">)</span>
+venv3/lib/python3.7/site-packages/_pytest/python.py:511:<span class="w"> </span><span class="k">in</span><span class="w"> </span>_importtestmodule
+<span class="w">    </span><span class="nv">mod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>self.fspath.pyimport<span class="o">(</span><span class="nv">ensuresyspath</span><span class="o">=</span>importmode<span class="o">)</span>
+venv3/lib/python3.7/site-packages/py/_path/local.py:704:<span class="w"> </span><span class="k">in</span><span class="w"> </span>pyimport
+<span class="w">    </span>__import__<span class="o">(</span>modname<span class="o">)</span>
+venv3/lib/python3.7/site-packages/_pytest/assertion/rewrite.py:152:<span class="w"> </span><span class="k">in</span><span class="w"> </span>exec_module
+<span class="w">    </span>exec<span class="o">(</span>co,<span class="w"> </span>module.__dict__<span class="o">)</span>
+tests/tests/test_user.py:1:<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>from<span class="w"> </span>application.models<span class="w"> </span>import<span class="w"> </span>User
+<span class="hll">E<span class="w">   </span>ImportError:<span class="w"> </span>cannot<span class="w"> </span>import<span class="w"> </span>name<span class="w"> </span><span class="s1">&#39;User&#39;</span><span class="w"> </span>from<span class="w"> </span><span class="s1">&#39;application.models&#39;</span>
+</span><span class="w">	</span><span class="o">(</span>/home/leo/devel/flask-tutorial/application/models.py<span class="o">)</span>
 
------------ coverage: platform linux, python <span class="m">3</span>.7.5-final-0 -----------
-Name                    Stmts   Miss  Cover   Missing
+-----------<span class="w"> </span>coverage:<span class="w"> </span>platform<span class="w"> </span>linux,<span class="w"> </span>python<span class="w"> </span><span class="m">3</span>.7.5-final-0<span class="w"> </span>-----------
+Name<span class="w">                    </span>Stmts<span class="w">   </span>Miss<span class="w">  </span>Cover<span class="w">   </span>Missing
 -----------------------------------------------------
-application/app.py         <span class="m">11</span>      <span class="m">9</span>    <span class="m">18</span>%   <span class="m">6</span>-21
-application/config.py      <span class="m">14</span>     <span class="m">14</span>     <span class="m">0</span>%   <span class="m">1</span>-32
-application/models.py       <span class="m">4</span>      <span class="m">0</span>   <span class="m">100</span>%
+application/app.py<span class="w">         </span><span class="m">11</span><span class="w">      </span><span class="m">9</span><span class="w">    </span><span class="m">18</span>%<span class="w">   </span><span class="m">6</span>-21
+application/config.py<span class="w">      </span><span class="m">14</span><span class="w">     </span><span class="m">14</span><span class="w">     </span><span class="m">0</span>%<span class="w">   </span><span class="m">1</span>-32
+application/models.py<span class="w">       </span><span class="m">4</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">100</span>%
 -----------------------------------------------------
-TOTAL                      <span class="m">29</span>     <span class="m">23</span>    <span class="m">21</span>%
+TOTAL<span class="w">                      </span><span class="m">29</span><span class="w">     </span><span class="m">23</span><span class="w">    </span><span class="m">21</span>%
 
-<span class="o">====================================</span> short <span class="nb">test</span> summary <span class="nv">info</span> <span class="o">===================================</span>
-ERROR tests/tests/test_user.py
-!!!!!!!!!!!!!!!!!!!!!!!!!!! Interrupted: <span class="m">1</span> error during collection !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-<span class="o">=======================================</span> <span class="m">1</span> error <span class="k">in</span> <span class="m">0</span>.20s <span class="o">=======================================</span>
-Stopping testing_db_1 ... <span class="k">done</span>
-Removing testing_db_1 ... <span class="k">done</span>
-Removing network testing_default
-$ 
-</pre></div>
-</div></div><p>I won't show here all the steps of the strict TDD methodology, and implement directly the final solution, which is</p><div class="code"><div class="title">application/models.p</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
+<span class="o">====================================</span><span class="w"> </span>short<span class="w"> </span><span class="nb">test</span><span class="w"> </span>summary<span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="o">===================================</span>
+ERROR<span class="w"> </span>tests/tests/test_user.py
+!!!!!!!!!!!!!!!!!!!!!!!!!!!<span class="w"> </span>Interrupted:<span class="w"> </span><span class="m">1</span><span class="w"> </span>error<span class="w"> </span>during<span class="w"> </span>collection<span class="w"> </span>!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+<span class="o">=======================================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>error<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.20s<span class="w"> </span><span class="o">=======================================</span>
+Stopping<span class="w"> </span>testing_db_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Removing<span class="w"> </span>testing_db_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Removing<span class="w"> </span>network<span class="w"> </span>testing_default
+$<span class="w"> </span>
+</pre></div> </div> </div><p>I won&#x27;t show here all the steps of the strict TDD methodology, and implement directly the final solution, which is</p><div class="code"><div class="title">application/models.p</div><div class="content"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
 <span class="kn">from</span> <span class="nn">flask_migrate</span> <span class="kn">import</span> <span class="n">Migrate</span>
 
 <span class="n">db</span> <span class="o">=</span> <span class="n">SQLAlchemy</span><span class="p">()</span>
@@ -1409,37 +1369,35 @@ $
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">email</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div></div><p>With this model the test passes</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py <span class="nb">test</span>
-Creating network <span class="s2">&quot;testing_default&quot;</span> with the default driver
-Creating testing_db_1 ... <span class="k">done</span>
-<span class="o">===================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">==================================</span>
-platform linux -- Python <span class="m">3</span>.7.5, pytest-5.4.3, py-1.9.0, pluggy-0.13.1 --
+</pre></div> </div> </div><p>With this model the test passes</p><div class="code"><div class="content"><div class="highlight"><pre>$<span class="w"> </span>./manage.py<span class="w"> </span><span class="nb">test</span>
+Creating<span class="w"> </span>network<span class="w"> </span><span class="s2">&quot;testing_default&quot;</span><span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>driver
+Creating<span class="w"> </span>testing_db_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+<span class="o">===================================</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>session<span class="w"> </span><span class="nv">starts</span><span class="w"> </span><span class="o">==================================</span>
+platform<span class="w"> </span>linux<span class="w"> </span>--<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.7.5,<span class="w"> </span>pytest-5.4.3,<span class="w"> </span>py-1.9.0,<span class="w"> </span>pluggy-0.13.1<span class="w"> </span>--
 /home/leo/devel/flask-tutorial/venv3/bin/python3
-cachedir: .pytest_cache
-rootdir: /home/leo/devel/flask-tutorial
-plugins: flask-1.0.0, cov-2.10.0
-collected <span class="m">1</span> item
+cachedir:<span class="w"> </span>.pytest_cache
+rootdir:<span class="w"> </span>/home/leo/devel/flask-tutorial
+plugins:<span class="w"> </span>flask-1.0.0,<span class="w"> </span>cov-2.10.0
+collected<span class="w"> </span><span class="m">1</span><span class="w"> </span>item
 
-tests/test_user.py::test__create_user PASSED
+tests/test_user.py::test__create_user<span class="w"> </span>PASSED
 
------------ coverage: platform linux, python <span class="m">3</span>.7.5-final-0 -----------
-Name                    Stmts   Miss  Cover   Missing
+-----------<span class="w"> </span>coverage:<span class="w"> </span>platform<span class="w"> </span>linux,<span class="w"> </span>python<span class="w"> </span><span class="m">3</span>.7.5-final-0<span class="w"> </span>-----------
+Name<span class="w">                    </span>Stmts<span class="w">   </span>Miss<span class="w">  </span>Cover<span class="w">   </span>Missing
 -----------------------------------------------------
-application/app.py         <span class="m">11</span>      <span class="m">1</span>    <span class="m">91</span>%   <span class="m">19</span>
-application/config.py      <span class="m">14</span>      <span class="m">0</span>   <span class="m">100</span>%
-application/models.py       <span class="m">8</span>      <span class="m">0</span>   <span class="m">100</span>%
+application/app.py<span class="w">         </span><span class="m">11</span><span class="w">      </span><span class="m">1</span><span class="w">    </span><span class="m">91</span>%<span class="w">   </span><span class="m">19</span>
+application/config.py<span class="w">      </span><span class="m">14</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">100</span>%
+application/models.py<span class="w">       </span><span class="m">8</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">100</span>%
 -----------------------------------------------------
-TOTAL                      <span class="m">33</span>      <span class="m">1</span>    <span class="m">97</span>%
+TOTAL<span class="w">                      </span><span class="m">33</span><span class="w">      </span><span class="m">1</span><span class="w">    </span><span class="m">97</span>%
 
 
-<span class="o">====================================</span> <span class="m">1</span> passed <span class="k">in</span> <span class="m">0</span>.14s <span class="o">===================================</span>
-Stopping testing_db_1 ... <span class="k">done</span>
-Removing testing_db_1 ... <span class="k">done</span>
-Removing network testing_default
-$ 
-</pre></div>
-</div></div><p>Please not that this is a very simple example and that in a real case I would add some other tests before accepting this code. In particular we should check that the field <code>email</code> can be empty, and maybe also test some validation on that field.</p><p>Let's add a very simple route to use the newly created model</p><div class="code"><div class="title">application/app.py</div><div class="content"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="o">====================================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>passed<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.14s<span class="w"> </span><span class="o">===================================</span>
+Stopping<span class="w"> </span>testing_db_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Removing<span class="w"> </span>testing_db_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Removing<span class="w"> </span>network<span class="w"> </span>testing_default
+$<span class="w"> </span>
+</pre></div> </div> </div><p>Please not that this is a very simple example and that in a real case I would add some other tests before accepting this code. In particular we should check that the field <code>email</code> can be empty, and maybe also test some validation on that field.</p><p>Let&#x27;s add a very simple route to use the newly created model</p><div class="code"><div class="title">application/app.py</div><div class="content"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 <span class="kn">from</span> <span class="nn">application.models</span> <span class="kn">import</span> <span class="n">User</span>
 
 
@@ -1466,23 +1424,18 @@ $
 </span><span class="hll">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Number of users: </span><span class="si">{</span><span class="n">num_users</span><span class="si">}</span><span class="s2">&quot;</span>
 </span>
     <span class="k">return</span> <span class="n">app</span>
-</pre></div>
-</div></div><p>As you can see I didn't introduce anything too complicated. I import the model <code>User</code> and count the number of entries in its table. We will create the table in a minute with the migration that <code>flask db migrate</code> will create for us, so we expect this to just return a page that says "Number of users: 0", but it's a good demonstration that the connection with the database is working.</p><p>So, let's generate the migration in the database. Spin up the development environment with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py compose up -d
-</pre></div>
-</div></div><p>If this is the first time I spin up the environment I have to create the application database and to initialise the migrations, so I run</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py create-initial-db
-</pre></div>
-</div></div><p>As we already initialised Alembic before we don't need to run the command <code>db init</code>. If you do, it will return <code>Error: Directory migrations already exists and is not empty</code>. Now I can create the migration with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py flask db migrate -m &quot;Initial user model&quot;
+</pre></div> </div> </div><p>As you can see I didn&#x27;t introduce anything too complicated. I import the model <code>User</code> and count the number of entries in its table. We will create the table in a minute with the migration that <code>flask db migrate</code> will create for us, so we expect this to just return a page that says &quot;Number of users: 0&quot;, but it&#x27;s a good demonstration that the connection with the database is working.</p><p>So, let&#x27;s generate the migration in the database. Spin up the development environment with</p><div class="code"><div class="content"><div class="highlight"><pre>$ ./manage.py compose up -d
+</pre></div> </div> </div><p>If this is the first time I spin up the environment I have to create the application database and to initialise the migrations, so I run</p><div class="code"><div class="content"><div class="highlight"><pre>$ ./manage.py create-initial-db
+</pre></div> </div> </div><p>As we already initialised Alembic before we don&#x27;t need to run the command <code>db init</code>. If you do, it will return <code>Error: Directory migrations already exists and is not empty</code>. Now I can create the migration with</p><div class="code"><div class="content"><div class="highlight"><pre>$ ./manage.py flask db migrate -m &quot;Initial user model&quot;
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.autogenerate.compare] Detected added table &#39;users&#39;
   Generating /home/leo/devel/flask-tutorial/migrations/versions/7a09d7f8a8fa_initial_user_model.py ...  done
-</pre></div>
-</div></div><p>As you can see from the output, this created the file <code>migrations/versions/7a09d7f8a8fa_initial_user_model.py</code>. The number <code>7a09d7f8a8fa</code> is just an hex version of a UUID ,so it will be different for you, while the name comes from the commit message. The file itself contains SQLAlchemy code that changes the DB according to the code that we wrote in the application.</p><p>Finally I can apply the migration with</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py flask db upgrade
+</pre></div> </div> </div><p>As you can see from the output, this created the file <code>migrations/versions/7a09d7f8a8fa_initial_user_model.py</code>. The number <code>7a09d7f8a8fa</code> is just an hex version of a UUID ,so it will be different for you, while the name comes from the commit message. The file itself contains SQLAlchemy code that changes the DB according to the code that we wrote in the application.</p><p>Finally I can apply the migration with</p><div class="code"><div class="content"><div class="highlight"><pre>$ ./manage.py flask db upgrade
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade  -&gt; 7a09d7f8a8fa, Initial user model
-</pre></div>
-</div></div><p>At this point we can run <code>./manage.py compose exec db psql -U postgres</code> again and see what happened to the database.</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>$ ./manage.py compose exec db psql -U postgres
+</pre></div> </div> </div><p>At this point we can run <code>./manage.py compose exec db psql -U postgres</code> again and see what happened to the database.</p><div class="code"><div class="content"><div class="highlight"><pre>$ ./manage.py compose exec db psql -U postgres
 psql (13.0 (Debian 13.0-1.pgdg100+1))
 Type &quot;help&quot; for help.
 
@@ -1497,8 +1450,7 @@ postgres=# \l
  template1   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
              |          |          |            |            | postgres=CTc/postgres
 (4 rows)
-</pre></div>
-</div></div><p>You see here that the database <code>application</code> configured with <code>APPLICATION_DB</code> has beed created. You can now connect to it and list the tables</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>postgres=# \c application
+</pre></div> </div> </div><p>You see here that the database <code>application</code> configured with <code>APPLICATION_DB</code> has beed created. You can now connect to it and list the tables</p><div class="code"><div class="content"><div class="highlight"><pre>postgres=# \c application
 You are now connected to database &quot;application&quot; as user &quot;postgres&quot;.
 application=# \dt
               List of relations
@@ -1507,14 +1459,12 @@ application=# \dt
  public | alembic_version | table | postgres
  public | users           | table | postgres
 (2 rows)
-</pre></div>
-</div></div><p>The content of the table <code>alembic_version</code> shouldn't be surprising, as it's the UUID used for the migration</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>application=# select * from alembic_version;
+</pre></div> </div> </div><p>The content of the table <code>alembic_version</code> shouldn&#x27;t be surprising, as it&#x27;s the UUID used for the migration</p><div class="code"><div class="content"><div class="highlight"><pre>application=# select * from alembic_version;
  version_num  
 --------------
  7a09d7f8a8fa
 (1 row)
-</pre></div>
-</div></div><p>The table <code>users</code> contains the fields <code>id</code> and <code>email</code> according to the model that we wrote in Python</p><div class="code"><div class="content"><div class="highlight"><pre><span></span>application=# \d users
+</pre></div> </div> </div><p>The table <code>users</code> contains the fields <code>id</code> and <code>email</code> according to the model that we wrote in Python</p><div class="code"><div class="content"><div class="highlight"><pre>application=# \d users
                                  Table &quot;public.users&quot;
  Column |       Type        | Collation | Nullable |              Default              
 --------+-------------------+-----------+----------+-----------------------------------
@@ -1523,14 +1473,13 @@ application=# \dt
 Indexes:
     &quot;users_pkey&quot; PRIMARY KEY, btree (id)
     &quot;users_email_key&quot; UNIQUE CONSTRAINT, btree (email)
-</pre></div>
-</div></div><p>You can also open your browser and head to <a href="http://localhost:5000/users">http://localhost:5000/users</a> to see the new route in action. After this we can safely commit my code and move on with the next requirement.</p><h3 id="git-commit">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec">browse the files</a>.</p>
+</pre></div> </div> </div><p>You can also open your browser and head to <a href="http://localhost:5000/users">http://localhost:5000/users</a> to see the new route in action. After this we can safely commit my code and move on with the next requirement.</p><h3 id="git-commit-3262">Git commit</h3><p>You can see the changes made in this step through <a href="https://github.com/lgiordani/flask_project_setup/commit/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec">this Git commit</a> or <a href="https://github.com/lgiordani/flask_project_setup/tree/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec">browse the files</a>.</p>
             <div class="advertisement">
                 <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
                   <img src="/images/first-class-objects/cover.jpg" />
                 </a>
                 <div class="body">
-                  <h2 id="first-class-objects-in-python">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python" title="Permanent link">¶</a></h2>
+                  <h2 id="first-class-objects-in-python-fffa">First-class objects in Python<a class="headerlink" href="#first-class-objects-in-python-fffa" title="Permanent link">¶</a></h2>
 <p>Higher-order functions, wrappers, and factories</p>
 <p>Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.</p>
                   <div class="actions">
@@ -1538,7 +1487,7 @@ Indexes:
                   </div>
                 </div>
             </div>
-            <h2 id="final-words">Final words<a class="headerlink" href="#final-words" title="Permanent link">¶</a></h2><p>I hope this post already showed you why a good setup can make the difference. The project is clean and wrapping the command in the management script plus the centralised config proved to be a good choice as it allowed me to solve the problem of migrations and testing in (what I think is) an elegant way. In the next post I'll show you how to easily create scenarios where you can test queries with only specific data in the database. If you find my posts useful please share them with whoever you thing might be interested.</p><h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">¶</a></h2><p>2020-07-13 <a href="https://github.com/Alladin9393">Vlad Pavlichek</a> found and fixed a typo in the post, where <code>manage.py</code> was missing the extension <code>.py</code>. Thanks Vlad!</p><p>2020-12-22 I reviewed the whole tutorial and corrected several typos</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+            <h2 id="final-words-9803">Final words<a class="headerlink" href="#final-words-9803" title="Permanent link">¶</a></h2><p>I hope this post already showed you why a good setup can make the difference. The project is clean and wrapping the command in the management script plus the centralised config proved to be a good choice as it allowed me to solve the problem of migrations and testing in (what I think is) an elegant way. In the next post I&#x27;ll show you how to easily create scenarios where you can test queries with only specific data in the database. If you find my posts useful please share them with whoever you thing might be interested.</p><h2 id="updates-0083">Updates<a class="headerlink" href="#updates-0083" title="Permanent link">¶</a></h2><p>2020-07-13 <a href="https://github.com/Alladin9393">Vlad Pavlichek</a> found and fixed a typo in the post, where <code>manage.py</code> was missing the extension <code>.py</code>. Thanks Vlad!</p><p>2020-12-22 I reviewed the whole tutorial and corrected several typos</p><h2 id="feedback-d845">Feedback<a class="headerlink" href="#feedback-d845" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
   <section class="links">

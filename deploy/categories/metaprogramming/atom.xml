@@ -149,7 +149,7 @@ Object-Oriented Programming in Python 3 - Classes and members&lt;/a&gt;&lt;/li&g
 &lt;span class="go"&gt;&amp;lt;class &amp;#39;__main__.MyClass&amp;#39;&amp;gt;&lt;/span&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;issubclass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MyClass&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Sequence&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="go"&gt;True&lt;/span&gt;
-&lt;span class="go"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;As you can see, the &lt;code&gt;MyClass&lt;/code&gt; class is initially not recognized as a subclass of &lt;code&gt;collections.Sequence&lt;/code&gt;, but after the registration &lt;code&gt;issubclass()&lt;/code&gt; returns &lt;code&gt;True&lt;/code&gt;, even if the class is still empty.&lt;/p&gt;
@@ -219,7 +219,7 @@ Object-Oriented Programming in Python 3 - Classes and members&lt;/a&gt;&lt;/li&g
 &lt;span class="go"&gt;&amp;lt;class &amp;#39;int&amp;#39;&amp;gt;&lt;/span&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="vm"&gt;__class__&lt;/span&gt;
 &lt;span class="go"&gt;&amp;lt;class &amp;#39;type&amp;#39;&amp;gt;&lt;/span&gt;
-&lt;span class="go"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="metaclasses-and-mro"&gt;Metaclasses and MRO&lt;a class="headerlink" href="#metaclasses-and-mro" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
@@ -321,7 +321,7 @@ Object-Oriented Programming in Python 3 - Classes and members&lt;/a&gt;&lt;/li&g
 &lt;span class="go"&gt;&amp;lt;class &amp;#39;type&amp;#39;&amp;gt;&lt;/span&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="vm"&gt;__bases__&lt;/span&gt;
 &lt;span class="go"&gt;(&amp;lt;class &amp;#39;object&amp;#39;&amp;gt;,)&lt;/span&gt;
-&lt;span class="go"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Given that, Python does nothing special to treat functions like first-class citizens, it simply recognizes that they are objects just like any other thing.&lt;/p&gt;
@@ -537,7 +537,7 @@ Object-Oriented Programming in Python 3 - Classes and members&lt;/a&gt;&lt;/li&g
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;
 &lt;span class="gt"&gt;Traceback (most recent call last):&lt;/span&gt;
   File &lt;span class="nb"&gt;&amp;quot;/home/leo/prova.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;103&lt;/span&gt;, in &lt;span class="n"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;
-    &lt;span class="n"&gt;p1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;
 &lt;span class="gr"&gt;TypeError&lt;/span&gt;: &lt;span class="n"&gt;unorderable types: Person() &amp;gt;= Person()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 

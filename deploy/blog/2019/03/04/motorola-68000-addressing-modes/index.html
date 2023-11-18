@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/retro/atom.xml">All posts in category: Retro</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/retro/atom.xml">All posts in category: Retro</a></li>
 </ul></section>
 <section>
   <header>
@@ -572,12 +558,12 @@
 <div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,d1
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="w">                           </span><span class="n">Compare</span><span class="w"></span>
-<span class="w">                        </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">                        </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">                        </span><span class="o">+----------+</span><span class="w"></span>
-<span class="n">d1</span><span class="w"> </span><span class="mh">0x12ca</span><span class="w"> </span><span class="o">------------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="mh">0x12ca</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">                        </span><span class="o">+----------+</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">                           </span><span class="n">Compare</span>
+<span class="w">                        </span><span class="o">+----------+</span>
+<span class="w">                        </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span>
+<span class="w">                        </span><span class="o">+----------+</span>
+<span class="n">d1</span><span class="w"> </span><span class="mh">0x12ca</span><span class="w"> </span><span class="o">------------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="mh">0x12ca</span><span class="w">  </span><span class="o">|</span>
+<span class="w">                        </span><span class="o">+----------+</span>
 </code></pre></div>
 
 <h4 id="address-register-direct-mode">Address Register Direct Mode<a class="headerlink" href="#address-register-direct-mode" title="Permanent link">&para;</a></h4>
@@ -591,12 +577,12 @@
 <div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,a1
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="w">                           </span><span class="n">Compare</span><span class="w"></span>
-<span class="w">                        </span><span class="o">+------------+</span><span class="w"></span>
-<span class="w">                        </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">    </span><span class="o">|</span><span class="w"></span>
-<span class="w">                        </span><span class="o">+------------+</span><span class="w"></span>
-<span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w"> </span><span class="o">----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="mh">0xfc1d28</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">                        </span><span class="o">+------------+</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">                           </span><span class="n">Compare</span>
+<span class="w">                        </span><span class="o">+------------+</span>
+<span class="w">                        </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">    </span><span class="o">|</span>
+<span class="w">                        </span><span class="o">+------------+</span>
+<span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w"> </span><span class="o">----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="mh">0xfc1d28</span><span class="w">  </span><span class="o">|</span>
+<span class="w">                        </span><span class="o">+------------+</span>
 </code></pre></div>
 
 <h3 id="register-indirect">Register Indirect<a class="headerlink" href="#register-indirect" title="Permanent link">&para;</a></h3>
@@ -613,16 +599,16 @@
 <div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,(a1)
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w"></span>
-<span class="w">      </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1d24</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span><span class="w"></span>
-<span class="w">      </span><span class="o">|</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">      </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1d26</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">      </span><span class="o">|</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">      </span><span class="o">+------------&gt;</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">                               </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">                     </span><span class="mh">0xfc1d2a</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w"></span>
-<span class="w">                               </span><span class="o">+---------+</span><span class="w"></span>
-<span class="w">                     </span><span class="mh">0xfc1d2c</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span>
+<span class="w">      </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1d24</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span>
+<span class="w">      </span><span class="o">|</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">      </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1d26</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span>
+<span class="w">      </span><span class="o">|</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">      </span><span class="o">+------------&gt;</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span>
+<span class="w">                               </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">                     </span><span class="mh">0xfc1d2a</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span>
+<span class="w">                               </span><span class="o">+---------+</span>
+<span class="w">                     </span><span class="mh">0xfc1d2c</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span>
 </code></pre></div>
 
 <h4 id="address-register-indirect-with-postincrement">Address Register Indirect with Postincrement<a class="headerlink" href="#address-register-indirect-with-postincrement" title="Permanent link">&para;</a></h4>
@@ -636,16 +622,16 @@
 <div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,(a1)+
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w"></span>
-<span class="w">     </span><span class="o">^</span><span class="w">       </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1d24</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span><span class="w"></span>
-<span class="w">     </span><span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">     </span><span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1d26</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">   </span><span class="o">+----+</span><span class="w">    </span><span class="n">v</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="o">+</span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;--+------------&gt;</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">   </span><span class="o">+----+</span><span class="w">                             </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">                            </span><span class="mh">0xfc1d2a</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w"></span>
-<span class="w">                                      </span><span class="o">+---------+</span><span class="w"></span>
-<span class="w">                            </span><span class="mh">0xfc1d2c</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span>
+<span class="w">     </span><span class="o">^</span><span class="w">       </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1d24</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span>
+<span class="w">     </span><span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">     </span><span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1d26</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span>
+<span class="w">   </span><span class="o">+----+</span><span class="w">    </span><span class="n">v</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="o">+</span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;--+------------&gt;</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span>
+<span class="w">   </span><span class="o">+----+</span><span class="w">                             </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">                            </span><span class="mh">0xfc1d2a</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span>
+<span class="w">                                      </span><span class="o">+---------+</span>
+<span class="w">                            </span><span class="mh">0xfc1d2c</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span>
 </code></pre></div>
 
 <p>The standard syntax is <code>(An)+</code>, and for this mode, the EA Mode field is <code>011</code>, while the EA Register field contains the register number.  No extension words are used.</p>
@@ -661,19 +647,19 @@
 <div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,-(a1)
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="w">   </span><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w"></span>
-<span class="w">    </span><span class="o">^</span><span class="w">       </span><span class="o">|</span><span class="w"></span>
-<span class="w">    </span><span class="o">|</span><span class="w">       </span><span class="n">v</span><span class="w"></span>
-<span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="o">+----+</span><span class="w"></span>
-<span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w">          </span><span class="mh">0xfc1d22</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span><span class="w"></span>
-<span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="o">+----+</span><span class="w">                    </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">    </span><span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w">            </span><span class="mh">0xfc1d24</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">    </span><span class="o">|</span><span class="w">       </span><span class="n">v</span><span class="w">                      </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">    </span><span class="o">+-------+----------&gt;</span><span class="w"> </span><span class="mh">0xfc1d26</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">                                   </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">                         </span><span class="mh">0xfc1d28</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w"></span>
-<span class="w">                                   </span><span class="o">+---------+</span><span class="w"></span>
-<span class="w">                         </span><span class="mh">0xfc1d2a</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">   </span><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span>
+<span class="w">    </span><span class="o">^</span><span class="w">       </span><span class="o">|</span>
+<span class="w">    </span><span class="o">|</span><span class="w">       </span><span class="n">v</span>
+<span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="o">+----+</span>
+<span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w">          </span><span class="mh">0xfc1d22</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span>
+<span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="o">+----+</span><span class="w">                    </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">    </span><span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w">            </span><span class="mh">0xfc1d24</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span>
+<span class="w">    </span><span class="o">|</span><span class="w">       </span><span class="n">v</span><span class="w">                      </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">    </span><span class="o">+-------+----------&gt;</span><span class="w"> </span><span class="mh">0xfc1d26</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span>
+<span class="w">                                   </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">                         </span><span class="mh">0xfc1d28</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span>
+<span class="w">                                   </span><span class="o">+---------+</span>
+<span class="w">                         </span><span class="mh">0xfc1d2a</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span>
 </code></pre></div>
 
 <h4 id="address-register-indirect-with-displacement">Address Register Indirect with Displacement<a class="headerlink" href="#address-register-indirect-with-displacement" title="Permanent link">&para;</a></h4>
@@ -687,52 +673,52 @@
 <div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,0x140(a1)
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="w">     </span><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w"></span>
-<span class="w">           </span><span class="o">|</span><span class="w"></span>
-<span class="w">           </span><span class="n">v</span><span class="w"></span>
-<span class="w">         </span><span class="o">+---+</span><span class="w"></span>
-<span class="mh">0x140</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">|</span><span class="w">            </span><span class="mh">0xfc1e64</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span><span class="w"></span>
-<span class="w">         </span><span class="o">+---+</span><span class="w">                      </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">           </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1e66</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">           </span><span class="n">v</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">           </span><span class="o">+------------&gt;</span><span class="w"> </span><span class="mh">0xfc1e68</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">                                    </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">                          </span><span class="mh">0xfc1e6a</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w"></span>
-<span class="w">                                    </span><span class="o">+---------+</span><span class="w"></span>
-<span class="w">                          </span><span class="mh">0xfc1e6c</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">     </span><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span>
+<span class="w">           </span><span class="o">|</span>
+<span class="w">           </span><span class="n">v</span>
+<span class="w">         </span><span class="o">+---+</span>
+<span class="mh">0x140</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">|</span><span class="w">            </span><span class="mh">0xfc1e64</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span>
+<span class="w">         </span><span class="o">+---+</span><span class="w">                      </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">           </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1e66</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span>
+<span class="w">           </span><span class="n">v</span><span class="w">                        </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">           </span><span class="o">+------------&gt;</span><span class="w"> </span><span class="mh">0xfc1e68</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span>
+<span class="w">                                    </span><span class="o">+---------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">                          </span><span class="mh">0xfc1e6a</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span>
+<span class="w">                                    </span><span class="o">+---------+</span>
+<span class="w">                          </span><span class="mh">0xfc1e6c</span><span class="w">  </span><span class="o">|</span><span class="w">         </span><span class="o">|</span>
 </code></pre></div>
 
 <p>Please note that the displacement is fixed to 16-bit, so its value limited in the range <code>(-32768,32767)</code>; the displacement is however sign-extended to 32-bit before being added to the base address.</p>
 <p>Note: this mode is sometimes called "Register Indirect with Offset".</p>
 <h4 id="address-register-indirect-with-index">Address Register Indirect with Index<a class="headerlink" href="#address-register-indirect-with-index" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Assembly syntax: <code>(d8,Dn,An)</code></li>
+<li>Assembly syntax: <code>(d8,An,Dn)</code></li>
 <li>EA Mode field: <code>110</code></li>
 <li>EA Register field: Register number</li>
 <li>Extension words: 1</li>
 </ul>
 <p>Besides an addressing mode that mimics C-style loops and a way to perform random access of arrays through a 16-bit displacement, the MC68000 provides a double-indexed array access with this addressing mode. The base address contained in one of the address registers is added to the content of a 16/32-bit register and an 8-bit index. This address mode requires 1 extension word that contains the 8-bit index; only the 8 least significant bits of the extension words are kept and sign-extended to 32-bits before any calculation.</p>
-<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,(0x4,d0,a1)
+<div class="highlight"><pre><span></span><code>cmpi.w  #0x1111,(0x4,a1,d0)
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w">   </span><span class="n">d0</span><span class="w"> </span><span class="mh">0x140</span><span class="w"></span>
-<span class="w">          </span><span class="o">|</span><span class="w">            </span><span class="o">|</span><span class="w"></span>
-<span class="w">          </span><span class="n">v</span><span class="w">            </span><span class="o">|</span><span class="w"></span>
-<span class="w">        </span><span class="o">+---+</span><span class="w">          </span><span class="o">|</span><span class="w"></span>
-<span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;--------+</span><span class="w"></span>
-<span class="w">        </span><span class="o">+---+</span><span class="w"></span>
-<span class="w">          </span><span class="o">|</span><span class="w"></span>
-<span class="w">          </span><span class="n">v</span><span class="w"></span>
-<span class="w">        </span><span class="o">+---+</span><span class="w"></span>
-<span class="mh">0x4</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">|</span><span class="w">            </span><span class="mh">0xfc1e68</span><span class="w">  </span><span class="o">|</span><span class="w">          </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span><span class="w"></span>
-<span class="w">        </span><span class="o">+---+</span><span class="w">                      </span><span class="o">+----------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">          </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1e6a</span><span class="w">  </span><span class="o">|</span><span class="w">          </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">          </span><span class="n">v</span><span class="w">                        </span><span class="o">+----------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">          </span><span class="o">+------------&gt;</span><span class="w"> </span><span class="mh">0xfc1e6c</span><span class="w">  </span><span class="o">|</span><span class="w">   </span><span class="kt">data</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">                                   </span><span class="o">+----------+</span><span class="w">              </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">                         </span><span class="mh">0xfc1e6e</span><span class="w">  </span><span class="o">|</span><span class="w">          </span><span class="o">|</span><span class="w"></span>
-<span class="w">                                   </span><span class="o">+----------+</span><span class="w"></span>
-<span class="w">                         </span><span class="mh">0xfc1e70</span><span class="w">  </span><span class="o">|</span><span class="w">          </span><span class="o">|</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">a1</span><span class="w"> </span><span class="mh">0xfc1d28</span><span class="w">   </span><span class="n">d0</span><span class="w"> </span><span class="mh">0x140</span>
+<span class="w">          </span><span class="o">|</span><span class="w">            </span><span class="o">|</span>
+<span class="w">          </span><span class="n">v</span><span class="w">            </span><span class="o">|</span>
+<span class="w">        </span><span class="o">+---+</span><span class="w">          </span><span class="o">|</span>
+<span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;--------+</span>
+<span class="w">        </span><span class="o">+---+</span>
+<span class="w">          </span><span class="o">|</span>
+<span class="w">          </span><span class="n">v</span>
+<span class="w">        </span><span class="o">+---+</span>
+<span class="mh">0x4</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">|</span><span class="w">            </span><span class="mh">0xfc1e68</span><span class="w">  </span><span class="o">|</span><span class="w">          </span><span class="o">|</span><span class="w">                </span><span class="n">Compare</span>
+<span class="w">        </span><span class="o">+---+</span><span class="w">                      </span><span class="o">+----------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">          </span><span class="o">|</span><span class="w">              </span><span class="mh">0xfc1e6a</span><span class="w">  </span><span class="o">|</span><span class="w">          </span><span class="o">|</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="mh">0x1111</span><span class="w">  </span><span class="o">|</span>
+<span class="w">          </span><span class="n">v</span><span class="w">                        </span><span class="o">+----------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">          </span><span class="o">+------------&gt;</span><span class="w"> </span><span class="mh">0xfc1e6c</span><span class="w">  </span><span class="o">|</span><span class="w">   </span><span class="kt">data</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="o">-----------&gt;</span><span class="w"> </span><span class="o">|</span><span class="w">   </span><span class="mh">0x13c</span><span class="w">  </span><span class="o">|</span>
+<span class="w">                                   </span><span class="o">+----------+</span><span class="w">              </span><span class="o">+----------+</span>
+<span class="w">                         </span><span class="mh">0xfc1e6e</span><span class="w">  </span><span class="o">|</span><span class="w">          </span><span class="o">|</span>
+<span class="w">                                   </span><span class="o">+----------+</span>
+<span class="w">                         </span><span class="mh">0xfc1e70</span><span class="w">  </span><span class="o">|</span><span class="w">          </span><span class="o">|</span>
 </code></pre></div>
 
 <p>For this mode the EA Mode field is set to <code>110</code> and the EA Register field contains the number of the address register in use. The standard syntax used by manuals is <code>(d8, An, Dn.SIZE)</code>, where <code>SIZE</code> can be either <code>w</code> or <code>l</code>. This addressing mode can provide an invaluable way to access two-dimensional arrays, and once again shows how powerful this microprocessor is.</p>
@@ -891,7 +877,7 @@
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>Let's consider some example of actual MC68000 code that uses effective addressing modes.</p>
 <h3 id="example-1">Example 1<a class="headerlink" href="#example-1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="mf">0280</span><span class="w"> </span><span class="mf">0003</span><span class="w"> </span><span class="n">ffff</span><span class="w">          </span><span class="ow">and</span><span class="n">i</span><span class="mf">.</span><span class="n">l</span><span class="w">  </span><span class="err">#</span><span class="mf">0</span><span class="n">x3ffff</span><span class="p">,</span><span class="n">d0</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">0280</span><span class="w"> </span><span class="mf">0003</span><span class="w"> </span><span class="n">ffff</span><span class="w">          </span><span class="ow">and</span><span class="n">i</span><span class="mf">.</span><span class="n">l</span><span class="w">  </span><span class="err">#</span><span class="mf">0</span><span class="n">x3ffff</span><span class="p">,</span><span class="n">d0</span>
 </code></pre></div>
 
 <p>This instruction uses the the Data Register Direct mode to address register <code>d0</code>. The instruction format of <code>andi</code> is the following</p>
@@ -901,14 +887,14 @@
 </code></pre></div>
 
 <p>which in the example shown above translates to</p>
-<div class="highlight"><pre><span></span><code><span class="mf">00000010</span><span class="w">  </span><span class="mf">10</span><span class="w">    </span><span class="mf">000</span><span class="w">  </span><span class="mf">000</span><span class="w"> </span><span class="mf">0000000000000011</span><span class="w"> </span><span class="mf">1111111111111111</span><span class="w"></span>
-<span class="o">^</span><span class="w">         </span><span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w">    </span><span class="o">^</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">00000010</span><span class="w">  </span><span class="mf">10</span><span class="w">    </span><span class="mf">000</span><span class="w">  </span><span class="mf">000</span><span class="w"> </span><span class="mf">0000000000000011</span><span class="w"> </span><span class="mf">1111111111111111</span>
+<span class="o">^</span><span class="w">         </span><span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w">    </span><span class="o">^</span>
 <span class="ow">and</span><span class="n">i</span><span class="w">      </span><span class="n">long</span><span class="w">  </span><span class="n">Dn</span><span class="w">   </span><span class="n">d0</span><span class="w">  </span>
 </code></pre></div>
 
 <p>So the microprocessor expects the instruction to be followed by two extension words (long), that will contain the immediate data that will be added to the register. The register is selected among the data ones because the EA Mode field is <code>000</code>, and the EA Register field selects register number 0. The two following extension words are <code>0003</code> and <code>ffff</code>, so the number <code>0x3ffff</code> is added to the register.</p>
 <h3 id="example-2">Example 2<a class="headerlink" href="#example-2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="mf">2052</span><span class="w">                    </span><span class="n">movea</span><span class="mf">.</span><span class="n">l</span><span class="w"> </span><span class="p">(</span><span class="n">a2</span><span class="p">),</span><span class="n">a0</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">2052</span><span class="w">                    </span><span class="n">movea</span><span class="mf">.</span><span class="n">l</span><span class="w"> </span><span class="p">(</span><span class="n">a2</span><span class="p">),</span><span class="n">a0</span>
 </code></pre></div>
 
 <p>The <code>movea</code> instruction moves data into an address register, but in this case uses the Address Register Indirect mode to specify the source. The instruction format is</p>
@@ -918,13 +904,13 @@
 </code></pre></div>
 
 <p>so in this case the hexadecimal code <code>2052</code> becomes</p>
-<div class="highlight"><pre><span></span><code><span class="mf">00</span><span class="w">  </span><span class="mf">10</span><span class="w">    </span><span class="mf">000</span><span class="w">  </span><span class="mf">001</span><span class="w">  </span><span class="mf">010</span><span class="w">   </span><span class="mf">010</span><span class="w"></span>
-<span class="w">    </span><span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w">         </span><span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w"></span>
-<span class="w">    </span><span class="n">long</span><span class="w">  </span><span class="n">a0</span><span class="w">        </span><span class="p">(</span><span class="n">An</span><span class="p">)</span><span class="w">  </span><span class="n">a2</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">00</span><span class="w">  </span><span class="mf">10</span><span class="w">    </span><span class="mf">000</span><span class="w">  </span><span class="mf">001</span><span class="w">  </span><span class="mf">010</span><span class="w">   </span><span class="mf">010</span>
+<span class="w">    </span><span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w">         </span><span class="o">^</span><span class="w">     </span><span class="o">^</span>
+<span class="w">    </span><span class="n">long</span><span class="w">  </span><span class="n">a0</span><span class="w">        </span><span class="p">(</span><span class="n">An</span><span class="p">)</span><span class="w">  </span><span class="n">a2</span>
 </code></pre></div>
 
 <h3 id="example-3">Example 3<a class="headerlink" href="#example-3" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="mf">397</span><span class="n">c</span><span class="w"> </span><span class="mf">0200</span><span class="w"> </span><span class="mf">0100</span><span class="w">          </span><span class="n">move</span><span class="mf">.</span><span class="n">w</span><span class="w">  </span><span class="err">#</span><span class="mf">0</span><span class="n">x200</span><span class="p">,</span><span class="mf">0</span><span class="n">x100</span><span class="p">(</span><span class="n">a4</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">397</span><span class="n">c</span><span class="w"> </span><span class="mf">0200</span><span class="w"> </span><span class="mf">0100</span><span class="w">          </span><span class="n">move</span><span class="mf">.</span><span class="n">w</span><span class="w">  </span><span class="err">#</span><span class="mf">0</span><span class="n">x200</span><span class="p">,</span><span class="mf">0</span><span class="n">x100</span><span class="p">(</span><span class="n">a4</span><span class="p">)</span>
 </code></pre></div>
 
 <p>This <code>move</code> instruction puts a word with the value <code>0x200</code> into an address which is <code>0x100</code> above the address pointed by <code>a4</code>. It uses Immediate Data for the source and Address Register Indirect with Displacement for the destination. The format of the <code>move</code> instruction is</p>
@@ -935,9 +921,9 @@
 
 <p>(please note that register and mode are swapped in the destination part)</p>
 <p>In this case we have</p>
-<div class="highlight"><pre><span></span><code><span class="mf">00</span><span class="w">    </span><span class="mf">11</span><span class="w">    </span><span class="mf">100</span><span class="w">  </span><span class="mf">101</span><span class="w">       </span><span class="mf">111100</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">00</span><span class="w">    </span><span class="mf">11</span><span class="w">    </span><span class="mf">100</span><span class="w">  </span><span class="mf">101</span><span class="w">       </span><span class="mf">111100</span>
 <span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w">    </span><span class="o">^</span><span class="w">         </span><span class="o">^</span><span class="w">    </span>
-<span class="n">move</span><span class="w">  </span><span class="n">word</span><span class="w">  </span><span class="n">a4</span><span class="w">   </span><span class="p">(</span><span class="n">d16</span><span class="p">,</span><span class="n">An</span><span class="p">)</span><span class="w">  </span><span class="n">Immediate</span><span class="w"> </span><span class="kd">Data</span><span class="w"></span>
+<span class="n">move</span><span class="w">  </span><span class="n">word</span><span class="w">  </span><span class="n">a4</span><span class="w">   </span><span class="p">(</span><span class="n">d16</span><span class="p">,</span><span class="n">An</span><span class="p">)</span><span class="w">  </span><span class="n">Immediate</span><span class="w"> </span><span class="kd">Data</span>
 </code></pre></div>
 
 <p>It is interesting to note that the word for the source is given with Immediate Data, and is indeed just after the instruction (<code>0x0200</code>), followed by the 16-bit displacement for Address Register Indirect with Displacement (<code>0x0100</code>).</p>
@@ -952,14 +938,14 @@
 <h2 id="program-counter-relative-syntax-and-representation">Program Counter Relative syntax and representation<a class="headerlink" href="#program-counter-relative-syntax-and-representation" title="Permanent link">&para;</a></h2>
 <p>As we discussed previously, the two Program Counter Relative modes just mirror Address Register Indirect with Displacement and Address Register Indirect with Index, binding them to the Program Counter instead of a generic register. It is worth however digging exactly into what the microprocessor is doing when decoding this addressing mode, and what the standard Assembly representation means.</p>
 <p>To describe the mechanism behind this modes let's consider an example of actual M68000 code</p>
-<div class="highlight"><pre><span></span><code><span class="mi">00000364</span><span class="o">:</span><span class="w"> </span><span class="mi">41</span><span class="n">fa</span><span class="w"> </span><span class="n">ffa6</span><span class="w">         </span><span class="n">lea</span><span class="w">     </span><span class="mh">0x30c</span><span class="o">(</span><span class="n">pc</span><span class="o">),</span><span class="n">a0</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mi">00000364</span><span class="o">:</span><span class="w"> </span><span class="mi">41</span><span class="n">fa</span><span class="w"> </span><span class="n">ffa6</span><span class="w">         </span><span class="n">lea</span><span class="w">     </span><span class="mh">0x30c</span><span class="o">(</span><span class="n">pc</span><span class="o">),</span><span class="n">a0</span>
 </code></pre></div>
 
 <p>This <code>lea</code> instruction stores the address <code>0x30c</code> into <code>a0</code>, but it's pretty evident that this address mode doesn't work like the traditional Address Register Indirect with Displacement. The instruction is at address <code>0x364</code> and if we read the displacement as usual we would expect the effective address to be at <code>0x364 + 0x30c</code>. It is important to understand that this is what the Assembler (or the disassembler) shows, and that the proper meaning of <code>0x30c(pc)</code> is "the address <code>0x30c</code> knowing that this instruction is at <code>0x364</code>". I believe this clearly shows why relocatable code makes use of this addressing mode. The address that we identify with <code>0x364</code> might actually be anywhere in memory, as this number means only <code>0x364</code> words after the first instruction (which is at <code>0x0</code> in our relative space).</p>
 <p>The binary representation of the instruction is actually revealing. The hexadecimal values of the two words <code>41fa ffa6</code> become <code>01000001111110101111111110100110</code> which can be split as follows</p>
-<div class="highlight"><pre><span></span><code><span class="mf">0100</span><span class="w">  </span><span class="mf">000</span><span class="w">  </span><span class="mf">111</span><span class="w">  </span><span class="mf">111010</span><span class="w">    </span><span class="mf">1111111110100110</span><span class="w"></span>
-<span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w">         </span><span class="o">^</span><span class="w">         </span><span class="o">^</span><span class="w"></span>
-<span class="n">lea</span><span class="w">   </span><span class="n">a0</span><span class="w">        </span><span class="p">(</span><span class="n">d16</span><span class="p">,</span><span class="n">PC</span><span class="p">)</span><span class="w">  </span><span class="n">extension</span><span class="w"> </span><span class="n">word</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">0100</span><span class="w">  </span><span class="mf">000</span><span class="w">  </span><span class="mf">111</span><span class="w">  </span><span class="mf">111010</span><span class="w">    </span><span class="mf">1111111110100110</span>
+<span class="o">^</span><span class="w">     </span><span class="o">^</span><span class="w">         </span><span class="o">^</span><span class="w">         </span><span class="o">^</span>
+<span class="n">lea</span><span class="w">   </span><span class="n">a0</span><span class="w">        </span><span class="p">(</span><span class="n">d16</span><span class="p">,</span><span class="n">PC</span><span class="p">)</span><span class="w">  </span><span class="n">extension</span><span class="w"> </span><span class="n">word</span>
 </code></pre></div>
 
 <p>According to the documentation of the addressing mode, the extension word <code>1111111110100110</code> is a signed 16-bit displacement, so it is a number expressed in two's complement notation. The conversion gives <code>-0x5a</code>, which added to the instruction relative address <code>0x364</code> surprisingly gives <code>0x30a</code>.</p>
@@ -977,6 +963,7 @@
 </ul>
 <h2 id="updates">Updates<a class="headerlink" href="#updates" title="Permanent link">&para;</a></h2>
 <p>2017-12-24: Reddit user <a href="https://new.reddit.com/user/SpaceShrimp">SpaceShrimp</a> pointed out the rage of a signed 16-bit number is <code>(-32768,32767)</code> and not <code>(-32767,32768)</code>. Thanks!</p>
+<p>2023-11-16: <a href="https://github.com/rolsen74">René W. Olsen</a> spotted a mistake in the Address Register Indirect with Index, where the two registers <code>An</code> and <code>Dn</code> were swapped. Thanks René!</p>
 <h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
 <p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>

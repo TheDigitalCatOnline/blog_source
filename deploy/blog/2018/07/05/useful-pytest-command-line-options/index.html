@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -558,11 +544,11 @@
 <p>Please remember to <code>import pytest</code> before using functions, decorators or attributes prefixed by <code>pytest.</code>, as I will not repeat it in each example.</p>
 <h2 id="run-single-tests">Run single tests<a class="headerlink" href="#run-single-tests" title="Permanent link">&para;</a></h2>
 <p>If you want to run only a specific test you can provide its name on the pytest command line</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv tests/test_calc.py::test_addition
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w"> </span>tests/test_calc.py::test_addition
 </code></pre></div>
 
 <p>which for example runs the <code>tests_addition</code> test inside the <code>tests/test_calc.py</code> file. You can also specify the file name only to run all the tests contained there</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv tests/test_calc.py
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w"> </span>tests/test_calc.py
 </code></pre></div>
 
 <h2 id="skipping-tests">Skipping tests<a class="headerlink" href="#skipping-tests" title="Permanent link">&para;</a></h2>
@@ -573,7 +559,7 @@
 </code></pre></div>
 
 <p>The result on the command line will be (after running <code>py.test -svv</code>)</p>
-<div class="highlight"><pre><span></span><code>tests/test_calc.py::test_addition SKIPPED
+<div class="highlight"><pre><span></span><code>tests/test_calc.py::test_addition<span class="w"> </span>SKIPPED
 </code></pre></div>
 
 <h2 id="skipping-with-a-reason">Skipping with a reason<a class="headerlink" href="#skipping-with-a-reason" title="Permanent link">&para;</a></h2>
@@ -584,12 +570,12 @@
 </code></pre></div>
 
 <p>Remember to add the <code>-rs</code> option to your command line to see the <code>r</code>eason behind <code>s</code>kipped tests. So after running <code>py.test -svv -rs</code> we will get something like</p>
-<div class="highlight"><pre><span></span><code>tests/test_calc.py::test_addition SKIPPED
+<div class="highlight"><pre><span></span><code>tests/test_calc.py::test_addition<span class="w"> </span>SKIPPED
 <span class="o">[</span>...<span class="o">]</span>
-<span class="o">=============================</span> short <span class="nb">test</span> summary <span class="nv">info</span> <span class="o">=============================</span>
-SKIP <span class="o">[</span><span class="m">1</span><span class="o">]</span> tests/test_calc.py:5: Addition has been deactivated because of issue <span class="c1">#123</span>
+<span class="o">=============================</span><span class="w"> </span>short<span class="w"> </span><span class="nb">test</span><span class="w"> </span>summary<span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="o">=============================</span>
+SKIP<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span>tests/test_calc.py:5:<span class="w"> </span>Addition<span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>deactivated<span class="w"> </span>because<span class="w"> </span>of<span class="w"> </span>issue<span class="w"> </span><span class="c1">#123</span>
 
-<span class="o">======================</span> <span class="m">12</span> passed, <span class="m">1</span> skipped <span class="k">in</span> <span class="m">0</span>.02 <span class="nv">seconds</span> <span class="o">=======================</span>
+<span class="o">======================</span><span class="w"> </span><span class="m">12</span><span class="w"> </span>passed,<span class="w"> </span><span class="m">1</span><span class="w"> </span>skipped<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.02<span class="w"> </span><span class="nv">seconds</span><span class="w"> </span><span class="o">=======================</span>
 </code></pre></div>
 
 <h2 id="skipping-tests-conditionally">Skipping tests conditionally<a class="headerlink" href="#skipping-tests-conditionally" title="Permanent link">&para;</a></h2>
@@ -608,11 +594,11 @@ SKIP <span class="o">[</span><span class="m">1</span><span class="o">]</span> te
 <p>With this code running <code>AWS_REGION=eu-west-1 py.test -svv -rs</code> will run the <code>test_addition</code> test, while running <code>AWS_REGION=us-west-2 py.test -svv -rs</code> will skip it. The environment variable <code>AWS_REGION</code> set in the previous command lines is an example that simulates the presence of the variable in the system.</p>
 <h2 id="run-tests-by-name">Run tests by name<a class="headerlink" href="#run-tests-by-name" title="Permanent link">&para;</a></h2>
 <p>You can selectively run tests by name using <code>-k</code>. This option accepts Python expressions that try to match the name of the test with the provided values. So</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv -k <span class="s2">&quot;test_addition&quot;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;test_addition&quot;</span>
 </code></pre></div>
 
 <p>will run all those tests which name contains the substring <code>'addition'</code>, like <code>test_addiiton</code>, <code>test_addition_multiple_inputs</code>, and <code>test_complex_addition</code>. A more complex expression could be for example</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv -k <span class="s2">&quot;test_addition and not complex&quot;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;test_addition and not complex&quot;</span>
 </code></pre></div>
 
 <p>which will run both <code>test_addition</code> and <code>test_addition_multiple_inputs</code> but not <code>test_complex_addition</code>.</p>
@@ -633,7 +619,7 @@ SKIP <span class="o">[</span><span class="m">1</span><span class="o">]</span> te
 </code></pre></div>
 
 <p>In the above example <code>test_addition</code> and <code>test_multiplication</code> have been decorated with <code>pytest.mark.slow</code> which tells pytest to label them with the <code>slow</code> identifier. At this point we can run all the tests that are tagged with the <code>-m</code> option</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv -m slow
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w"> </span>-m<span class="w"> </span>slow
 </code></pre></div>
 
 <p>Tests can be tagged multiple times</p>
@@ -645,11 +631,11 @@ SKIP <span class="o">[</span><span class="m">1</span><span class="o">]</span> te
 
 <p>In this case the test will be run both by <code>pytest -svv -m slow</code> and by <code>pytest -svv -m complex</code>.</p>
 <p>The <code>-m</code> option supports complex expressions like</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv -m <span class="s1">&#39;not slow&#39;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w"> </span>-m<span class="w"> </span><span class="s1">&#39;not slow&#39;</span>
 </code></pre></div>
 
 <p>which runs all the tests that are not tagged with <code>slow</code>, or</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv -m <span class="s1">&#39;mac or linux&#39;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w"> </span>-m<span class="w"> </span><span class="s1">&#39;mac or linux&#39;</span>
 </code></pre></div>
 
 <p>which runs all the tests tagged with <code>mac</code> and all the tests tagged with <code>linux</code>. Pay attention that <code>-m</code> expressions refer to the tags of each single test, so <code>slow and complex</code> will run only those tests that are tagged both with <code>slow</code> and with <code>complex</code>, and not all the tests marked with the first and all the tests marked with the second.</p>
@@ -674,35 +660,35 @@ SKIP <span class="o">[</span><span class="m">1</span><span class="o">]</span> te
 <p>Is it worth spending 3 days to write a test for a feature? Well, if a failure in the new code means a huge financial loss for your company, yes. If you are writing a tool for yourself, and the code you are writing is not dangerous at all, maybe not. With all the shades of grey between these two black and white extreme cases.</p>
 <p>So, don't become a slave of the coverage index. A coverage of more than 90% is heaven, and being over 80% is perfectly fine. I would say that, except for specific corner cases being under 80% means that you are not really following a TDD methodology. So, maybe go and review your work flow.</p>
 <p>Anyway, pytest gives you a nice way to report the coverage using the <code>coverage</code> program. Just install <code>pytest-cov</code> with</p>
-<div class="highlight"><pre><span></span><code>$ pip install pytest-cov
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pytest-cov
 </code></pre></div>
 
 <p>and run pytest with</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv --cov<span class="o">=</span>&lt;name&gt; --cov-report<span class="o">=</span>term
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w"> </span>--cov<span class="o">=</span>&lt;name&gt;<span class="w"> </span>--cov-report<span class="o">=</span>term
 </code></pre></div>
 
 <p>where <code>&lt;name&gt;</code> is the name of the Python module you are testing (actually the path where the code you are testing is). This gives you a nice report with the percentage of covered code file by file.</p>
-<div class="highlight"><pre><span></span><code>$ py.test -svv --cov<span class="o">=</span>mypymodule --cov-report<span class="o">=</span>term
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>py.test<span class="w"> </span>-svv<span class="w"> </span>--cov<span class="o">=</span>mypymodule<span class="w"> </span>--cov-report<span class="o">=</span>term
 
------------ coverage: platform linux, python <span class="m">3</span>.6.5-final-0 -----------
-Name                          Stmts   Miss  Cover
+-----------<span class="w"> </span>coverage:<span class="w"> </span>platform<span class="w"> </span>linux,<span class="w"> </span>python<span class="w"> </span><span class="m">3</span>.6.5-final-0<span class="w"> </span>-----------
+Name<span class="w">                          </span>Stmts<span class="w">   </span>Miss<span class="w">  </span>Cover
 -------------------------------------------------
-mypymodule/__init__.py       <span class="m">3</span>      <span class="m">0</span>   <span class="m">100</span>%
-mypymodule/calc.py          <span class="m">23</span>      <span class="m">0</span>   <span class="m">100</span>%
+mypymodule/__init__.py<span class="w">       </span><span class="m">3</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">100</span>%
+mypymodule/calc.py<span class="w">          </span><span class="m">23</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">100</span>%
 -------------------------------------------------
-TOTAL                            <span class="m">26</span>      <span class="m">0</span>   <span class="m">100</span>%
+TOTAL<span class="w">                            </span><span class="m">26</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">100</span>%
 </code></pre></div>
 
 <p>You may also use the <code>term-missing</code> report instad of just <code>term</code>, that lists the code blocks that are not covered</p>
-<div class="highlight"><pre><span></span><code>$ py.test -svv --cov<span class="o">=</span>mypymodule --cov-report<span class="o">=</span>term-missing
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>py.test<span class="w"> </span>-svv<span class="w"> </span>--cov<span class="o">=</span>mypymodule<span class="w"> </span>--cov-report<span class="o">=</span>term-missing
 
------------ coverage: platform linux, python <span class="m">3</span>.6.5-final-0 -----------
-Name                          Stmts   Miss  Cover   Missing
+-----------<span class="w"> </span>coverage:<span class="w"> </span>platform<span class="w"> </span>linux,<span class="w"> </span>python<span class="w"> </span><span class="m">3</span>.6.5-final-0<span class="w"> </span>-----------
+Name<span class="w">                          </span>Stmts<span class="w">   </span>Miss<span class="w">  </span>Cover<span class="w">   </span>Missing
 -----------------------------------------------------------
-mypymodule/__init__.py       <span class="m">3</span>      <span class="m">0</span>   <span class="m">100</span>%
-mypymodule/calc.py          <span class="m">23</span>      <span class="m">2</span>    <span class="m">91</span>%   <span class="m">6</span>, <span class="m">11</span>
+mypymodule/__init__.py<span class="w">       </span><span class="m">3</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">100</span>%
+mypymodule/calc.py<span class="w">          </span><span class="m">23</span><span class="w">      </span><span class="m">2</span><span class="w">    </span><span class="m">91</span>%<span class="w">   </span><span class="m">6</span>,<span class="w"> </span><span class="m">11</span>
 -----------------------------------------------------------
-TOTAL                            <span class="m">26</span>      <span class="m">2</span>    <span class="m">92</span>%
+TOTAL<span class="w">                            </span><span class="m">26</span><span class="w">      </span><span class="m">2</span><span class="w">    </span><span class="m">92</span>%
 </code></pre></div>
 
 <p>Here I commented some of the tests to force the coverage percentage to drop. As you can see the report tells us that lines 6 and 11 of the <code>mypymodule/calc.py</code> file are not covered by any test.</p>

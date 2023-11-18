@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -551,8 +537,8 @@
     <h2 id="the-problem">The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
 <p><strong>P01</strong> (*) Find the last element of a list.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">last</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-<span class="n">res0</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">8</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span>
 </code></pre></div>
 
 <h2 id="initial-thoughts">Initial thoughts<a class="headerlink" href="#initial-thoughts" title="Permanent link">&para;</a></h2>
@@ -567,16 +553,16 @@
 </ol>
 <h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h2>
 <p>A function in Scala is defined through the <code>def</code> keyword, both inside and outside an object. The language syntax seems to have a lot of possibilities and some dark corners, but it is clear that input parameters have to be specified between round brackets, and the type of the output comes after them (outside the brackets). Then an equal sign and the body of the function between braces.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">name_of_the_function</span><span class="p">(</span><span class="n">paramA</span><span class="p">:</span><span class="n">typeA</span><span class="p">,</span> <span class="n">paramB</span><span class="p">:</span><span class="n">typeB</span><span class="p">,</span> <span class="p">...):</span><span class="k">type</span> <span class="nc">=</span> <span class="p">{</span>
-    <span class="n">body</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">name_of_the_function</span><span class="p">(</span><span class="n">paramA</span><span class="p">:</span><span class="n">typeA</span><span class="p">,</span><span class="w"> </span><span class="n">paramB</span><span class="p">:</span><span class="n">typeB</span><span class="p">,</span><span class="w"> </span><span class="p">...):</span><span class="k">type</span><span class="w"> </span><span class="nc">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">body</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>The equal sign has an important meaning, if I remember correctly. Omitting the equal sign makes the function automatically return a <code>Unit</code> type (that is, no output), so the point seems to be: ask yourself if your function shall return something or not. The <code>Unit</code> return type may be also explicitly stated, in which case you have to add the equal sign. And interesting clarification (with two different points of view) may be found <a href="https://stackoverflow.com/questions/944111/when-to-use-the-equals-sign-in-a-scala-method-declaration">here</a>. As a beginner, I prefer to be explicit.</p>
 <h2 id="type-variables">Type variables<a class="headerlink" href="#type-variables" title="Permanent link">&para;</a></h2>
 <p>I need to declare a function that accepts a list of any kind of things. This problem falls under the term <em>polymorphism</em>, and in Scala can be achieved with <em>type variables</em>. A very quick introduction to the matter may be found <a href="https://twitter.github.io/scala_school/type-basics.html">here</a>. Basically for my problem I simply have to use the following syntax</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">func</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -587,22 +573,22 @@
 <p>The functional approach is easy in this case. Usually functional solutions are built starting with the exit case, which for this problem is: the list contains only one element, which is the last one. This excludes the possibility for the list to be empty, so we should manage that event too. If the list has more that one element, we simply remove the first one and call the function recursively. Just like Erlang, Scala has a very powerful pattern matching mechanism, that may be leveraged to simplify expressing the algorithm.</p>
 <p>The only edge case of this algorithm is when the list is empty. In that situation no element can be found, and an exception shall be thrown (Scala nomenclature).</p>
 <h2 id="the-procedural-solution">The procedural solution<a class="headerlink" href="#the-procedural-solution" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">l</span><span class="p">.</span><span class="n">last</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">l</span><span class="p">.</span><span class="n">last</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>Since the body of the function is so small I can also omit the braces and write</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">last</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">last</span>
 </code></pre></div>
 
 <p>There is no check for an empty list because the <code>last()</code> method already throws the <code>NoSuchElementException</code> when no element is present.</p>
 <p>There is no need to use an explicit <code>return</code> statement, as functions always return the last expression.</p>
 <h2 id="the-recursive-solution">The recursive solution<a class="headerlink" href="#the-recursive-solution" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="n">h</span> <span class="o">::</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="n">h</span>
-    <span class="k">case</span> <span class="n">_</span> <span class="o">::</span> <span class="n">tail</span> <span class="o">=&gt;</span> <span class="n">last</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
-    <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">last</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">h</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">NoSuchElementException</span>
 <span class="p">}</span>
 </code></pre></div>
 

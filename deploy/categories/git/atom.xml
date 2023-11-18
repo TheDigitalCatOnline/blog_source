@@ -31,7 +31,7 @@
 &lt;/ul&gt;
 &lt;h4 id="installation"&gt;Installation&lt;a class="headerlink" href="#installation" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;You may install Punch in your virtual environment (or in your system) directly from PyPI&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install punch.py
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;punch.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;and you will have the &lt;code&gt;punch&lt;/code&gt; executable available.&lt;/p&gt;
@@ -68,43 +68,43 @@
 &lt;p&gt;To use the described procedure you just need to have a local repository with gitflow enabled, i.e. you need to have two branches &lt;code&gt;master&lt;/code&gt; and &lt;code&gt;develop&lt;/code&gt;, possibly with &lt;code&gt;master&lt;/code&gt; tracking &lt;code&gt;origin/master&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Then &lt;strong&gt;setup the repository&lt;/strong&gt; issuing the following commands&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Move to the master branch&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git checkout master
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;master
 &lt;span class="gp"&gt;$&lt;/span&gt;
 &lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Rename develop to _develop&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git branch -m develop _develop 
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;branch&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;develop&lt;span class="w"&gt; &lt;/span&gt;_develop&lt;span class="w"&gt; &lt;/span&gt;
 &lt;span class="gp"&gt;$&lt;/span&gt;
 &lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Create the feature branch&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git checkout -b new_feature
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;-b&lt;span class="w"&gt; &lt;/span&gt;new_feature
 &lt;span class="gp"&gt;$&lt;/span&gt;
 &lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Push the feature branch to the remote (GitHub) and track it&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git push -u origin new_feature
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;push&lt;span class="w"&gt; &lt;/span&gt;-u&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;new_feature
 &lt;span class="gp"&gt;$&lt;/span&gt;
 &lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Alias the feature branch with the name develop&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git symbolic-ref refs/heads/develop refs/heads/new_feature
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;symbolic-ref&lt;span class="w"&gt; &lt;/span&gt;refs/heads/develop&lt;span class="w"&gt; &lt;/span&gt;refs/heads/new_feature
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;When you &lt;strong&gt;need to change your working feature branch&lt;/strong&gt; just run&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Just change the target of the symbolic reference&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git symbolic-ref refs/heads/develop refs/heads/other_feature
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;symbolic-ref&lt;span class="w"&gt; &lt;/span&gt;refs/heads/develop&lt;span class="w"&gt; &lt;/span&gt;refs/heads/other_feature
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;and if you &lt;strong&gt;need to go back to the original state&lt;/strong&gt; execute the following commands&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Remove the symbolic reference&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git symbolic-ref --delete refs/heads/develop
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;symbolic-ref&lt;span class="w"&gt; &lt;/span&gt;--delete&lt;span class="w"&gt; &lt;/span&gt;refs/heads/develop
 &lt;span class="gp"&gt;$&lt;/span&gt;
 &lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Rename the original develop branch&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git branch -m _develop develop
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;branch&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;_develop&lt;span class="w"&gt; &lt;/span&gt;develop
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;To &lt;strong&gt;squash commits&lt;/strong&gt; into your feature branch and &lt;strong&gt;force push&lt;/strong&gt; run these commands:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Make sure we are dealing with our feature branch&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git checkout new_feature
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;new_feature
 &lt;span class="gp"&gt;$&lt;/span&gt;
 &lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Rebase on master (this is a develop, after all)&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git rebase -i master
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;rebase&lt;span class="w"&gt; &lt;/span&gt;-i&lt;span class="w"&gt; &lt;/span&gt;master
 &lt;span class="gp"&gt;$&lt;/span&gt;
 &lt;span class="gp"&gt;$ &lt;/span&gt;&lt;span class="c1"&gt;# Force a push on GitHub&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;git push origin +new_feature
+&lt;span class="gp"&gt;$ &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;push&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;+new_feature
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="the-gitflow-gh-command"&gt;The &lt;code&gt;gitflow gh&lt;/code&gt; command&lt;a class="headerlink" href="#the-gitflow-gh-command" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;

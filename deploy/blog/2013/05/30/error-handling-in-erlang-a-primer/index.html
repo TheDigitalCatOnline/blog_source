@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -559,31 +545,31 @@
 <p>Anyway, before discussing the Erlang way of dealing with code errors, it is necessary to firmly grasp syntax and structures that the language provides.</p>
 <h2 id="exceptions-in-erlang">Exceptions in Erlang<a class="headerlink" href="#exceptions-in-erlang" title="Permanent link">&para;</a></h2>
 <p>The simplest way to make something go wrong when dealing with a computer is to treat it like a sentient being. Joking apart, a good way to crash a program is to execute a division by zero.</p>
-<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span><span class="w"></span>
-<span class="o">**</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="nn">error</span><span class="p">:</span><span class="w"> </span><span class="n">bad</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">arithmetic</span><span class="w"> </span><span class="n">expression</span><span class="w"></span>
-<span class="w">     </span><span class="n">in</span><span class="w"> </span><span class="n">operator</span><span class="w">  </span><span class="n">&#39;/&#39;</span><span class="o">/</span><span class="mi">2</span><span class="w"></span>
-<span class="w">        </span><span class="n">called</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span>
+<span class="o">**</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="nn">error</span><span class="p">:</span><span class="w"> </span><span class="n">bad</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">arithmetic</span><span class="w"> </span><span class="n">expression</span>
+<span class="w">     </span><span class="n">in</span><span class="w"> </span><span class="n">operator</span><span class="w">  </span><span class="n">&#39;/&#39;</span><span class="o">/</span><span class="mi">2</span>
+<span class="w">        </span><span class="n">called</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">0</span>
 <span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span>
 </code></pre></div>
 
 <p>As you can see Erlang does not get mad at your provocation and simply <strong>raises and exception</strong>, i.e. signals that something went wrong, giving some details about why and where it happened. This is not different from what other languages, like Python, do.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
 <span class="go">Traceback  (most recent call last):</span>
-<span class="go">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
-<span class="go">ZeroDivisionError: integer division or modulo by zero</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">ZeroDivisionError</span>: <span class="n">integer division or modulo by zero</span>
 <span class="gp">&gt;&gt;&gt; </span>
 </code></pre></div>
 
 <p>So exceptions are in Erlang, as in other languages, a "reserved channel" the language uses to propagate errors. If you code in C, you cannot leverage something like exceptions and must rely on return values. This means that you have to format the results of your functions so that they can host a wrong result too and end up returning an <code>int</code> with the error code while functions results are managed by reference.</p>
 <p>Back to Erlang. Exceptions crash you program, i.e. they make your program immediately stop, reporting the error to the system process that executed it (usually the OS GUI or a textual shell). Indeed the Erlang shell crashed when you tried to reach for the infinity.</p>
-<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">self</span><span class="p">().</span><span class="w"></span>
-<span class="o">&lt;</span><span class="mi">0</span><span class="p">.</span><span class="mi">32</span><span class="p">.</span><span class="mi">0</span><span class="o">&gt;</span><span class="w"></span>
-<span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span><span class="w"></span>
-<span class="o">**</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="nn">error</span><span class="p">:</span><span class="w"> </span><span class="n">bad</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">arithmetic</span><span class="w"> </span><span class="n">expression</span><span class="w"></span>
-<span class="w">     </span><span class="n">in</span><span class="w"> </span><span class="n">operator</span><span class="w">  </span><span class="n">&#39;/&#39;</span><span class="o">/</span><span class="mi">2</span><span class="w"></span>
-<span class="w">        </span><span class="n">called</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">self</span><span class="p">().</span><span class="w"></span>
-<span class="o">&lt;</span><span class="mi">0</span><span class="p">.</span><span class="mi">35</span><span class="p">.</span><span class="mi">0</span><span class="o">&gt;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">self</span><span class="p">().</span>
+<span class="o">&lt;</span><span class="mi">0</span><span class="p">.</span><span class="mi">32</span><span class="p">.</span><span class="mi">0</span><span class="o">&gt;</span>
+<span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span>
+<span class="o">**</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="nn">error</span><span class="p">:</span><span class="w"> </span><span class="n">bad</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">arithmetic</span><span class="w"> </span><span class="n">expression</span>
+<span class="w">     </span><span class="n">in</span><span class="w"> </span><span class="n">operator</span><span class="w">  </span><span class="n">&#39;/&#39;</span><span class="o">/</span><span class="mi">2</span>
+<span class="w">        </span><span class="n">called</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">0</span>
+<span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">self</span><span class="p">().</span>
+<span class="o">&lt;</span><span class="mi">0</span><span class="p">.</span><span class="mi">35</span><span class="p">.</span><span class="mi">0</span><span class="o">&gt;</span>
 <span class="mi">4</span><span class="o">&gt;</span><span class="w"> </span>
 </code></pre></div>
 
@@ -599,66 +585,66 @@
 <p>In addition to a class, exceptions encompass a <em>reason</em>, that is a valid Erlang item (an atom, an integer, a pid, ...). The reason carries the explanation of the exception, i.e. a detailed insight in what really happened.</p>
 <h2 id="dealing-with-exceptions">Dealing with exceptions<a class="headerlink" href="#dealing-with-exceptions" title="Permanent link">&para;</a></h2>
 <p>Now that we got acquainted with Erlang exception types we may step further into exception management structures and learn how to stop exceptions from crashing our programs. The way of managing exceptions raised by a function called in our code should be familiar to Python, C++, java and Ruby developers (and to many others, probably); the basic Erlang syntax is</p>
-<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="o">&lt;</span><span class="n">expressions</span><span class="o">&gt;</span><span class="w"> </span><span class="k">of</span><span class="w"></span>
-<span class="w">  </span><span class="o">&lt;</span><span class="n">result_pattern_matching</span><span class="o">&gt;</span><span class="w"></span>
-<span class="k">catch</span><span class="w"></span>
-<span class="w">  </span><span class="o">&lt;</span><span class="n">exception_pattern_matching</span><span class="o">&gt;</span><span class="w"></span>
-<span class="k">after</span><span class="w"></span>
-<span class="w">  </span><span class="o">&lt;</span><span class="n">after_expressions</span><span class="o">&gt;</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="o">&lt;</span><span class="n">expressions</span><span class="o">&gt;</span><span class="w"> </span><span class="k">of</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="n">result_pattern_matching</span><span class="o">&gt;</span>
+<span class="k">catch</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="n">exception_pattern_matching</span><span class="o">&gt;</span>
+<span class="k">after</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="n">after_expressions</span><span class="o">&gt;</span>
+<span class="k">end</span>
 </code></pre></div>
 
 <p>The large part of this structure is well known. Here, <code>&lt;expressions&gt;</code> is a series of Erlang expressions, comma-separated as usual; the <code>&lt;result_pattern_matching&gt;</code> part is a classical Erlang pattern matching structure, just like that you write in a case construct; last, the <code>&lt;after_expressions&gt;</code> is a series of Erlang expressions. The <code>&lt;exception_pattern_matching&gt;</code> part has a slightly new syntax we will cover in a moment.</p>
 <p>The structure works like in other languages: the <code>&lt;expressions&gt;</code> code is evaluated and the result is pattern matched against <code>&lt;result_pattern_matching&gt;</code> and the result is returned by the whole <code>try</code> statement. If an exception is raised when evaluating <code>&lt;expressions&gt;</code>, it is pattern matched against the code listed in <code>&lt;exception_pattern_matching&gt;</code> and the relative code is executed. Regardless of what happens in the try/catch part the code in <code>&lt;after_expressions&gt;</code> is executed, and its result is not returned.</p>
 <p>The exception matching code has a syntax that is very similar to that of the usual pattern matching, but exceptions are listed in the new form <code>ExceptionType:Reason</code>, where type and reason have been already described in the previous section. When the exception is a run-time error the reason is one of the values listed <a href="http://erlang.org/doc/reference_manual/errors.html#exit_reasons">here</a>.</p>
 <p>So the complete form of a try/catch statement in Erlang is the following, where <code>Expressions</code> is always a comma-separated list of Erlang expressions.</p>
-<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="nv">Expression1</span><span class="p">,...,</span><span class="nv">ExpressionN</span><span class="w"> </span><span class="k">of</span><span class="w"></span>
-<span class="w">  </span><span class="nv">Pattern1</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">Guard1</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">PatternExpressions1</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="nv">Pattern2</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">Guard2</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">PatternExpressions2</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
-<span class="w">  </span><span class="nv">PatternN</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">GuardN</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">PatternExpressionN</span><span class="w"></span>
-<span class="k">catch</span><span class="w"></span>
-<span class="w">  </span><span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">Reason1</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">ExceptionGuard1</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressions1</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">Reason2</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">ExceptionGuard2</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressions2</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
-<span class="w">  </span><span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">ReasonN</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">ExceptionGuardN</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressionsN</span><span class="w"></span>
-<span class="k">after</span><span class="w"></span>
-<span class="w">  </span><span class="nv">AfterExpressions</span><span class="w"></span>
-<span class="k">end</span><span class="p">.</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="nv">Expression1</span><span class="p">,...,</span><span class="nv">ExpressionN</span><span class="w"> </span><span class="k">of</span>
+<span class="w">  </span><span class="nv">Pattern1</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">Guard1</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">PatternExpressions1</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">Pattern2</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">Guard2</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">PatternExpressions2</span><span class="p">;</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="nv">PatternN</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">GuardN</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">PatternExpressionN</span>
+<span class="k">catch</span>
+<span class="w">  </span><span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">Reason1</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">ExceptionGuard1</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressions1</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">Reason2</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">ExceptionGuard2</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressions2</span><span class="p">;</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="nv">ExceptionType</span><span class="p">:</span><span class="nv">ReasonN</span><span class="w"> </span><span class="p">[</span><span class="k">when</span><span class="w"> </span><span class="nv">ExceptionGuardN</span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressionsN</span>
+<span class="k">after</span>
+<span class="w">  </span><span class="nv">AfterExpressions</span>
+<span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p>Exceptions pattern matching allows the use of the do-not-care variable <code>_</code> not only for reasons but for also for types. So the following syntax catches all exceptions of type ExceptionType</p>
-<div class="highlight"><pre><span></span><code><span class="p">...</span><span class="w"></span>
-<span class="k">catch</span><span class="w"></span>
-<span class="w">  </span><span class="nv">ExceptionType</span><span class="p">:</span><span class="w"> </span><span class="p">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressions1</span><span class="p">;</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">...</span>
+<span class="k">catch</span>
+<span class="w">  </span><span class="nv">ExceptionType</span><span class="p">:</span><span class="w"> </span><span class="p">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressions1</span><span class="p">;</span>
+<span class="k">end</span>
 </code></pre></div>
 
 <p>while the following catches all exceptions</p>
-<div class="highlight"><pre><span></span><code><span class="p">...</span><span class="w"></span>
-<span class="k">catch</span><span class="w"></span>
-<span class="w">  </span><span class="p">_:_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressions1</span><span class="p">;</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">...</span>
+<span class="k">catch</span>
+<span class="w">  </span><span class="p">_:_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">ExceptionExpressions1</span><span class="p">;</span>
+<span class="k">end</span>
 </code></pre></div>
 
 <p>I will not cover here the old-style error handling mechanism with <code>catch</code>; the interested reader can find it documented <a href="http://erlang.org/doc/reference_manual/expressions.html#id79206">here</a>.</p>
 <h2 id="returning-values-from-trycatch-statements">Returning values from try/catch statements<a class="headerlink" href="#returning-values-from-trycatch-statements" title="Permanent link">&para;</a></h2>
 <p>Try/catch statements return the value of the last expression executed, that is one of <code>PatternExpression1</code>,...,<code>PatternExpressionN</code> if no exception is raised, or one of <code>ExceptionExpressions1</code>,...,<code>ExceptionExpressionsN</code>. This means that we can assign the value of the whole expression to a variable </p>
-<div class="highlight"><pre><span></span><code><span class="nv">Result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="nv">Expression</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nv">Result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="nv">Expression</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p>Remember that <code>AfterExpressions</code> are always executed, but their final value is not returned by the statement.</p>
 <p>Since a lot of times you want to return the result of the expression after the <code>try</code> keyword, you can omit the <code>of</code> part</p>
-<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="nv">Expressions</span><span class="w"></span>
-<span class="k">catch</span><span class="w"></span>
-<span class="w"> </span><span class="p">...</span><span class="w"></span>
-<span class="k">end</span><span class="p">.</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="nv">Expressions</span>
+<span class="k">catch</span>
+<span class="w"> </span><span class="p">...</span>
+<span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <h2 id="raising-exceptions">Raising exceptions<a class="headerlink" href="#raising-exceptions" title="Permanent link">&para;</a></h2>
 <p>Erlang provides three different BIFs to raise exceptions, profitably called like the exception type they raise: <code>throw/1</code>, <code>erlang:error/1</code>, and <code>exit/1</code>. As you see, <code>error/1</code> is not automatically imported by the system and must be called in its full form. This is a hint for us programmers: <code>error/1</code> is there and can be used, but it is not something you should need often; otherwise, you misunderstood what an error exception is in Erlang.</p>
 <p>So in most cases, if your code encounters an error condition and you need to raise an exception, you end up using <code>throw/1</code> or <code>exit/1</code>. The argument of these functions is the reason of the exception: remember that you can format the reason you attach to your exception to match your needs, you only need to document it.</p>
-<div class="highlight"><pre><span></span><code><span class="nf">my_function</span><span class="p">(</span><span class="nv">Somebadvalue</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">throw</span><span class="p">({</span><span class="n">badvalue</span><span class="p">,</span><span class="w"> </span><span class="nv">Somebadvalue</span><span class="p">}).</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nf">my_function</span><span class="p">(</span><span class="nv">Somebadvalue</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">throw</span><span class="p">({</span><span class="n">badvalue</span><span class="p">,</span><span class="w"> </span><span class="nv">Somebadvalue</span><span class="p">}).</span>
 </code></pre></div>
 
 <p>Pay attention, however, that exceptions are a double-edged sword; the fact that they return values through a reserved channel is powerful, but can lead to subtle bugs and to long debug sessions. The advice in Erlang is to spare throw() for some special cases and to try always to communicate the failure through standard function results. This is, however, part of a coding philosophy that cannot be examined in depth here.</p>

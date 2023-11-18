@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -552,49 +538,49 @@
 <p><strong>P10</strong> (*) Run-length encoding of a list.
 Use the result of problem P09 to implement the so-called run-length encoding data compression method. Consecutive duplicates of elements are encoded as tuples (N, E) where N is the number of duplicates of the element E.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">encode</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">))</span>
-<span class="n">res0</span><span class="p">:</span> <span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span> <span class="nc">Symbol</span><span class="p">)]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="ss">&#39;a</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="ss">&#39;b</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="ss">&#39;c</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="ss">&#39;a</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="ss">&#39;d</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="ss">&#39;e</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="n">encode</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;b</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;c</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;c</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;d</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="nc">Symbol</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="ss">&#39;a</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="ss">&#39;b</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="ss">&#39;c</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="ss">&#39;a</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="ss">&#39;d</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="ss">&#39;e</span><span class="p">))</span>
 </code></pre></div>
 
 <h2 id="initial-thoughts">Initial thoughts<a class="headerlink" href="#initial-thoughts" title="Permanent link">&para;</a></h2>
 <p>The problem explicitly states "use the result of problem 09" (<a href="https://www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-09-pack-consecutive-duplicates/">here</a>) so I think it's time for me to learn how to make and import libraries. The problem itself seems to be rather simple to solve.</p>
 <h2 id="the-recursive-solution">The recursive solution<a class="headerlink" href="#the-recursive-solution" title="Permanent link">&para;</a></h2>
 <p>Given the availability of the <code>pack()</code> function from problem 09 the recursive solution just has to walk the packed list and convert each element (a list of equal elements) into a tuple. This is the tail recursive version</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">utils</span><span class="p">.</span><span class="n">packer</span>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">utils</span><span class="p">.</span><span class="n">packer</span>
 
-<span class="k">def</span> <span class="nf">encode</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span> <span class="nc">A</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="k">def</span> <span class="nf">_encode</span><span class="p">(</span><span class="n">res</span><span class="p">:</span> <span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span> <span class="nc">A</span><span class="p">)],</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]]):</span><span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span> <span class="nc">A</span><span class="p">)]</span> <span class="o">=</span> <span class="n">rem</span> <span class="k">match</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="n">res</span>
-        <span class="k">case</span> <span class="n">h::tail</span> <span class="o">=&gt;</span> <span class="n">_encode</span><span class="p">(</span><span class="n">res:::</span><span class="nc">List</span><span class="p">((</span><span class="n">h</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="n">h</span><span class="p">.</span><span class="n">head</span><span class="p">)),</span> <span class="n">tail</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="n">_encode</span><span class="p">(</span><span class="nc">List</span><span class="p">(),</span> <span class="n">utils</span><span class="p">.</span><span class="n">packer</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="nc">A</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">_encode</span><span class="p">(</span><span class="n">res</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="nc">A</span><span class="p">)],</span><span class="w"> </span><span class="n">rem</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]]):</span><span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="nc">A</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rem</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">res</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">h::tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_encode</span><span class="p">(</span><span class="n">res:::</span><span class="nc">List</span><span class="p">((</span><span class="n">h</span><span class="p">.</span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">.</span><span class="n">head</span><span class="p">)),</span><span class="w"> </span><span class="n">tail</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">_encode</span><span class="p">(</span><span class="nc">List</span><span class="p">(),</span><span class="w"> </span><span class="n">utils</span><span class="p">.</span><span class="n">packer</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>Note that I use the <code>utils.packer.pack()</code> function imported from a package which contains the code developed for problem 09.</p>
 <p>To obtain the availability of the <code>pack()</code> function I first created a <em>package</em>. In Scala a package may be declared with the <code>package</code> keyword, but the functions cannot be declared at module-level, they have to be converted into methods of an object. So the content of the <code>utils.scala</code> file is</p>
-<div class="highlight"><pre><span></span><code><span class="k">package</span> <span class="n">utils</span>
+<div class="highlight"><pre><span></span><code><span class="k">package</span><span class="w"> </span><span class="n">utils</span>
 
-<span class="k">object</span> <span class="nc">packer</span> <span class="p">{</span>
-    <span class="k">def</span> <span class="nf">pack</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="k">def</span> <span class="nf">_pack</span><span class="p">(</span><span class="n">res</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]],</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rem</span> <span class="k">match</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="n">res</span>
-            <span class="k">case</span> <span class="n">ls</span> <span class="o">=&gt;</span> <span class="p">{</span>
-                <span class="kd">val</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">=</span> <span class="n">rem</span> <span class="n">span</span> <span class="p">{</span> <span class="n">_</span> <span class="o">==</span> <span class="n">rem</span><span class="p">.</span><span class="n">head</span> <span class="p">}</span>
-                <span class="n">_pack</span><span class="p">(</span><span class="n">res:::</span><span class="nc">List</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">r</span><span class="p">)</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="n">_pack</span><span class="p">(</span><span class="nc">List</span><span class="p">(),</span> <span class="n">l</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="k">object</span><span class="w"> </span><span class="nc">packer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">pack</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">def</span><span class="w"> </span><span class="nf">_pack</span><span class="p">(</span><span class="n">res</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]],</span><span class="w"> </span><span class="n">rem</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rem</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">res</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">ls</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rem</span><span class="w"> </span><span class="n">span</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">rem</span><span class="p">.</span><span class="n">head</span><span class="w"> </span><span class="p">}</span>
+<span class="w">                </span><span class="n">_pack</span><span class="p">(</span><span class="n">res:::</span><span class="nc">List</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">r</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">_pack</span><span class="p">(</span><span class="nc">List</span><span class="p">(),</span><span class="w"> </span><span class="n">l</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>In Scala, an <code>object</code> is a singleton, and it is used without instancing it. So the <code>pack()</code> method may be used in this file as <code>packer.pack()</code>. This file is then compiled with the Scala compiler</p>
-<div class="highlight"><pre><span></span><code>$ scalac utils.scala
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>scalac<span class="w"> </span>utils.scala
 </code></pre></div>
 
 <p>producing a <code>utils</code> directory with the following files</p>
-<div class="highlight"><pre><span></span><code>$ ls utils
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ls<span class="w"> </span>utils
 packer<span class="nv">$$</span>anonfun<span class="nv">$1</span>.class
 packer.class
 packer$.class
@@ -604,10 +590,10 @@ packer$.class
 <h2 id="mapping">Mapping<a class="headerlink" href="#mapping" title="Permanent link">&para;</a></h2>
 <p>Mapping is, just like folding, a <em>functional</em> technique, because it applies a function to the elements of some collection. In Scala, the <code>map()</code> function of the <code>List</code> type produces a new list processing each element of the original list with the given function.</p>
 <p>The function to process elements is very simple, since it has to pack together the length of the element (which is a list) and its head.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">utils</span><span class="p">.</span><span class="n">packer</span>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">utils</span><span class="p">.</span><span class="n">packer</span>
 
-<span class="k">def</span> <span class="nf">encode</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span> <span class="nc">A</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">utils</span><span class="p">.</span><span class="n">packer</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="n">map</span> <span class="p">{</span> <span class="n">e</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">head</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="nc">A</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">utils</span><span class="p">.</span><span class="n">packer</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">head</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 

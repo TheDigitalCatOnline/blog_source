@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The Digital Cat - decorators</title><link href="https://www.thedigitalcatonline.com/" rel="alternate"></link><link href="https://www.thedigitalcatonline.com/categories/decorators/atom.xml" rel="self"></link><id>https://www.thedigitalcatonline.com/</id><updated>2022-09-18T23:00:00+00:00</updated><subtitle>Adventures of a curious cat in the land of programming</subtitle><entry><title>First-class objects in Python - Higher-order functions, wrappers, and factories</title><link href="https://www.thedigitalcatonline.com/blog/2021/03/09/first-class-objects-in-python/" rel="alternate"></link><published>2021-03-09T16:00:00+00:00</published><updated>2022-09-18T23:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2021-03-09:/blog/2021/03/09/first-class-objects-in-python/</id><content type="html">&lt;p&gt;My new book "First-class objects in Python" is out! Grab your &lt;strong&gt;FREE&lt;/strong&gt; copy &lt;a href="https://www.thedigitalcat.academy/freebie-first-class-objects"&gt;here&lt;/a&gt;!&lt;/p&gt;&lt;div class="imageblock"&gt;&lt;img src="/images/first-class-objects-in-python.jpg"&gt;&lt;/div&gt;</content><category term="Programming"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category><category term="OOP"></category><category term="functional programming"></category><category term="decorators"></category></entry><entry><title>Python Mocks: a gentle introduction - Part 2</title><link href="https://www.thedigitalcatonline.com/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/" rel="alternate"></link><published>2016-09-27T09:00:00+00:00</published><updated>2016-09-27T09:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2016-09-27:/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/</id><summary type="html">&lt;p&gt;Second part of the series on Python mocks: how to patch code&lt;/p&gt;</summary><content type="html">&lt;p&gt;In the &lt;a href="https://www.thedigitalcatonline.com/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"&gt;first post&lt;/a&gt; I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the &lt;code&gt;return_value&lt;/code&gt; and &lt;code&gt;side_effect&lt;/code&gt; attributes, and the &lt;code&gt;assert_called_with()&lt;/code&gt; method.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Digital Cat - decorators</title><link href="https://www.thedigitalcatonline.com/" rel="alternate"></link><link href="https://www.thedigitalcatonline.com/categories/decorators/atom.xml" rel="self"></link><id>https://www.thedigitalcatonline.com/</id><updated>2022-09-18T23:00:00+00:00</updated><subtitle>Adventures of a curious cat in the land of programming</subtitle><entry><title>First-class objects in Python - Higher-order functions, wrappers, and factories</title><link href="https://www.thedigitalcatonline.com/blog/2021/03/09/first-class-objects-in-python/" rel="alternate"></link><published>2021-03-09T16:00:00+00:00</published><updated>2022-09-18T23:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2021-03-09:/blog/2021/03/09/first-class-objects-in-python/</id><content type="html">&lt;p&gt;My new book &amp;quot;First-class objects in Python&amp;quot; is out! Grab your &lt;strong&gt;FREE&lt;/strong&gt; copy &lt;a href="https://www.thedigitalcat.academy/freebie-first-class-objects"&gt;here&lt;/a&gt;!&lt;/p&gt;&lt;div class="imageblock"&gt;&lt;img src="/images/first-class-objects-in-python.jpg"&gt;&lt;/div&gt;</content><category term="Programming"></category><category term="Python"></category><category term="Python2"></category><category term="Python3"></category><category term="OOP"></category><category term="functional programming"></category><category term="decorators"></category></entry><entry><title>Python Mocks: a gentle introduction - Part 2</title><link href="https://www.thedigitalcatonline.com/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/" rel="alternate"></link><published>2016-09-27T09:00:00+00:00</published><updated>2016-09-27T09:00:00+00:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2016-09-27:/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/</id><summary type="html">&lt;p&gt;Second part of the series on Python mocks: how to patch code&lt;/p&gt;</summary><content type="html">&lt;p&gt;In the &lt;a href="https://www.thedigitalcatonline.com/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"&gt;first post&lt;/a&gt; I introduced you to Python mocks, objects that can imitate other objects and work as placeholders, replacing external systems during unit testing. I described the basic behaviour of mock objects, the &lt;code&gt;return_value&lt;/code&gt; and &lt;code&gt;side_effect&lt;/code&gt; attributes, and the &lt;code&gt;assert_called_with()&lt;/code&gt; method.&lt;/p&gt;
 &lt;p&gt;In this post I will briefly review the remaining &lt;code&gt;assert_*&lt;/code&gt; methods and some interesting attributes that allow to check the calls received by the mock object. Then I will introduce and exemplify patching, which is a very important topic in testing.&lt;/p&gt;
 &lt;h2 id="other-assertions-and-attributes"&gt;Other assertions and attributes&lt;a class="headerlink" href="#other-assertions-and-attributes" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The &lt;a href="https://docs.python.org/dev/library/unittest.mock.html"&gt;official documentation&lt;/a&gt; of the mock library lists many other assertion, namely &lt;code&gt;assert_called_once_with()&lt;/code&gt;, &lt;code&gt;assert_any_call()&lt;/code&gt;, &lt;code&gt;assert_has_calls()&lt;/code&gt;, &lt;code&gt;assert_not_called()&lt;/code&gt;. If you grasped how &lt;code&gt;assert_called_with()&lt;/code&gt; works, you will have no troubles in understanding how those other behave. Be sure to check the documentation to get a full description of what mock object can assert about their history after being used by your code.&lt;/p&gt;
@@ -307,7 +307,7 @@
 &lt;span class="go"&gt;&amp;lt;class &amp;#39;__main__.MyClass&amp;#39;&amp;gt;&lt;/span&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;issubclass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MyClass&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Sequence&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="go"&gt;True&lt;/span&gt;
-&lt;span class="go"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;As you can see, the &lt;code&gt;MyClass&lt;/code&gt; class is initially not recognized as a subclass of &lt;code&gt;collections.Sequence&lt;/code&gt;, but after the registration &lt;code&gt;issubclass()&lt;/code&gt; returns &lt;code&gt;True&lt;/code&gt;, even if the class is still empty.&lt;/p&gt;
@@ -377,7 +377,7 @@
 &lt;span class="go"&gt;&amp;lt;class &amp;#39;int&amp;#39;&amp;gt;&lt;/span&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="vm"&gt;__class__&lt;/span&gt;
 &lt;span class="go"&gt;&amp;lt;class &amp;#39;type&amp;#39;&amp;gt;&lt;/span&gt;
-&lt;span class="go"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="metaclasses-and-mro"&gt;Metaclasses and MRO&lt;a class="headerlink" href="#metaclasses-and-mro" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
@@ -533,9 +533,9 @@
 &lt;span class="gt"&gt;Traceback (most recent call last):&lt;/span&gt;
   File &lt;span class="nb"&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;1&lt;/span&gt;, in &lt;span class="n"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;
   File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;902&lt;/span&gt;, in &lt;span class="n"&gt;__call__&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_mock_self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_mock_self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;958&lt;/span&gt;, in &lt;span class="n"&gt;_mock_call&lt;/span&gt;
-    &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;effect&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;effect&lt;/span&gt;
 &lt;span class="gr"&gt;ValueError&lt;/span&gt;: &lt;span class="n"&gt;A custom value error&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -551,9 +551,9 @@
 &lt;span class="gt"&gt;Traceback (most recent call last):&lt;/span&gt;
   File &lt;span class="nb"&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;1&lt;/span&gt;, in &lt;span class="n"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;
   File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;902&lt;/span&gt;, in &lt;span class="n"&gt;__call__&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_mock_self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_mock_self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   File &lt;span class="nb"&gt;&amp;quot;/usr/lib/python3.4/unittest/mock.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;961&lt;/span&gt;, in &lt;span class="n"&gt;_mock_call&lt;/span&gt;
-    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;effect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;effect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="gr"&gt;StopIteration&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -594,18 +594,18 @@
 &lt;p&gt;Now we know how to build a mock and how to give it a static return value or make it call a callable object. It is time to see how to use a mock in a test and what facilities do mocks provide. I'm going to use &lt;a href="http://pytest.org"&gt;pytest&lt;/a&gt; as a testing framework. You can find a quick introduction to pytest and TDD &lt;a href="/categories/tdd/"&gt;here&lt;/a&gt;).&lt;/p&gt;
 &lt;h3 id="setup"&gt;Setup&lt;a class="headerlink" href="#setup" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;If you want to quickly setup a pytest playground you may execute this code in a terminal (you need to have Python 3 and virtualenv installed in your system) &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir mockplayground
-&lt;span class="nb"&gt;cd&lt;/span&gt; mockplayground
-virtualenv venv3 -p python3
-&lt;span class="nb"&gt;source&lt;/span&gt; venv3/bin/activate
-pip install --upgrade pip
-pip install pytest
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[pytest]&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; pytest.ini
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;norecursedirs=venv*&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; pytest.ini
-mkdir tests
-touch myobj.py
-touch tests/test_mock.py
-&lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir&lt;span class="w"&gt; &lt;/span&gt;mockplayground
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;mockplayground
+virtualenv&lt;span class="w"&gt; &lt;/span&gt;venv3&lt;span class="w"&gt; &lt;/span&gt;-p&lt;span class="w"&gt; &lt;/span&gt;python3
+&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;venv3/bin/activate
+pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;--upgrade&lt;span class="w"&gt; &lt;/span&gt;pip
+pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;pytest
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;[pytest]&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;pytest.ini
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;norecursedirs=venv*&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;pytest.ini
+mkdir&lt;span class="w"&gt; &lt;/span&gt;tests
+touch&lt;span class="w"&gt; &lt;/span&gt;myobj.py
+touch&lt;span class="w"&gt; &lt;/span&gt;tests/test_mock.py
+&lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;py.test
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The &lt;code&gt;PYTHONPATH&lt;/code&gt; environment variable is an easy way to avoid having to setup a whole Python project to just test some simple code.&lt;/p&gt;
@@ -636,24 +636,24 @@ touch tests/test_mock.py
 &lt;p&gt;So the first thing we do in this test is to instantiate the mock object. This is a fake version of the external object, and its only purpose is to accept calls from the &lt;code&gt;MyObj&lt;/code&gt; object under test and return sensible values. Then we instantiate the &lt;code&gt;MyObj&lt;/code&gt; class passing the external object. We expect the class to call the &lt;code&gt;connect()&lt;/code&gt; method so we express this expectation calling &lt;code&gt;external_obj.connect.assert_called_with()&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;What happens behind the scenes? The &lt;code&gt;MyObj&lt;/code&gt; class receives the external object and somewhere is its initialization process calls the &lt;code&gt;connect()&lt;/code&gt; method of the mock object and this creates the method itself as a mock object. This new mock records the parameters used to call it and the subsequent call to &lt;code&gt;assert_called_with()&lt;/code&gt; checks that the method was called and that no parameters were passed.&lt;/p&gt;
 &lt;p&gt;Running pytest the test obviously fails.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
-&lt;span class="o"&gt;==========================================&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; session &lt;span class="nv"&gt;starts&lt;/span&gt; &lt;span class="o"&gt;==========================================&lt;/span&gt;
-platform linux -- Python &lt;span class="m"&gt;3&lt;/span&gt;.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
-rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
-collected &lt;span class="m"&gt;1&lt;/span&gt; items 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;py.test
+&lt;span class="o"&gt;==========================================&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;session&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;starts&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==========================================&lt;/span&gt;
+platform&lt;span class="w"&gt; &lt;/span&gt;linux&lt;span class="w"&gt; &lt;/span&gt;--&lt;span class="w"&gt; &lt;/span&gt;Python&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.4.3+,&lt;span class="w"&gt; &lt;/span&gt;pytest-2.9.0,&lt;span class="w"&gt; &lt;/span&gt;py-1.4.31,&lt;span class="w"&gt; &lt;/span&gt;pluggy-0.3.1
+rootdir:&lt;span class="w"&gt; &lt;/span&gt;/home/leo/devel/mockplayground,&lt;span class="w"&gt; &lt;/span&gt;inifile:&lt;span class="w"&gt; &lt;/span&gt;pytest.ini
+collected&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;items&lt;span class="w"&gt; &lt;/span&gt;
 
-tests/test_mock.py &lt;span class="nv"&gt;F&lt;/span&gt;
+tests/test_mock.py&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;F&lt;/span&gt;
 
-&lt;span class="o"&gt;===============================================&lt;/span&gt; &lt;span class="nv"&gt;FAILURES&lt;/span&gt; &lt;span class="o"&gt;================================================&lt;/span&gt;
-___________________________________________ test_instantiation __________________________________________
+&lt;span class="o"&gt;===============================================&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;FAILURES&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;================================================&lt;/span&gt;
+___________________________________________&lt;span class="w"&gt; &lt;/span&gt;test_instantiation&lt;span class="w"&gt; &lt;/span&gt;__________________________________________
 
-    def test_instantiation&lt;span class="o"&gt;()&lt;/span&gt;:
-        &lt;span class="nv"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mock.Mock&lt;span class="o"&gt;()&lt;/span&gt;
-&amp;gt;       myobj.MyObj&lt;span class="o"&gt;(&lt;/span&gt;external_obj&lt;span class="o"&gt;)&lt;/span&gt;
-E       AttributeError: &lt;span class="s1"&gt;&amp;#39;module&amp;#39;&lt;/span&gt; object has no attribute &lt;span class="s1"&gt;&amp;#39;MyObj&amp;#39;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;def&lt;span class="w"&gt; &lt;/span&gt;test_instantiation&lt;span class="o"&gt;()&lt;/span&gt;:
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nv"&gt;external_obj&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;mock.Mock&lt;span class="o"&gt;()&lt;/span&gt;
+&amp;gt;&lt;span class="w"&gt;       &lt;/span&gt;myobj.MyObj&lt;span class="o"&gt;(&lt;/span&gt;external_obj&lt;span class="o"&gt;)&lt;/span&gt;
+E&lt;span class="w"&gt;       &lt;/span&gt;AttributeError:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;module&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;object&lt;span class="w"&gt; &lt;/span&gt;has&lt;span class="w"&gt; &lt;/span&gt;no&lt;span class="w"&gt; &lt;/span&gt;attribute&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;MyObj&amp;#39;&lt;/span&gt;
 
-tests/test_mock.py:6: &lt;span class="nv"&gt;AttributeError&lt;/span&gt;
-&lt;span class="o"&gt;=======================================&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; failed &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.03 &lt;span class="nv"&gt;seconds&lt;/span&gt; &lt;span class="o"&gt;========================================&lt;/span&gt;
+tests/test_mock.py:6:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;AttributeError&lt;/span&gt;
+&lt;span class="o"&gt;=======================================&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;failed&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.03&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;seconds&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;========================================&lt;/span&gt;
 $
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -673,25 +673,25 @@ $
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;As usual the first run fails. Be sure to check this, it is part of the TDD methodology. You must have a test that DOES NOT PASS, then write some code that make it pass.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; py.test
-&lt;span class="o"&gt;==========================================&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; session &lt;span class="nv"&gt;starts&lt;/span&gt; &lt;span class="o"&gt;==========================================&lt;/span&gt;
-platform linux -- Python &lt;span class="m"&gt;3&lt;/span&gt;.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
-rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
-collected &lt;span class="m"&gt;2&lt;/span&gt; items 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;py.test
+&lt;span class="o"&gt;==========================================&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;session&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;starts&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==========================================&lt;/span&gt;
+platform&lt;span class="w"&gt; &lt;/span&gt;linux&lt;span class="w"&gt; &lt;/span&gt;--&lt;span class="w"&gt; &lt;/span&gt;Python&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.4.3+,&lt;span class="w"&gt; &lt;/span&gt;pytest-2.9.0,&lt;span class="w"&gt; &lt;/span&gt;py-1.4.31,&lt;span class="w"&gt; &lt;/span&gt;pluggy-0.3.1
+rootdir:&lt;span class="w"&gt; &lt;/span&gt;/home/leo/devel/mockplayground,&lt;span class="w"&gt; &lt;/span&gt;inifile:&lt;span class="w"&gt; &lt;/span&gt;pytest.ini
+collected&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;items&lt;span class="w"&gt; &lt;/span&gt;
 
-tests/test_mock.py .F
+tests/test_mock.py&lt;span class="w"&gt; &lt;/span&gt;.F
 
-&lt;span class="o"&gt;===============================================&lt;/span&gt; &lt;span class="nv"&gt;FAILURES&lt;/span&gt; &lt;span class="o"&gt;================================================&lt;/span&gt;
-______________________________________________ test_setup _______________________________________________
+&lt;span class="o"&gt;===============================================&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;FAILURES&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;================================================&lt;/span&gt;
+______________________________________________&lt;span class="w"&gt; &lt;/span&gt;test_setup&lt;span class="w"&gt; &lt;/span&gt;_______________________________________________
 
-    def test_setup&lt;span class="o"&gt;()&lt;/span&gt;:
-        &lt;span class="nv"&gt;external_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mock.Mock&lt;span class="o"&gt;()&lt;/span&gt;
-        &lt;span class="nv"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; myobj.MyObj&lt;span class="o"&gt;(&lt;/span&gt;external_obj&lt;span class="o"&gt;)&lt;/span&gt;
-&amp;gt;       obj.setup&lt;span class="o"&gt;()&lt;/span&gt;
-E       AttributeError: &lt;span class="s1"&gt;&amp;#39;MyObj&amp;#39;&lt;/span&gt; object has no attribute &lt;span class="s1"&gt;&amp;#39;setup&amp;#39;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;def&lt;span class="w"&gt; &lt;/span&gt;test_setup&lt;span class="o"&gt;()&lt;/span&gt;:
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nv"&gt;external_obj&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;mock.Mock&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nv"&gt;obj&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;myobj.MyObj&lt;span class="o"&gt;(&lt;/span&gt;external_obj&lt;span class="o"&gt;)&lt;/span&gt;
+&amp;gt;&lt;span class="w"&gt;       &lt;/span&gt;obj.setup&lt;span class="o"&gt;()&lt;/span&gt;
+E&lt;span class="w"&gt;       &lt;/span&gt;AttributeError:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;MyObj&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;object&lt;span class="w"&gt; &lt;/span&gt;has&lt;span class="w"&gt; &lt;/span&gt;no&lt;span class="w"&gt; &lt;/span&gt;attribute&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;setup&amp;#39;&lt;/span&gt;
 
-tests/test_mock.py:14: &lt;span class="nv"&gt;AttributeError&lt;/span&gt;
-&lt;span class="o"&gt;==================================&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; failed, &lt;span class="m"&gt;1&lt;/span&gt; passed &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.03 &lt;span class="nv"&gt;seconds&lt;/span&gt; &lt;span class="o"&gt;===================================&lt;/span&gt;
+tests/test_mock.py:14:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;AttributeError&lt;/span&gt;
+&lt;span class="o"&gt;==================================&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;failed,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;passed&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.03&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;seconds&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;===================================&lt;/span&gt;
 $
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -706,8 +706,8 @@ $
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;As you can see the external object has been stored in &lt;code&gt;self._repo&lt;/code&gt; and the call to &lt;code&gt;self._repo.setup()&lt;/code&gt; is not exactly what the test expects, lacking the &lt;code&gt;max_connections&lt;/code&gt; parameter. Running pytest we obtain the following result (I removed most of the pytest output)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;E           AssertionError: Expected call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True, &lt;span class="nv"&gt;max_connections&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-E           Actual call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;E&lt;span class="w"&gt;           &lt;/span&gt;AssertionError:&lt;span class="w"&gt; &lt;/span&gt;Expected&lt;span class="w"&gt; &lt;/span&gt;call:&lt;span class="w"&gt; &lt;/span&gt;setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;max_connections&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+E&lt;span class="w"&gt;           &lt;/span&gt;Actual&lt;span class="w"&gt; &lt;/span&gt;call:&lt;span class="w"&gt; &lt;/span&gt;setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;True&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;and you see that the error message is very clear about what we expected and what happened in our code.&lt;/p&gt;
@@ -739,7 +739,7 @@ E           Actual call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class
 &lt;span class="go"&gt;&amp;lt;class &amp;#39;type&amp;#39;&amp;gt;&lt;/span&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="vm"&gt;__bases__&lt;/span&gt;
 &lt;span class="go"&gt;(&amp;lt;class &amp;#39;object&amp;#39;&amp;gt;,)&lt;/span&gt;
-&lt;span class="go"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Given that, Python does nothing special to treat functions like first-class citizens, it simply recognizes that they are objects just like any other thing.&lt;/p&gt;
@@ -955,7 +955,7 @@ E           Actual call: setup&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;
 &lt;span class="gt"&gt;Traceback (most recent call last):&lt;/span&gt;
   File &lt;span class="nb"&gt;&amp;quot;/home/leo/prova.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;103&lt;/span&gt;, in &lt;span class="n"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;
-    &lt;span class="n"&gt;p1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;
 &lt;span class="gr"&gt;TypeError&lt;/span&gt;: &lt;span class="n"&gt;unorderable types: Person() &amp;gt;= Person()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 

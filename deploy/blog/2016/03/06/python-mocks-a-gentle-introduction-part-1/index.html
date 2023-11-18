@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -629,9 +615,9 @@
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
   File <span class="nb">&quot;/usr/lib/python3.4/unittest/mock.py&quot;</span>, line <span class="m">902</span>, in <span class="n">__call__</span>
-    <span class="k">return</span> <span class="n">_mock_self</span><span class="o">.</span><span class="n">_mock_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span> <span class="n">_mock_self</span><span class="o">.</span><span class="n">_mock_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
   File <span class="nb">&quot;/usr/lib/python3.4/unittest/mock.py&quot;</span>, line <span class="m">958</span>, in <span class="n">_mock_call</span>
-    <span class="k">raise</span> <span class="n">effect</span>
+<span class="w">    </span><span class="k">raise</span> <span class="n">effect</span>
 <span class="gr">ValueError</span>: <span class="n">A custom value error</span>
 </code></pre></div>
 
@@ -647,9 +633,9 @@
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
   File <span class="nb">&quot;/usr/lib/python3.4/unittest/mock.py&quot;</span>, line <span class="m">902</span>, in <span class="n">__call__</span>
-    <span class="k">return</span> <span class="n">_mock_self</span><span class="o">.</span><span class="n">_mock_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span> <span class="n">_mock_self</span><span class="o">.</span><span class="n">_mock_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
   File <span class="nb">&quot;/usr/lib/python3.4/unittest/mock.py&quot;</span>, line <span class="m">961</span>, in <span class="n">_mock_call</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">effect</span><span class="p">)</span>
+<span class="w">    </span><span class="n">result</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">effect</span><span class="p">)</span>
 <span class="gr">StopIteration</span>
 </code></pre></div>
 
@@ -690,18 +676,18 @@
 <p>Now we know how to build a mock and how to give it a static return value or make it call a callable object. It is time to see how to use a mock in a test and what facilities do mocks provide. I'm going to use <a href="http://pytest.org">pytest</a> as a testing framework. You can find a quick introduction to pytest and TDD <a href="/categories/tdd/">here</a>).</p>
 <h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
 <p>If you want to quickly setup a pytest playground you may execute this code in a terminal (you need to have Python 3 and virtualenv installed in your system) </p>
-<div class="highlight"><pre><span></span><code>mkdir mockplayground
-<span class="nb">cd</span> mockplayground
-virtualenv venv3 -p python3
-<span class="nb">source</span> venv3/bin/activate
-pip install --upgrade pip
-pip install pytest
-<span class="nb">echo</span> <span class="s2">&quot;[pytest]&quot;</span> &gt;&gt; pytest.ini
-<span class="nb">echo</span> <span class="s2">&quot;norecursedirs=venv*&quot;</span> &gt;&gt; pytest.ini
-mkdir tests
-touch myobj.py
-touch tests/test_mock.py
-<span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;.&quot;</span> py.test
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>mockplayground
+<span class="nb">cd</span><span class="w"> </span>mockplayground
+virtualenv<span class="w"> </span>venv3<span class="w"> </span>-p<span class="w"> </span>python3
+<span class="nb">source</span><span class="w"> </span>venv3/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>pytest
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[pytest]&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>pytest.ini
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;norecursedirs=venv*&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>pytest.ini
+mkdir<span class="w"> </span>tests
+touch<span class="w"> </span>myobj.py
+touch<span class="w"> </span>tests/test_mock.py
+<span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="w"> </span>py.test
 </code></pre></div>
 
 <p>The <code>PYTHONPATH</code> environment variable is an easy way to avoid having to setup a whole Python project to just test some simple code.</p>
@@ -732,24 +718,24 @@ touch tests/test_mock.py
 <p>So the first thing we do in this test is to instantiate the mock object. This is a fake version of the external object, and its only purpose is to accept calls from the <code>MyObj</code> object under test and return sensible values. Then we instantiate the <code>MyObj</code> class passing the external object. We expect the class to call the <code>connect()</code> method so we express this expectation calling <code>external_obj.connect.assert_called_with()</code>.</p>
 <p>What happens behind the scenes? The <code>MyObj</code> class receives the external object and somewhere is its initialization process calls the <code>connect()</code> method of the mock object and this creates the method itself as a mock object. This new mock records the parameters used to call it and the subsequent call to <code>assert_called_with()</code> checks that the method was called and that no parameters were passed.</p>
 <p>Running pytest the test obviously fails.</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;.&quot;</span> py.test
-<span class="o">==========================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">==========================================</span>
-platform linux -- Python <span class="m">3</span>.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
-rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
-collected <span class="m">1</span> items 
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="w"> </span>py.test
+<span class="o">==========================================</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>session<span class="w"> </span><span class="nv">starts</span><span class="w"> </span><span class="o">==========================================</span>
+platform<span class="w"> </span>linux<span class="w"> </span>--<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.4.3+,<span class="w"> </span>pytest-2.9.0,<span class="w"> </span>py-1.4.31,<span class="w"> </span>pluggy-0.3.1
+rootdir:<span class="w"> </span>/home/leo/devel/mockplayground,<span class="w"> </span>inifile:<span class="w"> </span>pytest.ini
+collected<span class="w"> </span><span class="m">1</span><span class="w"> </span>items<span class="w"> </span>
 
-tests/test_mock.py <span class="nv">F</span>
+tests/test_mock.py<span class="w"> </span><span class="nv">F</span>
 
-<span class="o">===============================================</span> <span class="nv">FAILURES</span> <span class="o">================================================</span>
-___________________________________________ test_instantiation __________________________________________
+<span class="o">===============================================</span><span class="w"> </span><span class="nv">FAILURES</span><span class="w"> </span><span class="o">================================================</span>
+___________________________________________<span class="w"> </span>test_instantiation<span class="w"> </span>__________________________________________
 
-    def test_instantiation<span class="o">()</span>:
-        <span class="nv">external_obj</span> <span class="o">=</span> mock.Mock<span class="o">()</span>
-&gt;       myobj.MyObj<span class="o">(</span>external_obj<span class="o">)</span>
-E       AttributeError: <span class="s1">&#39;module&#39;</span> object has no attribute <span class="s1">&#39;MyObj&#39;</span>
+<span class="w">    </span>def<span class="w"> </span>test_instantiation<span class="o">()</span>:
+<span class="w">        </span><span class="nv">external_obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mock.Mock<span class="o">()</span>
+&gt;<span class="w">       </span>myobj.MyObj<span class="o">(</span>external_obj<span class="o">)</span>
+E<span class="w">       </span>AttributeError:<span class="w"> </span><span class="s1">&#39;module&#39;</span><span class="w"> </span>object<span class="w"> </span>has<span class="w"> </span>no<span class="w"> </span>attribute<span class="w"> </span><span class="s1">&#39;MyObj&#39;</span>
 
-tests/test_mock.py:6: <span class="nv">AttributeError</span>
-<span class="o">=======================================</span> <span class="m">1</span> failed <span class="k">in</span> <span class="m">0</span>.03 <span class="nv">seconds</span> <span class="o">========================================</span>
+tests/test_mock.py:6:<span class="w"> </span><span class="nv">AttributeError</span>
+<span class="o">=======================================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>failed<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.03<span class="w"> </span><span class="nv">seconds</span><span class="w"> </span><span class="o">========================================</span>
 $
 </code></pre></div>
 
@@ -769,25 +755,25 @@ $
 </code></pre></div>
 
 <p>As usual the first run fails. Be sure to check this, it is part of the TDD methodology. You must have a test that DOES NOT PASS, then write some code that make it pass.</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;.&quot;</span> py.test
-<span class="o">==========================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">==========================================</span>
-platform linux -- Python <span class="m">3</span>.4.3+, pytest-2.9.0, py-1.4.31, pluggy-0.3.1
-rootdir: /home/leo/devel/mockplayground, inifile: pytest.ini
-collected <span class="m">2</span> items 
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="w"> </span>py.test
+<span class="o">==========================================</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>session<span class="w"> </span><span class="nv">starts</span><span class="w"> </span><span class="o">==========================================</span>
+platform<span class="w"> </span>linux<span class="w"> </span>--<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.4.3+,<span class="w"> </span>pytest-2.9.0,<span class="w"> </span>py-1.4.31,<span class="w"> </span>pluggy-0.3.1
+rootdir:<span class="w"> </span>/home/leo/devel/mockplayground,<span class="w"> </span>inifile:<span class="w"> </span>pytest.ini
+collected<span class="w"> </span><span class="m">2</span><span class="w"> </span>items<span class="w"> </span>
 
-tests/test_mock.py .F
+tests/test_mock.py<span class="w"> </span>.F
 
-<span class="o">===============================================</span> <span class="nv">FAILURES</span> <span class="o">================================================</span>
-______________________________________________ test_setup _______________________________________________
+<span class="o">===============================================</span><span class="w"> </span><span class="nv">FAILURES</span><span class="w"> </span><span class="o">================================================</span>
+______________________________________________<span class="w"> </span>test_setup<span class="w"> </span>_______________________________________________
 
-    def test_setup<span class="o">()</span>:
-        <span class="nv">external_obj</span> <span class="o">=</span> mock.Mock<span class="o">()</span>
-        <span class="nv">obj</span> <span class="o">=</span> myobj.MyObj<span class="o">(</span>external_obj<span class="o">)</span>
-&gt;       obj.setup<span class="o">()</span>
-E       AttributeError: <span class="s1">&#39;MyObj&#39;</span> object has no attribute <span class="s1">&#39;setup&#39;</span>
+<span class="w">    </span>def<span class="w"> </span>test_setup<span class="o">()</span>:
+<span class="w">        </span><span class="nv">external_obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mock.Mock<span class="o">()</span>
+<span class="w">        </span><span class="nv">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>myobj.MyObj<span class="o">(</span>external_obj<span class="o">)</span>
+&gt;<span class="w">       </span>obj.setup<span class="o">()</span>
+E<span class="w">       </span>AttributeError:<span class="w"> </span><span class="s1">&#39;MyObj&#39;</span><span class="w"> </span>object<span class="w"> </span>has<span class="w"> </span>no<span class="w"> </span>attribute<span class="w"> </span><span class="s1">&#39;setup&#39;</span>
 
-tests/test_mock.py:14: <span class="nv">AttributeError</span>
-<span class="o">==================================</span> <span class="m">1</span> failed, <span class="m">1</span> passed <span class="k">in</span> <span class="m">0</span>.03 <span class="nv">seconds</span> <span class="o">===================================</span>
+tests/test_mock.py:14:<span class="w"> </span><span class="nv">AttributeError</span>
+<span class="o">==================================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>failed,<span class="w"> </span><span class="m">1</span><span class="w"> </span>passed<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.03<span class="w"> </span><span class="nv">seconds</span><span class="w"> </span><span class="o">===================================</span>
 $
 </code></pre></div>
 
@@ -802,8 +788,8 @@ $
 </code></pre></div>
 
 <p>As you can see the external object has been stored in <code>self._repo</code> and the call to <code>self._repo.setup()</code> is not exactly what the test expects, lacking the <code>max_connections</code> parameter. Running pytest we obtain the following result (I removed most of the pytest output)</p>
-<div class="highlight"><pre><span></span><code>E           AssertionError: Expected call: setup<span class="o">(</span><span class="nv">cache</span><span class="o">=</span>True, <span class="nv">max_connections</span><span class="o">=</span><span class="m">256</span><span class="o">)</span>
-E           Actual call: setup<span class="o">(</span><span class="nv">cache</span><span class="o">=</span>True<span class="o">)</span>
+<div class="highlight"><pre><span></span><code>E<span class="w">           </span>AssertionError:<span class="w"> </span>Expected<span class="w"> </span>call:<span class="w"> </span>setup<span class="o">(</span><span class="nv">cache</span><span class="o">=</span>True,<span class="w"> </span><span class="nv">max_connections</span><span class="o">=</span><span class="m">256</span><span class="o">)</span>
+E<span class="w">           </span>Actual<span class="w"> </span>call:<span class="w"> </span>setup<span class="o">(</span><span class="nv">cache</span><span class="o">=</span>True<span class="o">)</span>
 </code></pre></div>
 
 <p>and you see that the error message is very clear about what we expected and what happened in our code.</p>

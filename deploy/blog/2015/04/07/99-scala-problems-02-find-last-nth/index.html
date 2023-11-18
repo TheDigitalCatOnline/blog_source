@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -551,8 +537,8 @@
     <h2 id="the-problem">The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
 <p><strong>P02</strong> (*) Find the last but one element of a list.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">penultimate</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-<span class="n">res0</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">5</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="n">penultimate</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span>
 </code></pre></div>
 
 <h2 id="initial-thoughts">Initial thoughts<a class="headerlink" href="#initial-thoughts" title="Permanent link">&para;</a></h2>
@@ -565,37 +551,37 @@
 <h2 id="the-procedural-solution">The procedural solution<a class="headerlink" href="#the-procedural-solution" title="Permanent link">&para;</a></h2>
 <p>A smart way to solve the problem is to consider that the penultimate element of a list of n elements is the last element of the first (n - 1) elements. Scala provides a method called <a href="http://www.scala-lang.org/api/2.11.4/index.html#scala.collection.immutable.List"><code>init()</code></a> which returns all elements except the last. Documentation says that if the given list is empty the method throws the <code>UnsupportedOperationException</code>, so if we want to imitate the previous <code>last()</code> function we shall cover the empty list case.</p>
 <p>If the list contains a single element, <code>init()</code> returns an empty list, and in that case the <code>last()</code> method throws the right exception.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">penultimate</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>  
-    <span class="n">l</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="n">last</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">penultimate</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">NoSuchElementException</span><span class="w">  </span>
+<span class="w">    </span><span class="n">l</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="n">last</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>The generic case may be handled using the <code>takeRight()</code> method, which selects the last n elements from the list. The last-nth element is then the head of the resulting list. This method deals with a list with less than n elements returning the whole list, which is not what we want. So we have to deal with the case of a list which contains less than n elements. The length of a list in Scala may be retrieved with the <code>length()</code> method.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">lastNth</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">A</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="n">l</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>
-    <span class="n">l</span><span class="p">.</span><span class="n">takeRight</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="n">head</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lastNth</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">IllegalArgumentException</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">length</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">NoSuchElementException</span>
+<span class="w">    </span><span class="n">l</span><span class="p">.</span><span class="n">takeRight</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="n">head</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <h2 id="the-recursive-solution">The recursive solution<a class="headerlink" href="#the-recursive-solution" title="Permanent link">&para;</a></h2>
 <p>The recursive solution takes advantage of the power of pattern matching. The exit case is when the list is composed by a head element and a tail made by a list of one single element. The pattern matching syntax can express this situation with the <code>h :: List(t)</code> syntax. The standard case is when the tail is still a generic list and the last case covers all edge cases.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">penultimate</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="n">h</span> <span class="o">::</span> <span class="nc">List</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">h</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">penultimate</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">h</span>
 
-    <span class="k">case</span> <span class="n">_</span> <span class="o">::</span> <span class="n">tail</span> <span class="o">=&gt;</span> <span class="n">penultimate</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">penultimate</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
 
-    <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">NoSuchElementException</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>The generic case may be written at least in two different ways. The first one involves the use of an helper function that reverses the list. Once the list has been reversed we may recursively find the nth element. Another way to express the same procedure is to have an helper function that counts the number N of elements in the list, then finds the (N-n)-th element (zero-indexed). Since however the reverse function, the count function, and the function to extract the nth element are discussed in the next three problems (problem 03, 04 and 05) this solution will be shown there.</p>
 <p>The second solution makes use of some methods of the <code>List</code> type and pattern guards. Pattern guards are simply conditional expressions that rule the application of a pattern.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">lastNth</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">A</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="n">tail</span> <span class="k">if</span> <span class="p">(</span><span class="n">tail</span><span class="p">.</span><span class="n">length</span> <span class="o">==</span> <span class="n">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">tail</span><span class="p">.</span><span class="n">head</span>
-    <span class="k">case</span> <span class="n">_</span> <span class="o">::</span> <span class="n">tail</span> <span class="o">=&gt;</span> <span class="n">lastNth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span>
-    <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lastNth</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tail</span><span class="p">.</span><span class="n">length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">tail</span><span class="p">.</span><span class="n">head</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">lastNth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">NoSuchElementException</span>
 <span class="p">}</span>
 </code></pre></div>
 

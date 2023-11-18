@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -551,16 +537,16 @@
     <h2 id="the-problem">The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
 <p><strong>P06</strong> (*) Find out whether a list is a palindrome.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">isPalindrome</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">res0</span><span class="p">:</span> <span class="nc">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="n">isPalindrome</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 </code></pre></div>
 
 <h2 id="initial-thoughts">Initial thoughts<a class="headerlink" href="#initial-thoughts" title="Permanent link">&para;</a></h2>
 <p>The algorithm is pretty simple. A list is palindrome when it is equal to its reversed version. So both a procedural and a recursive solution may get a reversed version of the list and then compare the two.</p>
 <p>For long lists this could be a performance issue, so a recursive solution could be interesting. It is sufficient to check if head and tail are equal, then remove them and recursively check the remaining list. The last step will either check a list of one element or an empty list (depending on the length of the list being odd or even), which are both palindrome by definition.</p>
 <h2 id="the-procedural-solution">The procedural solution<a class="headerlink" href="#the-procedural-solution" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">l</span> <span class="o">==</span> <span class="n">l</span><span class="p">.</span><span class="n">reverse</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">reverse</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -568,21 +554,21 @@
 <h2 id="the-recursive-solution">The recursive solution<a class="headerlink" href="#the-recursive-solution" title="Permanent link">&para;</a></h2>
 <p>The recursive solution may mimic the procedural implementing a helper function that reverses the list. See <a href="https://www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-05-reverse/">problem 05</a> for an implementation of such a function.</p>
 <p>A recursive solution for the palindrome check shall make use of functions to extract the head and tail elements from the list. Since pattern matching cannot separate the tail element, we have to use <code>List</code> type methods.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="kc">true</span>
-    <span class="k">case</span> <span class="nc">List</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="kc">true</span>
-    <span class="k">case</span> <span class="n">list</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">head</span> <span class="o">==</span> <span class="n">list</span><span class="p">.</span><span class="n">last</span> <span class="o">&amp;&amp;</span> <span class="n">isPalindrome</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">tail</span><span class="p">.</span><span class="n">init</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">list</span><span class="p">.</span><span class="n">last</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">isPalindrome</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">tail</span><span class="p">.</span><span class="n">init</span><span class="p">))</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>The corresponding tail recursive function is</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="k">def</span> <span class="nf">_palindrome</span><span class="p">(</span><span class="n">res</span><span class="p">:</span> <span class="nc">Boolean</span><span class="p">,</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">Boolean</span> <span class="o">=</span> <span class="n">rem</span> <span class="k">match</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="n">res</span>
-        <span class="k">case</span> <span class="nc">List</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">res</span>
-        <span class="k">case</span> <span class="n">list</span> <span class="o">=&gt;</span> <span class="n">_palindrome</span><span class="p">(</span><span class="n">res</span> <span class="o">&amp;&amp;</span> <span class="n">rem</span><span class="p">.</span><span class="n">head</span> <span class="o">==</span> <span class="n">rem</span><span class="p">.</span><span class="n">last</span><span class="p">,</span> <span class="n">rem</span><span class="p">.</span><span class="n">tail</span><span class="p">.</span><span class="n">init</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="n">_palindrome</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">_palindrome</span><span class="p">(</span><span class="n">res</span><span class="p">:</span><span class="w"> </span><span class="nc">Boolean</span><span class="p">,</span><span class="w"> </span><span class="n">rem</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rem</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">res</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">res</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_palindrome</span><span class="p">(</span><span class="n">res</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rem</span><span class="p">.</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">rem</span><span class="p">.</span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">rem</span><span class="p">.</span><span class="n">tail</span><span class="p">.</span><span class="n">init</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">_palindrome</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -591,70 +577,70 @@
 <p>Since I am using Scala 2.9 I want to use this occasion to learn how to implement an operator for the pattern matching.</p>
 <p>First of all: I recommend reading the following pages <a href="http://www.artima.com/pins1ed/case-classes-and-pattern-matching.html"> Case Classes and Pattern Matching</a>, <a href="http://www.artima.com/pins1ed/working-with-lists.html#16.5">List patterns</a>, <a href="http://www.artima.com/pins1ed/extractors.html">Extractors</a>. They describe in a very simple and clear way everything you need to know at this point about pattern matching and further clarify what discussed in <a href="https://www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-05-reverse/">problem 05</a> about the <code>::</code> class.</p>
 <p>The version proposed in Issue 2575 works only on <code>List</code> types but is a good starting point for me</p>
-<div class="highlight"><pre><span></span><code><span class="k">object</span> <span class="nc">:+</span> <span class="p">{</span>
-  <span class="k">def</span> <span class="nf">unapply</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="nc">None</span>
-    <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="nc">Some</span><span class="p">(</span> <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">init</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">last</span><span class="p">)</span> <span class="p">)</span>
-  <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="k">object</span><span class="w"> </span><span class="nc">:+</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">unapply</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">None</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Some</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">init</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">last</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>This allows to use the <code>:+</code> pattern matching operator (namely an <em>extractor</em>) to do something like</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="kd">val</span> <span class="n">init</span> <span class="o">:+</span> <span class="n">tail</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">init</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">tail</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">3</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">init</span><span class="w"> </span><span class="o">:+</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">init</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="n">tail</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
 </code></pre></div>
 
 <p>As a matter of fact the concept is very simple, even if its implementation is very rich and powerful. The <code>unapply()</code> method deconstructs the incoming value returning an <code>Option</code>, either <code>None</code> if the value does not match the format or <code>Some()</code> with a tuple of extracted values.</p>
 <p>Following the above example I come up with a first-last extractor <code>fl()</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">object</span> <span class="nc">fl</span> <span class="p">{</span>
-    <span class="k">def</span> <span class="nf">unapply</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="nc">None</span>
-        <span class="k">case</span> <span class="n">l</span> <span class="o">=&gt;</span> <span class="nc">Some</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">head</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">last</span><span class="p">)</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="k">object</span><span class="w"> </span><span class="nc">fl</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">unapply</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">None</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Some</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">last</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>which works as expected</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="kd">val</span> <span class="n">head</span> <span class="n">fl</span> <span class="n">last</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">head</span><span class="p">:</span> <span class="nc">Any</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">last</span><span class="p">:</span> <span class="nc">Any</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">scala</span><span class="o">&gt;</span> <span class="kd">val</span> <span class="n">head</span> <span class="n">fl</span> <span class="n">last</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">head</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">last</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="n">fl</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">head</span><span class="p">:</span><span class="w"> </span><span class="nc">Any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">last</span><span class="p">:</span><span class="w"> </span><span class="nc">Any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="n">fl</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">head</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">last</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 </code></pre></div>
 
 <p>To use it in the <code>isPalindrome()</code> recursive function, however, I need something that also returns the list without the first and the last element.</p>
-<div class="highlight"><pre><span></span><code><span class="k">object</span> <span class="nc">frl</span> <span class="p">{</span>
-    <span class="k">def</span> <span class="nf">unapply</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="nc">None</span>
-        <span class="k">case</span> <span class="n">l</span> <span class="k">if</span> <span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nc">Some</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">head</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">last</span><span class="p">,</span> <span class="nc">List</span><span class="p">())</span>
-        <span class="k">case</span> <span class="n">l</span> <span class="o">=&gt;</span> <span class="nc">Some</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">head</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">last</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="n">tail</span><span class="p">)</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="k">object</span><span class="w"> </span><span class="nc">frl</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">unapply</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">None</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Some</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="nc">List</span><span class="p">())</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Some</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="n">tail</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>This cannot however be used as an infix operator, because it has three input values, so pattern matching will use the standard call form</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="kd">val</span> <span class="n">frl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">first</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">last</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">frl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">rem</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">first</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">last</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span>
+<span class="n">rem</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
 </code></pre></div>
 
 <p>With this extractor my recursive function is greatly simplified</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="kc">true</span>
-    <span class="k">case</span> <span class="n">frl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">first</span> <span class="o">==</span> <span class="n">last</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">isPalindrome</span><span class="p">(</span><span class="n">rem</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">frl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">rem</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">first</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">last</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">isPalindrome</span><span class="p">(</span><span class="n">rem</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>and its corresponding tail recursive form is</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="k">def</span> <span class="nf">_palindrome</span><span class="p">(</span><span class="n">res</span><span class="p">:</span> <span class="nc">Boolean</span><span class="p">,</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">Boolean</span> <span class="o">=</span> <span class="n">rem</span> <span class="k">match</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="n">res</span>
-        <span class="k">case</span> <span class="n">frl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">_palindrome</span><span class="p">(</span><span class="n">res</span> <span class="o">&amp;&amp;</span> <span class="n">first</span> <span class="o">==</span> <span class="n">last</span><span class="p">,</span> <span class="n">rem</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="n">_palindrome</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isPalindrome</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">_palindrome</span><span class="p">(</span><span class="n">res</span><span class="p">:</span><span class="w"> </span><span class="nc">Boolean</span><span class="p">,</span><span class="w"> </span><span class="n">rem</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rem</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">res</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">frl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">rem</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_palindrome</span><span class="p">(</span><span class="n">res</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">rem</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">_palindrome</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 

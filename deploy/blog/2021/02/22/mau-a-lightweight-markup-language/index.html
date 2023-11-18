@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -550,7 +536,7 @@
   </header>
   
   <div class="post-content">
-    <h2 id="what-is-mau">What is Mau?<a class="headerlink" href="#what-is-mau" title="Permanent link">¶</a></h2><p>Mau is a lightweight markup language heavily inspired by AsciiDoc that makes is very easy to write blog posts or books.</p><p>The main goal of Mau is to provide a customisable markup language, reusing the good parts of AsciiDoc and providing a pure Python 3 implementation.</p><p>You can find Mau's source code on <a href="https://github.com/Project-Mau/mau">GitHub</a>.</p><h2 id="why-not-markdown-or-asciidoc">Why not Markdown or AsciiDoc?<a class="headerlink" href="#why-not-markdown-or-asciidoc" title="Permanent link">¶</a></h2><p>Markdown is a very good format, and I used it for all the posts in this blog so far. I grew increasingly unsatisfied, though, because of the lack of some features and the poor amount of customisation that it provides. When I wrote the second version of my book "Clean Architectures in Python" I considered using Markdown (through Pelican), but I couldn't find a good way to create tips and warnings. Recently, Python Markdown added a feature that allows to specify the file name for the source code, but the resulting HTML cannot easily be changed, making it difficult to achieve the graphical output I wanted.</p><p>AsciiDoc started as a Python project, but then was abandoned and eventually resurrected by Dan Allen with Asciidoctor. AsciiDoc has a lot of features and I consider it superior to Markdown, but Asciidoctor is a Ruby program, and this made it difficult for me to use it. In addition, the standard output of Asciidoctor is a nice single HTML page but again customising it is a pain. I had to struggle to add my Google Analytics code and a <code>sitemap.xml</code> to the book site.</p><p>I simply thought I could try to write my own tool, in a language that I know well (Python). It works, and I learned a lot writing it, so I'm definitely happy. I'd be delighted to know that this can be useful to other people, though.</p><h2 id="pelican">Pelican<a class="headerlink" href="#pelican" title="Permanent link">¶</a></h2><p>A reader for Mau source files is available in Pelican, you can find the code at <a href="https://github.com/getpelican/pelican-plugins/pull/1327">https://github.com/getpelican/pelican-plugins/pull/1327</a>. Simply add the code to your Pelican plugins directory and activate it adding <code>&quot;mau_reader&quot;</code> to <code>PLUGINS</code> in your file <code>pelicanconf.py</code>. The Mau reader processes only files with the <code>.mau</code> extension, so you can use Markdown/reStructuredText and Mau at the same time.</p><h2 id="development">Development<a class="headerlink" href="#development" title="Permanent link">¶</a></h2><p>If you are interested you can leave a star on the project on the <a href="https://github.com/Project-Mau/mau">GitHub page</a>, start using it, or contribute ideas, code, bugfixes.</p><h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+    <h2 id="what-is-mau-fb3c">What is Mau?<a class="headerlink" href="#what-is-mau-fb3c" title="Permanent link">¶</a></h2><p>Mau is a lightweight markup language heavily inspired by AsciiDoc that makes is very easy to write blog posts or books.</p><p>The main goal of Mau is to provide a customisable markup language, reusing the good parts of AsciiDoc and providing a pure Python 3 implementation.</p><p>You can find Mau&#x27;s source code on <a href="https://github.com/Project-Mau/mau">GitHub</a>.</p><h2 id="why-not-markdown-or-asciidoc-b535">Why not Markdown or AsciiDoc?<a class="headerlink" href="#why-not-markdown-or-asciidoc-b535" title="Permanent link">¶</a></h2><p>Markdown is a very good format, and I used it for all the posts in this blog so far. I grew increasingly unsatisfied, though, because of the lack of some features and the poor amount of customisation that it provides. When I wrote the second version of my book &quot;Clean Architectures in Python&quot; I considered using Markdown (through Pelican), but I couldn&#x27;t find a good way to create tips and warnings. Recently, Python Markdown added a feature that allows to specify the file name for the source code, but the resulting HTML cannot easily be changed, making it difficult to achieve the graphical output I wanted.</p><p>AsciiDoc started as a Python project, but then was abandoned and eventually resurrected by Dan Allen with Asciidoctor. AsciiDoc has a lot of features and I consider it superior to Markdown, but Asciidoctor is a Ruby program, and this made it difficult for me to use it. In addition, the standard output of Asciidoctor is a nice single HTML page but again customising it is a pain. I had to struggle to add my Google Analytics code and a <code>sitemap.xml</code> to the book site.</p><p>I simply thought I could try to write my own tool, in a language that I know well (Python). It works, and I learned a lot writing it, so I&#x27;m definitely happy. I&#x27;d be delighted to know that this can be useful to other people, though.</p><h2 id="pelican-f581">Pelican<a class="headerlink" href="#pelican-f581" title="Permanent link">¶</a></h2><p>A reader for Mau source files is available in Pelican, you can find the code at <a href="https://github.com/getpelican/pelican-plugins/pull/1327">https://github.com/getpelican/pelican-plugins/pull/1327</a>. Simply add the code to your Pelican plugins directory and activate it adding <code>"mau_reader"</code> to <code>PLUGINS</code> in your file <code>pelicanconf.py</code>. The Mau reader processes only files with the <code>.mau</code> extension, so you can use Markdown/reStructuredText and Mau at the same time.</p><h2 id="development-f3c5">Development<a class="headerlink" href="#development-f3c5" title="Permanent link">¶</a></h2><p>If you are interested you can leave a star on the project on the <a href="https://github.com/Project-Mau/mau">GitHub page</a>, start using it, or contribute ideas, code, bugfixes.</p><h2 id="feedback-d845">Feedback<a class="headerlink" href="#feedback-d845" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
   </div>
 
 

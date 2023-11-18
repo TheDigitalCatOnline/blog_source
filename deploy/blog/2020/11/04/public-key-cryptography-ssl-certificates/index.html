@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -798,11 +784,11 @@ Certificate:
 <p>Moreover, one of the version 3 extensions of the self-signed certificate is a basic constraint with the boolean <code>CA</code> set to true. It also has the extension <code>Key Usage</code> set to <code>Digital Signature, Certificate Sign, CRL Sign</code>, which means that the certificate can be used to sign other certificates.</p>
 <h2 id="example-self-signed-certificate">Example: self-signed certificate<a class="headerlink" href="#example-self-signed-certificate" title="Permanent link">&para;</a></h2>
 <p>You can use OpenSSL to create a self-signed certificate using the module <code>req</code> that you would normally use to create certificate requests. As a self-signed certificate doesn't need approval, the module can directly output the certificate.</p>
-<div class="highlight"><pre><span></span><code>$ openssl req -x509 -newkey rsa:2048 -keyout self-signed-key.pem -out self-signed.pem -days <span class="m">365</span> -nodes -subj <span class="s1">&#39;/CN=localhost&#39;</span>
-Generating a RSA private key
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-keyout<span class="w"> </span>self-signed-key.pem<span class="w"> </span>-out<span class="w"> </span>self-signed.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-nodes<span class="w"> </span>-subj<span class="w"> </span><span class="s1">&#39;/CN=localhost&#39;</span>
+Generating<span class="w"> </span>a<span class="w"> </span>RSA<span class="w"> </span>private<span class="w"> </span>key
 ....+++++
 ................+++++
-writing new private key to <span class="s1">&#39;self-signed-key.pem&#39;</span>
+writing<span class="w"> </span>new<span class="w"> </span>private<span class="w"> </span>key<span class="w"> </span>to<span class="w"> </span><span class="s1">&#39;self-signed-key.pem&#39;</span>
 -----
 </code></pre></div>
 
@@ -973,41 +959,41 @@ Certificate:
 <p>As happened for the certificate <code>Amazon Root CA 1</code> that we discussed before, this one is self-signed, having the same value for <code>Subject</code> and <code>Issuer</code>.</p>
 <h2 id="how-to-verify-certificates-with-openssl">How to verify certificates with OpenSSL<a class="headerlink" href="#how-to-verify-certificates-with-openssl" title="Permanent link">&para;</a></h2>
 <p>To verify if a certificate is valid we can use the module <code>verify</code> of OpenSSL. By default, OpenSSL doesn't trust anything, and <code>verify</code> relies on a default path in the system to find root certificates. You can see the path running</p>
-<div class="highlight"><pre><span></span><code>$ openssl version -d
-OPENSSLDIR: <span class="s2">&quot;/usr/lib/ssl&quot;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>version<span class="w"> </span>-d
+OPENSSLDIR:<span class="w"> </span><span class="s2">&quot;/usr/lib/ssl&quot;</span>
 </code></pre></div>
 
 <p>On Ubuntu 20.04, the directory <code>/usr/lib/ssl/certs</code> is a symbolic link to <code>/etc/ssl/certs</code> that is installed by the package <a href="https://packages.ubuntu.com/focal/ca-certificates"><code>ca-certificates</code></a> which is linked to the Mozilla's CA Certificate Program (details on that package can be found in the <a href="https://salsa.debian.org/debian/ca-certificates/-/blob/master/debian/README.Debian">source code</a>).</p>
 <p>So, if a root certificate is included in the Mozilla program, it is trusted by OpenSSL</p>
-<div class="highlight"><pre><span></span><code>$ openssl verify amazon-root-ca-1.pem 
-amazon-root-ca-1.pem: OK
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>verify<span class="w"> </span>amazon-root-ca-1.pem<span class="w"> </span>
+amazon-root-ca-1.pem:<span class="w"> </span>OK
 </code></pre></div>
 
 <p>while a self-signed certificate is not</p>
-<div class="highlight"><pre><span></span><code>$ openssl verify self-signed.pem 
-<span class="nv">CN</span> <span class="o">=</span> localhost
-error <span class="m">18</span> at <span class="m">0</span> depth lookup: self signed certificate
-error self-signed.pem: verification failed
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>verify<span class="w"> </span>self-signed.pem<span class="w"> </span>
+<span class="nv">CN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>localhost
+error<span class="w"> </span><span class="m">18</span><span class="w"> </span>at<span class="w"> </span><span class="m">0</span><span class="w"> </span>depth<span class="w"> </span>lookup:<span class="w"> </span>self<span class="w"> </span>signed<span class="w"> </span>certificate
+error<span class="w"> </span>self-signed.pem:<span class="w"> </span>verification<span class="w"> </span>failed
 </code></pre></div>
 
 <p>A non-root certificate can be verified specifying which root certificate signed it. So, the certificate for this website is not trusted automatically</p>
-<div class="highlight"><pre><span></span><code>$ openssl verify www-thedigitalcatonline-com.pem 
-<span class="nv">CN</span> <span class="o">=</span> www.thedigitalcatonline.com
-error <span class="m">20</span> at <span class="m">0</span> depth lookup: unable to get <span class="nb">local</span> issuer certificate
-error www-thedigitalcatonline-com.pem: verification failed
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>verify<span class="w"> </span>www-thedigitalcatonline-com.pem<span class="w"> </span>
+<span class="nv">CN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>www.thedigitalcatonline.com
+error<span class="w"> </span><span class="m">20</span><span class="w"> </span>at<span class="w"> </span><span class="m">0</span><span class="w"> </span>depth<span class="w"> </span>lookup:<span class="w"> </span>unable<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span><span class="nb">local</span><span class="w"> </span>issuer<span class="w"> </span>certificate
+error<span class="w"> </span>www-thedigitalcatonline-com.pem:<span class="w"> </span>verification<span class="w"> </span>failed
 </code></pre></div>
 
 <p>But it is verified specifying the certificate for Let's Encrypt that signed it</p>
-<div class="highlight"><pre><span></span><code>$ openssl verify -CAfile lets-encrypt-x3.pem www-thedigitalcatonline-com.pem 
-www-thedigitalcatonline-com.pem: OK
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>verify<span class="w"> </span>-CAfile<span class="w"> </span>lets-encrypt-x3.pem<span class="w"> </span>www-thedigitalcatonline-com.pem<span class="w"> </span>
+www-thedigitalcatonline-com.pem:<span class="w"> </span>OK
 </code></pre></div>
 
 <p>because the certificate <code>lets-encrypt-x3.pem</code> is signed by <code>DST_Root_CA_X3.pem</code> which is included in the Mozilla program, and thus included in my Linux distribution.</p>
 <p>If I remove the default certificates path OpenSSL doesn't accept the certificate for Let's Encrypt any more</p>
-<div class="highlight"><pre><span></span><code>$ openssl verify -no-CApath -CAfile lets-encrypt-x3.pem www-thedigitalcatonline-com.pem
-<span class="nv">C</span> <span class="o">=</span> US, <span class="nv">O</span> <span class="o">=</span> Let<span class="s1">&#39;s Encrypt, CN = Let&#39;</span>s Encrypt Authority X3
-error <span class="m">2</span> at <span class="m">1</span> depth lookup: unable to get issuer certificate
-error www-thedigitalcatonline-com.pem: verification failed
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>verify<span class="w"> </span>-no-CApath<span class="w"> </span>-CAfile<span class="w"> </span>lets-encrypt-x3.pem<span class="w"> </span>www-thedigitalcatonline-com.pem
+<span class="nv">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>US,<span class="w"> </span><span class="nv">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Let<span class="s1">&#39;s Encrypt, CN = Let&#39;</span>s<span class="w"> </span>Encrypt<span class="w"> </span>Authority<span class="w"> </span>X3
+error<span class="w"> </span><span class="m">2</span><span class="w"> </span>at<span class="w"> </span><span class="m">1</span><span class="w"> </span>depth<span class="w"> </span>lookup:<span class="w"> </span>unable<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span>issuer<span class="w"> </span>certificate
+error<span class="w"> </span>www-thedigitalcatonline-com.pem:<span class="w"> </span>verification<span class="w"> </span>failed
 </code></pre></div>
 
 <h2 id="low-level-certificate-validation-process">Low-level certificate validation process<a class="headerlink" href="#low-level-certificate-validation-process" title="Permanent link">&para;</a></h2>
@@ -1180,20 +1166,20 @@ fffffffffffffffffffff003031300d0609608648016503040201050004206fc
 <p>What I showed you here is what happens when we validate a root certificate. When we validate a non-root certificate the process is exactly the same (taking into account that the algorithms involved might be different), only the public key used to sign the certificate doesn't come from the certificate itself, but from the signer one. So, in the case of this blog, the certificate for www.thedigitalcat.com has a signature encrypted with the public key of Let's Encrypt. And the certificate for Let's Encrypt will be signed using the public key of Digital Signature Trust Co. This is what creates the chain of trust.</p>
 <h2 id="algorithms-used-by-root-certificates">Algorithms used by root certificates<a class="headerlink" href="#algorithms-used-by-root-certificates" title="Permanent link">&para;</a></h2>
 <p>A quick scan of the certificates that are part of the Mozilla program reveals that the vast majority of them is using RSA to self-sign them</p>
-<div class="highlight"><pre><span></span><code>$ <span class="k">for</span> i <span class="k">in</span> /etc/ssl/certs/*.pem<span class="p">;</span> <span class="k">do</span> openssl x509 -inform pem -in <span class="si">${</span><span class="nv">i</span><span class="si">}</span> -noout -text <span class="p">|</span> grep -E <span class="s2">&quot;Public Key Algorithm&quot;</span><span class="p">;</span> <span class="k">done</span> <span class="p">|</span> sort <span class="p">|</span> uniq -c
-     <span class="m">25</span>             Public Key Algorithm: id-ecPublicKey
-    <span class="m">114</span>             Public Key Algorithm: rsaEncryption
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/ssl/certs/*.pem<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-inform<span class="w"> </span>pem<span class="w"> </span>-in<span class="w"> </span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="w"> </span>-noout<span class="w"> </span>-text<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;Public Key Algorithm&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c
+<span class="w">     </span><span class="m">25</span><span class="w">             </span>Public<span class="w"> </span>Key<span class="w"> </span>Algorithm:<span class="w"> </span>id-ecPublicKey
+<span class="w">    </span><span class="m">114</span><span class="w">             </span>Public<span class="w"> </span>Key<span class="w"> </span>Algorithm:<span class="w"> </span>rsaEncryption
 </code></pre></div>
 
 <p>while part of them are using <code>id-ecPublicKey</code> which is the identifier of elliptic curves algorithms.</p>
 <p>When it comes to signature algorithms, instead, there is more variety</p>
-<div class="highlight"><pre><span></span><code>$ <span class="k">for</span> i <span class="k">in</span> /etc/ssl/certs/*.pem<span class="p">;</span> <span class="k">do</span> openssl x509 -inform pem -in <span class="si">${</span><span class="nv">i</span><span class="si">}</span> -noout -text <span class="p">|</span> grep -E <span class="s2">&quot;^    Signature Algorithm&quot;</span><span class="p">;</span> <span class="k">done</span> <span class="p">|</span> sort <span class="p">|</span> uniq -c
-      <span class="m">7</span>     Signature Algorithm: ecdsa-with-SHA256
-     <span class="m">18</span>     Signature Algorithm: ecdsa-with-SHA384
-     <span class="m">47</span>     Signature Algorithm: sha1WithRSAEncryption
-     <span class="m">57</span>     Signature Algorithm: sha256WithRSAEncryption
-      <span class="m">9</span>     Signature Algorithm: sha384WithRSAEncryption
-      <span class="m">1</span>     Signature Algorithm: sha512WithRSAEncryption
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/ssl/certs/*.pem<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-inform<span class="w"> </span>pem<span class="w"> </span>-in<span class="w"> </span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="w"> </span>-noout<span class="w"> </span>-text<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;^    Signature Algorithm&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c
+<span class="w">      </span><span class="m">7</span><span class="w">     </span>Signature<span class="w"> </span>Algorithm:<span class="w"> </span>ecdsa-with-SHA256
+<span class="w">     </span><span class="m">18</span><span class="w">     </span>Signature<span class="w"> </span>Algorithm:<span class="w"> </span>ecdsa-with-SHA384
+<span class="w">     </span><span class="m">47</span><span class="w">     </span>Signature<span class="w"> </span>Algorithm:<span class="w"> </span>sha1WithRSAEncryption
+<span class="w">     </span><span class="m">57</span><span class="w">     </span>Signature<span class="w"> </span>Algorithm:<span class="w"> </span>sha256WithRSAEncryption
+<span class="w">      </span><span class="m">9</span><span class="w">     </span>Signature<span class="w"> </span>Algorithm:<span class="w"> </span>sha384WithRSAEncryption
+<span class="w">      </span><span class="m">1</span><span class="w">     </span>Signature<span class="w"> </span>Algorithm:<span class="w"> </span>sha512WithRSAEncryption
 </code></pre></div>
 
 <p>Even here, elliptic curves are slowly being adopted.</p>

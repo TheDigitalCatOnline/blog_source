@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -558,7 +544,7 @@
 <p>As briefly shown in the last article synchronization problems are not only among the most complex issues to solve in computer science, but can also lead to severe malfunctions of our software.</p>
 <p>Let's reconsider and formalize the example given in the last post. Say we create two different processes working on the same data. If the two processes just read the same data from memory (or disk) no problems can arise: data are static, and accessing does not change them. So the execution of the two processes is called <strong>consistent</strong>, which highlights that repeated executions or executions spanning a long time will always result in the same system behaviour.</p>
 <p>If now one of the processes wants to modify data different situations can come up, depending on the actual timing of the operations. Say we have two processes <code>A</code> and <code>B</code> and an element <code>d</code>; process <code>A</code> increases element <code>d</code> by 1 while process <code>B</code> prints the element value on the screen. In a sort of metalanguage, we could express this situation with the following syntax</p>
-<div class="highlight"><pre><span></span><code><span class="n">A</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">d</span><span class="o">-&gt;</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">d</span><span class="o">-&gt;</span><span class="kr">output</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">A</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">d</span><span class="o">-&gt;</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">d</span><span class="o">-&gt;</span><span class="kr">output</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 
 <p>where <code>&amp;</code> stands for a concurrent execution; in other words the two processes are not synchronized. One of the possible resulting executions is</p>
@@ -578,7 +564,7 @@
 <p>It is thus necessary to increase the <strong>granularity</strong> of this block. Granularity is the scope of an action: the higher is the granularity the narrowest is the scope. So we have to restrict the scope of the block, which by now covers the whole process.</p>
 <h2 id="system-v-keys">System V keys<a class="headerlink" href="#system-v-keys" title="Permanent link">&para;</a></h2>
 <p>A part of the IPC structures introduced by Unix System V is explicitly dedicated to resource identification, the capability of labelling arbitrary objects and limiting access management to them. This is done through the use of the so-called <em>SysV IPC Keys</em>: a <strong>key</strong>, in this context, is a number used to identify univocally an IPC structure. An IPC key can be generated by <code>ftok()</code></p>
-<div class="highlight"><pre><span></span><code><span class="kt">key_t</span><span class="w"> </span><span class="nf">ftok</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">pathname</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">proj_id</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">key_t</span><span class="w"> </span><span class="nf">ftok</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">pathname</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">proj_id</span><span class="p">);</span>
 </code></pre></div>
 
 <p>where <code>pathname</code> is an existing file name with the full path and <code>proj_id</code> is a number without any restriction. It is guaranteed that the returned key is the same for subsequent calls with the same parameters, but it is not guaranteed that different parameters result in different keys: in other words <em>keys are not guaranteed to be unique</em>. Since IPC functions require a key created with <code>ftok()</code> the best solution is to write a small library that keeps track of assigned keys and avoids duplicates.</p>
@@ -593,111 +579,111 @@
 <p>We can declare three semaphores: the first one will manage access to the buffer while the second and third will keep track of how many elements are in the buffer (later it will become clear why two semaphores are not sufficient).</p>
 <p>Given that access to the buffer is exclusive the first semaphore will be a binary one (which value thus will be 0 or 1) while the second and the third will have values linked to the length of the buffer.</p>
 <p>In C language the SysV primitive to create a semaphore is</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">semget</span><span class="p">(</span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">nsems</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">semflg</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">semget</span><span class="p">(</span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">nsems</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">semflg</span><span class="p">);</span>
 </code></pre></div>
 
 <p>where <code>key</code> is an IPC key created with <code>ftok()</code>, <code>nsems</code> is the number of semaphores we want to create and <code>semflg</code> a set of flags controlling access to the semaphores. Access to IPC structures is ruled by a 12 bit system which is almost identical to the Unix file system access control, but we will not dive into it. As you can also notice <code>semget()</code> manages sets of semaphores, which helps us to keep the code compact.</p>
 <p>Let's review the full code to create a semaphore</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/types.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/sem.h&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/types.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/sem.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;/etc/fstab&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;/etc/fstab&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
 
-<span class="w">  </span><span class="cm">/* create a semaphore set with only 1 semaphore: */</span><span class="w"></span>
-<span class="w">  </span><span class="n">semid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mo">0666</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* create a semaphore set with only 1 semaphore: */</span>
+<span class="w">  </span><span class="n">semid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mo">0666</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Do not compile and execute it by now. As you can see from the <code>#include</code> statements, IPC structures are provided by the operating system itself and not by the standard C library. The key is created by passing to <code>ftok()</code> a file that certainly exists in the system and the PID of the current process. To know more about permission flags check the manual page for <code>semget()</code>.</p>
 <p>Let's go on learning to manage and remove semaphores; the primitive used to interact with a semaphore is</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">semctl</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">semnum</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">semctl</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">semnum</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
 </code></pre></div>
 
 <p>where <code>semid</code> is the semaphore set identifier returned from <code>semget()</code>, <code>semnum</code> the index of the semaphore inside the set and <code>cmd</code> the command you want to run. The value <code>semnum</code> is optional for some commands. Some commands need also an additional argument which type is <code>union semun</code>, defined as</p>
-<div class="highlight"><pre><span></span><code><span class="k">union</span><span class="w"> </span><span class="nc">semun</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">                  </span><span class="cm">/* value for SETVAL */</span><span class="w"></span>
-<span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">semid_ds</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">;</span><span class="w">     </span><span class="cm">/* buffer for IPC_STAT, IPC_SET */</span><span class="w"></span>
-<span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="o">*</span><span class="n">array</span><span class="p">;</span><span class="w">    </span><span class="cm">/* array for GETALL, SETALL */</span><span class="w"></span>
-<span class="w">                           </span><span class="cm">/* Linux specific part: */</span><span class="w"></span>
-<span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">seminfo</span><span class="w"> </span><span class="o">*</span><span class="n">__buf</span><span class="p">;</span><span class="w">    </span><span class="cm">/* buffer for IPC_INFO */</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">union</span><span class="w"> </span><span class="nc">semun</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">                  </span><span class="cm">/* value for SETVAL */</span>
+<span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">semid_ds</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">;</span><span class="w">     </span><span class="cm">/* buffer for IPC_STAT, IPC_SET */</span>
+<span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="o">*</span><span class="n">array</span><span class="p">;</span><span class="w">    </span><span class="cm">/* array for GETALL, SETALL */</span>
+<span class="w">                           </span><span class="cm">/* Linux specific part: */</span>
+<span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">seminfo</span><span class="w"> </span><span class="o">*</span><span class="n">__buf</span><span class="p">;</span><span class="w">    </span><span class="cm">/* buffer for IPC_INFO */</span>
+<span class="p">};</span>
 </code></pre></div>
 
 <p>To set the value of a semaphore the command is <code>SETVAL</code> and the value is specified through a <code>union semun</code> variable. To set the value of the first semaphore to 1 we modify the program this way</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/types.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/sem.h&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/types.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/sem.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">union</span><span class="w"> </span><span class="nc">semun</span><span class="w"> </span><span class="n">arg</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">;</span>
+<span class="w">  </span><span class="k">union</span><span class="w"> </span><span class="nc">semun</span><span class="w"> </span><span class="n">arg</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;/etc/fstab&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;/etc/fstab&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
 
-<span class="w">  </span><span class="cm">/* create a semaphore set with only 1 semaphore: */</span><span class="w"></span>
-<span class="w">  </span><span class="n">semid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mo">0666</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* create a semaphore set with only 1 semaphore: */</span>
+<span class="w">  </span><span class="n">semid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mo">0666</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Last we have to cancel the semaphore releasing the structures needed for its management; this is done by the command <code>IPC_RMID</code>, which removes the semaphore and notifies all processes queued to access it that it has been removed. Let this notification aside for the moment and change the code to remove the semaphore</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/types.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/sem.h&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/types.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/sem.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">union</span><span class="w"> </span><span class="nc">semun</span><span class="w"> </span><span class="n">arg</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">;</span>
+<span class="w">  </span><span class="k">union</span><span class="w"> </span><span class="nc">semun</span><span class="w"> </span><span class="n">arg</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;/etc/fstab&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;/etc/fstab&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
 
-<span class="w">  </span><span class="cm">/* create a semaphore set with only 1 semaphore: */</span><span class="w"></span>
-<span class="w">  </span><span class="n">semid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mo">0666</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* create a semaphore set with only 1 semaphore: */</span>
+<span class="w">  </span><span class="n">semid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mo">0666</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* deallocate semaphore */</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_RMID</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* deallocate semaphore */</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_RMID</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Now you can compile and run it. As you can imagine the program seems to do nothing: it just silently creates a semaphore, sets its value and removes it.</p>
 <h2 id="semaphores-part-2">Semaphores - part 2<a class="headerlink" href="#semaphores-part-2" title="Permanent link">&para;</a></h2>
 <p>Time to use effectively the semaphore: the function that allows to performs operations on a semaphore is </p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">semop</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="o">*</span><span class="n">sops</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">nsops</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">semop</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="o">*</span><span class="n">sops</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">nsops</span><span class="p">);</span>
 </code></pre></div>
 
 <p>where <code>semid</code> is the set identifier, <code>sops</code> an array of operations and <code>nsops</code> the length of the latter. Each operation is declared through a <code>struct sembuf</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">ushort</span><span class="w">  </span><span class="n">sem_num</span><span class="p">;</span><span class="w">        </span><span class="cm">/* semaphore index in array */</span><span class="w"></span>
-<span class="w">             </span><span class="kt">short</span><span class="w">   </span><span class="n">sem_op</span><span class="p">;</span><span class="w">         </span><span class="cm">/* semaphore operation */</span><span class="w"></span>
-<span class="w">             </span><span class="kt">short</span><span class="w">   </span><span class="n">sem_flg</span><span class="p">;</span><span class="w">        </span><span class="cm">/* operation flags */</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ushort</span><span class="w">  </span><span class="n">sem_num</span><span class="p">;</span><span class="w">        </span><span class="cm">/* semaphore index in array */</span>
+<span class="w">             </span><span class="kt">short</span><span class="w">   </span><span class="n">sem_op</span><span class="p">;</span><span class="w">         </span><span class="cm">/* semaphore operation */</span>
+<span class="w">             </span><span class="kt">short</span><span class="w">   </span><span class="n">sem_flg</span><span class="p">;</span><span class="w">        </span><span class="cm">/* operation flags */</span>
+<span class="p">};</span>
 </code></pre></div>
 
 <p>For the time being we will always set <code>sem_flg</code> to 0. Operations are always integers and obey the following rules</p>
@@ -716,175 +702,175 @@
 <p>Since we did not yet talk about shared memory we have to simulate read and write operation, i.e. pretend the operation has been performed. This is necessary since each process has its own memory space and cannot access that of another process. So each process has its own copy of the buffer, and the copies are not linked each other. Later in this series we will talk about techniques that allow sharing memory regions between processes.</p>
 <p>As already stated, we need 3 semaphores: the first acts as access controller and its maximum value is 1 while the other two manage overflow and underflow conditions. A single semaphore could not handle both conditions, since <code>semop()</code> acts one-way only.</p>
 <p>Let's clarify the latter statement before looking at the code. Say we have a single semaphore to manage over- and underflow conditions, with a value equal to the number of empty spaces in the buffer. Each time a W process fills the buffer it can decrease the semaphore value by one unit until the value reaches 0, which represents the condition of full buffer. This way however the empty buffer condition cannot be managed since the R process can increment the value of the semaphore without any limit. Semaphores, indeed, just control the lower boundary and not the upper one.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;errno.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/types.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/sem.h&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;errno.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/types.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/sem.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="cm">/* IPC structures */</span><span class="w"></span>
-<span class="w">  </span><span class="kt">pid_t</span><span class="w"> </span><span class="n">pid</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">union</span><span class="w"> </span><span class="nc">semun</span><span class="w"> </span><span class="n">arg</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">lock_res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span><span class="w"></span>
-<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">rel_res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span><span class="w"></span>
-<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">push</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">};</span><span class="w"></span>
-<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">pop</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">};</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="cm">/* IPC structures */</span>
+<span class="w">  </span><span class="kt">pid_t</span><span class="w"> </span><span class="n">pid</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">semid</span><span class="p">;</span>
+<span class="w">  </span><span class="k">union</span><span class="w"> </span><span class="nc">semun</span><span class="w"> </span><span class="n">arg</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">lock_res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">rel_res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">push</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">};</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">pop</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">};</span>
 
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num_proc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num_write_actions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num_read_actions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num_proc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num_write_actions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num_read_actions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
 
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Usage: %s &lt;size&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
-<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">){</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Usage: %s &lt;size&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strtol</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strtol</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;/etc/fstab&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;/etc/fstab&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
 
-<span class="w">  </span><span class="cm">/* Create a set with 3 semaphores */</span><span class="w"></span>
-<span class="w">  </span><span class="n">semid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mo">0666</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Create a set with 3 semaphores */</span>
+<span class="w">  </span><span class="n">semid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">semget</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mo">0666</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Initialize semaphore #0 to 1 - Resource controller */</span><span class="w"></span>
-<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Initialize semaphore #0 to 1 - Resource controller */</span>
+<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Initialize semaphore #1 to buf_length - Overflow controller */</span><span class="w"></span>
-<span class="w">  </span><span class="cm">/* Sem value represents free space in buffer */</span><span class="w"></span>
-<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Initialize semaphore #1 to buf_length - Overflow controller */</span>
+<span class="w">  </span><span class="cm">/* Sem value represents free space in buffer */</span>
+<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Initialize semaphore #2 to buf_length - Underflow controller */</span><span class="w"></span>
-<span class="w">  </span><span class="cm">/* Sem value represents the number of elements in buffer */</span><span class="w"></span>
-<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Initialize semaphore #2 to buf_length - Underflow controller */</span>
+<span class="w">  </span><span class="cm">/* Sem value represents the number of elements in buffer */</span>
+<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Fork */</span><span class="w"></span>
-<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_proc</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fork</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pid</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="cm">/* Child process code*/</span><span class="w"></span>
-<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_write_actions</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="n">sleep</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">6</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Fork */</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_proc</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fork</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pid</span><span class="p">){</span>
+<span class="w">      </span><span class="cm">/* Child process code*/</span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_write_actions</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="n">sleep</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">6</span><span class="p">);</span>
 
-<span class="w">    </span><span class="cm">/* Try to lock the buffer - sem #0 */</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lock_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;semop:lock_res (write)&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Try to lock the buffer - sem #0 */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lock_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;semop:lock_res (write)&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Lock a free cell - sem #1 */</span><span class="w"></span>
-<span class="w">    </span><span class="cm">/* Push an element - sem #2 */</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">push</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;---&gt; Child process %d: Element written</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;---&gt; Child process %d: BUFFER FULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Lock a free cell - sem #1 */</span>
+<span class="w">    </span><span class="cm">/* Push an element - sem #2 */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">push</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;---&gt; Child process %d: Element written</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="p">{</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;---&gt; Child process %d: BUFFER FULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Release the buffer */</span><span class="w"></span>
-<span class="w">    </span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rel_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Release the buffer */</span>
+<span class="w">    </span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rel_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
 
-<span class="w">      </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_read_actions</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="n">sleep</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_read_actions</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="n">sleep</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">3</span><span class="p">);</span>
 
-<span class="w">    </span><span class="cm">/* Try to lock the buffer - sem #0 */</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lock_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;semop:lock_res (read)&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Try to lock the buffer - sem #0 */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lock_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;semop:lock_res (read)&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Unlock a free cell - sem #1 */</span><span class="w"></span>
-<span class="w">    </span><span class="cm">/* Pop an element - sem #2 */</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pop</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&lt;--- Parent process %d: Element read</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&lt;--- Parent process %d: BUFFER EMPTY</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Unlock a free cell - sem #1 */</span>
+<span class="w">    </span><span class="cm">/* Pop an element - sem #2 */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pop</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&lt;--- Parent process %d: Element read</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&lt;--- Parent process %d: BUFFER EMPTY</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Release the buffer */</span><span class="w"></span>
-<span class="w">    </span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rel_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Release the buffer */</span>
+<span class="w">    </span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rel_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="cm">/* Destroy semaphores */</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_RMID</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Destroy semaphores */</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_RMID</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Let us review the most interesting parts of the code.</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">lock_res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span><span class="w"></span>
-<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">rel_res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span><span class="w"></span>
-<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">push</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">};</span><span class="w"></span>
-<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">pop</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">};</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">lock_res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">rel_res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">push</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">};</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sembuf</span><span class="w"> </span><span class="n">pop</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_NOWAIT</span><span class="p">};</span>
 </code></pre></div>
 
 <p>These four lines of code declare the actions we will use later on the semaphore set. The first two are single actions while the second two are double ones. The first action, <code>lock_res</code>, is used to lock the buffer: as you can see the semaphore number 0 is decremented by 1 and in case of busy resource the strategy is waiting (the last 0 in the action). The second action releases the buffer and is the mirror image of the first one.</p>
 <p>The third and fourth actions are specular too; each of them is an array of two actions, the first on the semaphore number 1 and the second on the semaphore number 2; while the first one is incremented the second is decremented and vice versa. The policy is changed from the first two actions: <code>IPC_NOWAIT</code> forces the process to continue execution, in contrast with the previous case, when the process was put on hold.</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="cm">/* Initialize semaphore #0 to 1 - Resource controller */</span><span class="w"></span>
-<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="cm">/* Initialize semaphore #0 to 1 - Resource controller */</span>
+<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Initialize semaphore #1 to buf_length - Overflow controller */</span><span class="w"></span>
-<span class="w">  </span><span class="cm">/* Sem value represents free space in buffer */</span><span class="w"></span>
-<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Initialize semaphore #1 to buf_length - Overflow controller */</span>
+<span class="w">  </span><span class="cm">/* Sem value represents free space in buffer */</span>
+<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Initialize semaphore #2 to buf_length - Underflow controller */</span><span class="w"></span>
-<span class="w">  </span><span class="cm">/* Sem value represents the number of elements in buffer */</span><span class="w"></span>
-<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Initialize semaphore #2 to buf_length - Underflow controller */</span>
+<span class="w">  </span><span class="cm">/* Sem value represents the number of elements in buffer */</span>
+<span class="w">  </span><span class="n">arg</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">semctl</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">SETVAL</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
 </code></pre></div>
 
 <p>Next, semaphores must be initialized: as already stated the first one is set to 1, being a binary access controller, the second to the length of the buffer as overflow controller and the third to 0 as underflow controller.</p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="cm">/* Try to lock the buffer - sem #0 */</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lock_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;semop:lock_res (write)&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="cm">/* Try to lock the buffer - sem #0 */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lock_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;semop:lock_res (write)&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Lock a free cell - sem #1 */</span><span class="w"></span>
-<span class="w">    </span><span class="cm">/* Push an element - sem #2 */</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">push</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;---&gt; Child process %d: Element written</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;---&gt; Child process %d: BUFFER FULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Lock a free cell - sem #1 */</span>
+<span class="w">    </span><span class="cm">/* Push an element - sem #2 */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">push</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;---&gt; Child process %d: Element written</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="p">{</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;---&gt; Child process %d: BUFFER FULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Release the buffer */</span><span class="w"></span>
-<span class="w">    </span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rel_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Release the buffer */</span>
+<span class="w">    </span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rel_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
 </code></pre></div>
 
 <p>Child process code (a writer) tries first of all to lock the buffer using <code>lock_res</code>; once the control over the resource has been acquired it performs the <code>push</code> action and writes on the standard output a meaningful message. Otherwise, it signals that the buffer is full. The last action it performs is to release the resource through <code>rel_res</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="cm">/* Try to lock the buffer - sem #0 */</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lock_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;semop:lock_res (read)&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="cm">/* Try to lock the buffer - sem #0 */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lock_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;semop:lock_res (read)&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Unlock a free cell - sem #1 */</span><span class="w"></span>
-<span class="w">    </span><span class="cm">/* Pop an element - sem #2 */</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pop</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&lt;--- Parent process %d: Element read</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&lt;--- Parent process %d: BUFFER EMPTY</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Unlock a free cell - sem #1 */</span>
+<span class="w">    </span><span class="cm">/* Pop an element - sem #2 */</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pop</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&lt;--- Parent process %d: Element read</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&lt;--- Parent process %d: BUFFER EMPTY</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Release the buffer */</span><span class="w"></span>
-<span class="w">    </span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rel_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Release the buffer */</span>
+<span class="w">    </span><span class="n">semop</span><span class="p">(</span><span class="n">semid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rel_res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
 </code></pre></div>
 
 <p>As you can immediately notice parent process (reader) mimics the behaviour of the child. It lock the buffer, reads some data with the <code>pop</code> action and release the resource.</p>

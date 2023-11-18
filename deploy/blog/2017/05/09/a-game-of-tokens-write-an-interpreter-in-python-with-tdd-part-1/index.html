@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -599,19 +585,19 @@ line : assignment | expression
 <p>I will provide two classes: <code>Token</code> and <code>TextBuffer</code>. These will avoid you spending too much time to create the basic tools, and allow you to get straight into the game. Since those classes come obviously with their own test suite you are free to develop them on your own. You should however start from the same tests that I used, otherwise your interface might end up being incompatible witht he rest of the project.</p>
 <h2 id="initial-setup">Initial setup<a class="headerlink" href="#initial-setup" title="Permanent link">&para;</a></h2>
 <p>I prepared <a href="https://github.com/lgiordani/smallcalc">this repository</a>, which contains everything you need to start the project.</p>
-<div class="highlight"><pre><span></span><code>$ git clone https://github.com/lgiordani/smallcalc.git
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/lgiordani/smallcalc.git
 </code></pre></div>
 
 <p>Once you cloned the repository, set up a Python virtual environment using your favourite method/tool and install the testing requirements</p>
-<div class="highlight"><pre><span></span><code>pip install -r requirements/test.txt
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements/test.txt
 </code></pre></div>
 
 <p>At this point you should be able to run the test suite. For this project we are going to use <a href="http://www.pytest.org">pytest</a>, so the command line is</p>
-<div class="highlight"><pre><span></span><code>pytest -svv
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-svv
 </code></pre></div>
 
 <p>or, if you want to check your code coverage,</p>
-<div class="highlight"><pre><span></span><code>pytest -svv  --cov-report term-missing --cov<span class="o">=</span>smallcalc 
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-svv<span class="w">  </span>--cov-report<span class="w"> </span>term-missing<span class="w"> </span>--cov<span class="o">=</span>smallcalc<span class="w"> </span>
 </code></pre></div>
 
 <h2 id="tokens">Tokens<a class="headerlink" href="#tokens" title="Permanent link">&para;</a></h2>
@@ -659,12 +645,12 @@ line : assignment | expression
 <p>The second element that you will find in the initial setup is the class <code>TextBuffer</code>, that provides a very basic manager for an input text file</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EOLError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot; Signals that the buffer is reading after the end of a line.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Signals that the buffer is reading after the end of a line.&quot;&quot;&quot;</span>
 
 
 <span class="k">class</span> <span class="nc">EOFError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot; Signals that the buffer is reading after the end of the text.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Signals that the buffer is reading after the end of the text.&quot;&quot;&quot;</span>
 
 
 <span class="k">class</span> <span class="nc">TextBuffer</span><span class="p">:</span>
@@ -736,7 +722,7 @@ line : assignment | expression
 <h2 id="cli">CLI<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h2>
 <p>The third element I provide is a simple REPL (<a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">Read–eval–print loop</a>) that at the moment just echoes any text you will input and gracefully exit when we press Ctrl+D. There are and there will be no tests for the CLI. Testing endpoints like this is complex and not always worth the effort, as in this case.</p>
 <p>The command line can be run from the project main directory with</p>
-<div class="highlight"><pre><span></span><code>python cli.py
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>cli.py
 </code></pre></div>
 
 <h2 id="level-1-end-of-file">Level 1 - End of file<a class="headerlink" href="#level-1-end-of-file" title="Permanent link">&para;</a></h2>
@@ -760,16 +746,16 @@ line : assignment | expression
 
 <p>To avoid misleading errors you should also create the empty file <code>smallcalc/calc_lexer.py</code>, as without that file pytest will raise an <code>ImportError</code>.</p>
 <p>This is our first test, and if you run the test suite now you will see that it fails. This is expected, as there is no code to pass the test.</p>
-<div class="highlight"><pre><span></span><code>$ pytest -svv  --cov-report term-missing --cov<span class="o">=</span><span class="nv">smallcalc</span>
-<span class="o">==================================</span> <span class="nv">FAILURES</span> <span class="o">===================================</span>
-_______________________ test_get_tokens_understands_eof _______________________
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pytest<span class="w"> </span>-svv<span class="w">  </span>--cov-report<span class="w"> </span>term-missing<span class="w"> </span>--cov<span class="o">=</span><span class="nv">smallcalc</span>
+<span class="o">==================================</span><span class="w"> </span><span class="nv">FAILURES</span><span class="w"> </span><span class="o">===================================</span>
+_______________________<span class="w"> </span>test_get_tokens_understands_eof<span class="w"> </span>_______________________
 
-    def test_get_tokens_understands_eof<span class="o">()</span>:
-&gt;       <span class="nv">l</span> <span class="o">=</span> clex.CalcLexer<span class="o">()</span>
-E       AttributeError: module <span class="s1">&#39;smallcalc.calc_lexer&#39;</span> has no attribute <span class="s1">&#39;CalcLexer&#39;</span>
+<span class="w">    </span>def<span class="w"> </span>test_get_tokens_understands_eof<span class="o">()</span>:
+&gt;<span class="w">       </span><span class="nv">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>clex.CalcLexer<span class="o">()</span>
+E<span class="w">       </span>AttributeError:<span class="w"> </span>module<span class="w"> </span><span class="s1">&#39;smallcalc.calc_lexer&#39;</span><span class="w"> </span>has<span class="w"> </span>no<span class="w"> </span>attribute<span class="w"> </span><span class="s1">&#39;CalcLexer&#39;</span>
 
-tests/test_calc_lexer.py:6: <span class="nv">AttributeError</span>
-<span class="o">=====================</span> <span class="m">1</span> failed, <span class="m">29</span> passed <span class="k">in</span> <span class="m">0</span>.08 <span class="nv">seconds</span> <span class="o">=====================</span>
+tests/test_calc_lexer.py:6:<span class="w"> </span><span class="nv">AttributeError</span>
+<span class="o">=====================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>failed,<span class="w"> </span><span class="m">29</span><span class="w"> </span>passed<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.08<span class="w"> </span><span class="nv">seconds</span><span class="w"> </span><span class="o">=====================</span>
 </code></pre></div>
 
 <p>Implement now a class <code>CalcLexer</code> in the file <code>smallcalc/calc_lexer.py</code> that makes the test pass. Remember that you just need the code to pass this test. So do not implement complex systems now and go for the simplest solution (hint: the test expects that specific output).</p>
@@ -911,9 +897,9 @@ integer: [0-9]
 </code></pre></div>
 
 <p>Test it to check that everything works. If your code passes the tests I gave you, the result is guaranteed.</p>
-<div class="highlight"><pre><span></span><code>$ python cli.py 
-smallcalc :&gt; <span class="m">3</span>
-<span class="o">(</span><span class="m">3</span>, <span class="s1">&#39;integer&#39;</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>cli.py<span class="w"> </span>
+smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">3</span>
+<span class="o">(</span><span class="m">3</span>,<span class="w"> </span><span class="s1">&#39;integer&#39;</span><span class="o">)</span>
 </code></pre></div>
 
 <p>Let me recap what we just created. We wrote a lexer, which is a component that splits the input text in different tokens with a meaning, and we instructed it to react to single-digits integers. Then, we created a parser, which is the component that tries to make sense of several tokens put together, applying syntactical rules. Last, the visitor runs through the output of the parser and actually performs the actions that the grammar describes. All this to just print out an integer? Seems overkill! It is, actually, but there is a lot to come, and this separation of levels will come handy.</p>
@@ -1148,9 +1134,9 @@ expression: integer addsymbol integer
 </code></pre></div>
 
 <p>And a quick test of the CLI confirms that everything works fine</p>
-<div class="highlight"><pre><span></span><code>$ python cli.py 
-smallcalc :&gt; <span class="m">2</span>+4
-<span class="o">(</span><span class="m">6</span>, <span class="s1">&#39;integer&#39;</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>cli.py<span class="w"> </span>
+smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">2</span>+4
+<span class="o">(</span><span class="m">6</span>,<span class="w"> </span><span class="s1">&#39;integer&#39;</span><span class="o">)</span>
 </code></pre></div>
 
 <p>Everything? Well, not exactly. If I type just a single integer in the CLI the whole program crashes with an exception. If your solution doesn't blow up with a single integer, it means that you (probably) overengineered it a little. This is fine, but if you had implemented just what was needed to pass the tests the result would have been an error in that case.</p>
@@ -1483,9 +1469,9 @@ expression: integer addsymbol integer
 
 <p>This time, however, we are at the end of the processing chain, and we have to deal with the difference symbol, namely to actually subtract numbers. To make this test pass, thus, you will need to change something in your <code>CalcVisitor</code> class.</p>
 <p>Once your code passes this test, a quick test of the CLI shows that everything works as intended</p>
-<div class="highlight"><pre><span></span><code>$ python cli.py 
-smallcalc :&gt; <span class="m">4</span> - <span class="m">6</span>
-<span class="o">(</span>-2, <span class="s1">&#39;integer&#39;</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>cli.py<span class="w"> </span>
+smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">4</span><span class="w"> </span>-<span class="w"> </span><span class="m">6</span>
+<span class="o">(</span>-2,<span class="w"> </span><span class="s1">&#39;integer&#39;</span><span class="o">)</span>
 </code></pre></div>
 
 <p>and since we rely on Python to perform the actual subtraction we get negative numbers for free. Pay attention: we can have negative numbers in the results, but we cannot input negative numbers. This is something that we will have to add later.</p>

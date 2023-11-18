@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -551,103 +537,103 @@
     <h2 id="the-problem">The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
 <p><strong>P05</strong> (*) Reverse a list.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">reverse</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-<span class="n">res0</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="n">reverse</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div>
 
 <h2 id="initial-thoughts">Initial thoughts<a class="headerlink" href="#initial-thoughts" title="Permanent link">&para;</a></h2>
 <p>Another classical problem of computer science and functional languages. The solution will be straightforward. As happened with the <code>length()</code> function developed for <a href="https://www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-04-length/">problem 04</a>, this one may help solving <a href="https://www.thedigitalcatonline.com/blog/2015/04/07/99-scala-problems-02-find-last-nth/">problem 02</a> in a pure recursive way. Moreover this problem may be solved with folding like problem 04.</p>
 <h2 id="the-procedural-solution">The procedural solution<a class="headerlink" href="#the-procedural-solution" title="Permanent link">&para;</a></h2>
 <p><code>List</code> type provides a suitable built-in method <code>reverse()</code> to return a reversed copy of the list. Pay attention to the fact that this method does not reverse the list in place, but returns a new list.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">ls</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span> <span class="o">=</span> <span class="n">ls</span><span class="p">.</span><span class="n">reverse</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">ls</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">reverse</span>
 </code></pre></div>
 
 <h2 id="the-recursive-solution">The recursive solution<a class="headerlink" href="#the-recursive-solution" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="n">h</span> <span class="o">::</span> <span class="n">tail</span> <span class="o">=&gt;</span> <span class="n">reverse</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span> <span class="o">:::</span> <span class="nc">List</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-    <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="nc">Nil</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">reverse</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span><span class="w"> </span><span class="o">:::</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Nil</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>This solution gives us the chance to dig into list concatenation operators in Scala. The double colon operator <code>::</code> has been introduced in problem 01 as something that divides the head element of a list from the tail. As a matter of fact, that operator appends an element at the beginning of a list</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="kd">val</span> <span class="n">l</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span>
 
-<span class="n">scala</span><span class="o">&gt;</span> <span class="mi">1</span><span class="n">::l</span>
-<span class="n">res0</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="n">::l</span>
+<span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Pay attention that pattern matching does not only a "pattern comparison", but also an assignment. In Scala, when you write</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="mi">5</span> <span class="k">match</span> <span class="p">{</span>
-     <span class="o">|</span>  <span class="k">case</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>
-     <span class="o">|</span> <span class="p">}</span>
-<span class="n">res3</span><span class="p">:</span> <span class="nc">Int</span> <span class="o">=</span> <span class="mi">6</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="o">|</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="p">}</span>
+<span class="n">res3</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span>
 </code></pre></div>
 
 <p>what you do is to first try to match <code>5</code> with <code>a</code>, and if it is successful, Scala assigns the value <code>5</code> to the variable (in this case <code>a</code> is a free variable, so the match is always satisfied).</p>
 <p>So the list pattern matching we already used</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="k">match</span> <span class="p">{</span>
-     <span class="o">|</span>  <span class="k">case</span> <span class="n">h::tail</span> <span class="o">=&gt;</span> <span class="n">h</span>
-     <span class="o">|</span>  <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="nc">Nil</span>
-     <span class="o">|</span> <span class="p">}</span>
-<span class="n">res7</span><span class="p">:</span> <span class="nc">Any</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="o">|</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">h::tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">h</span>
+<span class="w">     </span><span class="o">|</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Nil</span>
+<span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="p">}</span>
+<span class="n">res7</span><span class="p">:</span><span class="w"> </span><span class="nc">Any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 </code></pre></div>
 
 <p>tries to match the incoming <code>List(1,2,3,4)</code> with something in the form <code>h::tail</code>, which means "a list with a single element head and a list tail". Using the <code>::</code> operator ensures that <code>h</code> is considered a single element.</p>
 <p>This, however, is just a mnemonic. The truth is that <code>::</code> in Scala is also <a href="http://www.scala-lang.org/api/2.11.4/index.html#scala.collection.immutable.$colon$colon">a class</a> derived from <code>List</code> which is constructed passing a single element and a list. This means that the above example may be explicityl written as</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="k">match</span> <span class="p">{</span>
-     <span class="o">|</span>  <span class="k">case</span> <span class="n">::</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">tail</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">h</span>
-     <span class="o">|</span>  <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="nc">Nil</span>
-     <span class="o">|</span> <span class="p">}</span>
-<span class="n">res7</span><span class="p">:</span> <span class="nc">Any</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="o">|</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">::</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">tail</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">h</span>
+<span class="w">     </span><span class="o">|</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Nil</span>
+<span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="p">}</span>
+<span class="n">res7</span><span class="p">:</span><span class="w"> </span><span class="nc">Any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 </code></pre></div>
 
 <p>So, while the effect is the same, there is difference between <code>::</code> as a method of <code>List</code> objects and <code>::</code> as a class used in pattern matching. Also remember that in Scala methods which name ends with <code>:</code> are right-associative (see <a href="http://www.scala-lang.org/files/archive/spec/2.11/06-expressions.html#infix-operations">the language specification</a>. This means that <code>0 :: List(1,2,3)</code> is a shorthand form for <code>List(1,2,3).::(0)</code></p>
 <p>The triple colon operator <code>:::</code>, conversely, is just a method of <code>List</code> objects and there is no class with that name. It prepends a whole list to another list (joins the lists), and ending with <code>:</code> it is also a right-associative method.</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">:::</span> <span class="nc">List</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">res18</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">:::</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">res18</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span>
 
-<span class="n">scala</span><span class="o">&gt;</span> <span class="nc">List</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">).</span><span class="n">:::</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">res0</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">).</span><span class="n">:::</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Now the recursive solution becomes more clear: the first pattern matching case just exchanges the head of the list with the tail, but recursively calls the function on the tail itself.</p>
 <p>As already explained this code is not tail recursive, thus allocating stack space to store local variables during the recursive call. A good way to make it tail recursive is to use another list that is filled by the elements extracted from the source one.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="k">def</span> <span class="nf">_reverse</span><span class="p">(</span><span class="n">res</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="n">rem</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="n">rem</span> <span class="k">match</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="n">res</span>
-        <span class="k">case</span> <span class="n">h</span> <span class="o">::</span> <span class="n">tail</span> <span class="o">=&gt;</span> <span class="n">_reverse</span><span class="p">(</span><span class="n">h</span> <span class="o">::</span> <span class="n">res</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="n">_reverse</span><span class="p">(</span><span class="nc">Nil</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">_reverse</span><span class="p">(</span><span class="n">res</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span><span class="w"> </span><span class="n">rem</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rem</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">res</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_reverse</span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">res</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">_reverse</span><span class="p">(</span><span class="nc">Nil</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>Here we use an helper function in which we pick the first element of the remainder list <code>rem</code> and add it at the beginning of a list built from scratch. As you can see there is no computation left on the stack when we do the recursive call. The first solution, conversely, gave the result of the recursion as input to the <code>:::()</code> method.</p>
 <h2 id="folding">Folding<a class="headerlink" href="#folding" title="Permanent link">&para;</a></h2>
 <p>Folding may greatly simplify the solution. Remember that <code>foldLeft()</code> is a method of <code>List</code> objects that visits each element in the list, applying a given function. The first use of the function receives the initial value passed to <code>foldLeft()</code>, while successive calls receive the result of the previous call.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">ls</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span>
-    <span class="n">ls</span><span class="p">.</span><span class="n">foldLeft</span><span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]())</span> <span class="p">{</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">h</span> <span class="o">::</span> <span class="n">r</span> <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">ls</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">ls</span><span class="p">.</span><span class="n">foldLeft</span><span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]())</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 
 <p>The function passed to <code>foldLeft()</code> accepts the previous result and the current element. Since the initial value is an empty list we may apply the <code>::</code> operator just like we did in the tail recursive solution.</p>
 <h2 id="last-nth-element">Last nth element<a class="headerlink" href="#last-nth-element" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">lastNth</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span> <span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span> <span class="nc">A</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="k">def</span> <span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="k">def</span> <span class="nf">_reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">r</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span> <span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="n">r</span>
-            <span class="k">case</span> <span class="n">head::tail</span> <span class="o">=&gt;</span> <span class="n">_reverse</span><span class="p">(</span><span class="n">head::r</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span>
-        <span class="p">}</span>
-        <span class="n">_reverse</span><span class="p">(</span><span class="nc">List</span><span class="p">(),</span> <span class="n">l</span><span class="p">)</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lastNth</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="w"> </span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">def</span><span class="w"> </span><span class="nf">_reverse</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">r</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">],</span><span class="w"> </span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">r</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">head::tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_reverse</span><span class="p">(</span><span class="n">head::r</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">_reverse</span><span class="p">(</span><span class="nc">List</span><span class="p">(),</span><span class="w"> </span><span class="n">l</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">findKth</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">k</span><span class="p">:</span><span class="nc">Int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">)</span> <span class="k">match</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h::_</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">h</span>
-        <span class="k">case</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">_::tail</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">=&gt;</span> <span class="n">findKth</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span>
-        <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">findKth</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">k</span><span class="p">:</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">:</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">h::_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">h</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">_::tail</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">findKth</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="p">)</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">NoSuchElementException</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="kd">val</span> <span class="n">r</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-    <span class="n">findKth</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reverse</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="w">    </span><span class="n">findKth</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 

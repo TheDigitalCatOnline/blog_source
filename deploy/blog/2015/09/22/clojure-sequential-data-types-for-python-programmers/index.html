@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -589,8 +575,8 @@
 <p>Clojure collections are also <strong>persistent</strong>. The original meaning of this word refers to the possibility of accessing the old version of a given structure after having changed it. Since structures in Clojure are immutable you are forced to create a new variable every time you want to change something, which implies that the "old version" is still available. That is, immutability implies persistence. In Clojure, moreover, structures share values as long as this is consistent, which is exactly what Python does with the references concept (see <a href="https://www.thedigitalcatonline.com/blog/2014/08/21/python-3-oop-part-4-polymorphism/">this post</a>).</p>
 <h2 id="vectors-in-clojure">Vectors in Clojure<a class="headerlink" href="#vectors-in-clojure" title="Permanent link">&para;</a></h2>
 <p>Clojure's vectors are very similar to Python lists. The first thing that makes them similar (apart from the square brackets syntax) is that they grow on the right end.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">conj </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span> <span class="mi">5</span><span class="p">)</span>
-<span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">]</span>
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
@@ -600,7 +586,7 @@
 </code></pre></div>
 
 <p>From the right end you can also easily get values</p>
-<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">peek </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
+<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">peek </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">])</span>
 <span class="mi">5</span>
 </code></pre></div>
 
@@ -616,8 +602,8 @@
 <p>So Clojure vectors and Python lists are LIFO queues (Last In First Out), otherwise known as <em>stacks</em>. In Clojure <code>peek</code> takes the role of the classic <code>pop</code> operation, but remember that being collections immutable, what you get is a new value. That is, while in Python <code>pop()</code> modifies the list, in Clojure <code>peek</code> doesn't alter the vector.</p>
 <h3 id="subvectors">Subvectors<a class="headerlink" href="#subvectors" title="Permanent link">&para;</a></h3>
 <p>Just like Python lists, vectors can be sliced with the <code>subvec</code> function</p>
-<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">subvec </span><span class="p">[</span><span class="ss">:a</span> <span class="ss">:b</span> <span class="ss">:c</span> <span class="ss">:d</span> <span class="ss">:e</span><span class="p">]</span> <span class="mi">2</span> <span class="mi">5</span><span class="p">)</span>
-<span class="p">[</span><span class="ss">:c</span> <span class="ss">:d</span> <span class="ss">:e</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">subvec </span><span class="p">[</span><span class="ss">:a</span><span class="w"> </span><span class="ss">:b</span><span class="w"> </span><span class="ss">:c</span><span class="w"> </span><span class="ss">:d</span><span class="w"> </span><span class="ss">:e</span><span class="p">]</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="p">[</span><span class="ss">:c</span><span class="w"> </span><span class="ss">:d</span><span class="w"> </span><span class="ss">:e</span><span class="p">]</span>
 </code></pre></div>
 
 <p>Subvectors are however different from Python list slices. When you slice a list in Python you get a new object containing part of the same references you can find in the source list. That is, slicing a list actually builds a new list copying the reference of each object contained in the slice.</p>
@@ -653,8 +639,8 @@
 <p>You find two different functions that can append values to a Clojure vector, <code>into</code> and <code>conj</code>, implementing the <code>push</code> operation of classic stacks. Clojure is not an object-oriented language, so these functions are not methods of the vector type. Those methods however behave in a different way according to the destination type.</p>
 <p>The <code>into</code> function, according to the <a href="https://clojuredocs.org/clojure.core/into">official documentation</a> <em>conjoins every item</em> of the second argument (the <em>from</em> collection) into the first argument (the <em>to</em> collection). This means that every item of the incoming collection is appended to the destination, according to the way that collection manages the append operation. For example, vectors grow on the right, so performing an <code>into</code> will append elements on the right end of the vector itself. This means also that <code>into</code> may be used to convert one type of collection into another.</p>
 <p>Conversely, the <code>conj</code> function <em>conjoins the whole second argument</em> (<code>conj</code> accepts more than two arguments but let's deal with the simpler case now)</p>
-<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">conj </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="mi">5</span> <span class="mi">6</span><span class="p">])</span>
-<span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="p">[</span><span class="mi">5</span> <span class="mi">6</span><span class="p">]]</span>
+<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">[</span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">]]</span>
 </code></pre></div>
 
 <p>Just like <code>into</code>, <code>conj</code> relies on the destination type to perform the actual append operation.</p>
@@ -676,8 +662,8 @@
 
 <h3 id="getting-values-pop">Getting values (pop)<a class="headerlink" href="#getting-values-pop" title="Permanent link">&para;</a></h3>
 <p>The <code>pop</code> operation of classic stacks is also implemented by two different functions, <code>peek</code> and <code>pop</code>. The first one returns the last element of the vector, being thus the Clojure's equivalent of Python's <code>pop()</code> as shown in a previous example. Clojure's <code>pop</code>, instead, removes the last element and returns the resulting vector.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">pop </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
-<span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">pop </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span>
 </code></pre></div>
 
 <p>The Python equivalent could be a slice</p>
@@ -695,12 +681,12 @@
 </code></pre></div>
 
 <p>where the indexing syntax works also for slices. In Clojure you can use the <code>nth</code> function</p>
-<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">nth </span><span class="p">[</span><span class="s">&quot;a&quot;</span> <span class="s">&quot;vector&quot;</span> <span class="s">&quot;of&quot;</span> <span class="s">&quot;strings&quot;</span><span class="p">]</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth </span><span class="p">[</span><span class="s">&quot;a&quot;</span><span class="w"> </span><span class="s">&quot;vector&quot;</span><span class="w"> </span><span class="s">&quot;of&quot;</span><span class="w"> </span><span class="s">&quot;strings&quot;</span><span class="p">]</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
 <span class="s">&quot;of&quot;</span>
 </code></pre></div>
 
 <p>For vectors the <code>get</code> function maps to <code>nth</code>, since vectors are after all ordered dictionaries with the position indices as keys. Vectors in Clojure can also be directly used as functions, which aliases the use of <code>nth</code></p>
-<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span> <span class="p">([</span><span class="s">&quot;a&quot;</span> <span class="s">&quot;vector&quot;</span> <span class="s">&quot;of&quot;</span> <span class="s">&quot;strings&quot;</span><span class="p">]</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span><span class="w"> </span><span class="p">([</span><span class="s">&quot;a&quot;</span><span class="w"> </span><span class="s">&quot;vector&quot;</span><span class="w"> </span><span class="s">&quot;of&quot;</span><span class="w"> </span><span class="s">&quot;strings&quot;</span><span class="p">]</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
 <span class="s">&quot;of&quot;</span>
 </code></pre></div>
 
@@ -708,18 +694,18 @@
 <p>Being Clojure a LISP, lists are of paramount importance and a complete discussion about them will surely span more than a small post on a blog. So in this section I will try to stay focused on the differences with Python lists (and Clojure vectors), rather than give you a complete overview of this incredibly powerful tool. The most important thing I will not review here is that lists in Clojure are part of the syntax itself and in the following section I will only consider lists as data containers. The fact that LISPs consider code as data is outside the scope of this work.</p>
 <p>Being vectors the Clojure collection that implement classic stacks (LIFO queues), and being stacks one of the most used data structures in computer science, it is no surprise that a lot of sequential data processing in Clojure is done through vectors.</p>
 <p>As already stated the big difference between vectors and lists in Clojure is the fact that lists grow on the left end. Let us review the behaviour of <code>peek</code> and <code>conj</code> on lists compared to that of the same functions on vectors</p>
-<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">peek </span><span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">peek </span><span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span>
 <span class="mi">1</span>
-<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">peek </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span>
+<span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">peek </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span>
 <span class="mi">4</span>
-<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">conj </span><span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
-<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">conj </span><span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span> <span class="mi">1</span><span class="p">)</span>
-<span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">1</span><span class="p">]</span>
-<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">pop </span><span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">))</span>
-<span class="p">(</span><span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
-<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">pop </span><span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span>
-<span class="p">[</span><span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj </span><span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+<span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj </span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
+<span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">pop </span><span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+<span class="nv">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">pop </span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span>
 </code></pre></div>
 
 <p>I think this is simple to remember and easy to deal with in algorithms. As you can see lists behave somehow like mirrored vectors. Beware, however, that functions such as <code>first</code> and <code>last</code> still work in the same way. That is, lists are not reversed vectors.</p>

@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -588,210 +574,210 @@
 <h2 id="system-v-message-queues">System V Message Queues<a class="headerlink" href="#system-v-message-queues" title="Permanent link">&para;</a></h2>
 <p>Now it is the time to speak about implementing these concepts in a Linux operating system environment. As already said we have a set of primitives that allow us to manage the structures related to message queues, and they are very similar to those dedicated to semaphore management, already described in <a href="https://www.thedigitalcatonline.com/blog/2013/02/13/concurrent-programming-4/">the past article</a>.</p>
 <p>The structure used to describe a message is <code>msgbuf</code> and is declared in <code>linux/msg.h</code></p>
-<div class="highlight"><pre><span></span><code><span class="cm">/* message buffer for msgsnd and msgrcv calls */</span><span class="w"></span>
-<span class="k">struct</span><span class="w"> </span><span class="nc">msgbuf</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">;</span><span class="w">         </span><span class="cm">/* type of message */</span><span class="w"></span>
-<span class="w">   </span><span class="kt">char</span><span class="w"> </span><span class="n">mtext</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w">      </span><span class="cm">/* message text */</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* message buffer for msgsnd and msgrcv calls */</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">msgbuf</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">;</span><span class="w">         </span><span class="cm">/* type of message */</span>
+<span class="w">   </span><span class="kt">char</span><span class="w"> </span><span class="n">mtext</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w">      </span><span class="cm">/* message text */</span>
+<span class="p">};</span>
 </code></pre></div>
 
 <p>The field <code>mtype</code> represents the type of the message and is a strictly positive number: the correspondence between numbers and message types has to be set in advance and is part of the protocol definition.</p>
 <p>The second field represents the content of the message. With the standard definition, no real message can be held inside it because the space is too little (just one byte). This is just a placeholder since the real structure used to describe messages can be redefined in order to contain complex data. An example of redefinition is the following</p>
-<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">message</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">;</span><span class="w">         </span><span class="cm">/* message type */</span><span class="w"></span>
-<span class="w">   </span><span class="kt">long</span><span class="w"> </span><span class="n">sender</span><span class="p">;</span><span class="w">        </span><span class="cm">/* sender id */</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">message</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">;</span><span class="w">         </span><span class="cm">/* message type */</span>
+<span class="w">   </span><span class="kt">long</span><span class="w"> </span><span class="n">sender</span><span class="p">;</span><span class="w">        </span><span class="cm">/* sender id */</span>
 <span class="w">   </span><span class="kt">long</span><span class="w"> </span><span class="n">receiver</span><span class="p">;</span><span class="w">        </span><span class="cm">/* receiver id */</span><span class="w">        </span>
-<span class="w">   </span><span class="k">struct</span><span class="w"> </span><span class="nc">info</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">   </span><span class="cm">/* message content */</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">   </span><span class="k">struct</span><span class="w"> </span><span class="nc">info</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">   </span><span class="cm">/* message content */</span>
+<span class="p">};</span>
 </code></pre></div>
 
 <p>As you can see this is not a redefinition in the sense of object inheritance, being C a pure procedural language. The redefined structure must obey two simple rules: the first field must be a <code>long mtype</code> and the maximum size dimension shall be 8192 bytes.</p>
 <p>This last limit is hard coded in the Linux kernel, i.e. there is a C <code>#define</code> directive in <code>linux/msg.h</code> which states</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#define MSGMAX  8192   </span><span class="cm">/* &lt;= INT_MAX */</span><span class="cp">   </span><span class="cm">/* max size of message (bytes) */</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#define MSGMAX  8192   </span><span class="cm">/* &lt;= INT_MAX */</span><span class="cp">   </span><span class="cm">/* max size of message (bytes) */</span>
 </code></pre></div>
 
 <p>In the same file, there are other interesting limits such as <code>MSGMNB</code>, the maximum total size of a queue, which in Linux is set by default to 16384. That means that a queue containing 2 messages is already full.</p>
 <p>A short notice about kernel parameters such as <code>MSGMAX</code>, <code>MSGMNB</code> and others: kernel parameters can obviously be changed by modifying the source code and recompiling the kernel, that is generating a custom Linux kernel. Varying some parameters, however, can be dangerous for the portability of your programs. Indeed, if you increase the maximum size of a message to, say, 16384 bytes, in order to host big messages, your application will crash on a kernel without that modification, where the maximum size is still 8192. Kernel parameters can also be changed at runtime through the <code>/proc</code> filesystem and the sysctl interface: these topics are very rich and important and thus deserve a larger space. For the time being, I let the reader research about them.</p>
 <h4 id="create-a-queue">Create a queue<a class="headerlink" href="#create-a-queue" title="Permanent link">&para;</a></h4>
 <p>To create a new queue a process should call the <code>msgget()</code> function</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">msgget</span><span class="p">(</span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgflg</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">msgget</span><span class="p">(</span><span class="kt">key_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgflg</span><span class="p">)</span>
 </code></pre></div>
 
 <p>which receives as arguments an IPC key (see <a href="https://www.thedigitalcatonline.com/blog/2013/02/13/concurrent-programming-4/">issue 4</a>) and some flags, which by now can be set to <code>IPC_CREAT | 0660</code> (create the queue if it does not exist
 and grant access to the owner and group users). The returned integer is called queue identifier and is unique in the system.</p>
 <h4 id="send-messages">Send messages<a class="headerlink" href="#send-messages" title="Permanent link">&para;</a></h4>
 <p>To send a message to a queue we call the <code>msgsnd()</code> primitive</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">msgsnd</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">msqid</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">msgbuf</span><span class="w"> </span><span class="o">*</span><span class="n">msgp</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgsz</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgflg</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">msgsnd</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">msqid</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">msgbuf</span><span class="w"> </span><span class="o">*</span><span class="n">msgp</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgsz</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgflg</span><span class="p">)</span>
 </code></pre></div>
 
 <p>where <code>msqid</code> is the identifier of the queue, <code>msgp</code> is a pointer to the message we have to send, <code>msgz</code> the size of the message in bytes (excluding the length of the <code>mtype</code> field, which is 4 bytes) and <code>msgflg</code> a flag related to the waiting policy.</p>
 <p>Here, <code>msgp</code> is a pointer to a <code>struct msgbuf</code>. However, since that structure has been redefined, our actual call will contain a pointer to a variable of the redefined type.</p>
 <p>The length of the message in bytes can be easily be found as</p>
-<div class="highlight"><pre><span></span><code><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">message</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">message</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span>
 </code></pre></div>
 
 <p>where <code>struct message</code> is our redefinition of <code>struct msgbuf</code>.</p>
 <p>Waiting policies are similar to those introduced for semaphores. This time the policy is used when the queue is full. If <code>msgflg</code> is set to <code>IPC_NOWAIT</code>, the sender process will not wait for some available space and will exit with an error code.</p>
 <h4 id="read-messages">Read messages<a class="headerlink" href="#read-messages" title="Permanent link">&para;</a></h4>
 <p>To read messages contained in a queue we use the <code>msgrcv()</code> system call</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">msgrcv</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">msqid</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">msgbuf</span><span class="w"> </span><span class="o">*</span><span class="n">msgp</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgsz</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgflg</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">msgrcv</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">msqid</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">msgbuf</span><span class="w"> </span><span class="o">*</span><span class="n">msgp</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgsz</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">msgflg</span><span class="p">)</span>
 </code></pre></div>
 
 <p>where the <code>msgp</code> pointer identifies the variable where we will copy the message read from the queue and mtype identifies the subset of messages we want to consider. As before, <code>msgp</code> should be a pointer to a variable of our redefined type and both <code>msgz</code> and <code>msgflg</code> have the same meaning of their counterparts in <code>msgsnd()</code>.</p>
 <h4 id="delete-a-queue">Delete a queue<a class="headerlink" href="#delete-a-queue" title="Permanent link">&para;</a></h4>
 <p>Last, a queue can be removed calling the <code>msgctl()</code> primitive</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">msgctl</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">msqid</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">msqid_ds</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">msgctl</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">msqid</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">msqid_ds</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">);</span>
 </code></pre></div>
 
 <p>where the command <code>cmd</code> to remove the queue is <code>IPC_RMID</code>. Other two commands, <code>IPC_STAT</code> and <code>IPC_SET</code>, are available through <code>msgctl()</code>, but they are not interesting now.</p>
 <h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
 <p>Let's test all these concepts with a simple program which creates a message queue, sends a message to it, reads the message and cancels the queue. After the message has been read, a comparison between the original values and the ones in the message is performed to check that the system is working.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/msg.h&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/msg.h&gt;</span>
 
-<span class="cm">/* Redefines the struct msgbuf */</span><span class="w"></span>
-<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">mymsgbuf</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">int_num</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">float_num</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">ch</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">message_t</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Redefines the struct msgbuf */</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">mymsgbuf</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">int_num</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">float_num</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">ch</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">message_t</span><span class="p">;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">qid</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">msgkey</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">qid</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">msgkey</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">message_t</span><span class="w"> </span><span class="n">sent</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">message_t</span><span class="w"> </span><span class="n">received</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">message_t</span><span class="w"> </span><span class="n">sent</span><span class="p">;</span>
+<span class="w">  </span><span class="n">message_t</span><span class="w"> </span><span class="n">received</span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">length</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">length</span><span class="p">;</span>
 
-<span class="w">  </span><span class="cm">/* Initialize the seed of the pseudo-random number generator */</span><span class="w"></span>
-<span class="w">  </span><span class="n">srand</span><span class="w"> </span><span class="p">(</span><span class="n">time</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Initialize the seed of the pseudo-random number generator */</span>
+<span class="w">  </span><span class="n">srand</span><span class="w"> </span><span class="p">(</span><span class="n">time</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
 
-<span class="w">  </span><span class="cm">/* Length of the message */</span><span class="w"></span>
-<span class="w">  </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">message_t</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Length of the message */</span>
+<span class="w">  </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">message_t</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">msgkey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">msgkey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
 
-<span class="w">  </span><span class="cm">/* Create the queue*/</span><span class="w"></span>
-<span class="w">  </span><span class="n">qid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msgget</span><span class="p">(</span><span class="n">msgkey</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mo">0660</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Create the queue*/</span>
+<span class="w">  </span><span class="n">qid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msgget</span><span class="p">(</span><span class="n">msgkey</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mo">0660</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;QID = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">qid</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;QID = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">qid</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Build a message */</span><span class="w"></span>
-<span class="w">  </span><span class="n">sent</span><span class="p">.</span><span class="n">mtype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">sent</span><span class="p">.</span><span class="n">int_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">sent</span><span class="p">.</span><span class="n">float_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">rand</span><span class="p">())</span><span class="o">/</span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">sent</span><span class="p">.</span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">abs</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span><span class="o">%</span><span class="mi">26</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">97</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Build a message */</span>
+<span class="w">  </span><span class="n">sent</span><span class="p">.</span><span class="n">mtype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sent</span><span class="p">.</span><span class="n">int_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">();</span>
+<span class="w">  </span><span class="n">sent</span><span class="p">.</span><span class="n">float_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">rand</span><span class="p">())</span><span class="o">/</span><span class="mi">3</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sent</span><span class="p">.</span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">abs</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span><span class="o">%</span><span class="mi">26</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">97</span><span class="p">;</span>
 
-<span class="w">  </span><span class="cm">/* Send the message */</span><span class="w"></span>
-<span class="w">  </span><span class="n">msgsnd</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sent</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;MESSAGE SENT</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Send the message */</span>
+<span class="w">  </span><span class="n">msgsnd</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sent</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;MESSAGE SENT</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Receive the message */</span><span class="w"></span>
-<span class="w">  </span><span class="n">msgrcv</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">received</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">mtype</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;MESSAGE RECEIVED</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Receive the message */</span>
+<span class="w">  </span><span class="n">msgrcv</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">received</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">mtype</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;MESSAGE RECEIVED</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 
-<span class="w">  </span><span class="cm">/* Control that received and sent messages are equal */</span><span class="w"></span>
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Interger number = %d (sent %d) -- &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">.</span><span class="n">int_num</span><span class="p">,</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">int_num</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">received</span><span class="p">.</span><span class="n">int_num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">int_num</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; OK</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERROR</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Control that received and sent messages are equal */</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Interger number = %d (sent %d) -- &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">.</span><span class="n">int_num</span><span class="p">,</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">int_num</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">received</span><span class="p">.</span><span class="n">int_num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">int_num</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; OK</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERROR</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Float number = %f (sent %f) -- &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">.</span><span class="n">float_num</span><span class="p">,</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">float_num</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">received</span><span class="p">.</span><span class="n">float_num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">float_num</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; OK</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERROR</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Float number = %f (sent %f) -- &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">.</span><span class="n">float_num</span><span class="p">,</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">float_num</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">received</span><span class="p">.</span><span class="n">float_num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">float_num</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; OK</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERROR</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Char = &#39;%c&#39; (sent &#39;%c&#39;) -- &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">.</span><span class="n">ch</span><span class="p">,</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">ch</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">received</span><span class="p">.</span><span class="n">ch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">ch</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; OK</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERROR</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Char = &#39;%c&#39; (sent &#39;%c&#39;) -- &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">.</span><span class="n">ch</span><span class="p">,</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">ch</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">received</span><span class="p">.</span><span class="n">ch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">sent</span><span class="p">.</span><span class="n">ch</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; OK</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERROR</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="cm">/* Destroy the queue */</span><span class="w"></span>
-<span class="w">  </span><span class="n">msgctl</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_RMID</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Destroy the queue */</span>
+<span class="w">  </span><span class="n">msgctl</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_RMID</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p><a href="/code/queues1.c">source code</a></p>
 <p>Now we can create two processes and let them communicate through a message queue. Remembering forking concepts explained in the <a href="https://www.thedigitalcatonline.com/blog/2013/02/04/concurrent-programming-2/">issue 2</a> you can recall that the child process, when created, receives a copy of the memory of its parent. This means that creating the queue before the fork operation results in both the parent and the child knowing the right queue identifier and thus capable of access it.</p>
 <p>The following code creates a queue, then forks the execution. The child generates a random number, prints it on the standard output and sends them to the parent, which in turn prints it on the screen.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/msg.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/types.h&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/ipc.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/msg.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/types.h&gt;</span>
 
-<span class="cm">/* Redefines the message structure */</span><span class="w"></span>
-<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">mymsgbuf</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">message_t</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Redefines the message structure */</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">mymsgbuf</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">mtype</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">message_t</span><span class="p">;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">qid</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">msgkey</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">pid_t</span><span class="w"> </span><span class="n">pid</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">qid</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">key_t</span><span class="w"> </span><span class="n">msgkey</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">pid_t</span><span class="w"> </span><span class="n">pid</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">message_t</span><span class="w"> </span><span class="n">buf</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">message_t</span><span class="w"> </span><span class="n">buf</span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">length</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">length</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">message_t</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">message_t</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">msgkey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">msgkey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ftok</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getpid</span><span class="p">());</span>
 
-<span class="w">  </span><span class="n">qid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msgget</span><span class="p">(</span><span class="n">msgkey</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mo">0660</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">qid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msgget</span><span class="p">(</span><span class="n">msgkey</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_CREAT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mo">0660</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fork</span><span class="p">())){</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;CHILD - Queue ID = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">qid</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fork</span><span class="p">())){</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;CHILD - Queue ID = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">qid</span><span class="p">);</span>
 
-<span class="w">    </span><span class="n">srand</span><span class="w"> </span><span class="p">(</span><span class="n">time</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">srand</span><span class="w"> </span><span class="p">(</span><span class="n">time</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
 
-<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="n">sleep</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="n">buf</span><span class="p">.</span><span class="n">mtype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">buf</span><span class="p">.</span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="n">sleep</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">4</span><span class="p">);</span>
+<span class="w">      </span><span class="n">buf</span><span class="p">.</span><span class="n">mtype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">      </span><span class="n">buf</span><span class="p">.</span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="p">;</span>
 <span class="w">      </span><span class="n">msgsnd</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">      </span>
-<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;CHILD - Sent message number %d: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">.</span><span class="n">num</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;CHILD - Sent message number %d: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">.</span><span class="n">num</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;PARENT - Queue ID = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">qid</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;PARENT - Queue ID = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">qid</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="n">sleep</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="n">sleep</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">4</span><span class="p">);</span>
 <span class="w">    </span><span class="n">msgrcv</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">    </span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;PARENT - Received message number %d: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">.</span><span class="n">num</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;PARENT - Received message number %d: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">.</span><span class="n">num</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;PARENT - Waiting for the child to terminate...</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span>
-<span class="w">  </span><span class="n">waitpid</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;PARENT - Child ended</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">waitpid</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;PARENT - Child ended</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">msgctl</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_RMID</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">msgctl</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span><span class="w"> </span><span class="n">IPC_RMID</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p><a href="/code/queues2.c">source code</a></p>

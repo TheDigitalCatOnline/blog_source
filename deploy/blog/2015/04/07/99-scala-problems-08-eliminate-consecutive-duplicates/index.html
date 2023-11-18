@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -551,18 +537,18 @@
     <h2 id="the-problem">The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
 <p><strong>P08</strong> Eliminate consecutive duplicates of list elements. If a list contains repeated elements they should be replaced with a single copy of the element. The order of the elements should not be changed.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span> <span class="n">compress</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">))</span>
-<span class="n">res0</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]</span> <span class="o">=</span> <span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;b</span><span class="p">,</span> <span class="ss">&#39;c</span><span class="p">,</span> <span class="ss">&#39;a</span><span class="p">,</span> <span class="ss">&#39;d</span><span class="p">,</span> <span class="ss">&#39;e</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="n">compress</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;b</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;c</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;c</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;d</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">))</span>
+<span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Symbol</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;b</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;c</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;d</span><span class="p">,</span><span class="w"> </span><span class="ss">&#39;e</span><span class="p">)</span>
 </code></pre></div>
 
 <h2 id="initial-thoughts">Initial thoughts<a class="headerlink" href="#initial-thoughts" title="Permanent link">&para;</a></h2>
 <p>This task seems to be easy to accomplish. It should be all about filtering incoming elements based on the last element added to the list.</p>
 <h2 id="the-recursive-solution">The recursive solution<a class="headerlink" href="#the-recursive-solution" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compress</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span> <span class="k">match</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nc">Nil</span> <span class="o">=&gt;</span> <span class="nc">Nil</span>
-    <span class="k">case</span> <span class="n">h::</span><span class="nc">List</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nc">List</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-    <span class="k">case</span> <span class="n">h::tail</span> <span class="k">if</span> <span class="p">(</span><span class="n">h</span> <span class="o">==</span> <span class="n">tail</span><span class="p">.</span><span class="n">head</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">compress</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
-    <span class="k">case</span> <span class="n">h::tail</span> <span class="o">=&gt;</span> <span class="n">h::compress</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compress</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nc">Nil</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Nil</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">h::</span><span class="nc">List</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">h::tail</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">tail</span><span class="p">.</span><span class="n">head</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">compress</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">h::tail</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">h::compress</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -570,25 +556,25 @@
 <h2 id="folding">Folding<a class="headerlink" href="#folding" title="Permanent link">&para;</a></h2>
 <p>The folding methods of <code>List</code> types are very suitable for this task, as they scan the whole list carrying the result of previous applications.</p>
 <p>I already used <code>foldLeft()</code> so this was my first pick</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compress</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">foldLeft</span><span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]())</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="p">(</span><span class="nc">List</span><span class="p">(),</span> <span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nc">List</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="k">case</span> <span class="p">(</span><span class="n">ls</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">ls</span><span class="p">.</span><span class="n">last</span> <span class="o">==</span> <span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">ls</span>
-    <span class="k">case</span> <span class="p">(</span><span class="n">ls</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">ls:::</span><span class="nc">List</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compress</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">foldLeft</span><span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="nc">List</span><span class="p">(),</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">ls</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ls</span><span class="p">.</span><span class="n">last</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ls</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">ls</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ls:::</span><span class="nc">List</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>The initial value given to the folding method is an empty list. Then if the previous result is empty (i.e. when scanning the first element) the result is a list with that element. If the current element is already in the result (second case) the result is returned unchanged. Otherwise, the new element is appended at the end of the result.</p>
 <p>Since appending a list to an empty list is just like returning the list itself we may join the first and third cases with a modified pattern guard</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compress</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">foldLeft</span><span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]())</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="p">(</span><span class="n">ls</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">ls</span><span class="p">.</span><span class="n">isEmpty</span> <span class="o">||</span> <span class="n">ls</span><span class="p">.</span><span class="n">last</span> <span class="o">!=</span> <span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">ls:::</span><span class="nc">List</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="k">case</span> <span class="p">(</span><span class="n">ls</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">ls</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compress</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">foldLeft</span><span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">ls</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ls</span><span class="p">.</span><span class="n">isEmpty</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">last</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ls:::</span><span class="nc">List</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">ls</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ls</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>Left folding implies appending new values at the end of the result list, which is syntactically less straightforward than appending at the beginning (<code>list:::List(t)</code> vs <code>h::list</code>). So we may fold from right with <code>foldRight()</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compress</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">foldRight</span><span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]())</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ls</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">ls</span><span class="p">.</span><span class="n">isEmpty</span> <span class="o">||</span> <span class="n">ls</span><span class="p">.</span><span class="n">head</span> <span class="o">!=</span> <span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">e::ls</span>
-    <span class="k">case</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ls</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">ls</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compress</span><span class="p">[</span><span class="nc">A</span><span class="p">](</span><span class="n">l</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]):</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">foldRight</span><span class="p">(</span><span class="nc">List</span><span class="p">[</span><span class="nc">A</span><span class="p">]())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ls</span><span class="p">.</span><span class="n">isEmpty</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">head</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">e::ls</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ls</span>
 <span class="p">}</span>
 </code></pre></div>
 

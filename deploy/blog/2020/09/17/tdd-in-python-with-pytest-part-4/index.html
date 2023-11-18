@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -752,38 +738,38 @@ E           Actual call: setup(cache=True)
 <p>To learn how to use mocks in a practical case, let's work together on a new module in the <code>simple_calculator</code> package. The target is to write a class that downloads a JSON file with data on meteorites and computes some statistics on the dataset using the class <code>SimpleCalculator</code>. The file is provided by NASA at <a href="https://data.nasa.gov/resource/y77d-th95.json">this URL</a>.</p>
 <p>The class contains a method <code>get_data</code> that queries the remote server and returns the data, and a method <code>average_mass</code> that uses the method <code>SimpleCalculator.avg</code> to compute the average mass of the meteorites and return it. In a real world case, like for example in a scientific application, I would probably split the class in two. One class manages the data, updating it whenever it is necessary, and another one manages the statistics. For the sake of simplicity, however, I will keep the two functionalities together in this example.</p>
 <p>Let's see a quick example of what is supposed to happen inside our code. An excerpt of the file provided from the server is</p>
-<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;fall&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fell&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;geolocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">6.08333</span><span class="p">,</span><span class="w"> </span><span class="mf">50.775</span><span class="p">]</span><span class="w"></span>
-<span class="w">        </span><span class="p">},</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;mass&quot;</span><span class="p">:</span><span class="s2">&quot;21&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Aachen&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;nametype&quot;</span><span class="p">:</span><span class="s2">&quot;Valid&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;recclass&quot;</span><span class="p">:</span><span class="s2">&quot;L5&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;reclat&quot;</span><span class="p">:</span><span class="s2">&quot;50.775000&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;reclong&quot;</span><span class="p">:</span><span class="s2">&quot;6.083330&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="s2">&quot;1880-01-01T00:00:00.000&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;fall&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fell&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;geolocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">10.23333</span><span class="p">,</span><span class="w"> </span><span class="mf">56.18333</span><span class="p">]</span><span class="w"></span>
-<span class="w">        </span><span class="p">},</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;mass&quot;</span><span class="p">:</span><span class="s2">&quot;720&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Aarhus&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;nametype&quot;</span><span class="p">:</span><span class="s2">&quot;Valid&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;recclass&quot;</span><span class="p">:</span><span class="s2">&quot;H6&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;reclat&quot;</span><span class="p">:</span><span class="s2">&quot;56.183330&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;reclong&quot;</span><span class="p">:</span><span class="s2">&quot;10.233330&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="s2">&quot;1951-01-01T00:00:00.000&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;fall&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fell&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;geolocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">6.08333</span><span class="p">,</span><span class="w"> </span><span class="mf">50.775</span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;mass&quot;</span><span class="p">:</span><span class="s2">&quot;21&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Aachen&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;nametype&quot;</span><span class="p">:</span><span class="s2">&quot;Valid&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;recclass&quot;</span><span class="p">:</span><span class="s2">&quot;L5&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;reclat&quot;</span><span class="p">:</span><span class="s2">&quot;50.775000&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;reclong&quot;</span><span class="p">:</span><span class="s2">&quot;6.083330&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="s2">&quot;1880-01-01T00:00:00.000&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;fall&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fell&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;geolocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">10.23333</span><span class="p">,</span><span class="w"> </span><span class="mf">56.18333</span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;mass&quot;</span><span class="p">:</span><span class="s2">&quot;720&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Aarhus&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;nametype&quot;</span><span class="p">:</span><span class="s2">&quot;Valid&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;recclass&quot;</span><span class="p">:</span><span class="s2">&quot;H6&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;reclat&quot;</span><span class="p">:</span><span class="s2">&quot;56.183330&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;reclong&quot;</span><span class="p">:</span><span class="s2">&quot;10.233330&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="s2">&quot;1951-01-01T00:00:00.000&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
 </code></pre></div>
 
 <p>So a good way to compute the average mass of the meteorites is</p>

@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -558,12 +544,12 @@
 <p>Programming, after all, is craftsmanship.</p>
 <h2 id="the-starting-point">The starting point<a class="headerlink" href="#the-starting-point" title="Permanent link">&para;</a></h2>
 <p>The simple use case I will use for this post is that of a service API that we can access, and that produces data in JSON format, namely a <strong>list</strong> of elements like the one shown here</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;surname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Frazier&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;£28943&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;surname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Frazier&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;£28943&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Once we convert this to a Python data structure we obtain a list of dictionaries, where <code>'age'</code> is an integer, and the remaining fields are strings.</p>
@@ -629,19 +615,19 @@
 <p>When it comes to refactoring, however, we are somehow deconstructing a previously existing structure, and usually we end up creating a lot of private methods to help extracting and generalising parts of the code. My advice in this case is to test those methods, as this gives you a higher degree of confidence in what you are doing. With experience you will then learn which tests are required and which are not.</p>
 <h2 id="setup-of-the-testing-environment">Setup of the testing environment<a class="headerlink" href="#setup-of-the-testing-environment" title="Permanent link">&para;</a></h2>
 <p>Clone <a href="https://github.com/lgiordani/datastats">this repository</a> and create a virtual environment. Activate it and install the required packages with </p>
-<div class="highlight"><pre><span></span><code>pip install -r requirements.txt
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </code></pre></div>
 
 <p>The repository already contains a configuration file for pytest and you should customise it to avoid entering your virtual environment directory. Go and fix the <code>norecursedirs</code> parameter in that file, adding the name of the virtual environment you just created; I usually name my virtual environments with a <code>venv</code> prefix, and this is why that variable contains the entry <code>venv*</code>.</p>
 <p>At this point you should be able to run <code>pytest -svv</code> in the parent directory of the repository (the one that contains <code>pytest.ini</code>), and obtain a result similar to the following</p>
-<div class="highlight"><pre><span></span><code><span class="o">==========================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">==========================</span>
-platform linux -- Python <span class="m">3</span>.5.3, pytest-3.1.2, py-1.4.34, pluggy-0.4.0
-cachedir: .cache
-rootdir: datastats, inifile: pytest.ini
-plugins: cov-2.5.1
-collected <span class="m">0</span> <span class="nv">items</span> 
+<div class="highlight"><pre><span></span><code><span class="o">==========================</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>session<span class="w"> </span><span class="nv">starts</span><span class="w"> </span><span class="o">==========================</span>
+platform<span class="w"> </span>linux<span class="w"> </span>--<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.5.3,<span class="w"> </span>pytest-3.1.2,<span class="w"> </span>py-1.4.34,<span class="w"> </span>pluggy-0.4.0
+cachedir:<span class="w"> </span>.cache
+rootdir:<span class="w"> </span>datastats,<span class="w"> </span>inifile:<span class="w"> </span>pytest.ini
+plugins:<span class="w"> </span>cov-2.5.1
+collected<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="nv">items</span><span class="w"> </span>
 
-<span class="o">======================</span> no tests ran <span class="k">in</span> <span class="m">0</span>.00 <span class="nv">seconds</span> <span class="o">======================</span>
+<span class="o">======================</span><span class="w"> </span>no<span class="w"> </span>tests<span class="w"> </span>ran<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.00<span class="w"> </span><span class="nv">seconds</span><span class="w"> </span><span class="o">======================</span>
 </code></pre></div>
 
 <p>The given repository contains two branches. <code>master</code> is the one that you are into, and contains the initial setup, while <code>develop</code> points to the last step of the whole refactoring process. Every step of this post contains a reference to the commit that contains the changes introduced in that section.</p>
@@ -675,25 +661,25 @@ collected <span class="m">0</span> <span class="nv">items</span>
 </code></pre></div>
 
 <p>and calling the <code>stats()</code> method with that output, with <code>iage</code> set to <code>20</code>, and <code>isalary</code> set to <code>20000</code>, we get the following JSON result</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;avg_age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">62</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;avg_salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">55165</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;avg_yearly_increase&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">837</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Garth&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;surname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fields&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">70</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;£70472&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Laith&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;surname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Simmons&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;£27888&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}]</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;avg_age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">62</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;avg_salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">55165</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;avg_yearly_increase&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">837</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Garth&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;surname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fields&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">70</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;£70472&quot;</span>
+<span class="w">    </span><span class="p">}],</span>
+<span class="w">    </span><span class="nt">&quot;min_salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Laith&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;surname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Simmons&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;salary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;£27888&quot;</span>
+<span class="w">    </span><span class="p">}]</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Caveat: I'm using a single very short set of real data, namely a list of 3 dictionaries. In a real case I would test the black box with many different use cases, to ensure I am not just checking some corner case.</p>

@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -608,11 +594,11 @@
 
 <p>As you can see, the client is sending a pure text message to the server, with the format specified by the HTTP protocol. The first line contains the method name (<code>GET</code>), the URL (<code>/</code>) and the protocol we are using, including its version (<code>HTTP/1.1</code>). The remaining lines are called <em>headers</em> and contain metadata that can help the server to manage the request. The complete value of the <code>Host</code> header is in this case <code>localhost:80</code>, but as the standard port for HTTP services is 80, we don't need to specify it.</p>
 <p>If the server <code>localhost</code> is <em>serving</em> HTTP (i.e. running some software that understands HTTP) on port 80 the response we might get is something similar to</p>
-<div class="highlight"><pre><span></span><code>HTTP/1.0 200 OK
-Date: Mon, 10 Feb 2020 08:41:33 GMT
-Content-type: text/html
-Content-Length: 26889
-Last-Modified: Mon, 10 Feb 2020 08:41:27 GMT
+<div class="highlight"><pre><span></span><code><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Date</span><span class="o">:</span> <span class="l">Mon, 10 Feb 2020 08:41:33 GMT</span>
+<span class="na">Content-type</span><span class="o">:</span> <span class="l">text/html</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">26889</span>
+<span class="na">Last-Modified</span><span class="o">:</span> <span class="l">Mon, 10 Feb 2020 08:41:27 GMT</span>
 
 <span class="cp">&lt;!DOCTYPE HTML&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -658,16 +644,16 @@ Last-Modified: Mon, 10 Feb 2020 08:41:27 GMT
 </code></pre></div>
 
 <p>This little program accepts a connection on port 8080 and prints the received data on the terminal. You can test it executing it and then running <code>curl localhost:8080</code> in another terminal. You should see something like</p>
-<div class="highlight"><pre><span></span><code>$ python3 server.py 
-GET / HTTP/1.1
-Host: localhost:8080
-User-Agent: curl/7.65.3
-Accept: */*
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python3<span class="w"> </span>server.py<span class="w"> </span>
+GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1
+Host:<span class="w"> </span>localhost:8080
+User-Agent:<span class="w"> </span>curl/7.65.3
+Accept:<span class="w"> </span>*/*
 </code></pre></div>
 
 <p>The server keeps running the code in the <code>while</code> loop, so if you want to terminate it you have to do it with Ctrl+C. So far so good, but this is not an HTTP server yet, as it sends no response; you should actually receive an error message from curl that says <code>curl: (52) Empty reply from server</code>.</p>
 <p>Sending back a standard response is very simple, we just need to call <code>conn.sendall</code> passing the raw bytes. A minimal HTTP response contains the protocol and the status, an empty line, and the actual content, for example</p>
-<div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
+<div class="highlight"><pre><span></span><code><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 
 Hi there!
 </code></pre></div>
@@ -856,18 +842,18 @@ Resource favicon.ico cannot be loaded
 </code></pre></div>
 
 <p>Flask comes with a so-called development web server (do these words ring any bell now?) that we can run on a terminal</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nv">FLASK_APP</span><span class="o">=</span>service.py flask run
- * Serving Flask app <span class="s2">&quot;service.py&quot;</span>
- * Environment: production
-   WARNING: This is a development server. Do not use it <span class="k">in</span> a production deployment.
-   Use a production WSGI server instead.
- * Debug mode: off
- * Running on http://127.0.0.1:5000/ <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nv">FLASK_APP</span><span class="o">=</span>service.py<span class="w"> </span>flask<span class="w"> </span>run
+<span class="w"> </span>*<span class="w"> </span>Serving<span class="w"> </span>Flask<span class="w"> </span>app<span class="w"> </span><span class="s2">&quot;service.py&quot;</span>
+<span class="w"> </span>*<span class="w"> </span>Environment:<span class="w"> </span>production
+<span class="w">   </span>WARNING:<span class="w"> </span>This<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>development<span class="w"> </span>server.<span class="w"> </span>Do<span class="w"> </span>not<span class="w"> </span>use<span class="w"> </span>it<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>production<span class="w"> </span>deployment.
+<span class="w">   </span>Use<span class="w"> </span>a<span class="w"> </span>production<span class="w"> </span>WSGI<span class="w"> </span>server<span class="w"> </span>instead.
+<span class="w"> </span>*<span class="w"> </span>Debug<span class="w"> </span>mode:<span class="w"> </span>off
+<span class="w"> </span>*<span class="w"> </span>Running<span class="w"> </span>on<span class="w"> </span>http://127.0.0.1:5000/<span class="w"> </span><span class="o">(</span>Press<span class="w"> </span>CTRL+C<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span>
 </code></pre></div>
 
 <p>You can now visit the given URL with your browser and see that everything works properly. Remember that 127.0.0.1 is the special IP address that refers to "this computer"; the name <code>localhost</code> is usually created by the operating system as an alias for that, so the two are interchangeable. As you can see the standard port for Flask's development server is 5000, so you have to mention it explicitly, otherwise your browser would try to access port 80 (the default HTTP one). When you connect with the browser you will see some log messages about the HTTP requests</p>
-<div class="highlight"><pre><span></span><code><span class="m">127</span>.0.0.1 - - <span class="o">[</span><span class="m">14</span>/Feb/2020 <span class="m">14</span>:54:27<span class="o">]</span> <span class="s2">&quot;GET / HTTP/1.1&quot;</span> <span class="m">200</span> -
-<span class="m">127</span>.0.0.1 - - <span class="o">[</span><span class="m">14</span>/Feb/2020 <span class="m">14</span>:54:28<span class="o">]</span> <span class="s2">&quot;GET /favicon.ico HTTP/1.1&quot;</span> <span class="m">404</span> -
+<div class="highlight"><pre><span></span><code><span class="m">127</span>.0.0.1<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020<span class="w"> </span><span class="m">14</span>:54:27<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET / HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>-
+<span class="m">127</span>.0.0.1<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020<span class="w"> </span><span class="m">14</span>:54:28<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /favicon.ico HTTP/1.1&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span>-
 </code></pre></div>
 
 <p>You can recognise both now, as those are the same request we got with our little server in the previous part of the article.</p>
@@ -880,8 +866,8 @@ Resource favicon.ico cannot be loaded
 </ul>
 <h3 id="24-issues">2.4 Issues<a class="headerlink" href="#24-issues" title="Permanent link">&para;</a></h3>
 <p>Apparently, we solved all our problems, and many programmers just stop here. They learn how to use the framework (which is a big achievement!), but as we will shortly discover, this is not enough for a production system. Let's have a closer look at the output of the Flask server. It clearly says, among other things</p>
-<div class="highlight"><pre><span></span><code>   WARNING: This is a development server. Do not use it <span class="k">in</span> a production deployment.
-   Use a production WSGI server instead.
+<div class="highlight"><pre><span></span><code><span class="w">   </span>WARNING:<span class="w"> </span>This<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>development<span class="w"> </span>server.<span class="w"> </span>Do<span class="w"> </span>not<span class="w"> </span>use<span class="w"> </span>it<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>production<span class="w"> </span>deployment.
+<span class="w">   </span>Use<span class="w"> </span>a<span class="w"> </span>production<span class="w"> </span>WSGI<span class="w"> </span>server<span class="w"> </span>instead.
 </code></pre></div>
 
 <p>The main issue we have when we deal with any production system is represented by performances. Think about what we do with JavaScript when we minimise the code: we consciously obfuscate the code in order to make the file smaller, but this is done for the sole purpose of making the file faster to retrieve.</p>
@@ -908,21 +894,21 @@ Resource favicon.ico cannot be loaded
 </code></pre></div>
 
 <p>To run Gunicorn specify the number of concurrent instances and the external port</p>
-<div class="highlight"><pre><span></span><code>$ gunicorn --workers <span class="m">3</span> --bind <span class="m">0</span>.0.0.0:8000 wsgi
-<span class="o">[</span><span class="m">2020</span>-02-12 <span class="m">18</span>:39:07 +0000<span class="o">]</span> <span class="o">[</span><span class="m">13393</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Starting gunicorn <span class="m">20</span>.0.4
-<span class="o">[</span><span class="m">2020</span>-02-12 <span class="m">18</span>:39:07 +0000<span class="o">]</span> <span class="o">[</span><span class="m">13393</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Listening at: http://0.0.0.0:8000 <span class="o">(</span><span class="m">13393</span><span class="o">)</span>
-<span class="o">[</span><span class="m">2020</span>-02-12 <span class="m">18</span>:39:07 +0000<span class="o">]</span> <span class="o">[</span><span class="m">13393</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Using worker: sync
-<span class="o">[</span><span class="m">2020</span>-02-12 <span class="m">18</span>:39:07 +0000<span class="o">]</span> <span class="o">[</span><span class="m">13396</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: <span class="m">13396</span>
-<span class="o">[</span><span class="m">2020</span>-02-12 <span class="m">18</span>:39:07 +0000<span class="o">]</span> <span class="o">[</span><span class="m">13397</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: <span class="m">13397</span>
-<span class="o">[</span><span class="m">2020</span>-02-12 <span class="m">18</span>:39:07 +0000<span class="o">]</span> <span class="o">[</span><span class="m">13398</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: <span class="m">13398</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>gunicorn<span class="w"> </span>--workers<span class="w"> </span><span class="m">3</span><span class="w"> </span>--bind<span class="w"> </span><span class="m">0</span>.0.0.0:8000<span class="w"> </span>wsgi
+<span class="o">[</span><span class="m">2020</span>-02-12<span class="w"> </span><span class="m">18</span>:39:07<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">13393</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Starting<span class="w"> </span>gunicorn<span class="w"> </span><span class="m">20</span>.0.4
+<span class="o">[</span><span class="m">2020</span>-02-12<span class="w"> </span><span class="m">18</span>:39:07<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">13393</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Listening<span class="w"> </span>at:<span class="w"> </span>http://0.0.0.0:8000<span class="w"> </span><span class="o">(</span><span class="m">13393</span><span class="o">)</span>
+<span class="o">[</span><span class="m">2020</span>-02-12<span class="w"> </span><span class="m">18</span>:39:07<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">13393</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Using<span class="w"> </span>worker:<span class="w"> </span>sync
+<span class="o">[</span><span class="m">2020</span>-02-12<span class="w"> </span><span class="m">18</span>:39:07<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">13396</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Booting<span class="w"> </span>worker<span class="w"> </span>with<span class="w"> </span>pid:<span class="w"> </span><span class="m">13396</span>
+<span class="o">[</span><span class="m">2020</span>-02-12<span class="w"> </span><span class="m">18</span>:39:07<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">13397</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Booting<span class="w"> </span>worker<span class="w"> </span>with<span class="w"> </span>pid:<span class="w"> </span><span class="m">13397</span>
+<span class="o">[</span><span class="m">2020</span>-02-12<span class="w"> </span><span class="m">18</span>:39:07<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">13398</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Booting<span class="w"> </span>worker<span class="w"> </span>with<span class="w"> </span>pid:<span class="w"> </span><span class="m">13398</span>
 </code></pre></div>
 
 <p>As you can see, Gunicorn has the concept of <em>workers</em> which are a generic way to express concurrency. Specifically, Gunicorn implements a pre-fork worker model, which means that it (pre)creates a different Unix process for each worker. You can check this running <code>ps</code></p>
-<div class="highlight"><pre><span></span><code>$ ps ax <span class="p">|</span> grep gunicorn
-<span class="m">14919</span> pts/1    S+     <span class="m">0</span>:00 ~/venv3/bin/python3 ~/venv3/bin/gunicorn --workers <span class="m">3</span> --bind <span class="m">0</span>.0.0.0:8000 wsgi
-<span class="m">14922</span> pts/1    S+     <span class="m">0</span>:00 ~/venv3/bin/python3 ~/venv3/bin/gunicorn --workers <span class="m">3</span> --bind <span class="m">0</span>.0.0.0:8000 wsgi
-<span class="m">14923</span> pts/1    S+     <span class="m">0</span>:00 ~/venv3/bin/python3 ~/venv3/bin/gunicorn --workers <span class="m">3</span> --bind <span class="m">0</span>.0.0.0:8000 wsgi
-<span class="m">14924</span> pts/1    S+     <span class="m">0</span>:00 ~/venv3/bin/python3 ~/venv3/bin/gunicorn --workers <span class="m">3</span> --bind <span class="m">0</span>.0.0.0:8000 wsgi
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ps<span class="w"> </span>ax<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gunicorn
+<span class="m">14919</span><span class="w"> </span>pts/1<span class="w">    </span>S+<span class="w">     </span><span class="m">0</span>:00<span class="w"> </span>~/venv3/bin/python3<span class="w"> </span>~/venv3/bin/gunicorn<span class="w"> </span>--workers<span class="w"> </span><span class="m">3</span><span class="w"> </span>--bind<span class="w"> </span><span class="m">0</span>.0.0.0:8000<span class="w"> </span>wsgi
+<span class="m">14922</span><span class="w"> </span>pts/1<span class="w">    </span>S+<span class="w">     </span><span class="m">0</span>:00<span class="w"> </span>~/venv3/bin/python3<span class="w"> </span>~/venv3/bin/gunicorn<span class="w"> </span>--workers<span class="w"> </span><span class="m">3</span><span class="w"> </span>--bind<span class="w"> </span><span class="m">0</span>.0.0.0:8000<span class="w"> </span>wsgi
+<span class="m">14923</span><span class="w"> </span>pts/1<span class="w">    </span>S+<span class="w">     </span><span class="m">0</span>:00<span class="w"> </span>~/venv3/bin/python3<span class="w"> </span>~/venv3/bin/gunicorn<span class="w"> </span>--workers<span class="w"> </span><span class="m">3</span><span class="w"> </span>--bind<span class="w"> </span><span class="m">0</span>.0.0.0:8000<span class="w"> </span>wsgi
+<span class="m">14924</span><span class="w"> </span>pts/1<span class="w">    </span>S+<span class="w">     </span><span class="m">0</span>:00<span class="w"> </span>~/venv3/bin/python3<span class="w"> </span>~/venv3/bin/gunicorn<span class="w"> </span>--workers<span class="w"> </span><span class="m">3</span><span class="w"> </span>--bind<span class="w"> </span><span class="m">0</span>.0.0.0:8000<span class="w"> </span>wsgi
 </code></pre></div>
 
 <p>Using processes is just one of the two ways to implement concurrency in a Unix system, the other being using threads. The benefits and demerits of each solution are outside the scope of this post, however. For the time being just remember that you are dealing with multiple workers that process incoming requests asynchronously, thus implementing a non-blocking server, ready to accept multiple connections.</p>
@@ -958,45 +944,45 @@ Resource favicon.ico cannot be loaded
 <p>In the same directory of the file <code>wsgi.py</code>, create a <code>Dockerfile</code></p>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.6</span>
 
-<span class="k">ADD</span><span class="w"> </span>app /app
-<span class="k">ADD</span><span class="w"> </span>wsgi.py /
+<span class="k">ADD</span><span class="w"> </span>app<span class="w"> </span>/app
+<span class="k">ADD</span><span class="w"> </span>wsgi.py<span class="w"> </span>/
 
 <span class="k">WORKDIR</span><span class="w"> </span><span class="s">.</span>
-<span class="k">RUN</span><span class="w"> </span>pip install flask gunicorn
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>flask<span class="w"> </span>gunicorn
 <span class="k">EXPOSE</span><span class="w"> </span><span class="s">8000</span>
 </code></pre></div>
 
 <p>This starts from a Python Docker image, adds the <code>app</code> directory and the <code>wsgi.py</code> file, and installs Gunicorn. Now create a configuration for nginx in a file called <code>nginx.conf</code> in the same directory</p>
-<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span>
 
-<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://application:8000/</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://application:8000/</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>This defines a server that listens on port 80 and that connects all the URL starting with <code>/</code> with a server called <code>application</code> on port 8000, which is the container running Gunicorn.</p>
 <p>Last, create a file <code>docker-compose.yml</code> that will describe the configuration of the containers.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.7&quot;</span><span class="w"></span>
-<span class="nt">services</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span><span class="w"></span>
-<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Dockerfile</span><span class="w"></span>
-<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gunicorn --workers 3 --bind 0.0.0.0:8000 wsgi</span><span class="w"></span>
-<span class="w">    </span><span class="nt">expose</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8000</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.7&quot;</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">application</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Dockerfile</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gunicorn --workers 3 --bind 0.0.0.0:8000 wsgi</span>
+<span class="w">    </span><span class="nt">expose</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8000</span>
 
-<span class="w">  </span><span class="nt">nginx</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span><span class="w"></span>
-<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./nginx.conf:/etc/nginx/conf.d/default.conf</span><span class="w"></span>
-<span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080:80</span><span class="w"></span>
-<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application</span><span class="w"></span>
+<span class="w">  </span><span class="nt">nginx</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./nginx.conf:/etc/nginx/conf.d/default.conf</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080:80</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application</span>
 </code></pre></div>
 
 <p>As you can see the name <code>application</code> that we mentioned in the nginx configuration file is not a magic string, but is the name we assigned to the Gunicorn container in the Docker Compose configuration. Please note that nginx listens on port 80 inside the container, but the port is published as 8080 on the host.</p>
@@ -1005,121 +991,121 @@ Resource favicon.ico cannot be loaded
 </code></pre></div>
 
 <p>At this point you can run Docker Compose with <code>docker-compose up -d</code></p>
-<div class="highlight"><pre><span></span><code>$ docker-compose up -d
-Creating network <span class="s2">&quot;service_default&quot;</span> with the default driver
-Creating service_application_1 ... <span class="k">done</span>
-Creating service_nginx_1       ... <span class="k">done</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
+Creating<span class="w"> </span>network<span class="w"> </span><span class="s2">&quot;service_default&quot;</span><span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>driver
+Creating<span class="w"> </span>service_application_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Creating<span class="w"> </span>service_nginx_1<span class="w">       </span>...<span class="w"> </span><span class="k">done</span>
 </code></pre></div>
 
 <p>If everything is working correctly, opening the browser and visiting <code>localhost:8080</code> should show you the HTML page Flask is serving.</p>
 <p>Through <code>docker-compose logs</code> we can check what services are doing. We can recognise the output of Gunicorn in the logs of the service named <code>application</code></p>
-<div class="highlight"><pre><span></span><code>$ docker-compose logs application
-Attaching to service_application_1
-application_1  <span class="p">|</span> <span class="o">[</span><span class="m">2020</span>-02-14 <span class="m">08</span>:35:42 +0000<span class="o">]</span> <span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Starting gunicorn <span class="m">20</span>.0.4
-application_1  <span class="p">|</span> <span class="o">[</span><span class="m">2020</span>-02-14 <span class="m">08</span>:35:42 +0000<span class="o">]</span> <span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Listening at: http://0.0.0.0:8000 <span class="o">(</span><span class="m">1</span><span class="o">)</span>
-application_1  <span class="p">|</span> <span class="o">[</span><span class="m">2020</span>-02-14 <span class="m">08</span>:35:42 +0000<span class="o">]</span> <span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Using worker: sync
-application_1  <span class="p">|</span> <span class="o">[</span><span class="m">2020</span>-02-14 <span class="m">08</span>:35:42 +0000<span class="o">]</span> <span class="o">[</span><span class="m">8</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: <span class="m">8</span>
-application_1  <span class="p">|</span> <span class="o">[</span><span class="m">2020</span>-02-14 <span class="m">08</span>:35:42 +0000<span class="o">]</span> <span class="o">[</span><span class="m">9</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: <span class="m">9</span>
-application_1  <span class="p">|</span> <span class="o">[</span><span class="m">2020</span>-02-14 <span class="m">08</span>:35:42 +0000<span class="o">]</span> <span class="o">[</span><span class="m">10</span><span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: <span class="m">10</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>logs<span class="w"> </span>application
+Attaching<span class="w"> </span>to<span class="w"> </span>service_application_1
+application_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">2020</span>-02-14<span class="w"> </span><span class="m">08</span>:35:42<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Starting<span class="w"> </span>gunicorn<span class="w"> </span><span class="m">20</span>.0.4
+application_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">2020</span>-02-14<span class="w"> </span><span class="m">08</span>:35:42<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Listening<span class="w"> </span>at:<span class="w"> </span>http://0.0.0.0:8000<span class="w"> </span><span class="o">(</span><span class="m">1</span><span class="o">)</span>
+application_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">2020</span>-02-14<span class="w"> </span><span class="m">08</span>:35:42<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Using<span class="w"> </span>worker:<span class="w"> </span>sync
+application_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">2020</span>-02-14<span class="w"> </span><span class="m">08</span>:35:42<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">8</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Booting<span class="w"> </span>worker<span class="w"> </span>with<span class="w"> </span>pid:<span class="w"> </span><span class="m">8</span>
+application_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">2020</span>-02-14<span class="w"> </span><span class="m">08</span>:35:42<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">9</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Booting<span class="w"> </span>worker<span class="w"> </span>with<span class="w"> </span>pid:<span class="w"> </span><span class="m">9</span>
+application_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">2020</span>-02-14<span class="w"> </span><span class="m">08</span>:35:42<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Booting<span class="w"> </span>worker<span class="w"> </span>with<span class="w"> </span>pid:<span class="w"> </span><span class="m">10</span>
 </code></pre></div>
 
 <p>but the one we are mostly interested with now is the service named <code>nginx</code>, so let's follow the logs in real-time with <code>docker-compose logs -f nginx</code>. Refresh the <code>localhost</code> page you visited with the browser, and the container should output something like</p>
-<div class="highlight"><pre><span></span><code>$ docker-compose logs -f nginx
-Attaching to service_nginx_1
-nginx_1        <span class="p">|</span> <span class="m">192</span>.168.192.1 - - <span class="o">[</span><span class="m">14</span>/Feb/2020:08:42:20 +0000<span class="o">]</span> <span class="s2">&quot;GET / HTTP/1.1&quot;</span> <span class="m">200</span> <span class="m">13</span> <span class="s2">&quot;-&quot;</span> <span class="s2">&quot;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0&quot;</span> <span class="s2">&quot;-&quot;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>nginx
+Attaching<span class="w"> </span>to<span class="w"> </span>service_nginx_1
+nginx_1<span class="w">        </span><span class="p">|</span><span class="w"> </span><span class="m">192</span>.168.192.1<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:08:42:20<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET / HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0&quot;</span><span class="w"> </span><span class="s2">&quot;-&quot;</span>
 </code></pre></div>
 
 <p>which is the standard log format of nginx. It shows the IP address of the client (<code>192.168.192.1</code>), the connection timestamp, the HTTP request and the response status code (200), plus other information on the client itself.</p>
 <p>Let's now increase the number of services, to see the load balancing mechanism in action. To do this, first we need to change the log format of nginx to show the IP address of the machine that served the request. Change the <code>nginx.conf</code> file adding the <code>log_format</code> and <code>access_log</code> options</p>
-<div class="highlight"><pre><span></span><code><span class="k">log_format</span><span class="w"> </span><span class="s">upstreamlog</span><span class="w"> </span><span class="s">&#39;[</span><span class="nv">$time_local]</span><span class="w"> </span><span class="nv">$host</span><span class="w"> </span><span class="s">to:</span><span class="w"> </span><span class="nv">$upstream_addr:</span><span class="w"> </span><span class="nv">$request</span><span class="w"> </span><span class="nv">$status&#39;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">log_format</span><span class="w"> </span><span class="s">upstreamlog</span><span class="w"> </span><span class="s">&#39;[</span><span class="nv">$time_local]</span><span class="w"> </span><span class="nv">$host</span><span class="w"> </span><span class="s">to:</span><span class="w"> </span><span class="nv">$upstream_addr:</span><span class="w"> </span><span class="nv">$request</span><span class="w"> </span><span class="nv">$status&#39;</span><span class="p">;</span>
 
-<span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span><span class="w"></span>
+<span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span>
 
-<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://application:8000</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://application:8000</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kn">access_log</span><span class="w"> </span><span class="s">/var/log/nginx/access.log</span><span class="w"> </span><span class="s">upstreamlog</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kn">access_log</span><span class="w"> </span><span class="s">/var/log/nginx/access.log</span><span class="w"> </span><span class="s">upstreamlog</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>The <code>$upstream_addr</code> variable is the one that contains the IP address of the server proxied by nginx. Now run <code>docker-compose down</code> to stop all containers and then <code>docker-compose up -d --scale application=3</code> to start them again</p>
-<div class="highlight"><pre><span></span><code>$ docker-compose down
-Stopping service_nginx_1       ... <span class="k">done</span>
-Stopping service_application_1 ... <span class="k">done</span>
-Removing service_nginx_1       ... <span class="k">done</span>
-Removing service_application_1 ... <span class="k">done</span>
-Removing network service_default
-$ docker-compose up -d --scale <span class="nv">application</span><span class="o">=</span><span class="m">3</span>
-Creating network <span class="s2">&quot;service_default&quot;</span> with the default driver
-Creating service_application_1 ... <span class="k">done</span>
-Creating service_application_2 ... <span class="k">done</span>
-Creating service_application_3 ... <span class="k">done</span>
-Creating service_nginx_1       ... <span class="k">done</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>down
+Stopping<span class="w"> </span>service_nginx_1<span class="w">       </span>...<span class="w"> </span><span class="k">done</span>
+Stopping<span class="w"> </span>service_application_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Removing<span class="w"> </span>service_nginx_1<span class="w">       </span>...<span class="w"> </span><span class="k">done</span>
+Removing<span class="w"> </span>service_application_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Removing<span class="w"> </span>network<span class="w"> </span>service_default
+$<span class="w"> </span>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--scale<span class="w"> </span><span class="nv">application</span><span class="o">=</span><span class="m">3</span>
+Creating<span class="w"> </span>network<span class="w"> </span><span class="s2">&quot;service_default&quot;</span><span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>driver
+Creating<span class="w"> </span>service_application_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Creating<span class="w"> </span>service_application_2<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Creating<span class="w"> </span>service_application_3<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Creating<span class="w"> </span>service_nginx_1<span class="w">       </span>...<span class="w"> </span><span class="k">done</span>
 </code></pre></div>
 
 <p>As you can see, Docker Compose runs now 3 containers for the <code>application</code> service. If you open the logs stream and visit the page in the browser you will now see a slightly different output</p>
-<div class="highlight"><pre><span></span><code>$ docker-compose logs -f nginx
-Attaching to service_nginx_1
-nginx_1        <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:16 +0000<span class="o">]</span> localhost to: <span class="m">192</span>.168.240.4:8000: GET / HTTP/1.1 <span class="m">200</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>nginx
+Attaching<span class="w"> </span>to<span class="w"> </span>service_nginx_1
+nginx_1<span class="w">        </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:16<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">192</span>.168.240.4:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
 </code></pre></div>
 
 <p>where you can spot <code>to: 192.168.240.4:8000</code> which is the IP address of one of the application containers. Please note that the IP address you see might be different, as it depends on the Docker network settings. If you now visit the page again multiple times you should notice a change in the upstream address, something like</p>
-<div class="highlight"><pre><span></span><code>$ docker-compose logs -f nginx
-Attaching to service_nginx_1
-nginx_1        <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:16 +0000<span class="o">]</span> localhost to: <span class="m">192</span>.168.240.4:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1        <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:17 +0000<span class="o">]</span> localhost to: <span class="m">192</span>.168.240.2:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1        <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:17 +0000<span class="o">]</span> localhost to: <span class="m">192</span>.168.240.3:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1        <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:17 +0000<span class="o">]</span> localhost to: <span class="m">192</span>.168.240.4:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1        <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:17 +0000<span class="o">]</span> localhost to: <span class="m">192</span>.168.240.2:8000: GET / HTTP/1.1 <span class="m">200</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>nginx
+Attaching<span class="w"> </span>to<span class="w"> </span>service_nginx_1
+nginx_1<span class="w">        </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:16<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">192</span>.168.240.4:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">        </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:17<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">192</span>.168.240.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">        </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:17<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">192</span>.168.240.3:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">        </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:17<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">192</span>.168.240.4:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">        </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:09:00:17<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">192</span>.168.240.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
 </code></pre></div>
 
 <p>This shows that nginx is performing load balancing, but to tell the truth this is happening through Docker's DNS, and not by an explicit action performed by the web server. We can verify this accessing the nginx container and running <code>dig application</code> (you need to run <code>apt update</code> and <code>apt install dnsutils</code> to install <code>dig</code>)</p>
-<div class="highlight"><pre><span></span><code>$ docker-compose <span class="nb">exec</span> nginx /bin/bash
-root@99c2f348140e:/# apt update
-root@99c2f348140e:/# apt install -y dnsutils
-root@99c2f348140e:/# dig application
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>nginx<span class="w"> </span>/bin/bash
+root@99c2f348140e:/#<span class="w"> </span>apt<span class="w"> </span>update
+root@99c2f348140e:/#<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>dnsutils
+root@99c2f348140e:/#<span class="w"> </span>dig<span class="w"> </span>application
 
-<span class="p">;</span> &lt;&lt;&gt;&gt; DiG <span class="m">9</span>.11.5-P4-5.1-Debian &lt;&lt;&gt;&gt; application
-<span class="p">;;</span> global options: +cmd
-<span class="p">;;</span> Got answer:
-<span class="p">;;</span> -&gt;&gt;HEADER<span class="s">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span class="m">7221</span>
-<span class="p">;;</span> flags: qr rd ra<span class="p">;</span> QUERY: <span class="m">1</span>, ANSWER: <span class="m">3</span>, AUTHORITY: <span class="m">0</span>, ADDITIONAL: <span class="m">0</span>
+<span class="p">;</span><span class="w"> </span>&lt;&lt;&gt;&gt;<span class="w"> </span>DiG<span class="w"> </span><span class="m">9</span>.11.5-P4-5.1-Debian<span class="w"> </span>&lt;&lt;&gt;&gt;<span class="w"> </span>application
+<span class="p">;;</span><span class="w"> </span>global<span class="w"> </span>options:<span class="w"> </span>+cmd
+<span class="p">;;</span><span class="w"> </span>Got<span class="w"> </span>answer:
+<span class="p">;;</span><span class="w"> </span>-&gt;&gt;HEADER<span class="s">&lt;&lt;- opco</span>de:<span class="w"> </span>QUERY,<span class="w"> </span>status:<span class="w"> </span>NOERROR,<span class="w"> </span>id:<span class="w"> </span><span class="m">7221</span>
+<span class="p">;;</span><span class="w"> </span>flags:<span class="w"> </span>qr<span class="w"> </span>rd<span class="w"> </span>ra<span class="p">;</span><span class="w"> </span>QUERY:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>ANSWER:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span>AUTHORITY:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>ADDITIONAL:<span class="w"> </span><span class="m">0</span>
 
-<span class="p">;;</span> QUESTION SECTION:
-<span class="p">;</span>application.                   IN      A
+<span class="p">;;</span><span class="w"> </span>QUESTION<span class="w"> </span>SECTION:
+<span class="p">;</span>application.<span class="w">                   </span>IN<span class="w">      </span>A
 
-<span class="p">;;</span> ANSWER SECTION:
-application.            <span class="m">600</span>     IN      A       <span class="m">192</span>.168.240.2
-application.            <span class="m">600</span>     IN      A       <span class="m">192</span>.168.240.4
-application.            <span class="m">600</span>     IN      A       <span class="m">192</span>.168.240.3
+<span class="p">;;</span><span class="w"> </span>ANSWER<span class="w"> </span>SECTION:
+application.<span class="w">            </span><span class="m">600</span><span class="w">     </span>IN<span class="w">      </span>A<span class="w">       </span><span class="m">192</span>.168.240.2
+application.<span class="w">            </span><span class="m">600</span><span class="w">     </span>IN<span class="w">      </span>A<span class="w">       </span><span class="m">192</span>.168.240.4
+application.<span class="w">            </span><span class="m">600</span><span class="w">     </span>IN<span class="w">      </span>A<span class="w">       </span><span class="m">192</span>.168.240.3
 
-<span class="p">;;</span> Query time: <span class="m">1</span> msec
-<span class="p">;;</span> SERVER: <span class="m">127</span>.0.0.11#53<span class="o">(</span><span class="m">127</span>.0.0.11<span class="o">)</span>
-<span class="p">;;</span> WHEN: Fri Feb <span class="m">14</span> <span class="m">09</span>:57:24 UTC <span class="m">2020</span>
-<span class="p">;;</span> MSG SIZE  rcvd: <span class="m">110</span>
+<span class="p">;;</span><span class="w"> </span>Query<span class="w"> </span>time:<span class="w"> </span><span class="m">1</span><span class="w"> </span>msec
+<span class="p">;;</span><span class="w"> </span>SERVER:<span class="w"> </span><span class="m">127</span>.0.0.11#53<span class="o">(</span><span class="m">127</span>.0.0.11<span class="o">)</span>
+<span class="p">;;</span><span class="w"> </span>WHEN:<span class="w"> </span>Fri<span class="w"> </span>Feb<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="m">09</span>:57:24<span class="w"> </span>UTC<span class="w"> </span><span class="m">2020</span>
+<span class="p">;;</span><span class="w"> </span>MSG<span class="w"> </span>SIZE<span class="w">  </span>rcvd:<span class="w"> </span><span class="m">110</span>
 </code></pre></div>
 
 <p>To see load balancing performed by nginx we can explicitly define two services and assign them different weights. Run <code>docker-compose down</code> and change the nginx configuration to</p>
-<div class="highlight"><pre><span></span><code><span class="k">upstream</span><span class="w"> </span><span class="s">app</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">application1</span><span class="p">:</span><span class="mi">8000</span><span class="w"> </span><span class="s">weight=3</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">application2</span><span class="p">:</span><span class="mi">8000</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">upstream</span><span class="w"> </span><span class="s">app</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">application1</span><span class="p">:</span><span class="mi">8000</span><span class="w"> </span><span class="s">weight=3</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">application2</span><span class="p">:</span><span class="mi">8000</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="k">log_format</span><span class="w"> </span><span class="s">upstreamlog</span><span class="w"> </span><span class="s">&#39;[</span><span class="nv">$time_local]</span><span class="w"> </span><span class="nv">$host</span><span class="w"> </span><span class="s">to:</span><span class="w"> </span><span class="nv">$upstream_addr:</span><span class="w"> </span><span class="nv">$request</span><span class="w"> </span><span class="nv">$status&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="k">log_format</span><span class="w"> </span><span class="s">upstreamlog</span><span class="w"> </span><span class="s">&#39;[</span><span class="nv">$time_local]</span><span class="w"> </span><span class="nv">$host</span><span class="w"> </span><span class="s">to:</span><span class="w"> </span><span class="nv">$upstream_addr:</span><span class="w"> </span><span class="nv">$request</span><span class="w"> </span><span class="nv">$status&#39;</span><span class="p">;</span>
 
-<span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span><span class="w"></span>
+<span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span>
 
-<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://app</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://app</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kn">access_log</span><span class="w"> </span><span class="s">/var/log/nginx/access.log</span><span class="w"> </span><span class="s">upstreamlog</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kn">access_log</span><span class="w"> </span><span class="s">/var/log/nginx/access.log</span><span class="w"> </span><span class="s">upstreamlog</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>We defined here an <code>upstream</code> structure that lists two different services, <code>application1</code> and <code>application2</code>, giving to the first one a weight of 3. This mean that each 4 requests, 3 will be routed to the first service, and one to the second service. Now nginx is not just relying on the DNS, but consciously choosing between two different services.</p>
@@ -1132,7 +1118,7 @@ services:
       dockerfile: Dockerfile
     command: gunicorn --workers 6 --bind 0.0.0.0:8000 wsgi
     expose:
-        - 8000
+        <span class="k">-</span> 8000
 
   application2:
     build:
@@ -1140,33 +1126,33 @@ services:
       dockerfile: Dockerfile
     command: gunicorn --workers 3 --bind 0.0.0.0:8000 wsgi
     expose:
-        - 8000
+        <span class="k">-</span> 8000
 
   nginx:
     image: nginx
     volumes:
-     - ./nginx.conf:/etc/nginx/conf.d/default.conf
+     <span class="k">-</span> ./nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 80:80
+      <span class="k">-</span> 80:80
     depends_on:
-      - application1
-      - application2
+      <span class="k">-</span> application1
+      <span class="k">-</span> application2
 </code></pre></div>
 
 <p>I basically duplicated the definition of <code>application</code>, but the first service is running now 6 workers, just for the sake of showing a possible difference between the two. Now run <code>docker-compose up -d</code> and <code>docker-compose logs -f nginx</code>. If you refresh the page on the browser multiple times you will see something like</p>
-<div class="highlight"><pre><span></span><code>$ docker-compose logs -f nginx
-Attaching to service_nginx_1
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:25 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.2:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:25 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.2:8000: GET /favicon.ico HTTP/1.1 <span class="m">404</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:30 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.3:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:31 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.2:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:32 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.2:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:33 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.2:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:33 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.3:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:34 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.2:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:34 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.2:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:35 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.2:8000: GET / HTTP/1.1 <span class="m">200</span>
-nginx_1         <span class="p">|</span> <span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:35 +0000<span class="o">]</span> localhost to: <span class="m">172</span>.18.0.3:8000: GET / HTTP/1.1 <span class="m">200</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>nginx
+Attaching<span class="w"> </span>to<span class="w"> </span>service_nginx_1
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:25<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:25<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.2:8000:<span class="w"> </span>GET<span class="w"> </span>/favicon.ico<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">404</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:30<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.3:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:31<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:32<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:33<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:33<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.3:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:34<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:34<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:35<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.2:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
+nginx_1<span class="w">         </span><span class="p">|</span><span class="w"> </span><span class="o">[</span><span class="m">14</span>/Feb/2020:11:03:35<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span>localhost<span class="w"> </span>to:<span class="w"> </span><span class="m">172</span>.18.0.3:8000:<span class="w"> </span>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span>
 </code></pre></div>
 
 <p>where you can clearly notice the load balancing between <code>172.18.0.2</code> (<code>application1</code>) and <code>172.18.0.3</code> (<code>application2</code>) in action.</p>

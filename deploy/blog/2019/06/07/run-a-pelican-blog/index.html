@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/projects/atom.xml">All posts in category: Projects</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/projects/atom.xml">All posts in category: Projects</a></li>
 </ul></section>
 <section>
   <header>
@@ -570,11 +556,11 @@
 <p>Call the first repository <code>blog_source</code> and the second one <code>&lt;your_user_name&gt;.github.io</code>. The former is just a convention followed by my template, while the latter is enforced by GitHub pages, which uses by default that repository to publish the website at the address with that name.</p>
 <h2 id="install-the-template">Install the template<a class="headerlink" href="#install-the-template" title="Permanent link">&para;</a></h2>
 <p>Create a <a href="https://docs.python.org/3/tutorial/venv.html">Python virtual environment</a> and install <code>cookiecutter</code></p>
-<div class="highlight"><pre><span></span><code>pip install cookiecutter
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>cookiecutter
 </code></pre></div>
 
 <p>Then run <code>cookiecutter</code> on the template I prepared</p>
-<div class="highlight"><pre><span></span><code>cookiecutter https://github.com/lgiordani/cookiecutter-pelicanblog.git
+<div class="highlight"><pre><span></span><code>cookiecutter<span class="w"> </span>https://github.com/lgiordani/cookiecutter-pelicanblog.git
 </code></pre></div>
 
 <p>Now, you will be asked some questions, let's look at them in detail. Remember that you can always start from scratch of fix the values you entered manually later.</p>
@@ -588,8 +574,8 @@
 </ul>
 <h2 id="set-up-the-environment">Set up the environment<a class="headerlink" href="#set-up-the-environment" title="Permanent link">&para;</a></h2>
 <p>Now enter the directory that was created by the template, install the requirements and run the <code>setup.sh</code> script</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> &lt;blog_source_repo&gt;
-pip install -r requirements.txt
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>&lt;blog_source_repo&gt;
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 ./setup.sh
 </code></pre></div>
 

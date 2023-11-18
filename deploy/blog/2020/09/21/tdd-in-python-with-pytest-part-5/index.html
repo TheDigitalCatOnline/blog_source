@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -561,17 +547,17 @@
 <p>This is exactly the case addressed by patching. Patching, in a testing framework, means to replace a globally reachable object with a mock, thus achieving the goal of having the code run unmodified, while part of it has been hot swapped, that is, replaced at run time.</p>
 <h3 id="a-warm-up-example">A warm-up example<a class="headerlink" href="#a-warm-up-example" title="Permanent link">&para;</a></h3>
 <p>Clone the repository <code>fileinfo</code> that you can find <a href="https://github.com/lgiordani/fileinfo">here</a> and move to the branch <code>develop</code>. As I did for the project <code>simple_calculator</code>, the branch <code>master</code> contains the full solution, and I use it to maintain the repository, but if you want to code along you need to start from scratch. If you prefer, you can clearly clone it on GitHub and make your own copy of the repository.</p>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/lgiordani/fileinfo
-<span class="nb">cd</span> fileinfo
-git checkout --track origin/develop
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/lgiordani/fileinfo
+<span class="nb">cd</span><span class="w"> </span>fileinfo
+git<span class="w"> </span>checkout<span class="w"> </span>--track<span class="w"> </span>origin/develop
 </code></pre></div>
 
 <p>Create a virtual environment following your preferred process and install the requirements</p>
-<div class="highlight"><pre><span></span><code>pip install -r requirements/dev.txt
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements/dev.txt
 </code></pre></div>
 
 <p>You should at this point be able to run</p>
-<div class="highlight"><pre><span></span><code>pytest -svv
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-svv
 </code></pre></div>
 
 <p>and get an output like</p>
@@ -842,7 +828,7 @@ collected 0 items
 </code></pre></div>
 
 <p>When you try to execute this test you will get the following error</p>
-<div class="highlight"><pre><span></span><code><span class="n">TypeError</span><span class="o">:</span><span class="w"> </span><span class="n">can</span><span class="s1">&#39;t set attributes of built-in/extension type &#39;</span><span class="n">datetime</span><span class="o">.</span><span class="na">datetime</span><span class="err">&#39;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">TypeError</span><span class="o">:</span><span class="w"> </span><span class="n">can</span><span class="s1">&#39;t set attributes of built-in/extension type &#39;</span><span class="n">datetime</span><span class="o">.</span><span class="na">datetime</span><span class="err">&#39;</span>
 </code></pre></div>
 
 <p>which is raised because patching tries to replace the function <code>now</code> in <code>datetime.datetime</code> with a mock, and since the module is immutable this operation fails.</p>

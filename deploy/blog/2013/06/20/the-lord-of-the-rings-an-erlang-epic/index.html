@@ -66,39 +66,6 @@
   </article>
 </section>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">
-      <img src="/images/8-technologies.jpg" />
-    </a>
-    <div class="body">
-      <h2>How do you become a DevOps Engineer?</h2>
-      <p>A curated list of 8 technologies you need to learn</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/8-technologies-you-need-to-learn-now">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
-
-
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -295,6 +262,25 @@
     <li class="tag tag-size-3">
       <a title="Posts about WWW" href="/categories/www/">WWW</a>
     </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
 </ul></section>
 <section>
   <header>
@@ -559,20 +545,20 @@
 <p>There are two main strategies that can be leveraged to get the ring build and behave in a correct way: the <strong>master process</strong> approach and the <strong>recursive</strong> one. For each of the two, I am going to present and analyze the following steps: a ring of processes with <strong>no message</strong> exchange, a ring with <strong>a single message</strong> travelling through it, a ring with <strong>multiple messages</strong> and a ring that exposes a <strong>functional interface</strong> to send messages.</p>
 <h2 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h2>
 <p>Debugging concurrent applications is everything but simple. For this exercise, it is however enough to get simple information about which process is forwarding which message. To allow a simple removal of debug prints a very small macro has been included in the file <code>debug.hrl</code>, activated by the definition of <code>debug</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="p">-</span><span class="ni">ifdef</span><span class="p">(</span><span class="n">debug</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">DEBUG</span><span class="p">(</span><span class="nv">Format</span><span class="p">,</span><span class="w"> </span><span class="nv">Args</span><span class="p">),</span><span class="w"></span>
-<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;</span><span class="si">~p</span><span class="s">: &quot;</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="nv">Format</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">()]</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="nv">Args</span><span class="p">)).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">else</span><span class="p">.</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">DEBUG</span><span class="p">(</span><span class="nv">Format</span><span class="p">,</span><span class="w"> </span><span class="nv">Args</span><span class="p">),</span><span class="w"> </span><span class="n">true</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">endif</span><span class="p">.</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">-</span><span class="ni">ifdef</span><span class="p">(</span><span class="n">debug</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">DEBUG</span><span class="p">(</span><span class="nv">Format</span><span class="p">,</span><span class="w"> </span><span class="nv">Args</span><span class="p">),</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;</span><span class="si">~p</span><span class="s">: &quot;</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="nv">Format</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">()]</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="nv">Args</span><span class="p">)).</span>
+<span class="p">-</span><span class="ni">else</span><span class="p">.</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">DEBUG</span><span class="p">(</span><span class="nv">Format</span><span class="p">,</span><span class="w"> </span><span class="nv">Args</span><span class="p">),</span><span class="w"> </span><span class="n">true</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">endif</span><span class="p">.</span>
 </code></pre></div>
 
 <p>This converts the line</p>
-<div class="highlight"><pre><span></span><code><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;A message</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[]).</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;A message</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[]).</span>
 </code></pre></div>
 
 <p>to</p>
-<div class="highlight"><pre><span></span><code>&lt;<span class="m">0</span>.44.0&gt;: A message
+<div class="highlight"><pre><span></span><code>&lt;<span class="m">0</span>.44.0&gt;:<span class="w"> </span>A<span class="w"> </span>message
 </code></pre></div>
 
 <p>where <code>&lt;0.44.0&gt;</code> is the pid of the message calling <code>?DEBUG</code> (only if <code>-define(debug, true).</code> is in the file).</p>
@@ -580,58 +566,58 @@
 <p>A good way to face the problem of building the ring is to spawn a <em>master process</em>, which will then spawn all other processes. This solution keeps the creation phase simple since everything happens between the master process and the process that is currently being spawned.</p>
 <p>A small caveat: the creation of the ring must be performed <strong>backwards</strong>. When the master process spawns another process the only other process it knows is the process spawned in the previous loop. This means that the master process spawns a process that connects backwards to it, then spawns a process that connects backward to the second one, and so on.</p>
 <h4 id="building-the-ring">Building the ring<a class="headerlink" href="#building-the-ring" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span><span class="w"></span>
-<span class="c">%%% Description: Implements a simple ring of processes without message passing</span><span class="w"></span>
-<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span>
+<span class="c">%%% Description: Implements a simple ring of processes without message passing</span>
+<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span>
 
-<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_master_no_messages</span><span class="p">).</span><span class="w"></span>
+<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_master_no_messages</span><span class="p">).</span>
 
-<span class="c">%% Include some debug macros</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Include some debug macros</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span>
 
-<span class="c">%% User interface</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% User interface</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
-<span class="c">%% Private exports</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% Private exports</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
-<span class="c">%% This version of the processes ring program uses the first process as a</span><span class="w"></span>
-<span class="c">%% master that spawns all other processes. It links to each process it spawns,</span><span class="w"></span>
-<span class="c">%% but processes are not linked each other.</span><span class="w"></span>
-<span class="c">%% Processes send no messages.</span><span class="w"></span>
+<span class="c">%% This version of the processes ring program uses the first process as a</span>
+<span class="c">%% master that spawns all other processes. It links to each process it spawns,</span>
+<span class="c">%% but processes are not linked each other.</span>
+<span class="c">%% Processes send no messages.</span>
 
-<span class="c">%% This spawns the first process. There is no need to register the process.</span><span class="w"></span>
-<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% This spawns the first process. There is no need to register the process.</span>
+<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">]).</span>
 
-<span class="c">%% Function create/1 needs to be defined so that the first process can call</span><span class="w"></span>
-<span class="c">%% create/2 passing its pid through self().</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">()).</span><span class="w"></span>
+<span class="c">%% Function create/1 needs to be defined so that the first process can call</span>
+<span class="c">%% create/2 passing its pid through self().</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">()).</span>
 
-<span class="c">%% Function create/2 manages the single process creation; in this version the</span><span class="w"></span>
-<span class="c">%% master process just spawns each process and links to it. The exit clause</span><span class="w"></span>
-<span class="c">%% is when the proceses counter reaches 1 (that is, we completed the ring).</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">);</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Prev</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/2 manages the single process creation; in this version the</span>
+<span class="c">%% master process just spawns each process and links to it. The exit clause</span>
+<span class="c">%% is when the proceses counter reaches 1 (that is, we completed the ring).</span>
+<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">);</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nv">Prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Prev</span><span class="p">).</span>
 
-<span class="c">%% In this version function loop/1 sits down and does nothing.</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% In this version function loop/1 sits down and does nothing.</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">).</span>
 </code></pre></div>
 
 <p><a href="/code/erlang-rings/ring_master_no_messages.erl">source code</a></p>
 <p>Note that the first spawn cannot directly call <code>create/2</code> passing <code>self()</code> since at that moment <code>self()</code> is the pid of the calling process (e.g. the Erlang shell) and not the pid of the first process of the ring, which is what we want. So we have to bypass this by spawning a process which executes <code>create/1</code>, which in turn calls <code>create/2</code> with the pid the process extracted with <code>self()</code>.</p>
 <p>This first program spawns a set of processes that sit down and do nothing. Since they are all linked together (through the link with the master process), you can terminate the whole set by sending an exit signal to one of them. You can get the list of pid and names through the shell function <code>i()</code>. Otherwise, you can get and use the pid returned by the function <code>start/1</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i</span><span class="p">().</span><span class="w"></span>
-<span class="p">[...]</span><span class="w"></span>
-<span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">exit</span><span class="p">(</span><span class="n">pid</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">44</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">boom</span><span class="p">).</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">i</span><span class="p">().</span>
+<span class="p">[...]</span>
+<span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">exit</span><span class="p">(</span><span class="n">pid</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">44</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">boom</span><span class="p">).</span>
 </code></pre></div>
 
 <h4 id="sending-a-single-message">Sending a single message<a class="headerlink" href="#sending-a-single-message" title="Permanent link">&para;</a></h4>
@@ -643,59 +629,59 @@
 <li>when the ring is ready the master process has to send the message to the second process; then it terminates</li>
 <li>each node just forwards the incoming message and terminates</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span><span class="w"></span>
-<span class="c">%%% Description: Implements a simple ring of processes with a single</span><span class="w"></span>
-<span class="c">%%%              message traveling once through the ring.</span><span class="w"></span>
-<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span>
+<span class="c">%%% Description: Implements a simple ring of processes with a single</span>
+<span class="c">%%%              message traveling once through the ring.</span>
+<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span>
 
-<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_master_single_message</span><span class="p">).</span><span class="w"></span>
+<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_master_single_message</span><span class="p">).</span>
 
-<span class="c">%% Include some debug macros</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Include some debug macros</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span>
 
-<span class="c">%% User interface</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% User interface</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span>
 
-<span class="c">%% Private exports</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% Private exports</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
-<span class="c">%% This version of the processes ring program uses the first process as a</span><span class="w"></span>
-<span class="c">%% master that spawns all other processes. It links to each process it spawns,</span><span class="w"></span>
-<span class="c">%% but processes are not linked each other.</span><span class="w"></span>
-<span class="c">%% The first process then injects a single message in the ring, sending it to</span><span class="w"></span>
-<span class="c">%% the second process.</span><span class="w"></span>
+<span class="c">%% This version of the processes ring program uses the first process as a</span>
+<span class="c">%% master that spawns all other processes. It links to each process it spawns,</span>
+<span class="c">%% but processes are not linked each other.</span>
+<span class="c">%% The first process then injects a single message in the ring, sending it to</span>
+<span class="c">%% the second process.</span>
 
-<span class="c">%% This spawns the first process. There is no need to register the process.</span><span class="w"></span>
-<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% This spawns the first process. There is no need to register the process.</span>
+<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">]).</span>
 
-<span class="c">%% Function create/2 needs to be defined so that the first process can call</span><span class="w"></span>
-<span class="c">%% create/3 passing its pid through self().</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/2 needs to be defined so that the first process can call</span>
+<span class="c">%% create/3 passing its pid through self().</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">).</span>
 
-<span class="c">%% Function create/3 manages the single process creation; in this version the</span><span class="w"></span>
-<span class="c">%% master process spawns each process and links to it. Then each process starts</span><span class="w"></span>
-<span class="c">%% a loop. When the ring is completed the first process injects the message and</span><span class="w"></span>
-<span class="c">%% terminates.</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> injects message </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Message</span><span class="p">;</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/3 manages the single process creation; in this version the</span>
+<span class="c">%% master process spawns each process and links to it. Then each process starts</span>
+<span class="c">%% a loop. When the ring is completed the first process injects the message and</span>
+<span class="c">%% terminates.</span>
+<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> injects message </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span>
+<span class="w">    </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Message</span><span class="p">;</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nv">Prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">).</span>
 
-<span class="c">%% Now loop/1 blocks each process making it wait for a message to pass along.</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% Now loop/1 blocks each process making it wait for a message to pass along.</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ok</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p><a href="/code/erlang-rings/ring_master_single_message.erl">source code</a></p>
@@ -707,69 +693,69 @@
 <li>when the number of remaining travels is 1 the process forwards the message and then terminates.</li>
 <li>when the number of remaining travels is more than 1 the process loops again with a decremented value of travels.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span><span class="w"></span>
-<span class="c">%%% Description: Implements a simple ring of processes with a single</span><span class="w"></span>
-<span class="c">%%%              message traveling multiple times through the ring.</span><span class="w"></span>
-<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span>
+<span class="c">%%% Description: Implements a simple ring of processes with a single</span>
+<span class="c">%%%              message traveling multiple times through the ring.</span>
+<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span>
 
-<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_master_multiple_messages</span><span class="p">).</span><span class="w"></span>
+<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_master_multiple_messages</span><span class="p">).</span>
 
-<span class="c">%% Include some debug macros</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Include some debug macros</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span>
 
-<span class="c">%% User interface</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">3</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% User interface</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">3</span><span class="p">]).</span>
 
-<span class="c">%% Private exports</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% Private exports</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span>
 
-<span class="c">%% This version of the processes ring program uses the first process as a</span><span class="w"></span>
-<span class="c">%% master that spawns all other processes. It links to each process it spawns,</span><span class="w"></span>
-<span class="c">%% but processes are not linked each other.</span><span class="w"></span>
-<span class="c">%% The first process then injects a message in the ring, sending it to the</span><span class="w"></span>
-<span class="c">%% second process and when getting the message from the last process, it</span><span class="w"></span>
-<span class="c">%% injects it again in the ring a given number of times.</span><span class="w"></span>
+<span class="c">%% This version of the processes ring program uses the first process as a</span>
+<span class="c">%% master that spawns all other processes. It links to each process it spawns,</span>
+<span class="c">%% but processes are not linked each other.</span>
+<span class="c">%% The first process then injects a message in the ring, sending it to the</span>
+<span class="c">%% second process and when getting the message from the last process, it</span>
+<span class="c">%% injects it again in the ring a given number of times.</span>
 
-<span class="c">%% This spawns the first process. There is no need to register the process.</span><span class="w"></span>
-<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% This spawns the first process. There is no need to register the process.</span>
+<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]).</span>
 
-<span class="c">%% Function create/3 needs to be defined so that the first process can call</span><span class="w"></span>
-<span class="c">%% create/4 passing its pid through self().</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/3 needs to be defined so that the first process can call</span>
+<span class="c">%% create/4 passing its pid through self().</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">).</span>
 
-<span class="c">%% Function create/4 manages the single process creation; in this version the</span><span class="w"></span>
-<span class="c">%% master process spawns each process and links to it. Then each process starts</span><span class="w"></span>
-<span class="c">%% a loop. When the ring is completed the first process injects the message and</span><span class="w"></span>
-<span class="c">%% starts looping.</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> injects message </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/4 manages the single process creation; in this version the</span>
+<span class="c">%% master process spawns each process and links to it. Then each process starts</span>
+<span class="c">%% a loop. When the ring is completed the first process injects the message and</span>
+<span class="c">%% starts looping.</span>
+<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> injects message </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span>
+<span class="w">    </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nv">Prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">).</span>
 
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> and terminating</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                   </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">;</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> (still </span><span class="si">~p</span><span class="s"> time(s))</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                   </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> and terminating</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ok</span>
+<span class="w">    </span><span class="k">end</span><span class="p">;</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> (still </span><span class="si">~p</span><span class="s"> time(s))</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p><a href="/code/erlang-rings/ring_master_multiple_messages.erl">source code</a></p>
@@ -783,110 +769,110 @@
 <li><code>send_message/2</code> - sends a message that travels the given number of times through the ring</li>
 </ul>
 <p>To expose a functional interface you need to register one or more processes, to get a global access point for your functions, so the first change to the code is that the spawned process is registered. Note that <code>Message</code> and <code>NumberProcesses</code> are no more passed to the <code>create()</code> function.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">register</span><span class="p">(</span><span class="n">ring_master_functional</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">])),</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nb">register</span><span class="p">(</span><span class="n">ring_master_functional</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">])),</span>
 </code></pre></div>
 
 <p>This is not enough. We have to be sure that the whole ring is ready before giving control back to the user issuing <code>start()</code>. Until now the message was sent by the master process just after the creation of the last ring process, so there was no need to synchronize the return of the start function with the spawned processes. Now we need it, so just after registering the master process we wait for a ready message coming from the ring. To allow the ring to send the message to the initial caller we have to pass <code>self()</code> to <code>create()</code>. Pay attention that <code>self()</code> passed to the spawned process is the pid of the external process (e.g. the Erlang shell) while <code>self()</code> passed to <code>create()</code> is the pid of the master ring process.</p>
-<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span><span class="w"></span>
-<span class="c">%%% Description: Implements a simple ring of processes that exposes a</span><span class="w"></span>
-<span class="c">%%%              functional interface to send messages.</span><span class="w"></span>
-<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span>
+<span class="c">%%% Description: Implements a simple ring of processes that exposes a</span>
+<span class="c">%%%              functional interface to send messages.</span>
+<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span>
 
-<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_master_functional</span><span class="p">).</span><span class="w"></span>
+<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_master_functional</span><span class="p">).</span>
 
-<span class="c">%% Include some debug macros</span><span class="w"></span>
-<span class="c">%%-define(debug, true).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Include some debug macros</span>
+<span class="c">%%-define(debug, true).</span>
+<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span>
 
-<span class="c">%% User interface</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">send_message</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">send_message</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% User interface</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">send_message</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">send_message</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span>
 
-<span class="c">%% Private exports</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% Private exports</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
-<span class="c">%% This version of the processes ring program uses the first process as a</span><span class="w"></span>
-<span class="c">%% master that spawns all other processes. It links to each process it spawns,</span><span class="w"></span>
-<span class="c">%% but processes are not linked each other.</span><span class="w"></span>
-<span class="c">%% The module exposes a functional interface to send messages in the ring</span><span class="w"></span>
-<span class="c">%% and to terminate it.</span><span class="w"></span>
+<span class="c">%% This version of the processes ring program uses the first process as a</span>
+<span class="c">%% master that spawns all other processes. It links to each process it spawns,</span>
+<span class="c">%% but processes are not linked each other.</span>
+<span class="c">%% The module exposes a functional interface to send messages in the ring</span>
+<span class="c">%% and to terminate it.</span>
 
-<span class="c">%% This spawns the first process. The process is registered to allow the</span><span class="w"></span>
-<span class="c">%% functional interface to work with it.</span><span class="w"></span>
-<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_master_functional</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                           </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">()])),</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="n">ready</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="w"></span>
-<span class="w">    </span><span class="k">after</span><span class="w"> </span><span class="mi">5000</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% This spawns the first process. The process is registered to allow the</span>
+<span class="c">%% functional interface to work with it.</span>
+<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_master_functional</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span>
+<span class="w">                                           </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">()])),</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="n">ready</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="n">ok</span>
+<span class="w">    </span><span class="k">after</span><span class="w"> </span><span class="mi">5000</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="p">}</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 
-<span class="c">%% Functional interface: terminate the ring</span><span class="w"></span>
-<span class="nf">stop</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">ring_master_functional</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}.</span><span class="w"></span>
+<span class="c">%% Functional interface: terminate the ring</span>
+<span class="nf">stop</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">ring_master_functional</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}.</span>
 
-<span class="c">%% Functional interface: send a message that travels through the ring once</span><span class="w"></span>
-<span class="nf">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Functional interface: send a message that travels through the ring once</span>
+<span class="nf">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span>
 
-<span class="c">%% Functional interface: send a message that travels through the ring</span><span class="w"></span>
-<span class="c">%% Times times</span><span class="w"></span>
-<span class="nf">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">ring_master_functional</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]}.</span><span class="w"></span>
+<span class="c">%% Functional interface: send a message that travels through the ring</span>
+<span class="c">%% Times times</span>
+<span class="nf">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">ring_master_functional</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]}.</span>
 
-<span class="c">%% Function create/2 needs to be defined so that the first process can call</span><span class="w"></span>
-<span class="c">%% create/3 passing its pid through self(). The Starter process is passed to</span><span class="w"></span>
-<span class="c">%% allow the ring to send a ready message.</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Starter</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/2 needs to be defined so that the first process can call</span>
+<span class="c">%% create/3 passing its pid through self(). The Starter process is passed to</span>
+<span class="c">%% allow the ring to send a ready message.</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Starter</span><span class="p">).</span>
 
-<span class="c">%% Function create/3 manages the single process creation; in this version the</span><span class="w"></span>
-<span class="c">%% master process spawns each process and links to it. Then each process starts</span><span class="w"></span>
-<span class="c">%% a loop. When the ring is completed the first process injects the message and</span><span class="w"></span>
-<span class="c">%% terminates.</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Starter</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ready</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop_master</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">);</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/3 manages the single process creation; in this version the</span>
+<span class="c">%% master process spawns each process and links to it. Then each process starts</span>
+<span class="c">%% a loop. When the ring is completed the first process injects the message and</span>
+<span class="c">%% terminates.</span>
+<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="nv">Starter</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ready</span><span class="p">,</span>
+<span class="w">    </span><span class="n">loop_master</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">);</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nv">Prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Prev</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">).</span>
 
-<span class="c">%% Function loop_master/1 rules the behaviour of the master process (the first</span><span class="w"></span>
-<span class="c">%% of the whole ring). When it receives a stop command it forwards it and</span><span class="w"></span>
-<span class="c">%% terminates. When it receives a message command if Times is 0 the message is</span><span class="w"></span>
-<span class="c">%% thrown away, otherwise is is injected again in the ring with a decremented</span><span class="w"></span>
-<span class="c">%% Times value.</span><span class="w"></span>
-<span class="nf">loop_master</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop_master</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> (still </span><span class="si">~p</span><span class="s"> time(s)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                   </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]},</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop_master</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% Function loop_master/1 rules the behaviour of the master process (the first</span>
+<span class="c">%% of the whole ring). When it receives a stop command it forwards it and</span>
+<span class="c">%% terminates. When it receives a message command if Times is 0 the message is</span>
+<span class="c">%% thrown away, otherwise is is injected again in the ring with a decremented</span>
+<span class="c">%% Times value.</span>
+<span class="nf">loop_master</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ok</span><span class="p">;</span>
+<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="n">loop_master</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">);</span>
+<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> (still </span><span class="si">~p</span><span class="s"> time(s)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]},</span>
+<span class="w">            </span><span class="n">loop_master</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 
-<span class="c">%% Function loop/1 rules the behaviour of the standard processes.</span><span class="w"></span>
-<span class="c">%% When a process receives a stop command it forwards it and</span><span class="w"></span>
-<span class="c">%% terminates. When it receives a message command it just forwards it.</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="p">_]}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                   </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% Function loop/1 rules the behaviour of the standard processes.</span>
+<span class="c">%% When a process receives a stop command it forwards it and</span>
+<span class="c">%% terminates. When it receives a message command it just forwards it.</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ok</span><span class="p">;</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="p">_]}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p><a href="/code/erlang-rings/ring_master_functional.erl">source code</a></p>
@@ -903,286 +889,286 @@
 <p>This solution has the advantage of being very straightforward for an Erlang programmer since it implements the standard recursion pattern. However, it forces the programmer to deal most of the time with the last node, which is a little counterintuitive.</p>
 <p>The following programs are the recursive version of the four presented in the previous section. Once grasped the two main differences, building the ring forwards instead of backwards and dealing with the last node instead of the first, the two solutions present pretty much the same evolution steps.</p>
 <p>The recursive ring construction.</p>
-<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span><span class="w"></span>
-<span class="c">%%% Description: Implements a simple ring of processes without message passing</span><span class="w"></span>
-<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span>
+<span class="c">%%% Description: Implements a simple ring of processes without message passing</span>
+<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span>
 
-<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_recursion_no_messages</span><span class="p">).</span><span class="w"></span>
+<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_recursion_no_messages</span><span class="p">).</span>
 
-<span class="c">%% Include some debug macros</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Include some debug macros</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span>
 
-<span class="c">%% User interface</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% User interface</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
-<span class="c">%% Private exports</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% Private exports</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
-<span class="c">%% This version of the processes ring program starts the processes in a</span><span class="w"></span>
-<span class="c">%% recursive way. Each process spawns the next one and links to it.</span><span class="w"></span>
-<span class="c">%% Processes send no messages.</span><span class="w"></span>
+<span class="c">%% This version of the processes ring program starts the processes in a</span>
+<span class="c">%% recursive way. Each process spawns the next one and links to it.</span>
+<span class="c">%% Processes send no messages.</span>
 
-<span class="c">%% Please remember that io:format() does not always respect processes order</span><span class="w"></span>
-<span class="c">%% and that as a general rule printing on the standard output from concurrent</span><span class="w"></span>
-<span class="c">%% jobs is not very useful. Here I do this just to show that processes have been</span><span class="w"></span>
-<span class="c">%% spawned. Remember to define debug false if you create a ring of more than</span><span class="w"></span>
-<span class="c">%% 30-40 processes.</span><span class="w"></span>
+<span class="c">%% Please remember that io:format() does not always respect processes order</span>
+<span class="c">%% and that as a general rule printing on the standard output from concurrent</span>
+<span class="c">%% jobs is not very useful. Here I do this just to show that processes have been</span>
+<span class="c">%% spawned. Remember to define debug false if you create a ring of more than</span>
+<span class="c">%% 30-40 processes.</span>
 
-<span class="c">%% This spawns the first process, registering it under the name</span><span class="w"></span>
-<span class="c">%% &#39;ring_recursion_no_messages&#39;.</span><span class="w"></span>
-<span class="c">%% Note that spawn() does never fail, but register may; if spawning the</span><span class="w"></span>
-<span class="c">%% first process fails an exception is raised and the process calling</span><span class="w"></span>
-<span class="c">%% start/1 is terminated.</span><span class="w"></span>
-<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_recursion_no_messages</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                               </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">])).</span><span class="w"></span>
+<span class="c">%% This spawns the first process, registering it under the name</span>
+<span class="c">%% &#39;ring_recursion_no_messages&#39;.</span>
+<span class="c">%% Note that spawn() does never fail, but register may; if spawning the</span>
+<span class="c">%% first process fails an exception is raised and the process calling</span>
+<span class="c">%% start/1 is terminated.</span>
+<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_recursion_no_messages</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span>
+<span class="w">                                               </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">])).</span>
 
-<span class="c">%% Function create/1 manages the single process creation; in this version the</span><span class="w"></span>
-<span class="c">%% only thing a process shall do is to spawn another process. The exit clause</span><span class="w"></span>
-<span class="c">%% is when the proceses counter reaches 1 (that is, the current process is the</span><span class="w"></span>
-<span class="c">%% last one): the last process uses &#39;ring_recursion_no_messages&#39; as its next</span><span class="w"></span>
-<span class="c">%% process, thus closing the ring.</span><span class="w"></span>
-<span class="c">%% Here we use the only parameter(NumberProcesses) as the index for the current</span><span class="w"></span>
-<span class="c">%% process, so we end when the parameter is 1. If we want to think of it as the</span><span class="w"></span>
-<span class="c">%% number of REMAINING processes the only changes are that the exit clause is</span><span class="w"></span>
-<span class="c">%% create(0) instead of create(1), and that the first process is spawned in</span><span class="w"></span>
-<span class="c">%% start/1 with [NumberProcesses - 1] as argument. It is only a matter of taste.</span><span class="w"></span>
-<span class="c">%% Since all processes in the ring are meant to work together we are linking</span><span class="w"></span>
-<span class="c">%% them together to ensure that if one fails all others are terminated.</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> (last)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">           </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nb">whereis</span><span class="p">(</span><span class="n">ring_recursion_no_messages</span><span class="p">)]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="n">ring_recursion_no_messages</span><span class="p">);</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="mi">1</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> </span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Next</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">Next</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/1 manages the single process creation; in this version the</span>
+<span class="c">%% only thing a process shall do is to spawn another process. The exit clause</span>
+<span class="c">%% is when the proceses counter reaches 1 (that is, the current process is the</span>
+<span class="c">%% last one): the last process uses &#39;ring_recursion_no_messages&#39; as its next</span>
+<span class="c">%% process, thus closing the ring.</span>
+<span class="c">%% Here we use the only parameter(NumberProcesses) as the index for the current</span>
+<span class="c">%% process, so we end when the parameter is 1. If we want to think of it as the</span>
+<span class="c">%% number of REMAINING processes the only changes are that the exit clause is</span>
+<span class="c">%% create(0) instead of create(1), and that the first process is spawned in</span>
+<span class="c">%% start/1 with [NumberProcesses - 1] as argument. It is only a matter of taste.</span>
+<span class="c">%% Since all processes in the ring are meant to work together we are linking</span>
+<span class="c">%% them together to ensure that if one fails all others are terminated.</span>
+<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> (last)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nb">whereis</span><span class="p">(</span><span class="n">ring_recursion_no_messages</span><span class="p">)]),</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="n">ring_recursion_no_messages</span><span class="p">);</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nv">Next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="mi">1</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> </span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Next</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">Next</span><span class="p">).</span>
 
-<span class="c">%% In this version function loop/1 sits down and does nothing.</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% In this version function loop/1 sits down and does nothing.</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">).</span>
 </code></pre></div>
 
 <p><a href="/code/erlang-rings/ring_recursion_no_messages.erl">source code</a></p>
 <p>The recursive ring with a single message travelling.</p>
-<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span><span class="w"></span>
-<span class="c">%%% Description: Implements a simple ring of processes with a single</span><span class="w"></span>
-<span class="c">%%%              message traveling once through the ring.</span><span class="w"></span>
-<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span>
+<span class="c">%%% Description: Implements a simple ring of processes with a single</span>
+<span class="c">%%%              message traveling once through the ring.</span>
+<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span>
 
-<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_recursion_single_message</span><span class="p">).</span><span class="w"></span>
+<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_recursion_single_message</span><span class="p">).</span>
 
-<span class="c">%% Include some debug macros</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Include some debug macros</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span>
 
-<span class="c">%% User interface</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% User interface</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span>
 
-<span class="c">%% Private exports</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% Private exports</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
-<span class="c">%% This version of the processes ring program starts the processes in a</span><span class="w"></span>
-<span class="c">%% recursive way. Each process spawns the next one and links to it.</span><span class="w"></span>
-<span class="c">%% The last process then injects a single message in the ring, sending it to the</span><span class="w"></span>
-<span class="c">%% first process.</span><span class="w"></span>
+<span class="c">%% This version of the processes ring program starts the processes in a</span>
+<span class="c">%% recursive way. Each process spawns the next one and links to it.</span>
+<span class="c">%% The last process then injects a single message in the ring, sending it to the</span>
+<span class="c">%% first process.</span>
 
-<span class="c">%% This spawns the first process passing the requested message to it</span><span class="w"></span>
-<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_recursion_single_message</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                                  </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">])).</span><span class="w"></span>
+<span class="c">%% This spawns the first process passing the requested message to it</span>
+<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_recursion_single_message</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span>
+<span class="w">                                                  </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">])).</span>
 
-<span class="c">%% Function create/2 manages the single process creation; in this version each</span><span class="w"></span>
-<span class="c">%% process just spawns another process, except the last one, which shall inject</span><span class="w"></span>
-<span class="c">%% the message in the ring and terminate.</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> (last)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">           </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nb">whereis</span><span class="p">(</span><span class="n">ring_recursion_single_message</span><span class="p">)]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> injects message </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">ring_recursion_single_message</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Message</span><span class="p">;</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> </span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Next</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">Next</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/2 manages the single process creation; in this version each</span>
+<span class="c">%% process just spawns another process, except the last one, which shall inject</span>
+<span class="c">%% the message in the ring and terminate.</span>
+<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> (last)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nb">whereis</span><span class="p">(</span><span class="n">ring_recursion_single_message</span><span class="p">)]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> injects message </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">ring_recursion_single_message</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Message</span><span class="p">;</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nv">Next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> </span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Next</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">Next</span><span class="p">).</span>
 
-<span class="c">%% Now loop/1 blocks each process making it wait for a message to pass along.</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% Now loop/1 blocks each process making it wait for a message to pass along.</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ok</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p><a href="/code/erlang-rings/ring_recursion_single_message.erl">source code</a></p>
 <p>The recursive ring with support for multiple message travels.</p>
-<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span><span class="w"></span>
-<span class="c">%%% Description: Implements a simple ring of processes with a single</span><span class="w"></span>
-<span class="c">%%%              message traveling multiple times through the ring.</span><span class="w"></span>
-<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span>
+<span class="c">%%% Description: Implements a simple ring of processes with a single</span>
+<span class="c">%%%              message traveling multiple times through the ring.</span>
+<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span>
 
-<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_recursion_multiple_messages</span><span class="p">).</span><span class="w"></span>
+<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_recursion_multiple_messages</span><span class="p">).</span>
 
-<span class="c">%% Include some debug macros</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Include some debug macros</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span>
 
-<span class="c">%% User interface</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">3</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% User interface</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">3</span><span class="p">]).</span>
 
-<span class="c">%% Private exports</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% Private exports</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span>
 
-<span class="c">%% This version of the processes ring program starts the processes in a</span><span class="w"></span>
-<span class="c">%% recursive way. Each process spawns the next one and links to it.</span><span class="w"></span>
-<span class="c">%% The last process then injects a message in the ring, sending it to the</span><span class="w"></span>
-<span class="c">%% first process and when getting the message from the second to last, it</span><span class="w"></span>
-<span class="c">%% injects it again in the ring a given number of times.</span><span class="w"></span>
+<span class="c">%% This version of the processes ring program starts the processes in a</span>
+<span class="c">%% recursive way. Each process spawns the next one and links to it.</span>
+<span class="c">%% The last process then injects a message in the ring, sending it to the</span>
+<span class="c">%% first process and when getting the message from the second to last, it</span>
+<span class="c">%% injects it again in the ring a given number of times.</span>
 
-<span class="c">%% This spawns the first process passing it the requested message and the number</span><span class="w"></span>
-<span class="c">%% of times the message shall travel through the ring.</span><span class="w"></span>
-<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_recursion_multiple_messages</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"></span>
-<span class="w">                          </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">])).</span><span class="w"></span>
+<span class="c">%% This spawns the first process passing it the requested message and the number</span>
+<span class="c">%% of times the message shall travel through the ring.</span>
+<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_recursion_multiple_messages</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span>
+<span class="w">                          </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">])).</span>
 
-<span class="c">%% Function create/3 manages the single process creation; in this version each</span><span class="w"></span>
-<span class="c">%% process spawns another process and then loops, except the last one, which</span><span class="w"></span>
-<span class="c">%% shall inject the message in the ring before looping. Since the last process</span><span class="w"></span>
-<span class="c">%% starts the message passing it loops an already decremented number of times.</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> (last)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">           </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nb">whereis</span><span class="p">(</span><span class="n">ring_recursion_multiple_messages</span><span class="p">)]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> injects message </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">ring_recursion_multiple_messages</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="n">ring_recursion_multiple_messages</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"></span>
-<span class="w">                      </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> </span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Next</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">Next</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/3 manages the single process creation; in this version each</span>
+<span class="c">%% process spawns another process and then loops, except the last one, which</span>
+<span class="c">%% shall inject the message in the ring before looping. Since the last process</span>
+<span class="c">%% starts the message passing it loops an already decremented number of times.</span>
+<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> (last)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nb">whereis</span><span class="p">(</span><span class="n">ring_recursion_multiple_messages</span><span class="p">)]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> injects message </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Message</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">ring_recursion_multiple_messages</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="n">ring_recursion_multiple_messages</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nv">Next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span>
+<span class="w">                      </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> </span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Next</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">Next</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">).</span>
 
-<span class="c">%% Function loop/2 needs two clauses now. The first one is the exit condition,</span><span class="w"></span>
-<span class="c">%% when the forward counter reaches 1: the process forwards the message and</span><span class="w"></span>
-<span class="c">%% terminates. The second clause is the standard behaviour: the process forwards</span><span class="w"></span>
-<span class="c">%% the incoming message and loops again with a decremented counter.</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> and terminating</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                   </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">;</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> (still </span><span class="si">~p</span><span class="s"> time(s))</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                   </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% Function loop/2 needs two clauses now. The first one is the exit condition,</span>
+<span class="c">%% when the forward counter reaches 1: the process forwards the message and</span>
+<span class="c">%% terminates. The second clause is the standard behaviour: the process forwards</span>
+<span class="c">%% the incoming message and loops again with a decremented counter.</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> and terminating</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ok</span>
+<span class="w">    </span><span class="k">end</span><span class="p">;</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> (still </span><span class="si">~p</span><span class="s"> time(s))</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="p">[</span><span class="nv">Msg</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">NumberMessages</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p><a href="/code/erlang-rings/ring_recursion_multiple_messages.erl">source code</a></p>
 <p>The recursive ring exposing the functional API.</p>
-<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span><span class="w"></span>
-<span class="c">%%% Description: Implements a simple ring of processes that exposes a</span><span class="w"></span>
-<span class="c">%%%              functional interface to send messages.</span><span class="w"></span>
-<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c">%%% Author:  Leonardo Giordani &lt;giordani.leonardo@gmail.com&gt;</span>
+<span class="c">%%% Description: Implements a simple ring of processes that exposes a</span>
+<span class="c">%%%              functional interface to send messages.</span>
+<span class="c">%%% Created: Jun 2013 by Leonardo Giordani</span>
 
-<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_recursion_functional</span><span class="p">).</span><span class="w"></span>
+<span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">ring_recursion_functional</span><span class="p">).</span>
 
-<span class="c">%% Include some debug macros</span><span class="w"></span>
-<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span><span class="w"></span>
-<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Include some debug macros</span>
+<span class="p">-</span><span class="ni">define</span><span class="p">(</span><span class="no">debug</span><span class="p">,</span><span class="w"> </span><span class="n">true</span><span class="p">).</span>
+<span class="p">-</span><span class="ni">include</span><span class="p">(</span><span class="s">&quot;debug.hrl&quot;</span><span class="p">).</span>
 
-<span class="c">%% User interface</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">send_message</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">send_message</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% User interface</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">start</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">send_message</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">send_message</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span>
 
-<span class="c">%% Private exports</span><span class="w"></span>
-<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span><span class="w"></span>
+<span class="c">%% Private exports</span>
+<span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">create</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">loop</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
-<span class="c">%% This version of the processes ring program starts the processes in a</span><span class="w"></span>
-<span class="c">%% recursive way. Each process spawns the next one and links to it.</span><span class="w"></span>
-<span class="c">%% The module exposes a functional interface to send messages in the ring</span><span class="w"></span>
-<span class="c">%% and to terminate it.</span><span class="w"></span>
+<span class="c">%% This version of the processes ring program starts the processes in a</span>
+<span class="c">%% recursive way. Each process spawns the next one and links to it.</span>
+<span class="c">%% The module exposes a functional interface to send messages in the ring</span>
+<span class="c">%% and to terminate it.</span>
 
-<span class="c">%% This spawns the first process. The process is registered as in the previous</span><span class="w"></span>
-<span class="c">%% recursive versions to allow the last process to connect with the first.</span><span class="w"></span>
-<span class="c">%% Moreover, exposing a functional interface needs a global entry point, that is</span><span class="w"></span>
-<span class="c">%% the name of the first process.</span><span class="w"></span>
-<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_recursion_functional</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                              </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">()])),</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="n">ready</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="w"></span>
-<span class="w">    </span><span class="k">after</span><span class="w"> </span><span class="mi">5000</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% This spawns the first process. The process is registered as in the previous</span>
+<span class="c">%% recursive versions to allow the last process to connect with the first.</span>
+<span class="c">%% Moreover, exposing a functional interface needs a global entry point, that is</span>
+<span class="c">%% the name of the first process.</span>
+<span class="nf">start</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nb">register</span><span class="p">(</span><span class="n">ring_recursion_functional</span><span class="p">,</span><span class="w"> </span><span class="nb">spawn</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span>
+<span class="w">                                              </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">()])),</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="n">ready</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="n">ok</span>
+<span class="w">    </span><span class="k">after</span><span class="w"> </span><span class="mi">5000</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="p">}</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 
-<span class="c">%% Functional interface: terminate the ring</span><span class="w"></span>
-<span class="nf">stop</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">ring_master_functional</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}.</span><span class="w"></span>
+<span class="c">%% Functional interface: terminate the ring</span>
+<span class="nf">stop</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">ring_master_functional</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}.</span>
 
-<span class="c">%% Functional interface: send a message that travels through the ring once</span><span class="w"></span>
-<span class="nf">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Functional interface: send a message that travels through the ring once</span>
+<span class="nf">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span>
 
-<span class="c">%% Functional interface: send a message that travels through the ring</span><span class="w"></span>
-<span class="c">%% Times times</span><span class="w"></span>
-<span class="nf">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">ring_recursion_functional</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]}.</span><span class="w"></span>
+<span class="c">%% Functional interface: send a message that travels through the ring</span>
+<span class="c">%% Times times</span>
+<span class="nf">send_message</span><span class="p">(</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">ring_recursion_functional</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]}.</span>
 
-<span class="c">%% Function create/2 manages the single process creation; in this version each</span><span class="w"></span>
-<span class="c">%% process just spawns another process, except the last one, which connects with</span><span class="w"></span>
-<span class="c">%% the first one. The Starter process is passed to allow the ring to send a</span><span class="w"></span>
-<span class="c">%% ready message.</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> (last)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">           </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nb">whereis</span><span class="p">(</span><span class="n">ring_recursion_functional</span><span class="p">)]),</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Starter</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ready</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop_last</span><span class="p">(</span><span class="n">ring_recursion_functional</span><span class="p">);</span><span class="w"></span>
-<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nv">Next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> </span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Next</span><span class="p">]),</span><span class="w"></span>
-<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">Next</span><span class="p">).</span><span class="w"></span>
+<span class="c">%% Function create/2 manages the single process creation; in this version each</span>
+<span class="c">%% process just spawns another process, except the last one, which connects with</span>
+<span class="c">%% the first one. The Starter process is passed to allow the ring to send a</span>
+<span class="c">%% ready message.</span>
+<span class="nf">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> (last)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nb">whereis</span><span class="p">(</span><span class="n">ring_recursion_functional</span><span class="p">)]),</span>
+<span class="w">    </span><span class="nv">Starter</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">ready</span><span class="p">,</span>
+<span class="w">    </span><span class="n">loop_last</span><span class="p">(</span><span class="n">ring_recursion_functional</span><span class="p">);</span>
+<span class="nf">create</span><span class="p">(</span><span class="nv">NumberProcesses</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nv">Next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">spawn_link</span><span class="p">(</span><span class="o">?</span><span class="nv">MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">create</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumberProcesses</span><span class="w"> </span><span class="o">-</span><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">Starter</span><span class="p">]),</span>
+<span class="w">    </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Process </span><span class="si">~p</span><span class="s"> created and connected with </span><span class="si">~p</span><span class="s"> </span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="nv">Next</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">loop</span><span class="p">(</span><span class="nv">Next</span><span class="p">).</span>
 
-<span class="c">%% Function loop_last/1 rules the behaviour of the last process of the whole</span><span class="w"></span>
-<span class="c">%% ring). When it receives a stop command it just terminates since the message</span><span class="w"></span>
-<span class="c">%% has already been received by all processes in the ring. When it receives a</span><span class="w"></span>
-<span class="c">%% message command if Times is 1 the message is thrown away (it just travelled</span><span class="w"></span>
-<span class="c">%% through the ring for the last time), otherwise is is injected again in the</span><span class="w"></span>
-<span class="c">%% ring with a decremented Times value.</span><span class="w"></span>
-<span class="nf">loop_last</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop_last</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> (still </span><span class="si">~p</span><span class="s"> time(s)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                   </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]},</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop_last</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% Function loop_last/1 rules the behaviour of the last process of the whole</span>
+<span class="c">%% ring). When it receives a stop command it just terminates since the message</span>
+<span class="c">%% has already been received by all processes in the ring. When it receives a</span>
+<span class="c">%% message command if Times is 1 the message is thrown away (it just travelled</span>
+<span class="c">%% through the ring for the last time), otherwise is is injected again in the</span>
+<span class="c">%% ring with a decremented Times value.</span>
+<span class="nf">loop_last</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="n">ok</span><span class="p">;</span>
+<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="n">loop_last</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">);</span>
+<span class="w">        </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p</span><span class="s"> (still </span><span class="si">~p</span><span class="s"> time(s)</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">Times</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]},</span>
+<span class="w">            </span><span class="n">loop_last</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 
-<span class="c">%% Function loop/1 rules the behaviour of the standard processes.</span><span class="w"></span>
-<span class="c">%% When a process receives a stop command it forwards it and</span><span class="w"></span>
-<span class="c">%% terminates. When it receives a message command it just forwards it.</span><span class="w"></span>
-<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">receive</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="p">_]}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                   </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span><span class="w"></span>
-<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="c">%% Function loop/1 rules the behaviour of the standard processes.</span>
+<span class="c">%% When a process receives a stop command it forwards it and</span>
+<span class="c">%% terminates. When it receives a message command it just forwards it.</span>
+<span class="nf">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">receive</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">stop</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ok</span><span class="p">;</span>
+<span class="w">        </span><span class="nv">Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="p">_]}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="o">?</span><span class="nv">DEBUG</span><span class="p">(</span><span class="s">&quot;Got message </span><span class="si">~p</span><span class="s">, passing it to </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="p">[_</span><span class="nv">Message</span><span class="p">,</span><span class="w"> </span><span class="nv">NextProcess</span><span class="p">]),</span>
+<span class="w">            </span><span class="nv">NextProcess</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nv">Msg</span><span class="p">,</span>
+<span class="w">            </span><span class="n">loop</span><span class="p">(</span><span class="nv">NextProcess</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p><a href="/code/erlang-rings/ring_recursion_functional.erl">source code</a></p>
