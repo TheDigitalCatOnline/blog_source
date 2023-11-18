@@ -733,6 +733,4 @@ I hope you found the project entertaining and that you can now appreciate the po
 
 2023-09-03: [link]("https://github.com/labdmitriy", "Dmitry Labazkin") provided a new test for the method `avg` and a better implementation. He also asked relevant questions about type checking that I addressed in a new section. Thanks Dmitry!
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

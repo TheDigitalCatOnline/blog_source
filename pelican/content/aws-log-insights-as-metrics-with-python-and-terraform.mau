@@ -801,6 +801,4 @@ Total: `$0.20 * 111600 / 10^6 + $0.0000166667 * 71424 ~= $1.22/month`
 
 As you can see, for applications like this it's extremely convenient to use a serverless solution like Lambda functions.
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

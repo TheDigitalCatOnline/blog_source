@@ -733,6 +733,4 @@ In the next post I will guide you through the addition of the `SizeBinary` class
 
 2022-11-25 GitHub user [link]("https://github.com/rioj7", "rioj7") found several typos and corrected them. He also contributed a better explanation for the internal representation of decimal numbers. Thanks!
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

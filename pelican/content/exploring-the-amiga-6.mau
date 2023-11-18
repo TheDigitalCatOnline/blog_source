@@ -390,6 +390,4 @@ It's time to show the complete Exec vector table, as we are going to use and ana
 * Motorola M68000 Family Programmer's Reference Manual - [link]("https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf")
 * Amiga System Programmers Guide, Abacus - [link]("https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus")
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

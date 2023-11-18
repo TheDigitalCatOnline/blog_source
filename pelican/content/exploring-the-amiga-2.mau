@@ -344,6 +344,4 @@ The next article will describe in depth how the jump table of the Exec library i
 * [link](http://amigadev.elowar.com,"AmigaOS Developer Docs")
 * [link](http://wandel.ca/homepage/execdis/index.html,"Marcus Wandel's disassmbly of Kickstart 1.2")
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

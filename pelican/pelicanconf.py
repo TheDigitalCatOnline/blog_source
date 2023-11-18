@@ -110,7 +110,6 @@ MARKDOWN = {
     "output_format": "html5",
 }
 
-
 MAU = {
     "custom_templates": {
         "header.html": (

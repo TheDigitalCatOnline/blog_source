@@ -323,6 +323,4 @@ In the next article I will show the code of the 4 Exec base functions and discus
 
 2018-06-23: As [link](https://new.reddit.com/user/Malor,Malor) pointed out on Reddit ([link](https://new.reddit.com/r/programming/comments/8pkgk0/exploring_the_amiga_part_1/e0cifax,here)) there is no need to own the original hardware, as licenses are still sold by Cloanto. Thanks Malor!
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

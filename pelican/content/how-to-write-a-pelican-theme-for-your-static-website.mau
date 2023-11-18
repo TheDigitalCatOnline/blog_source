@@ -1052,6 +1052,4 @@ Last, but hopefully not least, the code of this blog is public and can be found 
 I hope this was useful. Remember that Pelican is open source, and you can always get in touch with the maintainers to ask questions or to submit enhancements. Also remember to drop a line on Twitter to the author of any template you will use (thanks are always welcome) and to link to the source on the website.
 Happy blogging!
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

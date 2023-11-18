@@ -633,6 +633,4 @@ I hope this rather long discussion helped you to get a better picture of the opt
 
 2021-03-06 Following the suggestion of [link](https://github.com/TimoMorris,"Tim Morris") I added the console output to the source code to make the code easier to understand. Thanks Tim for the feedback!
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

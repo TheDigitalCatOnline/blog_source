@@ -575,9 +575,7 @@ resource "aws_db_subnet_group" "rds_group" {
 
 I hope this was a useful and interesting trip into network design. As an example, this might sound trivial and simple compared to what is needed in certain contexts, but it is definitely a good setup that you can build on. I think VPC is often overlooked as it is assumed developers are familiar with networks. As networking is a crucial part of a system and will pop up in other technologies like Docker or Kubernetes, I recommend any mid-level or senior developer to make sure they are familiar with the main concepts of IP. Happy learning!
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau
 
 Photo by [link]("https://unsplash.com/@nate_dumlao?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash", "Nathan Dumlao") on [link]("https://unsplash.com/photos/kEOLkJksbc8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash", "Unsplash").
 

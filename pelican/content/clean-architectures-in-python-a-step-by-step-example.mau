@@ -180,6 +180,4 @@ I hope you found this introduction useful. What you read so far was the first ch
 
 Chapter 2 of the book briefly discusses the *components* and the ideas behind this software architecture. Chapter 3 runs through *a concrete example* of clean architecture and chapter 4 expands the example adding a *web application* on top of it. Chapter 5 discusses *error management* and improvements to the Python code developed in the previous chapters. Chapters 6 and 7 show how to plug *different database systems* to the web service created previously, and chapter 8 wraps up the example showing how to run the application with a *production-ready configuration*.
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

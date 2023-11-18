@@ -623,6 +623,4 @@ I hope this post helped you to understand a bit more how multiple inheritance wo
 
 2021-12-20: [link]("https://github.com/akocur", "Alexander") fixed a mistake in the part relative to `SquareButton` and the behaviour of `super()`. Thanks!
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

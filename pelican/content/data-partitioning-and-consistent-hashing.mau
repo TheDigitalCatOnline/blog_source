@@ -648,9 +648,7 @@ I hope this long post was useful to introduce you to the topic of partitioning a
 * The [link]("https://www.cs.princeton.edu/courses/archive/fall09/cos518/papers/chash.pdf", "original article") by David Karger et al.: "Consistent Hashing and Random Trees: Distributed Caching protocols for Relieving Hot Spots ont the World Wide Web".
 * An [link]("https://arxiv.org/pdf/1406.2294.pdf", "alternative algorithm") by John Lamping and Eric Veach: "A Fast, Minimal Memory, Consistent Hash Algorithm".
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau
 
 Photo by [link]("https://unsplash.com/@alexlvrs?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText", "Alex Lvrs") on [link]("https://unsplash.com/s/photos/cake?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText", "Unsplash").
   

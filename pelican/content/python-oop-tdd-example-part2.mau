@@ -360,6 +360,4 @@ The full implementation of the class is in the GitHub repository, you can see it
 
 Well, I hope this was interesting and useful. TDD is a powerful technique, and when you apply it correctly and without unnecessary rigidity it can truly boost your productivity and the quality of your code. And, which is the most important thing, making coding fun.
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

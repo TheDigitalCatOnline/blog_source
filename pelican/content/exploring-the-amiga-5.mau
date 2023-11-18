@@ -392,6 +392,4 @@ The next instalment of the series will cover the initial part of the system memo
 * Microprocessor-based system design by Ricardo Gutierrez-Osuna ([link]("http://courses.cs.tamu.edu/rgutier/ceg411_f01/","slides")), in particular [link](http://courses.cs.tamu.edu/rgutier/ceg411_f01/l9.pdf,"Lesson 9 - Exception processing")
 * Motorola M68000 Family Programmer's Reference Manual - [link]("https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf")
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau

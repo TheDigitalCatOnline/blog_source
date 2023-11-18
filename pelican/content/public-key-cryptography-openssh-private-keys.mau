@@ -242,6 +242,4 @@ The claim is that the new SSH private key format offers a better protection of k
 * [link](https://tools.ietf.org/html/rfc5958,"RFC 5958 - Asymmetric Key Packages")
 * [link](https://tools.ietf.org/html/rfc7468,"RFC 7468 - Textual Encodings of PKIX, PKCS, and CMS Structures")
 
-== Feedback
-
-Feel free to reach me on [link]("https://twitter.com/thedigicat","Twitter") if you have questions. The [link]("https://github.com/TheDigitalCatOnline/blog_source/issues","GitHub issues") page is the best place to submit corrections.
+::#include:snippets/feedback.mau
