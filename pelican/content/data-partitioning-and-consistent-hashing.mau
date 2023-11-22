@@ -514,7 +514,7 @@ This is a terrific result. Not only it's much better than the previous one (_at 
 
 All routing tables shown in the post have been created with the following Python script. Please bear in mind that this is just demo code, so things haven't been optimised or designed particularly well. Feel free to change the hash function and the parameters of the script to experiment and see what consistent hashing can do.
 
-.consistent_hashing_demo.py
+.`consistent_hashing_demo.py`
 [source, python]
 ----
 import hashlib

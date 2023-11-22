@@ -21,7 +21,7 @@ In this post I will show you how to run a production-ready database alongside yo
 
 A database is an integral part of a web application, so in this step I will add my database of choice, Postgres, to the project setup. To do this I need to add a service in the docker-compose configuration file
 
-.docker/development.yml
+.`docker/development.yml`
 [source,yaml]
 ----
 version: '3.4'
@@ -60,7 +60,7 @@ Notice also that I'm creating a persistent volume for the service `db` [class]("
 
 To orchestrate this setup we need to add those variables to the JSON configuration
 
-.config/development.json
+.`config/development.json`
 [source,json]
 ----
 [
@@ -110,7 +110,7 @@ CONTAINER ID  IMAGE       COMMAND                 ...  PORTS                   N
 
 Now we need to connect the application to the database and to do this we can leverage flask-sqlalchemy. As we will use this at every stage of the life of the application, the requirement goes among the production ones. We also need psycopg2 as it is the library used to connect to Postgres.
 
-.requirements/production.txt
+.`requirements/production.txt`
 [source]
 ----
 Flask
@@ -122,7 +122,7 @@ Remember to run `pip install -r requirements/development.txt` to install the req
 
 At this point I need to create a connection string in the configuration of the application. The connection string parameters come from the same environment variables used to spin up the container `db`
 
-.application/config.py
+.`application/config.py`
 [source,python]
 ----
 import os
@@ -158,7 +158,7 @@ class TestingConfig(Config):
 
 As you can see, here I use the variable `APPLICATION_DB` [class]("1","callout") and not `POSTGRES_DB`, so I need to specify that as well in the config file. The reason, as I mentioned before, is that we prefer to separate the default database, used by Postgres to manage all other databases, from the one used specifically by our application.
 
-.config/development.json
+.`config/development.json`
 [source,json]
 ----
 [
@@ -199,7 +199,7 @@ As you can see, here I use the variable `APPLICATION_DB` [class]("1","callout") 
 
 At this point the application container needs to access some of the Postgres environment variables and the `APPLICATION_DB` one
 
-.docker/development.yml
+.`docker/development.yml`
 [source,yaml]
 ----
 version: '3.4'
@@ -299,7 +299,7 @@ Learn all you need to know to understand first-class citizenship in Python, the 
 
 To connect the Flask application with the database running in the container we need to initialise a `SQLAlchemy` object and add it to the application factory.
 
-.application/models.py
+.`application/models.py`
 [source,python]
 ----
 from flask_sqlalchemy import SQLAlchemy
@@ -307,7 +307,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 ----
 
-.application/app.py
+.`application/app.py`
 [source,python]
 ----
 from flask import Flask
@@ -340,7 +340,7 @@ The situation is the following: the application is running in the Docker contain
 
 Fortunately I wrapped the command `flask` in the script `manage.py`, which loads all the required environment variables. Let's add flask-migrate to the production requirements
 
-.requirements/production.txt
+.`requirements/production.txt`
 [source]
 ----
 Flask
@@ -353,7 +353,7 @@ Remember to run `pip install -r requirements/development.txt` to install the req
 
 Now we can initialise a `Migrate` object and add it to the application factory
 
-.application/models.py
+.`application/models.py`
 [source,python]
 ----
 from flask_sqlalchemy import SQLAlchemy
@@ -363,7 +363,7 @@ db = SQLAlchemy()
 migrate = Migrate():@:
 ----
 
-.application/app.py
+.`application/app.py`
 [source,python]
 ----
 from flask import Flask
@@ -433,7 +433,7 @@ Generally speaking testing is an umbrella under which many different things can 
 
 Let's add pytest to the testing requirements, along with a couple of packages to monitor the test coverage
 
-.requirements/testing.txt
+.`requirements/testing.txt`
 [source]
 ----
 -r production.txt
@@ -447,7 +447,7 @@ As you can see I also use the coverage plugin to keep an eye on how well I cover
 
 Warning: before you change the script `manage.py` make sure you terminate all the running containers running `./manage.py compose down`. The next version will change the naming convention for containers and you might end up with some stale containers and run into issues with the database.
 
-.manage.py
+.`manage.py`
 [source,python]
 ----
 #! /usr/bin/env python
@@ -564,7 +564,7 @@ Notable changes are
 * The docker-compose command line is needed both in the commands `compose` and in `test`, so I isolated some code into a function called `docker_compose_cmdline` [class]("3","callout") which returns a list as needed by `subprocess` functions. The command line now uses also the option `-p` (project name) [class]("4","callout") to give a prefix to the containers. This way we can run tests while running the development server.
 * The command `test` forces `APPLICATION_CONFIG` to be `testing` [class]("5","callout"), which loads the file `config/testing.json`, then runs docker-compose using the file `docker/testing.yml` (both file have not been created yet), runs the pytest command line, and tears down the testing database container. Before running the tests the script waits for the service to be available [class]("6","callout"). Postgres doesn't allow connection until the database is ready to accept them.
 
-.config/testing.json
+.`config/testing.json`
 [source,json]
 ----
 [
@@ -609,7 +609,7 @@ Also note that I set the variable `POSTGRES_HOSTNAME` to `localhost` in this fil
 
 The last piece of setup that we need is the orchestration configuration for Docker Compose
 
-.docker/testing.yml
+.`docker/testing.yml`
 [source,yaml]
 ----
 version: '3.4'
@@ -673,7 +673,7 @@ When you develop a web application and then run it in production, you typically 
 
 As running sql commands directly on the the database is often useful I will create a function that wraps the boilerplate for the connection. The command that creates the initial database at that point will be trivial.
 
-.manage.py
+.`manage.py`
 [source,python]
 ----
 #! /usr/bin/env python
@@ -824,7 +824,7 @@ Before moving on I think it's time to refactor the file `manage.py`. Refactoring
 
 The new script is
 
-.manage.py
+.`manage.py`
 [source,python]
 ----
 #! /usr/bin/env python
@@ -1008,7 +1008,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 
 Pytest uses fixtures for tests, so we should prepare some basic ones that will be generally useful. First let's include `pytest-flask`, which provides already some basic fixtures
 
-.requirements/testing.txt
+.`requirements/testing.txt`
 [source]
 ----
 -r production.txt
@@ -1021,7 +1021,7 @@ pytest-flask:@:
 
 Then add the fixtures `app` and `database` to the file `tests/conftest.py`. The first is required by pytest-flask itself (it's used by other fixtures) and the second one is useful every time you need to interact with the database itself.
 
-.tests/conftest.py
+.`tests/conftest.py`
 [source,python]
 ----
 import pytest
@@ -1066,7 +1066,7 @@ Before wrapping up this post, I want to give you a full example of the TDD proce
 
 First of all I write a test that creates a user in the database and then retrieves it, checking its attributes
 
-.tests/test_user.py
+.`tests/test_user.py`
 [source,python]
 ----
 from application.models import User
@@ -1135,7 +1135,7 @@ $
 
 I won't show here all the steps of the strict TDD methodology, and implement directly the final solution, which is
 
-.application/models.p
+.`application/models.py`
 [source,python]
 ----
 from flask_sqlalchemy import SQLAlchemy
@@ -1189,7 +1189,7 @@ Please not that this is a very simple example and that in a real case I would ad
 
 Let's add a very simple route to use the newly created model
 
-.application/app.py
+.`application/app.py`
 [source,python]
 ----
 from flask import Flask

@@ -47,19 +47,19 @@ My format of choice for this tutorial is JSON, as it can be read by both Python 
 
 My standard structure for Python requirements uses 3 files: `production.txt`, `development.txt`, and `testing.txt`. They are all stored in the same directory called `requirements`, and are hierarchically connected. 
 
-.requirements/production.txt
+.`requirements/production.txt`
 [source]
 ----
 ## This file is currently empty
 ----
 
-.requirements/testing.txt
+.`requirements/testing.txt`
 [source]
 ----
 -r production.txt
 ----
 
-.requirements/development.txt
+.`requirements/development.txt`
 [source]
 ----
 -r testing.txt
@@ -67,7 +67,7 @@ My standard structure for Python requirements uses 3 files: `production.txt`, `d
 
 There is also a final file `requirements.txt` that points to the production one.
 
-.requirements.txt
+.`requirements.txt`
 [source]
 ----
 -r requirements/production.txt
@@ -77,7 +77,7 @@ As you can see this allows me to separate the requirements to avoid installing u
 
 I have my linters already installed system-wide, but as I'm using black to format the code I have to configure flake8 to accept what I'm doing
 
-..flake8
+.`.flake8`
 [source]
 ----
 [flake8]
@@ -105,7 +105,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 
 As this will be a Flask application the first thing to do is to install Flask itself. That goes in the production requirements, as that is needed at every stage.
 
-.requirements/production.txt
+.`requirements/production.txt`
 [source]
 ----
 Flask
@@ -122,7 +122,7 @@ As we saw before, that file automatically installs the testing and production re
 
 Then we need a directory where to keep all the code that is directly connected with the Flask framework, and where we will start creating the configuration for the application. Create the directory `application` and the file `config.py` in it.
 
-.application/config.py
+.`application/config.py`
 [source,python]
 ----
 class Config(object):
@@ -153,7 +153,7 @@ It's important to understand the variables and the parameters involved in the co
 
 We need now to create the application and to properly configure it.
 
-.application/app.py
+.`application/app.py`
 [source,python]
 ----
 from flask import Flask
@@ -178,8 +178,7 @@ I decided to use an application factory [class]("1","callout") that accepts a st
 
 Last, we need something that initializes the application running the application factory and passing the correct value for the parameter `config_name`. The Flask development server can automatically use any file named `wsgi.py` in the root directory, and since WSGI is a standard specification using that makes me sure that any HTTP server we will use in production (for example Gunicorn or uWSGI) will be immediately working.
 
-
-.wsgi.py
+.`wsgi.py`
 [source,python]
 ----
 import os
@@ -229,7 +228,7 @@ Learn all you need to know to understand first-class citizenship in Python, the 
 
 As I mentioned in the introduction, I am going to use a static JSON configuration file. The choice of JSON comes from the fact that it is a widespread file format, accessible from many programming languages, included Terraform, which I plan to use to create my production infrastructure.
 
-.config/development.json
+.`config/development.json`
 [source,json]
 ----
 [
@@ -246,7 +245,7 @@ As I mentioned in the introduction, I am going to use a static JSON configuratio
 
 I obviously need a script that extracts variables from the JSON file and converts them into environment variables, so it's time to start writing my own `manage.py` file. This is a pretty standard concept in the world of Python web frameworks, a tradition initiated by Django. The idea is to centralise all the management functions like starting/stopping the development server or managing database migrations. As in flask this is partially done by the command `flask` itself, for the time being I just need to wrap it providing suitable environment variables.
 
-.manage.py
+.`manage.py`
 [source,python]
 ----
 #! /usr/bin/env python
@@ -355,7 +354,7 @@ Running the application in a Docker container allows me to isolate it and to sim
 
 First of all we need an image for the Flask application
 
-.docker/Dockerfile
+.`docker/Dockerfile`
 [source,Dockerfile]
 ----
 FROM python:3
@@ -374,7 +373,7 @@ As you can see the requirements directory is copied into the image, so that Dock
 
 This clearly means that every time we change the development requirements we need to rebuild the image. This is not a complicated process, so I will keep it as a manual process for now. To run the image we can create a configuration file for docker-compose.
 
-.docker/development.yml
+.`docker/development.yml`
 [source,yaml]
 ----
 version: '3.4'
@@ -396,7 +395,7 @@ services:
 
 As you can see, the docker-compose configuration file can read environment variables natively. To run it we first need to add docker-compose itself to the development requirements.
 
-.requirements/development.txt
+.`requirements/development.txt`
 [source,text]
 ----
 -r testing.txt
@@ -470,7 +469,7 @@ Notice that the server now says `Running on http://0.0.0.0:5000/`, as the Docker
 
 To simplify the usage of docker-compose, I want to wrap it in the script `manage.py`, so that it automatically receives environment variables, as their number is going to increase as soon as we add a database.
 
-.manage.py
+.`manage.py`
 [source,python]
 ----
 #! /usr/bin/env python

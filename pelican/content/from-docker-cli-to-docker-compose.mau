@@ -535,7 +535,7 @@ To face one problem at a time, let's first containerise the application and run 
 The easiest way to containerise a Python application is to create a new image starting from the image `python:3`. The following `Dockerfile` goes into the application directory
 
 [source,dockerfile,callouts="|"]
-.whaleapp/Dockerfile
+.`whaleapp/Dockerfile`
 ----
 FROM python:3|1|
 
@@ -867,7 +867,7 @@ whale
 
 Then create the file `docker-compose.yml` in the project directory (not the app directory) and put the following code in it
 
-.docker-compose.yml
+.`docker-compose.yml`
 [source,yaml]
 ----
 version: '3.8'
@@ -879,7 +879,7 @@ This is not a valid Docker Compose file, yet, but you can see that there is a va
 
 The first service we want to run is Postgres, and a basic configuration for that is
 
-.docker-compose.yml
+.`docker-compose.yml`
 [source,yaml]
 ----
 version: '3.8'

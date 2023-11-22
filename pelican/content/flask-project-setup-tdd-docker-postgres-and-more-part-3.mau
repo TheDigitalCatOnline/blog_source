@@ -33,7 +33,7 @@ Unfortunately the Docker interface is not extremely script-friendly when it come
 
 The new management script is
 
-.manage.py
+.`manage.py`
 [source,python]
 ----
 #! /usr/bin/env python
@@ -287,7 +287,7 @@ The function `down` simply tears down the containers and removes the scenario co
 
 The two missing config files are pretty simple. The docker compose configuration is
 
-.docker/scenario.yml
+.`docker/scenario.yml`
 [source,yaml]
 ----
 version: '3.4'
@@ -323,7 +323,7 @@ Here you can see that the database is ephemeral, that the port on the host is au
 
 The configuration file is
 
-.config/scenario.json
+.`config/scenario.json`
 [source,json]
 ----
 [
@@ -374,7 +374,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 
 Let's have a look at a very simple scenario that doesn't do anything on the database, just to understand the system. The code for the scenario is
 
-.scenarios/foo.py
+.`scenarios/foo.py`
 [source,python]
 ----
 import os
@@ -444,7 +444,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 
 Let's do something a bit more interesting. The new scenario is contained in `scenarios/users.py`
 
-.scenarios/users.py
+.`scenarios/users.py`
 [source,python]
 ----
 from application.app import create_app
@@ -532,7 +532,7 @@ I will then create a configuration that simulates a production environment and t
 
 The first component that we have to change here is the HTTP server. In development we use Flask's development server, and the first message that server prints is `WARNING: This is a development server. Do not use it in a production deployment.` Got it, Flask! A good choice to replace it is Gunicorn, so first of all I add it in the requirements
 
-.requirements/production.txt
+.`requirements/production.txt`
 [source]
 ----
 Flask
@@ -544,7 +544,7 @@ gunicorn:@:
 
 Then I need to create a docker-compose configuration for production
 
-.docker/production.yml
+.`docker/production.yml`
 [source,yaml]
 ----
 version: '3.4'
@@ -586,7 +586,7 @@ As you can see here the command that runs the application is slightly different 
 
 Then I created the file `Dockerfile.production` that defines the production image of the web application
 
-.docker/Dockerfile.production
+.`docker/Dockerfile.production`
 [source,Dockerfile]
 ----
 FROM python:3
@@ -603,7 +603,7 @@ RUN pip install -r /opt/requirements/production.txt
 
 The last thing I need is a configuration file
 
-.config/production.json
+.`config/production.json`
 [source,json]
 ----
 [
@@ -667,7 +667,7 @@ Mapping the container port to the host is not a great idea, though, as it makes 
 
 I will add nginx and serve HTTP from there, reverse proxying the application containers through docker-compose networking. First of all the new configuration for docker-compose
 
-.docker/production.yml
+.`docker/production.yml`
 [source,yaml]
 ----
 version: '3.4'
@@ -711,7 +711,7 @@ volumes:
 
 As you can see I added a service `nginx` that runs the default Nginx image, mapping a custom configuration file that I will create in a minute. The application container doesn't need any port mapping, as I won't access it directly from the host anymore. The Nginx configuration file is
 
-.docker/nginx/nginx.conf
+.`docker/nginx/nginx.conf`
 [source,nginx]
 ----
 worker_processes 1;

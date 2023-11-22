@@ -151,7 +151,7 @@ An interesting topic to discuss is that of data types: shall the calculator perf
 
 The first test we are going to write is one that checks if the class `SimpleCalculator` can perform an addition. Add the following code to the file `tests/test_main.py`
 
-.tests/test_main.py
+.`tests/test_main.py`
 [source,python]
 ----
 from simple_calculator.main import SimpleCalculator:1:
@@ -199,7 +199,7 @@ This, by the way, is not yet an error in a test. The error happens very soon, du
 
 Let's fix this issue. Open the file `simple_calculator/main.py` and add this code
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 class SimpleCalculator:
@@ -266,7 +266,7 @@ For each failing test, pytest shows a header with the name of the test and the p
 
 Back to the project. The new error is no surprise, as the test uses the method `add` that wasn't defined in the class. I bet you already guessed what I'm going to do, didn't you? This is the code that you should add to the class
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 class SimpleCalculator:
@@ -291,7 +291,7 @@ tests/test_main.py:10: TypeError
 
 The function we defined doesn't accept any argument other than `self` (`def add(self)`), but in the test we pass three of them (`calculator.add(4, 5)`. Remember that in Python `self` is passed implicitly when you call a function. Our move at this point is to change the function to accept the parameters that it is supposed to receive, namely two numbers. The code now becomes
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 class SimpleCalculator:
@@ -322,7 +322,7 @@ The function returns `None`, as it doesn't contain any code, while the test expe
 
 Well, the answer is
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 class SimpleCalculator:
@@ -347,7 +347,7 @@ I know this sound weird, but think about it for a moment: if your code works (th
 
 The requirements state that "Addition and multiplication shall accept multiple arguments". This means that we should be able to execute not only `add(4, 5)` like we did, but also `add(4, 5, 11)`, `add(4, 5, 11, 2)`, and so on. We can start testing this behaviour with the following test, that you should put in `tests/test_main.py`, after the previous test that we wrote.
 
-.tests/test_main.py
+.`tests/test_main.py`
 [source,python]
 ----
 def test_add_three_numbers():
@@ -377,7 +377,7 @@ for the obvious reason that the function we wrote in the previous section accept
 
 Well, the simplest solution is to add another argument, so my first attempt is
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 class SimpleCalculator:
@@ -453,7 +453,7 @@ tests/test_main.py:10: TypeError
 
 To fix this error we can obviously revert the addition of the third argument, but this would mean going back to the previous solution. Obviously tests focus on a very small part of the code, but we have to keep in mind what we are doing in terms of the big picture. A better solution is to add a default value to the third argument. The additive identity is `0`, so the new code of the method `add` is
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 class SimpleCalculator:
@@ -484,7 +484,7 @@ I want to stress this. You should implement the minimal change in the code that 
 
 How can we solve this? We know that writing `return 15` will make the first test fail (you may try, if you want), so here we have to be a bit smarter and try a better solution, that in this case is actually to implement a real sum
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 class SimpleCalculator:
@@ -519,7 +519,7 @@ as it is not _generic_, it is just covering a greater amount of inputs (9, in th
 
 That said, a good test might be the following
 
-.tests/test_main.py
+.`tests/test_main.py`
 [source,python]
 ----
 def test_add_many_numbers():
@@ -557,7 +557,7 @@ The minimum amount of code that we can add, this time, will not be so trivial, a
 
 The Python way to support a generic number of arguments (technically called _variadic functions_) is through the use of the syntax `*args`, which stores in `args` a tuple that contains all the arguments.
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 class SimpleCalculator:
@@ -582,7 +582,7 @@ Part of the TDD methodology, then, deals with "refactoring", which means changin
 
 From the requirements we know that we have to implement a function to subtract numbers, but this doesn't mention multiple arguments (as it would be complex to define what subtracting 3 of more numbers actually means). The tests that implements this requirements is
 
-.tests/test_main.py
+.`tests/test_main.py`
 [source,python]
 ----
 def test_subtract_two_numbers():
@@ -610,7 +610,7 @@ tests/test_main.py:36: AttributeError
 
 Now that you understood the TDD process, and that you know you should avoid over-engineering, you can also skip some of the passages that we run through in the previous sections. A good solution for this test is
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
     def sub(self, a, b):
@@ -627,7 +627,7 @@ It's time to move to multiplication, which has many similarities to addition. Th
 
 In this case the first test can be the multiplication of two numbers, as it was for addition.
 
-.tests/test_main.py
+.`tests/test_main.py`
 [source,python]
 ----
 def test_mul_two_numbers():
@@ -659,7 +659,7 @@ In this case the choice is not really important, as we are dealing with very sim
 
 If we decide to follow the strict TDD, that is implement the simplest first solution, the bare minimum code that passes the test would be
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
     def mul(self, a, b):
@@ -706,7 +706,7 @@ The steps followed by the algorithm will be
 
 Going back to our class `SimpleCalculator`, we might import `reduce` from the module `functools` and use it on the array `args`. We need to provide a function that we can define in the function `mul` itself.
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 from functools import reduce
@@ -728,7 +728,7 @@ More information about the algorithm `reduce` can be found on the MapReduce Wiki
 
 The above code makes the test suite pass, so we can move on and address the next problem. As happened with addition we cannot properly test that the function accepts a potentially infinite number of arguments, so we can test a reasonably high number of inputs.
 
-.tests/test_main.py
+.`tests/test_main.py`
 [source,python]
 ----
 def test_mul_many_numbers():
@@ -770,7 +770,7 @@ For the time being, let's see if we can work on the code of the class `SimpleCal
 
 Python provides a useful function to multiply two objects in the module `operator` of the standard library
 
-.simple_calculator/main.py
+.`simple_calculator/main.py`
 [source,python]
 ----
 import operator
