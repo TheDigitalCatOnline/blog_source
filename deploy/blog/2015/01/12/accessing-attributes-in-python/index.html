@@ -232,6 +232,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -483,6 +486,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -626,7 +632,7 @@
 <span class="gp">... </span>
 <span class="go">&#39;Pawn of Prophecy&#39;</span>
 <span class="go">&#39;David Eddings&#39;</span>
-</pre></div> </div> </div><p>While this type of access is perfectly valid in Python you should not use it as long as you can use the direct dotted access. Writing tricky code may seem very smart, but when it comes to debugging &quot;the simpler the better&quot;.</p><h2 id="avoiding-to-fail-3650">Avoiding to fail<a class="headerlink" href="#avoiding-to-fail-3650" title="Permanent link">¶</a></h2><p>When you try to access an attribute that does not exist, either with the dotted syntax or with <code>getattr()</code>, Python gives you a last chance before raising the <code>AttributeError</code> exception. It calls the <code>__getattr__()</code> special method (pay attention to the double underscores) passing it the name of the attribute: in the previous example, when accessing <code>b.publisher</code>, Python calls <code>b.__getattr__('publisher')</code>. </p><p>In this case, since the <code>Book</code> class or its ancestors do not define the <code>__getattr__()</code> method, the attribute access fails and Python raises the exception.</p><p>Let us try to define the method, just to show that it actually works</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</pre></div> </div> </div><p>While this type of access is perfectly valid in Python you should not use it as long as you can use the direct dotted access. Writing tricky code may seem very smart, but when it comes to debugging &quot;the simpler the better&quot;.</p><h2 id="avoiding-to-fail-3650">Avoiding to fail<a class="headerlink" href="#avoiding-to-fail-3650" title="Permanent link">¶</a></h2><p>When you try to access an attribute that does not exist, either with the dotted syntax or with <code>getattr()</code>, Python gives you a last chance before raising the <code>AttributeError</code> exception. It calls the <code>__getattr__()</code> special method (pay attention to the double underscores) passing it the name of the attribute: in the previous example, when accessing <code>b.publisher</code>, Python calls <code>b.__getattr__(&#39;publisher&#39;)</code>. </p><p>In this case, since the <code>Book</code> class or its ancestors do not define the <code>__getattr__()</code> method, the attribute access fails and Python raises the exception.</p><p>Let us try to define the method, just to show that it actually works</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">author</span>

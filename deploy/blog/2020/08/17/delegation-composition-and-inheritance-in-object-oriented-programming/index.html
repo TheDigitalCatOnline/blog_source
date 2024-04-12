@@ -232,6 +232,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -482,6 +485,9 @@
     </li>
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
     </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
@@ -843,7 +849,7 @@
         <span class="k">raise</span> <span class="ne">AttributeError</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Child</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</pre></div> </div> </div><p>Now, if we try to access <code>c.secret</code>, Python would raise an <code>AttributeError</code>, as neither <code>Child</code> nor <code>Parent</code> can provide that attribute. As a last resort, though, Python runs <code>c.__getattr__("secret")</code>, and the code of that method that we implemented in the class <code>Child</code> returns the string <code>"a_secret_string"</code>. Please note that the value of the argument <code>attr</code> is the <em>name</em> of the attribute as a string.</p><p>Because of the catch-all nature of <code>__getattr__</code>, we eventually have to raise an <code>AttributeError</code> to keep the inheritance mechanism working, unless we actually need or want to implement something very special.</p><p>This opens the door to an interesting hybrid solution where we can compose objects retaining an automatic delegation mechanism.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Parent</span><span class="p">:</span>
+</pre></div> </div> </div><p>Now, if we try to access <code>c.secret</code>, Python would raise an <code>AttributeError</code>, as neither <code>Child</code> nor <code>Parent</code> can provide that attribute. As a last resort, though, Python runs <code>c.__getattr__(&#34;secret&#34;)</code>, and the code of that method that we implemented in the class <code>Child</code> returns the string <code>&#34;a_secret_string&#34;</code>. Please note that the value of the argument <code>attr</code> is the <em>name</em> of the attribute as a string.</p><p>Because of the catch-all nature of <code>__getattr__</code>, we eventually have to raise an <code>AttributeError</code> to keep the inheritance mechanism working, unless we actually need or want to implement something very special.</p><p>This opens the door to an interesting hybrid solution where we can compose objects retaining an automatic delegation mechanism.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Parent</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 

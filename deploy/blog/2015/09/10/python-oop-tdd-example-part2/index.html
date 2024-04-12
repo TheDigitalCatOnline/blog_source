@@ -232,6 +232,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -483,6 +486,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -650,7 +656,7 @@
 </pre></div> </div> </div><p>And this simple addition lowers the count of failed tests from 35 to 30. Another small addition that satisfies 2 more tests is the splitting function, which shall return <code>SizeBinary</code> objects instead of <code>Binary</code> ones</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">upper_bits</span><span class="p">,</span> <span class="n">lower_bits</span><span class="p">):</span>
         <span class="n">upper</span><span class="p">,</span> <span class="n">lower</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">lower_bits</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">upper_bits</span><span class="p">,</span> <span class="n">upper</span><span class="p">),</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">lower_bits</span><span class="p">,</span> <span class="n">lower</span><span class="p">)</span>
-</pre></div> </div> </div><p>As already explained we want to get the negative version of the number both with the one&#x27;s complement and the two&#x27;s complement techniques. For starters, let&#x27;s deal with one&#x27;s complement.</p><p>A very smart way to reverse all the n bits of a value x is to compute <code>(1 << n) - x - 1</code>. An example will show you that this works, avoiding long and boring mathematical explanations. We want to negate the number 1 represented as 8 bits (&#x27;00000001&#x27;). First we compute <code>1 << 8</code> which returns <code>100000000</code>, then we subtract the value 1 of the number which returns <code>1111111</code> and finally we subtract the constant 1, which returns <code>11111110</code>. Look and behold! So this is exactly what I will implement for my <code>oc()</code> function</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span> <span class="nf">oc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</pre></div> </div> </div><p>As already explained we want to get the negative version of the number both with the one&#x27;s complement and the two&#x27;s complement techniques. For starters, let&#x27;s deal with one&#x27;s complement.</p><p>A very smart way to reverse all the n bits of a value x is to compute <code>(1 &lt;&lt; n) - x - 1</code>. An example will show you that this works, avoiding long and boring mathematical explanations. We want to negate the number 1 represented as 8 bits (&#x27;00000001&#x27;). First we compute <code>1 &lt;&lt; 8</code> which returns <code>100000000</code>, then we subtract the value 1 of the number which returns <code>1111111</code> and finally we subtract the constant 1, which returns <code>11111110</code>. Look and behold! So this is exactly what I will implement for my <code>oc()</code> function</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span> <span class="nf">oc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div> </div> </div><p>From the same boring mathematics tomes we may discover that the two&#x27;s complement representation of a number is its one&#x27;s complement version plus 1. So the implementation of <code>tc()</code> is straightforward</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span> <span class="nf">tc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">oc</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>

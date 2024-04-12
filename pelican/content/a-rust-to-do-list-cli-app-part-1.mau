@@ -1,0 +1,723 @@
+:pelican.title:A Rust to-do list CLI app - Part 1
+:pelican.date:2024-02-14 18:00:00 +0100
+:pelican.category:Programming
+:pelican.tags:Rust, TDD
+:pelican.authors:Leonardo Giordani
+:pelican.series:A Rust to-do list CLI app
+:pelican.slug:a-rust-to-do-list-cli-app-part-1
+:pelican.image:a-rust-to-do-list-cli-app-part-1
+:pelican.summary:Nothing yet
+
+This blog was born as a place where I could share what I discovered while I was learning new technologies and concepts. Remaining faithful to this manifesto, I decided to start writing some posts about Rust, as I recently joined the vibrant community behind this language. My roots are in C and Assembly, so I feel at home with Rust that looks to me like a proper modern version of C. As such, I'm supremely interested in the ideas behind it, and in particular I want to focus on low-level data representation, structures, and memory usage.
+
+After having read the manual and implemented several snippets, I decided to try to implement a more complete application and to annotate the journey here. While I was looking for a tutorial I found [link]("https://www.freecodecamp.org/news/how-to-build-a-to-do-app-with-rust/", "this useful post") by Claudio Restifo, where he develops a simple to-do list management application.
+
+So, I decided to implement the same using Claudio's solution when I was stuck or to compare his strategy with mine, as it is always extremely useful to see how another coder tackles certain challenges. Thanks Claudio! However, as I'm a big fan of TDD, I'd like to follow that approach, which is something that Claudio doesn't do in his post.
+
+Please keep in mind that these are my first steps with the language, so consider what you read here as the work of a beginner (as I am, with this language). I'm more than happy to receive advice or corrections, so feel free to get in touch if you see anything that can be done in a better way. In the post, you will find annotations that highlight the major topics that I think a Rust programmer should be familiar with.
+
+== Requirements
+
+The requirements I set for the application are:
+
+* Manage a list of entries. Each entry can be in state "to be done" or "done".
+* Provide commands to view, add, delete and mark items as "done" or "to be done".
+* Can save and retrieve data from a file. The file has a default name that can be changed with an option.
+
+This is an extremely basic application, so the command line is: `todo [OPTIONS] COMMAND [KEY]`.
+
+I expect the interaction with the tool to be something like
+
+[source]
+----
+$ todo list
+# TO DO
+
+* Write post
+* Buy milk
+* Have fun
+
+# DONE
+
+* Feed the cat
+
+$ todo add "Update CV"
+$ todo mark-done "Buy milk"
+$ todo list
+# TO DO
+
+* Write post
+* Have fun
+* Update CV
+
+# DONE
+
+* Feed the cat
+* Buy milk
+----
+
+== Initial setup
+
+Starting a new Rust project is extremely simple with Cargo:
+
+[source, rust]
+----
+$ cargo new todo-cli
+----
+
+This will create the required structure in a new directory and create two files: `Cargo.toml` and `src/main.rs`. The latter will contain some placeholder code that we can use to check our setup
+
+.`main.rs`
+[source, rust]
+----
+fn main() {
+    println!("Hello, world!");
+}
+----
+
+We can run the code with `cargo run` or build it into a stand-alone executable with `cargo build`. This will compile the code in debug mode by default and put the executable in the directory `target/debug`. Cargo can be used to run tests as well (`cargo test`).
+
+[infobox, title="Cargo"]
+----
+Cargo [docs.rustoz]("cargo") is the Rust package manager and the default solution to manage dependencies, compile packages and in general to manage your code. It's highly recommended to learn at least the basics of this powerful tool.
+----
+
+<< repo.github:lgiordani/rust-todo-cli/tree/a7c4616179fdcce0b5bc6010402c1d914ac1587b
+
+== CLI management
+
+Command line interfaces are typically not part of the classic TDD cycle, as they should be part of integration tests. Now, the definition that the Rust community uses for _integration tests_ is
+
+[quote]
+----
+Integration tests are external to your crate and use only its public interface in the same way any other code would. Their purpose is to test that many parts of your library work correctly together.
+----
+
+So, the _integration_ they consider here is that between multiple parts of a library. What I am referring to here is more properly _system integration tests_, where we test the public interface of a whole tool. Long story short, I will not write tests for the CLI commands.
+
+In the aforementioned post, Claudio Restifo suggests we can read command line arguments using `std::env::args()` directly with something like
+
+[source, rust]
+----
+fn main() {
+    let action = std::env::args().nth(1)
+        .expect("Please specify an action");
+    let item = std::env::args().nth(2)
+        .expect("Please specify an item");
+
+    println!("{:?}, {:?}", action, item);
+}
+----
+
+[infobox, title="Modules"]
+----
+In Rust a module can be used directly as long as it is part of the current project. The standard library is clearly visible by default, while other modules have to be declared in the file `Cargo.toml`. It is then perfectly acceptable to write `let action = std::env::args()...`.
+
+[docs.rust]("reference/items/use-declarations.html", "Use declarations"), however, can import other modules into the current namespace, to make the code more readable.
+----
+
+The method `nth` [docs.rust]("std/iter/trait.Iterator.html#method.nth") returns (not too surprisingly) the nth element of an iterator.
+
+[infobox, title="Iterators"]
+----
+The Rust documentation contains a very useful section on iterators [docs.rust]("/std/iter/index.html").
+
+The function `std::env::args` [docs.rust]("/std/env/fn.args.html") (used to access the command line arguments in the traditional Unix fashion) returns `Args` [docs.rust]("/std/env/struct.Args.html"), which implements the trait `Iterator`.
+
+As it happens in object-oriented programming languages (which Rust is not), the expression "implements an interface" is often simplified to "is". So, colloquially speaking, we can say that `std::env::Args` is an `Iterator` [docs.rust]("/std/iter/trait.Iterator.html").
+----
+
+The prototype of `nth` is
+
+[source, rust]
+----
+fn nth(&mut self, n: usize) -> Option<Self::Item>
+----
+
+and it mentions `Option<Self::Item>` as the return type. The type `Option` provides a method `expect` [docs.rust]("/std/option/enum.Option.html#method.expect") that returns either the content of the `Some` value or panics, printing the given message in the backtrace.
+
+[infobox, title="Option"]
+----
+`Option` [docs.rust]("std/option/index.html") and `Result` [docs.rust]("std/result/index.html") are a versatile way to manage optional results (either something or nothing) and results (either something good or an error), and are among the most important structures to learn in Rust.
+----
+
+Running the code above with `cargo run` produces the following output, where we can see the message set by the first call to `expect`.
+
+[source, callouts="|"]
+----
+    Finished dev [unoptimized + debuginfo] target(s) in 0.01s
+     Running `target/debug/todo-cli`
+thread 'main' panicked at src/main.rs:80:42:
+Please specify an action|@|
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+----
+
+== Better CLI management with Clap
+
+[link]("https://docs.rs/clap/latest/clap/", "Clap") stands for *C*ommand *L*ine *A*rgument *P*arser and is a nice crate that simplifies the creation of advanced command line interfaces. I installed it using
+
+[source]
+----
+$ cargo add clap --features derive
+----
+
+as detailed in the documentation and my code is now
+
+[source, rust]
+----
+use clap::Parser;
+
+#[derive(Parser)]
+struct Cli {
+    command: String,
+    key: String,
+}
+
+fn main() {
+    let args = Cli::parse();
+
+    println!("Command line: {} {}", args.command, args.key);
+}
+----
+
+Clap allows me to add long and short options as well, so later I will use it to specify the database file name. For now, however, this is enough.
+
+[infobox, title="derive"]
+----
+The attribute `derive` [docs.rust]("reference/attributes/derive.html") is another cornerstone of the language and is used everywhere. The machinery behind it is not trivial, but I recommend getting used to the syntax and the standard use cases.
+----
+
+<< repo.github:lgiordani/rust-todo-cli/tree/b85162745b90e96a58ee58a5a7306e599aa56fa1
+
+== A simple list of elements
+
+From Claudio's post I got the idea of using a hash map for the list of items. That's a simple and effective solution, in particular given the fact that Rust provides the collection type out of the box.
+
+As I want to use TDD, I begin with a test. In Rust, we put tests and code in the same file (but for integration tests between modules), so I can write a simple test at the bottom of the file to check that a `TodoList` type exists and can be initialised.
+
+[source, rust]
+----
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn init_todo() {
+        let todo = TodoList::new();
+    }
+}
+----
+
+[infobox, title="TDD"]
+----
+TDD is one of my favourite methodologies and I'm happy to see that Rust allows me to follow it. I can't recommend TDD enough! The Rust book contains [docs.rust]("book/ch11-01-writing-tests.html", "a pretty detailed chapter") on how to write tests.
+----
+
+Clearly, when I run `cargo test` I get a compile error. Let's implement the type then
+
+[source, rust]
+----
+use std::collections::HashMap;
+
+[...]
+
+struct TodoList {
+    // true = to do, false = done
+    items: HashMap<String, bool>,
+}
+----
+
+As you see, I had to write a comment as a reminder of the meaning of the boolean values. I also suspect that I will need to use the type `HashMap<String, bool>` multiple times, so I will probably end up creating a type alias of some sort.
+
+To initialise such structure I have to create an implementation of the function `new`
+
+. Version 1
+[source, rust]
+----
+impl TodoList {
+    fn new() -> TodoList {
+        let items: HashMap<String, bool> =
+            HashMap::<String, bool>::new();
+
+        TodoList { items: items }
+    }
+}
+----
+
+[infobox, title="struct and impl"]
+----
+Rust is not an object-oriented programming language, so it uses plain structs to encapsulate data. The Rust book has [docs.rust]("book/ch05-01-defining-structs.html", "a full chapter") on `struct` and `impl`.
+----
+
+Thanks to type inference, the explicit definition of types after the call to `HashMap` is not needed and I can write
+
+. Version 2
+[source, rust]
+----
+        let items: HashMap<String, bool> = HashMap::new();
+----
+
+or
+
+. Version 3
+[source, rust]
+----
+        let items = HashMap::<String, bool>::new();
+----
+
+For such a simple initialisation, I might also write directly
+
+. Version 4
+[source, rust]
+----
+        TodoList {
+            items: HashMap::<String, bool>::new(),
+        }
+----
+
+However, I will soon replace the `::new()` with something more complicated that reads a file, so I decided to keep version 2. This code passes the test I wrote, so it's good enough for now.
+
+At this point I can also initialise the list in the main function
+
+[source, rust]
+----
+struct TodoList {
+    // true = to do, false = done
+    items: HashMap<String, bool>,
+}
+
+impl TodoList {
+    fn new() -> TodoList {
+        let items: HashMap<String, bool> = HashMap::new();
+
+        TodoList { items: items }
+    }
+}
+
+fn main() {
+    let args = Cli::parse();
+
+    let todo = TodoList::new();
+
+    println!("Command line: {} {}", args.command, args.key);
+}
+----
+
+Please note that I'm not being too strict with dead code here and the compile will complain about unused variables and fields. I like this, and I won't add underscores to silence the warnings since they are a good reminder of what I still have to implement.
+
+<< repo.github:lgiordani/rust-todo-cli/tree/0e49a12d38b1c3a5de9332507608b2c0c3f17ad8
+
+== Adding items
+
+A good improvement at this point would be to create a method to add items to the list. First, the mandatory test
+
+[source, rust]
+----
+    #[test]
+    fn add_item() {
+        let mut todo = TodoList::new();
+        todo.add(String::from("Something to do"));
+        assert_eq!(todo.items.get("Something to do"), Some(&true))
+    }
+----
+
+The type `HashMap` provides a method called `insert` [docs.rust]("std/collections/struct.HashMap.html#method.insert") which is exactly what I need
+
+[source, rust]
+----
+impl TodoList {
+
+    ...
+
+    fn add(&mut self, key: String) {
+        self.items.insert(key, true);
+    }
+}
+----
+
+And once again this code passes the test, so I consider it good enough.
+
+[infobox, title="self and Self"]
+----
+In Rust `self` is a keyword [docs.rust]("std/keyword.self.html") and not just a name as it happens in Python. Rust considers `self` of type `Self` [docs.rust]("std/keyword.SelfTy.html"), which is the type we are implementing in a `trait` or `impl` block.
+
+The code `fn add(&mut self, key: String) {` above is equivalent to `fn add(self: &mut Self, key: String) {`. However, `self` cannot be renamed to something like `foo`, as Rust is expecting a parameter with that specific name.
+----
+
+[infobox, title="References and mutability"]
+----
+I found confusing, at first, that in Rust we usually call `&mut` a _mutable reference_. In my head, I always translate it into a _reference to mutable data_ as this helps me to remember what I am doing here.
+
+In short, in Rust we need to declare explicitly when we intend to consider a value mutable using the keyword `mut` [docs.rust]("std/keyword.mut.html"), and this is valid also when we pass arguments to functions. If we decide to borrow data instead of moving it, we can use _references_, that in C terms are equivalent to protected pointers. We can also pass a reference to data that we intend to mutate, which is where `&mut` comes into play.
+
+However, as I mentioned I think it's important to understand that the reference (a pointer) is not mutating. The data referenced by it is.
+----
+
+<< repo.github:lgiordani/rust-todo-cli/tree/320c31afba90c63e0482e4442d580d7de1fcfbd4
+
+== Multiple additions and updates
+
+If I add the same key multiple times I want the list to contain only one occurrence, so I test this.
+
+[source, rust]
+----
+    #[test]
+    fn add_item_already_exist() {
+        let mut todo = TodoList::new();
+        todo.add(String::from("Something to do"));
+        todo.add(String::from("Something to do"));
+        assert_eq!(todo.items.get("Something to do"), Some(&true));
+        assert_eq!(todo.items.len(), 1);
+    }
+----
+
+The test passes already, thanks to the properties of the hash map.
+
+I also want the second insertion not to update the value of the existing element, and in this case the test is
+
+[source, rust]
+----
+    #[test]
+    fn add_item_does_not_change_value() {
+        let mut todo = TodoList::new();
+        todo.add(String::from("Something to do"));
+
+        if let Some(x) = todo.items.get_mut("Something to do") {
+            *x = false;
+        }
+
+        todo.add(String::from("Something to do"));
+        assert_eq!(todo.items.get("Something to do"), Some(&false));
+        assert_eq!(todo.items.len(), 1);
+    }
+----
+
+I have to manually change the value inside the map using `get_mut` [docs.rust]("std/collections/struct.HashMap.html#method.get_mut") that returns a mutable reference to the value. This test doesn't pass, as `insert` actually updates the existing value.
+
+At the time of writing the method `try_insert` of `HashMap` is experimental, so I implemented a custom solution
+
+[source, rust]
+----
+use std::collections::hash_map::Entry;
+
+[...]
+
+
+    fn add(&mut self, key: String) {
+        if let Entry::Vacant(entry) = self.items.entry(key) {
+            entry.insert(true);
+        }
+    }
+----
+
+Here, I'm basically checking if an entry for `key` is vacant (does not exist) and I create it only in that case. This code passes all tests.
+
+[infobox, title="if let"]
+----
+I consider `if let` [docs.rust]("book/ch06-03-if-let.html") a very powerful piece of syntax. I care only about one of the possible outcomes, so I don't want to waste time defining it in a full-fledged `match`.
+----
+
+<< repo.github:lgiordani/rust-todo-cli/tree/e0ee0b9fdb14e2d7f4d0a5022718d5c7923249e6
+
+== Marking items
+
+The second method I want to add is `mark` that allows me to set the value of the boolean corresponding to a given key. This will be used to flag an item as "done" or "to be done". The test is
+
+[source, rust]
+----
+    #[test]
+    fn mark_item() {
+        let mut todo = TodoList::new();
+        todo.add(String::from("Something to do"));
+        todo.mark(String::from("Something to do"), false);
+        assert_eq!(todo.items.get("Something to do"), Some(&false))
+        todo.mark(String::from("Something to do"), true);
+        assert_eq!(todo.items.get("Something to do"), Some(&true))
+    }
+----
+
+Here, I can follow the same strategy I used in the test `add_item_does_not_change_value`
+
+[source, rust]
+----
+impl TodoList {
+
+    ...
+
+    fn mark(&mut self, key: String, value: bool) {
+        if let Some(x) = self.items.get_mut(&key) {
+            *x = value;
+        }
+    }
+}
+----
+
+What if the key is not in the list, though? The function `get_mut` returns an Option, but `mark` should signal with a `Result` that something didn't work. I can test this with
+
+[source, rust]
+----
+    #[test]
+    fn mark_item_does_not_exist() {
+        let mut todo = TodoList::new();
+        assert_eq!(
+            todo.mark(String::from("Something to do"), false),
+            Err(String::from("Something to do"))
+        );
+    }
+----
+
+The new version of the function is then
+
+[source, rust]
+----
+impl TodoList {
+
+    ...
+
+    fn mark(&mut self, key: String, value: bool) -> Result<String, String> {
+        let x = self.items.get_mut(&key).ok_or(&key)?;
+        *x = value;
+
+        Ok(key)
+    }
+}
+----
+
+The method `ok_or` [docs.rust]("std/option/enum.Option.html#method.ok_or") converts an `Option` into a `Result`, so I just call `?` to propagate the error.
+
+[infobox, title="The question mark operator"]
+----
+The operator `?` is one of the best features of Rust, and it's explained in [docs.rust]("book/ch09-02-recoverable-errors-with-result.html", "this chapter") of the Rust Book. I find it such a simple yet extremely powerful way to deal with error propagation.
+----
+
+<< repo.github:lgiordani/rust-todo-cli/tree/15179a8821f73ea5479d7bde1060126158e5eb7e
+
+== Listing items
+
+At this point I want to add the method `list` that allows me to see the items contained in `TodoList`. I'd like to separate the logic from the presentation so the method will return two lists of items, one for each value of the connected boolean.
+
+This means that the output of the method should in my opinion be a tuple of iterators, one on the items with state "to be done" and one on the ones in state "done".
+
+[infobox, title="Iterators"]
+----
+Iterators are a big thing in Rust, and I can understand why as they definitely boost performances saving memory. The Rust book has [docs.rust]("book/ch13-02-iterators.html", "a chapter") on them, and there is clearly plenty of documentation for the [docs.rust]("std/iter/trait.Iterator.html", "relative trait").
+----
+
+I start with tests as usual
+
+[source, rust]
+----
+    #[test]
+    fn list_items() {
+        let mut todo = TodoList::new();
+        todo.add(String::from("Something to do"));
+        todo.add(String::from("Something else to do"));
+        todo.add(String::from("Something done"));
+        todo.mark(String::from("Something done"), false);
+
+        let (todo_items, done_items) = todo.list();
+
+        let todo_items: Vec<String> = todo_items.map(|x| x.clone()).collect();
+        let done_items: Vec<String> = done_items.map(|x| x.clone()).collect();
+
+        assert!(todo_items.iter().any(|e| e == "Something to do"));
+        assert!(todo_items.contains(&String::from("Something else to do")));
+        assert_eq!(todo_items.len(), 2);
+        assert!(done_items.contains(&String::from("Something done")));
+        assert_eq!(done_items.len(), 1);
+    }
+----
+
+There is a lot to say here, and please remember the caveat that I'm not sure what I'm doing is the best thing.
+
+I add some elements to the list and mark one as done, then I call the method `list` to get two iterators and test them. However, iterators can be traversed only once, so to test them properly I prefer to convert them into vectors using the method `collect` [docs.rust]("std/iter/trait.Iterator.html#method.collect").
+
+To generate the two iterators I will probably use `HashMap::iter` [docs.rust]("std/collections/struct.HashMap.html#method.iter"), which means they will have an element type `&String`, as we are interested in the item key.
+
+As far as I can tell, there are several different strategies I can use here.
+
+I can generate vectors of `&String` using the elements directly from the iterators and then use the method `Vec::contains` [docs.rust]("std/vec/struct.Vec.html#method.contains"). However, the latter wants to receive a reference to the searched value, which means that I would end up with
+
+[source, rust]
+----
+let todo_items: Vec<&String> = todo_items.collect();
+assert!(todo_items.contains(&&String::from("Something else to do")));
+----
+
+While this is perfectly reasonable in terms of memory consumption and performances, the double `&&` is a bit ugly. So, considering that I'm writing a test, where performances are not the major concern, I'd prefer to simplify the syntax. I can create a vector of `String` values and check them
+
+[source, rust]
+----
+let todo_items: Vec<String> = todo_items.cloned().collect();
+assert!(todo_items.contains(&String::from("Something else to do")));
+----
+
+The syntax `todo_items.cloned()` is equivalent to `todo_items.map(|x| x.clone())` and leverages the implicit dereferencing of `x`. Here, `copied()` cannot be used as `String` doesn't implement the trait `Copy`.
+
+A good alternative to `contains` is `any`, which however works on iterators. A final version of the code is then
+
+[source, rust]
+----
+let todo_items: Vec<String> = todo_items.cloned().collect();
+assert!(todo_items.iter().any(|e| e == "Something to do"));
+----
+
+Which is also more elegant since it uses the comparison between a `String` (which is the iterator item type) and an `&str` (the right side). At this point my test is
+
+[source, rust]
+----
+#[test]
+fn list_items() {
+    let mut todo = TodoList::new();
+    todo.add(String::from("Something to do"));
+    todo.add(String::from("Something else to do"));
+    todo.add(String::from("Something done"));
+    todo.mark(String::from("Something done"), false);
+
+    let (todo_items, done_items) = todo.list();
+
+    let todo_items: Vec<String> = todo_items.cloned().collect();
+    let done_items: Vec<String> = done_items.cloned().collect();
+
+    assert!(todo_items.iter().any(|e| e == "Something to do"));
+    assert!(todo_items.iter().any(|e| e == "Something else to do"));
+    assert_eq!(todo_items.len(), 2);
+    assert!(done_items.iter().any(|e| e == "Something done"));
+    assert_eq!(done_items.len(), 1);
+}
+----
+
+An implementation of the method `list` that passes this test is
+
+[source, rust]
+----
+    fn list(&self) ->
+       (impl Iterator<Item = &String>, impl Iterator<Item = &String>) {
+        (
+            self.items.iter().filter(|x| *x.1 == true).map(|x| x.0),
+            self.items.iter().filter(|x| *x.1 == false).map(|x| x.0),
+        )
+    }
+----
+
+Here, the powerful keyword `impl` declares that whatever comes out of that function implements the `Iterator` trait with an element type `String`. The code uses `iter` [docs.rust]("std/collections/struct.HashMap.html#method.iter") to create an iterator on the elements of the hash map (element type `(&String, &bool)`, then uses `map` [docs.rust]("std/iter/trait.Iterator.html#method.map") to extract the first element of each tuple. All in all, the function returns a tuple of `Map` [docs.rust]("std/iter/struct.Map.html") which is a type that implements `Iterator`.
+
+<< repo.github:lgiordani/rust-todo-cli/tree/40293e0aab286505e67f3932c16c1367bf92560c
+
+== Exposing commands on the CLI
+
+It's time to expose the methods I implemented on the CLI. I realised that commands like `add` and `mark-done` require a second argument (the key), other commands like `list` don't.
+
+So, the first change is to make the key argument optional.
+
+[source, rust]
+----
+#[derive(Parser)]
+struct Cli {
+    command: String,
+
+    key: Option<String>,:@:
+}
+----
+
+Purely to have something to play with, I will also add some values to the list in `main`. This is temporary, as long as I don't implement a file storage mechanism.
+
+[source, rust]
+----
+fn main() {
+    let args = Cli::parse();
+
+    let mut todo = TodoList::new();
+
+    todo.add("Something to do".to_string());:@:
+    todo.add("Something else to do".to_string());:@:
+    todo.add("Something done".to_string());:@:
+    todo.mark("Something done".to_string(), false).unwrap();:@:
+}
+----
+
+Last, the command-method binding part. A match construct is the best option in this case, something like
+
+[source, rust]
+----
+match args.command.as_str() {
+    "add" => ...,
+    "mark-done" => ...,
+    "list" => ...
+}
+----
+
+[infobox, title="match"]
+----
+The `match` control flow construct is a blessing that comes directly from functional programming, where pattern matching is an important tool. The Rust book has [docs.rust]("book/ch06-02-match.html#the-match-control-flow-construct", "a chapter dedicated to it") and [docs.rust]("book/ch18-03-pattern-syntax.html", "a chapter on the pattern syntax").
+----
+
+However, since each method has a different return type, I need the whole construct to return a uniform `Result` that can be used to print a meaningful state message at the end of the execution.
+
+The code I wrote is the following
+
+[source, rust]
+----
+fn main() {
+   ...
+
+   let result = match args.command.as_str() {
+        "add" => match args.key {
+            Some(key) => {
+                todo.add(key);
+                Ok(())
+            }
+            None => Err("Key cannot be empty!".to_string()),
+        },
+        "mark-done" => match args.key {
+            Some(key) => todo
+                .mark(key, false)
+                .map_err(|e| format!("Invalid key {}", e))
+                .and(Ok(())),
+            None => Err("Key cannot be empty!".to_string()),
+        },
+        "list" => {
+            let (todo_items, done_items) = todo.list();
+
+            println!("# TO DO");
+            println!();
+            todo_items.for_each(|x| println!(" * {}", x));
+
+            println!();
+
+            println!("# DONE");
+            println!();
+            done_items.for_each(|x| println!(" * {}", x));
+
+            Ok(())
+        }
+        cmd => Err(format!("Command {} not recognised", cmd)),
+    };
+
+    match result {
+        Err(e) => println!("ERROR: {}", e),
+        Ok(_) => println!("SUCCESS"),
+    }
+}
+----
+
+[infobox, title="Option and Result"]
+----
+It's paramount to learn how to convert `Option` [docs.rust]("std/option/enum.Option.html") into `Result` [docs.rust]("std/result/enum.Result.html") and vice versa, as well as how to convert a `Result` type into a different one. Being familiar with functions like `map_err` [docs.rust]("std/result/enum.Result.html#method.map_err") or `and` [docs.rust]("std/result/enum.Result.html#method.and") will drastically change the quality of your Rust code.
+----
+
+<< repo.github:lgiordani/rust-todo-cli/tree/89cccf4d64c7c998b6f254d3af2f68557e58759b
+
+== Tidy up
+
+At this point I went through the code and fixed some of the warning the compiler was still giving me. These all come from the tests, where I created the `todo` variable but never used it, and where I ignored the results returned by calls of `todo.mark`. There, I used `unwrap` [docs.rust]("std/result/enum.Result.html#method.unwrap") as I'm happy for that to panic if something goes wrong.
+
+<< repo.github:lgiordani/rust-todo-cli/tree/39d406d483bc79fff262211beff473027cd02794
+
+== Final words
+
+What a journey so far! It's really true that you can't consider a language learned until you start from scratch and try to use it to implement a real application. Well, it's not over yet, I'm still missing an important part which is the file storage.
+
+If you have comments, suggestions, or corrections, please let me know! I am more than happy to learn something new from other coders and to publish updates to the post.
+
+::#include:snippets/feedback.mau

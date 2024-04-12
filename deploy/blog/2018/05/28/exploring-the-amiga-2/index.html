@@ -232,6 +232,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -483,6 +486,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -592,7 +598,7 @@ FUNC_CNT    SET      FUNC_CNT-LIB_VECTSIZE
     ENDM
 
 FUNC_CNT    SET      LIB_USERDEF
-</pre></div> </div> </div><p>The last line initialises the <code>FUNC_CNT</code> symbol with the <code>LIB_USERDEF</code> value. Then each call of the <code>FUNCDEF <arg></code> macro does two things:</p><ol><li>Creates the <code>_LVO<arg></code> symbol with value <code>FUNC_CNT</code> (e.g. <code>_LVOSupervisor EQU -30</code>)</li><li>Decrements the <code>FUNC_CNT</code> symbol by <code>LIB_VECTSIZE</code></li></ol><p>Please note that the example <code>FUNCDEF</code> that you can find (commented) in <code>libraries.i</code> won&#x27;t work out of the box as <code>FUNC_CNT</code> is defined inside the macro itself, while it has to be already defined before the first use of the macro.</p><div class="code"><div class="content"><div class="highlight"><pre>*------ FUNCDEF is used to parse library offset tables.  Many applications
+</pre></div> </div> </div><p>The last line initialises the <code>FUNC_CNT</code> symbol with the <code>LIB_USERDEF</code> value. Then each call of the <code>FUNCDEF &lt;arg&gt;</code> macro does two things:</p><ol><li>Creates the <code>_LVO&lt;arg&gt;</code> symbol with value <code>FUNC_CNT</code> (e.g. <code>_LVOSupervisor EQU -30</code>)</li><li>Decrements the <code>FUNC_CNT</code> symbol by <code>LIB_VECTSIZE</code></li></ol><p>Please note that the example <code>FUNCDEF</code> that you can find (commented) in <code>libraries.i</code> won&#x27;t work out of the box as <code>FUNC_CNT</code> is defined inside the macro itself, while it has to be already defined before the first use of the macro.</p><div class="code"><div class="content"><div class="highlight"><pre>*------ FUNCDEF is used to parse library offset tables.  Many applications
 *------ need a special version of FUNCDEF - you provide your own macro
 *------ to match your needs.  Here is an example:
 *

@@ -232,6 +232,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -483,6 +486,9 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
     </li>
@@ -571,7 +577,7 @@ vectors:
     function1-vectors
     function2-vectors
     function3-vectors
-</pre></div> </div> </div><p>As you can see the function at <code>function2</code> (in this example) depends on a <code><table></code> and a <code><start></code> parameters which will be contained in some register. At this point, since the address <code>function2</code> is known, there can be some code that runs the function on the table contained in the code itself</p><div class="code"><div class="content"><div class="highlight"><pre>setup:
+</pre></div> </div> </div><p>As you can see the function at <code>function2</code> (in this example) depends on a <code>&lt;table&gt;</code> and a <code>&lt;start&gt;</code> parameters which will be contained in some register. At this point, since the address <code>function2</code> is known, there can be some code that runs the function on the table contained in the code itself</p><div class="code"><div class="content"><div class="highlight"><pre>setup:
     run &lt;function2&gt; on &lt;vectors_offset&gt; and &lt;setup&gt;
 function1:
     code
@@ -586,7 +592,7 @@ vectors:
     function1-vectors
     function2-vectors
     function3-vectors
-</pre></div> </div> </div><p>where <code><vectors_offset></code> is a hardcoded offset (as the displacement of <code>vectors</code> relative to <code>setup</code> is known) and <code>setup</code> is the effective address that the <code>setup</code> routine has at runtime.</p><p>This mechanism creates then a library that can install other libraries through a given function, but that can at the same time install itself.</p><h2 id="the-kickstart-vector-table-a451">The Kickstart vector table<a class="headerlink" href="#the-kickstart-vector-table-a451" title="Permanent link">¶</a></h2><p>An actual example of the vector table mechanism can be found in the Kickstart code. Kickstart is the BIOS of the Amiga system, and is loaded at boot time either from disk (Amiga 1000 and some Amiga 3000) or from a ROM.</p><p>The code of Kickstart 1.3 can be found <a href="https://www.romcollector.com/emulators-firmware-i-29.html">here</a> and you can easily disassemble it with vdasm</p><div class="code"><div class="content"><div class="highlight"><pre>$ vda68k Kickstart1.3.rom &gt; Kickstart1.3.asm
+</pre></div> </div> </div><p>where <code>&lt;vectors_offset&gt;</code> is a hardcoded offset (as the displacement of <code>vectors</code> relative to <code>setup</code> is known) and <code>setup</code> is the effective address that the <code>setup</code> routine has at runtime.</p><p>This mechanism creates then a library that can install other libraries through a given function, but that can at the same time install itself.</p><h2 id="the-kickstart-vector-table-a451">The Kickstart vector table<a class="headerlink" href="#the-kickstart-vector-table-a451" title="Permanent link">¶</a></h2><p>An actual example of the vector table mechanism can be found in the Kickstart code. Kickstart is the BIOS of the Amiga system, and is loaded at boot time either from disk (Amiga 1000 and some Amiga 3000) or from a ROM.</p><p>The code of Kickstart 1.3 can be found <a href="https://www.romcollector.com/emulators-firmware-i-29.html">here</a> and you can easily disassemble it with vdasm</p><div class="code"><div class="content"><div class="highlight"><pre>$ vda68k Kickstart1.3.rom &gt; Kickstart1.3.asm
 </pre></div> </div> </div><p>Inside this code we can see a practical implementation of the mechanism described above.</p><p>The mandatory disclaimer: <strong>to use the Amiga Kickstart ROM images you must own a license.</strong> (see the Resources section).</p><p>When you disassemble some binary code, however, you don&#x27;t get some nice source code written in a high level language. Well, not with a simple disassembler like vdasm, anyway. What you get is the one to one interpretation of the binary values according to the processor&#x27;s conventions, and this includes parts of the binary file that are pure data. The disassembler has no way to know if some binary number represents an instruction or a pure number. Moreover, there is no trace of the original labels used by the author(s) of the code, as they are lost in the translation to machine language, when they are converted to pure addresses.</p><p>The practice of understanding how a system works starting from the pure implementation is called &quot;reversing&quot;, and personally I consider it one of the most fascinating tasks a programmer can face.</p><p>The purpose of the present investigation is to find the Kickstart 1.3 vector table, and with that to find the position and implementation of the Exec functions. Well, let&#x27;s start.</p><h3 id="step-1-437f">Step 1</h3><p>I know that <code>MakeFunctions</code> is used to create in memory the structure of Exec itself. So I know that somewhere that function is invoked on the code that I am studying.</p><p>Since one of the parameters of the <code>MakeFunctions</code> routine is the name of the library a good starting point might be a string containing <code>exec.library</code> (which is the standard name of this library in the Amiga system). Once I find that string I can look for a function call that uses its address as a parameter.</p><p>The byte sequence that represents that string (using ASCII) is <code>65 78 65 63 2E 6C 69 62 72 61 72 79</code>. In Kickstart 1.3 the offset of this string is <code>0x00a8</code>.</p><p>Remember that what you see in the disassembled code is not a string. The disassembler tries to convert everything into instructions, so you will find something like</p><div class="code"><div class="content"><div class="highlight"><pre>000000a8: 6578                      bcs.b   0x122
 000000aa: 6563                      bcs.b   0x10f
 000000ac: 2e6c 6962                 movea.l 0x6962(a4),sp

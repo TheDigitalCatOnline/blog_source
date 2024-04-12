@@ -101,7 +101,7 @@
     {{ article.content }}
   </div>
 
-  {% if article.series %}
+  {% if article.series and ( article.series.all | length > 1 )%}
   <section class="links">
     <header>
       {% set text = 'Part %(index)s of the %(name)s series' %}

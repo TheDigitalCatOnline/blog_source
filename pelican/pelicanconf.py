@@ -111,74 +111,17 @@ MARKDOWN = {
 }
 
 MAU = {
-    "custom_templates": {
-        "header.html": (
-            '<h{{ level }} id="{{ anchor }}">'
-            "{{ value }}"
-            "{% if anchor and level <= 2 %}"
-            '<a class="headerlink" href="#{{ anchor }}" title="Permanent link">¶</a>'
-            "{% endif %}"
-            "</h{{ level }}>"
-        ),
-        "block-admonition.html": (
-            '<div class="admonition {{ kwargs.class }}">'
-            '<i class="fa fa-{{ kwargs.icon }}"></i>'
-            '<div class="content">'
-            '<div class="title">{{ kwargs.label }}</div>'
-            "<div>{{ content }}</div>"
-            "</div>"
-            "</div>"
-        ),
-        "block-infobox.html": (
-            '<div class="infobox">'
-            '<i class="fa fa-{{ kwargs.icon }}"></i>'
-            '<div class="title">{{ kwargs.title }}</div>'
-            "<div>{{ content }}</div>"
-            "</div>"
-        ),
-        "block-advertisement.html": (
-            """
-            <div class="advertisement">
-                <a href="{{ kwargs.target }}">
-                  <img src="{{ kwargs.image }}" />
-                </a>
-                <div class="body">
-                  {{ content }}
-                  <div class="actions">
-                    <a class="action" href="{{ kwargs.target }}">{{ kwargs.action }}</a>
-                  </div>
-                </div>
-            </div>
-            """
-        ),
-        "source.html": (
-            '<div class="code">'
-            '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
-            '<div class="content">'
-            '<div class="highlight">'
-            "<pre>"
-            "{% for line, callout in code %}"
-            "{{ line }}{% if callout %} {{ callout }}{% endif %}\n"
-            "{% endfor %}"
-            "</pre>"
-            "</div> "
-            "</div> "
-            '{% if callouts %}<div class="callouts">'
-            "<table><tbody>"
-            "{% for callout in callouts %}{{ callout }}{% endfor %}"
-            "</tbody></table>"
-            "</div>{% endif %}"
-            "</div>"
-        ),
-        "content_image.html": (
-            '<div class="imageblock">'
-            '<img src="{{ uri }}"{% if alt_text %} alt="{{ alt_text }}"{% endif %}>'
-            '{% if title %}<div class="title">{{ title }}</div>{% endif %}'
-            "</div>"
-        ),
+    "visitor": {
+        "templates_directory": "../mau/templates",
+        "template_providers": ["mau-docs-templates"],
+        "pygments": {
+            "html": {
+                "nowrap": True,
+            },
+        },
     },
-    "pygments": {"html": {"nowrap": True}},
 }
+
 
 QUOTES = [
     {
