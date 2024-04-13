@@ -215,7 +215,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 * [link](https://wsgi.readthedocs.io/en/latest/what.html,WSGI) - The Python Web Server Gateway Interface
 * My post [link](\{filename}dissecting-a-web-stack.markdown,"Dissecting a web stack") includes a section on WSGI
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 
@@ -547,7 +547,7 @@ Now I can run `./manage.py compose up -d` and `./manage.py compose down` and hav
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/9e08735af6177760cd750230122a507b15c9c112,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/9e08735af6177760cd750230122a507b15c9c112,"browse the files").
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 

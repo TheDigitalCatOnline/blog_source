@@ -45,7 +45,7 @@ The rest of the post is dedicated to the exploration of such an important and in
 
 Let's start from the formal definition of hash function:
 
-[quote]
+[*quote]
 ----
 A hash function is any function that can be used to map data of arbitrary size to data of fixed size
 ----

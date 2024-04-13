@@ -92,7 +92,8 @@ $ docker run -d \
   postgres:13
 ----
 
-[infobox, icon="info-circle", title="Stopping containers"]
+, Stopping containers
+[*infobox, icon="info-circle"]
 %%%%
 You can stop containers using `docker stop ID`. This [link]("https://docs.docker.com/engine/reference/commandline/stop/#extended-description", "gives containers a grace period") to react to the `SIGTERM` signal, for example to properly close files and terminate connections, and then terminates it with `SIGKILL`. You can also force it to stop unconditionally using `docker kill ID` which sends `SIGKILL` immediately.
 
@@ -121,7 +122,8 @@ Type "help" for help.
 whale_db=# 
 ----
 
-[infobox, icon="info-circle", title="Postgres trust"]
+. Postgres trust
+[*infobox, icon="info-circle"]
 %%%%
 You might be surprised by the fact that `psql` didn't ask for the password that we set when we run the container. This happens because the server trusts local connections, and when we run `psql` inside the container we are on `localhost`.
 
@@ -614,7 +616,8 @@ $ docker image ls | grep whale
 whaleapp  latest  969b15466905  9 minutes ago  894MB
 ----
 
-[infobox, icon="info-circle", title="Size of containers"]
+. Size of containers
+[*infobox, icon="info-circle"]
 %%%%
 You might want to observe 1 minute of silence meditating on the fact that we used almost 900 megabytes of space to run 40 lines of Python. As you can see benefits come with a cost, and you should not underestimate those. 900 megabytes might not seem a lot nowadays, but if you keep building images you will soon use up the space on your hard drive or end up paying a lot for the space on your remote repository.
 
@@ -636,7 +639,7 @@ Database connection closed.
 
 Please note that I used `--rm` to make Docker remove the container automatically when it is terminated. This way I can run it again with the same name without having to explicitly remove the past container with `docker rm`.
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 
@@ -690,7 +693,8 @@ $ docker inspect whale-postgres
 [...]
 ----
 
-[infobox, icon="info-circle", title="Docker network management"]
+. Docker network management
+[*infobox, icon="info-circle"]
 %%%%
 The command `docker network` can be used to change the network configuration of _running_ containers.
 
@@ -832,7 +836,8 @@ Connecting to the PostgreSQL database...
 Database connection closed.
 ----
 
-[infobox, icon="info-circle", title="Managing secrets"]
+. Managing secrets
+[*infobox, icon="info-circle"]
 %%%%
 A "secret" is a value that should never be shown in plain text, as it is used to grant access to a system. This can be a password or a private key such as the ones you have to run SSH, and as happens with everything related to security, managing them is complicated. Please keep in mind that security is hard and that the best attitude to have is: _every time you think something in security is straightforward this means you got it wrong_.
 

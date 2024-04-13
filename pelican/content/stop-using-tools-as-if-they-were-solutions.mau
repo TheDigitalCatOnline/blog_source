@@ -32,7 +32,7 @@ That's hardly the first thing you should ask yourself. I'm pretty sure you agree
 
 Why are these questions more important than the one about hammers? Because the answers to these questions can heavily influence the whole project. They are pillars of your architecture and not details[footnote](pycabook). My colleague Ken Pemberton always reminds me that most of the time we don't ask ourselves an even more important question: "What problem are you trying to solve?". In the example above, a bridge might not be the best solution in the first place.
 
-[footnote, pycabook]
+[*footnote, pycabook]
 ----
 See "What is a software architecture?" in [link]("https://www.thedigitalcatbooks.com", "Clean Architectures in Python").
 ----
@@ -67,7 +67,7 @@ Being a blogger and an author I want to add a consideration about communication.
 
 Professor Sidney Morris, in a [link]("https://www.youtube.com/watch?v=T1snRQEQuEk","very interesting video") about how to write proofs in mathematics, describes the process with these words:
 
-[excerpt]
+[*callout]
 ----
 * Step 1: write down what we are given
 * Step 2: write down the definition of each technical term in what we are given
@@ -114,7 +114,7 @@ You need to show that you understand problems, that you can compare solutions, t
 
 Design patterns are defined by Erich Gamma and his co-authors in their seminal book[footnote](gof) with these words: "[...] patterns solve specific design problems and make object-oriented designs more flexible, elegant, and ultimately reusable. [...] A designer who is familiar with such patterns can apply them immediately to design problems without having to rediscover them."
 
-[footnote, gof]
+[*footnote, gof]
 ----
 _Design Patterns: Elements of Reusable Object-Oriented Software_ by Gamma, Vlissides, Johnson, and Helm
 ----
@@ -131,9 +131,9 @@ We all make the same mistake here: we push (or at least accept) a culture in whi
 
 Programming languages, architectural patterns, algorithms. Those are all tools to implement solutions, they are not the solutions. You should learn them, down to the most minute details if you can, but never put them on the table before you understood the problem.
 
-Alexis Carrel said, "A few observation and much reasoning lead to error; many observations and a little reasoning to truth."[footnote](carrel) The advice that I take from the French Nobel Prize winner is: what is in front of you has to be observed deeply to find out its real nature. What things are is much more important than what we think they are and how we think we should treat them ("reasoning"). And what things are, if observed properly, will also reveal ways to interact with them, to manipulate them, to solve them.
+Alexis Carrel said, "A few observation and much reasoning lead to error; many observations and a little reasoning to truth."[*footnote](carrel) The advice that I take from the French Nobel Prize winner is: what is in front of you has to be observed deeply to find out its real nature. What things are is much more important than what we think they are and how we think we should treat them ("reasoning"). And what things are, if observed properly, will also reveal ways to interact with them, to manipulate them, to solve them.
 
-[footnote, carrel]
+[*footnote, carrel]
 ----
 _Réflexions sur la vie_, Paris, 1952
 ----

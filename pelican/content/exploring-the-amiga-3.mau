@@ -227,7 +227,7 @@ What we are really interested in, at this point, is where the address of this st
 
 The structure is at address `0x030c` and we are looking for and instruction like `lea 0x30c(pc),ax`, where `ax` is one of the address registers `a0`-`a7`. Loading the address of a table in a register is the standard way to loop on the table to modify it or to copy the bytes somewhere. It was interesting to discover why this is the preferred way to do it
 
-[callout]
+[*callout]
 ----
 The 68000 does not allow you to execute a MOVE instruction with a destination relative to the program counter (PC). In the view of the 68000 designers, code should not patch itself. If you must change a table in the middle of code, you must point to it with an instruction like LEA TABLE(PC),An and then alter it through An. (Self-modifying code is especially bad for 68000 programs that may someday run on the 68020, because the 68020's instruction cache normally assumes that code is pure.
 

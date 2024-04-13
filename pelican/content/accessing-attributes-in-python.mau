@@ -83,7 +83,7 @@ When you try to change the value of an attribute (you _write_ the attribute) the
 'David Carroll Eddings'
 ----
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 
@@ -241,7 +241,7 @@ To find a good use for `__getattr__()` and `getattr()` we need to step into some
 
 Both `getattr()` and `__getattr__()` have their counterpart to manage writing access, namely `setattr()` and `__setattr__()`.
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 

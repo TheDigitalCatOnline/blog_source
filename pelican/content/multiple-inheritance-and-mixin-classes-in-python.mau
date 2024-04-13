@@ -237,7 +237,7 @@ So, while with single-parent inheritance the rules are straightforward, with mul
 
 Not at all! There are solutions to this problem, as we will see shortly, but this further level of intricacy makes multiple inheritance something that doesn't fit easily in a design and has to be implemented carefully to avoid subtle bugs. Remember that inheritance is an automatic delegation mechanism, as this makes what happens in the code less evident. For these reasons, multiple inheritance is often depicted as scary and convoluted, and usually given some space only in the advanced OOP courses, at least in the Python world. I believe every Python programmer, instead, should familiarise with it and learn how to take advantage of it.
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 
@@ -549,7 +549,7 @@ Here, the MRO or `LimitSizeButton` is `(<class '__main__.LimitSizeButton'>, <cla
 
 Remember that in Python, you are never forced to call the parent's implementation of a method, so the mixin here might also stop the dispatching mechanism if that is the requirement of the business logic of the new object.
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 

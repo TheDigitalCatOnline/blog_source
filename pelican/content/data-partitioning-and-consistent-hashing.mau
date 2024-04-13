@@ -13,7 +13,8 @@ My interest in partitioning dates back to 2015 when I was following courses at t
 
 The topic of distributed storage and data processing is arguably rich and complicated, so while I will try to give a broader context to the concepts that I will introduce, I by no means intend to write a comprehensive guide to the subject matter. The audience of this post is developers who do not know what partitioning and consistent hashing are and want to take their first step into those topics.
 
-[infobox, title="Code syntax"]
+. Code syntax
+[*infobox]
 ----
 You will find some code examples mentioned in the post, which are written using the Python notation. If you are not familiar with the language, these are the main rules
 

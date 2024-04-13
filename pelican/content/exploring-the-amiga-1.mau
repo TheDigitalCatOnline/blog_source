@@ -115,7 +115,7 @@ This means that, generally speaking, all the addresses we use when we branch to 
 
 The Motorola 68k calls this addressing mode _Program Counter Indirect with Displacement Mode_. Its description contained in the Programmer's Reference Manual is
 
-[callout]
+[*callout]
 ----
 In this mode, the operand is in memory. The address of the operand is the sum of the address in the program counter (PC) and the sign-extended 16-bit displacement integer in the extension word. The value in the PC is the address of the extension word.
 
@@ -158,7 +158,7 @@ The value is the two's complement representation of the decimal `-90`, and since
 
 The fact that the PC is pointing at the address might be overlooked. The manual says
 
-[callout]
+[*callout]
 ----
 The value in the PC is the address of the extension word.
 (2.2.11, page 2-13)

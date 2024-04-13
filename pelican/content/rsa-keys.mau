@@ -722,7 +722,7 @@ second_prime_number = key.q
 q_inv_crt = key.u
 ----
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 

@@ -8,7 +8,7 @@
 :pelican.image:clean-architectures
 :pelican.summary:How to create software that can be easily changed and adapted, following the clean architecture principles
 
-:TIP:admonition,tip,lightbulb
+::defblock:tip,*admonition,label,class=tip,icon=lightbulb
 
 In 2015 I was introduced by my friend [link](https://github.com/gekorob,"Roberto Ciatti") to the concept of Clean Architecture, as it is called by Robert Martin. The well-known Uncle Bob talks a lot about this concept at conferences and wrote some very interesting posts about it. What he calls "Clean Architecture" is a way of structuring a software system, a set of consideration (more than strict rules) about the different layers and the role of the actors in it.
 
@@ -46,7 +46,7 @@ The domain in which the web framework operates is that of the HTTP protocol, so 
 
 The business logic is an important concept in system design. You are creating a system because you have some knowledge that you think might be useful to the world, or at the very least marketable. This knowledge is, at the end of the day, a way to process data, a way to extract or present data that maybe others don't have. A search engine can find all the web pages that are related to the terms in a query, a social network shows you the posts of people you follow and sorts them according to a specific algorithm, a travel company finds the best options for your journey between two locations, and so on. All these are good examples of business logic.
 
-[{TIP},"Business logic"]
+[*tip,"Business logic"]
 ----
 Business logic is the specific algorithm or process that you want to implement, the way you transform data to provide a service. It is the most important part of the system.
 ----
@@ -55,7 +55,7 @@ The use case implements a very specific part of the whole business logic. In thi
 
 Why can't the web framework do it? Well, the main purpose of a good system architecture is to _separate concerns_, that is to keep different responsibilities and domains separated. The web framework is there to process the HTTP protocol, and is maintained by programmers that are concerned with that specific part of the system, and adding the business logic to it mixes two very different fields.
 
-[{TIP},"Separation of concerns"]
+[*tip,"Separation of concerns"]
 ----
 Different parts a system should manage different parts of the process. Whenever two separate parts of a system work on the same data or the same part of a process they are _coupled_. While coupling is unavoidable, the higher the coupling between two components the harder is to change one without affecting the other.
 ----
@@ -66,7 +66,7 @@ In the example that we are discussing here, the use case needs to fetch all the 
 
 So, the information that the use case wants to process is stored somewhere. Let's call this component _storage system_. Many of you probably already pictured a database in your mind, maybe a relational one, but that is just one of the possible data sources. The abstraction represented by the storage system is: anything that the use case can access and that can provide data is a source. It might be a file, a database (either relational or not), a network endpoint, or a remote sensor.
 
-[{TIP},"Abstraction"]
+[*tip,"Abstraction"]
 ----
 When designing a system, it is paramount to think in terms of abstractions, or building blocks. A component has a role in the system, regardless of the specific implementation of that component. The higher the level of the abstraction, the less detailed are the components. Clearly, high-level abstractions don't consider practical problems, which is why the abstract design has to be then implemented using specific solutions or technologies.
 ----
@@ -81,7 +81,7 @@ How does the use case connect with the storage system? Clearly, if we hard code 
 
 For example, let's assume the use case called directly a specific Python library to access PostgreSQL such as [link](https://www.psycopg.org/,psycopg). This would couple the use case with that specific source, and a change of database would result in a change of its code. This is far from being ideal, as the use case contains the business logic, which has not changed moving from one database system to the other. Parts of the system that do not contain the business logic should be treated like implementation details.
 
-[{TIP},"Implementation detail"]
+[*tip,"Implementation detail"]
 ----
 A specific solution or technology is called a _detail_ when it is not central to the design as a whole. The word doesn't refer to the inherent complexity of the subject, which might be greater than that of more central parts.
 ----
@@ -92,12 +92,12 @@ How can we avoid strong coupling? A simple solution is called _inversion of cont
 
 Inversion of control happens in two phases. First, the called object (the database in this case) is wrapped with a standard interface. This is a set of functionalities shared by every implementation of the target, and each interface translates the functionalities to calls to the specific language[footnote](language) of the wrapped implementation.
 
-[footnote, language]
+[*footnote, language]
 ----
 The word _language_, here, is meant in its broader sense. It might be a programming language, but also an API, a data format, or a protocol.
 ----
 
-[{TIP},"Inversion of control"]
+[*tip,"Inversion of control"]
 ----
 A technique used to avoid strong coupling between components of a system, that involves wrapping them so that they expose a certain interface. A component expecting that interface can then connect to them without knowing the details of the specific implementation, and thus being strongly coupled to the interface instead of the specific implementation.
 ----
@@ -162,7 +162,7 @@ The main immediate advantage of a layered architecture, however, is testability.
 
 We know that the Web framework receives an HTTP request [class]("1","callout") with a specific target and a specific query string, and that it has to call [class]("2","callout") a method on the use case passing specific parameters. When the use case returns data [class]("3","callout"), the Web framework has to convert that into an HTTP response [class]("4","callout"). Since this is a test we can have a fake use case, that is an object that just mimics what the use case does without really implementing the business logic. We will then test that the Web framework calls the method [class]("2","callout") with the correct parameters, and that the HTTP response [class]("4","callout") contains the correct data in the proper format, and all this will happen without involving any other part of the system.
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 

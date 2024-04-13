@@ -286,7 +286,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 * [link](https://flask-sqlalchemy.palletsprojects.com/en/2.x/,"Flask-SQLAlchemy") - A Flask extension to work with SQLAlchemy
 * [link](https://docs.sqlalchemy.org/en/13/dialects/postgresql.html,"SQLAlchemy and PostgreSQL") - The Python SQL Toolkit and ORM
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 
@@ -1328,7 +1328,7 @@ You can also open your browser and head to [link]("http://localhost:5000/users")
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec,"browse the files").
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 

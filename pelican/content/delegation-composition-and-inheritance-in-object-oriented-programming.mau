@@ -21,7 +21,7 @@ These actors have a state, the data, and give access to it through an interface:
 
 Alan Kay, in his "The Early History of Smalltalk", says
 
-[callout]
+[*callout]
 ----
 In computer terms, Smalltalk is a recursion on the notion of computer itself. Instead of dividing "computer stuff" into things each less strong than the whole — like data structures, procedures, and functions which are the usual paraphernalia of programming languages — each Smalltalk object is a recursion on the entire possibilities of the computer. Thus its semantics are a bit like having thousands and thousands of computers all hooked together by a very fast network.
 ----
@@ -34,7 +34,7 @@ In this post, I want to focus on the second of the pillars of object-oriented pr
 
 For the rest of this post, I will consider objects as mini computers and the system in which they live a "very fast network", using the words of Alan Kay. Data contained in an object is the state of the computer, its methods are the input/output devices, and calling methods is the same thing as sending a message to another computer through the network.
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 
@@ -345,7 +345,7 @@ You are incorrectly using composition when:
 
 Overall, code smells for inheritance are the need to override or delete attributes and methods, changes in one class affecting too many other classes in the inheritance tree, big classes that contain heavily unrelated methods. For composition: too many methods that just wrap methods of the contained instances, the need to pass too many arguments to methods, classes that are too empty and that just contain one instance of another class.
 
-[advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
+[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
 ----
 == First-class objects in Python
 

@@ -77,7 +77,8 @@ fn main() {
 
 We can run the code with `cargo run` or build it into a stand-alone executable with `cargo build`. This will compile the code in debug mode by default and put the executable in the directory `target/debug`. Cargo can be used to run tests as well (`cargo test`).
 
-[infobox, title="Cargo"]
+. Cargo
+[*infobox]
 ----
 Cargo [docs.rustoz]("cargo") is the Rust package manager and the default solution to manage dependencies, compile packages and in general to manage your code. It's highly recommended to learn at least the basics of this powerful tool.
 ----
@@ -88,7 +89,7 @@ Cargo [docs.rustoz]("cargo") is the Rust package manager and the default solutio
 
 Command line interfaces are typically not part of the classic TDD cycle, as they should be part of integration tests. Now, the definition that the Rust community uses for _integration tests_ is
 
-[quote]
+[*quote]
 ----
 Integration tests are external to your crate and use only its public interface in the same way any other code would. Their purpose is to test that many parts of your library work correctly together.
 ----
@@ -109,7 +110,8 @@ fn main() {
 }
 ----
 
-[infobox, title="Modules"]
+. Modules
+[*infobox]
 ----
 In Rust a module can be used directly as long as it is part of the current project. The standard library is clearly visible by default, while other modules have to be declared in the file `Cargo.toml`. It is then perfectly acceptable to write `let action = std::env::args()...`.
 
@@ -118,7 +120,8 @@ In Rust a module can be used directly as long as it is part of the current proje
 
 The method `nth` [docs.rust]("std/iter/trait.Iterator.html#method.nth") returns (not too surprisingly) the nth element of an iterator.
 
-[infobox, title="Iterators"]
+. Iterators
+[*infobox]
 ----
 The Rust documentation contains a very useful section on iterators [docs.rust]("/std/iter/index.html").
 
@@ -136,7 +139,8 @@ fn nth(&mut self, n: usize) -> Option<Self::Item>
 
 and it mentions `Option<Self::Item>` as the return type. The type `Option` provides a method `expect` [docs.rust]("/std/option/enum.Option.html#method.expect") that returns either the content of the `Some` value or panics, printing the given message in the backtrace.
 
-[infobox, title="Option"]
+. Option
+[*infobox]
 ----
 `Option` [docs.rust]("std/option/index.html") and `Result` [docs.rust]("std/result/index.html") are a versatile way to manage optional results (either something or nothing) and results (either something good or an error), and are among the most important structures to learn in Rust.
 ----
@@ -182,7 +186,8 @@ fn main() {
 
 Clap allows me to add long and short options as well, so later I will use it to specify the database file name. For now, however, this is enough.
 
-[infobox, title="derive"]
+. derive
+[*infobox]
 ----
 The attribute `derive` [docs.rust]("reference/attributes/derive.html") is another cornerstone of the language and is used everywhere. The machinery behind it is not trivial, but I recommend getting used to the syntax and the standard use cases.
 ----
@@ -208,7 +213,8 @@ mod tests {
 }
 ----
 
-[infobox, title="TDD"]
+. TDD
+[*infobox]
 ----
 TDD is one of my favourite methodologies and I'm happy to see that Rust allows me to follow it. I can't recommend TDD enough! The Rust book contains [docs.rust]("book/ch11-01-writing-tests.html", "a pretty detailed chapter") on how to write tests.
 ----
@@ -244,7 +250,8 @@ impl TodoList {
 }
 ----
 
-[infobox, title="struct and impl"]
+. struct and impl
+[*infobox]
 ----
 Rust is not an object-oriented programming language, so it uses plain structs to encapsulate data. The Rust book has [docs.rust]("book/ch05-01-defining-structs.html", "a full chapter") on `struct` and `impl`.
 ----
@@ -337,14 +344,16 @@ impl TodoList {
 
 And once again this code passes the test, so I consider it good enough.
 
-[infobox, title="self and Self"]
+. self and Self
+[*infobox]
 ----
 In Rust `self` is a keyword [docs.rust]("std/keyword.self.html") and not just a name as it happens in Python. Rust considers `self` of type `Self` [docs.rust]("std/keyword.SelfTy.html"), which is the type we are implementing in a `trait` or `impl` block.
 
 The code `fn add(&mut self, key: String) {` above is equivalent to `fn add(self: &mut Self, key: String) {`. However, `self` cannot be renamed to something like `foo`, as Rust is expecting a parameter with that specific name.
 ----
 
-[infobox, title="References and mutability"]
+. References and mutability
+[*infobox]
 ----
 I found confusing, at first, that in Rust we usually call `&mut` a _mutable reference_. In my head, I always translate it into a _reference to mutable data_ as this helps me to remember what I am doing here.
 
@@ -412,7 +421,8 @@ use std::collections::hash_map::Entry;
 
 Here, I'm basically checking if an entry for `key` is vacant (does not exist) and I create it only in that case. This code passes all tests.
 
-[infobox, title="if let"]
+. if let
+[*infobox]
 ----
 I consider `if let` [docs.rust]("book/ch06-03-if-let.html") a very powerful piece of syntax. I care only about one of the possible outcomes, so I don't want to waste time defining it in a full-fledged `match`.
 ----
@@ -485,7 +495,8 @@ impl TodoList {
 
 The method `ok_or` [docs.rust]("std/option/enum.Option.html#method.ok_or") converts an `Option` into a `Result`, so I just call `?` to propagate the error.
 
-[infobox, title="The question mark operator"]
+. The question mark operator
+[*infobox]
 ----
 The operator `?` is one of the best features of Rust, and it's explained in [docs.rust]("book/ch09-02-recoverable-errors-with-result.html", "this chapter") of the Rust Book. I find it such a simple yet extremely powerful way to deal with error propagation.
 ----
@@ -498,7 +509,8 @@ At this point I want to add the method `list` that allows me to see the items co
 
 This means that the output of the method should in my opinion be a tuple of iterators, one on the items with state "to be done" and one on the ones in state "done".
 
-[infobox, title="Iterators"]
+. Iterators
+[*infobox]
 ----
 Iterators are a big thing in Rust, and I can understand why as they definitely boost performances saving memory. The Rust book has [docs.rust]("book/ch13-02-iterators.html", "a chapter") on them, and there is clearly plenty of documentation for the [docs.rust]("std/iter/trait.Iterator.html", "relative trait").
 ----
@@ -647,7 +659,8 @@ match args.command.as_str() {
 }
 ----
 
-[infobox, title="match"]
+. match
+[*infobox]
 ----
 The `match` control flow construct is a blessing that comes directly from functional programming, where pattern matching is an important tool. The Rust book has [docs.rust]("book/ch06-02-match.html#the-match-control-flow-construct", "a chapter dedicated to it") and [docs.rust]("book/ch18-03-pattern-syntax.html", "a chapter on the pattern syntax").
 ----
@@ -701,7 +714,8 @@ fn main() {
 }
 ----
 
-[infobox, title="Option and Result"]
+. Option and Result
+[*infobox]
 ----
 It's paramount to learn how to convert `Option` [docs.rust]("std/option/enum.Option.html") into `Result` [docs.rust]("std/result/enum.Result.html") and vice versa, as well as how to convert a `Result` type into a different one. Being familiar with functions like `map_err` [docs.rust]("std/result/enum.Result.html#method.map_err") or `and` [docs.rust]("std/result/enum.Result.html#method.and") will drastically change the quality of your Rust code.
 ----

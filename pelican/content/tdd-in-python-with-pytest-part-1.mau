@@ -43,7 +43,7 @@ I guess you feel very sorry for the poor programmer. Apart from the aggressive a
 
 The classical [link](https://en.wikipedia.org/wiki/Sorites_paradox,"sorites paradox") may help to understand the issue. One of the standard formulations, taken from the Wikipedia page, is
 
-[callout]
+[*callout]
 ----
 1,000,000 grains of sand is a heap of sand (Premise 1)
 
@@ -190,7 +190,7 @@ E   ImportError: cannot import name 'SimpleCalculator' from 'simple_calculator.m
 
 No surprise here, actually, as we just tried to use something that doesn't exist. This is good, the test is showing us that something we suppose exists actually doesn't.
 
-[callout]
+[*callout]
 ----
 *TDD rule number 1:* Test first, code later
 ----
@@ -208,7 +208,7 @@ class SimpleCalculator:
 
 But, I hear you scream, this class doesn't implement any of the requirements that are in the project. Yes, this is the hardest lesson you have to learn when you start using TDD. The development of the code is ruled by the tests, not by the requirements. The requirements are used to write the tests, the tests are used to write the code. You shouldn't worry about something that is more than one level above the current one in this workflow.
 
-[callout]
+[*callout]
 ----
 *TDD rule number 2:* Add the reasonably minimum amount of code you need to pass the tests
 ----
@@ -415,7 +415,7 @@ The first test now fails because the new `add` method requires three arguments a
 
 When multiple tests fail it's easy to feel discomforted and lost. Where are you supposed to start fixing this? Well, one possible solution is to undo the previous change and to try a different solution, but in general you should try to get to a situation in which only one test fails.
 
-[callout]
+[*callout]
 ----
 *TDD rule number 3:* You shouldn't have more than one failing test at a time
 ----
@@ -573,7 +573,7 @@ Pay attention here, please. In TDD, a solution is not correct when it is beautif
 
 Part of the TDD methodology, then, deals with "refactoring", which means changing the code in a way that doesn't change the outputs, which in turns means that all your tests keep passing. Once you have a proper test suite in place, you can focus on the beauty of the code, or you can introduce smart solutions according to what the language allows you to do. We will discuss refactoring further later in this post.
 
-[callout]
+[*callout]
 ----
 *TDD rule number 4:* Write code that passes the test. Then refactor it.
 ----
@@ -753,7 +753,7 @@ In this case, however, we know why the test already passes. We implemented a sma
 
 So, after these considerations, we can be happy that the second test already passes.
 
-[callout]
+[*callout]
 ----
 *TDD rule number 5:* A test should fail the first time you run it. If it doesn't, ask yourself why you are adding it.
 ----
@@ -788,7 +788,7 @@ Running the test suite I can see that all the test pass, so my refactoring is co
 
 *Git tag:* [link](https://github.com/lgiordani/simple_calculator/tree/step-6-refactoring,step-6-refactoring)
 
-[callout]
+[*callout]
 ----
 *TDD rule number 6:* Never refactor without tests.
 ----
