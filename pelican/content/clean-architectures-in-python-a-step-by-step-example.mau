@@ -74,7 +74,7 @@ When designing a system, it is paramount to think in terms of abstractions, or b
 For simplicity's sake, let's use a relational database like Postgres in this example, as it is likely to be familiar to the majority of readers, but keep in mind the more generic case.
 
 . The storage
-[asciidoctor_classes=".text-center"]
+[alt_text="The storage"]
 << image:/images/cabook/figure03.svg
 
 How does the use case connect with the storage system? Clearly, if we hard code into the use case the calls to a specific system (e.g. using SQL) the two components will be _strongly coupled_, which is something we try to avoid in system design. Coupled components are not independent, they are tightly connected, and changes occurring in one of the two force changes in the second one (and vice versa). This also means that testing components is more difficult, as one component cannot live without the other, and when the second component is a complex system like a database this can severely slow down development.
