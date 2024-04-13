@@ -59,7 +59,7 @@ The first way to look at delegation is through the lenses of state sharing. As I
 
 When using inheritance, the child class shares its whole state with the parent class. Let's have a look at a simple example
 
-[source,python]
+[*source,python]
 ----
 class Parent:
     def __init__(self, value):
@@ -82,7 +82,7 @@ As you can see, `describe` is defined in `Parent` [class]("1","callout"), so whe
 
 Composition, on the other side, keeps the state completely private and makes the delegated object see only what is explicitly shared through message passing. A simple example of this is
 
-[source,python]
+[*source,python]
 ----
 class Logger:
     def log(self, value):
@@ -114,7 +114,7 @@ Another way to look at the dichotomy between inheritance and composition is that
 
 Let's see an example of this in action using inheritance
 
-[source,python]
+[*source,python]
 ----
 class Window:
     def __init__(self, title, size_x, size_y):
@@ -148,7 +148,7 @@ class TransparentWindow(Window):
 
 At this point we can instantiate and use `TransparentWindow`
 
-[source,python]
+[*source,python]
 ----
 >>> twin = TransparentWindow("Terminal", 640, 480, 80)
 >>> twin.info()
@@ -164,7 +164,7 @@ When we call `twin.info`, Python is running `TransparentWindow`'s implementation
 
 Composition is on the other end of the spectrum, as any delegation performed through composed objects has to be explicit. Let's see an example
 
-[source,python]
+[*source,python]
 ----
 class Body:
     def __init__(self, text):
@@ -190,7 +190,7 @@ class Page:
 
 When we instantiate a `Page` and call `info` everything works
 
-[source,python]
+[*source,python]
 ----
 >>> page = Page("New post", "Some text for an exciting new post")
 >>> page.info()
@@ -206,7 +206,7 @@ The third point of view from which you can look at delegation is that of the nat
 
 This difference in the nature of the relationship between actors in a delegation is directly mapped into inheritance and composition. When using inheritance, we implement the verb _to be_
 
-[source,python]
+[*source,python]
 ----
 class Car:
     def __init__(self, colour, max_speed):
@@ -227,7 +227,7 @@ Here, `SportsCar` _is_ a `Car`, it can be initialised in the same way and has th
 
 Composition, on the other hand, implements the verb _to have_ and describes an object that is "physically" made of other objects
 
-[source,python]
+[*source,python]
 ----
 class Employee:
     def __init__(self, name):
@@ -246,7 +246,7 @@ We can say that a company is the sum of its employees (plus other things), and w
 
 The last point of view that I want to explore is that of the entities involved in the delegation. When we discuss a theoretical delegation, for example saying "This Boeing 747 is a plane, thus it flies" we are describing a delegation between abstract, immaterial objects, namely generic "planes" and generic "flying objects".
 
-[source,python]
+[*source,python]
 ----
 class FlyingObject:
     pass
@@ -263,7 +263,7 @@ Since `Plane` and `FlyingObject` share the same underlying nature, their relatio
 
 When we use composition, instead, we are putting into play a delegation that is not valid for all objects of that type, but only for those that we connected. For example, we can separate gears from the rest of a bicycle, and it is only when we put together _that_ specific set of gears and _that_ bicycle that the delegation happens. So, while we can think theoretically at bicycles and gears, the actual delegation happens only when dealing with concrete objects.
 
-[source,python]
+[*source,python]
 ----
 class Gears:
     def __init__(self):
@@ -293,7 +293,7 @@ As you can see here, an instance of `Bicycle` contains an instance of `Gears` [c
 
 It is also possible, at least in Python, to have composition using pure classes, which is useful when the class is a pure helper or a simple container of methods (I'm not going to discuss here the benefits or the disadvantages of such a solution)
 
-[source,python]
+[*source,python]
 ----
 class Gears:
     @classmethod
@@ -366,7 +366,7 @@ I believe this is very true, so I think that when it comes to choosing between c
 
 Let's consider a quick example, bearing in mind that I'm only scratching the surface of something about which people write entire books. Let's pretend we are designing a web application that manages companies and their owners, and we started with the consideration that and `Owner`, well, _owns_ the `Company`. This is a clear composition relationship.
 
-[source,python]
+[*source,python]
 ----
 class Company:
     def __init__(self, name):
@@ -383,7 +383,7 @@ class Owner:
 
 Unfortunately, this automatically limits the number of companies owned by an `Owner` to one. If we want to relax that requirement, the best way to do it is to reverse the composition, and make the `Company` contain the `Owner`.
 
-[source,python]
+[*source,python]
 ----
 class Owner:
     def __init__(self, first_name, last_name):
@@ -403,7 +403,7 @@ As you can see this is in direct contrast with the initial modelling that comes 
 
 The code above is not satisfactory, though, as it initialises `Owner` every time we create a company, while we might want to use the same instance. Again, this is not mandatory, it depends on the data contained in the `Owner` objects and the level of consistency that we need. For example, if we add to the owner an attribute `online` to mark that they are currently using the website and can be reached on the internal chat, we don't want have to cycle between all companies and set the owner's online status for each of them if the owner is the same. So, we might want to change the way we compose them, passing an instance of `Owner` instead of the data used to initialise it.
 
-[source,python]
+[*source,python]
 ----
 class Owner:
     def __init__(self, first_name, last_name, online=False):
@@ -423,7 +423,7 @@ class Company:
 
 Clearly, if the class `Company` has no other purpose than having a name, using a class is overkill, so this design might be further reduced to an `Owner` with a list of company names.
 
-[source,python]
+[*source,python]
 ----
 class Owner:
     def __init__(self, first_name, last_name):
@@ -437,7 +437,7 @@ class Owner:
 
 Can we use inheritance? Now I am stretching the example to its limit, but I can accept there might be a use case for something like this.
 
-[source,python]
+[*source,python]
 ----
 class Owner:
     def __init__(self, first_name, last_name):
@@ -455,7 +455,7 @@ class Company(Owner):
 
 As I showed in the previous sections, though, this code smells as soon as we start adding something like the `email` address.
 
-[source,python]
+[*source,python]
 ----
 class Owner:
     def __init__(self, first_name, last_name, email):
@@ -482,7 +482,7 @@ Speaking of blurry separations, Python offers an interesting hook to its interna
 
 Let's have a look at what happens internally when we deal with classes that are linked through inheritance.
 
-[source,python]
+[*source,python]
 ----
 class Parent:
     def __init__(self, value):
@@ -506,7 +506,7 @@ This is a trivial example of an inheritance relationship between `Child` and `Pa
 
 Let's have a look at the internals of the two classes. `Parent.__dict__` is
 
-[source,python]
+[*source,python]
 ----
 mappingproxy({'__module__': '__main__',
               '__init__': <function __main__.Parent.__init__(self, value)>,
@@ -518,7 +518,7 @@ mappingproxy({'__module__': '__main__',
 
 and `Child.__dict__` is
 
-[source,python]
+[*source,python]
 ----
 mappingproxy({'__module__': '__main__',
               'is_even': <function __main__.Child.is_even(self)>,
@@ -533,7 +533,7 @@ As I mentioned before, however, there is a hook into this system that the langua
 
 An example can definitely clarify the matter.
 
-[source,python]
+[*source,python]
 ----
 class Parent:
     def __init__(self, value):
@@ -561,7 +561,7 @@ Because of the catch-all nature of `__getattr__`, we eventually have to raise an
 
 This opens the door to an interesting hybrid solution where we can compose objects retaining an automatic delegation mechanism.
 
-[source,python]
+[*source,python]
 ----
 class Parent:
     def __init__(self, value):
@@ -597,7 +597,7 @@ Now, this is very powerful, but is it also useful?
 
 I think this is not one of the techniques that will drastically change the way you write code in Python, but it can definitely help you to use composition instead of inheritance even when the amount of methods that you have to wrap is high. One of the limits of composition is that you are at the extreme spectrum of automatism; while inheritance is completely automatic, composition doesn't do anything for you. This means that when you compose objects you need to decide which methods or attributes of the contained objects you want to wrap, in order to expose then in the container object. In the previous example, the class `Child` might want to expose the attribute `value` and the method `info`, which would result in something like
 
-[source,python]
+[*source,python]
 ----
 class Parent:
     def __init__(self, value):

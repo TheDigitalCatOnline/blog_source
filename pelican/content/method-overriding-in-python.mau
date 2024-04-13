@@ -18,7 +18,7 @@ As for most OOP languages, in Python inheritance works through implicit delegati
 
 An example:
 
-[source, python]
+[*source, python]
 ----
 class Parent(object):
     def __init__(self):
@@ -33,7 +33,7 @@ class Child(Parent):
 
 As you can see the `Child` class is empty, but since it inherits from `Parent` Python takes charge of routing all method calls. So you may use the `get_value()` method of `Child` objects and everything works as expected.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> c = Child()
 >>> c.get_value()
@@ -42,7 +42,7 @@ As you can see the `Child` class is empty, but since it inherits from `Parent` P
 
 Indeed `get_value()` is not exactly part of the `Child` class as if it were defined in it
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> p = Parent()
 >>> c = Child()
@@ -98,7 +98,7 @@ Learn all you need to know to understand first-class citizenship in Python, the 
 
 In Python method overriding occurs simply defining in the child class a method with the same name of a method in the parent class. When you define a method in the object you make the latter able to satisfy that method call, so the implementations of its ancestors do not come in play.
 
-[source, python]
+[*source, python]
 ----
 class Parent(object):
     def __init__(self):
@@ -114,7 +114,7 @@ class Child(Parent):
 
 Now `Child` objects behave differently
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> c = Child()
 >>> c.get_value()
@@ -123,7 +123,7 @@ Now `Child` objects behave differently
 
 and taking a look inside the class we spot a difference
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> Parent.__dict__
 dict_proxy({'__module__': '__main__',
@@ -157,7 +157,7 @@ When you override you have to think if you want to filter the arguments for the 
 
 === An example of pre-filtering
 
-[source, python]
+[*source, python]
 ----
 import datetime
 
@@ -174,7 +174,7 @@ class TimestampLogger(Logger):
 
 The `TimestampLogger` object adds some information to the message string before calling the original implementation of its `log()` method.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> l = Logger()
 >>> l.log('hi!')
@@ -187,7 +187,7 @@ hi!
 
 === An example of post-filtering
 
-[source, python]
+[*source, python]
 ----
 import os
 

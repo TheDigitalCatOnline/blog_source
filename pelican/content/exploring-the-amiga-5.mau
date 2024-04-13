@@ -34,7 +34,7 @@ After a reset the processor initialises the Program Counter with the address sto
 
 The very first 8 bytes of the Kickstart ROM are
 
-[source]
+[*source]
 ----
 00000000: 1111
 00000002: 4ef9 00fc 00d2            jmp     0xfc00d2.l
@@ -42,7 +42,7 @@ The very first 8 bytes of the Kickstart ROM are
 
 and you can clearly see that the long word at address `0x4` is `00fc 00d2`. This actually corresponds to the address where the initial code of the ROM is
 
-[source]
+[*source]
 ----
 000000d2: 4ff9 0004 0000            lea     0x40000.l,sp
 ----
@@ -57,7 +57,7 @@ Exec manages memory and resources using [link](https://en.wikipedia.org/wiki/Lin
 
 The Exec library provides a nice structure to manage lists, `LH`. The structure is defined in `include_i/exec/lists.i`
 
-[source]
+[*source]
 ----
    STRUCTURE    LH,0
     APTR    LH_HEAD
@@ -72,7 +72,7 @@ The only two fields that this structure adds compared to the previous descriptio
 
 We need now to discover where Exec keeps the header for the memory list. Analysing the `ExecBase` structure contained in `include_i/exec/execbase.i` we find the following definitions
 
-[source]
+[*source]
 ----
 ******* System List Headers (private!) ********************************
 
@@ -95,7 +95,7 @@ Since ExecBase is a description of the structure of Exec once it will be install
 
 I took the code contained in `include_i/exec/execbase.i` and I computed the address of each field. The first column contains the relative address inside the structure (thus starting from `0x0`), while the second column contains the address relative to the Exec base address. As shown in the fourth post the `LN` and `LIB` structures fill the first 34 bytes, which is why the following starting address is `0x22`
 
-[source]
+[*source]
 ----
 0000 0022    UWORD   SoftVer ; kickstart release number (obs.)
 0002 0024    WORD    LowMemChkSum    ; checksum of 68000 trap vectors
@@ -190,7 +190,7 @@ According to this structure we expect to find the memory list header 322 bytes (
 
 It is not surprise indeed that the function `AllocMem` mentions it. This function is part of the Exec API that we explored in the third and fourth instalments. Following the same method described there I found the function at the address `0x17d0` in the Kickstart code
 
-[source]
+[*source]
 ----
 ; memoryBlock = AllocMem(byteSize, attributes)
 ; d0                     d0        d1
@@ -208,7 +208,7 @@ and in this initial part of the function we can clearly see the code that loads 
 
 The displacement `0x142` is also mentioned in a table towards the beginning of the code, and this is the part we are really interested in at the moment
 
-[source]
+[*source]
 ----
 ; Initialise list headers
 
@@ -249,7 +249,7 @@ This table is immediately followed by the table we found in the [link](\{filenam
 
 Let's comment line by line the code at `02b0`
 
-[source]
+[*source]
 ----
 ; Initialise list headers
 
@@ -266,14 +266,14 @@ Let's comment line by line the code at `02b0`
 000002d0: 60e2                      bra.b   0x2b4
 ----
 
-[source]
+[*source]
 ----
 000002b0: 43fa 0020                 lea     0x2d2(pc),a1
 ----
 
 First of all the code loads the absolute address of `0x2d2(pc)` in the `a1` register. This is exactly the beginning of the table, as shown above.
 
-[source]
+[*source]
 ----
 000002b4: 3019                      move.w  (a1)+,d0
 000002b6: 6700 0086                 beq.w   0x33e
@@ -281,14 +281,14 @@ First of all the code loads the absolute address of `0x2d2(pc)` in the `a1` regi
 
 The code then loads the first value of the table (`0142`) in `d0` and increments `a1`. This suggests that we are looking at a loop. The following instruction is indeed a comparison that jumps to `0x33e` is the value is `0`. You can easily see above that the table is terminated by a `0000`.
 
-[source]
+[*source]
 ----
 000002ba: 41f6 0000                 lea     (0,a6,d0.w),a0
 ----
 
 The register `a0` is then loaded with the effective address of Exec + `d0`. This means that we use the value we just read from the table as a pointer. For the first value, then, we are looking at `0x142` bytes after the beginning of the Exec library, exactly where we expected to find the Memory List header.
 
-[source]
+[*source]
 ----
 000002be: 2088                      move.l  a0,(a0)
 000002c0: 5890                      addq.l  #0x4,(a0)
@@ -296,7 +296,7 @@ The register `a0` is then loaded with the effective address of Exec + `d0`. This
 
 An empty linked list has the head pointing to the tail and the tail pointing to zero. To do this we set the content of that address `(a0)` to the address itself (`a0`), then we increment it by 4 making it point to the tail.
 
-[source]
+[*source]
 ----
 000002c2: 42a8 0004                 clr.l   0x4(a0)
 000002c6: 2148 0008                 move.l  a0,0x8(a0)
@@ -304,7 +304,7 @@ An empty linked list has the head pointing to the tail and the tail pointing to 
 
 The tail itself is then cleared and the tail predecessor is set to be the head.
 
-[source]
+[*source]
 ----
 000002ca: 3019                      move.w  (a1)+,d0
 000002cc: 1140 000c                 move.b  d0,0xc(a0)
@@ -312,7 +312,7 @@ The tail itself is then cleared and the tail predecessor is set to be the head.
 
 The code then fetches the next word from the table (`000a`) and puts it into a field 12 bytes (`0xc`) from the beginning of the structure, that is `LH_TYPE`. The possible values of this byte can be found in `include_i/exec/nodes.i`, where we find that the value `0xa` corresponds to `NT_MEMORY`.
 
-[source]
+[*source]
 ----
 ;------ Node Types for LN_TYPE
 
@@ -343,7 +343,7 @@ NT_EXTENDED     EQU 255
 
 There is only one instruction left
 
-[source]
+[*source]
 ----
 000002d0: 60e2                      bra.b   0x2b4
 ----
@@ -352,7 +352,7 @@ which jumps back to the beginning of this short piece of code. The procedure the
 
 The final content of the memory at `0142` will be
 
-[source]
+[*source]
 ----
 00000142: 0000 0146 ; LH_HEAD
 00000146: 0000 0000 ; LH_TAIL
@@ -364,7 +364,7 @@ And the same happens for the remaining 7 lists from `ResourceList` to `TaskWait`
 
 According to the values of `LN_TYPE` the list headers table is the following
 
-[source]
+[*source]
 ----
 000002d2: 0142 000a ; MemList (NT_MEMORY)
 000002d6: 0150 0008 ; ResourceList (NT_RESOURCE)

@@ -20,7 +20,7 @@ At a certain point during boot time Kickstart figures out the types of memory in
 
 The memory initialisation code is the following
 
-[source]
+[*source]
 ----
 00000380: 200c                      move.l  a4,d0
 00000382: 6724                      beq.b   0x3a8
@@ -50,7 +50,7 @@ The memory initialisation code is the following
 
 As I did in the previous post I will split the code in parts and replace some addresses with labels to try and make the routine more understandable
 
-[source]
+[*source]
 ----
 Check_expansion:
 00000380: 200c                      move.l  a4,d0
@@ -87,7 +87,7 @@ Add_chip:
 
 The two addresses `0x326` and `0x332` mentioned in the code contain the two zero-terminated strings `Chip Memory` and `Fast Memory`
 
-[source]
+[*source]
 ----
 ; ################################################################
 ; 'Chip Memory' string
@@ -124,7 +124,7 @@ The two addresses `0x326` and `0x332` mentioned in the code contain the two zero
 
 Let's analyse the code line by line.
 
-[source]
+[*source]
 ----
 Check_expansion:
 00000380: 200c                      move.l  a4,d0
@@ -133,7 +133,7 @@ Check_expansion:
 
 The first thing that Kickstart does is to check if `a4` contains a non-zero value, which signals that we have a memory expansion board available. If `a4` is zero the code jumps to the part that initialises chip memory only.
 
-[source]
+[*source]
 ----
 Add_expansion:
 00000384: 41ee 024c                 lea     0x24c(a6),a0
@@ -144,7 +144,7 @@ The code then loads two effective addresses. The first one is the first free mem
 
 The purpose of the code is to call the `AddMemList` routine, which adds the memory to the system free memory pool. It has the following prototype
 
-[source]
+[*source]
 ----
 size = AddMemList(size, attributes, pri, base, name)
 D0                D0    D1          D2   A0    A1
@@ -152,7 +152,7 @@ D0                D0    D1          D2   A0    A1
 
 where `size` is the size of the memory (bytes), `attributes` contains flags that identify memory attributes, `pri` is the priority of the memory, `base` is the base address of the new area and `name` is a name for this list.
 
-[source]
+[*source]
 ----
 0000038c: 7400                      moveq   #0,d2
 0000038e: 323c 0005                 move.w  #0x5,d1
@@ -160,7 +160,7 @@ where `size` is the size of the memory (bytes), `attributes` contains flags that
 
 The code then prepares the registers for the `AddMemList` call. It gives this memory priority `0` and sets the `attributes` flags to `0x5`, which is `101`, or `PUBLIC` and `FAST` (see `include_i/exec/memory.i`).
 
-[source]
+[*source]
 ----
 00000392: 200c                      move.l  a4,d0
 00000394: 9088                      sub.l   a0,d0
@@ -172,7 +172,7 @@ The expansion memory base address is copied in `d0` (this is actually an unneede
 
 When the routine returns the code begins the initialisation of the chip memory. The chip memory has to be initialised in two different ways depending on the presence of the expansion memory, as the latter is preferably used by the CPU.
 
-[source]
+[*source]
 ----
 000003a0: 41f8 0400                 lea     0x400.w,a0
 000003a4: 7000                      moveq   #0,d0
@@ -185,14 +185,14 @@ Only_chip:
 
 If the initial test on the presence of the expansion memory fails the code jumps directly to `0x03a8`. If the expansion memory has already been initialised, instead, the CPU executes the code at `0x03a0` and then jumps to `0x03b2` (Renamed `Add_chip` here).
 
-[source]
+[*source]
 ----
 000003a0: 41f8 0400                 lea     0x400.w,a0
 ----
 
 So if there is expansion memory, Exec will be loaded there, which means that both it and the system stack are not in the chip memory. We can then add the whole space above `0x400` (more on this number in a later section)
 
-[source]
+[*source]
 ----
 000003a4: 7000                      moveq   #0,d0
 000003a6: 600a                      bra.b   Add_chip
@@ -202,7 +202,7 @@ Since the stack has already been created in fast memory we can store a 0 in `d0`
 
 If the expansion is not present, instead, Exec is installed in the chip memory, so we compute the base like we did for the fast memory.
 
-[source]
+[*source]
 ----
 Only_chip:
 000003a8: 41ee 024c                 lea     0x24c(a6),a0
@@ -211,7 +211,7 @@ Only_chip:
 
 Here we load the effective address of the first free location, `0x24c` bytes after the ExecBase address, and we specify the size of the memory as 6 Kbytes less than the maximum, to keep some space for the system stack. The size is negative as later the memory size will be added to the register.
 
-[source]
+[*source]
 ----
 Add_chip:
 000003b2: 323c 0003                 move.w  #0x3,d1
@@ -225,7 +225,7 @@ Add_chip:
 
 After this we repeat the same procedure that was described for the fast memory. The attributes are now `CHIP` and `PUBLIC` (`0x3`), the string at `0x326` is `Chip Memory`, and the priority is -10 (`-0xa`). The `a3` register already contains the end address of the chip memory, so we add it to `d0` and then subtract the first free location computed before to get the size of the memory. As happened before, the routine calls `AddMemList` at `0x1a26`.
 
-[source]
+[*source]
 ----
 000003c6: 224e                      movea.l a6,a1
 000003c8: 6100 107e                 bsr.w   0x1448
@@ -237,7 +237,7 @@ The last action of this part of the code is to call `AddLibrary` at `0x1448`. Th
 
 When we discussed the way the memory is initialised we discovered a "magic number" that Kickstart uses to find the first free location in memory
 
-[source]
+[*source]
 ----
 00000384: 41ee 024c                 lea     0x24c(a6),a0
 ----
@@ -248,7 +248,7 @@ It's easy to calculate this number. Here you find the annotated version of the `
 
 The structure is described in the `include_i/exec/execbase.i` include file, and I added the displacement in bytes of each field. The first column is the displacement in the `ExecBase` structure, while the second starts from `0x22`. The latter comes from the fact that the structure follows an `LN` structure and a `LIB` structure, described in the fourth instalment of this series.
 
-[source]
+[*source]
 ----
 0000 0022    UWORD   SoftVer
 0002 0024    WORD    LowMemChkSum
@@ -349,7 +349,7 @@ The Motorola 68000 architecture forces to reserve the first 1024 bytes (`0x400`)
 
 The Exec base address, however, is not `0x400` but `0x676`. As we already know the library is preceded by the jump table, and since Exec exports 105 functions we use `105*6 = 630` bytes for the jump vectors. Adding these 630 bytes to the first 1024 reserved for the exception vectors gives 1654 (`0x676`) as the base address of the library.
 
-[source]
+[*source]
 ----
         +---------------------------------------+
         | First free address                    |

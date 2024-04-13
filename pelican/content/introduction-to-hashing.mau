@@ -30,7 +30,7 @@ A typical algorithm used for this purpose is MD5, and the label computed by the 
 
 You can test MD5 on your own using the `md5sum` program that comes with all Linux distributions or other Unix-based systems. Open a terminal and run the following command
 
-[source, bash]
+[*source, bash]
 ----
 echo "This is a simple input string" | md5sum
 ----
@@ -66,7 +66,7 @@ It is also evident that **hash functions cannot produce unique results by design
 
 Let me give you a very simple example. Let's create a hash function that returns the first 32 bits (4 bytes) of the input, padding them with zeros if the input is shorter that 32 bits. I will use the ASCII standard to convert strings of characters into hexadecimal numbers, so every letter is represented by 1 byte.
 
-[source]
+[*source]
 ----
 "This is a string"
   |
@@ -133,7 +133,7 @@ Let's consider a system that uses a hash to speed up searches in some arrays. Fo
 
 Changing one single bit of the source data shall results in a **complete change** of the hash number. Compare for example the MD5 hash values of two similar strings
 
-[source]
+[*source]
 ----
 The quick brown fox jumps over the lazy dog
   |
@@ -186,7 +186,7 @@ Let me show you an example. As we saw above, a hash function that returns the fi
 
 However, if we are working on a set of strings like
 
-[source]
+[*source]
 ----
 A poor workman blames his tool
 Barking dogs seldom bite

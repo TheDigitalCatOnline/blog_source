@@ -92,7 +92,7 @@ Since at the moment we have 3 products with 4 environments each, this choice loo
 
 To simplify the schema, let's grant space for 20 products and group CIDRs by environment. This means we will have 20 CIDRs for Live environments, 20 for Staging, and so on. The assignment plan is then
 
-[source]
+[*source]
 ----
 10.0.0.0/16  reserved
 ...
@@ -127,7 +127,7 @@ As I mentioned, the initial CIDRs are reserved for future use, but we also kept 
 
 Should we create new products we will continue with the same pattern, e.g.
 
-[source]
+[*source]
 ----
 10.0.0.0/16  reserved
 ...
@@ -193,7 +193,7 @@ Let's have a deeper look at the figures. A `/16` space can be split into 128 `/2
 
 Here, I show a possible schema for the account `alligator-accounting-live` that is granted the space `10.10.0.0/16`.
 
-[source]
+[*source]
 ----
 NAME       CIDR           ADDRESSES                     NUM ADDRESSES
 
@@ -298,7 +298,7 @@ I assume the following files are all created in the same directory that I will c
 === VPC
 
 .`modules/vpc/vpc.tf`
-[source,terraform]
+[*source,terraform]
 ----
 resource "aws_vpc" "main" {
   cidr_block = "${var.cidr_prefix}.0.0/16"
@@ -310,7 +310,7 @@ resource "aws_vpc" "main" {
 ----
 
 .`modules/vpc/variables.tf`
-[source,terraform]
+[*source,terraform]
 ----
 variable "cidr_prefix" {
   description = "The first two octets of the CIDR, e.g. 10.10 (will become 10.10.0.0/16)"
@@ -326,7 +326,7 @@ variable "name" {
 When you call the module you will have to pass these two variables, e.g.
 
 .`alligator-accounting-live/vpc/main.tf`
-[source,terraform]
+[*source,terraform]
 ----
 module "vpc" {
   source = "../../modules/vpc"
@@ -339,7 +339,7 @@ module "vpc" {
 === Internet Gateway 
 
 .`modules/vpc/gateway.tf`
-[source,terraform]
+[*source,terraform]
 ----
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
@@ -353,7 +353,7 @@ resource "aws_internet_gateway" "main" {
 === Subnets
 
 .`modules/vpc/subnets.tf`
-[source,terraform]
+[*source,terraform]
 ----
 resource "aws_subnet" "nat" {
   vpc_id     = aws_vpc.main.id
@@ -451,7 +451,7 @@ resource "aws_subnet" "bastion" {
 We need to associate the public subnets with the Internet Gateway.
 
 .`modules/vpc/gateway.tf`
-[source,terraform]
+[*source,terraform]
 ----
 [...]
 
@@ -495,7 +495,7 @@ resource "aws_route_table_association" "bastion_to_igw" {
 We need a NAT to grant private networks access to the Internet.
 
 .`modules/vpc/nat.tf`
-[source,terraform]
+[*source,terraform]
 ----
 resource "aws_eip" "nat_gateway" {
   vpc = true
@@ -555,7 +555,7 @@ resource "aws_route_table_association" "private_c_to_nat" {
 As an optional step, you might want to create _subnet groups_ for RDS. In AWS, you can create RDS instances in public networks out of the box, but if you want to put them in a private network (and _you want_ to put them there) you need to build a subnet group. See [link]("https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html", "the documentation").
 
 .`modules/vpc/subnets.tf`
-[source,terraform]
+[*source,terraform]
 ----
 resource "aws_db_subnet_group" "rds_group" {
   name = "rds_private"

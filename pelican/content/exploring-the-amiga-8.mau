@@ -27,7 +27,7 @@ To branch according to the value of these flags we can use the `Bcc` family of i
 
 There are multiple families of instructions that use the CCR: `Bcc`, `DBcc`, `Scc`, and `TRAPcc`. The following table lists all the possible conditions we can test on the Motorola 68000 and their meaning
 
-[source]
+[*source]
 ----
 | Instruction | Full name        | Tested condition  | Notes                 |
 |-------------|------------------|-------------------|-----------------------|
@@ -54,7 +54,7 @@ The reason why the `T` and `F` conditions are not available for `Bcc` instructio
 
 Let's see an example of use with a standard comparison instruction: `cmp`
 
-[source]
+[*source]
 ----
 cmp.w   d0,d1
 beq.b   0x1522
@@ -72,7 +72,7 @@ The `beq` instruction on the second line checks only the `Z` flag, however, so w
 
 A less straightforward example involves `move`
 
-[source]
+[*source]
 ----
 move.w  0x1c(a1),d0
 beq.b   0x151e
@@ -98,7 +98,7 @@ If the list we are managing is a singly linked list, where each node points to t
 
 The following drawing is a simple representation of what happens in the Kickstart code when the `Enqueue` function is executed. `Ins` is the node we want to insert, `Pred` is the node after which we will insert `Ins`, and `Next` is the node before which we will insert `Ins`.
 
-[source]
+[*source]
 ----
                                   TAILPRED  TAIL
                                      |       |
@@ -119,7 +119,7 @@ As you can see there are several pointers that need to be changed. Both the `LN_
 
 `Enqueue` has a very simple prototype
 
-[source]
+[*source]
 ----
 Enqueue(list, node)
         aO    a1
@@ -127,7 +127,7 @@ Enqueue(list, node)
 
 where `a0` and `a1` are pointers respectively to the list header and to the node we are going to insert. It is worth recalling how the list header status is at the time when the first insertion happens, that is when either the chip or expansion memory are added to the system memory pool, managed through `MemList`. The latter is a list header `LH` structure and the actual values are the following
 
-[source]
+[*source]
 ----
     0xe +-------+ 0x150
         |       |
@@ -144,7 +144,7 @@ where `a0` and `a1` are pointers respectively to the list header and to the node
 
 With this structure in mind, let's dive into the source code of `Enqueue`. The function is defined at `0xfc1670`
 
-[source]
+[*source]
 ----
 00001670: 1229 0009                 move.b  0x9(a1),d1
 00001674: 2010                      move.l  (a0),d0
@@ -164,7 +164,7 @@ With this structure in mind, let's dive into the source code of `Enqueue`. The f
 
 And it can be roughly divided into three sections, according to the internal jumps.
 
-[source]
+[*source]
 ----
 Init:
 00001670: 1229 0009                 move.b  0x9(a1),d1
@@ -193,7 +193,7 @@ As I did for other functions in the previous articles, I'm going to dissect this
 
 === Init
 
-[source]
+[*source]
 ----
 Init:
 00001670: 1229 0009                 move.b  0x9(a1),d1
@@ -208,7 +208,7 @@ Putting aside the intricacies of the addressing modes, the second line stores th
 
 === FindPos
 
-[source]
+[*source]
 ----
 FindPos:
 00001676: 2040                      movea.l d0,a0
@@ -224,7 +224,7 @@ If the list contains at least one node, `d0` contains its address. But if the li
 
 === InsertNode
 
-[source]
+[*source]
 ----
 InsertNode:
 00001682: 2028 0004                 move.l  0x4(a0),d0
@@ -238,7 +238,7 @@ InsertNode:
 
 In either case, when we reach the tail or when the priority of the next node is lower than the one of the new node, we reach `InsertNode`. At this point `a0` points to `Next` and we can access `Pred` through `0x4(a0)` (that is `LN_SUCC` of `Next`).
 
-[source]
+[*source]
 ----
 00001682: 2028 0004                 move.l  0x4(a0),d0
 00001686: 2149 0004                 move.l  a1,0x4(a0)
@@ -253,7 +253,7 @@ This first stores the aforementioned address of `Pred` in `d0`, then replaces it
 
 This moves `a0`, the address of `Next`, into the first field of `Ins`, that is `Next` becomes the successor of `Ins`. The second line moves `d0` (the address of `Pred`) into the `LN_PRED` of `Ins`.
 
-[source]
+[*source]
 ----
 00001690: 2040                      movea.l d0,a0
 00001692: 2089                      move.l  a1,(a0)
@@ -268,7 +268,7 @@ Since we reviewed the code of `Enqueue` it makes sense to have a look at the opp
 
 Removing a node is simpler than adding it, as all we have to do is to make `Pred` point to `Next` and vice versa, so the function is much shorter. It's worth noting that while the function accepts the address of the node in `a1` the value in this register is eventually overwritten, so the address has to be kept elsewhere when the function is called.
 
-[source]
+[*source]
 ----
 0000163c: 2051                      movea.l (a1),a0
 0000163e: 2269 0004                 movea.l 0x4(a1),a1
@@ -285,7 +285,7 @@ In the [link](\{filename}exploring-the-amiga-6.mau,"6th post") of this series we
 
 The code of the function is at `fc1448`, and required some work before I was able to read it (see the section "Manual decompilation").
 
-[source]
+[*source]
 ----
 00001448: 41ee 017a                 lea 0x17a(a6),a0
 0000144c: 6100 0270                 bsr.w 0x16be
@@ -303,7 +303,7 @@ The following lines call the protected version of `Enqueue` and `SumLibrary`, af
 
 When I was following the call to `AddLibrary` from the main body of Kickstart I was surprised to find this code
 
-[source]
+[*source]
 ----
 00001446: 0000 41ee                 ori.b   #-0x12,d0
 0000144a: 017a 6100                 bchg    d0,0x754c(pc)
@@ -315,7 +315,7 @@ which at first glance doesn't look like a basic function, as the instructions ar
 
 When you try to manually decompile some machine code you need a cheat sheet and the processor manual (see the resources section), which can help you to quickly track down the meaning of the single bits. The values we are interested in are
 
-[source]
+[*source]
 ----
 00001448: 41ee
 0000144a: 017a
@@ -328,7 +328,7 @@ When you try to manually decompile some machine code you need a cheat sheet and 
 
 since `fc1456` is listed as the address of the `RemLibrary` function. The binary representation of these values is
 
-[source]
+[*source]
 ----
 00001448: 0100 0001 1110 1110
 0000144a: 0000 0001 0111 1010
@@ -347,7 +347,7 @@ Both instructions use the following 3 bits to specify a register (`An` for `lea`
 
 The three bits after `0100` are `000`, which translates to `a0` as a target. The last 6 bits are the addressing mode and the register, and the cheat sheet tells us that `101 110` corresponds to Address Register Indirect with Displacement Mode on `a6`. `101` is labelled as `(d16, An)`, while `110` is the number 6. The following word is thus the `d16` displacement from `a6`, which means that `41ee 017a` translates to ` lea 0x17a(a6),a0`.
 
-[source]
+[*source]
 ----
 
 lea   a0   (d16,An)         0x17a
@@ -363,7 +363,7 @@ lea   a0   (d16,An)         0x17a
 
 The second instruction starts at `0x144c` with `0110`, which is the signature of all the branch commands: `bra`, `bsr`, and all the condition-based ones like `bgt`, `blt`, and so on. Since the following 4 bits are `0001` we know this is a `bsr`, branch to subroutine. Now, in this instruction the 8 least significant bits tell us what the displacement is, and thus the type of the operand (Programmer's Manual, section 4-59, page 163). In this case they are all `0`, which means a word displacement, which is in the next 16 bits. Pay attention that, as we discussed for `lea` in the [link](\{filename}exploring-the-amiga-1.mau,"first post") the Program Counter contains the address of the first displacement word. In this case the displacement is `0x270` at address `0x144e`, so the branch address is the sum of the two, that is `0x16be`.
 
-[source]
+[*source]
 ----
 
    bsr   displacement
@@ -379,7 +379,7 @@ The second instruction starts at `0x144c` with `0110`, which is the signature of
 
 The third instruction is again a `bsr` and following the same process we find out that the branch address is the sum between `0x82` and `0x1452`, that is `0x14d4`.
 
-[source]
+[*source]
 ----
 
    bsr   displacement
@@ -395,7 +395,7 @@ The third instruction is again a `bsr` and following the same process we find ou
 
 The final instruction is an `rts`, as we expected, and as the decompiler correctly told us. The disassembled code is then what we used in the previous section
 
-[source]
+[*source]
 ----
 00001448: 41ee 017a                 lea 0x17a(a6),a0
 0000144c: 6100 0270                 bsr.w 0x16be

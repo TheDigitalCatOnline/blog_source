@@ -33,7 +33,7 @@ On Linux you can both use the GCC compiler or install vasm. The latter uses the 
 
 To install the latest vasm you can run the following code
 
-[source]
+[*source]
 ----
 wget -q "http://sun.hasenbraten.de/vasm/release/vasm.tar.gz"
 tar xvf vasm.tar.gz # The file is not actually gzipped
@@ -49,7 +49,7 @@ The vbcc suite written by Volker Barthelmann contains a disassembler for the M68
 
 A disassembler is a handy tool that can reveal a lot about how a program works. You can install it with the following code
 
-[source]
+[*source]
 ----
 wget -q "http://sun.hasenbraten.de/~frank/projects/download/vdam68k.tar.gz"
 tar xvzf vdam68k.tar.gz 
@@ -71,7 +71,7 @@ You may want to rename the `Includes&Libs` directory to `Includes_Libs` to simpl
 
 I created a `asm.sh` helper script to simplify the development process
 
-[source,bash]
+[*source,bash]
 ----
 #!/bin/bash
 
@@ -82,14 +82,14 @@ ${BASE}/vasm/vasmm68k_mot -kick1hunks -Fhunkexe -I${BASE}/NDK_3.1/Include_Libs/i
 
 Don't forget to run `chmod 775 asm.sh` to make the script executable. Now run the following command
 
-[source,bash]
+[*source,bash]
 ----
 echo -e "loop:\n btst #6,\$bfe001\n bne loop\n rts\n" > test.asm && ./asm.sh test.asm
 ----
 
 This compiles a very small program that loops until you press the right mouse button. If everything has been correctly installed you should get the following output
 
-[source]
+[*source]
 ----
 vasm 1.8c (c) in 2002-2018 Volker Barthelmann
 vasm M68k/CPU32/ColdFire cpu backend 2.3b (c) 2002-2017 Frank Wille
@@ -101,7 +101,7 @@ CODE(acrx2):              12 bytes
 
 And running the `file` command should return the correct type
 
-[source]
+[*source]
 ----
 $ file test
 test: AmigaOS loadseg()ble executable/binary
@@ -124,7 +124,7 @@ In this mode, the operand is in memory. The address of the operand is the sum of
 
 The usual assembler syntax for this addressing mode is `(d16,PC)` or `d16(PC)`, where `d16` is a 16-bits displacement. The `lea` instruction, for example, supports this mode, so we can find code like
 
-[source]
+[*source]
 ----
 00000364: 41fa ffa6         lea     0x30c(pc),a0
 ----
@@ -139,14 +139,14 @@ A question may arise, then: why does the code show the address `0x30c`, which is
 
 In the example, the syntax `0x30c(pc)` doesn't mean "the line at `0x30c` from the current line", but "the line at `0x30c` *considering that* the current line is `0x0364`". Let's dig into the binary representation of the instruction to see how the processor receives it. The value `0x41faffa6` in binary form is 
 
-[source]
+[*source]
 ----
 01000001111110101111111110100110
 ----
 
 If we split it according to the Motorola 68k opcodes scheme (Programmer's Reference Manual, Section 8) we get
 
-[source]
+[*source]
 ----
 0100 000 111 111010 1111111110100110
 ^    ^       ^
@@ -178,7 +178,7 @@ The Exec master library is not different, but this library is loaded as part of 
 
 Many Amiga programmers knew (and know) the addresses by heart, which is fine since the Amiga OS promises not to change the order of the jump table among different versions of Exec. So, for example, the address of the `OpenLibrary` function can be found at `-552` bytes before the library base address, while `CloseLibrary` is at `-414`. To call the `OpenLibrary` function, then, you need the following code
 
-[source]
+[*source]
 ----
     move.l 4.w,a6   ; a6 = base address of Exec
     jsr -552(a6)    ; OpenLibrary()
@@ -188,7 +188,7 @@ The first instruction moves the value contained at address `0x4` into the `a6` r
 
 The `OpenLibrary` function, however, expects some parameters, as you can see on the documentation page `exec.library/OpenLibrary` ([link](http://amigadev.elowar.com/read/ADCD_2.1/Includes_and_Autodocs_3._guide/node0222.html,here)).
 
-[source]
+[*source]
 ----
 library = OpenLibrary(libName, version)
 D0                    A1       D0
@@ -196,7 +196,7 @@ D0                    A1       D0
 
 The pointer to the library name has to be in the register `a1` and the minimum accepted version in `d0`. The code becomes
 
-[source]
+[*source]
 ----
     move.l 4.w,a6        ; a6 = base address of Exec
     clr.l d0             ; 0 = accept all versions

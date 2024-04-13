@@ -42,7 +42,7 @@ So now, following the TDD methodology, I will write some tests that exploit thes
 
 The `SizeBinary` object shall support all the initialization options supported by `Binary`, but its main interface is different because when creating a `SizeBinary` we must be allowed to specify the size. The first tests are though pretty straightforward.
 
-[source, python]
+[*source, python]
 ----
 def test_size_binary_init_int():
     size_binary = SizeBinary(8, 6)
@@ -75,7 +75,7 @@ I will cover all the cases already covered for the `Binary` class. As you can se
 
 One of the requirements is to provide a method to split a `SizeBinary` object into two arbitrarily sized `Binary` objects. The tests are
 
-[source, python]
+[*source, python]
 ----
 def test_size_binary_split():
     size_binary8 = SizeBinary(8, "01010110")
@@ -101,7 +101,7 @@ As you can see the split shall be able to pad the resulting values if the number
 
 There are many techniques to represent negative numbers with binary digits, and there is no way to tell from a binary number neither if it is positive or negative nor which technique has been used. It is a matter of conventions into the system in use. We want to implement [link]("https://en.wikipedia.org/wiki/Ones'_complement", "one's complement") and [link]("https://en.wikipedia.org/wiki/Two's_complement", "two's complement"), which are described in detail in the linked Wikipedia articles. The tests to check the correct behaviour are
 
-[source, python]
+[*source, python]
 ----
 def test_size_binary_OC():
     # 6 = 0b00000110 -> 0b11111001
@@ -143,7 +143,7 @@ def test_size_binary_TC():
 
 The basic mathematical and logical operations are the same implemented for the `Binary` class. Some tests have been added to check what happens when performing operations between two `SizeBinary` with a different size. We expect the result to have the size of the bigger of the two operands.
 
-[source, python]
+[*source, python]
 ----
 def test_binary_addition_int():
     assert SizeBinary(8, 4) + 1 == SizeBinary(8, 5)
@@ -175,7 +175,7 @@ Also keep in mind that TDD assumes you write one test at a time and change the c
 
 Following my own advice my `SizeBinary` class inherits from `Binary`
 
-[source, python]
+[*source, python]
 ----
 from binary import Binary
 
@@ -191,7 +191,7 @@ We need to reimplement many of the special methods already implemented in the `B
 
 The initialization function shall store the bit length and initialize a flag to signal the overflow condition. Since I also want to have a `set()` function that changes the value I implement it and call it in the `__init__()` method.
 
-[source, python]
+[*source, python]
 ----
     def __init__(self, bits, value):
         self.bits = bits
@@ -217,7 +217,7 @@ With this code I get a surprising result of 37 passed tests, while 14 still refu
 
 This was done on purpose, to show you that writing tests is not something that automatically guarantees you to have correct code. As a matter of fact, in this case tests like
 
-[source, python]
+[*source, python]
 ----
 def test_binary_addition_int():
     assert SizeBinary(8, 4) + 1 == SizeBinary(8, 5)
@@ -229,7 +229,7 @@ Let us check why this happens. The `SizeBinary` object is also a `Binary` object
 
 Let us add some code to implement the correct comparision
 
-[source, python]
+[*source, python]
 ----
     def __eq__(self, other):
         return super().__eq__(other) and self.bits == other.bits
@@ -239,7 +239,7 @@ which adds a check on the number of bits to the check already made by the `Binar
 
 One simple thing to add is the right padding with zeros that shall be provided for input values that are shorter than the given number of bits
 
-[source, python]
+[*source, python]
 ----
     def __str__(self):
         s = super().__str__()
@@ -248,7 +248,7 @@ One simple thing to add is the right padding with zeros that shall be provided f
 
 And this simple addition lowers the count of failed tests from 35 to 30. Another small addition that satisfies 2 more tests is the splitting function, which shall return `SizeBinary` objects instead of `Binary` ones
 
-[source, python]
+[*source, python]
 ----
     def split(self, upper_bits, lower_bits):
         upper, lower = super().split(lower_bits)
@@ -259,7 +259,7 @@ As already explained we want to get the negative version of the number both with
 
 A very smart way to reverse all the n bits of a value x is to compute `(1 << n) - x - 1`. An example will show you that this works, avoiding long and boring mathematical explanations. We want to negate the number 1 represented as 8 bits ('00000001'). First we compute `1 << 8` which returns `100000000`, then we subtract the value 1 of the number which returns `1111111` and finally we subtract the constant 1, which returns `11111110`. Look and behold! So this is exactly what I will implement for my `oc()` function
 
-[source, python]
+[*source, python]
 ----
     def oc(self):
         return SizeBinary(self.bits, (1 << self.bits) - self._value - 1)
@@ -267,7 +267,7 @@ A very smart way to reverse all the n bits of a value x is to compute `(1 << n) 
 
 From the same boring mathematics tomes we may discover that the two's complement representation of a number is its one's complement version plus 1. So the implementation of `tc()` is straightforward
 
-[source, python]
+[*source, python]
 ----
     def tc(self):
         return self.oc() + 1
@@ -277,7 +277,7 @@ As a matter of fact this function doesn't make the relative test (`test_size_bin
 
 Right and left shifts are the same of the `Binary` class, except that the result shall fit into the given bits. So we may delegate them to the `Binary` class implementation
 
-[source, python]
+[*source, python]
 ----
     def __lshift__(self, pos):
         return SizeBinary(self.bits, super().__lshift__(pos))
@@ -292,7 +292,7 @@ Now it's time for some arithmetic and logic functions. Since the internal repres
 
 The problem with those functions is that if we mix binaries with different sizes we want to "promote" the smaller one, to that the result has the size of the bigger. To handle this situation I isolated some code in a helper function called `_max_and_convert()`
 
-[source, python]
+[*source, python]
 ----
     def _max_and_convert(self, other):
         try:
@@ -307,7 +307,7 @@ The problem with those functions is that if we mix binaries with different sizes
 
 It checks if the `other` argument has a `bits` attribute, otherwise converts it into a `SizeBinary`. Then it returns the converted argument and the greatest length between the latter and `self`. Using this function I can then implement some magic methods such as
 
-[source, python]
+[*source, python]
 ----
     def __add__(self, other):
         bits, sb_other = self._max_and_convert(other)
@@ -316,7 +316,7 @@ It checks if the `other` argument has a `bits` attribute, otherwise converts it 
 
 This template is used to implement `__add__()`, `__sub__()`, `__mul__()`, `__truediv__()`, `__and__()`, `__or__()`, `__xor__()`. The `__invert__()` method is simpler, missing the second argument
 
-[source, python]
+[*source, python]
 ----
     def __invert__(self):
         return SizeBinary(self.bits, super().__invert__())
@@ -324,7 +324,7 @@ This template is used to implement `__add__()`, `__sub__()`, `__mul__()`, `__tru
 
 With those functions I now have 49 successful tests and 2 still failing, namely `test_size_binary_to_binary` and `test_binary_slice`. The first one depends on the missing `to_binary()` method
 
-[source, python]
+[*source, python]
 ----
     def to_binary(self):
         return Binary(self)
@@ -332,7 +332,7 @@ With those functions I now have 49 successful tests and 2 still failing, namely 
 
 The second needs some consideration: slicing depends on the `__getitem__()` magic method, which is used also for the simple indexing, tested by `test_binary_get_bit` and `test_binary_negative_index`, for example. The requested behaviour of the `SizeBinary` class is to return a single character when indexing a single bit and a `SizeBinary` or the correct length when slicing. The following code handles both situations
 
-[source, python]
+[*source, python]
 ----
     def __getitem__(self, key):
         res = super().__getitem__(key)

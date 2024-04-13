@@ -24,7 +24,7 @@ Delegation was introduced in OOP as a way to reduce code duplication. When an ob
 
 Let's consider the example of code management website, clearly completely fictional and not inspired by any existing product. Let's assume we created the following hierarchy
 
-[source]
+[*source]
 ----
       assignable reviewable item
  (assign_to_user, ask_review_to_user)
@@ -41,7 +41,7 @@ Unfortunately, the use of inheritance over composition often leads to systems th
 
 Let's continue the example of the code management portal, and consider an `issue`, which is an item that we want to store in the system, but cannot be reviewed by a user. If we create a hierarchy like this
 
-[source]
+[*source]
 ----
     assignable reviewable item
  (assign_to_user, ask_review_to_user)
@@ -60,7 +60,7 @@ Let's continue the example of the code management portal, and consider an `issue
 
 we end up putting the features related to the review process in an object that shouldn't have them. The standard solution to this problem is that of increasing the depth of the inheritance hierarchy and to derive from the new simpler ancestor.
 
-[source]
+[*source]
 ----
    assignable item
   (assign_to_user)
@@ -84,7 +84,7 @@ we end up putting the features related to the review process in an object that s
 
 However, this approach stops being viable as soon as an object needs to inherit from a given class but not from the parent of that class. For example, an element that has to be reviewable but not assignable, like a `best practice` that we want to add to the site. If we want to keep using inheritance, the only solution at this point is to duplicate the code that implements the reviewable nature of the item (or the code that implements the assignable feature) and create two different class hierarchies.
 
-[source]
+[*source]
 ----
    assignable item              +-------->  reviewable item
   (assign_to_user)              |         (ask_review_to_user)
@@ -112,7 +112,7 @@ Multiple inheritance was then introduced in OOP, as it was clear that an object 
 
 The above situation can then be solved having `pull request` inherit from both the class that provides the assign feature and from the one that implements the reviewable nature. 
 
-[source]
+[*source]
 ----
    assignable item                          reviewable item
   (assign_to_user)                        (ask_review_to_user)
@@ -150,7 +150,7 @@ There is a more immediate problem in multiple inheritance, though. As it happens
 
 So, if your class `Child` inherits from parents `Parent1` and `Parent2`, and both provide the `__init__` method, which one should your object use?
 
-[source, python]
+[*source, python]
 ----
 class Parent1():
     def __init__(self):
@@ -170,7 +170,7 @@ class Child(Parent1, Parent2):
 
 Things can even get worse, as parents can have different signatures of the common method, for example
 
-[source, python]
+[*source, python]
 ----
 class Parent1:
     # This inherits from Ancestor but redefines __init__
@@ -192,7 +192,7 @@ class Child(Parent1, Parent2):
 
 The problem can be extended even further, introducing a common ancestor above `Parent1` and `Parent2`.
 
-[source, python]
+[*source, python]
 ----
 class Ancestor:
     # The common ancestor, defines its own __init__ method
@@ -220,7 +220,7 @@ class Child(Parent1, Parent2):
 
 As you can see, we already have a problem when we introduce multiple parents, and a common ancestor just adds a new level of complexity. The ancestor class can clearly be at any point of the inheritance tree (grandparent, grand-grandparent, etc.), the important part is that it is shared between `Parent1` and `Parent2`. This is the so-called diamond problem, as the inheritance graph has the shape of a diamond
 
-[source]
+[*source]
 ----
        Ancestor
         ^   ^
@@ -254,7 +254,7 @@ There is a lot to say about MRO and the underlying C3 linearisation algorithm, b
 
 So, as in the case of standard inheritance, this means that the first class in the list that implements a specific attribute will be the selected provider for that resolution. An example might clarify the matter
 
-[source,python]
+[*source,python]
 ----
 class Ancestor:
     def rewind(self):
@@ -313,7 +313,7 @@ In Python, when you override a method provided by an ancestor class, you have to
 
 When a class inherits from another we are ideally creating objects that keep the backward compatibility with the interface of the parent class, to allow a polymorphic use of them. This means that when we inherit from a class and override a method changing its signature we are doing something that is dangerous and, at least from the point of view of polymorphism, wrong. Have a look at this example
 
-[source, python]
+[*source, python]
 ----
 class GraphicalEntity:
     def __init__(self, pos_x, pos_y, size_x, size_y):
@@ -345,7 +345,7 @@ class Square(GraphicalEntity):
 
 Please note that `Square` changes the signature of both `__init__` and `resize`. Now, when we instantiate those classes we need to keep in mind the different signature of `__init__` in `Square`
 
-[source, python]
+[*source, python]
 ----
 r1 = Rectangle(100, 200, 15, 30)
 r2 = Rectangle(150, 280, 23, 55)
@@ -354,7 +354,7 @@ q1 = Square(300, 400, 50)
 
 We usually accept that an enhanced version of a class accepts different parameters when it is initialised, as we do not expect it to be polymorphic on `__init__`. Problems arise when we try to leverage polymorphism on other methods, for example resizing all `GraphicalEntity` objects in a list
 
-[source, python]
+[*source, python]
 ----
 for shape in [r1, r2, q1]:
     size_x = shape.size_x
@@ -380,7 +380,7 @@ Python doesn't provide support for mixins with any dedicated language feature, s
 
 Let's have a look at a simple example
 
-[source, python]
+[*source, python]
 ----
 class GraphicalEntity:
     def __init__(self, pos_x, pos_y, size_x, size_y):
@@ -411,7 +411,7 @@ Mixins cannot usually be too generic. After all, they are designed to add featur
 
 Thanks to the MRO, Python programmers can leverage multiple inheritance to override methods that objects inherit from their parents, allowing them to customise classes without code duplication. Let's have a look at this example
 
-[source, python]
+[*source, python]
 ----
 class GraphicalEntity:
     def __init__(self, pos_x, pos_y, size_x, size_y):
@@ -435,7 +435,7 @@ As you can see the `Button` class extends the `GraphicalEntity` one in a classic
 
 I might just override `__init__` in the new class
 
-[source, python]
+[*source, python]
 ----
 class GraphicalEntity:
     def __init__(self, pos_x, pos_y, size_x, size_y):
@@ -465,7 +465,7 @@ which performs the requested job, but strongly connects the feature of having a 
 
 The second option is that of isolating the features connected with having a single dimension in a mixin class, and add it as a parent for the new class
 
-[source, python]
+[*source, python]
 ----
 class GraphicalEntity:
     def __init__(self, pos_x, pos_y, size_x, size_y):
@@ -501,7 +501,7 @@ Please note that the position of the mixin is important as `super` follows the M
 
 If we defined `SquareButton` as
 
-[source, python]
+[*source, python]
 ----
 class SquareButton(Button, SingleDimensionMixin):
     pass
@@ -511,7 +511,7 @@ then the `__init__` method would first be provided by `Button`, and its `super` 
 
 Mixins are not used only when you want to change the object's interface, though. Leveraging `super` we can achieve interesting designs like
 
-[source, python]
+[*source, python]
 ----
 class GraphicalEntity:
     def __init__(self, pos_x, pos_y, size_x, size_y):
@@ -566,7 +566,7 @@ The example I chose can be found in the [link]("https://github.com/django/django
 
 As you might know, Django `View` class is the ancestor of all class-based views and provides a `dispatch` method that converts HTTP request methods into Python function calls ([link]("https://github.com/django/django/blob/3.0/django/views/generic/base.py#L89", "CODE")). Now, the `TemplateView` is a view that answers to a GET request rendering a template with the data coming from a context passed when the view is called. Given the mechanism behind Django views, then, `TemplateView` should implement a `get` method and return the content of the HTTP response. The code of the class is
 
-[source, python]
+[*source, python]
 ----
 class TemplateView(TemplateResponseMixin, ContextMixin, View):
     """
@@ -579,7 +579,7 @@ class TemplateView(TemplateResponseMixin, ContextMixin, View):
 
 As you can see `TemplateView` is a `View`, but it uses two mixins to inject features. Let's have a look at `TemplateResponseMixin`
 
-[source, python]
+[*source, python]
 ----
 class TemplateResponseMixin:
     [...]
@@ -595,7 +595,7 @@ I removed the code of the class as it is not crucial for the present discussion,
 
 It is clear that `TemplateResponseMixin` just adds to any class the two methods `get_template_names` and `render_to_response`. The latter is called in the `get` method of `TemplateView` to create the response. Let's have a look at a simplified schema of the calls:
 
-[source]
+[*source]
 ----
 GET request --> TemplateView.dispatch --> View.dispatch --> TemplateView.get --> TemplateResponseMixin.render_to_response
 ----

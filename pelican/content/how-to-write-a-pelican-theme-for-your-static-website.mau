@@ -23,7 +23,7 @@ Let's create a blog called The Analog Fox, following [link](https://docs.getpeli
 
 I created a virtual environment and installed Pelican as suggested, then run
 
-[source]
+[*source]
 ----
 mkdir theanalogfox
 cd theanalogfox
@@ -32,7 +32,7 @@ pelican-quickstart
 
 For this project I will only run the blog locally, so I didn't configure any specific way to publish it, neither properly set up a URL prefix. If you are about to create a real website please read Pelican's documentation about those settings.
 
-[source]
+[*source]
 ----
 > Where do you want to create your new web site? [.] 
 > What will be the title of this web site? The Analog Fox:@:
@@ -58,7 +58,7 @@ If you run `pelican -lr` now and visit [link]("http://localhost:8000") with your
 
 Before we venture into the jungle of Jinja templates it's worth creating some content. As this is a very boring activity I prepared a little script that you can run in the terminal.
 
-[source, bash]
+[*source, bash]
 ----
 #!/bin/bash
 
@@ -122,7 +122,7 @@ Unzip the template archive in a subdirectory of the blog directory called `futur
 
 Enter the theme directory and change the layout of the files to follow [link](https://docs.getpelican.com/en/latest/themes.html#structure,"Pelican's requirements"):
 
-[source]
+[*source]
 ----
 mv assets/ static
 mv images/ static/
@@ -133,7 +133,7 @@ mv *.html templates/
 At this point edit the file `pelicanconf.py` in the main directory of the blog, adding the variable `THEME`
 
 .`pelicanconf.py`
-[source, python]
+[*source, python]
 ----
 PATH = 'content'
 
@@ -149,7 +149,7 @@ If you refresh the blog page now you will see that the output doesn't even have 
 Let's learn the first piece of syntax adjusting the CSS and JS links, then, so that we can at least have a good output to look at. We need to change the path `assets/` with `{{ SITEURL }}/theme/`
 
 .`future-imperfect/templates/index.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
 <!DOCTYPE HTML>
 <!--
@@ -179,7 +179,7 @@ Let's learn the first piece of syntax adjusting the CSS and JS links, then, so t
 
 We also need to correctly link images. Change any occurrence of `images/` into `{{ SITEURL}}/theme/images/`, e.g.
 
-[source, html+jinja]
+[*source, html+jinja]
 ----
     <div class="meta">
       <time class="published" datetime="2015-11-01">November 1, 2015</time>
@@ -225,7 +225,7 @@ We actually already used Pelican's variables and Jinja templates when we prefixe
 The Pelican variable we are interested in is `SITENAME`, which has been initialised by the quickstart script as you can see in the configuration file
 
 .`pelicanconf.py`
-[source,python]
+[*source,python]
 ----
 SITENAME = "The Analog Fox"
 ----
@@ -233,7 +233,7 @@ SITENAME = "The Analog Fox"
 We need to replace the static text with this variable three times: in the tag `&lt;title&gt;`, in the navigation bar and in the header at the top of the sidebar.
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
 <html>
   <head>
@@ -274,7 +274,7 @@ We need to replace the static text with this variable three times: in the tag `&
 Pelican provides support even for the subtitle, but that wasn't filled in by the setup script for us, so we need to create the variable in the configuration file
 
 .`pelicanconf.py`
-[source,python]
+[*source,python]
 ----
 SITENAME = "The Analog Fox"
 SITESUBTITLE = "A great blog about old stuff"
@@ -283,7 +283,7 @@ SITESUBTITLE = "A great blog about old stuff"
 Once this is done we can insert the variable at the top of the sidebar, just under the title
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
         <section id="intro">
           <a href="#" class="logo"><img src="{{ SITEURL }}/theme/images/logo.jpg" alt="" /></a>
@@ -305,7 +305,7 @@ Pelican passes the whole configuration file to the template, together with the p
 For now, just to familiarise with the concept, you might try to add `TIMEZONE` under the subtitle
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
           <header>
             <h2>{{ SITENAME }}</h2>
@@ -325,7 +325,7 @@ Pelican has a native support for social links, as you can see from the `SOCIAL` 
 The section of the template that renders those buttons is
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
         <!-- Footer -->
         <section id="footer">
@@ -345,7 +345,7 @@ Lists are one of the most common patterns when writing templates, as they usuall
 As I mentioned, I created a new variable `CONTACTS`
 
 .`pelicanconf.py`
-[source,python]
+[*source,python]
 ----
 # Social widget
 SOCIAL = (
@@ -366,7 +366,7 @@ DEFAULT_PAGINATION = 3
 that is a list of tuples, each one including the title of the button, the name of the icon (Font Awesome), and the link itself. Now we can replace the snippet of code above with this
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
         <!-- Footer -->
         <section id="footer">
@@ -388,7 +388,7 @@ Now that we introduced loops and variables we have all the tools we need to work
 First of all, I reduced the static list of posts to a single one
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
       <!-- Main -->
       <div id="main">
@@ -433,7 +433,7 @@ Please note that your content will be slightly different as it has been randomly
 The list of Pelican variables we can access is available at [link](https://docs.getpelican.com/en/latest/themes.html#index-html) (variables for the page `index.html`) and [link](https://docs.getpelican.com/en/latest/themes.html#article) (attributes of `Article` objects).
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
         {% for article in articles %}:@:
         <!-- Post -->
@@ -470,7 +470,7 @@ Jinja filters are very powerful, and as you see I used them twice with dates to 
 
 Last, you can nest for loops in other for loops, as I did with tags. You can see the internal structure of tags [link]("https://docs.getpelican.com/en/latest/themes.html#author-category-tag", "in the documentation"). Please note that the string representation of tags (and other objects in Pelican) is the attribute `name`, so we might write
 
-[source,html+jinja]
+[*source,html+jinja]
 ----
               {% for tag in article.tags %}
               <li><a href="#">{{ tag }}</a></li>:@:
@@ -489,7 +489,7 @@ What we did in the previous section prints all the articles in the blog on the s
 
 Pelican fully supports it, and if you remember we set it up when we run `pelican-quickstart`. You can see the current number of articles per page in `pelicanconf.py`
 
-[source, python]
+[*source, python]
 ----
 DEFAULT_PAGINATION = 3
 ----
@@ -497,7 +497,7 @@ DEFAULT_PAGINATION = 3
 To leverage pagination we first need to replace the variable `articles` with `articles_page.object_list`
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
         {% for article in articles_page.object_list %}:@:
         <!-- Post -->
@@ -512,7 +512,7 @@ If you render the page in the browser now you'll see that it shows only the last
 
 To use pagination we also need to configure navigation buttons. The template already includes them after all the articles in the main body.
 
-[source,html+jinja]
+[*source,html+jinja]
 ----
         <!-- Pagination -->
         <ul class="actions pagination">
@@ -526,7 +526,7 @@ We have three different cases when it comes to pagination. The first page should
 We can achieve it with the following code
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
         <!-- Pagination -->
         <ul class="actions pagination">
@@ -553,7 +553,7 @@ Render the page in the browser and you will see that the "Next page" button lead
 The sidebar is usually the best place to show a fixed set of posts like latest ones. We can easily achieve this slicing the list of articles. To do this let's first reduce the number of mini posts to one, so that we can introduce a loop
 
 .`future-imperfect/templates/index.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
         <!-- Mini Posts -->
         <section>
@@ -576,7 +576,7 @@ The sidebar is usually the best place to show a fixed set of posts like latest o
 We can show the last 4 articles with this simple sintax
 
 .`future-imperfect/templates/index.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
         <!-- Mini Posts -->
         <section>
@@ -601,7 +601,7 @@ We can show the last 4 articles with this simple sintax
 which will print the same static article 4 times because we are not using Pelican's variables yet. Applying the same changes we introduced for the main list of articles we finally get
 
 .`future-imperfect/templates/index.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
         <!-- Mini Posts -->
         <section>
@@ -634,7 +634,7 @@ The images are stored in `content/images` and this is also an arbitrary decision
 Through the automated script that we used to generate content we wrote a specific metadata in each article, with the name of the relative image. For example
 
 .`content/post01.markdown`
-[source]
+[*source]
 ----
 Title: A sample article 01
 Date: 2021-03-01
@@ -649,7 +649,7 @@ Summary: Summary of post 01
 This shows you that you can add whatever metadata you want to your posts and have them loaded into the object `article`. To show the image we just need to load the correct file instead of the placeholder, both in the main list
 
 .`future-imperfect/templates/index.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
         {% for article in articles_page.object_list %}
         <!-- Post -->
@@ -683,7 +683,7 @@ This shows you that you can add whatever metadata you want to your posts and hav
 and in the sidebar
 
 .`future-imperfect/templates/index.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
         <!-- Mini Posts -->
         <section>
@@ -722,7 +722,7 @@ In the following section I will show you how to use the Jinja tags `extends` and
 Since we want to reuse some parts of the page we need to move them to a "common space". Create a new file called `future-imperfect/templates/base.html` and move the whole content of `index.html` into it. Then write this single statement in the now empty `index.html`
 
 .`future-imperfect/templates/index.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
 {% extends "base.html" %}
 ----
@@ -731,7 +731,7 @@ What we did is to tell Jinja that everything we do in `index.html` should happen
 
 The problem with this setup is that `base.html` doesn't have access to the variables that `index.html` has access to, as `base.html` is an arbitrary file and not something known to Pelican. Indeed the command `pelican -lr` that you are running in a terminal should give you this error
 
-[source,callouts="|"]
+[*source,callouts="|"]
 ----
 WARNING: Caught exception:
   | "'articles_page' is undefined".
@@ -742,7 +742,7 @@ Since that is something only `index.html` can provide we need to do something mo
 Grab the whole content of the `&lt;div id="main"&gt;` and move it in `index.html` wrapped in `{% block content %}`
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
 {% extends "base.html" %}
 
@@ -795,7 +795,7 @@ Grab the whole content of the `&lt;div id="main"&gt;` and move it in `index.html
 At the same time fill the empty space you left in `base.html` with a call for that block
 
 .`future-imperfect/templates/base.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
       <!-- Main -->
       <div id="main">
@@ -808,7 +808,7 @@ When this is done, reload the page and... nothing should have changed. Sorry, bu
 To see the benefit of what we did let's move on and create the page for the single article, `article.html`
 
 .`future-imperfect/templates/article.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
 {% extends "base.html" %}
 ----
@@ -816,7 +816,7 @@ To see the benefit of what we did let's move on and create the page for the sing
 As we said before `base.html` is supposed to be the common part of all pages, so `article.html` should start from that as well. To check how that page looks like now let's update the links from the articles in the main body. Open `index.html` and replace the URLs of each article
 
 .`future-imperfect/templates/index.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
 <article class="post">
   <header>
@@ -847,7 +847,7 @@ As we said before `base.html` is supposed to be the common part of all pages, so
 Now if you render the front page and click on the title of a post in the main column you will end up in the page dedicated to it, which has a worrying empty central column! Well, after all `article.html` extends `base.html` but doesn't provide anything for the block `content`, so let's fix this
 
 .`future-imperfect/templates/article.html`
-[source,html+jinja]
+[*source,html+jinja]
 ----
 {% extends "base.html" %}
 
@@ -891,7 +891,7 @@ Jinja provides the tag `include` that allows you to easily inject the content of
 Move the content of the mini posts section from `base.html` to a file called `templates/includes/latest_posts.html`
 
 .`templates/includes/latest_posts.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
 <!-- Mini Posts -->
 <section>
@@ -916,7 +916,7 @@ Move the content of the mini posts section from `base.html` to a file called `te
 And replace it with a call to `include` in `base.html`
 
 .`templates/includes/base.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
         <!-- Intro -->
         <section id="intro">
@@ -962,7 +962,7 @@ The two variables involved in this process are `SUMMARY_MAX_LENGTH` and `SUMMARY
 To see the summary in action let's open the last post (`post20.markdown`) and remove the line `Summary: Summary of post 20`. Then we need to adjust the code of the page to properly display the summary as content.
 
 .`templates/includes/index.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
 {% for article in articles_page.object_list %}
 <!-- Post -->
@@ -996,7 +996,7 @@ To see the summary in action let's open the last post (`post20.markdown`) and re
 In the article page, instead we want the content to be displayed, so we just need to remove the summary (which at this point is not a single line that can be easily displayed under the title.
 
 .`templates/includes/article.html`
-[source, html+jinja]
+[*source, html+jinja]
 ----
 {% block content %}
 <!-- Post -->

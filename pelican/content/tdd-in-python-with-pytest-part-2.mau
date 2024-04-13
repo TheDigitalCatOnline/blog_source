@@ -17,7 +17,7 @@ You can find the first post [link](\{filename}tdd-in-python-with-pytest-part-1.m
 The requirements state that there shall be a division function, and that it has to return a float value. This is a simple condition to test, as it is sufficient to divide two numbers that do not give an integer result
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_div_two_numbers_float():
     calculator = SimpleCalculator()
@@ -30,7 +30,7 @@ def test_div_two_numbers_float():
 The test suite fails with the usual error that signals a missing method. The implementation of this function is very simple as the operator `/` in Python performs a float division
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
 class SimpleCalculator:
     [...]
@@ -48,7 +48,7 @@ I already mentioned in the previous post that this is not a good requirement, an
 The test that comes from the requirement is simple
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_div_by_zero_returns_inf():
     calculator = SimpleCalculator()
@@ -60,7 +60,7 @@ def test_div_by_zero_returns_inf():
 
 And the test suite fails now with this message
 
-[source]
+[*source]
 ----
 __________________________ test_div_by_zero_returns_inf ___________________________
 
@@ -86,7 +86,7 @@ Note that when an exception happens in the code and not in the test, the pytest 
 We might implement two different solutions to satisfy this requirement and its test. The first one is to prevent `b` to be 0
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def div(self, a, b):
         if not b:
@@ -98,7 +98,7 @@ We might implement two different solutions to satisfy this requirement and its t
 and the second one is to intercept the exception with a `try/except` block
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def div(self, a, b):
         try:
@@ -120,7 +120,7 @@ Again, this is a requirement I made up just for the sake of showing you how do d
 Pytest provides a context manager named `raises` that runs the code contained in it and passes only if the given exception is produced by that code.
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 import pytest
 
@@ -135,7 +135,7 @@ def test_mul_by_zero_raises_exception():
 
 In this case, thus, pytest runs the line `calculator.mul(3, 0)`. If the method  doesn't raise the exception `ValueError` the test will fail. Indeed, if you run the test suite now, you will get the following failure
 
-[source]
+[*source]
 ----
 ________________________ test_mul_by_zero_raises_exception ________________________
 
@@ -154,7 +154,7 @@ which signals that the code didn't raise the expected exception.
 The code that makes the test pass needs to test if one of the inputs of the function `mul` is 0. This can be done with the help of the built-in function `all`, which accepts an iterable and returns `True` only if all the values contained in it are `True`. Since in Python the value `0` is not true, we may write
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def mul(self, *args):
         if not all(args):
@@ -192,7 +192,7 @@ Now, if you followed the posts coding along it is time to try to tackle a proble
 Let's start adding a test for requirement number 1
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_correct_average():
     calculator = SimpleCalculator()
@@ -205,7 +205,7 @@ def test_avg_correct_average():
 We feed the function `avg` a list of generic numbers, which average we calculated with an external tool. The first run of the test suite fails with the usual complaint about a missing function, and we can make the test pass with a simple use of `sum` and `len`, as both built-in functions work on iterables
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
 class SimpleCalculator:
     [...]
@@ -223,7 +223,7 @@ Here, `it` stands for iterable, as this function works with anything that suppor
 The second requirement mentions an upper threshold, but we are free with regards to the API, i.e. the requirement doesn't specify how the threshold is supposed to be specified or named. I decided to call the upper threshold parameter `ut`, so the test becomes
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_removes_upper_outliers():
     calculator = SimpleCalculator()
@@ -237,7 +237,7 @@ As you can see the parameter `ut=90` is supposed to remove the element `98` from
 
 The test suite fails because the function `avg` doesn't accept the parameter `ut`
 
-[source]
+[*source]
 ----
 _________________________ test_avg_removes_upper_outliers _________________________
 
@@ -253,7 +253,7 @@ tests/test_main.py:95: TypeError
 There are two problems now that we have to solve, as it happened for the second test we wrote in this project. The new `ut` argument needs a default value, so we have to manage that case, and then we have to make the upper threshold work. My solution is
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def avg(self, it, ut=None):
         if not ut:
@@ -273,7 +273,7 @@ The idea here is that `ut` is used to filter the iterable keeping all the elemen
 The lower threshold is the mirror of the upper threshold, so it doesn't require many explanations. The test is
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_removes_lower_outliers():
     calculator = SimpleCalculator()
@@ -286,7 +286,7 @@ def test_avg_removes_lower_outliers():
 and the code of the function `avg` now becomes
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def avg(self, it, lt=None, ut=None):
         if not lt:
@@ -311,7 +311,7 @@ The reason behind this is that you might get the expected behaviour for free, li
 The test for the fourth requirement is
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_upper_threshold_is_included():
     calculator = SimpleCalculator()
@@ -326,7 +326,7 @@ def test_avg_upper_threshold_is_included():
 while the test for the fifth one is
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_lower_threshold_is_included():
     calculator = SimpleCalculator()
@@ -347,7 +347,7 @@ Requirement number 6 is something that wasn't clearly specified in the project d
 The test that implements this requirement is
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_empty_list():
     calculator = SimpleCalculator()
@@ -359,7 +359,7 @@ def test_avg_empty_list():
 
 and the test suite fails with the following error
 
-[source,callouts="|"]
+[*source,callouts="|"]
 ----
 _______________________________ test_avg_empty_list _______________________________
 
@@ -384,7 +384,7 @@ simple_calculator/main.py:26: ValueError
 The function `min` that we used to compute the default lower threshold doesn't work with an empty list, so the code raises an exception. The simplest solution is to check for the length of the iterable before computing the default thresholds
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def avg(self, it, lt=None, ut=None):
         if not len(it):
@@ -410,7 +410,7 @@ As you can see the function `avg` is already pretty rich, but at the same time i
 The next requirement deals with the case in which the outlier removal process empties the list. The test is the following
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_manages_empty_list_after_outlier_removal():
     calculator = SimpleCalculator()
@@ -422,7 +422,7 @@ def test_avg_manages_empty_list_after_outlier_removal():
 
 and the test suite fails with a `ZeroDivisionError`, because the length of the iterable is now 0.
 
-[source,callouts="|"]
+[*source,callouts="|"]
 ----
 ________________ test_avg_manages_empty_list_after_outlier_removal ________________
 
@@ -457,7 +457,7 @@ simple_calculator/main.py:36: ZeroDivisionError
 The easiest solution is to introduce a new check on the length of the iterable
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def avg(self, it, lt=None, ut=None):
         if not len(it):
@@ -482,7 +482,7 @@ And this code makes the test suite pass. As I stated before, code that makes the
 After some attempts I found this solution
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def avg(self, it, lt=None, ut=None):
         _it = it[:]
@@ -508,7 +508,7 @@ which looks reasonably clean, and makes the whole test suite pass.
 The last requirement checks another boundary case, which happens when the list is empty and we specify one of or both the thresholds. This test will check that the outlier removal code doesn't assume the list contains elements.
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_manages_empty_list_before_outlier_removal():
     calculator = SimpleCalculator()
@@ -535,7 +535,7 @@ Second, this step shows an important part of the TDD workflow: checking corner c
 This test shows that the code doesn't manage zero-valued lower thresholds correctly
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_manages_zero_value_lower_outlier():
     calculator = SimpleCalculator()
@@ -548,7 +548,7 @@ def test_avg_manages_zero_value_lower_outlier():
 The reason is that the function `avg` contains a check like `if lt:`, which fails when `lt` is 0, as that is a false value. The check should be `if lt is not None:`, so that part of the function `avg` becomes
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
         if lt is not None:
             _it = [x for x in _it if x >= lt]
@@ -557,7 +557,7 @@ The reason is that the function `avg` contains a check like `if lt:`, which fail
 It is immediately clear that the upper threshold has the same issue, so the two tests I added are
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_manages_zero_value_lower_outlier():
     calculator = SimpleCalculator()
@@ -578,7 +578,7 @@ def test_avg_manages_zero_value_upper_outlier():
 and the final version of `avg` is
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def avg(self, it, lt=None, ut=None):
         _it = it[:]
@@ -610,7 +610,7 @@ These are interesting points, and he provides an implementation that solves them
 Dmitry adds a test to check that generators are supported
 
 .`tests/test_main.py`
-[source,python]
+[*source,python]
 ----
 def test_avg_accepts_generators():
     calculator = SimpleCalculator()
@@ -621,7 +621,7 @@ def test_avg_accepts_generators():
 His implementation of the function `avg()` passes that test and the previous ones we wrote
 
 .`simple_calculator/main.py`
-[source,python]
+[*source,python]
 ----
     def avg(self, it, lt=None, ut=None):
         count = 0

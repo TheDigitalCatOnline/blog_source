@@ -21,7 +21,7 @@ The package we are going to write will provide a class that represents binary nu
 
 A quick example of what the package shall do:
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b = Binary('0101110001')
 >>> hex(b)
@@ -40,7 +40,7 @@ A quick example of what the package shall do:
 
 Binary system is just a _representation_ of numbers with base 2, just like hexadecimal (base 16) and decimal (base 10). Python can already natively deal with different bases, even if internally numbers are always stored as binary integers (more precise as numbers with base 2<sup>30</sup> and each digit as a binary number). Let us check it
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> a = 5
 >>> a
@@ -59,7 +59,7 @@ Binary system is just a _representation_ of numbers with base 2, just like hexad
 
 As you can see Python understands some common bases out of the box, using the `0x` prefix for hexadecimal numbers and the `0b` for binary ones (and `0o`) for octals). However the number is always printed in its base-10 form (`5` in this case). This means however that a binary number cannot be indexed, since integers does not provide support for this operation
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> 0b101[0]
 Traceback (most recent call last):
@@ -69,7 +69,7 @@ TypeError: 'int' object is not subscriptable
 
 You can also use a different base when converting things to integers, through the `base` parameter
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> a = int('101', base=2)
 >>> a
@@ -97,7 +97,7 @@ Create and activate a Python virtual environment using your favourite tool. You 
 
 Once the virtual environment is activated, install Pytest with
 
-[source]
+[*source]
 ----
 $ pip install pytest
 ----
@@ -106,7 +106,7 @@ Then create a directory for the project and enter it. You are free to give it th
 
 First of all let's create two directories for code and tests
 
-[source, bash]
+[*source, bash]
 ----
 $ mkdir src
 $ touch src/__init__.py
@@ -116,7 +116,7 @@ $ touch tests/__init__.py
 
 Finally, let us check that everything is working correctly. Since there are no tests yet, Pytest should terminate without errors.
 
-[source, bash]
+[*source, bash]
 ----
 $ pytest
 ===================== test session starts =====================
@@ -133,7 +133,7 @@ where `[...]` will be filled with information about your execution environment.
 The approach used by Pytest is very straightforward: to test your library you just have to write some functions that use it. Those functions shall run without raising any exception; if a test (a function) runs without raising an exception it passes, otherwise it fails. Let us start writing a very simple test to learn the basic syntax. Create the file `tests/test_binary.py` and write in it the following code
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_first():
     pass
@@ -141,7 +141,7 @@ def test_first():
 
 If you run `pytest` again you shall obtain this result
 
-[source, bash]
+[*source, bash]
 ----
 $ pytest
 ===================== test session starts =====================
@@ -155,7 +155,7 @@ tests/test_binary.py .
 
 if you prefer (as I do) you may use the `-v` verbose switch to get detailed information about what tests have been executed
 
-[source, bash]
+[*source, bash]
 ----
 $ pytest -v
 ===================== test session starts =====================
@@ -172,7 +172,7 @@ By default Pytest looks for Python files whose name starts with `test_`, and thi
 The latter does nothing, so it runs without raising any exception and the test passes. Let us try to raise an exception
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_first():
     raise ValueError
@@ -180,7 +180,7 @@ def test_first():
 
 which gives the following output
 
-[source, bash]
+[*source, bash]
 ----
 $ pytest -v
 ===================== test session starts =====================
@@ -202,7 +202,7 @@ tests/test_binary.py:2: ValueError
 
 To easily write tests that raise exceptions when failing we may use the `assert` Python statement, which shall be followed by an expression. If the expression returns a true value, `assert` does nothing, otherwise it raises an `AssertionError` exception. Let us do a quick check in the Python console
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> assert True
 >>> assert False
@@ -226,7 +226,7 @@ So now we will pretend we have already developed our `Binary` class and write so
 === Initialisation
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 from src.binary import Binary
 
@@ -241,7 +241,7 @@ This is our first real test. First of all we import the class from the file `bin
 We want to be able to initialise a `Binary` with a wide range of values: bit strings (`'110'`), binary strings (`'0b110'`), hexadecimal strings (`'0x6'`), hexadecimal values (`0x6`), lists of integers (`[1,1,0]`) and list of strings (`['1','1','0']`). The following tests check all those cases
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_init_bitstr():
     binary = Binary("110")
@@ -276,7 +276,7 @@ def test_binary_init_strseq():
 Finally, let us check that our `Binary` class cannot be initialised with a negative number. I decided to represent negative numbers through the two's complement technique, which however requires a predefined bit length. So for simple binaries I just discard negative numbers.
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 import pytest
 
@@ -296,7 +296,7 @@ I want to check that my binary numbers can be correctly converted to integers (t
 Some examples (check the full code for the whole set of tests)
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_int():
     binary = Binary(6)
@@ -311,7 +311,7 @@ def test_binary_str():
 
 Trying to run the tests at this point just returns a big failure due to an import error, since the `binary.py` module does not exists yet.
 
-[source, bash]
+[*source, bash]
 ----
 $ pytest -v
 ===================== test session starts =====================
@@ -328,7 +328,7 @@ E   ModuleNotFoundError: No module named 'src.binary'
 Let us create the file `binary.py` and start creating the `Binary` class.
 
 .`src/binary.py`
-[source, python]
+[*source, python]
 ----
 class Binary:
     pass
@@ -336,7 +336,7 @@ class Binary:
 
 Now when you run Pytest the output shows that all tests are found and that all of them fail (I will just show the first one)
 
-[source, bash]
+[*source, bash]
 ----
 $ pytest -v
 ===================== test session starts =====================
@@ -388,7 +388,7 @@ The most complex part of the class is the initialization, since I want it to acc
 This is the code
 
 .`src/binary.py`
-[source, python, callouts="|"]
+[*source, python, callouts="|"]
 ----
 from collections.abc import Sequence
 
@@ -435,7 +435,7 @@ According to [link]("https://docs.python.org/3/library/functions.html#bin", "the
 So we just have to add
 
 .`src/binary.py`
-[source, python]
+[*source, python]
 ----
 def __index__(self):
     return self.__int__()
@@ -446,7 +446,7 @@ inside the class, and we get two more successful tests.
 To make `test_binary_str` pass we have to provide a magic method that converts the object into a string, which is
 
 .`src/binary.py`
-[source, python]
+[*source, python]
 ----
 def __str__(self):
     return bin(self)[2:]
@@ -457,7 +457,7 @@ It makes use of the internal Python algorithm provided by `bin()` stripping the 
 The last failing test is `test_binary_eq` which tests for equality between two `Binary` objects. Out of the box, Python compares objects on a very low level, just checking if the two references point to the same object in memory. To make it smarter we have to provide the `__eq__()` method
 
 .`src/binary.py`
-[source, python]
+[*source, python]
 ----
 def __eq__(self, other):
     return int(self) == int(other)
@@ -475,7 +475,7 @@ And now all the tests run successfully.
 Now it is time to add new features to our `Binary` class. As already said, the TDD methodology wants us to first write the tests, then to write the code. Our class is missing some basic arithmetic and binary operations. Some of the test we can add are 
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_addition_int():
     assert Binary(4) + 1 == Binary(5)
@@ -487,7 +487,7 @@ def test_binary_addition_binary():
 These check that adding both an integer and a `Binary` to a `Binary` works as expected.
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_division_int():
     assert Binary(20) / 4 == Binary(5)
@@ -499,7 +499,7 @@ def test_binary_division_rem_int():
 These check two different cases because division can produce a remainder, which is not considered here.
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_get_bit():
     binary = Binary('0101110001')
@@ -523,7 +523,7 @@ Bitwise and arithmetic operations are implemented using Python magic methods. Pl
 The code that implements the required behaviour is
 
 .`src/binary.py`
-[source, python]
+[*source, python]
 ----
     def __and__(self, other):
         return Binary(self._value & Binary(other)._value)
@@ -570,7 +570,7 @@ I want `Binary` to support indexing, just like lists. The difference between lis
 We can test this in a simple way with
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_get_bit():
     binary = Binary("0101110001")
@@ -581,7 +581,7 @@ def test_binary_get_bit():
 The implementation of this behaviour is actually very simple , but as we will see later it contains some bugs.
 
 .`src/binary.py`
-[source, python]
+[*source, python]
 ----
     def __getitem__(self, item):
         return str(self)[-(item + 1)]
@@ -597,7 +597,7 @@ The implementation of this behaviour is actually very simple , but as we will se
 
 Just like lists, `Binary` should support slicing. Always keep in mind the reversed indexing, that can be exemplified by
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b = Binary('01101010')
 >>> b[4:7]
@@ -609,7 +609,7 @@ Just like lists, `Binary` should support slicing. Always keep in mind the revers
 This can be directly converted into a test
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_slice():
     assert Binary('01101010')[0:3] == Binary('10')
@@ -620,7 +620,7 @@ def test_binary_slice():
 This shows that my initial implementation of the method `__index__()` was too trivial. The output of this test shows that the method doesn't support slicing, raising the exception `TypeError: unsupported operand type(s) for +: 'slice' and 'int'`. Checking [link]("https://docs.python.org/3/reference/datamodel.html#object.__getitem__", "the documentation") of `__getitem__()` we notice that it shall manage both integers and `slice` objects (this is the missing part) and that it shall raise `IndexError` for illegal indexes to make for loops work. So I immediately add a test for this rule and other tests to match the correct behaviour
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_negative_index():
     assert Binary("0101110001")[-1] == "1"
@@ -646,7 +646,7 @@ Remember that leading zeros are stripped, so getting the index number 7 shall fa
 I also added a test for empty slices. For those, I arbitrarily decided that an empty slice should return `Binary(0)`.
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_empty_slice():
     assert Binary("01101010")[4:4] == Binary("0")
@@ -655,7 +655,7 @@ def test_empty_slice():
 Instead of trying to reimplement the whole list slicing behaviour with reversed indexes, it is much simpler to make use of it. We can just take the string version of our `Binary`, slice its reversed version and return the result (reversed again). The result of the slice can be a single element, however, so we have to check it against the `Sequence` class
 
 .`src/binary.py`
-[source, python]
+[*source, python]
 ----
     def __getitem__(self, key):
         reversed_list = [int(i) for i in reversed(str(self))]
@@ -681,7 +681,7 @@ The first list comprehension returns a list of integers with the reversed versio
 The last feature I want to add is a function `split()` that divides the binary number in two binaries. The rightmost one shall have the given size in bits, while the leftmost just contains the remaining bits. The following tests exemplify the behaviour of `split()`
 
 .`tests/test_binary.py`
-[source, python]
+[*source, python]
 ----
 def test_binary_split_no_remainder():
     assert Binary('110').split(4) == (0, Binary('110'))
@@ -699,7 +699,7 @@ def test_binary_split_leading_zeros():
 The code that implements it leverages the slicing behaviour
 
 .`src/binary.py`
-[source, python]
+[*source, python]
 ----
 def split(self, bits):
     return (self[bits:], self[:bits])

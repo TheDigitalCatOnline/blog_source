@@ -34,7 +34,7 @@ Unfortunately the Docker interface is not extremely script-friendly when it come
 The new management script is
 
 .`manage.py`
-[source,python]
+[*source,python]
 ----
 #! /usr/bin/env python
 
@@ -288,7 +288,7 @@ The function `down` simply tears down the containers and removes the scenario co
 The two missing config files are pretty simple. The docker compose configuration is
 
 .`docker/scenario.yml`
-[source,yaml]
+[*source,yaml]
 ----
 version: '3.4'
 
@@ -324,7 +324,7 @@ Here you can see that the database is ephemeral, that the port on the host is au
 The configuration file is
 
 .`config/scenario.json`
-[source,json]
+[*source,json]
 ----
 [
   {
@@ -375,7 +375,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 Let's have a look at a very simple scenario that doesn't do anything on the database, just to understand the system. The code for the scenario is
 
 .`scenarios/foo.py`
-[source,python]
+[*source,python]
 ----
 import os
 
@@ -386,7 +386,7 @@ def run():
 
 When I run the scenario I get the following output
 
-[source]
+[*source]
 ----
 $ ./manage.py scenario up foo
 Creating network "scenario_foo_default" with the default driver
@@ -399,7 +399,7 @@ docker-compose -p scenario_foo -f docker/scenario_foo.yml exec db psql -U postgr
 
 The command `docker ps` shows that my development environment is happily running alongside with the scenario
 
-[source]
+[*source]
 ----
 $ docker ps
 CONTAINER ID  IMAGE             COMMAND                 [...]  PORTS                    NAMES
@@ -411,7 +411,7 @@ a031b6429e07  postgres          "docker-entrypoint.s…"  [...]  0.0.0.0:32827->
 
 And the output of the command `scenario up foo` contains the string `HEY! This is scenario foo` that was printed by the file `foo.py`. We can also successfully run the suggested command
 
-[source]
+[*source]
 ----
 $ docker-compose -p scenario_foo -f docker/scenario_foo.yml exec db psql -U postgres -d application
 psql (12.3 (Debian 12.3-1.pgdg100+1))
@@ -445,7 +445,7 @@ You can see the changes made in this step through [link](https://github.com/lgio
 Let's do something a bit more interesting. The new scenario is contained in `scenarios/users.py`
 
 .`scenarios/users.py`
-[source,python]
+[*source,python]
 ----
 from application.app import create_app
 from application.models import db, User
@@ -478,14 +478,14 @@ I decided to be as agnostic as possible in the scenarios, to avoid creating some
 
 I can run the scenario with
 
-[source]
+[*source]
 ----
 $ ./manage.py scenario up users
 ----
 
 and then connect to the database to find my users
 
-[source]
+[*source]
 ----
 $ docker-compose -p scenario_users -f docker/scenario_users.yml exec db psql -U postgres -d application
 psql (12.3 (Debian 12.3-1.pgdg100+1))
@@ -533,7 +533,7 @@ I will then create a configuration that simulates a production environment and t
 The first component that we have to change here is the HTTP server. In development we use Flask's development server, and the first message that server prints is `WARNING: This is a development server. Do not use it in a production deployment.` Got it, Flask! A good choice to replace it is Gunicorn, so first of all I add it in the requirements
 
 .`requirements/production.txt`
-[source]
+[*source]
 ----
 Flask
 flask-sqlalchemy
@@ -545,7 +545,7 @@ gunicorn:@:
 Then I need to create a docker-compose configuration for production
 
 .`docker/production.yml`
-[source,yaml]
+[*source,yaml]
 ----
 version: '3.4'
 
@@ -587,7 +587,7 @@ As you can see here the command that runs the application is slightly different 
 Then I created the file `Dockerfile.production` that defines the production image of the web application
 
 .`docker/Dockerfile.production`
-[source,Dockerfile]
+[*source,Dockerfile]
 ----
 FROM python:3
 
@@ -604,7 +604,7 @@ RUN pip install -r /opt/requirements/production.txt
 The last thing I need is a configuration file
 
 .`config/production.json`
-[source,json]
+[*source,json]
 ----
 [
   {
@@ -648,7 +648,7 @@ Remember that `FLASK_ENV` changes the internal settings of Flask, most notably d
 
 I can now build the image with
 
-[source]
+[*source]
 ----
 $ APPLICATION_CONFIG="production" ./manage.py compose build web
 ----
@@ -668,7 +668,7 @@ Mapping the container port to the host is not a great idea, though, as it makes 
 I will add nginx and serve HTTP from there, reverse proxying the application containers through docker-compose networking. First of all the new configuration for docker-compose
 
 .`docker/production.yml`
-[source,yaml]
+[*source,yaml]
 ----
 version: '3.4'
 
@@ -712,7 +712,7 @@ volumes:
 As you can see I added a service `nginx` that runs the default Nginx image, mapping a custom configuration file that I will create in a minute. The application container doesn't need any port mapping, as I won't access it directly from the host anymore. The Nginx configuration file is
 
 .`docker/nginx/nginx.conf`
-[source,nginx]
+[*source,nginx]
 ----
 worker_processes 1;
  
@@ -745,7 +745,7 @@ This is a pretty standard configuration, and in a real production environment I 
 
 I can at this point run
 
-[source]
+[*source]
 ----
 $ APPLICATION_CONFIG="production" ./manage.py compose up -d
 Starting production_db_1    ... done
@@ -755,7 +755,7 @@ Starting production_web_1   ... done
 
 It's interesting to have a look at the logs of the nginx container, as Nginx by default prints all the incoming requests
 
-[source]
+[*source]
 ----
 $ APPLICATION_CONFIG="production" ./manage.py compose logs -f nginx
 Attaching to production_nginx_1
@@ -767,7 +767,7 @@ The last line is what I get when I visit localhost:8080 while the production set
 
 Scaling up and down the service is now a breeze
 
-[source]
+[*source]
 ----
 $ APPLICATION_CONFIG="production" ./manage.py compose up -d --scale web=3
 production_db_1 is up-to-date
@@ -794,21 +794,21 @@ I mentioned that Docker Compose creates a connection between services, and used 
 
 While the production setup is running we can connect to the nginx container and see what is happening in real time, so first of all I run a bash shell on it
 
-[source]
+[*source]
 ----
 $ APPLICATION_CONFIG="production" ./manage.py compose exec nginx bash
 ----
 
 Once inside I can see my configuration file at `/etc/nginx/nginx.conf`, but this has not changed. Remember that Docker networking doesn't work as a templating engine, but with a local DNS. This means that if we try to resolve `web` from inside the container we should see multiple IPs. The command `dig` is a good tool to investigate the DNS, but it doesn't come preinstalled in the nginx container, so I need to run
 
-[source]
+[*source]
 ----
 root@33cbaea369be:/# apt update && apt install dnsutils
 ----
 
 and at this point I can run it
 
-[source]
+[*source]
 ----
 root@33cbaea369be:/# dig web
 
@@ -836,14 +836,14 @@ root@33cbaea369be:/#
 
 The command outputs 3 IPs, which correspond to the 3 containers of the service `web` that I am currently running. If I scale down (from outside the container)
 
-[source]
+[*source]
 ----
 $ APPLICATION_CONFIG="production" ./manage.py compose up -d --scale web=1
 ----
 
 then the output of `dig` becomes
 
-[source]
+[*source]
 ----
 root@33cbaea369be:/# dig web
 

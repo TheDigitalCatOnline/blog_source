@@ -18,7 +18,7 @@ Since the nomenclature may vary from language to language, let me name things. I
 
 As a working example, in this post I will use the following class. It represents a book with a title and an author. It also provides a `get_entry()` method which returns a string representation of the book.
 
-[source, python]
+[*source, python]
 ----
 class Book:
     def __init__(self, title, author):
@@ -37,7 +37,7 @@ Every instance of this class will contain three attributes, namely `title`, `aut
 
 In Python you may call an attribute of an object using the widely accepted dotted-syntax
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b = Book(title="Pawn of Prophecy", author="David Eddings")
 >>> b.title
@@ -46,7 +46,7 @@ In Python you may call an attribute of an object using the widely accepted dotte
 
 As already mentioned, this mechanism works with methods too.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b.get_entry
 <bound method Book.get_entry of <__main__.Book object at 0xb703952c>>
@@ -56,7 +56,7 @@ Here I intentionally omitted the calling brackets (parentheses) to show what hap
 
 When an object does not contain the attribute we are looking for, Python raises an `AttributeError` exception
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b.publisher
 Traceback  (most recent call last):
@@ -67,7 +67,7 @@ AttributeError: 'Book' object has no attribute 'publisher'
 
 Remember also that Python objects provide a wide range of automatically created attributes such as `__class__` or `__doc__`. These attributes can be read exactly like standard attributes, since in Python the double underscore prefix and suffix is just a gentleman agreement between programmers.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b.__class__
 <class '__main__.Book'>
@@ -75,7 +75,7 @@ Remember also that Python objects provide a wide range of automatically created 
 
 When you try to change the value of an attribute (you _write_ the attribute) the syntax does not change.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b = Book(title="Pawn of Prophecy", author="David Eddings")
 >>> b.author = "David Carroll Eddings"
@@ -98,7 +98,7 @@ Sometimes you want to have an attribute which value comes from other attributes 
 
 In Python you can "mask" the method, aliasing it with a data attribute, which in this case is called _property_.
 
-[source, python]
+[*source, python]
 ----
 class Book(object):
     def __init__(self, title, author):
@@ -113,7 +113,7 @@ class Book(object):
 
 The above syntax defines an `entry` attribute which automatically calls `self.get_entry()` when read.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b = Book(title="Pawn of Prophecy", author="David Eddings")
 >>> b.entry
@@ -122,7 +122,7 @@ The above syntax defines an `entry` attribute which automatically calls `self.ge
 
 Properties allow to specify also a write method (a _setter_), that is automatically called when you try to change the value of the property itself.
 
-[source, python]
+[*source, python]
 ----
 class Book(object):
     def __init__(self, title, author):
@@ -142,7 +142,7 @@ class Book(object):
 
 Please note that the set method shall accept the value as its second parameter. When getters and setters are masked by a property it may be a good thing to make their name start with an underscore, just to signal that they are not intended to be used directly. Remember however that this has no special meaning for the language, being just a convention between programmers.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b = Book(title="Pawn of Prophecy", author="David Eddings")
 >>> b.entry
@@ -161,7 +161,7 @@ ValueError: Entries shall be formatted as '<title> by <author>'
 
 While attributes are usually defined in the instance through the `__init__()` method (part of the constructor mechanism), properties are part of the class itself.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> Book.title
 Traceback  (most recent call last):
@@ -181,7 +181,7 @@ What happens if you want to access an attribute whose name is contained in a var
 
 To perform this "indirect" access Python provides the `getattr()` builtin function, which accepts an object and the name of an attribute.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> getattr(b, 'title')
 'Pawn of Prophecy'
@@ -191,7 +191,7 @@ To perform this "indirect" access Python provides the `getattr()` builtin functi
 
 This type of attribute access may be useful even when accessing a lot of attributes, allowing to write simple for loops or list comprehensions
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> for attr in ['title', 'author']:
 ...  getattr(b, attr)
@@ -210,7 +210,7 @@ In this case, since the `Book` class or its ancestors do not define the `__getat
 
 Let us try to define the method, just to show that it actually works
 
-[source, python]
+[*source, python]
 ----
 class Book(object):
     def __init__(self, title, author):
@@ -226,7 +226,7 @@ class Book(object):
 
 **WARNING**: this is just an example to show how `__getattr__()` works. The code presented here shall _not_ be considered a good example of Python programming.
 
-[source, pycon]
+[*source, pycon]
 ----
 >>> b = Book(title="Pawn of Prophecy", author="David Eddings")
 >>> b.title

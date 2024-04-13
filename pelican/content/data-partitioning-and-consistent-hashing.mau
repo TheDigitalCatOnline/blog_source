@@ -120,7 +120,7 @@ Say we use hash functions to partition the database and use the employee salary 
 
 In the example above I used MD5 as the routing hash function, and you can reproduce the calculations using the following Python code
 
-[source, python]
+[*source, python]
 ----
 import hashlib
 
@@ -142,7 +142,7 @@ hash_value(60100) % 16
 
 Things do not go much better if we use the integer division. If we have 16 partitions, each one of them contains 2^124^ values
 
-[source, python]
+[*source, python]
 ----
 # 2
 hash_value(60000) // 2**124
@@ -234,7 +234,7 @@ Let's see an example, bearing in mind that the specific function can change amon
 
 For simplicity's sake, I used a custom hash function that outputs 28-bit hashes (7 hexadecimal digits). This makes it possible to compare hashes visually and simplifies the example. To do this I took the first 7 digits of the SHA1 hash with the following Python code
 
-[source, python]
+[*source, python]
 ----
 def hash_name(name):
     return int(hashlib.sha1(name.encode("utf-8")).hexdigest()[:7], 16)
@@ -246,7 +246,7 @@ WARNING: this is not a good hash function! SHA1 produces 160 bits hashes, so tak
 
 All our nodes are called `server-X` with `X` being a letter of the English alphabet, thus giving us `server-a`, `server-b`, and so on. I decided to create 5 partitions per server, numbered from 0 to 4, which are generated appending `-Y` to the name, where `Y` is the number of the partition. For example:
 
-[source]
+[*source]
 ----
 server-a-0 -- hash --> 148456820
 server-a-1 -- hash --> 57674441
@@ -257,7 +257,7 @@ server-a-4 -- hash --> 23746828
 
 If we do this for two nodes (`server-a` and `server-b`) and then sort the results we will get a full routing table
 
-[source]
+[*source]
 ----
  23746828 --> server-a-4 ( 6848918 hashes)
  30595746 --> server-a-3 (27078695 hashes)
@@ -273,7 +273,7 @@ If we do this for two nodes (`server-a` and `server-b`) and then sort the result
 
 Remember that the hashes in the routing table are the minimum hash served by that partition. For example, the first line tells us that all hashes from `23746828` are served by the partition `server-a-4`, while hashes from `30595746` are served by the partition `server-a-3`. This means that the partition `server-a-4` serves 6848918 hashes (as you can read in the table). A key whose hash is `79249022` will be served by `server-b-0`
 
-[source]
+[*source]
 ----
  60903228 --> server-b-2 (17957108 hashes)
  78860336 --> server-b-0 ( 7773725 hashes)
@@ -287,7 +287,7 @@ Remember that the hashes in the routing table are the minimum hash served by tha
 
 Since partitions are not physically separated, but are just virtual entities belonging to a node, the route table can be simplified to
 
-[source]
+[*source]
 ----
  23746828 -- > server-a (37156400 hashes)
  60903228 -- > server-b (87553592 hashes)
@@ -300,7 +300,7 @@ Since partitions are not physically separated, but are just virtual entities bel
 What we achieved is remarkable, but there are still two problems. Let's have a look at a simple routing table for three nodes with 5 partitions each
 
 .3 nodes with 5 partitions each
-[source]
+[*source]
 ----
  23746828 --> server-a (23267855 hashes)
  47014683 --> server-c (10659758 hashes)
@@ -318,7 +318,7 @@ What we achieved is remarkable, but there are still two problems. Let's have a l
 First, the lowest value is not 0, which means that there are some hashes (23,746,828 in this case) which are not served by any slot. Second, in general the distribution doesn't cover the space evenly, as some nodes receive too many keys compared to others. This second problem isn't actually visible in the setups I showed so far, but it becomes noticeable increasing the number of servers. For example, with two nodes we have this situation
 
 .2 nodes with 5 partitions each
-[source]
+[*source]
 ----
 server-a: 122254437 hashes
 server-b: 146181018 hashes
@@ -327,7 +327,7 @@ server-b: 146181018 hashes
 while with 5 nodes it becomes
 
 .5 nodes with 5 partitions each
-[source]
+[*source]
 ----
 server-a: 64211359 hashes
 server-b: 66179053 hashes
@@ -343,7 +343,7 @@ As you can see, in the second case the load of `server-e` is 56% that of `server
 The first problem is easily solved assigning the initial hashes to the last node, that is considering the hash space mapped on a circle. This means that for 2 nodes with 5 partitions each we have
 
 .Routing table of 2 nodes with 5 partitions each
-[source]
+[*source]
 ----
 Full routing table
         0 --> server-b-1 (23746828 hashes):@:
@@ -371,7 +371,7 @@ where the partition `server-b-1` contains the orphaned initial hashes.
 The second problem is a matter of statistical approach. The hash function that we use to map the partition name to the key space cannot be controlled, as its diffusion property has been designed to avoid a regular spacing of values. However, if we increase the number of partitions we expect the hash function to spread values across the whole space. At that point, each partition will be assigned just a tiny key space, and the differences between partitions will be less noticeable. In other words, by increasing the number of partitions dramatically we should achieve a better distribution. Let's compare the results of 5 nodes with 2 partitions each
 
 .5 nodes with 2 partitions each
-[source]
+[*source]
 ----
 server-a 36500586
 server-b 76678431
@@ -383,7 +383,7 @@ server-e 67334683
 with the results of 5 nodes with 3000 partitions each
 
 .5 nodes with 3000 partitions each
-[source]
+[*source]
 ----
 server-a 53385222
 server-b 53855877
@@ -405,7 +405,7 @@ With consistent hashing, when we add a new node we need to generate the hash val
 The initial setup is 2 nodes with 5 partitions each
 
 .2 nodes with 5 partitions
-[source]
+[*source]
 ----
 Full routing table
         0 --> server-b-1 (23746828 hashes)
@@ -437,7 +437,7 @@ TOTAL HASHES: 268435455/268435455
 if we add one node we migrate to this new setup
 
 .3 nodes with 5 partitions
-[source]
+[*source]
 ----
 Full routing table
         0 --> server-b-1 (23746828 hashes)
@@ -481,7 +481,7 @@ TOTAL HASHES: 268435455/268435455
 
 Let's have a closer look to what happens with `server-c`
 
-[source]
+[*source]
 ----
 Simplified routing table
         0 -- > server-b (23746828 hashes)
@@ -515,7 +515,7 @@ This is a terrific result. Not only it's much better than the previous one (_at 
 All routing tables shown in the post have been created with the following Python script. Please bear in mind that this is just demo code, so things haven't been optimised or designed particularly well. Feel free to change the hash function and the parameters of the script to experiment and see what consistent hashing can do.
 
 .`consistent_hashing_demo.py`
-[source, python]
+[*source, python]
 ----
 import hashlib
 import itertools

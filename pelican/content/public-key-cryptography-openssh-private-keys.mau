@@ -21,7 +21,7 @@ Note: as the word "key" can identify several different component of the systems 
 
 Describing the introduction of the new format, the [link](https://www.openssh.com/txt/release-6.5,"OpenSSH changelog") says
 
-[source]
+[*source]
 ----
 Add a new private key format that uses a bcrypt KDF to better
 protect keys at rest. This format is used unconditionally for
@@ -72,7 +72,7 @@ We can roughly sketch the process with the following steps:
 
 Let's create an encrypted key with OpenSSL and analyse it. The command I used is
 
-[source]
+[*source]
 ----
 openssl genpkey -aes-256-cbc -algorithm RSA\
     -pkeyopt rsa_keygen_bits:4096 -pass pass:foobar\
@@ -81,7 +81,7 @@ openssl genpkey -aes-256-cbc -algorithm RSA\
 
 which creates a 4096 bits RSA key and encrypts it with AES using `foobar` as password. What I get is a file in the aforementioned PEM format
 
-[source]
+[*source]
 %%%%
 -----BEGIN ENCRYPTED PRIVATE KEY-----
 MIIJrTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIW+BK6UQtCPACAggA
@@ -99,7 +99,7 @@ GxSfj7s0Qs0K5e3Xv1lCQUhSz82fBysznjeAhWa45YEV
 
 We can dump the ASN.1 content directly from the PEM format using `openssl asn1parse`
 
-[source]
+[*source]
 ----
 $ openssl asn1parse -inform pem -in key_rsa_4096_openssl_pw
     0:d=0  hl=4 l=2477 cons: SEQUENCE          
@@ -126,7 +126,7 @@ You can clearly see that this key is encrypted using PBES2 [class]("1","callout"
 
 According to the [link](https://datatracker.ietf.org/doc/html/rfc2898#appendix-A.4,"PKCS #5 specification"), the `PBES2` block contains
 
-[source]
+[*source]
 ----
 PBES2-params ::= SEQUENCE {
        keyDerivationFunc AlgorithmIdentifier {{PBES2-KDFs}},
@@ -135,7 +135,7 @@ PBES2-params ::= SEQUENCE {
 
 and indeed we have `PBKDF2` [class]("1","callout") for `keyDerivationFunc`, and `aes-256-cbc` [class]("3","callout") for `encryptionScheme`. The sequence `PBKDF2` is specified in the [link](https://datatracker.ietf.org/doc/html/rfc2898#appendix-A.2,"same document") as
 
-[source]
+[*source]
 ----
 PBKDF2-params ::= SEQUENCE {
        salt CHOICE {
@@ -158,7 +158,7 @@ The best starting point for our investigation is the tool `ssh-keygen` which we 
 
 This function contains a modified implementation of PBKDF2 that uses bcrypt as the core hash function. The comment that you can find at the top of the file [link](https://github.com/openbsd/src/blob/master/sys/lib/libsa/bcrypt_pbkdf.c#L28,"bcrypt_pbkdf.c") says
 
-[source]
+[*source]
 ----
 /*
  * pkcs #5 pbkdf2 implementation using the "bcrypt" hash
@@ -205,7 +205,7 @@ When it comes to KDFs, the advice is always to run as much iterations as possibl
 
 On my laptop, an i7-8565U with 32GiB of RAM running Kubuntu 20.04 I get the following results, which are pretty linear:
 
-[source]
+[*source]
 ----
 ssh-keygen -a 100 -t ed25519	0.667s
 ssh-keygen -a 500 -t ed25519	3.148s

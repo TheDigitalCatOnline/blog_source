@@ -26,7 +26,7 @@ For the time being, let's focus on the environment variables that the image requ
 
 The first variable is `POSTGRES_PASSWORD`, which is the only mandatory configuration value (unless you disable authentication which is not recommended). Indeed, if you run the image without setting this value, you get this message
 
-[source]
+[*source]
 ----
 $ docker run postgres
 Error: Database is uninitialized and superuser password is not specified.
@@ -54,7 +54,7 @@ If you do not specify the value of `POSTGRES_DB`, this image will create a defau
 
 A note of warning here. If you omit both the database name and the user you will end up with the superuser `postgres` and database `postgres`. The [link](https://www.postgresql.org/docs/current/creating-cluster.html,"official documentation") states that
 
-[source]
+[*source]
 ----
 After initialization, a database cluster will contain a database named
 postgres, which is meant as a default database for use by utilities,
@@ -67,7 +67,7 @@ This mean that it is not ideal to use that as the database for our application. 
 
 We can run the image with
 
-[source]
+[*source]
 ----
 $ docker run -d \
   -e POSTGRES_PASSWORD=whale_password \
@@ -82,7 +82,7 @@ The ID of the container is returned by `docker run` but we can retrieve it any t
 
 Stop the previous container and run it again with
 
-[source]
+[*source]
 ----
 $ docker run -d \
   --name whale-postgres \
@@ -100,7 +100,7 @@ In either case, however, you might want to remove the container, that otherwise 
 
 To remove a container you have to run `docker rm ID`, but you can leverage the fact that both `docker stop` and `docker kill` return the ID of the container to pipe the termination and the removal
 
-[source]
+[*source]
 ----
 $ docker stop ID | xargs docker rm
 ----
@@ -112,7 +112,7 @@ Otherwise, you can use `docker rm -f ID`, which corresponds to `docker kill` fol
 
 Now we can connect to the database using the executable `psql` provided in the image itself. To execute a command inside a container we use `docker exec` and this time we will specify `-it` to open an interactive session. `psql` uses by default the user name `root`, and the database with the same name as the user, so we need to specify both. The header informs me that the image is running PostgreSQL 13.5 on Debian.
 
-[source]
+[*source]
 ----
 $ docker exec -it whale-postgres psql -U whale_user whale_db
 psql (13.5 (Debian 13.5-1.pgdg110+1))
@@ -127,7 +127,7 @@ You might be surprised by the fact that `psql` didn't ask for the password that 
 
 If you are curious about trust in Postgres you can see the configuration file with
 
-[source]
+[*source]
 ----
 $ docker exec -it whale-postgres \
   cat /var/lib/postgresql/data/pg_hba.conf
@@ -135,7 +135,7 @@ $ docker exec -it whale-postgres \
 
 where you can spot the lines
 
-[source]
+[*source]
 ----
 # TYPE  DATABASE  USER  ADDRESS  METHOD
 
@@ -148,7 +148,7 @@ You can find more information about Postgres trust in [link]("https://www.postgr
 
 Here, I can list all the databases with `\l`. You can see all `psql` commands and the rest of the documentation at [link](https://www.postgresql.org/docs/current/app-psql.html).
 
-[source]
+[*source]
 ----
 $ docker exec -it whale-postgres psql -U whale_user whale_db
 psql (13.5 (Debian 13.5-1.pgdg110+1))
@@ -177,7 +177,7 @@ If we want the database to be accessible from outside we need to publish a port.
 
 Stop the container (you can use its name now) and run it again with
 
-[source]
+[*source]
 ----
 $ docker run -d \
   --name whale-postgres \
@@ -189,7 +189,7 @@ $ docker run -d \
 
 Running `docker ps` we can see that the container publishes the port now (`0.0.0.0:5432->5432/tcp`). We can double-check it with `ss` ("socket statistics")
 
-[source]
+[*source]
 ----
 $ ss -nulpt | grep 5432
 tcp  LISTEN  0  4096  0.0.0.0:5432  0.0.0.0:*
@@ -198,7 +198,7 @@ tcp  LISTEN  0  4096     [::]:5432     [::]:*
 
 Please note that usually `ss` won't tell you the name of the process using that port because the process is run by `root`. If you run `ss` with `sudo` you will see it
 
-[source]
+[*source]
 ----
 $ sudo ss -nulpt | grep 5432
 tcp  LISTEN  0  4096  0.0.0.0:5432  0.0.0.0:*  users:(("docker-proxy",pid=1262717,fd=4))
@@ -207,7 +207,7 @@ tcp  LISTEN  0  4096     [::]:5432     [::]:*  users:(("docker-proxy",pid=126272
 
 Unfortunately, `ss` is not available on macOS. On that platform (and on Linux as well) you can use `lsof` with `grep`
 
-[source]
+[*source]
 ----
 $ sudo lsof -i -p -n | grep 5432
 docker-pr 219643            root    4u  IPv4 2945982      0t0  TCP *:5432 (LISTEN)
@@ -216,7 +216,7 @@ docker-pr 219650            root    4u  IPv6 2952986      0t0  TCP *:5432 (LISTE
 
 or directly using the option `-i`
 
-[source]
+[*source]
 ----
 $ sudo lsof -i :5432
 COMMAND      PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
@@ -236,7 +236,7 @@ Now that we exposed a port we can connect to the database running `psql` in an e
 
 Since `psql` is provided by the image `postgres` we can in theory run that passing the hostname with `-h localhost`, but if you try it you will be disappointed.
 
-[source]
+[*source]
 ----
 $ docker run -it postgres:13 psql -h localhost -U whale_user whale_db
 psql: error: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
@@ -247,7 +247,7 @@ connection to server at "localhost" (::1), port 5432 failed: Cannot assign reque
 
 This is correct, as that container runs in a bridge network where `localhost` is the container itself. To make it work we need to run the container as part of the host network (that is the same network our computer is running on). This can be done with `--network=host`
 
-[source]
+[*source]
 ----
 $ docker run -it \
   --network=host postgres:13 \
@@ -269,7 +269,7 @@ I do not recommend this approach for a real project but it should be good enough
 
 Make sure the container `whale-postgres` is running (with or without publishing the port, it's not important at the moment). Connect to the container using `psql` and run the following two SQL commands (make sure you are connected to the database `whale_db`)
 
-[source,sql]
+[*source,sql]
 ----
 CREATE TABLE recipes (
   recipe_id INT NOT NULL,
@@ -288,7 +288,7 @@ VALUES
 
 This code creates a table called `recipes` and inserts 3 rows with an `id` and a `name`. The output of the above commands should be
 
-[source]
+[*source]
 ----
 CREATE TABLE
 INSERT 0 3
@@ -296,7 +296,7 @@ INSERT 0 3
 
 You can double check that the database contains the table with `\dt`
 
-[source]
+[*source]
 ----
 whale_db=# \dt
            List of relations
@@ -308,7 +308,7 @@ whale_db=# \dt
 
 and that the table contains three rows with a `select`.
 
-[source]
+[*source]
 ----
 whale_db=# select * from recipes;
  recipe_id |  recipe_name   
@@ -323,7 +323,7 @@ Now, the problem with containers is that they do not store data permanently. Whi
 
 If we stop the container and run it again, though, we will quickly realise that the values stored in the database are gone.
 
-[source]
+[*source]
 ----
 $ docker stop whale-postgres | xargs docker rm 
 whale-postgres
@@ -357,7 +357,7 @@ You can manage volumes using `docker volume`, that provides several subcommands 
 
 Stop and remove the running Postgres container and run it again with a named volume
 
-[source]
+[*source]
 ----
 $ docker stop whale-postgres | xargs docker rm 
 $ docker run -d \
@@ -374,7 +374,7 @@ This will create the volume named `whale_dbdata` and connect it to the path `/va
 
 `docker ps` doesn't give any information on volumes, so to see what is connected to your container you need to use `docker inspect`
 
-[source]
+[*source]
 ----
 $ docker inspect whale-postgres 
 [...]
@@ -395,7 +395,7 @@ $ docker inspect whale-postgres
 
 The value for `"Source"` is where the volume is stored in the host, that is on your computer, but generally speaking you can ignore that detail. You can see all volumes using `docker volume ls` (using `grep` if the list is long as it is in my case)
 
-[source]
+[*source]
 ----
 $ docker volume ls | grep whale
 local     whale_dbdata
@@ -405,7 +405,7 @@ Now that the container is running and is connected to a volume, we can try to in
 
 The whole point of using a volume is to make information permanent, so now terminate and remove the Postgres container, and run it again using the same volume. You can check that the database still contains data using the query shown previously.
 
-[source]
+[*source]
 ----
 $ docker rm -f whale-postgres 
 whale-postgres
@@ -437,7 +437,7 @@ I will first create an application and run it in the host, leveraging the port e
 
 To create the application, first create a Python virtual environment using your preferred method. I currently use `pyenv` ([link](https://github.com/pyenv/pyenv)).
 
-[source]
+[*source]
 ----
 pyenv virtualenv whale_docker
 pyenv activate whale_docker
@@ -445,7 +445,7 @@ pyenv activate whale_docker
 
 Now we need to put our requirements in a file and install them. I prefer to keep things tidy from day zero, so create the directory `whaleapp` in the project directory and inside it the file `requirements.txt`.
 
-[source]
+[*source]
 ----
 mkdir whaleapp
 touch whaleapp/requirements.txt
@@ -453,7 +453,7 @@ touch whaleapp/requirements.txt
 
 The only requirement we have for this simple application is `psycopg2`, so I add it to the file and then install it. Since we are installing requirements is useful to update `pip` as well.
 
-[source]
+[*source]
 ----
 echo "psycopg2" >> whaleapp/requirements.txt
 pip install -U pip
@@ -464,7 +464,7 @@ pip install -r whaleapp/requirements.txt
 
 Now create the file `whaleapp/whaleapp.py` and put this code in it
 
-[source,python]
+[*source,python]
 . whaleapp/whaleapp.py
 ----
 import time
@@ -513,7 +513,7 @@ As you can see the code is not complicated. The application is an endless `while
 
 If the Postgres container is running and publishing port 5432, this application can be run directly on the host
 
-[source]
+[*source]
 ----
 $ python whaleapp.py 
 Connecting to the PostgreSQL database...
@@ -534,7 +534,7 @@ To face one problem at a time, let's first containerise the application and run 
 
 The easiest way to containerise a Python application is to create a new image starting from the image `python:3`. The following `Dockerfile` goes into the application directory
 
-[source,dockerfile,callouts="|"]
+[*source,dockerfile,callouts="|"]
 .`whaleapp/Dockerfile`
 ----
 FROM python:3|1|
@@ -553,7 +553,7 @@ A Docker file contains the description of the layers that build an image. Here, 
 
 It is important to keep in mind the layered nature of Docker images, as this can lead to simple optimisation tricks. In this case, loading the requirements file and installing them creates a layer out of a file that doesn't change very often, while the layer created at [class](5, callout) is probably changing very quickly while we develop the application. If we run something like
 
-[source,dockerfile]
+[*source,dockerfile]
 ----
 [...]
 
@@ -568,7 +568,7 @@ we would have to install the requirements every time we change the application c
 
 Once the `Dockerfile` is in place we can build the image
 
-[source]
+[*source]
 ----
 $ cd whaleapp
 $ docker build -t whaleapp .
@@ -608,7 +608,7 @@ Successfully tagged whaleapp:latest
 
 You can see the layers being built one by one (marked as `Step x/6` here). Once the image has been build you should be able to see it in the list of images present in your system
 
-[source]
+[*source]
 ----
 $ docker image ls | grep whale
 whaleapp  latest  969b15466905  9 minutes ago  894MB
@@ -623,7 +623,7 @@ By the way, this is the reason why Docker splits image into layers and reuses th
 
 As I mentioned before we can run this image but we need to use the `host` network configuration.
 
-[source]
+[*source]
 ----
 $ docker run -it --rm --network=host --name whale-app whaleapp
 Connecting to the PostgreSQL database...
@@ -653,7 +653,7 @@ Whenever containers are run in the same custom bridge network, Docker provides t
 
 A custom network can be created using `docker network`
 
-[source]
+[*source]
 ----
 $ docker network create whale
 ----
@@ -662,7 +662,7 @@ As always, Docker will return the ID of the object it just created, but we can i
 
 Stop and remove the Postgres container, and run it again using the network `whale`
 
-[source]
+[*source]
 ----
 $ docker rm -f whale-postgres 
 whale-postgres
@@ -680,7 +680,7 @@ Please note that there is no need to publish the port 5432 in this setup, as the
 
 As happened with volumes, `docker ps` doesn't give information about the network that containers are using, so you have to use `docker inspect` again
 
-[source]
+[*source]
 ----
 $ docker inspect whale-postgres 
 [...]
@@ -696,21 +696,21 @@ The command `docker network` can be used to change the network configuration of 
 
 You can disconnect a running container from a network with
 
-[source]
+[*source]
 ----
 $ docker network disconnect NETWORK_ID CONTAINER_ID
 ----
 
 and connect it with
 
-[source]
+[*source]
 ----
 $ docker network connect NETWORK_ID CONTAINER_ID
 ----
 
 You can see which containers are using a given network inspecting it
 
-[source]
+[*source]
 ----
 $ docker network inspect NETWORK_ID
 ----
@@ -720,7 +720,7 @@ Remember that disconnecting a container from a network makes it unreachable, so 
 
 As I mentioned before, Docker bridge networks provide DNS resolution using the container's name. We can double check this running a container and using `ping`.
 
-[source]
+[*source]
 ----
 $ docker run -it --rm --network=whale whaleapp ping whale-postgres
 PING whale-postgres (172.19.0.2) 56(84) bytes of data.
@@ -740,7 +740,7 @@ As you can see the Postgres container is reachable and we also know that it curr
 
 The point of all this talk about DNS is that we can now change the code of the Python application so that it connects to `whale-postgres` instead of `localhost`
 
-[source,python]
+[*source,python]
 ----
 connection_data = {
     "host": "whale-postgres",:@:
@@ -752,7 +752,7 @@ connection_data = {
 
 Once this is done, rebuild the image and run it in the `whale` network
 
-[source]
+[*source]
 ----
 $ docker build -t whaleapp .
 [...]
@@ -767,7 +767,7 @@ Database connection closed.
 
 You can also take the network directly from another container, which is a useful shortcut.
 
-[source]
+[*source]
 ----
 $ docker build -t whaleapp .
 [...]
@@ -790,7 +790,7 @@ In particular, we can replace the connection data `host`, `database`, and `user`
 
 Reading values from environment variables is easy in Python
 
-[source,python]
+[*source,python]
 ----
 import os
 import time
@@ -814,7 +814,7 @@ Please note that I prefixed all environment variables with `WHALEAPP__`. This is
 
 We already know how to pass environment variables to Docker containers as we did it when we run the Postgres container. Build the image again, and then run it passing the correct variables
 
-[source]
+[*source]
 ----
 $ docker build -t whaleapp .
 [...]
@@ -857,7 +857,7 @@ Docker Compose reads the configuration of a system from the file `docker-compose
 
 To install Docker Compose follow the instructions you find at [link](https://docs.docker.com/compose/install/). Before we start using Docker Compose make sure you kill the Postgres container if you are still running it, and remove the network we created
 
-[source]
+[*source]
 ----
 $ docker rm -f whale-postgres 
 whale-postgres
@@ -868,7 +868,7 @@ whale
 Then create the file `docker-compose.yml` in the project directory (not the app directory) and put the following code in it
 
 .`docker-compose.yml`
-[source,yaml]
+[*source,yaml]
 ----
 version: '3.8'
 
@@ -880,7 +880,7 @@ This is not a valid Docker Compose file, yet, but you can see that there is a va
 The first service we want to run is Postgres, and a basic configuration for that is
 
 .`docker-compose.yml`
-[source,yaml]
+[*source,yaml]
 ----
 version: '3.8'
 
@@ -902,7 +902,7 @@ As you can see, this file contains the environment variables that we passed to t
 
 Now, from the project directory, you can run Docker Compose with
 
-[source]
+[*source]
 ----
 $ docker-compose -p whale up -d
 Creating network "whale_default" with the default driver
@@ -917,7 +917,7 @@ If you run `docker ps` you will see that the container is named `whale_db_1`. Th
 
 To stop the services you have to run
 
-[source]
+[*source]
 ----
 $ docker-compose -p whale down
 Stopping whale_db_1 ... done
@@ -931,7 +931,7 @@ As you can see from the output, Docker Compose stops and removes the container, 
 
 We can now add the application container to the Compose file
 
-[source,yaml,callouts="|"]
+[*source,yaml,callouts="|"]
 ----
 version: '3.8'
 
@@ -962,7 +962,7 @@ This definition is slightly different, as the application container has to be bu
 
 Please note that the variable `WHALEAPP__DB_HOST` is set to the service name, and not to the container name. Now, when we run Docker Compose we get
 
-[source]
+[*source]
 ----
 $ docker-compose -p whale up -d
 Creating network "whale_default" with the default driver
@@ -972,7 +972,7 @@ Creating whale_app_1 ... done
 
 and the output tells us that also the container `whale_app_1` has been created this time. We can see the logs of a container with `docker logs`, but using `docker-compose` allows us to call services by name instead of by ID
 
-[source]
+[*source]
 ----
 $ docker-compose -p whale logs -f app
 Attaching to whale_app_1
@@ -988,7 +988,7 @@ app_1  | Database connection closed.
 
 You might have noticed that at the very beginning of the application logs there are some connection errors, and that after a while the application manages to connect to the database
 
-[source]
+[*source]
 ----
 $ docker-compose -p whale logs -f app
 Attaching to whale_app_1
@@ -1018,7 +1018,7 @@ Please note that this might not happen in your setup, as this is tightly connect
 
 The standard solution when part of a system depends on another is to create a _health check_ that periodically tests the first service, and to start the second service only when the check is successful. We can do this in the Compose file using `healthcheck` and `depends_on`
 
-[source,yaml,callouts="|"]
+[*source,yaml,callouts="|"]
 ----
 version: '3.8'
 

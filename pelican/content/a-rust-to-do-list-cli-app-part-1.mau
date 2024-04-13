@@ -28,7 +28,7 @@ This is an extremely basic application, so the command line is: `todo [OPTIONS] 
 
 I expect the interaction with the tool to be something like
 
-[source]
+[*source]
 ----
 $ todo list
 # TO DO
@@ -60,7 +60,7 @@ $ todo list
 
 Starting a new Rust project is extremely simple with Cargo:
 
-[source, rust]
+[*source, rust]
 ----
 $ cargo new todo-cli
 ----
@@ -68,7 +68,7 @@ $ cargo new todo-cli
 This will create the required structure in a new directory and create two files: `Cargo.toml` and `src/main.rs`. The latter will contain some placeholder code that we can use to check our setup
 
 .`main.rs`
-[source, rust]
+[*source, rust]
 ----
 fn main() {
     println!("Hello, world!");
@@ -97,7 +97,7 @@ So, the _integration_ they consider here is that between multiple parts of a lib
 
 In the aforementioned post, Claudio Restifo suggests we can read command line arguments using `std::env::args()` directly with something like
 
-[source, rust]
+[*source, rust]
 ----
 fn main() {
     let action = std::env::args().nth(1)
@@ -129,7 +129,7 @@ As it happens in object-oriented programming languages (which Rust is not), the 
 
 The prototype of `nth` is
 
-[source, rust]
+[*source, rust]
 ----
 fn nth(&mut self, n: usize) -> Option<Self::Item>
 ----
@@ -143,7 +143,7 @@ and it mentions `Option<Self::Item>` as the return type. The type `Option` provi
 
 Running the code above with `cargo run` produces the following output, where we can see the message set by the first call to `expect`.
 
-[source, callouts="|"]
+[*source, callouts="|"]
 ----
     Finished dev [unoptimized + debuginfo] target(s) in 0.01s
      Running `target/debug/todo-cli`
@@ -156,14 +156,14 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 [link]("https://docs.rs/clap/latest/clap/", "Clap") stands for *C*ommand *L*ine *A*rgument *P*arser and is a nice crate that simplifies the creation of advanced command line interfaces. I installed it using
 
-[source]
+[*source]
 ----
 $ cargo add clap --features derive
 ----
 
 as detailed in the documentation and my code is now
 
-[source, rust]
+[*source, rust]
 ----
 use clap::Parser;
 
@@ -195,7 +195,7 @@ From Claudio's post I got the idea of using a hash map for the list of items. Th
 
 As I want to use TDD, I begin with a test. In Rust, we put tests and code in the same file (but for integration tests between modules), so I can write a simple test at the bottom of the file to check that a `TodoList` type exists and can be initialised.
 
-[source, rust]
+[*source, rust]
 ----
 #[cfg(test)]
 mod tests {
@@ -215,7 +215,7 @@ TDD is one of my favourite methodologies and I'm happy to see that Rust allows m
 
 Clearly, when I run `cargo test` I get a compile error. Let's implement the type then
 
-[source, rust]
+[*source, rust]
 ----
 use std::collections::HashMap;
 
@@ -232,7 +232,7 @@ As you see, I had to write a comment as a reminder of the meaning of the boolean
 To initialise such structure I have to create an implementation of the function `new`
 
 . Version 1
-[source, rust]
+[*source, rust]
 ----
 impl TodoList {
     fn new() -> TodoList {
@@ -252,7 +252,7 @@ Rust is not an object-oriented programming language, so it uses plain structs to
 Thanks to type inference, the explicit definition of types after the call to `HashMap` is not needed and I can write
 
 . Version 2
-[source, rust]
+[*source, rust]
 ----
         let items: HashMap<String, bool> = HashMap::new();
 ----
@@ -260,7 +260,7 @@ Thanks to type inference, the explicit definition of types after the call to `Ha
 or
 
 . Version 3
-[source, rust]
+[*source, rust]
 ----
         let items = HashMap::<String, bool>::new();
 ----
@@ -268,7 +268,7 @@ or
 For such a simple initialisation, I might also write directly
 
 . Version 4
-[source, rust]
+[*source, rust]
 ----
         TodoList {
             items: HashMap::<String, bool>::new(),
@@ -279,7 +279,7 @@ However, I will soon replace the `::new()` with something more complicated that 
 
 At this point I can also initialise the list in the main function
 
-[source, rust]
+[*source, rust]
 ----
 struct TodoList {
     // true = to do, false = done
@@ -311,7 +311,7 @@ Please note that I'm not being too strict with dead code here and the compile wi
 
 A good improvement at this point would be to create a method to add items to the list. First, the mandatory test
 
-[source, rust]
+[*source, rust]
 ----
     #[test]
     fn add_item() {
@@ -323,7 +323,7 @@ A good improvement at this point would be to create a method to add items to the
 
 The type `HashMap` provides a method called `insert` [docs.rust]("std/collections/struct.HashMap.html#method.insert") which is exactly what I need
 
-[source, rust]
+[*source, rust]
 ----
 impl TodoList {
 
@@ -359,7 +359,7 @@ However, as I mentioned I think it's important to understand that the reference 
 
 If I add the same key multiple times I want the list to contain only one occurrence, so I test this.
 
-[source, rust]
+[*source, rust]
 ----
     #[test]
     fn add_item_already_exist() {
@@ -375,7 +375,7 @@ The test passes already, thanks to the properties of the hash map.
 
 I also want the second insertion not to update the value of the existing element, and in this case the test is
 
-[source, rust]
+[*source, rust]
 ----
     #[test]
     fn add_item_does_not_change_value() {
@@ -396,7 +396,7 @@ I have to manually change the value inside the map using `get_mut` [docs.rust]("
 
 At the time of writing the method `try_insert` of `HashMap` is experimental, so I implemented a custom solution
 
-[source, rust]
+[*source, rust]
 ----
 use std::collections::hash_map::Entry;
 
@@ -423,7 +423,7 @@ I consider `if let` [docs.rust]("book/ch06-03-if-let.html") a very powerful piec
 
 The second method I want to add is `mark` that allows me to set the value of the boolean corresponding to a given key. This will be used to flag an item as "done" or "to be done". The test is
 
-[source, rust]
+[*source, rust]
 ----
     #[test]
     fn mark_item() {
@@ -438,7 +438,7 @@ The second method I want to add is `mark` that allows me to set the value of the
 
 Here, I can follow the same strategy I used in the test `add_item_does_not_change_value`
 
-[source, rust]
+[*source, rust]
 ----
 impl TodoList {
 
@@ -454,7 +454,7 @@ impl TodoList {
 
 What if the key is not in the list, though? The function `get_mut` returns an Option, but `mark` should signal with a `Result` that something didn't work. I can test this with
 
-[source, rust]
+[*source, rust]
 ----
     #[test]
     fn mark_item_does_not_exist() {
@@ -468,7 +468,7 @@ What if the key is not in the list, though? The function `get_mut` returns an Op
 
 The new version of the function is then
 
-[source, rust]
+[*source, rust]
 ----
 impl TodoList {
 
@@ -505,7 +505,7 @@ Iterators are a big thing in Rust, and I can understand why as they definitely b
 
 I start with tests as usual
 
-[source, rust]
+[*source, rust]
 ----
     #[test]
     fn list_items() {
@@ -538,7 +538,7 @@ As far as I can tell, there are several different strategies I can use here.
 
 I can generate vectors of `&String` using the elements directly from the iterators and then use the method `Vec::contains` [docs.rust]("std/vec/struct.Vec.html#method.contains"). However, the latter wants to receive a reference to the searched value, which means that I would end up with
 
-[source, rust]
+[*source, rust]
 ----
 let todo_items: Vec<&String> = todo_items.collect();
 assert!(todo_items.contains(&&String::from("Something else to do")));
@@ -546,7 +546,7 @@ assert!(todo_items.contains(&&String::from("Something else to do")));
 
 While this is perfectly reasonable in terms of memory consumption and performances, the double `&&` is a bit ugly. So, considering that I'm writing a test, where performances are not the major concern, I'd prefer to simplify the syntax. I can create a vector of `String` values and check them
 
-[source, rust]
+[*source, rust]
 ----
 let todo_items: Vec<String> = todo_items.cloned().collect();
 assert!(todo_items.contains(&String::from("Something else to do")));
@@ -556,7 +556,7 @@ The syntax `todo_items.cloned()` is equivalent to `todo_items.map(|x| x.clone())
 
 A good alternative to `contains` is `any`, which however works on iterators. A final version of the code is then
 
-[source, rust]
+[*source, rust]
 ----
 let todo_items: Vec<String> = todo_items.cloned().collect();
 assert!(todo_items.iter().any(|e| e == "Something to do"));
@@ -564,7 +564,7 @@ assert!(todo_items.iter().any(|e| e == "Something to do"));
 
 Which is also more elegant since it uses the comparison between a `String` (which is the iterator item type) and an `&str` (the right side). At this point my test is
 
-[source, rust]
+[*source, rust]
 ----
 #[test]
 fn list_items() {
@@ -589,7 +589,7 @@ fn list_items() {
 
 An implementation of the method `list` that passes this test is
 
-[source, rust]
+[*source, rust]
 ----
     fn list(&self) ->
        (impl Iterator<Item = &String>, impl Iterator<Item = &String>) {
@@ -610,7 +610,7 @@ It's time to expose the methods I implemented on the CLI. I realised that comman
 
 So, the first change is to make the key argument optional.
 
-[source, rust]
+[*source, rust]
 ----
 #[derive(Parser)]
 struct Cli {
@@ -622,7 +622,7 @@ struct Cli {
 
 Purely to have something to play with, I will also add some values to the list in `main`. This is temporary, as long as I don't implement a file storage mechanism.
 
-[source, rust]
+[*source, rust]
 ----
 fn main() {
     let args = Cli::parse();
@@ -638,7 +638,7 @@ fn main() {
 
 Last, the command-method binding part. A match construct is the best option in this case, something like
 
-[source, rust]
+[*source, rust]
 ----
 match args.command.as_str() {
     "add" => ...,
@@ -656,7 +656,7 @@ However, since each method has a different return type, I need the whole constru
 
 The code I wrote is the following
 
-[source, rust]
+[*source, rust]
 ----
 fn main() {
    ...
