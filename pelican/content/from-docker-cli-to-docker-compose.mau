@@ -92,7 +92,7 @@ $ docker run -d \
   postgres:13
 ----
 
-, Stopping containers
+. Stopping containers
 [*infobox, icon="info-circle"]
 %%%%
 You can stop containers using `docker stop ID`. This [link]("https://docs.docker.com/engine/reference/commandline/stop/#extended-description", "gives containers a grace period") to react to the `SIGTERM` signal, for example to properly close files and terminate connections, and then terminates it with `SIGKILL`. You can also force it to stop unconditionally using `docker kill ID` which sends `SIGKILL` immediately.

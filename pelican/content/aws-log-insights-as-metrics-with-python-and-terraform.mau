@@ -196,8 +196,8 @@ The reason behind 1 minute is that the maximum standard resolution of CloudWatch
 ==== Resources
 
 * [link](https://aws.amazon.com/dynamodb/, "Amazon DynamoDB")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table,"aws_dynamodb_table documentation")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table_item,"aws_dynamodb_table_item documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table,"`aws_dynamodb_table` documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table_item,"`aws_dynamodb_table_item` documentation")
 
 === IAM part 1
 
@@ -336,10 +336,10 @@ resource "aws_iam_role_policy" "loginsights2metrics" {
 
 ==== Resources
 
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document, "aws_iam_policy_document documentation")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role, "aws_iam_role documentation")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment, "aws_iam_role_policy_attachment documentation")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy, "aws_iam_role_policy documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document, "`aws_iam_policy_document` documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role, "`aws_iam_role` documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment, "`aws_iam_role_policy_attachment` documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy, "`aws_iam_role_policy` documentation")
 * [link](https://docs.aws.amazon.com/cli/latest/reference/iam/get-policy.html, "AWS CLI iam get-policy documentation")
 * [link](https://docs.aws.amazon.com/cli/latest/reference/iam/get-policy-version.html, "AWS CLI iam get-policy-version documentation")
 
@@ -416,9 +416,9 @@ resource "aws_lambda_permission" "loginsights2metrics" {
 
 ==== Resources
 
-* [link](https://registry.terraform.io/providers/hashicorp/archive/latest/docs/data-sources/archive_file, "archive_file documentation")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function, "aws_lambda_function documentation")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission, "aws_lambda_permission documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/archive/latest/docs/data-sources/archive_file, "`archive_file` documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function, "`aws_lambda_function` documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission, "`aws_lambda_permission` documentation")
 
 === IAM part 2
 
@@ -455,9 +455,9 @@ resource "aws_iam_role_policy" "loginsights2metrics_exec" {
 
 ==== Resources
 
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document, "aws_iam_policy_document documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document, "`aws_iam_policy_document` documentation")
 documentation")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy, "aws_iam_role_policy documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy, "`aws_iam_role_policy` documentation")
 
 === CloudWatch
 
@@ -488,8 +488,8 @@ resource "aws_cloudwatch_event_target" "lambda" {
 
 ==== Resources
 
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_rule, "aws_cloudwatch_event_rule documentation")
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target, "aws_cloudwatch_event_target documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_rule, "`aws_cloudwatch_event_rule` documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target, "`aws_cloudwatch_event_target` documentation")
 
 === Using the module
 
@@ -593,7 +593,7 @@ Please note that the variable `vpc_private_subnets` is a list of subnet names th
 
 ==== Resources
 
-* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group, "aws_security_group documentation")
+* [link](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group, "`aws_security_group` documentation")
 * [link](https://www.terraform.io/docs/language/modules/develop/index.html, "Creating Terraform modules")
 
 == Python

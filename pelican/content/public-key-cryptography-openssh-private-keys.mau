@@ -148,7 +148,7 @@ PBKDF2-params ::= SEQUENCE {
        algid-hmacWithSHA1 }
 ----
 
-As you can see in the ASN.1 dump the salt is `5BE04AE9442D08F0` [class]("4","callout"), the iteration count is 2048 (`0x800`) [class]("5","callout"), and the hash function (`prf`, pseudorandom function) is `hmacWithSHA256` [class]("6","callout") without any additional parameters. The value 2048 for the iterations is a default value in OpenSSL (see the definition of [link](https://github.com/openssl/openssl/blob/5bcbdee621fbf05df7431b8fbb0ea7de7054e1f0/include/openssl/evp.h#L41,"PKCS5_DEFAULT_ITER")).
+As you can see in the ASN.1 dump the salt is `5BE04AE9442D08F0` [class]("4","callout"), the iteration count is 2048 (`0x800`) [class]("5","callout"), and the hash function (`prf`, pseudorandom function) is `hmacWithSHA256` [class]("6","callout") without any additional parameters. The value 2048 for the iterations is a default value in OpenSSL (see the definition of [link](https://github.com/openssl/openssl/blob/5bcbdee621fbf05df7431b8fbb0ea7de7054e1f0/include/openssl/evp.h#L41,"PKCS5\_DEFAULT\_ITER")).
 
 == OpenSSH's private key format
 

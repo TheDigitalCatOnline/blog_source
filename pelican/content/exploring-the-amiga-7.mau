@@ -368,6 +368,6 @@ The rest of the code prepares the call to the protected version of `Enqueue`, co
 == Resources
 
 * Motorola M68000 Family Programmer's Reference Manual - [link]("https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf")
-* Amiga System Programmers Guide, Abacus - [link]("https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus")
+* [link](https://archive.org/details/Amiga_System_Programmers_Guide_1988_Abacus, "Amiga System Programmers Guide, Abacus")
 
 ::#include:snippets/feedback.mau
