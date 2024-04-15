@@ -54,7 +54,7 @@ We can then classify the interactions happening in our system, and thus to our c
 
 ### Message flow
 
-The flow is defined as the tuple `(source, origin)`, that is where the message comes from and what is its destination. There are three different combinations that we are interested in: `(outside, self)`, `(self, self)`, and `(self, outside)`, where `self` is the object we are testing, and `outside` is a generic object that lives in the system. There is a fourth combination, `(outside, outside)` that is not relevant for the testing, since it doesn't involve the object under analysis.
+The flow is defined as the tuple `(source, destination)`, that is where the message comes from and what is its destination. There are three different combinations that we are interested in: `(outside, self)`, `(self, self)`, and `(self, outside)`, where `self` is the object we are testing, and `outside` is a generic object that lives in the system. There is a fourth combination, `(outside, outside)` that is not relevant for the testing, since it doesn't involve the object under analysis.
 
 So `(outside, self)` contains all the messages that other parts of the system send to our component. These messages correspond to the public API of the component, that is the set of entry points the component makes available to interact with it. Notable examples are the public methods of an object in an object-oriented programming language or the HTTP endpoints of a Web application. This flow represents the _incoming messages_.
 
