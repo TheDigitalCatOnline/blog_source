@@ -51,7 +51,7 @@
     </header>
     <div class="paginated-posts">
       <div class="posts">
-	{% for series_name, series_articles in series.items() %}
+	{% for series_name, series_articles in article_series.items() %}
 	{% set article = series_articles[0] %}
 	{% if article.series_info %}
 	<article class="card">
