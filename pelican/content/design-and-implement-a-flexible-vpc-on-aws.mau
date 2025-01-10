@@ -1,7 +1,7 @@
 :pelican.title:Design and implement a flexible VPC on AWS
 :pelican.date:2023-10-16 11:00:00 +0100
 :pelican.category:Programming
-:pelican.tags:AWS, infrastructure, networking, architecture, Terraform
+:pelican.tags:AWS, infrastructure, networking, Terraform
 :pelican.authors:Leonardo Giordani
 :pelican.slug:design-and-implement-a-flexible-vpc-on-aws
 :pelican.image:design-and-implement-a-flexible-vpc-on-aws

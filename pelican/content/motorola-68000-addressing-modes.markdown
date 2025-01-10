@@ -1,7 +1,7 @@
 Title: Motorola 68000: addressing modes
 Date: 2019-03-04 22:30:00 +0100
 Category: Retro
-Tags: assembly, M68000, retroprogramming
+Tags: Assembly, M68000, retroprogramming
 Authors: Leonardo Giordani
 Slug: motorola-68000-addressing-modes
 Image: mc68000

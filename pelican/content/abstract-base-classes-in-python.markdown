@@ -1,7 +1,7 @@
 Title: Abstract Base Classes in Python
 Date: 2016-04-03 11:00:00 +0100
 Category: Programming
-Tags: decorators, metaclasses, metaprogramming, Notebook, OOP, Python, Python2, Python3
+Tags: decorators, metaclasses, metaprogramming, OOP, Python, Python2, Python3
 Authors: Leonardo Giordani
 Slug: abstract-base-classes-in-python
 Image: abstract-base-classes

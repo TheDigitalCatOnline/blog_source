@@ -1,7 +1,7 @@
 :pelican.title:Data Partitioning and Consistent Hashing
 :pelican.date:2022-08-23 12:00:00 +0000
 :pelican.category:Programming
-:pelican.tags:algorithms, architectures, big data, cryptography, devops, distributed systems, Python
+:pelican.tags:algorithms, software architecture, big data, cryptography, devops, distributed systems, Python
 :pelican.authors:Leonardo Giordani
 :pelican.slug:data-partitioning-and-consistent-hashing
 :pelican.image:data-partitioning-and-consistent-hashing

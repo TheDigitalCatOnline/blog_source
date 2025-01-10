@@ -52,20 +52,6 @@
   </ul>
 </div></nav>
 <section>
-  <article class="card">
-    <a href="https://www.thedigitalcat.academy/freebie-first-class-objects">
-      <img src="/images/first-class-objects-in-python.jpg" />
-    </a>
-    <div class="body">
-      <h2>First-class objects in Python</h2>
-      <p>Higher-order functions, wrappers, and factories</p>
-      <div class="actions">
-        <a class="action" href="https://www.thedigitalcat.academy/freebie-first-class-objects">Get your FREE copy</a>
-      </div>
-    </div>
-  </article>
-</section>
-<section>
   <header>
     <h2>Tags</h2>
   </header>
@@ -74,19 +60,13 @@
       <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
     </li>
     <li class="tag tag-size-3">
-      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+      <a title="Posts about Amiga" href="/categories/amiga/">Amiga</a>
     </li>
     <li class="tag tag-size-4">
       <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
     </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about architecture" href="/categories/architecture/">architecture</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
-    </li>
     <li class="tag tag-size-2">
-      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+      <a title="Posts about Assembly" href="/categories/assembly/">Assembly</a>
     </li>
     <li class="tag tag-size-3">
       <a title="Posts about AWS" href="/categories/aws/">AWS</a>
@@ -187,9 +167,6 @@
     <li class="tag tag-size-4">
       <a title="Posts about networking" href="/categories/networking/">networking</a>
     </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
-    </li>
     <li class="tag tag-size-1">
       <a title="Posts about OOP" href="/categories/oop/">OOP</a>
     </li>
@@ -197,7 +174,7 @@
       <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
     </li>
     <li class="tag tag-size-4">
-      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+      <a title="Posts about Pelican" href="/categories/pelican/">Pelican</a>
     </li>
     <li class="tag tag-size-4">
       <a title="Posts about Pika" href="/categories/pika/">Pika</a>
@@ -232,11 +209,14 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
-    <li class="tag tag-size-4">
+    <li class="tag tag-size-3">
       <a title="Posts about Rust" href="/categories/rust/">Rust</a>
     </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about software architecture" href="/categories/software-architecture/">software architecture</a>
     </li>
     <li class="tag tag-size-3">
       <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
@@ -328,19 +308,13 @@
       <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
     </li>
     <li class="tag tag-size-3">
-      <a title="Posts about amiga" href="/categories/amiga/">amiga</a>
+      <a title="Posts about Amiga" href="/categories/amiga/">Amiga</a>
     </li>
     <li class="tag tag-size-4">
       <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
     </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about architecture" href="/categories/architecture/">architecture</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about architectures" href="/categories/architectures/">architectures</a>
-    </li>
     <li class="tag tag-size-2">
-      <a title="Posts about assembly" href="/categories/assembly/">assembly</a>
+      <a title="Posts about Assembly" href="/categories/assembly/">Assembly</a>
     </li>
     <li class="tag tag-size-3">
       <a title="Posts about AWS" href="/categories/aws/">AWS</a>
@@ -441,9 +415,6 @@
     <li class="tag tag-size-4">
       <a title="Posts about networking" href="/categories/networking/">networking</a>
     </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Notebook" href="/categories/notebook/">Notebook</a>
-    </li>
     <li class="tag tag-size-1">
       <a title="Posts about OOP" href="/categories/oop/">OOP</a>
     </li>
@@ -451,7 +422,7 @@
       <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
     </li>
     <li class="tag tag-size-4">
-      <a title="Posts about pelican" href="/categories/pelican/">pelican</a>
+      <a title="Posts about Pelican" href="/categories/pelican/">Pelican</a>
     </li>
     <li class="tag tag-size-4">
       <a title="Posts about Pika" href="/categories/pika/">Pika</a>
@@ -486,11 +457,14 @@
     <li class="tag tag-size-3">
       <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
     </li>
-    <li class="tag tag-size-4">
+    <li class="tag tag-size-3">
       <a title="Posts about Rust" href="/categories/rust/">Rust</a>
     </li>
     <li class="tag tag-size-2">
       <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about software architecture" href="/categories/software-architecture/">software architecture</a>
     </li>
     <li class="tag tag-size-3">
       <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
@@ -608,14 +582,14 @@ line : assignment | expression
 
 <h2 id="tokens">Tokens<a class="headerlink" href="#tokens" title="Permanent link">&para;</a></h2>
 <p>The first class that I provide to start working on our interpreter is <code>Token</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Token</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Token</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_type</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_type</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;Token(</span><span class="si">{}</span><span class="s2">, &#39;</span><span class="si">{}</span><span class="s2">&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
@@ -631,16 +605,16 @@ line : assignment | expression
 
     <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div>
 
@@ -649,32 +623,32 @@ line : assignment | expression
 <p>Remember that everything you find in this class has been introduced to make one or more tests pass, so check the test suite to understand how the object can be used.</p>
 <h2 id="buffer">Buffer<a class="headerlink" href="#buffer" title="Permanent link">&para;</a></h2>
 <p>The second element that you will find in the initial setup is the class <code>TextBuffer</code>, that provides a very basic manager for an input text file</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EOLError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">EOLError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Signals that the buffer is reading after the end of a line.&quot;&quot;&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">EOFError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EOFError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Signals that the buffer is reading after the end of the text.&quot;&quot;&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">TextBuffer</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TextBuffer</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">column</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">text</span> <span class="k">else</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">current_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
@@ -683,7 +657,7 @@ line : assignment | expression
             <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">current_char</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_char</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
@@ -694,7 +668,7 @@ line : assignment | expression
             <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">next_char</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">next_char</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">column</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
@@ -705,21 +679,21 @@ line : assignment | expression
             <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="p">:]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">newline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">newline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">column</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">skip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">skip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">column</span> <span class="o">+=</span> <span class="n">steps</span>
 
-    <span class="k">def</span> <span class="nf">goto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">goto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span> <span class="o">=</span> <span class="n">line</span><span class="p">,</span> <span class="n">column</span>
 </code></pre></div>
 
@@ -736,11 +710,11 @@ line : assignment | expression
 <p>The first thing a Lexer shall be able to do is to load and process an empty text. This should return an <code>EOF</code> (<code>End Of File</code>) token. <code>EOF</code> is used to signal that the input buffer has ended and that there is no more text to process.</p>
 <p>The method <code>get_tokens</code> returns all the tokens of the input stream in a single list.</p>
 <p>Add this code to <code>tests/test_calc_lexer.py</code></p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">tok</span> <span class="k">as</span> <span class="n">token</span>
-<span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_lexer</span> <span class="k">as</span> <span class="n">clex</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">tok</span> <span class="k">as</span> <span class="n">token</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_lexer</span> <span class="k">as</span> <span class="n">clex</span>
 
 
-<span class="k">def</span> <span class="nf">test_get_tokens_understands_eof</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_get_tokens_understands_eof</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -770,32 +744,32 @@ tests/test_calc_lexer.py:6:<span class="w"> </span><span class="nv">AttributeErr
 <hr>
 <h3 id="solution">Solution<a class="headerlink" href="#solution" title="Permanent link">&para;</a></h3>
 <p>To pass the test, the class <code>CalcLexer</code> can use the provided <code>text_buffer.TextBuffer</code> class, that exposes a method <code>load</code> and wrap it in <code>CalcLexer.load</code>. The test is not providing any input so the easiest solution is just to return the required token. The test requires us to implement the method <code>get_tokens</code>, but I preferred to isolate the code in a method called <code>get_token</code> and to call the latter from <code>get_tokens</code>. The file <code>smallcalc/calc_lexer.py</code> is then</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">text_buffer</span>
-<span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">tok</span> <span class="k">as</span> <span class="n">token</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">text_buffer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">tok</span> <span class="k">as</span> <span class="n">token</span>
 
 <span class="n">EOF</span> <span class="o">=</span> <span class="s1">&#39;EOF&#39;</span>
 
 
-<span class="k">class</span> <span class="nc">CalcLexer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CalcLexer</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span> <span class="o">=</span> <span class="n">text_buffer</span><span class="o">.</span><span class="n">TextBuffer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">EOF</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span>
 
-    <span class="k">def</span> <span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()]</span>
 </code></pre></div>
 
 <hr>
 <p>You can see here in practice what I mentioned in the introduction about TDD. The method <code>get_token</code> returns a hardcoded <code>token.Token(EOF)</code>, because <em>that is enough to pass the test</em>. It is not enough to be a good Lexer, but if we write and pass the right tests, this will happen in time. Be smart, be strict: write the minimal code needed to pass the test.</p>
 <p>Being really strict, however, this solution is already over-engineered. The code</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">EOF</span><span class="p">)]</span>
 </code></pre></div>
 
@@ -809,7 +783,7 @@ integer: [0-9]
 
 <h3 id="lexer">Lexer<a class="headerlink" href="#lexer" title="Permanent link">&para;</a></h3>
 <p>Since a calculator has to deal with numbers let us implement support for integers (we will add floating point numbers later). The first thing that we need is to recognise single-digit integers. This is the test that you have to add to <code>tests/test_calc_lexer.py</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_token_understands_integers</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_get_token_understands_integers</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">)</span>
@@ -818,7 +792,7 @@ integer: [0-9]
 </code></pre></div>
 
 <p>Note that here we are testing <code>get_token</code> and not <code>get_tokens</code>. This method will come handy later, so it is worth testing it here. As soon as that works you can test the behaviour of <code>get_tokens</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_integers</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_get_tokens_understands_integers</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">)</span>
@@ -836,10 +810,10 @@ integer: [0-9]
 <h3 id="parser">Parser<a class="headerlink" href="#parser" title="Permanent link">&para;</a></h3>
 <p>Now that we have a working lexer that recognises integers let us work on the parser. This has to use the lexer to process a text and produce a tree of nodes that represent the syntactic structure of the processed code. Don't worry if it seems extremely complex, it is actually pretty simple if you follow the tests.</p>
 <p>Edit the <code>tests/test_calc_parser.py</code> file and insert this code</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_parser</span> <span class="k">as</span> <span class="n">cpar</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_parser</span> <span class="k">as</span> <span class="n">cpar</span>
 
 
-<span class="k">def</span> <span class="nf">test_parse_integer</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_parse_integer</span><span class="p">():</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
     <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;5&quot;</span><span class="p">)</span>
 
@@ -857,10 +831,10 @@ integer: [0-9]
 <p>Let us consider the visitor, now. This is the run-time component of our language, the part that actually runs through the tree of nodes and executes it. This part, thus, is where most of the actual behaviour of the language happens. For instance, the fact that the symbol "+" actually sums integers is because the visitor implements that operation.</p>
 <p>This can seem a trivial consideration, but if you think about the division between integers you immediately understand that the visitor has a great responsibility. Does the symbol <code>/</code> divide integers with or without floating point math? Python 3, for instance, opted for a floating point division, and introduced the <code>//</code> operator for the integer version of the operation, but other languages behave differently.</p>
 <p>I'll discuss this in more detail later, when we will implement mathematical operations. For the time being, let us create the <code>tests/test_calc_visitor.py</code> file and introduce the following test</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_visitor</span> <span class="k">as</span> <span class="n">cvis</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_visitor</span> <span class="k">as</span> <span class="n">cvis</span>
 
 
-<span class="k">def</span> <span class="nf">test_visitor_integer</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_visitor_integer</span><span class="p">():</span>
     <span class="n">ast</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span>
         <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">12</span>
@@ -872,11 +846,11 @@ integer: [0-9]
 
 <p>As you can see, at this stage the visitor has a trivial job, which is to just return the value and the type of the number that it finds in the tree. Note that the visitor provides a method <code>visit</code> which is type agnostic (i.e. it doesn't care about the type of the node). This is correct, as the visitor has to traverse the whole tree recursively and to react to the different nodes without a previous knowledge of what it should expect.</p>
 <p>As simple as the visitor can be, now we can make our CLI interface use the parser and the visitor to understand and execute one simple command, which is to parse a single-digit integer and print it with its type. Change the <code>cli.py</code> file to </p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_parser</span> <span class="k">as</span> <span class="n">cpar</span>
-<span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_visitor</span> <span class="k">as</span> <span class="n">cvis</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_parser</span> <span class="k">as</span> <span class="n">cpar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_visitor</span> <span class="k">as</span> <span class="n">cvis</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">cvis</span><span class="o">.</span><span class="n">CalcVisitor</span><span class="p">()</span>
 
@@ -913,7 +887,7 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">3<
 <h3 id="solution_1">Solution<a class="headerlink" href="#solution_1" title="Permanent link">&para;</a></h3>
 <p>The two functions <code>get_token</code> and <code>get_tokens</code> have to evolve to deal with the new requirements, and to avoid having too much code in a single function I created some private helpers (where "private" has the Python meaning of "please don't use them").</p>
 <p>The idea behind <code>get_tokens</code> is to call <code>get_token</code> until the <code>EOF</code> token is returned, even though we want the latter to be present in the final result.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
         <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -927,7 +901,7 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">3<
 </code></pre></div>
 
 <p>Then I decided to make <code>get_token</code> the central hub of my process with the following paradigm: the function tries to extract a specific token (<code>_process_integer</code>, in this case) and to return it; if the token cannot be extracted, the function tries the following one. At the moment I don't have any other type of token, but I will have them soon.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">eof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_eof</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">eof</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">eof</span>
@@ -943,14 +917,14 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">3<
 
 <p>The three helpers shall just try to extract and return the token they have been assigned or None. After some refactoring I came up with three functions (two of them as properties) that simplify common tasks. <code>_current_char</code> and <code>_current_line</code> are just wrappers around two attributes of <code>self._text_storage</code>, while <code>_set_current_token_and_skip</code> is a bit more complex and ensures that the <code>_current_token</code> is always up to date.</p>
 <div class="highlight"><pre><span></span><code>    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_current_char</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_current_char</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">current_char</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_current_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_current_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">current_line</span>
 
-    <span class="k">def</span> <span class="nf">_set_current_token_and_skip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_current_token_and_skip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span> <span class="o">=</span> <span class="n">token</span>
@@ -958,7 +932,7 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">3<
 </code></pre></div>
 
 <p>Once this functions are in place I can write the actual helpers for the token extraction. The method <code>_process_eol</code> leverages <code>self._text_storage</code>, which raises an <code>EOLError</code> when the end of line has been reached. So all I need to do is to try to get the current char and return <code>None</code> if nothing happens. In case an <code>EOLError</code> exception is raised I run <code>_set_current_token_and_skip</code> with the end of line token.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_eol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">_process_eol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_current_char</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -971,7 +945,7 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">3<
 </code></pre></div>
 
 <p>The helper to process the end of file (<code>_process_eof</code>) is exactly like <code>_process_eol</code>, using <code>self._current_line</code> and <code>text_buffer.EOFError</code>.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_eof</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">_process_eof</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_current_line</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -982,7 +956,7 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">3<
 </code></pre></div>
 
 <p>At this point of the development the incoming token can only be <code>EOL</code>, <code>EOF</code>, or an integer, so the <code>_process_integer</code> function doesn't need to return <code>None</code>. Therefore, it is sufficient to create an integer token with the current char and return it.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">_process_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_token_and_skip</span><span class="p">(</span>
             <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">INTEGER</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_char</span><span class="p">)</span>
         <span class="p">)</span>
@@ -995,36 +969,36 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">3<
 
 <p><code>CalcParser</code> is the only class that is tested, but forecasting (actually, knowing) that we are going to manage multiple types of nodes, I isolated the code for the <code>IntegerNode</code> in its own class. There is no need to abstract things further for the time being, so <code>IntegerNode</code> doesn't inherit from any other class.</p>
 <p>From a pure TDD point of view this is wrong, because I should have written some tests for the <code>IntegerNode</code> class before writing it. The purpose of this exercise, however is to guide you through the creation of a simple compiler, so tests are already given, and I will turn a blind eye on my own exception to the rule (how convenient!).</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_lexer</span> <span class="k">as</span> <span class="n">clex</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_lexer</span> <span class="k">as</span> <span class="n">clex</span>
 
 
-<span class="k">class</span> <span class="nc">IntegerNode</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IntegerNode</span><span class="p">:</span>
     <span class="n">node_type</span> <span class="o">=</span> <span class="s1">&#39;integer&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span><span class="p">,</span>
             <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
         <span class="p">}</span>
 
 
-<span class="k">class</span> <span class="nc">CalcParser</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CalcParser</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">parse_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">IntegerNode</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
 <p><code>CalcVisitor</code> is by far the simplest class at the moment, as the only node we are managing is the one with an <code>integer</code> type.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CalcVisitor</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CalcVisitor</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;integer&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
 </code></pre></div>
@@ -1044,7 +1018,7 @@ expression: integer addsymbol integer
 
 <p>At the moment, our parser doesn't sound like an important component, as its output is just a refurbished version of the lexer one. The visitor, in turn, doesn't really perform any action but to print in a different format what the parser produces.</p>
 <p>Let us try to introduce a simple mathematical operation, then, that should spice up our components. The new test for the lexer component (<code>tests/test_calc_lexer.py</code>) is</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_unspaced_sum_of_integers</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_get_tokens_understands_unspaced_sum_of_integers</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3+5&#39;</span><span class="p">)</span>
@@ -1060,7 +1034,7 @@ expression: integer addsymbol integer
 
 <p>Please note that there are no spaces, as our lexer doesn't know how to deal with them yet. As you can see the output is straightforward, so go and change the <code>CalcLexer</code> class to make this tests pass without breaking any of the ones you already wrote. Check for coverage, to spot possible overengineered parts, and if necessary refactor the class to keep methods as simple as possible.</p>
 <p>The parser now has a more complex job than before, though not yet really challenging. The test for the parser is</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_expression</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_parse_expression</span><span class="p">():</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
     <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;2+3&quot;</span><span class="p">)</span>
 
@@ -1087,7 +1061,7 @@ expression: integer addsymbol integer
 <p>This parser, thus, is pretty ignorant of the different operations we can perform, giving the whole responsibility to the visitor. We could, however, implement the parser to make it produce something more specific, like for example a <code>binary_sum</code> or <code>addition</code> node, which represents only the addition, and which wouldn't need the <code>'operator'</code> key, as it is implicit in the node type.</p>
 <p>The amount of work done by the parser and by the visitor is a peculiarity of the specific language or program, so feel free to experiment. For the moment you have to stick to one solution as you are guided by the tests that I wrote, but as soon as you grasped the concepts and start writing a new language, you will be free to implement each component as you prefer.</p>
 <p>Finally, the visitor shall implement the actual mathematical operation. The test is</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_visitor_expression_sum</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_visitor_expression_sum</span><span class="p">():</span>
     <span class="n">ast</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
         <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -1109,11 +1083,11 @@ expression: integer addsymbol integer
 </code></pre></div>
 
 <p>As soon as you changed the method <code>visit</code> to deal with <code>'expression'</code> nodes, you can test the new syntax in the CLI. Since we changed <code>visit</code> internally, that part of the CLI doesn't require any modification. We have, however, to change the parser entry point from <code>parse_integer</code> to <code>parse_expression</code>, so the new <code>cli.py</code> file will be</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_parser</span> <span class="k">as</span> <span class="n">cpar</span>
-<span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_visitor</span> <span class="k">as</span> <span class="n">cvis</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_parser</span> <span class="k">as</span> <span class="n">cpar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_visitor</span> <span class="k">as</span> <span class="n">cvis</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">cvis</span><span class="o">.</span><span class="n">CalcVisitor</span><span class="p">()</span>
 
@@ -1153,14 +1127,14 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">2<
 <div class="highlight"><pre><span></span><code><span class="n">LITERAL</span> <span class="o">=</span> <span class="s1">&#39;LITERAL&#39;</span>
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_literal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">_process_literal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_current_token_and_skip</span><span class="p">(</span>
             <span class="n">token</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">LITERAL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_char</span><span class="p">)</span>
         <span class="p">)</span>
 </code></pre></div>
 
 <p>The helper <code>_process_integer</code>, on the other hand, changes to return <code>None</code> when no integer can be parsed, which is easily checked with <code>isdigit</code>.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">_process_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_char</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">None</span>
 
@@ -1170,7 +1144,7 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">2<
 </code></pre></div>
 
 <p>Last, the method <code>get_token</code> receives <code>_process_literal</code> as an additional case.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">eof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_eof</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">eof</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">eof</span>
@@ -1189,51 +1163,51 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">2<
 </code></pre></div>
 
 <p>The parser needs a node that represents the literal, namely <code>LiteralNode</code>, and a node to represent a binary operation, called <code>BinaryNode</code>. To avoid duplicating methods I created the <code>ValueNode</code> class and made both <code>IntegerNode</code> and <code>LiteralNode</code> inherit from that.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">smallcalc</span> <span class="kn">import</span> <span class="n">calc_lexer</span> <span class="k">as</span> <span class="n">clex</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">smallcalc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_lexer</span> <span class="k">as</span> <span class="n">clex</span>
 
 
-<span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{}</span>  <span class="c1"># pragma: no cover</span>
 
 
-<span class="k">class</span> <span class="nc">ValueNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValueNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
 
     <span class="n">node_type</span> <span class="o">=</span> <span class="s1">&#39;value_node&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span><span class="p">,</span>
             <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
         <span class="p">}</span>
 
 
-<span class="k">class</span> <span class="nc">IntegerNode</span><span class="p">(</span><span class="n">ValueNode</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IntegerNode</span><span class="p">(</span><span class="n">ValueNode</span><span class="p">):</span>
     <span class="n">node_type</span> <span class="o">=</span> <span class="s1">&#39;integer&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">LiteralNode</span><span class="p">(</span><span class="n">ValueNode</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LiteralNode</span><span class="p">(</span><span class="n">ValueNode</span><span class="p">):</span>
 
     <span class="n">node_type</span> <span class="o">=</span> <span class="s1">&#39;literal&#39;</span>
 
 
-<span class="k">class</span> <span class="nc">BinaryNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BinaryNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
 
     <span class="n">node_type</span> <span class="o">=</span> <span class="s1">&#39;binary&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">operator</span> <span class="o">=</span> <span class="n">operator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
 
-    <span class="k">def</span> <span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span><span class="p">,</span>
             <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span>
@@ -1251,20 +1225,20 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">2<
 </code></pre></div>
 
 <p>The most important change, however, is in <code>CalcParser</code>, where I added the methods <code>parse_addsymbol</code> and <code>parse_expression</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CalcParser</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CalcParser</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">parse_addsymbol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_addsymbol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">LiteralNode</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">parse_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">IntegerNode</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">parse_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_integer</span><span class="p">()</span>
         <span class="n">operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_addsymbol</span><span class="p">()</span>
         <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_integer</span><span class="p">()</span>
@@ -1273,9 +1247,9 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">2<
 </code></pre></div>
 
 <p>The visitor has to add the processing code for <code>binary</code> nodes, which assumes the operation is a sum, so it just needs to visit the left and right nodes.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CalcVisitor</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CalcVisitor</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;integer&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
 
@@ -1297,7 +1271,7 @@ expression: integer addsymbol integer
 </code></pre></div>
 
 <p>Up to now our language can handle only single-digit integers, so this part shall be enhanced before moving to more complex syntax structures. The only component that requires a change is the lexer, as it should emit one single token containing all the digits. The test, consequently, goes in <code>tests/test_calc_lexer.py</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_multidigit_integers</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_get_tokens_understands_multidigit_integers</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;356&#39;</span><span class="p">)</span>
@@ -1315,10 +1289,10 @@ expression: integer addsymbol integer
 <hr>
 <h3 id="solution_3">Solution<a class="headerlink" href="#solution_3" title="Permanent link">&para;</a></h3>
 <p>To provide support for multi-digit integers we just need to change the method <code>_process_integer</code> of the lexer. The new version makes use of a very simple regular expressions.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">re</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">_process_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;\d+&#39;</span><span class="p">)</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
@@ -1341,7 +1315,7 @@ expression: integer addsymbol integer
 <p><em>"Follow the white rabbit."</em> - The Matrix (1999)</p>
 <p>The second limitation that our language has at the moment is that it cannot handle whitespaces. If you try to input an expression like <code>3 + 4</code> in the CLI the program will crash with an exception (why?). Traditionally, whitespaces are completely ignored by programming languages: in Python, as well as in C and many other languages, writing <code>3+4</code>, <code>3 + 4</code>, <code>3+ 4</code>, or <code>3   +   4</code> doesn't change the meaning at all. In Python, however, whitespaces matter at the beginning of the line, as indentation is used in lieu of parentheses.</p>
 <p>How can we put such a behaviour in our language? Again, the lexer is the component in charge, as it should just skip whitespaces. So add this test to <code>tests/test_calc_lexer.py</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_ignores_spaces</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_get_tokens_ignores_spaces</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 + 5&#39;</span><span class="p">)</span>
@@ -1360,7 +1334,7 @@ expression: integer addsymbol integer
 <hr>
 <h3 id="solution_4">Solution<a class="headerlink" href="#solution_4" title="Permanent link">&para;</a></h3>
 <p>To process whitespaces I needed to add a helper called <code>_process_whitespace</code> with the same structure of the new <code>_process_integer</code>.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">_process_whitespace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">_process_whitespace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;\ +&#39;</span><span class="p">)</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
@@ -1375,7 +1349,7 @@ expression: integer addsymbol integer
 
 <p>Note that the solution here is <code>'\ +'</code> which skips any amount of whitespaces, even though <code>'\ '</code> would have been enough to pass the test. As I said before, every time we have to test cases with "any" in them we have to be a bit less strict. TDD is not perfect, and remember that at the end of the day it's more important to have something that works and is not perfect than something that is perfect and doesn't work at all.</p>
 <p>As this time I am not interested in returning whitespace tokens, I just want to skip them. The helper is therefore added to <code>get_token</code> without a <code>return</code> statement.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">eof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_eof</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">eof</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">eof</span>
@@ -1408,7 +1382,7 @@ expression: integer addsymbol integer
 
 <p>Now that we addressed two basic issues of our language we can start enhancing the higher level syntactical structures. Since we implemented the addition operation, the most natural step forward is to implement subtraction. As for the addition, this change will involve all the three layers of the language, lexer, parser, and visitor.</p>
 <p>Let us start teaching the lexer to understand the minus sign. The test that we need is the following (in <code>tests/test_calc_lexer.py</code>)</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_subtraction</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_get_tokens_understands_subtraction</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 - 5&#39;</span><span class="p">)</span>
@@ -1427,7 +1401,7 @@ expression: integer addsymbol integer
 <p>Using specific tokens, however, can simplify things if we want to handle multi-character literals. If we have an operator like <code>-&gt;</code> (as in C) or <code>//</code> (like in Python), or something more complex, we could prefer to handle those in the lexer, emitting a single token with a specific name.</p>
 <p>We could introduce in the lexer a table of accepted values for literals, which would lead to an earlier and better error reporting. At the moment our language accepts every literal between two integers (try with <code>$</code>, for example), but fails to process them in the parser, interpreting any literal as <code>+</code>. Feel free to expand the project in such a direction if you want.</p>
 <p>The test for the parser is the following</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_expression_understands_subtraction</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_parse_expression_understands_subtraction</span><span class="p">():</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
     <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;2-3&quot;</span><span class="p">)</span>
 
@@ -1452,7 +1426,7 @@ expression: integer addsymbol integer
 
 <p>which is a small variation of the previously implemented <code>test_parse_expression</code>.</p>
 <p>The considerations made for the lexer are perfectly valid for the parser as well, so you should need no node change at this point. The last test we have to add is that of the visitor, which is again very similar to the previous one</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_visitor_expression_subtraction</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_visitor_expression_subtraction</span><span class="p">():</span>
     <span class="n">ast</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
         <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -1484,9 +1458,9 @@ smallcalc<span class="w"> </span>:&gt;<span class="w"> </span><span class="m">4<
 <hr>
 <h3 id="solution_5">Solution<a class="headerlink" href="#solution_5" title="Permanent link">&para;</a></h3>
 <p>Adding the addition binary operation changed code in the lexer, the parser, and in the visitor. That operation was however considered a generic binary operation, and only the visitor implements the actual <code>+</code> operation. So adding the subtraction works out of the box for the first two stages and requires me to change the visitor only, with a simple <code>if</code> condition on the value of the operator.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CalcVisitor</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CalcVisitor</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;integer&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
 
@@ -1519,7 +1493,7 @@ expression: integer (addsymbol expression)
 <p>For instance: the expression <code>3 + 4 - 5</code> gives <code>2</code> as a result. The result is the same if we perform <code>(3 + 4) - 5 = 7 - 5 = 2</code> or <code>3 + (4 - 5) = 3 - 1 = 2</code>, where the expressions between parentheses are executed first.</p>
 <p>From the interpreter's point of view, then, we can process a chain of additions and subtractions without being concerned about precedence, which greatly simplifies our job. As the output of the parser is a tree, however, we need to find a way to represent such a chain of operations in that form. One way is to nest expressions, which means that each operation is a single <code>binary</code> node, with the left term containing an integer and the right one the rest of the expression. In the previous example <code>3 + 4 - 5</code> is represented by an addition between <code>3</code> and <code>4 - 5</code>. <code>4 - 5</code>, in turn, is another binary node, a subtraction between <code>4</code> and <code>5</code>.</p>
 <p>Let us start checking if the lexer understand multiple operations</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_tokens_understands_multiple_operations</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_get_tokens_understands_multiple_operations</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 + 5 - 7&#39;</span><span class="p">)</span>
@@ -1538,7 +1512,7 @@ expression: integer (addsymbol expression)
 <p>If the current version of your lexer doesn't pass this test make the necessary changes to the code.</p>
 <p>Now we should modify the parser. While expressing the test is very simple, actually creating the code that makes it pass is not that trivial. So, as an intermediate step, I will make you implement the code that allows the parser to check upcoming tokens.</p>
 <p>One solution to this problem is to save the state of the parser, get as many tokens as we need, and then restore the status. Inspired by Git, I called those methods <code>stash</code> and <code>pop</code>. Put the following test in <code>tests/test_calc_lexer.py</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_lexer_can_stash_and_pop_status</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_lexer_can_stash_and_pop_status</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 5&#39;</span><span class="p">)</span>
 
@@ -1551,7 +1525,7 @@ expression: integer (addsymbol expression)
 
 <p>As you can see the <code>get_token</code> call between <code>stash</code> and <code>pop</code> doesn't leave any trace.</p>
 <p>Once your code is working implement the second test. Create a method <code>peek_token</code> that performs all the previous actions together</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_lexer_can_peek_token</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_lexer_can_peek_token</span><span class="p">():</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">clex</span><span class="o">.</span><span class="n">CalcLexer</span><span class="p">()</span>
     <span class="n">l</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3 + 5&#39;</span><span class="p">)</span>
 
@@ -1561,7 +1535,7 @@ expression: integer (addsymbol expression)
 
 <p>You can implement <code>peek_token</code> very easily leveraging <code>stash</code> and <code>pop</code>.</p>
 <p>Now we are ready to face the test that covers nested operations, which goes in <code>tests/test_calc_parser.py</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_parse_expression_with_multiple_operations</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_parse_expression_with_multiple_operations</span><span class="p">():</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">cpar</span><span class="o">.</span><span class="n">CalcParser</span><span class="p">()</span>
     <span class="n">p</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;2 + 3 - 4&quot;</span><span class="p">)</span>
 
@@ -1597,7 +1571,7 @@ expression: integer (addsymbol expression)
 
 <p>A note of warning: probably the first version of the code that makes this test pass will be horrible, as the logic involved is not trivial. Remember that your <strong>first goal is to make the test pass and then, with the battery of tests in your arsenal, to tidy up the code</strong>.</p>
 <p>As usual, the last test involves the visitor</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_visitor_expression_with_multiple_operations</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_visitor_expression_with_multiple_operations</span><span class="p">():</span>
     <span class="n">ast</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
         <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -1634,9 +1608,9 @@ expression: integer (addsymbol expression)
 <h3 id="solution_6">Solution<a class="headerlink" href="#solution_6" title="Permanent link">&para;</a></h3>
 <p>I made no assumptions on the length of the tokens stream in <code>get_tokens</code>, so processing multiple tokens comes out of the box in the lexer.</p>
 <p>Adding <code>stash</code> and <code>pop</code> is not very complex, as the tests show exactly what we need to save and retrieve. Here I leverage the <code>position</code> attribute and the <code>goto</code> functions of the <code>TextBuffer</code> class.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CalcLexer</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CalcLexer</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span> <span class="o">=</span> <span class="n">text_buffer</span><span class="o">.</span><span class="n">TextBuffer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1644,23 +1618,23 @@ expression: integer (addsymbol expression)
     <span class="p">[</span><span class="o">...</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_current_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_current_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">status</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">status</span><span class="p">[</span><span class="s1">&#39;text_storage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">position</span>
         <span class="n">status</span><span class="p">[</span><span class="s1">&#39;current_token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span>
         <span class="k">return</span> <span class="n">status</span>
 
-    <span class="k">def</span> <span class="nf">stash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_status</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_storage</span><span class="o">.</span><span class="n">goto</span><span class="p">(</span><span class="o">*</span><span class="n">status</span><span class="p">[</span><span class="s1">&#39;text_storage&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span> <span class="o">=</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;current_token&#39;</span><span class="p">]</span>
 </code></pre></div>
 
 <p>Once <code>stash</code> and <code>pop</code> are in place implementing <code>peek_token</code> is trivial</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">peek_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">peek_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stash</span><span class="p">()</span>
         <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
@@ -1669,7 +1643,7 @@ expression: integer (addsymbol expression)
 </code></pre></div>
 
 <p>Finally, <code>peek_token</code> allows me to add support for multiple expressions in the parser.</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">parse_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">parse_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_integer</span><span class="p">()</span>
 
         <span class="n">next_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">peek_token</span><span class="p">()</span>

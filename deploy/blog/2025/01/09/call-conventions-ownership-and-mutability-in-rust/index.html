@@ -1,0 +1,976 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>The Digital Cat - Call conventions, ownership, and mutability in Rust</title>
+    <meta charset="utf-8" />
+    <meta http-equiv='content-language' content='en-gb'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
+<meta name="description" content="A thorough explanation of conventions and the role of ownership and mutability in Rust function calls">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@thedigicat" />
+<meta name="twitter:title" content="Call conventions, ownership, and mutability in Rust" />
+<meta name="twitter:description" content="A thorough explanation of conventions and the role of ownership and mutability in Rust function calls" />
+<meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/call-conventions-ownership-and-mutability-in-rust.jpg" />
+    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/theme/css/main.min.css?f6765de3">
+    <link href="/images/global/favicon.jpg" rel="icon">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'UA-74364524-1');
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     
+     gtag('config', 'G-FZ55XG1KGG');
+    </script>
+  </head>
+
+  <body class="preload">
+    <div class="container">
+      <div class="sidebar navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Amiga" href="/categories/amiga/">Amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Assembly" href="/categories/assembly/">Assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about big data" href="/categories/big-data/">big data</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about distributed systems" href="/categories/distributed-systems/">distributed systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about networking" href="/categories/networking/">networking</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pelican" href="/categories/pelican/">Pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about software architecture" href="/categories/software-architecture/">software architecture</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Feeds</h2>
+  </header>
+<ul>
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+
+
+  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
+    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
+  </ul>
+</section>      </div>
+      <div class="page">
+	<header class="primary" >
+	  <button type="button">
+	    <i class="fas fa-bars"></i>
+	  </button>
+	  <p>The Digital Cat</p>
+	</header>
+	<div class="mobile-menu navigation">
+<nav>
+<div class="links">
+  <ul>
+    <li class="link"><a href="/index.html">Homepage</a></li>
+    <li class="link"><a href="/pages/about.html">About</a></li>
+    <li class="link"><a href="/archives/index.html">Archives</a></li>
+  </ul>
+</div></nav>
+<section>
+  <header>
+    <h2>Categories</h2>
+  </header>
+<ul>
+  <li><a href="/category/programming/">Programming</a></li>
+  <li><a href="/category/projects/">Projects</a></li>
+  <li><a href="/category/retro/">Retro</a></li>
+</ul></section>
+<section>
+  <header>
+    <h2>Tags</h2>
+  </header>
+<ul class="tags">
+    <li class="tag tag-size-3">
+      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Amiga" href="/categories/amiga/">Amiga</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Assembly" href="/categories/assembly/">Assembly</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about big data" href="/categories/big-data/">big data</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about C" href="/categories/c/">C</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about design" href="/categories/design/">design</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about devops" href="/categories/devops/">devops</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about distributed systems" href="/categories/distributed-systems/">distributed systems</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Django" href="/categories/django/">Django</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about editor" href="/categories/editor/">editor</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about generators" href="/categories/generators/">generators</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Git" href="/categories/git/">Git</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about HTML" href="/categories/html/">HTML</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about networking" href="/categories/networking/">networking</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pelican" href="/categories/pelican/">Pelican</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python" href="/categories/python/">Python</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
+    </li>
+    <li class="tag tag-size-1">
+      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about software architecture" href="/categories/software-architecture/">software architecture</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
+    </li>
+    <li class="tag tag-size-2">
+      <a title="Posts about testing" href="/categories/testing/">testing</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about tools" href="/categories/tools/">tools</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
+    </li>
+    <li class="tag tag-size-4">
+      <a title="Posts about video" href="/categories/video/">video</a>
+    </li>
+    <li class="tag tag-size-3">
+      <a title="Posts about WWW" href="/categories/www/">WWW</a>
+    </li>
+</ul></section>	</div>
+	
+<div class="page-content">
+  <header>
+    <h1>Call conventions, ownership, and mutability in Rust</h1>
+    <div class="post-info">
+      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2025-01-09T18:00:00+01:00"> 09/01/2025</time></p>
+      <p class="tags">
+	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
+	<a class="tag" href="/categories/assembly/">Assembly</a>
+	<a class="tag" href="/categories/compilers/">compilers</a>
+	<a class="tag" href="/categories/rust/">Rust</a>
+      </p>
+      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=Call%20conventions%2C%20ownership%2C%20and%20mutability%20in%20Rust&url=https%3A//www.thedigitalcatonline.com/blog/2025/01/09/call-conventions-ownership-and-mutability-in-rust/&via=thedigicat&hashtags=assembly,compilers,rust" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
+<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2025/01/09/call-conventions-ownership-and-mutability-in-rust/&title=Call%20conventions%2C%20ownership%2C%20and%20mutability%20in%20Rust&summary=A%20thorough%20explanation%20of%20conventions%20and%20the%20role%20of%20ownership%20and%20mutability%20in%20Rust%20function%20calls&source=https%3A//www.thedigitalcatonline.com/blog/2025/01/09/call-conventions-ownership-and-mutability-in-rust/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
+<span><a class="" href="https://news.ycombinator.com/submitlink?t=Call%20conventions%2C%20ownership%2C%20and%20mutability%20in%20Rust&u=https%3A//www.thedigitalcatonline.com/blog/2025/01/09/call-conventions-ownership-and-mutability-in-rust/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
+<span><a class="" href="mailto:?subject=Call%20conventions%2C%20ownership%2C%20and%20mutability%20in%20Rust&amp;body=https%3A//www.thedigitalcatonline.com/blog/2025/01/09/call-conventions-ownership-and-mutability-in-rust/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
+<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2025/01/09/call-conventions-ownership-and-mutability-in-rust/&title=Call%20conventions%2C%20ownership%2C%20and%20mutability%20in%20Rust" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>My roots as a developer are in C and Assembly, and I remember fondly the time spent to learn those languages using Borland TASM or Turbo C under MS-DOS. Those languages, and the technology that surrounded them, forced me to understand the low-level architecture of computers, and I still consider those details extremely interesting.</p><p>Rust, just like C and C++, is a low-level language that exposes details of the underlying architecture, and to use it proficiently requires a certain understanding of concepts like memory management that are mostly ignored by high-level language like Python or JavaScript.</p><p>This post has been written for beginners who are used to dynamically typed languages. I will explore the intricacies of passing arguments to Rust functions, trying to clarify exactly what happens behind the scenes and why the language provides syntactic devices like <code>&amp;</code> or <code>mut</code>.</p><p>For the sake of clarity, I will split the discussion into three separate topics: <strong>call conventions</strong>, <strong>ownership</strong>, and <strong>mutability</strong>. However, it is important to keep in mind that those concepts are not independent, and that the separation is purely a strategy to make them more digestible.</p><h2 id="computer-architecture-3c2b">Computer architecture<a class="headerlink" href="#computer-architecture-3c2b" title="Permanent link">¶</a></h2><p>Throughout the article, I will mention and show what happens at CPU level when code is written in a certain way.</p><p>You do not need to have previous knowledge of computer architecture to follow those sections, as I will explain what happens step by step, but I highly recommend to eventually become familiar with some concepts like the stack and CPU calling conventions. You will find some useful links in the Resources section at the end of the article.</p><div class="infobox"><div class="title">Assembly and machine code</div><div><p>Formally, machine code is the sequence of binary values that are given to the CPU: everything in machine code is just a binary number. Assembly is a slightly higher-level language that uses mnemonics and register names to make it simpler for humans to read and write machine code.</p>
+<p>For all practical purposes, in this article we can assume that Assembly and machine code are the same thing and use the two words interchangeably.</p></div></div><h2 id="call-conventions-df06">Call conventions<a class="headerlink" href="#call-conventions-df06" title="Permanent link">¶</a></h2><p>When we define a function, we list a set of <strong>parameters</strong>, that is values that have to be given to the function when we call it. As Rust is a statically typed language, functions need to declare the type of each parameter, and arguments need to match that.</p><div class="infobox"><div class="title">Arguments and parameters</div><div><p>Strictly speaking, arguments and parameters are different. However, this explanation from <a href="https://doc.rust-lang.org/book/ch03-03-how-functions-work.html#parameters">the Rust book</a> looks like a good informal approach.</p>
+<p><em>We can define functions to have parameters, which are special variables that are part of a function’s signature. When a function has parameters, we can call it providing concrete values for those parameters. Technically, the concrete values are called arguments, but in casual conversation, people tend to use the words parameter and argument interchangeably for either the variables in a function’s definition or the concrete values passed in when you call a function.</em></p></div></div><p>In Rust, there are many built-in types like integers, floats, booleans, and an infinite amount of user-defined types, but when we define function parameters there are two macro categories in which they can fall: <em>values</em> and <em>references</em>.</p><p>This is the first and most important concept to learn. We can call a function passing values in <em>only two different ways</em>, regardless of the data type. Depending on the language and the speaker, such techniques are named in different ways, and in this article I will use call <strong>by value</strong> and call <strong>by reference</strong>. We call these two different strategies <strong>call conventions</strong>.</p><h3 id="values-and-references-dc2e">Values and references</h3><p>Let&#x27;s review this important distinction between values and references before we jump into the details of function calling.</p><p>Consider this situation: I want to give a friend a card for their birthday. I can hand them the card itself, passing the physical object.</p><p>Let&#x27;s consider a different scenario: a friend wants to borrow my car to go shopping. It would be crazy for me to try and get my car to hand it physically. I will probably just tell my friend where the car is parked.</p><p>These two examples are exactly what happens when a computer manages data. Ultimately, data is just bytes stored somewhere in memory (typically in RAM, but the same is true for caches or long-term storage like hard drives). When I want to send data to another component in the system I can either give the data itself (value) or tell the component where to find the value (reference).</p><div class="infobox"><div class="title">Memory location</div><div><p>Technically, a memory location is called <strong>address</strong>. Ultimately, it&#x27;s just a number that identifies a specific location in memory that hosts data. A <strong>pointer</strong> or a <strong>reference</strong> is the type of a variable that contains a memory address. It is usually an unsigned integer whose size depends on the computer architecture. For an Intel x86-64 machine it&#x27;s a 64 bit number (8 bytes).</p>
+<p>Strictly speaking, while C pointers are literally just an integer, Rust references are structures that contain additional data, but for the sake of simplicity in this post we will ignore the difference. If you want to dig into this you can read <a href="https://doc.rust-lang.org/std/primitive.reference.html">the documentation</a>.</p>
+<p>This means that, strictly speaking, arguments can be passed only by value. References are values (addresses) that are used to find other values.</p></div></div><h3 id="why-two-different-ways-7669">Why two different ways?</h3><p>Why do computer provide two ways to pass arguments to functions?</p><p>Let&#x27;s consider a real world example. I won a huge sum of money at the national lottery, and decided to get a safe deposit box at the bank and put the money there. To make sure I don&#x27;t forget the code to open the safe I write it on a piece of paper. One day I need to get some money from the safe, but I cannot go myself, so I ask a friend to go, open the safe, and get the money for me. To do this, I have to give this person the piece of paper with the code, and they will give it back once they are done. As this happens multiple times, I decide that it might be simpler to copy the code on another piece of paper and to give that to them.</p><p>Everything works well, until one day the bank asks us to change the code every time we open the safe, as a security measure. Now, the one who opens the safe has to come up with a new code and update their own piece of paper. This means that the copy owned by the other person is instantly invalidated. Assuming we don&#x27;t have any other way to communicate the change, we need to review our strategy. In this case there is only one way to deal with the situation. We need a single copy of the piece of paper and each one of us knows where it is hidden. This way, the one who changes the code can go and update the only copy of the note in existence.</p><p>At CPU level, when we call a function (the friend) we might need to pass data (the code to open the safe). As long as data is not changed we can safely copy it into the function&#x27;s memory space (copy the code on another piece of paper), but as soon as the value changes we need a different method that allows the function to change the original value (the only copy of the note). We can pass the location of the data (the place where the note is hidden) so that the function can use it and change it.</p><p>In the first two parts of the article we will deal with read-only data, so for a while it will look like there is no need to use references. In the third part, we will introduce mutability that will finally justify them.</p><h3 id="pass-by-value-in-rust-3d8c">Pass by value in Rust</h3><p>The following code shows how we can pass function arguments by value in Rust</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="p">{</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span> <span class="callout">3</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Item</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span> <span class="callout">1</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="callout">2</span>
+<span class="p">}</span>
+</pre></div></div></div><p>As you can see, the code is extremely simple. The function <code>main</code> creates a variable of type <code>Item</code> <span class="callout">1</span> and calls the function <code>process</code> <span class="callout">2</span>. This in turn extracts the field <code>value</code> <span class="callout">3</span> and returns it (which is ignored by <code>main</code>).</p><p>The function prototype accepts an argument of type <code>Item</code>. This means that the function wants to receive the physical data (the birthday card).</p><p>In this case we say that the caller passes the variable <code>i</code> <em>by value</em>.</p><h4 id="behind-the-scenes-dde3">Behind the scenes</h4><p>Traditionally, we assume that the compiler will byte copy the value into the function stack, and this is still a valid mental model. However, remember that the compiler&#x27;s task is to optimise code, so it might decide to do something completely different at machine language level.</p><p>We can see what happens in this case using the amazing <a href="https://godbolt.org/">Compiler Explorer</a>. Please note that to use it you need to make the function <code>main</code> public, as the compiler expects a library, not an executable. See the section &quot;Disassemble Rust&quot; at the end of the post if you want to do it locally.</p><p>Using rustc 1.83.0, the code above becomes</p><div class="code"><div class="content"><div class="highlight"><pre><span class="nl">example:process:</span>
+<span class="w">        </span><span class="nf">mov</span><span class="w">     </span><span class="nb">ax</span><span class="p">,</span><span class="w"> </span><span class="nb">di</span> <span class="callout">6</span>
+<span class="w">        </span><span class="nf">ret</span> <span class="callout">7</span>
+
+<span class="nl">example:main:</span>
+<span class="w">        </span><span class="nf">push</span><span class="w">    </span><span class="nb">rax</span> <span class="callout">1</span>
+<span class="w">        </span><span class="nf">mov</span><span class="w">     </span><span class="nb">edi</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span> <span class="callout">3</span>
+<span class="w">        </span><span class="nf">call</span><span class="w">    </span><span class="nv">example</span><span class="p">:</span><span class="nv">process</span> <span class="callout">5</span>
+<span class="w">        </span><span class="nf">pop</span><span class="w">     </span><span class="nb">rax</span> <span class="callout">2</span>
+<span class="w">        </span><span class="nf">ret</span>
+</pre></div></div></div><p>For those unfamiliar with (Intel) Assembly, let me clarify what happens here:</p><ul><li>First of all, there is no concept of <code>struct</code> in machine code. Here, the compiler figures out there is only one field so the struct <code>i</code> is just the 16 bit value 42.</li><li>In <code>example::main</code> the code saves <span class="callout">1</span> and restores <span class="callout">2</span> the 64-bit register <code>rax</code>, which is used by convention to store a function&#x27;s return value (low-level calling convention).</li><li>The value of the variable <code>i</code> is stored in the register <code>edi</code> <span class="callout">3</span>. Here, the compiler decided not to use the stack, as the value of the variable is ultimately just a single <code>u16</code> that can be hosted by a register.</li><li>The function <code>example:process</code> is called <span class="callout">5</span>. The code of the function in Rust is very simple, and it needs only to extract the field <code>value</code>. In Assembly, there is no field, and the return value of the function is basically just its input. The function stores the output in the register <code>ax</code> <span class="callout">6</span> which is the lower 16-bit part of <code>rax</code>.</li><li>The function returns <span class="callout">7</span>.</li></ul><p>Leaving aside the complexity of the low-level architecture and conventions, the main concept we need to retain is: passing parameters by value copies the value of the arguments.</p><p>Again, keep in mind that the compiler writes machine code with optimisation in mind, so what we do in Rust is not always reflected in what happens at CPU level. Later, we will see an example of this.</p><h3 id="pass-by-reference-in-rust-261a">Pass by reference in Rust</h3><p>The following code is a slight modification of the previous example and shows how we can pass function arguments by reference in Rust</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="p">{</span> <span class="callout">1</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Item</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span> <span class="callout">2</span>
+<span class="p">}</span>
+</pre></div></div></div><p>As you can see, the only difference is that the function <code>process</code> accepts <code>&amp;Item</code> <span class="callout">1</span>, that is a reference to <code>Item</code>. The function call is modified accordingly, passing <code>&amp;i</code> <span class="callout">2</span>, which is the reference to <code>i</code>.</p><p>Here, we are doing what we did when we lent a car. Instead of handing the car itself we tell the recipient where to find it.</p><h4 id="automatic-referencing-and-dereferencing-5b33">Automatic referencing and dereferencing</h4><p>The code above might surprise those who are used to code in C/C++, as the function <code>process</code> receives <code>&amp;Item</code> but then reads one of the field as if the variable was an <code>Item</code>.</p><p>Formally, we should first <em>dereference</em> the pointer, which in Rust can be done with <code>*item</code> and then access the field. Indeed, the following code works</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="p">{</span>
+<span class="w">    </span><span class="p">(</span><span class="o">*</span><span class="n">item</span><span class="p">).</span><span class="n">value</span>
+<span class="p">}</span>
+</pre></div></div></div><p>In C/C++ the syntax <code>(*item).value</code> can be written <code>item-&gt;value</code>, but Rust doesn&#x27;t have the arrow operator. </p><p>Rust has a feature called <em>automatic referencing and dereferencing</em> that can automatically add <code>&amp;</code>, <code>&amp;mut</code>, or <code>*</code> to match the required data type. In this case, it automatically transforms <code>item</code> into <code>*item</code>.</p><p><strong>It is extremely important to remember that Rust silently adjusts calls</strong>. The feature is useful, as it simplifies the syntax of the language, but if we want to understand what happens behind the scenes we need to be aware of this behaviour.</p><p>You can read more about automatic referencing and dereferencing in <a href="https://doc.rust-lang.org/book/ch05-03-method-syntax.html#wheres-the---operator">chapter 5.3</a> of the Rust book.</p><h4 id="behind-the-scenes-dde3">Behind the scenes</h4><p>This time, the mental model is that we are handing the function the location of our data, without copying it to new memory locations. Let&#x27;s see what happens at CPU level.</p><p>Again, using the <a href="https://godbolt.org/">Compiler Explorer</a> and rustc 1.83.0, the code above becomes</p><div class="code"><div class="content"><div class="highlight"><pre><span class="nl">example:process:</span>
+<span class="w">        </span><span class="nf">mov</span><span class="w">     </span><span class="nb">ax</span><span class="p">,</span><span class="w"> </span><span class="kt">word</span><span class="w"> </span><span class="nv">ptr</span><span class="w"> </span><span class="p">[</span><span class="nb">rdi</span><span class="p">]</span> <span class="callout">6</span>
+<span class="w">        </span><span class="nf">ret</span> <span class="callout">7</span>
+
+<span class="nl">example:main:</span>
+<span class="w">        </span><span class="nf">push</span><span class="w">    </span><span class="nb">rax</span> <span class="callout">1</span>
+<span class="w">        </span><span class="nf">mov</span><span class="w">     </span><span class="kt">word</span><span class="w"> </span><span class="nv">ptr</span><span class="w"> </span><span class="p">[</span><span class="nb">rsp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="mi">42</span> <span class="callout">3</span>
+<span class="w">        </span><span class="nf">lea</span><span class="w">     </span><span class="nb">rdi</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nb">rsp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="p">]</span> <span class="callout">4</span>
+<span class="w">        </span><span class="nf">call</span><span class="w">    </span><span class="nv">example</span><span class="p">:</span><span class="nv">process</span> <span class="callout">5</span>
+<span class="w">        </span><span class="nf">pop</span><span class="w">     </span><span class="nb">rax</span> <span class="callout">2</span>
+<span class="w">        </span><span class="nf">ret</span>
+</pre></div></div></div><p>The machine code is clearly different from the previous version. Let&#x27;s have a deep look:</p><ul><li>As happened before, the code saves <span class="callout">1</span> and restores <span class="callout">2</span> the 64-bit register <code>rax</code>, which is used by convention to store a function&#x27;s return value (calling convention).</li><li>The value 42 is pushed onto the stack <span class="callout">3</span>. This call looks complicated because of byte alignment, but it basically moves the value 42 at the stack address stored into the stack register <code>rsp</code>. Let&#x27;s decompose it<ul><li>In Intel Assembly <code>mov [rsp], 42</code> would move the value 42 to the address stored in the register <code>rsp</code>. The value is not moved into the register. Rather, the value in the register is used as an address.</li><li>The CPU is very picky when it comes to the size of data that we want to move, so the code clarifies that we want to treat the address as the space that hosts 2 bytes (a <code>word</code> that corresponds to 16 bits) with <code>mov word ptr [rsp], 42</code>.</li><li>Last, the Intel calling convention wants the stack pointer <code>rsp</code> to be constantly aligned to a 16-byte boundary. The function <code>main</code> already pushed <code>rax</code>, which advanced the stack pointer by 8 bytes, and we are going to store 2 bytes (<code>word</code>), so we are missing 6 bytes to keep the stack pointer aligned. This is the reason why the code above uses <code>[rsp + 6]</code> instead of just <code>[rsp]</code>.</li></ul></li><li>The address stored at <code>rsp + 6</code> is loaded into the register <code>rdi</code> <span class="callout">4</span>. The instruction <code>lea</code> (Load Effective Address) calculates the result of <code>[rsp + 6]</code> as an address and loads it into <code>rdi</code>. This is different from what <code>mov</code> would do, which is to copy the value at that address.</li><li>As before, the function <code>process</code> is called <span class="callout">5</span>.</li><li>The code of the function is different as well because now <code>rdi</code> doesn&#x27;t contain a value but the address of the value. Thus, the function uses <code>word ptr [rdi]</code> <span class="callout">6</span> to move the 16 bits value at that address into <code>ax</code> (which is still the conventional register for the return value) and returns <span class="callout">7</span>.</li></ul><p>Once again, the Assembly code is complicated because of conventions and low-level architectural details, but the main concept is: passing parameters by address gives the function the location of the data and not the data itself.</p><h3 id="the-compilers-role-fed8">The compiler&#x27;s role</h3><p>I mentioned several times that the compiler&#x27;s task is to optimise code, which means that the machine code might or might not correspond to what we wrote in Rust (or any other high level language). A simple example is the following</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">struct</span><span class="w"> </span><span class="nc">LargeItem</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="kt">u16</span><span class="p">;</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">],</span> <span class="callout">2</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="nc">LargeItem</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">li</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LargeItem</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">],</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">li</span><span class="p">);</span> <span class="callout">1</span>
+<span class="p">}</span>
+</pre></div></div></div><p>Here, we are passing the variable <code>li</code> by value <span class="callout">1</span>, but the size of the type is rather huge. It&#x27;s a struct of 2 MiB (2 bytes * 2<sup>32</sup>) <span class="callout">2</span> which cannot be stored into a register. This means that, even though in Rust we pretend we pass the value, the compiler is forced to call the function passing the address. The relevant part of the machine code this time is</p><div class="code"><div class="content"><div class="highlight"><pre><span class="nl">example:process:</span>
+<span class="w">        </span><span class="nf">mov</span><span class="w">     </span><span class="nb">ax</span><span class="p">,</span><span class="w"> </span><span class="kt">word</span><span class="w"> </span><span class="nv">ptr</span><span class="w"> </span><span class="p">[</span><span class="nb">rdi</span><span class="p">]</span>
+<span class="w">        </span><span class="nf">ret</span>
+
+<span class="nl">example:main:</span>
+<span class="w">        </span><span class="c1"># Calls to memset and memcpy</span>
+<span class="w">        </span><span class="c1"># to set up the large struct</span>
+<span class="w">        </span><span class="nf">...</span>
+<span class="w">        </span><span class="nf">lea</span><span class="w">     </span><span class="nb">rdi</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nb">rsp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">8</span><span class="p">]</span> <span class="callout">1</span>
+<span class="w">        </span><span class="nf">call</span><span class="w">    </span><span class="nv">example</span><span class="p">:</span><span class="nv">process</span>
+<span class="w">        </span><span class="nf">...</span>
+<span class="w">        </span><span class="nf">ret</span>
+</pre></div></div></div><p>where I omitted the rest of the code that deals with the memory initialisation of the large struct.</p><p>As you can see, the compiler ignores our &quot;directive&quot; to pass by value and uses the address of the struct <span class="callout">1</span> as it did with the Rust code that uses references. The function extracts the first value of the array <code>item.value</code>, so the machine code reads the value at the address <span class="callout">2</span>.</p><p>The bottom line is: <strong>both passing by value and passing by reference can result in the same machine code</strong>.</p><p>This might sound surprising, but if you think about it, that&#x27;s exactly the reason why we use a compiler and why it&#x27;s such a fascinating and important piece of software.</p><p>As I mentioned before, the reason why we should pass arguments by reference instead of by value will be clear once we introduce mutability. To get there, however, we first need to discuss another features of the language: ownership.</p><h2 id="ownership-8ac9">Ownership<a class="headerlink" href="#ownership-8ac9" title="Permanent link">¶</a></h2><p>This is the second aspect of function calls that I want to discuss, together with call conventions and mutability. Once again, such concepts are interconnected and are separated here just for the sake of clarity.</p><p>To discuss ownership, let&#x27;s once again have a look at real world examples.</p><p>In the first scenario, I have a car (once again!) that I don&#x27;t use any more, so I sell it. From today, I cannot drive that car any more, as it belongs to someone else.</p><p>The second situation is: I own a holiday home in a beautiful place, and a friend asked me to use it for a coupe of weeks. The ownership of the house doesn&#x27;t change, but for a while it will be used by another person.</p><p>The third case is similar to a previous example. I annotated the address of a shop on a piece of paper. A friend expresses interest in the same shop, so I copy the note and give it to them. Now, we both have the same information in two different physical locations.</p><p>The difference between the cases is clear. Once the car is sold it&#x27;s not part of my possession any more. I can&#x27;t drive it, but at the same time I don&#x27;t have to pay insurance or to deal with it when it&#x27;s time to demolish it. In the second case, the house is still mine, and I am responsible for council tax and repairs, but for a while it will be given to another. In the third case, each one of us owns their own copy of the information and is responsible for the data.</p><p>These three cases can be connected with the way function arguments are treated in Rust. When we pass variables to a function we need to consider the <em>ownership</em> of those variables (actually, the ownership of the data stored in those variables).</p><p>In Rust, each argument can be passed in one of the three possible ways:</p><ul><li><strong>Copy</strong>: we make a copy of value and end up with two owners (like the address of the shop).</li><li><strong>Move</strong>: we transfer ownership (like selling the car).</li><li><strong>Borrow</strong>: we lend the value to a function but we want to have it back (like we did with the house).</li></ul><p>It is important to understand that ownership is an additional check introduced by the Rust compiler, and that there is no such a thing at CPU level.</p><h3 id="copy-two-values-and-two-owners-44a9">Copy: two values and two owners</h3><p>Let&#x27;s consider the following code</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">value</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span> <span class="callout">1</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">v</span><span class="p">);</span> <span class="callout">2</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Value {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span> <span class="callout">3</span>
+<span class="p">}</span>
+</pre></div></div></div><p>Here, we initialise a value <code>v</code> <span class="callout">1</span> and we pass it by value to the function <code>process</code> <span class="callout">2</span>.</p><p>The value of <code>v</code> is <em>copied</em> into the variable <code>value</code> when the function is called. This means that when we call <code>process</code> there are two independent areas of memory:</p><ul><li>The area labelled <code>v</code> which is owned by <code>main</code>.</li><li>The area labelled <code>value</code> which is owned by <code>process</code>.</li></ul><p>Both areas of memory (variables) contain the same value initially, but they are independent so they can change without affecting each other. We will see an example when we discuss mutability later.</p><p>There are two important facts to consider here:</p><ol start=1><li>We can use <code>v</code> <span class="callout">3</span> after we called <code>process</code>. As we copied the value into the function, our variable is still accessible.</li><li>The variable has been <strong>copied automatically</strong> by Rust. This happens because <code>v</code> is a simple type and implements the trait <code>Copy</code> out of the box.</li></ol><h4 id="the-copy-trait-151d">The Copy trait</h4><p>In Rust, the <code>Copy</code> trait is associated with bitwise copy, that is a trivial memory copy between memory areas. Going back to real world examples we can think of a photocopy of a document, where the two copies are exactly identical at the end of the process.</p><p>This is not always what we want and this is where the trait <code>Clone</code> comes into play. I won&#x27;t discuss it further in this article, make sure you read what the Rust book says about <a href="https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html#memory-and-allocation">Memory and Allocation</a>.</p><p>Some simple types in Rust implement the trait <code>Copy</code> out of the box: integers, floats, booleans, and char are among those. If you are unsure, you can always check the documentation. For example, <code>u32</code> implements <code>Copy</code> as stated <a href="https://doc.rust-lang.org/std/primitive.u32.html#impl-Copy-for-u32">here</a>.</p><p>It&#x27;s important to remember that a <code>struct</code> doesn&#x27;t implement <code>Copy</code> automatically. This was the case originally, but it was changed around 2014, and you can read a long and detailed explanation in <a href="https://github.com/rust-lang/rfcs/blob/master/text/0019-opt-in-builtin-traits.md">RFC #19</a>.</p><h3 id="move-transfer-ownership-9b44">Move: transfer ownership</h3><p>What happens when a variable is passed by value and its type doesn&#x27;t implement the <code>Copy</code> trait? In Rust, the variable is <em>moved</em> to the function and the ownership is transferred (selling the car).</p><p>Let&#x27;s have a look at the following code</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Item</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// This fails: value moved to process()</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Item value {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>The compiler won&#x27;t accept it and will return the following error</p><div class="code"><div class="content"><div class="highlight"><pre>    |
+    |     let i = Item { value: 42 };
+    |         - move occurs because `i` has type `Item`,
+    |           which does not implement the `Copy` trait
+    |
+    |     process(i);
+    |             - value moved here
+...
+    |     println!(&quot;Item value {}&quot;, i.value);
+    |                               ^^^^^^^ value borrowed
+    |                                       here after move
+    |
+</pre></div></div></div><p>After what we said in the previous sections, I believe the error messages are very clear.</p><p>When we called <code>process</code> passing <code>i</code> by value we gave up ownership of the variable, so it is not acceptable to use it after that instruction. We are basically trying to drive the car after we sold it.</p><h4 id="implementing-copy-for-structs-c9e3">Implementing Copy for structs</h4><p>As you see, the <code>Copy</code> trait is explicitly mentioned. If we implement it for <code>Item</code> we should be able to go back to the previous case, with two copies of the value (<code>i</code> in <code>main</code> and <code>item</code> in <code>process</code>). When we define a <code>struct</code> that contains only types that implement <code>Copy</code> we can ask Rust to implement the trait for us using <code>#[derive(Copy, Clone)]</code>.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="cp">#[derive(Copy, Clone)]</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Item</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// This succeeds: value copied to process()</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Item value {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>This code compiles as now <code>Item</code> can be copied when passed as an argument to <code>process</code>. The only field of <code>Item</code> is a <code>u16</code>, a type that implements the trait <code>Copy</code>, so it is sufficient to derive the trait to implement it for the structure.</p><p>To prove that ownership is a protection mechanism that exists only in Rust, it is interesting to compare the Assembly code for the two cases of a struct that doesn&#x27;t implement <code>Copy</code> and for one that does. The code is exactly the same for both cases (we saw it in the first example of the article).</p><h3 id="borrow-lend-the-value-to-a-function-a051">Borrow: lend the value to a function</h3><p>So far we saw two cases that happen when we pass arguments by value. We learned however that we can also pass arguments by reference, so let&#x27;s have a look at what happens in that case.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Item</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Item value {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>Here, we pass to the function a reference to the value, just like we did with the house in the example. We are basically telling the function that it is allowed to access the value for a while, but that we retain ownership. The code compiles without errors.</p><p>This seems to be exactly what happened when we passed by value a type that implements <code>Copy</code>, so what is the difference? As we said before, when data is read-only passing arguments by value and by reference might produce identical results, and using references might look like an unnecessary complication.</p><p>Sooner or later, however, we will need to change the values of our variables. Time to discuss mutability.</p><h2 id="mutability-bbfe">Mutability<a class="headerlink" href="#mutability-bbfe" title="Permanent link">¶</a></h2><p>In Rust, variables are immutable unless they are declared as mutable. However, as it happened for ownership, it is important to remember that at CPU level everything is mutable.</p><p>Mutability, like ownership, is a feature that the compiler introduces to help us to write code that is more correct. Forcing us to declare a variable as mutable gives us the chance to ask ourselves if we need that and to avoid bugs. Mutability and ownership work together to ensure that we write safer code.</p><p>While the role of <code>mut</code> in front of variables is usually simple to grasp, mutable references might prove more complicated. For this reason, to discuss mutability we will consider separately the case of arguments passed by value and arguments passed by reference.</p><h3 id="mutability-and-arguments-passed-by-value-a926">Mutability and arguments passed by value</h3><p>Looking back at two of the real world examples in the previous section, we can quickly understand what happens if we introduce mutability with parameters passed by value.</p><p>When I sell the car (pass by value, move) or give away the address of the shop (pass by value, copy), the new owner is free to do whatever they want with the object they receive. They can decide to paint the car, or to burn the note, and those actions are not affecting me at all.</p><p>The same happens with Rust variables. If the variable is moved (because it doesn&#x27;t implement <code>Copy</code>), the ownership is transferred to the function, which is free to do whatever it wants.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Item</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Variable moved</span>
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>If the variable is copied (because it implements <code>Copy</code>) the function receives a copy of the value, and once again it&#x27;s free to do whatever it wants with it.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="cp">#[derive(Copy, Clone)]</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Item</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Variable copied</span>
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// i.value is 42</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Value {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>Here, we can access <code>i</code> after the call because it implements <code>Copy</code>, but the function changed the value of the copied value and not that of the original variable.</p><p>The two examples show what we said at the beginning of the article: passing arguments by value doesn&#x27;t allow us to change the original variables. In Rust, when a variable is passed by value mutability can be ignored.</p><h4 id="declaring-an-argument-as-mutable-19d1">Declaring an argument as mutable</h4><p>There is an important point to clarify. Let&#x27;s have a look at the following code</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>As you see, the variable <code>i</code> is passed by value. This means that the function <code>process</code> is free to do whatever it wants with the argument <code>value</code>. However, <code>i</code> is not mutable, so how can the function increment <code>value</code>?</p><p>The syntax <code>mut value</code> in the function signature means: create a <em>local mutable variable</em> that will host a value coming from the outside.</p><p>This is paramount to understand: <code>mut value</code> doesn&#x27;t mean that the argument passed in <code>main</code> has to be mutable. It just means that the argument will be hosted by a mutable local variable.</p><p>As a matter of fact, the following code compiles</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>But the compiler gives us a warning</p><div class="code"><div class="content"><div class="highlight"><pre>warning: variable does not need to be mutable
+    |
+    |     let mut i: u16 = 42;
+    |         ----^
+    |         |
+    |         help: remove this `mut`
+</pre></div></div></div><h3 id="mutable-arguments-by-reference-323d">Mutable arguments by reference</h3><p>When a friend borrows my house, I am expecting them to vacate it after a while, and its management is my responsibility. While they live there, I might not like the fact that they paint the walls or change furniture. I need to be clear if I am giving them an object that they can alter or not.</p><p>This is why in Rust we can pass arguments to functions by reference in two different ways. We can pass a normal reference (<code>&amp;</code>) or a mutable reference (<code>&amp;mut</code>).</p><div class="infobox"><div class="title">Mutable references</div><div><p>The name &quot;mutable reference&quot; can be misleading, as <code>&amp;mut</code> is a reference that <strong>allows to mutate the referenced variable</strong>. The reference itself, as any other variable, is immutable unless stated otherwise.</p></div></div><p>We already saw how to pass a normal reference</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">u16</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="o">*</span><span class="n">value</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// i is 42</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Item value {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>Please note that everything is coherent here. The variable <code>i</code> is not mutable (because we don&#x27;t need it), and is passed by (immutable) reference to the function. This means that the function receives a reference to a value and Rust knows that it is not allowed to change the referenced value.</p><p>If we want to change the value inside the function we need to alter the code in many places</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="kt">u16</span><span class="p">)</span><span class="w"> </span><span class="p">{</span> <span class="callout">1</span>
+<span class="w">    </span><span class="o">*</span><span class="n">value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span> <span class="callout">3</span>
+
+<span class="w">    </span><span class="n">process</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">i</span><span class="p">);</span> <span class="callout">2</span>
+
+<span class="w">    </span><span class="c1">// i is 43</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Item value {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div><p>The function <code>process</code> needs to receive <code>&amp;mut u16</code> <span class="callout">1</span> because we want to change the referenced value. This means that <code>main</code> has to call the function passing <code>&amp;mut i</code> <span class="callout">2</span> and not <code>&amp;i</code>, as the types need to be coherent. We cannot create a mutable reference to an immutable value, though, so <code>i</code> has to be mutable as well <span class="callout">3</span>.</p><h2 id="the-functional-way-6a95">The functional way<a class="headerlink" href="#the-functional-way-6a95" title="Permanent link">¶</a></h2><p>There is a last option that is a standard strategy in functional languages, where often variables cannot be declared as mutable at all.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">struct</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="kt">u16</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="nc">Item</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Item</span><span class="w"> </span><span class="p">{</span> <span class="callout">2</span>
+<span class="w">    </span><span class="n">item</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">item</span><span class="w"> </span> <span class="callout">3</span>
+<span class="p">}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Item</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Variable moved</span>
+<span class="w">    </span><span class="c1">// Reassigned to retain ownership</span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="callout">1</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Value {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div></div></div><p>Here, we pass the variable <code>i</code> by value <span class="callout">1</span>, which will copy or move the variable (depending on <code>Copy</code>). The function <code>process</code> declares the parameter as mutable <span class="callout">2</span> and changes its value. Then, it returns the same type it accepted <span class="callout">3</span> and the caller reassigns the old variable <span class="callout">1</span>, that at this point has to be mutable.</p><h2 id="a-quick-recap-1714">A quick recap<a class="headerlink" href="#a-quick-recap-1714" title="Permanent link">¶</a></h2><p>As you can see, it is very hard to separate call conventions, ownership, and mutability. They are all different aspects of function arguments in Rust, and they work together to ensure the code is safe. Before wrapping up, it might be useful to summarise how we decide the correct strategy.</p><p><em>Do you want to modify the original value?</em></p><ul><li><strong>YES</strong>: Variable has to be mutable. Pass by mutable reference OR return and reassign.</li><li><strong>NO</strong>: <em>Do you need to retain ownership?</em><ul><li><strong>YES</strong>: Implement <code>Copy</code>. Pass by value OR pass by reference.</li><li><strong>NO</strong>: Pass by value OR pass by reference.</li></ul></li></ul><h2 id="disassemble-rust-85d5">Disassemble Rust<a class="headerlink" href="#disassemble-rust-85d5" title="Permanent link">¶</a></h2><p>If you want to disassemble the Rust code on your machine (for example to explore a different architecture) you can follow these steps.</p><ul><li>Install <a href="https://github.com/rust-embedded/cargo-binutils">cargo-binutils</a>.</li><li>Create a project with Cargo: <code>cargo new proto</code></li><li>Open <code>Cargo.toml</code> and turn off debug for the profile <code>dev</code></li></ul><div class="code"><div class="title"><code>Cargo.toml</code></div><div class="content"><div class="highlight"><pre><span class="k">[package]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;proto&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<span class="n">edition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2021&quot;</span>
+
+<span class="k">[dependencies]</span>
+
+<span class="k">[profile.dev]</span>
+<span class="n">debug</span><span class="o">=</span><span class="mi">0</span>
+</pre></div></div></div><ul><li>Use <code>llvm-objdump</code> options and <code>awk</code> to get the output you want. For example</li></ul><div class="code"><div class="content"><div class="highlight"><pre>$ cargo objdump -- \
+   --disassemble \
+   --x86-asm-syntax=intel \
+   --demangle \
+   --no-show-raw-insn \
+   --no-print-imm-hex \
+   | awk -v RS=&quot;&quot; &#39;/^[[:xdigit:]]+ &lt;proto::/&#39;
+</pre></div></div></div><p>The <code>awk</code> script is useful to isolate the functions in your code only, skipping the boilerplate that the compiler has to put into an executable. Make sure you mention the correct name of your script if you use something else than <code>proto</code>.</p><h2 id="final-words-9803">Final words<a class="headerlink" href="#final-words-9803" title="Permanent link">¶</a></h2><p>This was quite a ride! I hope it was useful, it definitely was to me to clarify in my head the available options and the reasons behind them. Happy coding!</p><h2 id="resources-edc5">Resources<a class="headerlink" href="#resources-edc5" title="Permanent link">¶</a></h2><ul><li>I highly recommend to watch this <a href="https://www.youtube.com/watch?v=B27_eoNCsV0">video by James Sherman</a> that explains in detail how function code is called at CPU level.</li><li>Make sure you are familiar with the following concepts:<ul><li>The <a href="https://en.wikipedia.org/wiki/Stack_register">stack</a></li><li>The <a href="https://en.wikipedia.org/wiki/Calling_convention">calling convention</a> of a specific CPU, such as the <a href="https://en.wikipedia.org/wiki/X86_calling_conventions">x86 calling convention</a>.</li></ul></li></ul>
+  </div>
+
+
+  <section>
+    <header>
+      <h2>Related Posts</h2>
+    </header>
+    <div class="paginated-posts">
+      <div class="posts">
+	<article class="card">
+          <a href="/blog/2019/03/04/motorola-68000-addressing-modes/">
+            <img src="/images/mc68000.jpg" alt="mc68000" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/03/04/motorola-68000-addressing-modes/"><h2>Motorola 68000: addressing modes</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/m68000/" class="tag">M68000</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-03-04T22:30:00+01:00">Mar 4, 2019</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2019/02/19/exploring-the-amiga-8/">
+            <img src="/images/exploring-the-amiga-8.jpg" alt="exploring-the-amiga-8" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/02/19/exploring-the-amiga-8/"><h2>Exploring the Amiga - Part 8</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/amiga/" class="tag">Amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-02-19T14:00:00+01:00">Feb 19, 2019</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-12-20T08:00:00+00:00">Dec 20, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2019/02/19/exploring-the-amiga-7/">
+            <img src="/images/exploring-the-amiga-7.jpg" alt="exploring-the-amiga-7" />
+          </a>
+          <div class="body">
+            <a href="/blog/2019/02/19/exploring-the-amiga-7/"><h2>Exploring the Amiga - Part 7</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/amiga/" class="tag">Amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2019-02-19T13:00:00+01:00">Feb 19, 2019</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/25/exploring-the-amiga-6/">
+            <img src="/images/exploring-the-amiga-6.jpg" alt="exploring-the-amiga-6" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/25/exploring-the-amiga-6/"><h2>Exploring the Amiga - Part 6</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/amiga/" class="tag">Amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-25T13:00:00+01:00">Jun 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/25/exploring-the-amiga-5/">
+            <img src="/images/exploring-the-amiga-5.jpg" alt="exploring-the-amiga-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/25/exploring-the-amiga-5/"><h2>Exploring the Amiga - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/amiga/" class="tag">Amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-25T12:00:00+01:00">Jun 25, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/14/exploring-the-amiga-4/">
+            <img src="/images/exploring-the-amiga-4.jpg" alt="exploring-the-amiga-4" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/14/exploring-the-amiga-4/"><h2>Exploring the Amiga - Part 4</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/amiga/" class="tag">Amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-14T14:30:00+01:00">Jun 14, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/06/08/exploring-the-amiga-3/">
+            <img src="/images/exploring-the-amiga-3.jpg" alt="exploring-the-amiga-3" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/06/08/exploring-the-amiga-3/"><h2>Exploring the Amiga - Part 3</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/amiga/" class="tag">Amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-06-08T12:30:00+01:00">Jun 8, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/05/28/exploring-the-amiga-2/">
+            <img src="/images/exploring-the-amiga-2.jpg" alt="exploring-the-amiga-2" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/05/28/exploring-the-amiga-2/"><h2>Exploring the Amiga - Part 2</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/amiga/" class="tag">Amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-05-28T15:00:00+01:00">May 28, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-12-21T08:00:00+00:00">Dec 21, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2018/05/28/exploring-the-amiga-1/">
+            <img src="/images/exploring-the-amiga-1.jpg" alt="exploring-the-amiga-1" />
+          </a>
+          <div class="body">
+            <a href="/blog/2018/05/28/exploring-the-amiga-1/"><h2>Exploring the Amiga - Part 1</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/assembly/" class="tag">Assembly</a>
+		<a href="/categories/amiga/" class="tag">Amiga</a>
+		<a href="/categories/retroprogramming/" class="tag">retroprogramming</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-05-28T14:00:00+01:00">May 28, 2018</time></p>
+	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-02-26T08:00:00+00:00">Feb 26, 2021</time></p>
+	    </div>
+          </div>
+	</article>
+	<article class="card">
+          <a href="/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/">
+            <img src="/images/a-game-of-tokens-5.jpg" alt="a-game-of-tokens-5" />
+          </a>
+          <div class="body">
+            <a href="/blog/2020/08/09/a-game-of-tokens-write-an-interpreter-in-python-with-tdd-part-5/"><h2>A game of tokens: write an interpreter in Python with TDD - Part 5</h2></a>
+	    <div class="info">
+	      <p class="tags">
+		<a href="/categories/pytest/" class="tag">pytest</a>
+		<a href="/categories/python/" class="tag">Python</a>
+		<a href="/categories/python3/" class="tag">Python3</a>
+		<a href="/categories/tdd/" class="tag">TDD</a>
+		<a href="/categories/testing/" class="tag">testing</a>
+		<a href="/categories/compilers/" class="tag">compilers</a>
+              </p>
+	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-08-09T18:00:00+01:00">Aug 9, 2020</time></p>
+	    </div>
+          </div>
+	</article>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+      </div>
+    </div>
+    <script src="/theme/js/packed.js?46a8f903"></script>
+
+  </body>
+</html>

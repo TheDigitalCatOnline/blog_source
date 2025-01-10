@@ -33,6 +33,7 @@ JINJA_ENVIRONMENT = {"extensions": ["jinja2.ext.do"]}
 
 ARTICLE_URL = "blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/"
 ARTICLE_SAVE_AS = ARTICLE_URL + "index.html"
+ARTICLE_URL = "blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/"
 
 CATEGORY_URL = "category/{slug}/"
 CATEGORY_SAVE_AS = CATEGORY_URL + "index.html"

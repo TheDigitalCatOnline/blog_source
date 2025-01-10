@@ -2,7 +2,7 @@ Title: Clean Architectures in Python: the book
 Date: 2018-12-20 08:00:00 +0100
 Modified: 2021-08-22 08:00:00 +0000
 Category: Projects
-Tags: OOP, Python, Python2, Python3, TDD, testing, architectures
+Tags: OOP, Python, Python2, Python3, TDD, testing, software architecture
 Authors: Leonardo Giordani
 Slug: cabook
 Image: cabook

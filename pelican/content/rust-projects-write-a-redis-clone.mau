@@ -1,0 +1,18 @@
+:pelican.title:Free book "Rust Projects - Write a Redis Clone"
+:pelican.date:2024-12-24 10:00:00 +0000
+:pelican.category:Programming
+:pelican.tags:Rust, TDD
+:pelican.authors:Leonardo Giordani
+:pelican.slug:rust-projects-write-a-redis-clone
+:pelican.image:rust-projects-write-a-redis-clone
+
+I just published version 1.1.0 of my free book "Rust Projects - Write a Redis Clone".
+
+<< image:/images/rust-projects-write-a-redis-clone.jpg
+
+You can download the book from [link]("https://leanpub.com/rustprojects-redis", "Leanpub")!
+
+The book follows the Redis challenge on [link]("https://app.codecrafters.io/catalog", "CodeCrafters") and contains a 40% discount for any type of paid membership.
+
+In this version I added a section to chapter 5 to restore some tests that I left commented in one of the previous sections during a refactoring. I also added a final section to address compiler warnings and tidy up the code.
+

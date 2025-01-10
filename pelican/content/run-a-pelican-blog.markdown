@@ -1,7 +1,7 @@
 Title: Run a blog with pelican
 Date: 2019-06-07 15:30:00 +0100
 Category: Projects
-Tags: blogging, Python, Python3, pelican
+Tags: blogging, Python, Python3, Pelican
 Authors: Leonardo Giordani
 Slug: run-a-pelican-blog
 Image: run-a-pelican-blog

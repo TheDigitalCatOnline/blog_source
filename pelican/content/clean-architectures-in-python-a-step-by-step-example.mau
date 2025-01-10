@@ -2,7 +2,7 @@
 :pelican.date:2016-11-14 19:00:00 +0000
 :pelican.modified:2021-09-24 12:00:00 +0000
 :pelican.category:Programming
-:pelican.tags:OOP, pytest, Python, Python2, Python3, TDD, architectures
+:pelican.tags:OOP, pytest, Python, Python2, Python3, TDD, software architecture
 :pelican.authors:Leonardo Giordani
 :pelican.slug:clean-architectures-in-python-a-step-by-step-example
 :pelican.image:clean-architectures

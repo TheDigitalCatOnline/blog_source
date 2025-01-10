@@ -1,7 +1,7 @@
 Title: Python 3 OOP Notebooks
 Date: 2015-03-14 23:00:00 +0200
 Category: Programming
-Tags: Python, Python3, OOP, Notebook
+Tags: Python, Python3, OOP
 Authors: Leonardo Giordani
 Slug: python-3-oop-notebooks
 Image: python-3-oop-notebooks

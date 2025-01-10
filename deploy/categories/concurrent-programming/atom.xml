@@ -69,7 +69,7 @@
 &lt;p&gt;Since we are building things from the ground up, let's implement a small Python program that opens a socket connection, receives an HTTP request, and sends an HTTP response. As port 80 is a "low port" (a number smaller than 1024), we usually don't have permissions to open sockets there, so I will use port 8080. This is not a problem for now, as HTTP can be served on any port.&lt;/p&gt;
 &lt;h3 id="12-implementation"&gt;1.2 Implementation&lt;a class="headerlink" href="#12-implementation" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Create the file &lt;code&gt;server.py&lt;/code&gt; and type this code. Yes, &lt;strong&gt;type it&lt;/strong&gt;, don't just copy and paste, you will not learn anything otherwise.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;socket&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;socket&lt;/span&gt;
 
 &lt;span class="c1"&gt;## Create a socket instance&lt;/span&gt;
 &lt;span class="c1"&gt;## AF_INET: use IP protocol version 4&lt;/span&gt;
@@ -114,7 +114,7 @@ Hi there!
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Our server becomes then&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;socket&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;socket&lt;/span&gt;
 
 &lt;span class="c1"&gt;## Create a socket instance&lt;/span&gt;
 &lt;span class="c1"&gt;## AF_INET: use IP protocol version 4&lt;/span&gt;
@@ -147,8 +147,8 @@ Hi there!
 
 &lt;p&gt;At this point, we are not really responding to the user's request, however. Try different curl command lines like &lt;code&gt;curl localhost:8080/index.html&lt;/code&gt; or &lt;code&gt;curl localhost:8080/main.css&lt;/code&gt; and you will always receive the same response. We should try to find the resource the user is asking for and send that back in the response content.&lt;/p&gt;
 &lt;p&gt;This version of the HTTP server properly extracts the resource and tries to load it from the current directory, returning either a success of a failure&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;socket&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;socket&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;re&lt;/span&gt;
 
 &lt;span class="c1"&gt;## Create a socket instance&lt;/span&gt;
 &lt;span class="c1"&gt;## AF_INET: use IP protocol version 4&lt;/span&gt;
@@ -274,26 +274,26 @@ Resource favicon.ico cannot be loaded
 &lt;p&gt;Thanks to Miguel Gringberg and his &lt;a href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world"&gt;amazing Flask mega-tutorial&lt;/a&gt; I can set up Flask in seconds. I will not run through the tutorial here, as you can follow it on Miguel's website. I will only use the content of the first article (out of 23!) to create an extremely simple "Hello, world" application.&lt;/p&gt;
 &lt;p&gt;To run the following example you will need a virtual environment and you will have to &lt;code&gt;pip install flask&lt;/code&gt;. Follow Miguel's tutorial if you need more details on this.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;app/__init__.py&lt;/code&gt; file is&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;flask&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
 
 &lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;routes&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;app&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;routes&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;and the &lt;code&gt;app/routes.py&lt;/code&gt; file is&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;app&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;
 
 
 &lt;span class="nd"&gt;@application&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="nd"&gt;@application&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/index&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You can already see here the power of a framework in action. We defined an &lt;code&gt;index&lt;/code&gt; function and connected it with two different URLs (&lt;code&gt;/&lt;/code&gt; and &lt;code&gt;/index&lt;/code&gt;) in 3 lines of Python. This leaves us time and energy to properly work on the business logic, that in this case is a revolutionary "Hello, world!". Nobody ever did this before.&lt;/p&gt;
 &lt;p&gt;Finally, the &lt;code&gt;service.py&lt;/code&gt; file is&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;app&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Flask comes with a so-called development web server (do these words ring any bell now?) that we can run on a terminal&lt;/p&gt;
@@ -341,7 +341,7 @@ Resource favicon.ico cannot be loaded
 &lt;p&gt;If the framework is compatible with the gateway interface, we can add software that deals with concurrency and uses the framework through the compatibility layer. Such a component is a production-ready HTTP server, and two common choices in the Python world are Gunicorn and uWSGI.&lt;/p&gt;
 &lt;p&gt;Production-ready HTTP server means that the software understands HTTP as the development server already did, but at the same time pushes performances in order to sustain a bigger workload, and as we said before this is done through concurrency.&lt;/p&gt;
 &lt;p&gt;Flask is compatible with WSGI, so we can make it work with Gunicorn. To install it in our virtual environment run &lt;code&gt;pip install gunicorn&lt;/code&gt; and set it up creating a file names &lt;code&gt;wsgi.py&lt;/code&gt; with the following content&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;app&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;
 
 
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -647,7 +647,7 @@ nginx_1&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="p"&gt;|&lt;/s
 &lt;h2 id="conclusion"&gt;Conclusion&lt;a class="headerlink" href="#conclusion" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;As you can see a web stack is a pretty rich set of components, and the reason behind them is often related to performances. There are a lot of technologies that we take for granted, and that fortunately have become easier to deploy, but I still believe a full-stack engineer should be aware not only of the existence of such layers, but also of their purpose and at least their basic configuration.&lt;/p&gt;
 &lt;h2 id="feedback"&gt;Feedback&lt;a class="headerlink" href="#feedback" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Feel free to reach me on &lt;a href="https://twitter.com/thedigicat"&gt;Twitter&lt;/a&gt; if you have questions. The &lt;a href="https://github.com/TheDigitalCatOnline/blog_source/issues"&gt;GitHub issues&lt;/a&gt; page is the best place to submit corrections.&lt;/p&gt;</content><category term="Programming"></category><category term="architectures"></category><category term="concurrent programming"></category><category term="cryptography"></category><category term="devops"></category><category term="infrastructure"></category><category term="Flask"></category><category term="Django"></category><category term="Python"></category><category term="SSL"></category><category term="HTTP"></category><category term="WWW"></category><category term="AWS"></category></entry><entry><title>The Lord of the Rings: an Erlang epic</title><link href="https://www.thedigitalcatonline.com/blog/2013/06/20/the-lord-of-the-rings-an-erlang-epic/" rel="alternate"></link><published>2013-06-20T17:49:00+01:00</published><updated>2013-06-20T17:49:00+01:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2013-06-20:/blog/2013/06/20/the-lord-of-the-rings-an-erlang-epic/</id><summary type="html"></summary><content type="html">&lt;h2 id="abstract"&gt;Abstract&lt;a class="headerlink" href="#abstract" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Feel free to reach me on &lt;a href="https://twitter.com/thedigicat"&gt;Twitter&lt;/a&gt; if you have questions. The &lt;a href="https://github.com/TheDigitalCatOnline/blog_source/issues"&gt;GitHub issues&lt;/a&gt; page is the best place to submit corrections.&lt;/p&gt;</content><category term="Programming"></category><category term="software architecture"></category><category term="concurrent programming"></category><category term="cryptography"></category><category term="devops"></category><category term="infrastructure"></category><category term="Flask"></category><category term="Django"></category><category term="Python"></category><category term="SSL"></category><category term="HTTP"></category><category term="WWW"></category><category term="AWS"></category></entry><entry><title>The Lord of the Rings: an Erlang epic</title><link href="https://www.thedigitalcatonline.com/blog/2013/06/20/the-lord-of-the-rings-an-erlang-epic/" rel="alternate"></link><published>2013-06-20T17:49:00+01:00</published><updated>2013-06-20T17:49:00+01:00</updated><author><name>Leonardo Giordani</name></author><id>tag:www.thedigitalcatonline.com,2013-06-20:/blog/2013/06/20/the-lord-of-the-rings-an-erlang-epic/</id><summary type="html"></summary><content type="html">&lt;h2 id="abstract"&gt;Abstract&lt;a class="headerlink" href="#abstract" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;One of the first really challenging problems an Erlang novice must face is the classical process ring, which can be found around the Internet and most notably in "Erlang Programming" by Cesarini and Thompson (page 115).&lt;/p&gt;
 &lt;p&gt;Its formulation may vary, but the core of it requires the programmer to design and implement a closed ring of processes, to make them pass a given number of messages each other and then terminate gracefully.&lt;/p&gt;
 &lt;p&gt;I try here to give an in-depth analysis of the matter, to point out some of the most interesting issues of this exercise. I strongly suggest the Erlang novice to try and solve the exercise before looking at the solutions proposed here.&lt;/p&gt;

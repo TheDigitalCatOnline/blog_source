@@ -80,7 +80,7 @@ We can run the code with `cargo run` or build it into a stand-alone executable w
 . Cargo
 [*infobox]
 ----
-Cargo [docs.rustoz]("cargo") is the Rust package manager and the default solution to manage dependencies, compile packages and in general to manage your code. It's highly recommended to learn at least the basics of this powerful tool.
+Cargo [docs.rust]("cargo") is the Rust package manager and the default solution to manage dependencies, compile packages and in general to manage your code. It's highly recommended to learn at least the basics of this powerful tool.
 ----
 
 << repo.github:lgiordani/rust-todo-cli/tree/a7c4616179fdcce0b5bc6010402c1d914ac1587b
