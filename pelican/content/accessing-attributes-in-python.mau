@@ -83,15 +83,6 @@ When you try to change the value of an attribute (you _write_ the attribute) the
 'David Carroll Eddings'
 ----
 
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
-
 == Properties
 
 Sometimes you want to have an attribute which value comes from other attributes or, in general, which value shall be computed at the moment. The standard way to deal with this situation is to create a method, called _getter_, just like I did with `get_entry()`. 
@@ -240,15 +231,6 @@ As you can see the `publisher` and `somename` attributes are correctly accessed 
 To find a good use for `__getattr__()` and `getattr()` we need to step into something a bit more complex, which is the explicit delegation mechanism involved in a composition between objects. You may find more details on this topic in [link]("\{filename}python-3-oop-part-3-delegation-composition-and-inheritance.markdown", "this post").
 
 Both `getattr()` and `__getattr__()` have their counterpart to manage writing access, namely `setattr()` and `__setattr__()`.
-
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
 
 == The deepest secret
 

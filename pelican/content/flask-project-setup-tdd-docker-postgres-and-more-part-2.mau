@@ -286,15 +286,6 @@ You can see the changes made in this step through [link](https://github.com/lgio
 * [link](https://flask-sqlalchemy.palletsprojects.com/en/2.x/,"Flask-SQLAlchemy") - A Flask extension to work with SQLAlchemy
 * [link](https://docs.sqlalchemy.org/en/13/dialects/postgresql.html,"SQLAlchemy and PostgreSQL") - The Python SQL Toolkit and ORM
 
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
-
 == Step 2 - Connecting the application and the database
 
 To connect the Flask application with the database running in the container we need to initialise a `SQLAlchemy` object and add it to the application factory.
@@ -1327,15 +1318,6 @@ You can also open your browser and head to [link]("http://localhost:5000/users")
 === Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/da8c8d98dc8f730b72f99ab88ee6a64b55b23eec,"browse the files").
-
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
 
 == Final words
 

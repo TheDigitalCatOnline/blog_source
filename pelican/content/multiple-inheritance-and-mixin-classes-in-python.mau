@@ -237,15 +237,6 @@ So, while with single-parent inheritance the rules are straightforward, with mul
 
 Not at all! There are solutions to this problem, as we will see shortly, but this further level of intricacy makes multiple inheritance something that doesn't fit easily in a design and has to be implemented carefully to avoid subtle bugs. Remember that inheritance is an automatic delegation mechanism, as this makes what happens in the code less evident. For these reasons, multiple inheritance is often depicted as scary and convoluted, and usually given some space only in the advanced OOP courses, at least in the Python world. I believe every Python programmer, instead, should familiarise with it and learn how to take advantage of it.
 
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
-
 === Multiple inheritance: the Python way
 
 Let's see how it is possible to solve the diamond problem. Unlike genetics, we programmers can't afford any level of uncertainty or randomness in our processes, so in the presence of a possible ambiguity as the one created by multiple inheritance, we need to write down a rule that will be strictly followed in every case. In Python, this rule goes by the name of MRO (Method Resolution Order), which was introduced in Python 2.3 and is described in [link]("https://www.python.org/download/releases/2.3/mro/", "this document") by Michele Simionato.
@@ -548,15 +539,6 @@ print(b.size_y)
 Here, the MRO or `LimitSizeButton` is `(<class '__main__.LimitSizeButton'>, <class '__main__.LimitSizeMixin'>, <class '__main__.Button'>, <class '__main__.GraphicalEntity'>, <class 'object'>)`, which means that when we initialize it the `__init__` method is first provided by `LimitSizeMixin`, which then calls through `super` the `__init__` method of `Button`, and through the latter the `__init__` method of `GraphicalEntity`.
 
 Remember that in Python, you are never forced to call the parent's implementation of a method, so the mixin here might also stop the dispatching mechanism if that is the requirement of the business logic of the new object.
-
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
 
 == A concrete example: Django class-based views
 

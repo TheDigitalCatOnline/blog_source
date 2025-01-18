@@ -639,15 +639,6 @@ Database connection closed.
 
 Please note that I used `--rm` to make Docker remove the container automatically when it is terminated. This way I can run it again with the same name without having to explicitly remove the past container with `docker rm`.
 
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
-
 == Run containers in the same network
 
 Docker containers are isolated from the host and from other containers by default. This however doesn't mean that they can't communicate with each other if we run them in a specific configuration. In particular, an important part in Docker networking is played by bridge networks.

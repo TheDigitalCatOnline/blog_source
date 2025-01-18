@@ -215,15 +215,6 @@ You can see the changes made in this step through [link](https://github.com/lgio
 * [link](https://wsgi.readthedocs.io/en/latest/what.html,WSGI) - The Python Web Server Gateway Interface
 * My post [link](\{filename}dissecting-a-web-stack.markdown,"Dissecting a web stack") includes a section on WSGI
 
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
-
 == Step 3 - Application configuration
 
 As I mentioned in the introduction, I am going to use a static JSON configuration file. The choice of JSON comes from the fact that it is a widespread file format, accessible from many programming languages, included Terraform, which I plan to use to create my production infrastructure.
@@ -546,15 +537,6 @@ Now I can run `./manage.py compose up -d` and `./manage.py compose down` and hav
 === Git commit
 
 You can see the changes made in this step through [link](https://github.com/lgiordani/flask_project_setup/commit/9e08735af6177760cd750230122a507b15c9c112,"this Git commit") or [link](https://github.com/lgiordani/flask_project_setup/tree/9e08735af6177760cd750230122a507b15c9c112,"browse the files").
-
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
 
 === Resources
 

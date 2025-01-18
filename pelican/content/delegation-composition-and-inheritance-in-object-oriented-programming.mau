@@ -34,15 +34,6 @@ In this post, I want to focus on the second of the pillars of object-oriented pr
 
 For the rest of this post, I will consider objects as mini computers and the system in which they live a "very fast network", using the words of Alan Kay. Data contained in an object is the state of the computer, its methods are the input/output devices, and calling methods is the same thing as sending a message to another computer through the network.
 
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
-
 == Delegation in OOP
 
 Delegation is the mechanism through which an actor assigns a task or part of a task to another actor. This is not new in computer science, as any program can be split into blocks and each block generally depends on the previous ones. Furthermore, code can be isolated in libraries and reused in different parts of a program, implementing this "task assignment". In an OO system the assignee is not just the code of a function, but a full-fledged object, another actor.
@@ -344,15 +335,6 @@ You are incorrectly using composition when:
 * You are composing instances, but creating many class methods so that the container can access them. This means that the nature of the delegation is more related to the code and the object might benefit from inheritance, where the classes delegate the method calls, instead of relying on the relationship between instances.
 
 Overall, code smells for inheritance are the need to override or delete attributes and methods, changes in one class affecting too many other classes in the inheritance tree, big classes that contain heavily unrelated methods. For composition: too many methods that just wrap methods of the contained instances, the need to pass too many arguments to methods, classes that are too empty and that just contain one instance of another class.
-
-[*advertisement, target="https://www.thedigitalcat.academy/freebie-first-class-objects", action="Get your FREE copy", image="/images/first-class-objects/cover.jpg"]
-----
-== First-class objects in Python
-
-Higher-order functions, wrappers, and factories
-
-Learn all you need to know to understand first-class citizenship in Python, the gateway to grasp how decorators work and how functional programming can supercharge your code.
-----
 
 == Domain modelling
 
