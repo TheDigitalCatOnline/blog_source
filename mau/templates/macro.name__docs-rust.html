@@ -1,0 +1,5 @@
+{% if args.1 %}
+<a href="https://doc.rust-lang.org/{{ args.0 }}">{{ args.1 }}</a>
+{% else %}
+[<a href="https://doc.rust-lang.org/{{ args.0 }}">docs</a>]
+{% endif %}
