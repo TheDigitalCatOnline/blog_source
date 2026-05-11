@@ -1,5 +1,4 @@
 pelican
-pelican-mau-reader
 pelican-related-posts
 pelican-series
 pelican-share-post

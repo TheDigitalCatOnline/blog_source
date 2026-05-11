@@ -151,4 +151,4 @@ If you are managing a project and are looking for a tool to manage the versions 
 * The official page of [link](https://calver.org/,"Calendar Versionining")
 * The Wikipedia article on [link](https://en.wikipedia.org/wiki/Zero-based_numbering,"Zero-based_numbering")
 
-::#include:snippets/feedback.mau
+<< mau:snippets/feedback.mau

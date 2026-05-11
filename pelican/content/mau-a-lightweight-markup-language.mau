@@ -32,4 +32,4 @@ A reader for Mau source files is available in Pelican, you can find the code at 
 
 If you are interested you can leave a star on the project on the [link](https://github.com/Project-Mau/mau, "GitHub page"), start using it, or contribute ideas, code, bugfixes.
 
-::#include:snippets/feedback.mau
+<< mau:snippets/feedback.mau

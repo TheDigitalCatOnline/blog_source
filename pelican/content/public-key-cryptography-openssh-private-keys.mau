@@ -7,7 +7,7 @@
 :pelican.image:public-key-cryptography-openssh-private-keys
 :pelican.summary:An in-depth discussion of the format of OpenSSH keys
 
-When you create standard RSA keys with `ssh-keygen` you end up with a private key in PEM format, and a public key in OpenSSH format. Both have been described in detail in my post [link](\{filename\}rsa-keys.mau,"Public key cryptography: RSA keys"). In 2014, OpenSSH introduced a custom format for private keys that is apparently similar to PEM but is internally completely different. This format is used by default when you create ed25519 keys and it is expected to be the default format for all keys in the future, so it is worth having a look.
+When you create standard RSA keys with `ssh-keygen` you end up with a private key in PEM format, and a public key in OpenSSH format. Both have been described in detail in my post [link]({{filename}}rsa-keys.mau,"Public key cryptography: RSA keys"). In 2014, OpenSSH introduced a custom format for private keys that is apparently similar to PEM but is internally completely different. This format is used by default when you create ed25519 keys and it is expected to be the default format for all keys in the future, so it is worth having a look.
 
 While investigating this topic I found a lot of misconceptions and wrong or partially wrong statements on Stack Overflow, so I hope this might be a comprehensive view of what this format is, its relationship with PEM, and the tools that you can use to manipulate it.
 
@@ -21,7 +21,7 @@ Note: as the word "key" can identify several different component of the systems 
 
 Describing the introduction of the new format, the [link](https://www.openssh.com/txt/release-6.5,"OpenSSH changelog") says
 
-[*source]
+[@source]
 ----
 Add a new private key format that uses a bcrypt KDF to better
 protect keys at rest. This format is used unconditionally for
@@ -56,7 +56,7 @@ Protection [link](https://en.wikipedia.org/wiki/Data_at_rest,"at rest") refers t
 
 == PEM format and protection at rest
 
-Now that I clarified some terminology, let's have a look at what the standard PEM format does to store encrypted passwords. As I explained in my post [link](\{filename\}rsa-keys.mau,"Public key cryptography: RSA keys") a PEM file contains a text header, a text footer, and some content. The content is always an ASN.1 structure created using DER and encoded using base64.
+Now that I clarified some terminology, let's have a look at what the standard PEM format does to store encrypted passwords. As I explained in my post [link]({{filename}}rsa-keys.mau,"Public key cryptography: RSA keys") a PEM file contains a text header, a text footer, and some content. The content is always an ASN.1 structure created using DER and encoded using base64.
 
 For encrypted private keys, the ASN.1 structure is created following a standard called [link](https://datatracker.ietf.org/doc/html/rfc5208,"PKCS #8"). This standard uses an encryption scheme called PBES2 described in the specification PKCS #5, which uses a symmetric cipher and a password, previously converted into an encryption key using the KDF called PBKDF2. I hope at this point some if not all of these names ring a bell.
 
@@ -72,7 +72,7 @@ We can roughly sketch the process with the following steps:
 
 Let's create an encrypted key with OpenSSL and analyse it. The command I used is
 
-[*source]
+[@source]
 ----
 openssl genpkey -aes-256-cbc -algorithm RSA\
     -pkeyopt rsa_keygen_bits:4096 -pass pass:foobar\
@@ -81,7 +81,7 @@ openssl genpkey -aes-256-cbc -algorithm RSA\
 
 which creates a 4096 bits RSA key and encrypts it with AES using `foobar` as password. What I get is a file in the aforementioned PEM format
 
-[*source]
+[@source]
 %%%%
 -----BEGIN ENCRYPTED PRIVATE KEY-----
 MIIJrTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIW+BK6UQtCPACAggA
@@ -99,7 +99,7 @@ GxSfj7s0Qs0K5e3Xv1lCQUhSz82fBysznjeAhWa45YEV
 
 We can dump the ASN.1 content directly from the PEM format using `openssl asn1parse`
 
-[*source]
+[@source]
 ----
 $ openssl asn1parse -inform pem -in key_rsa_4096_openssl_pw
     0:d=0  hl=4 l=2477 cons: SEQUENCE          
@@ -126,7 +126,7 @@ You can clearly see that this key is encrypted using PBES2 [class]("1","callout"
 
 According to the [link](https://datatracker.ietf.org/doc/html/rfc2898#appendix-A.4,"PKCS #5 specification"), the `PBES2` block contains
 
-[*source]
+[@source]
 ----
 PBES2-params ::= SEQUENCE {
        keyDerivationFunc AlgorithmIdentifier {{PBES2-KDFs}},
@@ -135,7 +135,7 @@ PBES2-params ::= SEQUENCE {
 
 and indeed we have `PBKDF2` [class]("1","callout") for `keyDerivationFunc`, and `aes-256-cbc` [class]("3","callout") for `encryptionScheme`. The sequence `PBKDF2` is specified in the [link](https://datatracker.ietf.org/doc/html/rfc2898#appendix-A.2,"same document") as
 
-[*source]
+[@source]
 ----
 PBKDF2-params ::= SEQUENCE {
        salt CHOICE {
@@ -158,7 +158,7 @@ The best starting point for our investigation is the tool `ssh-keygen` which we 
 
 This function contains a modified implementation of PBKDF2 that uses bcrypt as the core hash function. The comment that you can find at the top of the file [link](https://github.com/openbsd/src/blob/master/sys/lib/libsa/bcrypt_pbkdf.c#L28,"bcrypt_pbkdf.c") says
 
-[*source]
+[@source]
 ----
 /*
  * pkcs #5 pbkdf2 implementation using the "bcrypt" hash
@@ -205,7 +205,7 @@ When it comes to KDFs, the advice is always to run as much iterations as possibl
 
 On my laptop, an i7-8565U with 32GiB of RAM running Kubuntu 20.04 I get the following results, which are pretty linear:
 
-[*source]
+[@source]
 ----
 ssh-keygen -a 100 -t ed25519	0.667s
 ssh-keygen -a 500 -t ed25519	3.148s
@@ -242,4 +242,4 @@ The claim is that the new SSH private key format offers a better protection of k
 * [link](https://tools.ietf.org/html/rfc5958,"RFC 5958 - Asymmetric Key Packages")
 * [link](https://tools.ietf.org/html/rfc7468,"RFC 7468 - Textual Encodings of PKIX, PKCS, and CMS Structures")
 
-::#include:snippets/feedback.mau
+<< mau:snippets/feedback.mau

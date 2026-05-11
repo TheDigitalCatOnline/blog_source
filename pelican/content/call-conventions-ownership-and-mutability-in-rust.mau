@@ -9,7 +9,7 @@
 
 My roots as a developer are in C and Assembly, and I remember fondly the time spent to learn those languages using Borland TASM or Turbo C under MS-DOS. Those languages, and the technology that surrounded them, forced me to understand the low-level architecture of computers, and I still consider those details extremely interesting.
 
-Rust, just like C and C++, is a low-level language that exposes details of the underlying architecture, and to use it proficiently requires a certain understanding of concepts like memory management that are mostly ignored by high-level language like Python or JavaScript.
+Rust, just like C and C++, is a low-level language that exposes details of the underlying architecture; using it proficiently requires a certain understanding of concepts like memory management that are mostly ignored by high-level languages like Python or JavaScript.
 
 This post has been written for beginners who are used to dynamically typed languages. I will explore the intricacies of passing arguments to Rust functions, trying to clarify exactly what happens behind the scenes and why the language provides syntactic devices like `&` or `mut`.
 
@@ -19,7 +19,7 @@ For the sake of clarity, I will split the discussion into three separate topics:
 
 Throughout the article, I will mention and show what happens at CPU level when code is written in a certain way.
 
-You do not need to have previous knowledge of computer architecture to follow those sections, as I will explain what happens step by step, but I highly recommend to eventually become familiar with some concepts like the stack and CPU calling conventions. You will find some useful links in the Resources section at the end of the article.
+You do not need to have previous knowledge of computer architecture to follow those sections, as I will explain what happens step by step, but I highly recommend that you eventually become familiar with some concepts like the stack and CPU calling conventions. You will find some useful links in the Resources section at the end of the article.
 
 . Assembly and machine code
 [*infobox]
@@ -36,12 +36,12 @@ When we define a function, we list a set of *parameters*, that is values that ha
 . Arguments and parameters
 [*infobox]
 ----
-Strictly speaking, arguments and parameters are different. However, this explanation from [docs.rust]("book/ch03-03-how-functions-work.html#parameters", "the Rust book") looks like a good informal approach.
+Strictly speaking, arguments and parameters are different. However, this explanation from [docs-rust]("book/ch03-03-how-functions-work.html#parameters", "the Rust book") looks like a good informal approach.
 
 _We can define functions to have parameters, which are special variables that are part of a function’s signature. When a function has parameters, we can call it providing concrete values for those parameters. Technically, the concrete values are called arguments, but in casual conversation, people tend to use the words parameter and argument interchangeably for either the variables in a function’s definition or the concrete values passed in when you call a function._
 ----
 
-In Rust, there are many built-in types like integers, floats, booleans, and an infinite amount of user-defined types, but when we define function parameters there are two macro categories in which they can fall: _values_ and _references_.
+In Rust, there are many built-in types like integers, floats, booleans, and any number of user-defined types, but when we define function parameters there are two macro categories in which they can fall: _values_ and _references_.
 
 This is the first and most important concept to learn. We can call a function passing values in _only two different ways_, regardless of the data type. Depending on the language and the speaker, such techniques are named in different ways, and in this article I will use call *by value* and call *by reference*. We call these two different strategies *call conventions*.
 
@@ -60,14 +60,14 @@ These two examples are exactly what happens when a computer manages data. Ultima
 ----
 Technically, a memory location is called *address*. Ultimately, it's just a number that identifies a specific location in memory that hosts data. A *pointer* or a *reference* is the type of a variable that contains a memory address. It is usually an unsigned integer whose size depends on the computer architecture. For an Intel x86-64 machine it's a 64 bit number (8 bytes).
 
-Strictly speaking, while C pointers are literally just an integer, Rust references are structures that contain additional data, but for the sake of simplicity in this post we will ignore the difference. If you want to dig into this you can read [docs.rust]("std/primitive.reference.html", "the documentation").
+Strictly speaking, while C pointers are literally just an integer, Rust references are structures that contain additional data, but for the sake of simplicity in this post we will ignore the difference. If you want to dig into this you can read [docs-rust]("std/primitive.reference.html", "the documentation").
 
 This means that, strictly speaking, arguments can be passed only by value. References are values (addresses) that are used to find other values.
 ----
 
-=== Why two different ways?
+=== Why two different ways exist
 
-Why do computer provide two ways to pass arguments to functions?
+Why do computers provide two ways to pass arguments to functions?
 
 Let's consider a real world example. I won a huge sum of money at the national lottery, and decided to get a safe deposit box at the bank and put the money there. To make sure I don't forget the code to open the safe I write it on a piece of paper. One day I need to get some money from the safe, but I cannot go myself, so I ask a friend to go, open the safe, and get the money for me. To do this, I have to give this person the piece of paper with the code, and they will give it back once they are done. As this happens multiple times, I decide that it might be simpler to copy the code on another piece of paper and to give that to them.
 
@@ -81,24 +81,24 @@ In the first two parts of the article we will deal with read-only data, so for a
 
 The following code shows how we can pass function arguments by value in Rust
 
-[*source, rust]
+[@source, rust, marker_delimiter="|"]
 ----
 struct Item {
     pub value: u16,
 }
 
-fn process(item: Item) -> u16{
-    item.value:3:
+fn process(item: Item) -> u16 {
+    item.value|1|
 }
 
 fn main() {
-    let i = Item { value: 42 };:1:
+    let i = Item { value: 42 };|2|
 
-    process(i);:2:
+    process(i);|3|
 }
 ----
 
-As you can see, the code is extremely simple. The function `main` creates a variable of type `Item` [class]("1", "callout") and calls the function `process` [class]("2", "callout"). This in turn extracts the field `value` [class]("3", "callout") and returns it (which is ignored by `main`).
+As you can see, the code is extremely simple. The function `main` creates a variable of type `Item` [callout](2) and calls the function `process` [callout](3). This in turn extracts the field `value` [callout](1) and returns it (which is ignored by `main`).
 
 The function prototype accepts an argument of type `Item`. This means that the function wants to receive the physical data (the birthday card).
 
@@ -106,33 +106,33 @@ In this case we say that the caller passes the variable `i` _by value_.
 
 ==== Behind the scenes
 
-Traditionally, we assume that the compiler will byte copy the value into the function stack, and this is still a valid mental model. However, remember that the compiler's task is to optimise code, so it might decide to do something completely different at machine language level.
+Traditionally, we assume that the compiler will copy the value byte by byte into the function stack, and this is still a valid mental model. However, remember that the compiler's task is to optimise code, so it might decide to do something completely different at machine language level.
 
-We can see what happens in this case using the amazing [link]("https://godbolt.org/", "Compiler Explorer"). Please note that to use it you need to make the function `main` public, as the compiler expects a library, not an executable. See the section "Disassemble Rust" at the end of the post if you want to do it locally.
+We can see what happens in this case using the excellent [link]("https://godbolt.org/", "Compiler Explorer"). Please note that to use it you need to make the function `main` public, as the compiler expects a library, not an executable. See the section "Disassemble Rust" at the end of the post if you want to do it locally.
 
 Using rustc 1.83.0, the code above becomes
 
-[*source, nasm, callouts="|"]
+[@source, nasm, marker_delimiter="|"]
 ----
 example:process:
-        mov     ax, di|6|
-        ret|7|
+        mov     ax, di|1|
+        ret|2|
 
 example:main:
-        push    rax|1|
-        mov     edi, 42|3|
+        push    rax|3|
+        mov     edi, 42|4|
         call    example:process|5|
-        pop     rax|2|
+        pop     rax|6|
         ret
 ----
 
 For those unfamiliar with (Intel) Assembly, let me clarify what happens here:
 
-* First of all, there is no concept of `struct` in machine code. Here, the compiler figures out there is only one field so the struct `i` is just the 16 bit value 42.
-* In `example::main` the code saves [class]("1","callout") and restores [class]("2","callout") the 64-bit register `rax`, which is used by convention to store a function's return value (low-level calling convention).
-* The value of the variable `i` is stored in the register `edi` [class]("3","callout"). Here, the compiler decided not to use the stack, as the value of the variable is ultimately just a single `u16` that can be hosted by a register.
-* The function `example:process` is called [class]("5","callout"). The code of the function in Rust is very simple, and it needs only to extract the field `value`. In Assembly, there is no field, and the return value of the function is basically just its input. The function stores the output in the register `ax` [class]("6","callout") which is the lower 16-bit part of `rax`.
-* The function returns [class]("7","callout").
+* First of all, there is no concept of `struct` in machine code. Here, the compiler figures out there is only one field so the struct `i` is just the 16-bit value 42.
+* In `example::main` the code saves [callout](3) and restores [callout](6) the 64-bit register `rax`, which is used by convention to store a function's return value (low-level calling convention).
+* The value of the variable `i` is stored in the register `edi` [callout](4). Here, the compiler decided not to use the stack, as the value of the variable is ultimately just a single `u16` that can be hosted by a register.
+* The function `example:process` is called [callout](5). The code of the function in Rust is very simple, and it needs only to extract the field `value`. In Assembly, there is no field, and the return value of the function is basically just its input. The function stores the output in the register `ax` [callout](1) which is the lower 16-bit part of `rax`.
+* The function returns [callout](2).
 
 Leaving aside the complexity of the low-level architecture and conventions, the main concept we need to retain is: passing parameters by value copies the value of the arguments.
 
@@ -142,13 +142,13 @@ Again, keep in mind that the compiler writes machine code with optimisation in m
 
 The following code is a slight modification of the previous example and shows how we can pass function arguments by reference in Rust
 
-[*source, rust, callouts="|"]
+[@source, rust, marker_delimiter="|"]
 ----
 struct Item {
     pub value: u16,
 }
 
-fn process(item: &Item) -> u16{|1|
+fn process(item: &Item) -> u16 {|1|
     item.value
 }
 
@@ -159,30 +159,30 @@ pub fn main() {
 }
 ----
 
-As you can see, the only difference is that the function `process` accepts `&Item` [class]("1","callout"), that is a reference to `Item`. The function call is modified accordingly, passing `&i` [class]("2","callout"), which is the reference to `i`.
+As you can see, the only difference is that the function `process` accepts `&Item` [callout](1), that is a reference to `Item`. The function call is modified accordingly, passing `&i` [callout](2), which is the reference to `i`.
 
 Here, we are doing what we did when we lent a car. Instead of handing the car itself we tell the recipient where to find it.
 
 ==== Automatic referencing and dereferencing
 
-The code above might surprise those who are used to code in C/C++, as the function `process` receives `&Item` but then reads one of the field as if the variable was an `Item`.
+The code above might surprise those who are used to code in C/C++, as the function `process` receives `&Item` but then reads one of the fields as if the variable were an `Item`.
 
 Formally, we should first _dereference_ the pointer, which in Rust can be done with `*item` and then access the field. Indeed, the following code works
 
-[*source, rust, callouts="|"]
+[@source, rust, marker_delimiter="|"]
 ----
-fn process(item: &Item) -> u16{
+fn process(item: &Item) -> u16 {
     (*item).value
 }
 ----
 
-In C/C++ the syntax `(*item).value` can be written `item->value`, but Rust doesn't have the arrow operator. 
+In C/C++ the syntax `(*item).value` can be written `item->value`, but Rust doesn't have the arrow operator.
 
 Rust has a feature called _automatic referencing and dereferencing_ that can automatically add `&`, `&mut`, or `*` to match the required data type. In this case, it automatically transforms `item` into `*item`.
 
 *It is extremely important to remember that Rust silently adjusts calls*. The feature is useful, as it simplifies the syntax of the language, but if we want to understand what happens behind the scenes we need to be aware of this behaviour.
 
-You can read more about automatic referencing and dereferencing in [docs.rust]("book/ch05-03-method-syntax.html#wheres-the---operator", "chapter 5.3") of the Rust book.
+You can read more about automatic referencing and dereferencing in [docs-rust]("book/ch05-03-method-syntax.html#wheres-the---operator", "chapter 5.3") of the Rust book.
 
 ==== Behind the scenes
 
@@ -190,31 +190,31 @@ This time, the mental model is that we are handing the function the location of 
 
 Again, using the [link]("https://godbolt.org/", "Compiler Explorer") and rustc 1.83.0, the code above becomes
 
-[*source, nasm, callouts="|"]
+[@source, nasm, marker_delimiter="|"]
 ----
 example:process:
-        mov     ax, word ptr [rdi]|6|
-        ret|7|
+        mov     ax, word ptr [rdi]|1|
+        ret|2|
 
 example:main:
-        push    rax|1|
-        mov     word ptr [rsp + 6], 42|3|
-        lea     rdi, [rsp + 6]|4|
-        call    example:process|5|
-        pop     rax|2|
+        push    rax|3|
+        mov     word ptr [rsp + 6], 42|4|
+        lea     rdi, [rsp + 6]|5|
+        call    example:process|6|
+        pop     rax|7|
         ret
 ----
 
-The machine code is clearly different from the previous version. Let's have a deep look:
+The machine code is clearly different from the previous version. Let's have a closer look:
 
-* As happened before, the code saves [class]("1","callout") and restores [class]("2","callout") the 64-bit register `rax`, which is used by convention to store a function's return value (calling convention).
-* The value 42 is pushed onto the stack [class]("3","callout"). This call looks complicated because of byte alignment, but it basically moves the value 42 at the stack address stored into the stack register `rsp`. Let's decompose it
+* As happened before, the code saves [callout](3) and restores [callout](7) the 64-bit register `rax`, which is used by convention to store a function's return value (calling convention).
+* The value 42 is pushed onto the stack [callout](4). This call looks complicated because of byte alignment, but it basically moves the value 42 at the stack address stored into the stack register `rsp`. Let's decompose it
 ** In Intel Assembly `mov [rsp], 42` would move the value 42 to the address stored in the register `rsp`. The value is not moved into the register. Rather, the value in the register is used as an address.
 ** The CPU is very picky when it comes to the size of data that we want to move, so the code clarifies that we want to treat the address as the space that hosts 2 bytes (a `word` that corresponds to 16 bits) with `mov word ptr [rsp], 42`.
 ** Last, the Intel calling convention wants the stack pointer `rsp` to be constantly aligned to a 16-byte boundary. The function `main` already pushed `rax`, which advanced the stack pointer by 8 bytes, and we are going to store 2 bytes (`word`), so we are missing 6 bytes to keep the stack pointer aligned. This is the reason why the code above uses `[rsp + 6]` instead of just `[rsp]`.
-* The address stored at `rsp + 6` is loaded into the register `rdi` [class]("4","callout"). The instruction `lea` (Load Effective Address) calculates the result of `[rsp + 6]` as an address and loads it into `rdi`. This is different from what `mov` would do, which is to copy the value at that address.
-* As before, the function `process` is called [class]("5","callout").
-* The code of the function is different as well because now `rdi` doesn't contain a value but the address of the value. Thus, the function uses `word ptr [rdi]` [class]("6","callout") to move the 16 bits value at that address into `ax` (which is still the conventional register for the return value) and returns [class]("7","callout").
+* The address stored at `rsp + 6` is loaded into the register `rdi` [callout](5). The instruction `lea` (Load Effective Address) calculates the result of `[rsp + 6]` as an address and loads it into `rdi`. This is different from what `mov` would do, which is to copy the value at that address.
+* As before, the function `process` is called [callout](6).
+* The code of the function is different as well because now `rdi` doesn't contain a value but the address of the value. Thus, the function uses `word ptr [rdi]` [callout](1) to move the 16-bit value at that address into `ax` (which is still the conventional register for the return value) and returns [callout](2).
 
 Once again, the Assembly code is complicated because of conventions and low-level architectural details, but the main concept is: passing parameters by address gives the function the location of the data and not the data itself.
 
@@ -222,10 +222,10 @@ Once again, the Assembly code is complicated because of conventions and low-leve
 
 I mentioned several times that the compiler's task is to optimise code, which means that the machine code might or might not correspond to what we wrote in Rust (or any other high level language). A simple example is the following
 
-[*source, rust, callouts="|"]
+[@source, rust, marker_delimiter="|"]
 ----
 struct LargeItem {
-    value: [u16; 1024 * 1024],|2|
+    value: [u16; 1024 * 1024],|1|
 }
 
 fn process(item: LargeItem) -> u16 {
@@ -237,23 +237,23 @@ pub fn main() {
         value: [0; 1024 * 1024],
     };
 
-    process(li);|1|
+    process(li);|2|
 }
 ----
 
-Here, we are passing the variable `li` by value [class]("1","callout"), but the size of the type is rather huge. It's a struct of 2 MiB (2 bytes * 2^32^) [class]("2","callout") which cannot be stored into a register. This means that, even though in Rust we pretend we pass the value, the compiler is forced to call the function passing the address. The relevant part of the machine code this time is
+Here, we are passing the variable `li` by value [callout](2), but the size of the type is rather huge. It's a struct of 2 MiB (2 bytes * 2^20^) [callout](1) which cannot be stored into a register. This means that, even though in Rust we pretend we pass the value, the compiler is forced to call the function passing the address. The relevant part of the machine code this time is
 
-[*source, nasm, callouts="|"]
+[@source, nasm, marker_delimiter="|"]
 ----
 example:process:
-        mov     ax, word ptr [rdi]
+        mov     ax, word ptr [rdi]|1|
         ret
 
 example:main:
         # Calls to memset and memcpy
         # to set up the large struct
         ...
-        lea     rdi, [rsp + 8]|1|
+        lea     rdi, [rsp + 8]|2|
         call    example:process
         ...
         ret
@@ -261,13 +261,13 @@ example:main:
 
 where I omitted the rest of the code that deals with the memory initialisation of the large struct.
 
-As you can see, the compiler ignores our "directive" to pass by value and uses the address of the struct [class]("1", "callout") as it did with the Rust code that uses references. The function extracts the first value of the array `item.value`, so the machine code reads the value at the address [class]("2", "callout").
+As you can see, the compiler ignores our "directive" to pass by value and uses the address of the struct [callout](2) as it did with the Rust code that uses references. The function extracts the first value of the array `item.value`, so the machine code reads the value at the address [callout](1).
 
 The bottom line is: *both passing by value and passing by reference can result in the same machine code*.
 
 This might sound surprising, but if you think about it, that's exactly the reason why we use a compiler and why it's such a fascinating and important piece of software.
 
-As I mentioned before, the reason why we should pass arguments by reference instead of by value will be clear once we introduce mutability. To get there, however, we first need to discuss another features of the language: ownership.
+As I mentioned before, the reason why we should pass arguments by reference instead of by value will be clear once we introduce mutability. To get there, however, we first need to discuss another feature of the language: ownership.
 
 == Ownership
 
@@ -277,9 +277,9 @@ To discuss ownership, let's once again have a look at real world examples.
 
 In the first scenario, I have a car (once again!) that I don't use any more, so I sell it. From today, I cannot drive that car any more, as it belongs to someone else.
 
-The second situation is: I own a holiday home in a beautiful place, and a friend asked me to use it for a coupe of weeks. The ownership of the house doesn't change, but for a while it will be used by another person.
+The second situation is: I own a holiday home in a beautiful place, and a friend asked me to use it for a couple of weeks. The ownership of the house doesn't change, but for a while it will be used by another person.
 
-The third case is similar to a previous example. I annotated the address of a shop on a piece of paper. A friend expresses interest in the same shop, so I copy the note and give it to them. Now, we both have the same information in two different physical locations.
+The third case is similar to a previous example. I wrote down the address of a shop on a piece of paper. A friend expresses interest in the same shop, so I copy the note and give it to them. Now, we both have the same information in two different physical locations.
 
 The difference between the cases is clear. Once the car is sold it's not part of my possession any more. I can't drive it, but at the same time I don't have to pay insurance or to deal with it when it's time to demolish it. In the second case, the house is still mine, and I am responsible for council tax and repairs, but for a while it will be given to another. In the third case, each one of us owns their own copy of the information and is responsible for the data.
 
@@ -287,32 +287,32 @@ These three cases can be connected with the way function arguments are treated i
 
 In Rust, each argument can be passed in one of the three possible ways:
 
-* *Copy*: we make a copy of value and end up with two owners (like the address of the shop).
+* *Copy*: we make a copy of the value and end up with two owners (like the address of the shop).
 * *Move*: we transfer ownership (like selling the car).
 * *Borrow*: we lend the value to a function but we want to have it back (like we did with the house).
 
-It is important to understand that ownership is an additional check introduced by the Rust compiler, and that there is no such a thing at CPU level.
+It is important to understand that ownership is an additional check introduced by the Rust compiler, and that there is no such thing at CPU level.
 
 === Copy: two values and two owners
 
 Let's consider the following code
 
-[*source, rust]
+[@source, rust, marker_delimiter="|"]
 ----
 fn process(value: u16) -> u16 {
     value * 2
 }
 
 fn main() {
-    let v: u16 = 42;:1:
+    let v: u16 = 42;|1|
 
-    process(v);:2:
+    process(v);|2|
 
-    println!("Value {}", v);:3:
+    println!("Value {}", v);|3|
 }
 ----
 
-Here, we initialise a value `v` [class]("1","callout") and we pass it by value to the function `process` [class]("2","callout").
+Here, we initialise a value `v` [callout](1) and we pass it by value to the function `process` [callout](2).
 
 The value of `v` is _copied_ into the variable `value` when the function is called. This means that when we call `process` there are two independent areas of memory:
 
@@ -323,26 +323,26 @@ Both areas of memory (variables) contain the same value initially, but they are 
 
 There are two important facts to consider here:
 
-# We can use `v` [class]("3","callout") after we called `process`. As we copied the value into the function, our variable is still accessible.
+# We can use `v` [callout](3) after we called `process`. As we copied the value into the function, our variable is still accessible.
 # The variable has been *copied automatically* by Rust. This happens because `v` is a simple type and implements the trait `Copy` out of the box.
 
 ==== The Copy trait
 
-In Rust, the `Copy` trait is associated with bitwise copy, that is a trivial memory copy between memory areas. Going back to real world examples we can think of a photocopy of a document, where the two copies are exactly identical at the end of the process.
+In Rust, the trait `Copy` is associated with bitwise copy, that is a trivial memory copy between memory areas. Going back to real world examples we can think of a photocopy of a document, where the two copies are exactly identical at the end of the process.
 
-This is not always what we want and this is where the trait `Clone` comes into play. I won't discuss it further in this article, make sure you read what the Rust book says about [docs.rust]("stable/book/ch04-01-what-is-ownership.html#memory-and-allocation", "Memory and Allocation").
+This is not always what we want and this is where the trait `Clone` comes into play. I won't discuss it further in this article, make sure you read what the Rust book says about [docs-rust]("stable/book/ch04-01-what-is-ownership.html#memory-and-allocation", "Memory and Allocation").
 
-Some simple types in Rust implement the trait `Copy` out of the box: integers, floats, booleans, and char are among those. If you are unsure, you can always check the documentation. For example, `u32` implements `Copy` as stated [docs.rust]("std/primitive.u32.html#impl-Copy-for-u32", "here").
+Some simple types in Rust implement the trait `Copy` out of the box: integers, floats, booleans, and char are among those. If you are unsure, you can always check the documentation. For example, `u32` implements `Copy` as stated [docs-rust]("std/primitive.u32.html#impl-Copy-for-u32", "here").
 
-It's important to remember that a `struct` doesn't implement `Copy` automatically. This was the case originally, but it was changed around 2014, and you can read a long and detailed explanation in [link]("https://github.com/rust-lang/rfcs/blob/master/text/0019-opt-in-builtin-traits.md", "RFC #19").
+It's important to remember that a `struct` doesn't implement `Copy` automatically. This was the case originally, but it was changed in 2014, and you can read a long and detailed explanation in [link]("https://github.com/rust-lang/rfcs/blob/master/text/0019-opt-in-builtin-traits.md", "RFC #19").
 
 === Move: transfer ownership
 
-What happens when a variable is passed by value and its type doesn't implement the `Copy` trait? In Rust, the variable is _moved_ to the function and the ownership is transferred (selling the car).
+What happens when a variable is passed by value and its type doesn't implement the trait `Copy`? In Rust, the variable is _moved_ to the function and the ownership is transferred (selling the car).
 
 Let's have a look at the following code
 
-[*source, rust]
+[@source, rust]
 ----
 struct Item {
     pub value: u16,
@@ -364,7 +364,7 @@ fn main() {
 
 The compiler won't accept it and will return the following error
 
-[*source]
+[@source]
 ----
     |
     |     let i = Item { value: 42 };
@@ -386,9 +386,9 @@ When we called `process` passing `i` by value we gave up ownership of the variab
 
 ==== Implementing Copy for structs
 
-As you see, the `Copy` trait is explicitly mentioned. If we implement it for `Item` we should be able to go back to the previous case, with two copies of the value (`i` in `main` and `item` in `process`). When we define a `struct` that contains only types that implement `Copy` we can ask Rust to implement the trait for us using `#[derive(Copy, Clone)]`.
+As you see, the trait `Copy` is explicitly mentioned. If we implement it for `Item` we should be able to go back to the previous case, with two copies of the value (`i` in `main` and `item` in `process`). When we define a `struct` that contains only types that implement `Copy` we can ask Rust to implement the trait for us using `#[derive(Copy, Clone)]`.
 
-[*source, rust]
+[@source, rust]
 ----
 #[derive(Copy, Clone)]
 struct Item {
@@ -409,15 +409,15 @@ fn main() {
 }
 ----
 
-This code compiles as now `Item` can be copied when passed as an argument to `process`. The only field of `Item` is a `u16`, a type that implements the trait `Copy`, so it is sufficient to derive the trait to implement it for the structure.
+This code compiles as now `Item` can be copied when passed as an argument to `process`. The only field of `Item` is a `u16`, a type that implements the trait `Copy`, so deriving the trait is enough for the structure to implement it.
 
-To prove that ownership is a protection mechanism that exists only in Rust, it is interesting to compare the Assembly code for the two cases of a struct that doesn't implement `Copy` and for one that does. The code is exactly the same for both cases (we saw it in the first example of the article).
+To prove that ownership is a protection mechanism that exists only in Rust, it is interesting to compare the Assembly code for the two cases of a struct that doesn't implement `Copy` and one that does. The code is exactly the same for both cases (we saw it in the first example of the article).
 
 === Borrow: lend the value to a function
 
 So far we saw two cases that happen when we pass arguments by value. We learned however that we can also pass arguments by reference, so let's have a look at what happens in that case.
 
-[*source, rust]
+[@source, rust]
 ----
 struct Item {
     pub value: u16,
@@ -448,7 +448,7 @@ In Rust, variables are immutable unless they are declared as mutable. However, a
 
 Mutability, like ownership, is a feature that the compiler introduces to help us to write code that is more correct. Forcing us to declare a variable as mutable gives us the chance to ask ourselves if we need that and to avoid bugs. Mutability and ownership work together to ensure that we write safer code.
 
-While the role of `mut` in front of variables is usually simple to grasp, mutable references might prove more complicated. For this reason, to discuss mutability we will consider separately the case of arguments passed by value and arguments passed by reference.
+While the role of `mut` in front of variables is usually straightforward to grasp, mutable references might prove more complicated. For this reason, to discuss mutability we will consider separately the case of arguments passed by value and arguments passed by reference.
 
 === Mutability and arguments passed by value
 
@@ -458,7 +458,7 @@ When I sell the car (pass by value, move) or give away the address of the shop (
 
 The same happens with Rust variables. If the variable is moved (because it doesn't implement `Copy`), the ownership is transferred to the function, which is free to do whatever it wants.
 
-[*source, rust]
+[@source, rust]
 ----
 struct Item {
     pub value: u16,
@@ -478,7 +478,7 @@ fn main() {
 
 If the variable is copied (because it implements `Copy`) the function receives a copy of the value, and once again it's free to do whatever it wants with it.
 
-[*source, rust]
+[@source, rust]
 ----
 #[derive(Copy, Clone)]
 struct Item {
@@ -500,7 +500,7 @@ fn main() {
 }
 ----
 
-Here, we can access `i` after the call because it implements `Copy`, but the function changed the value of the copied value and not that of the original variable.
+Here, we can access `i` after the call because it implements `Copy`, but the function changed the copied value and not that of the original variable.
 
 The two examples show what we said at the beginning of the article: passing arguments by value doesn't allow us to change the original variables. In Rust, when a variable is passed by value mutability can be ignored.
 
@@ -508,7 +508,7 @@ The two examples show what we said at the beginning of the article: passing argu
 
 There is an important point to clarify. Let's have a look at the following code
 
-[*source, rust]
+[@source, rust]
 ----
 fn process(mut value: u16) {
     value += 1;
@@ -525,11 +525,11 @@ As you see, the variable `i` is passed by value. This means that the function `p
 
 The syntax `mut value` in the function signature means: create a _local mutable variable_ that will host a value coming from the outside.
 
-This is paramount to understand: `mut value` doesn't mean that the argument passed in `main` has to be mutable. It just means that the argument will be hosted by a mutable local variable.
+This is crucial to understand: `mut value` doesn't mean that the argument passed in `main` has to be mutable. It just means that the argument will be hosted by a mutable local variable.
 
 As a matter of fact, the following code compiles
 
-[*source, rust]
+[@source, rust]
 ----
 fn process(mut value: u16) {
     value += 1;
@@ -544,7 +544,7 @@ fn main() {
 
 But the compiler gives us a warning
 
-[*source]
+[@source]
 ----
 warning: variable does not need to be mutable
     |
@@ -568,7 +568,7 @@ The name "mutable reference" can be misleading, as `&mut` is a reference that *a
 
 We already saw how to pass a normal reference
 
-[*source, rust]
+[@source, rust]
 ----
 fn process(value: &u16) -> u16 {
     *value
@@ -584,41 +584,41 @@ fn main() {
 }
 ----
 
-Please note that everything is coherent here. The variable `i` is not mutable (because we don't need it), and is passed by (immutable) reference to the function. This means that the function receives a reference to a value and Rust knows that it is not allowed to change the referenced value.
+Please note that everything is consistent here. The variable `i` is not mutable (because we don't need it), and is passed by (immutable) reference to the function. This means that the function receives a reference to a value and Rust knows that it is not allowed to change the referenced value.
 
 If we want to change the value inside the function we need to alter the code in many places
 
-[*source, rust]
+[@source, rust, marker_delimiter="|"]
 ----
-fn process(value: &mut u16) {:1:
-    *value += 1
+fn process(value: &mut u16) {|1|
+    *value += 1;
 }
 
 fn main() {
-    let mut i: u16 = 42;:3:
+    let mut i: u16 = 42;|2|
 
-    process(&mut i);:2:
+    process(&mut i);|3|
 
     // i is 43
     println!("Item value {}", i);
 }
 ----
 
-The function `process` needs to receive `&mut u16` [class]("1", "callout") because we want to change the referenced value. This means that `main` has to call the function passing `&mut i` [class]("2", "callout") and not `&i`, as the types need to be coherent. We cannot create a mutable reference to an immutable value, though, so `i` has to be mutable as well [class]("3", "callout").
+The function `process` needs to receive `&mut u16` [callout](1) because we want to change the referenced value. This means that `main` has to call the function passing `&mut i` [callout](3) and not `&i`, as the types need to be coherent. We cannot create a mutable reference to an immutable value, though, so `i` has to be mutable as well [callout](2).
 
 == The functional way
 
 There is a last option that is a standard strategy in functional languages, where often variables cannot be declared as mutable at all.
 
-[*source, rust]
+[@source, rust, marker_delimiter="|"]
 ----
 struct Item {
     pub value: u16,
 }
 
-fn process(mut item: Item) -> Item {:2:
+fn process(mut item: Item) -> Item {|1|
     item.value += 1;
-    item :3:
+    item|2|
 }
 
 fn main() {
@@ -626,13 +626,13 @@ fn main() {
 
     // Variable moved
     // Reassigned to retain ownership
-    i = process(i);:1:
+    i = process(i);|3|
 
-    println!("Value {}", i.value)
+    println!("Value {}", i.value);
 }
 ----
 
-Here, we pass the variable `i` by value [class]("1", "callout"), which will copy or move the variable (depending on `Copy`). The function `process` declares the parameter as mutable [class]("2", "callout") and changes its value. Then, it returns the same type it accepted [class]("3", "callout") and the caller reassigns the old variable [class]("1", "callout"), that at this point has to be mutable.
+Here, we pass the variable `i` by value [callout](3), which will copy or move the variable (depending on `Copy`). The function `process` declares the parameter as mutable [callout](1) and changes its value. Then, it returns the same type it accepted [callout](2) and the caller reassigns the old variable [callout](1), that at this point has to be mutable.
 
 == A quick recap
 
@@ -654,7 +654,7 @@ If you want to disassemble the Rust code on your machine (for example to explore
 * Open `Cargo.toml` and turn off debug for the profile `dev`
 
 . `Cargo.toml`
-[*source, toml]
+[@source, toml]
 ----
 [package]
 name = "proto"
@@ -667,9 +667,9 @@ edition = "2021"
 debug=0
 ----
 
-* Use `llvm-objdump` options and `awk` to get the output you want. For example
+* Use `llvm-objdump` and `awk` to get the output you want. For example
 
-[*source]
+[@source]
 ----
 $ cargo objdump -- \
    --disassemble \
@@ -680,15 +680,15 @@ $ cargo objdump -- \
    | awk -v RS="" '/^[[:xdigit:]]+ <proto::/'
 ----
 
-The `awk` script is useful to isolate the functions in your code only, skipping the boilerplate that the compiler has to put into an executable. Make sure you mention the correct name of your script if you use something else than `proto`.
+The `awk` script is useful to isolate the functions in your code only, skipping the boilerplate that the compiler has to put into an executable. Make sure you mention the correct name of your script if you use something other than than `proto`.
 
 == Final words
 
-This was quite a ride! I hope it was useful, it definitely was to me to clarify in my head the available options and the reasons behind them. Happy coding!
+This was quite a ride! I hope it was useful, it definitely helped me to clarify in my head the available options and the reasons behind them. Happy coding!
 
 == Resources
 
-* I highly recommend to watch this [link]("https://www.youtube.com/watch?v=B27_eoNCsV0", "video by James Sherman") that explains in detail how function code is called at CPU level.
+* I highly recommend watching this [link]("https://www.youtube.com/watch?v=B27_eoNCsV0", "video by James Sherman") that explains in detail how function code is called at CPU level.
 * Make sure you are familiar with the following concepts:
 ** The [link]("https://en.wikipedia.org/wiki/Stack_register", "stack")
 ** The [link]("https://en.wikipedia.org/wiki/Calling_convention", "calling convention") of a specific CPU, such as the [link]("https://en.wikipedia.org/wiki/X86_calling_conventions", "x86 calling convention").

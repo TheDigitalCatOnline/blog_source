@@ -657,6 +657,12 @@ div.code {
 	div.highlight {
 	    font-family: "Courier New", monospace;
 	    margin: 0;
+
+            /** Mau highlighted line styles **/
+            pre .hll-default { background-color: #ffffcc }
+            pre .hll-important { background-color: #ffaf5b }
+            pre .hll-add { background-color: #bfffbf }
+            pre .hll-remove { background-color: #f9cece }
 	}
     }
 }

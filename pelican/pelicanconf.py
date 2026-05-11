@@ -112,13 +112,27 @@ MARKDOWN = {
 }
 
 MAU = {
-    "visitor": {
-        "templates_directory": "../mau/templates",
-        "template_providers": ["mau-docs-templates"],
-        "pygments": {
-            "html": {
-                "nowrap": True,
+    "parser": {
+        "aliases": {
+            "tip": {
+                "args": {"class": "tip", "icon": "lightbulb"},
+                "subtype": "admonition",
             },
+        },
+    },
+    "visitor": {
+        "templates": {
+            "paths": [
+                "../mau/templates",
+            ],
+            "providers": ["mau-docs-templates"],
+            #     "templates_directory": "../mau/templates",
+            #     "template_providers": ["mau-docs-templates"],
+            #     "pygments": {
+            #         "html": {
+            #             "nowrap": True,
+            #         },
+            #     },
         },
     },
 }
