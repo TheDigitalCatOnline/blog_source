@@ -2,7 +2,7 @@ Title: Object-Oriented Programming in Python 3 - Metaclasses
 Date: 2014-09-01 15:00:00 +0200
 Modified: 2019-05-22 23:30:00 +0000
 Category: Programming
-Tags: Python, Python3, OOP, metaprogramming, metaclasses
+Tags: Python, OOP, metaprogramming, metaclasses
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-5-metaclasses
 Image: python-3-oop

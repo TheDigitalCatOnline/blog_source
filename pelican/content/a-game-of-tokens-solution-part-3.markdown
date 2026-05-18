@@ -1,7 +1,7 @@
 Title: A game of tokens: solution - Part 3
 Date: 2017-10-31 12:00:00 +0000
 Category: Programming
-Tags: Python, Python3, TDD, testing, compilers
+Tags: Python, TDD, testing, compilers
 Authors: Leonardo Giordani
 Slug: a-game-of-tokens-solution-part-3
 Image: a-game-of-tokens-solutions

@@ -1,0 +1,22 @@
+{# Macro: renders a single post card. Call as: from 'includes/post_card.html' import post_card #}
+{% macro post_card(article) %}
+<div class="post-card">
+  <a href="{{ SITEURL }}/{{ article.url }}" class="post-card-img-link">
+    <img src="{{ SITEURL }}/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg"
+         alt="{{ article.title | striptags }}" />
+  </a>
+  <div class="post-card-body">
+    <a href="{{ SITEURL }}/{{ article.url }}" class="post-card-title-link">
+      <h3>{{ article.title }}</h3>
+    </a>
+    <div class="post-card-tags">
+      {% for tag in article.tags %}
+      <a href="{{ SITEURL }}/{{ tag.url }}" class="post-tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>{{ article.date | strftime('%b %-d, %Y') }}
+    </p>
+  </div>
+</div>
+{% endmacro %}

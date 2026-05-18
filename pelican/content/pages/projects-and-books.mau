@@ -1,0 +1,36 @@
+:pelican.title:Projects and books
+
+.cite The Lord of the Rings - The Two Towers (1954)
+[*quote]
+----
+We in the house of Denethor know much ancient lore by long tradition, and there are moreover in our treasuries many things preserved: books and tablets writ on withered parchments, yea, and on stone, and on leaves of silver and of gold, in divers characters. Some none can now read; and for the rest, few ever unlock them. I can read a little in them, for I have had teaching. It was these records that brought the Grey Pilgrim to us.
+----
+
+
+== Open source projects
+
+=== Mau
+
+Mau is a lightweight markup language I designed to write structured technical content in plain text. It supports headers, footnotes, source code blocks with syntax highlighting and line callouts, admonitions, footnotes, and a flexible macro system — all rendered through a template engine that makes the output fully customisable.
+
+The language grew out of my frustration with the limitations I encountered when writing long-form technical articles and books in Markdown and AsciiDoc. Mau gives me precise control over how each element is rendered without coupling the source format to any particular output back-end.
+
+The source code is hosted on [link](https://github.com/Project-Mau, "GitHub") and the official documentation, including a full language reference and guides for integrating Mau with Pelican, is available at [link](https://project-mau.github.io/, "project-mau.github.io").
+
+== Books
+
+=== Clean Architectures in Python
+
+_Clean Architectures in Python_ is a practical guide to applying architecture and design patterns in Python projects. It covers the foundational ideas behind clean architecture — use cases, entities, repositories, and the dependency rule — and walks through building a fully tested application from the ground up, layer by layer.
+
+The book pays particular attention to testing strategy: how to write fast, meaningful unit tests that are decoupled from infrastructure, and how to structure a project so that business logic remains independent of frameworks, databases, and external services. It draws on years of experience consulting on and reviewing Python codebases of very different sizes and maturity levels.
+
+The book is available as a pay-what-you-want PDF on [link](https://leanpub.com/clean-architectures-in-python, "Leanpub").
+
+=== Rust Projects - Write a Redis Clone
+
+_Rust Projects — Write a Redis Clone_ is a hands-on book that guides you through building a simplified Redis-compatible server in Rust from scratch. Rather than teaching Rust syntax in isolation, the book uses a real, non-trivial project as the vehicle: by the end you have a working TCP server that speaks the Redis Serialisation Protocol and handles a meaningful subset of Redis commands.
+
+Along the way the book covers Rust ownership and borrowing in depth, async I/O with Tokio, protocol parsing, and the design decisions that arise when you need correctness and performance at the same time. Each chapter introduces new language features precisely when the project requires them, so the motivation for every concept is always concrete.
+
+The book is available as a pay-what-you-want PDF on [link](https://leanpub.com/rustprojects-redis, "Leanpub") and as a free HTML version at [link](https://rust-projects-write-a-redis-clone.github.io/, "rust-projects-write-a-redis-clone.github.io").

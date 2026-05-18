@@ -1,0 +1,39 @@
+<aside class="site-sidebar" id="siteSidebar">
+
+  <nav class="sidebar-section">
+    <a href="{{ SITEURL }}/index.html" class="sidebar-link{% if active_page == 'index' %} active{% endif %}">
+      <i class="fas fa-home fa-fw me-2"></i>Home
+    </a>
+    <a href="{{ SITEURL }}/pages/about.html" class="sidebar-link{% if active_page == 'about' %} active{% endif %}">
+      <i class="fas fa-user fa-fw me-2"></i>About
+    </a>
+    <a href="{{ SITEURL }}/pages/projects-and-books.html" class="sidebar-link{% if active_page == 'projects' %} active{% endif %}">
+      <i class="fas fa-user fa-fw me-2"></i>Projects and Books
+    </a>
+    <a href="{{ SITEURL }}/archives/index.html" class="sidebar-link{% if active_page == 'archives' %} active{% endif %}">
+      <i class="fas fa-archive fa-fw me-2"></i>Archives
+    </a>
+  </nav>
+
+  {% if categories %}
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Categories</p>
+    {% for category, _ in categories | sort(attribute='0') %}
+    <a href="{{ SITEURL }}/{{ category.url }}" class="sidebar-link">{{ category }}</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if tag_cloud %}
+  {% set tags = tag_cloud | sort(attribute='0') %}
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Tags</p>
+    <div class="sidebar-tags">
+      {% for tag in tags %}
+      <a href="/{{ tag.0.url }}" class="sidebar-tag tag-size-{{ tag.1 }}">{{ tag.0 }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</aside>

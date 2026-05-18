@@ -1,0 +1,21 @@
+<nav class="navbar site-navbar">
+  <div class="container-fluid position-relative">
+
+    <button class="site-navbar-toggler d-lg-none"
+            id="sidebarToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="siteSidebar">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <span class="navbar-brand site-navbar-brand mb-0">{{ SITENAME }}</span>
+
+    {% if GITHUB_URL %}
+    <a href="{{ GITHUB_URL }}" class="site-navbar-icon ms-auto" aria-label="GitHub" target="_blank">
+      <i class="fab fa-github fa-lg"></i>
+    </a>
+    {% endif %}
+
+  </div>
+</nav>

@@ -6,7 +6,7 @@ DEPLOY_DIR="deploy"
 S3_BUCKET="www.thedigitalcatonline.com"
 CLOUDFRONT_DISTRIBUTION="E1VK6I0BH0G8RZ"
 
-boussole compile
+./scripts/compile_scss.sh
 
 cd pelican
 make publish
@@ -16,6 +16,4 @@ rm -fR ${DEPLOY_DIR}/*
 cp -R ${OUTPUT_DIR}/* ${DEPLOY_DIR}
 
 AWS_PROFILE=${AWS_PROFILE} aws s3 sync ${DEPLOY_DIR} s3://${S3_BUCKET} --delete
-# --no-guess-mime-type
-# AWS_PROFILE=${AWS_PROFILE} s3cmd sync ${DEPLOY_DIR}/ s3://${S3_BUCKET} --acl-public --delete-removed --no-mime-magic
 aws --profile ${AWS_PROFILE} cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION} --paths "/*"

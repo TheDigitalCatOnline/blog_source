@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %} - {{ article.title | striptags }}{% endblock %}
+
+{% block meta_description %}
+{% if article.summary %}
+<meta name="description" content="{{ article.summary | striptags }}" />
+{% endif %}
+<meta name="twitter:card" content="summary" />
+{% if TWITTER_USERNAME %}<meta name="twitter:site" content="@{{ TWITTER_USERNAME }}" />{% endif %}
+<meta name="twitter:title" content="{{ article.title | striptags }}" />
+{% if article.summary %}
+<meta name="twitter:description" content="{{ article.summary | striptags }}" />
+{% endif %}
+<meta name="twitter:image" content="{{ SITEURL }}/images/{{ article.image if article.image else 'article_image_placeholder' }}.jpg" />
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mx-0">
+  <div class="col-12 col-md-10 col-lg-8 col-xl-6 site-post-content">
+
+    <header class="post-header">
+      <h1 class="post-title">{{ article.title }}</h1>
+      <div class="post-meta">
+        <span><i class="fas fa-user fa-fw me-1"></i>{{ article.author }}</span>
+        <span><i class="fas fa-calendar-alt fa-fw me-1"></i>{{ article.date | strftime('%b %-d, %Y') }}</span>
+        {% if article.modified %}
+        <span><i class="fas fa-edit fa-fw me-1"></i>Updated on {{ article.modified | strftime('%b %-d, %Y') }}</span>
+        {% endif %}
+      </div>
+      <div class="post-card-tags mb-2">
+        <a href="{{ SITEURL }}/{{ article.category.url }}" class="post-tag">{{ article.category }}</a>
+        {% for tag in article.tags %}
+        <a href="{{ SITEURL }}/{{ tag.url }}" class="post-tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% include 'includes/share.html' %}
+    </header>
+
+    <div class="post-body">
+      {{ article.content }}
+    </div>
+
+    {% if article.series and (article.series.all | length > 1) %}
+    <section class="post-related post-series">
+      <h2 class="post-related-title">
+        Part {{ article.series.index }} of the {{ article.series.name }} series
+      </h2>
+      <div class="row g-2">
+        {% if article.series.all_previous %}
+        <div class="col-12">
+          <h3 class="h6 mt-2">Previous articles</h3>
+          <ul>
+            {% for a in article.series.all_previous %}
+            <li><a href="{{ SITEURL }}/{{ a.url }}">{{ a.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        {% if article.series.all_next %}
+        <div class="col-12">
+          <h3 class="h6 mt-2">Next articles</h3>
+          <ul>
+            {% for a in article.series.all_next %}
+            <li><a href="{{ SITEURL }}/{{ a.url }}">{{ a.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% include 'includes/related_posts.html' %}
+
+  </div>
+</div>
+{% endblock %}

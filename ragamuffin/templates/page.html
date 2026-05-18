@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %} - {{ page.title }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ page.title }}" />
+{% endblock %}
+
+{% set active_page = page.slug %}
+
+{% block content %}
+<div class="row justify-content-center mx-0">
+  <div class="col-12 col-md-10 col-lg-8 col-xl-6 site-post-content">
+
+    <header class="post-header">
+      <h1 class="post-title">{{ page.title }}</h1>
+    </header>
+
+    <div class="post-body">
+      {{ page.content }}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

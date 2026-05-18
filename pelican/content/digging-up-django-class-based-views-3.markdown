@@ -2,7 +2,7 @@ Title: Digging up Django class-based views - 3
 Date: 2014-02-14 16:13:41 +0100
 Modified: 2020-03-16 07:00:00 +0000
 Category: Programming
-Tags: Django, OOP, Python, Python3
+Tags: Django, OOP, Python
 Authors: Leonardo Giordani
 Slug: digging-up-django-class-based-views-3
 Image: digging-up-django-class-based-views

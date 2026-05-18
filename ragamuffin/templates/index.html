@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from 'includes/post_card.html' import post_card %}
+
+{% block title %} - Home{% if articles_page.number != 1 %} Page {{ articles_page.number }}{% endif %}{% endblock %}
+
+{% set active_page = 'index' %}
+
+{% block banner %}
+  {% include 'includes/banner.html' %}
+{% endblock %}
+
+{% block footer %}
+<footer class="site-footer">
+  <p id="bannerAttribution"></p>
+</footer>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mx-0">
+  <div class="col-12 col-lg-10 col-xl-8">
+
+    {% include 'includes/pagination.html' %}
+
+    <div class="row g-3">
+      {% for article in articles_page.object_list %}
+      <div class="col-12 col-md-6 col-lg-4">
+        {{ post_card(article) }}
+      </div>
+      {% endfor %}
+    </div>
+
+    {% include 'includes/pagination.html' %}
+
+  </div>
+</div>
+{% endblock %}

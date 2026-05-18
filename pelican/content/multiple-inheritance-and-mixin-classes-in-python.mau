@@ -2,7 +2,7 @@
 :pelican.date:2020-03-27 12:00:00 +0100
 :pelican.modified:2022-10-08 14:00:00 +0100
 :pelican.category:Programming
-:pelican.tags:algorithms, Django, OOP, Python, Python3
+:pelican.tags:algorithms, Django, OOP, Python
 :pelican.authors:Leonardo Giordani
 :pelican.slug:mixin-classes-in-python
 :pelican.image:multiple-inheritance-and-mixin-classes-in-python

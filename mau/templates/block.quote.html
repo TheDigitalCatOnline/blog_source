@@ -1,4 +1,7 @@
-<blockquote>
-  {{ content }}
-  {% if labels.cite %}<cite>{{ labels.cite }}</cite>{% endif %}
-</blockquote>
+<div class="page-quote">
+  <i class="fa-solid fa-quote-right page-quote-icon"></i>
+  <blockquote class="page-quote-body">
+    {{ content }}
+    {% if labels.cite %}<cite class="page-quote-cite">{{ labels.cite }}</cite>{% endif %}
+  </blockquote>
+</div>

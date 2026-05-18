@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="{{ SITE_DESCRIPTION if SITE_DESCRIPTION else SITENAME }}" />
+    {% block meta_description %}{% endblock %}
+    <title>{{ SITENAME }}{% block title %} - Home{% endblock %}</title>
+
+    <!-- Google Fonts: Open Sans + Roboto Slab -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- MDB CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" />
+
+    <!-- Site theme -->
+    {% assets filters="cssmin", output="css/main.min.css", "css/main.css", "css/pygments/default.css" %}
+    <link rel="stylesheet" href="/{{ ASSET_URL }}">
+    {% endassets %}
+
+    {% block extra_head %}{% endblock %}
+  </head>
+
+  <body>
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="site-sidebar-overlay" id="sidebarOverlay"></div>
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="site-content">
+
+      {% block banner %}{% endblock %}
+
+      <main class="site-main">
+        {% block content %}{% endblock %}
+      </main>
+
+      {% block footer %}{% endblock %}
+
+    </div>
+
+
+    <!-- MDB JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+
+    <!-- Inject settings for JS -->
+    <script>
+      const BANNER_IMAGES = {{ BANNER_IMAGES | tojson if BANNER_IMAGES else '[]' }};
+      const QUOTES = {{ QUOTES | tojson if QUOTES else '[]' }};
+    </script>
+
+    <!-- Site JS -->
+    <script src="{{ SITEURL }}/theme/js/main.js"></script>
+
+    <!-- Sidebar toggle -->
+    <script>
+      (function () {
+        const toggle  = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('siteSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (!toggle) return;
+
+        function openSidebar() {
+          sidebar.classList.add('show');
+          overlay.classList.add('show');
+          toggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeSidebar() {
+          sidebar.classList.remove('show');
+          overlay.classList.remove('show');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        toggle.addEventListener('click', function () {
+          sidebar.classList.contains('show') ? closeSidebar() : openSidebar();
+        });
+
+        overlay.addEventListener('click', closeSidebar);
+      })();
+    </script>
+
+    {% block extra_js %}{% endblock %}
+
+  </body>
+</html>

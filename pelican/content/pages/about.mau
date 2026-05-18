@@ -1,0 +1,45 @@
+:pelican.title:About
+
+.cite Bernard of Chartres
+[*quote]
+----
+We are like dwarfs standing on the shoulders of giants, so that we can see more than they, and things at a greater distance; not by virtue of any sharpness of sight on our part, or any physical distinction, but because we are carried high and raised up by their giant size.
+----
+
+
+== About me
+
+My name is Leonardo Giordani. I was born in Italy in 1977, a year that also gave the world Star Wars, bash, Apple ][, BSD, finger, Zork, Dire Straits, The Police, Rumours, and The Silmarillion.
+
+I'm interested in operating systems and programming languages, photography, fantasy and science fiction, video and board games, guitar playing, climbing, horseback riding, Aikido, lightsaber combat, roller skating, drawing, painting, bookbinding, mathematics, and cryptography.
+
+I have written code in Z80 and x86 Assembly, BASIC, Turbo Pascal, Prolog, C, C++, PHP, Lisp, Ada, Objective-C, bash, Python, Erlang, Clojure, Scala, and Rust.
+
+
+== About this blog
+
+This blog was born in 2013 out of my desire to publish a series of old articles on concurrent programming that I wrote at university. Those articles summarise knowledge acquired during my operating systems classes and are the oldest posts you can find here.
+
+The blog then evolved following my interests and now contains mostly posts about Python, with some digressions into other languages and technologies such as Erlang, Scala, Clojure, and AMQP.
+
+Cats are curious and inquisitive animals. I am a digital cat.
+
+
+== License
+
+The content of this blog is the result of my studies and investigations into several computer science topics. Nothing here could ever have been written, however, without the efforts of many other people who shared their knowledge with me, mostly through free resources: first BBSs in the 1980s, then forums, websites, blogs, and the wide availability of source code.
+
+All entries in this blog (posts and code snippets) are therefore released under the [link]("https://creativecommons.org/licenses/by-sa/4.0/", "Creative Commons Attribution-ShareAlike 4.0 International") licence (CC BY-SA 4.0). I strongly believe that shared knowledge, in every field, is the only way to achieve real progress.
+
+
+== About errors
+
+Since computer science is my main occupation, you will likely find every sort of absurdity in this blog.
+
+Every error is a lesson... if someone corrects you. So please let me know about any mistakes or oversights you spot.
+
+
+== Contact me
+
+* [link]("https://github.com/TheDigitalCatOnline", GitHub)
+* [link]("https://github.com/TheDigitalCatOnline/blog_source/issues", "Blog issues")

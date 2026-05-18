@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from 'includes/post_card.html' import post_card %}
+
+{% block content %}
+<div class="row justify-content-center mx-0">
+  <div class="col-12 col-lg-10 col-xl-8">
+
+    <h2 class="px-2 py-3">{% block page_header %}{% endblock %}</h2>
+
+    {% include 'includes/pagination.html' %}
+
+    <div class="row g-3">
+      {% for article in (articles_page.object_list if articles_page else articles) %}
+      <div class="col-12 col-md-6 col-lg-4">
+        {{ post_card(article) }}
+      </div>
+      {% endfor %}
+    </div>
+
+    {% include 'includes/pagination.html' %}
+
+  </div>
+</div>
+{% endblock %}

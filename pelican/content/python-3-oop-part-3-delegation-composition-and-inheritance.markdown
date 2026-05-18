@@ -2,7 +2,7 @@ Title: Object-Oriented Programming in Python 3 - Composition and inheritance
 Date: 2014-08-20 15:00:00 +0200
 Modified: 2019-05-22 23:30:00 +0000
 Category: Programming
-Tags: Python, Python3, OOP
+Tags: Python, OOP
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-3-delegation-composition-and-inheritance
 Image: python-3-oop

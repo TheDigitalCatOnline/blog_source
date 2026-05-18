@@ -1,0 +1,32 @@
+// ============================================================
+// Layout
+// ============================================================
+
+$sidebar-width:   260px;
+$navbar-height:   56px;
+
+// ============================================================
+// Brand colours — single source of truth
+// ============================================================
+
+// Neutrals (from original bengal theme)
+$color-text:            rgb(61, 68, 73);
+$color-text-light:        rgb(240, 243, 245);
+$color-bg-light:        rgb(240, 243, 245);
+$color-bg-emboss:       rgb(209, 211, 212);
+$color-bg-medium:       rgb(102, 114, 123);
+$color-bg-dark:         rgb(61, 68, 73);
+
+// Accent (yellow/orange highlight palette)
+$color-accent-light:    rgb(255, 213, 0);
+$color-accent-medium:   rgb(255, 153, 0);
+$color-accent-dark:     rgb(199, 111, 16);
+
+// Typography
+$font-body:             'Open Sans', sans-serif;
+$font-heading:          'Roboto Slab', serif;
+
+// Tag cloud — 3 sizes (1 = most popular, 3 = least popular)
+$tag-cloud-size-1:      1.4rem;
+$tag-cloud-size-2:      1.1rem;
+$tag-cloud-size-3:      0.9rem;

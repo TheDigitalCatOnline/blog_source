@@ -1,7 +1,7 @@
 Title: Advanced use of Python decorators and metaclasses
 Date: 2014-10-14 09:43:08 +0200
 Category: Programming
-Tags: Python3, Python, OOP, decorators, metaclasses, metaprogramming
+Tags: Python, OOP, decorators, metaclasses, metaprogramming
 Authors: Leonardo Giordani
 Slug: decorators-and-metaclasses
 Image: decorators-and-metaclasses

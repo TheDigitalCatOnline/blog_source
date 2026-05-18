@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %} - Archives{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ SITENAME }} — full post archives" />
+{% endblock %}
+
+{% set active_page = 'archives' %}
+
+{% block content %}
+<div class="row justify-content-center mx-0">
+  <div class="col-12 col-md-10 col-lg-8 col-xl-6 site-post-content">
+
+    <header class="post-header">
+      <h1 class="post-title">Archives</h1>
+    </header>
+
+    <div class="post-body">
+      {% for article in dates %}
+      <p>
+        <time datetime="{{ article.date.isoformat() }}" class="text-muted me-2">
+          {{ article.date | strftime('%b %-d, %Y') }}
+        </time>
+        <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+      </p>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

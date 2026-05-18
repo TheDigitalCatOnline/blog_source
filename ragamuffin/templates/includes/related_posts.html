@@ -1,0 +1,20 @@
+{% if article.related_posts %}
+<section class="post-related">
+  <h2 class="post-related-title">Related Posts</h2>
+  <div class="row g-2">
+    {% for related in article.related_posts %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="related-card">
+        <div class="related-card-img">
+          <img src="{{ SITEURL }}/images/{{ related.image if related.image else 'article_image_placeholder' }}.jpg"
+               alt="" />
+        </div>
+        <div class="related-card-body">
+          <a href="{{ SITEURL }}/{{ related.url }}" class="related-card-title stretched-link">{{ related.title }}</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,32 @@
+{% if articles_page and articles_paginator.num_pages > 1 %}
+<nav class="post-pagination" aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+
+    {% if articles_page.has_previous() %}
+    <li class="page-item">
+      <a class="page-link" href="{{ SITEURL }}/{{ articles_previous_page.url }}">&laquo;</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+    {% endif %}
+
+    {% for num in range(1, articles_paginator.num_pages + 1) %}
+    {% set page = articles_paginator.page(num) %}
+    {% if num == articles_page.number %}
+    <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="{{ SITEURL }}/{{ page.url }}">{{ num }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if articles_page.has_next() %}
+    <li class="page-item">
+      <a class="page-link" href="{{ SITEURL }}/{{ articles_next_page.url }}">&raquo;</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+    {% endif %}
+
+  </ul>
+</nav>
+{% endif %}

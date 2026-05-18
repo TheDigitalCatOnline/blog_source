@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sass --style=expanded --no-source-map bengal/static/scss:bengal/static/css
+./scripts/compile_scss.sh
 
 cd pelican
 pelican -lr $@

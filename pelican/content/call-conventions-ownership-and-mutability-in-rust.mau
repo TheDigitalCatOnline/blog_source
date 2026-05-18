@@ -690,5 +690,5 @@ This was quite a ride! I hope it was useful, it definitely helped me to clarify 
 
 * I highly recommend watching this [link]("https://www.youtube.com/watch?v=B27_eoNCsV0", "video by James Sherman") that explains in detail how function code is called at CPU level.
 * Make sure you are familiar with the following concepts:
-** The [link]("https://en.wikipedia.org/wiki/Stack_register", "stack")
+** The [link]("https://en.wikipedia.org/wiki/Stack_register", "stack").
 ** The [link]("https://en.wikipedia.org/wiki/Calling_convention", "calling convention") of a specific CPU, such as the [link]("https://en.wikipedia.org/wiki/X86_calling_conventions", "x86 calling convention").

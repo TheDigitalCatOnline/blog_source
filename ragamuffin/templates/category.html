@@ -1,0 +1,11 @@
+{% extends "articles_list_page.html" %}
+
+{% block title %} - {{ category }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ SITENAME }} — articles in category {{ category }}" />
+{% endblock %}
+
+{% set active_page = 'index' %}
+
+{% block page_header %}Posts in category: {{ category }}{% endblock %}

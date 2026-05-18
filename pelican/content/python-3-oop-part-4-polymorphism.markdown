@@ -2,7 +2,7 @@ Title: Object-Oriented Programming in Python 3 - Polymorphism
 Date: 2014-08-21 10:00:00 +0200
 Modified: 2018-12-21 10:40:00 +0000
 Category: Programming
-Tags: Python, Python3, OOP
+Tags: Python, OOP
 Authors: Leonardo Giordani
 Slug: python-3-oop-part-4-polymorphism
 Image: python-3-oop

@@ -1,7 +1,7 @@
 Title: OOP concepts in Python 2.x - Part 2
 Date: 2014-03-10 18:56:56 +0100
 Category: Programming
-Tags: Python2, Python, OOP
+Tags: Python, OOP
 Authors: Leonardo Giordani
 Slug: oop-concepts-in-python-2-dot-x-part-2
 Image: oop-concepts-in-python-2-dot-x
