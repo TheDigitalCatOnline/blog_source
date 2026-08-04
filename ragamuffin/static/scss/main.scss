@@ -629,6 +629,18 @@ div.infobox {
 // Post card grid
 // ============================================================
 
+// Bootstrap's xxl (1400px) is too eager for this layout — cards look
+// stretched between 1400 and ~1900px. Promote to 3-per-row only above
+// the custom breakpoint.
+.post-card-grid {
+  @media (min-width: v.$breakpoint-cards-wide) {
+    > .col-12 {
+      flex: 0 0 auto;
+      width: 33.3333333%;
+    }
+  }
+}
+
 .post-card {
   background: #fff;
   border-radius: 0.5rem;

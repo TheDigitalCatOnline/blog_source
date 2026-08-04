@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The Digital Cat" />
+<meta name="description" content="The Digital Cat — articles tagged with devops" />
+    <title>The Digital Cat - devops</title>
+
+    <!-- Google Fonts: Open Sans + Roboto Slab -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- MDB CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" />
+
+    <!-- Site theme -->
+    <link rel="stylesheet" href="/theme/css/main.min.css?8886c78b">
+
+  </head>
+
+  <body>
+
+<nav class="navbar site-navbar">
+  <div class="container-fluid position-relative">
+
+    <button class="site-navbar-toggler d-lg-none"
+            id="sidebarToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="siteSidebar">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <span class="navbar-brand site-navbar-brand mb-0">The Digital Cat</span>
+
+
+  </div>
+</nav>
+    <div class="site-sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="site-sidebar" id="siteSidebar">
+
+  <nav class="sidebar-section">
+    <a href="https://www.thedigitalcatonline.com/index.html" class="sidebar-link">
+      <i class="fas fa-home fa-fw me-2"></i>Home
+    </a>
+    <a href="https://www.thedigitalcatonline.com/pages/about.html" class="sidebar-link">
+      <i class="fas fa-user fa-fw me-2"></i>About
+    </a>
+    <a href="https://www.thedigitalcatonline.com/pages/projects-and-books.html" class="sidebar-link">
+      <i class="fas fa-user fa-fw me-2"></i>Projects and Books
+    </a>
+    <a href="https://www.thedigitalcatonline.com/archives/index.html" class="sidebar-link">
+      <i class="fas fa-archive fa-fw me-2"></i>Archives
+    </a>
+  </nav>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Categories</p>
+    <a href="https://www.thedigitalcatonline.com/category/programming/" class="sidebar-link">Programming</a>
+    <a href="https://www.thedigitalcatonline.com/category/retro/" class="sidebar-link">Retro</a>
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Tags</p>
+    <div class="sidebar-tags">
+      <a href="/tag/algorithms/" class="sidebar-tag tag-size-2">algorithms</a>
+      <a href="/tag/amiga/" class="sidebar-tag tag-size-2">Amiga</a>
+      <a href="/tag/amqp/" class="sidebar-tag tag-size-3">AMQP</a>
+      <a href="/tag/assembly/" class="sidebar-tag tag-size-2">Assembly</a>
+      <a href="/tag/aws/" class="sidebar-tag tag-size-2">AWS</a>
+      <a href="/tag/big-data/" class="sidebar-tag tag-size-3">big data</a>
+      <a href="/tag/blogging/" class="sidebar-tag tag-size-3">blogging</a>
+      <a href="/tag/c/" class="sidebar-tag tag-size-2">C</a>
+      <a href="/tag/clojure/" class="sidebar-tag tag-size-3">Clojure</a>
+      <a href="/tag/compilers/" class="sidebar-tag tag-size-2">compilers</a>
+      <a href="/tag/concurrent-programming/" class="sidebar-tag tag-size-2">concurrent programming</a>
+      <a href="/tag/cryptography/" class="sidebar-tag tag-size-2">cryptography</a>
+      <a href="/tag/decorators/" class="sidebar-tag tag-size-2">decorators</a>
+      <a href="/tag/design/" class="sidebar-tag tag-size-3">design</a>
+      <a href="/tag/devops/" class="sidebar-tag tag-size-2">devops</a>
+      <a href="/tag/distributed-systems/" class="sidebar-tag tag-size-3">distributed systems</a>
+      <a href="/tag/django/" class="sidebar-tag tag-size-2">Django</a>
+      <a href="/tag/docker/" class="sidebar-tag tag-size-2">Docker</a>
+      <a href="/tag/ed25519/" class="sidebar-tag tag-size-3">ed25519</a>
+      <a href="/tag/editor/" class="sidebar-tag tag-size-3">editor</a>
+      <a href="/tag/emacs/" class="sidebar-tag tag-size-3">Emacs</a>
+      <a href="/tag/erlang/" class="sidebar-tag tag-size-3">Erlang</a>
+      <a href="/tag/flask/" class="sidebar-tag tag-size-2">Flask</a>
+      <a href="/tag/functional-programming/" class="sidebar-tag tag-size-2">functional programming</a>
+      <a href="/tag/generators/" class="sidebar-tag tag-size-2">generators</a>
+      <a href="/tag/git/" class="sidebar-tag tag-size-3">Git</a>
+      <a href="/tag/html/" class="sidebar-tag tag-size-3">HTML</a>
+      <a href="/tag/http/" class="sidebar-tag tag-size-2">HTTP</a>
+      <a href="/tag/infrastructure/" class="sidebar-tag tag-size-2">infrastructure</a>
+      <a href="/tag/javascript/" class="sidebar-tag tag-size-3">JavaScript</a>
+      <a href="/tag/lambda/" class="sidebar-tag tag-size-3">Lambda</a>
+      <a href="/tag/m68000/" class="sidebar-tag tag-size-3">M68000</a>
+      <a href="/tag/markdown/" class="sidebar-tag tag-size-3">Markdown</a>
+      <a href="/tag/mau/" class="sidebar-tag tag-size-3">Mau</a>
+      <a href="/tag/metaclasses/" class="sidebar-tag tag-size-2">metaclasses</a>
+      <a href="/tag/metaprogramming/" class="sidebar-tag tag-size-2">metaprogramming</a>
+      <a href="/tag/networking/" class="sidebar-tag tag-size-3">networking</a>
+      <a href="/tag/oop/" class="sidebar-tag tag-size-1">OOP</a>
+      <a href="/tag/operating-systems/" class="sidebar-tag tag-size-2">operating systems</a>
+      <a href="/tag/pelican/" class="sidebar-tag tag-size-3">Pelican</a>
+      <a href="/tag/postgres/" class="sidebar-tag tag-size-2">Postgres</a>
+      <a href="/tag/pytest/" class="sidebar-tag tag-size-2">pytest</a>
+      <a href="/tag/python/" class="sidebar-tag tag-size-1">Python</a>
+      <a href="/tag/rabbitmq/" class="sidebar-tag tag-size-3">RabbitMQ</a>
+      <a href="/tag/refactoring/" class="sidebar-tag tag-size-2">refactoring</a>
+      <a href="/tag/rsa/" class="sidebar-tag tag-size-2">RSA</a>
+      <a href="/tag/rust/" class="sidebar-tag tag-size-2">Rust</a>
+      <a href="/tag/software-architecture/" class="sidebar-tag tag-size-2">software architecture</a>
+      <a href="/tag/ssh/" class="sidebar-tag tag-size-2">SSH</a>
+      <a href="/tag/ssl/" class="sidebar-tag tag-size-2">SSL</a>
+      <a href="/tag/tdd/" class="sidebar-tag tag-size-1">TDD</a>
+      <a href="/tag/terraform/" class="sidebar-tag tag-size-2">Terraform</a>
+      <a href="/tag/testing/" class="sidebar-tag tag-size-1">testing</a>
+      <a href="/tag/tools/" class="sidebar-tag tag-size-3">tools</a>
+      <a href="/tag/versioning/" class="sidebar-tag tag-size-3">versioning</a>
+      <a href="/tag/video/" class="sidebar-tag tag-size-3">video</a>
+      <a href="/tag/www/" class="sidebar-tag tag-size-2">WWW</a>
+    </div>
+  </div>
+
+</aside>
+    <div class="site-content">
+
+
+      <main class="site-main">
+<div class="row justify-content-center mx-0">
+  <div class="col-12 col-lg-10 col-xl-8">
+
+    <h2 class="px-2 py-3">Posts tagged: devops</h2>
+
+
+    <div class="row g-3 post-card-grid">
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2022/08/23/data-partitioning-and-consistent-hashing/" class="post-card-img-link">
+    <img src="/images/data-partitioning-and-consistent-hashing.jpg"
+         alt="Data Partitioning and Consistent Hashing" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2022/08/23/data-partitioning-and-consistent-hashing/" class="post-card-title-link">
+      <h3>Data Partitioning and Consistent Hashing</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/algorithms/" class="post-tag">algorithms</a>
+      <a href="/tag/software-architecture/" class="post-tag">software architecture</a>
+      <a href="/tag/big-data/" class="post-tag">big data</a>
+      <a href="/tag/cryptography/" class="post-tag">cryptography</a>
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/distributed-systems/" class="post-tag">distributed systems</a>
+      <a href="/tag/python/" class="post-tag">Python</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Aug 23, 2022
+    </p>
+  </div>
+</div>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/" class="post-card-img-link">
+    <img src="/images/from-docker-cli-to-docker-compose.jpg"
+         alt="From Docker CLI to Docker Compose" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2022/02/19/from-docker-cli-to-docker-compose/" class="post-card-title-link">
+      <h3>From Docker CLI to Docker Compose</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/docker/" class="post-tag">Docker</a>
+      <a href="/tag/infrastructure/" class="post-tag">infrastructure</a>
+      <a href="/tag/postgres/" class="post-tag">Postgres</a>
+      <a href="/tag/python/" class="post-tag">Python</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Feb 19, 2022
+    </p>
+  </div>
+</div>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/" class="post-card-img-link">
+    <img src="/images/public-key-cryptography-openssh-private-keys.jpg"
+         alt="Public key cryptography: OpenSSH private keys" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2021/06/03/public-key-cryptography-openssh-private-keys/" class="post-card-title-link">
+      <h3>Public key cryptography: OpenSSH private keys</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/algorithms/" class="post-tag">algorithms</a>
+      <a href="/tag/cryptography/" class="post-tag">cryptography</a>
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/ed25519/" class="post-tag">ed25519</a>
+      <a href="/tag/rsa/" class="post-tag">RSA</a>
+      <a href="/tag/ssh/" class="post-tag">SSH</a>
+      <a href="/tag/ssl/" class="post-tag">SSL</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Jun 3, 2021
+    </p>
+  </div>
+</div>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2020/11/04/public-key-cryptography-ssl-certificates/" class="post-card-img-link">
+    <img src="/images/public-key-cryptography-ssl-certificates.jpg"
+         alt="Public key cryptography: SSL certificates" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2020/11/04/public-key-cryptography-ssl-certificates/" class="post-card-title-link">
+      <h3>Public key cryptography: SSL certificates</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/algorithms/" class="post-tag">algorithms</a>
+      <a href="/tag/cryptography/" class="post-tag">cryptography</a>
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/ssl/" class="post-tag">SSL</a>
+      <a href="/tag/ssh/" class="post-tag">SSH</a>
+      <a href="/tag/rsa/" class="post-tag">RSA</a>
+      <a href="/tag/python/" class="post-tag">Python</a>
+      <a href="/tag/www/" class="post-tag">WWW</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Nov 4, 2020
+    </p>
+  </div>
+</div>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/" class="post-card-img-link">
+    <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-3.jpg"
+         alt="Flask project setup: TDD, Docker, Postgres and more - Part 3" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2020/07/07/flask-project-setup-tdd-docker-postgres-and-more-part-3/" class="post-card-title-link">
+      <h3>Flask project setup: TDD, Docker, Postgres and more - Part 3</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/aws/" class="post-tag">AWS</a>
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/docker/" class="post-tag">Docker</a>
+      <a href="/tag/flask/" class="post-tag">Flask</a>
+      <a href="/tag/http/" class="post-tag">HTTP</a>
+      <a href="/tag/postgres/" class="post-tag">Postgres</a>
+      <a href="/tag/pytest/" class="post-tag">pytest</a>
+      <a href="/tag/python/" class="post-tag">Python</a>
+      <a href="/tag/tdd/" class="post-tag">TDD</a>
+      <a href="/tag/testing/" class="post-tag">testing</a>
+      <a href="/tag/www/" class="post-tag">WWW</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Jul 7, 2020
+    </p>
+  </div>
+</div>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/" class="post-card-img-link">
+    <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-2.jpg"
+         alt="Flask project setup: TDD, Docker, Postgres and more - Part 2" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2020/07/06/flask-project-setup-tdd-docker-postgres-and-more-part-2/" class="post-card-title-link">
+      <h3>Flask project setup: TDD, Docker, Postgres and more - Part 2</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/aws/" class="post-tag">AWS</a>
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/docker/" class="post-tag">Docker</a>
+      <a href="/tag/flask/" class="post-tag">Flask</a>
+      <a href="/tag/http/" class="post-tag">HTTP</a>
+      <a href="/tag/postgres/" class="post-tag">Postgres</a>
+      <a href="/tag/pytest/" class="post-tag">pytest</a>
+      <a href="/tag/python/" class="post-tag">Python</a>
+      <a href="/tag/tdd/" class="post-tag">TDD</a>
+      <a href="/tag/testing/" class="post-tag">testing</a>
+      <a href="/tag/www/" class="post-tag">WWW</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Jul 6, 2020
+    </p>
+  </div>
+</div>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/" class="post-card-img-link">
+    <img src="/images/flask-project-setup-tdd-docker-postgres-and-more-part-1.jpg"
+         alt="Flask project setup: TDD, Docker, Postgres and more - Part 1" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2020/07/05/flask-project-setup-tdd-docker-postgres-and-more-part-1/" class="post-card-title-link">
+      <h3>Flask project setup: TDD, Docker, Postgres and more - Part 1</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/aws/" class="post-tag">AWS</a>
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/docker/" class="post-tag">Docker</a>
+      <a href="/tag/flask/" class="post-tag">Flask</a>
+      <a href="/tag/http/" class="post-tag">HTTP</a>
+      <a href="/tag/postgres/" class="post-tag">Postgres</a>
+      <a href="/tag/tdd/" class="post-tag">TDD</a>
+      <a href="/tag/testing/" class="post-tag">testing</a>
+      <a href="/tag/www/" class="post-tag">WWW</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Jul 5, 2020
+    </p>
+  </div>
+</div>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2020/02/16/dissecting-a-web-stack/" class="post-card-img-link">
+    <img src="/images/dissecting-a-web-stack.jpg"
+         alt="Dissecting a Web stack" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2020/02/16/dissecting-a-web-stack/" class="post-card-title-link">
+      <h3>Dissecting a Web stack</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/software-architecture/" class="post-tag">software architecture</a>
+      <a href="/tag/concurrent-programming/" class="post-tag">concurrent programming</a>
+      <a href="/tag/cryptography/" class="post-tag">cryptography</a>
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/infrastructure/" class="post-tag">infrastructure</a>
+      <a href="/tag/flask/" class="post-tag">Flask</a>
+      <a href="/tag/django/" class="post-tag">Django</a>
+      <a href="/tag/python/" class="post-tag">Python</a>
+      <a href="/tag/ssl/" class="post-tag">SSL</a>
+      <a href="/tag/http/" class="post-tag">HTTP</a>
+      <a href="/tag/www/" class="post-tag">WWW</a>
+      <a href="/tag/aws/" class="post-tag">AWS</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Feb 16, 2020
+    </p>
+  </div>
+</div>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="post-card">
+  <a href="/blog/2018/04/25/rsa-keys/" class="post-card-img-link">
+    <img src="/images/rsa-keys.jpg"
+         alt="Public key cryptography: RSA keys" />
+  </a>
+  <div class="post-card-body">
+    <a href="/blog/2018/04/25/rsa-keys/" class="post-card-title-link">
+      <h3>Public key cryptography: RSA keys</h3>
+    </a>
+    <div class="post-card-tags">
+      <a href="/tag/algorithms/" class="post-tag">algorithms</a>
+      <a href="/tag/cryptography/" class="post-tag">cryptography</a>
+      <a href="/tag/devops/" class="post-tag">devops</a>
+      <a href="/tag/ssl/" class="post-tag">SSL</a>
+      <a href="/tag/ssh/" class="post-tag">SSH</a>
+      <a href="/tag/rsa/" class="post-tag">RSA</a>
+      <a href="/tag/python/" class="post-tag">Python</a>
+    </div>
+    <p class="post-card-date">
+      <i class="fas fa-calendar-alt fa-fw me-1"></i>Apr 25, 2018
+    </p>
+  </div>
+</div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+      </main>
+
+
+    </div>
+
+
+    <!-- MDB JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+
+    <!-- Inject settings for JS -->
+    <script>
+      const BANNER_IMAGES = {"img1": {"author": "Pacto Visual", "file": "images/banner1.jpg", "url": "https://unsplash.com/photos/close-up-photo-of-tabby-cat-cWOzOnSoh6Q"}, "img2": {"author": "Ayako", "file": "images/banner2.jpg", "url": "https://unsplash.com/photos/a-cat-sitting-on-top-of-a-bed-next-to-a-pillow-h7Dw2hF4e0A"}, "img3": {"author": "Jonathan Cooper", "file": "images/banner3.jpg", "url": "https://unsplash.com/photos/black-and-brown-tabby-cat-on-white-textile-ZSBz8rr178o"}, "img4": {"author": "Sven Mieke", "file": "images/banner4.jpg", "url": "https://unsplash.com/photos/brown-tabby-cat-lying-on-white-textile-G-8B32scqMc"}};
+      const QUOTES = [{"source": "Blade Runner, 1982", "text": "I\u0027ve seen things you people wouldn\u0027t believe. Attack ships on fire off the shoulder of Orion. I watched C-beams glitter in the dark near the Tannh\u00e4user Gate. All those moments will be lost in time, like tears in rain. Time to die."}, {"source": "Raiders of the Lost Ark, 1981", "text": "Look at this. It\u2019s worthless \u2014 ten dollars from a vendor in the street. But I take it, I bury it in the sand for a thousand years, it becomes priceless."}, {"source": "Back to the Future, 1985", "text": "Roads? Where we\u0027re going, we don\u0027t need... roads."}];
+    </script>
+
+    <!-- Site JS -->
+    <script src="https://www.thedigitalcatonline.com/theme/js/main.js"></script>
+
+    <!-- Sidebar toggle -->
+    <script>
+      (function () {
+        const toggle  = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('siteSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (!toggle) return;
+
+        function openSidebar() {
+          sidebar.classList.add('show');
+          overlay.classList.add('show');
+          toggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeSidebar() {
+          sidebar.classList.remove('show');
+          overlay.classList.remove('show');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        toggle.addEventListener('click', function () {
+          sidebar.classList.contains('show') ? closeSidebar() : openSidebar();
+        });
+
+        overlay.addEventListener('click', closeSidebar);
+      })();
+    </script>
+
+
+  </body>
+</html>

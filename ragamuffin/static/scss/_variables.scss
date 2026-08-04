@@ -5,6 +5,10 @@
 $sidebar-width:   260px;
 $navbar-height:   56px;
 
+// Custom breakpoint above Bootstrap's xxl (1400px): switch the post-card
+// grid from 2-per-row to 3-per-row only on very wide displays.
+$breakpoint-cards-wide: 1900px;
+
 // ============================================================
 // Brand colours — single source of truth
 // ============================================================

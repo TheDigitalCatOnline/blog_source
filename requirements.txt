@@ -14,4 +14,3 @@ mdx_video
 webassets
 cssmin
 jsmin
-boussole

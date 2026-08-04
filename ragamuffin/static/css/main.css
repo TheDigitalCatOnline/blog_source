@@ -500,6 +500,13 @@ div.infobox p:last-child {
   content: "— ";
 }
 
+@media (min-width: 1900px) {
+  .post-card-grid > .col-12 {
+    flex: 0 0 auto;
+    width: 33.3333333%;
+  }
+}
+
 .post-card {
   background: #fff;
   border-radius: 0.5rem;

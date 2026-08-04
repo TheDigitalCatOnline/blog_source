@@ -1,523 +1,194 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>The Digital Cat - A simple example of Python OOP development (with TDD) - Part 2</title>
     <meta charset="utf-8" />
-    <meta http-equiv='content-language' content='en-gb'>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <meta name="description" content="A blog featuring in-depth posts about Python, Scala, TDD, devops, security and all things development">
-<meta name="description" content="The development of a simple Python module from scratch using TDD">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The Digital Cat" />
+<meta name="description" content="The development of a simple Python module from scratch using TDD" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@thedigicat" />
 <meta name="twitter:title" content="A simple example of Python OOP development (with TDD) - Part 2" />
 <meta name="twitter:description" content="The development of a simple Python module from scratch using TDD" />
 <meta name="twitter:image" content="https://www.thedigitalcatonline.com/images/python-oop-tdd.jpg" />
-    <script src="https://kit.fontawesome.com/15214b60ba.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="/theme/css/main.min.css?f6765de3">
-    <link href="/images/global/favicon.jpg" rel="icon">
-    
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74364524-1"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-     
-     gtag('config', 'UA-74364524-1');
-    </script>
+    <title>The Digital Cat - A simple example of Python OOP development (with TDD) - Part 2</title>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ55XG1KGG"></script>
-    <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-     
-     gtag('config', 'G-FZ55XG1KGG');
-    </script>
+    <!-- Google Fonts: Open Sans + Roboto Slab -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- MDB CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" />
+
+    <!-- Site theme -->
+    <link rel="stylesheet" href="/theme/css/main.min.css?8886c78b">
+
   </head>
 
-  <body class="preload">
-    <div class="container">
-      <div class="sidebar navigation">
-<nav>
-<div class="links">
-  <ul>
-    <li class="link"><a href="/index.html">Homepage</a></li>
-    <li class="link"><a href="/pages/about.html">About</a></li>
-    <li class="link"><a href="/archives/index.html">Archives</a></li>
-  </ul>
-</div></nav>
-<section>
-  <header>
-    <h2>Tags</h2>
-  </header>
-<ul class="tags">
-    <li class="tag tag-size-3">
-      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Amiga" href="/categories/amiga/">Amiga</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about Assembly" href="/categories/assembly/">Assembly</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about big data" href="/categories/big-data/">big data</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about C" href="/categories/c/">C</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about design" href="/categories/design/">design</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about devops" href="/categories/devops/">devops</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about distributed systems" href="/categories/distributed-systems/">distributed systems</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Django" href="/categories/django/">Django</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about editor" href="/categories/editor/">editor</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about generators" href="/categories/generators/">generators</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Git" href="/categories/git/">Git</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about HTML" href="/categories/html/">HTML</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about networking" href="/categories/networking/">networking</a>
-    </li>
-    <li class="tag tag-size-1">
-      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Pelican" href="/categories/pelican/">Pelican</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
-    </li>
-    <li class="tag tag-size-1">
-      <a title="Posts about Python" href="/categories/python/">Python</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
-    </li>
-    <li class="tag tag-size-1">
-      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about software architecture" href="/categories/software-architecture/">software architecture</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about testing" href="/categories/testing/">testing</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about tools" href="/categories/tools/">tools</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about video" href="/categories/video/">video</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about WWW" href="/categories/www/">WWW</a>
-    </li>
-</ul></section>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Feeds</h2>
-  </header>
-<ul>
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/atom.xml">All posts</a></li>
+  <body>
+
+<nav class="navbar site-navbar">
+  <div class="container-fluid position-relative">
+
+    <button class="site-navbar-toggler d-lg-none"
+            id="sidebarToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="siteSidebar">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <span class="navbar-brand site-navbar-brand mb-0">The Digital Cat</span>
 
 
-  <li><i class="fas fa-rss" aria-hidden="true"></i> <a href="/category/programming/atom.xml">All posts in category: Programming</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Get in touch</h2>
-  </header>
-  <ul class="contact">
-    <li><i class="fab fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/thedigicat">Twitter</a></li>
-    <li><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/TheDigitalCatOnline">GitHub</a></li>
-  </ul>
-</section>      </div>
-      <div class="page">
-	<header class="primary" >
-	  <button type="button">
-	    <i class="fas fa-bars"></i>
-	  </button>
-	  <p>The Digital Cat</p>
-	</header>
-	<div class="mobile-menu navigation">
-<nav>
-<div class="links">
-  <ul>
-    <li class="link"><a href="/index.html">Homepage</a></li>
-    <li class="link"><a href="/pages/about.html">About</a></li>
-    <li class="link"><a href="/archives/index.html">Archives</a></li>
-  </ul>
-</div></nav>
-<section>
-  <header>
-    <h2>Categories</h2>
-  </header>
-<ul>
-  <li><a href="/category/programming/">Programming</a></li>
-  <li><a href="/category/projects/">Projects</a></li>
-  <li><a href="/category/retro/">Retro</a></li>
-</ul></section>
-<section>
-  <header>
-    <h2>Tags</h2>
-  </header>
-<ul class="tags">
-    <li class="tag tag-size-3">
-      <a title="Posts about algorithms" href="/categories/algorithms/">algorithms</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Amiga" href="/categories/amiga/">Amiga</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about AMQP" href="/categories/amqp/">AMQP</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about Assembly" href="/categories/assembly/">Assembly</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about AWS" href="/categories/aws/">AWS</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about big data" href="/categories/big-data/">big data</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about blogging" href="/categories/blogging/">blogging</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about C" href="/categories/c/">C</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Clojure" href="/categories/clojure/">Clojure</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about compilers" href="/categories/compilers/">compilers</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about concurrent programming" href="/categories/concurrent-programming/">concurrent programming</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about cryptography" href="/categories/cryptography/">cryptography</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about decorators" href="/categories/decorators/">decorators</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about design" href="/categories/design/">design</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about devops" href="/categories/devops/">devops</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about distributed systems" href="/categories/distributed-systems/">distributed systems</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Django" href="/categories/django/">Django</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Docker" href="/categories/docker/">Docker</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about ed25519" href="/categories/ed25519/">ed25519</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about editor" href="/categories/editor/">editor</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Emacs" href="/categories/emacs/">Emacs</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Erlang" href="/categories/erlang/">Erlang</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Flask" href="/categories/flask/">Flask</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about functional programming" href="/categories/functional-programming/">functional programming</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about generators" href="/categories/generators/">generators</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Git" href="/categories/git/">Git</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about HTML" href="/categories/html/">HTML</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about HTTP" href="/categories/http/">HTTP</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about infrastructure" href="/categories/infrastructure/">infrastructure</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about JavaScript" href="/categories/javascript/">JavaScript</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Lambda" href="/categories/lambda/">Lambda</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about M68000" href="/categories/m68000/">M68000</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Markdown" href="/categories/markdown/">Markdown</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Mau" href="/categories/mau/">Mau</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about metaclasses" href="/categories/metaclasses/">metaclasses</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about metaprogramming" href="/categories/metaprogramming/">metaprogramming</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about networking" href="/categories/networking/">networking</a>
-    </li>
-    <li class="tag tag-size-1">
-      <a title="Posts about OOP" href="/categories/oop/">OOP</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about operating systems" href="/categories/operating-systems/">operating systems</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Pelican" href="/categories/pelican/">Pelican</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Pika" href="/categories/pika/">Pika</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about Postage" href="/categories/postage/">Postage</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Postgres" href="/categories/postgres/">Postgres</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about pytest" href="/categories/pytest/">pytest</a>
-    </li>
-    <li class="tag tag-size-1">
-      <a title="Posts about Python" href="/categories/python/">Python</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about Python2" href="/categories/python2/">Python2</a>
-    </li>
-    <li class="tag tag-size-1">
-      <a title="Posts about Python3" href="/categories/python3/">Python3</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about RabbitMQ" href="/categories/rabbitmq/">RabbitMQ</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about refactoring" href="/categories/refactoring/">refactoring</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about retroprogramming" href="/categories/retroprogramming/">retroprogramming</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about RSA" href="/categories/rsa/">RSA</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Rust" href="/categories/rust/">Rust</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about Scala" href="/categories/scala/">Scala</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about software architecture" href="/categories/software-architecture/">software architecture</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about SSH" href="/categories/ssh/">SSH</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about SSL" href="/categories/ssl/">SSL</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about TDD" href="/categories/tdd/">TDD</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about Terraform" href="/categories/terraform/">Terraform</a>
-    </li>
-    <li class="tag tag-size-2">
-      <a title="Posts about testing" href="/categories/testing/">testing</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about tools" href="/categories/tools/">tools</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about versioning" href="/categories/versioning/">versioning</a>
-    </li>
-    <li class="tag tag-size-4">
-      <a title="Posts about video" href="/categories/video/">video</a>
-    </li>
-    <li class="tag tag-size-3">
-      <a title="Posts about WWW" href="/categories/www/">WWW</a>
-    </li>
-</ul></section>	</div>
-	
-<div class="page-content">
-  <header>
-    <h1>A simple example of Python OOP development (with TDD) - Part 2 </h1>
-    <div class="post-info">
-      <p>By Leonardo Giordani - <i class="fas fa-calendar-alt"></i> <time datetime="2015-09-10T20:00:00+01:00"> 10/09/2015</time> <i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T17:00:00+00:00">Nov 26, 2022</time></p>
-      <p class="tags">
-	<a class="tag category" href="/category/programming/" title="All posts in category Programming">Programming</a>
-	<a class="tag" href="/categories/oop/">OOP</a>
-	<a class="tag" href="/categories/python/">Python</a>
-	<a class="tag" href="/categories/python3/">Python3</a>
-	<a class="tag" href="/categories/tdd/">TDD</a>
-	<a class="tag" href="/categories/testing/">testing</a>
-      </p>
-      <p class="share">Share on: <span><a class="" href="https://twitter.com/intent/tweet?text=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202&url=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/&via=thedigicat&hashtags=oop,python,python3,tdd,testing" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i> Twitter</a></span>
-<span><a class="" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/&title=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202&summary=The%20development%20of%20a%20simple%20Python%20module%20from%20scratch%20using%20TDD&source=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a></span>
-<span><a class="" href="https://news.ycombinator.com/submitlink?t=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202&u=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/" target="_blank" title="Share on HackerNews"><i class="fab fa-hacker-news"></i> HackerNews</a></span>
-<span><a class="" href="mailto:?subject=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202&amp;body=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/" target="_blank" title="Share via Email"><i class="fas fa-envelope"></i> Email</a></span>
-<span><a class="" href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/&title=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202" target="_blank" title="Share via Reddit"><i class="fab fa-reddit"></i> Reddit</a></span></p>    
+  </div>
+</nav>
+    <div class="site-sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="site-sidebar" id="siteSidebar">
+
+  <nav class="sidebar-section">
+    <a href="https://www.thedigitalcatonline.com/index.html" class="sidebar-link">
+      <i class="fas fa-home fa-fw me-2"></i>Home
+    </a>
+    <a href="https://www.thedigitalcatonline.com/pages/about.html" class="sidebar-link">
+      <i class="fas fa-user fa-fw me-2"></i>About
+    </a>
+    <a href="https://www.thedigitalcatonline.com/pages/projects-and-books.html" class="sidebar-link">
+      <i class="fas fa-user fa-fw me-2"></i>Projects and Books
+    </a>
+    <a href="https://www.thedigitalcatonline.com/archives/index.html" class="sidebar-link">
+      <i class="fas fa-archive fa-fw me-2"></i>Archives
+    </a>
+  </nav>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Categories</p>
+    <a href="https://www.thedigitalcatonline.com/category/programming/" class="sidebar-link">Programming</a>
+    <a href="https://www.thedigitalcatonline.com/category/retro/" class="sidebar-link">Retro</a>
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Tags</p>
+    <div class="sidebar-tags">
+      <a href="/tag/algorithms/" class="sidebar-tag tag-size-2">algorithms</a>
+      <a href="/tag/amiga/" class="sidebar-tag tag-size-2">Amiga</a>
+      <a href="/tag/amqp/" class="sidebar-tag tag-size-3">AMQP</a>
+      <a href="/tag/assembly/" class="sidebar-tag tag-size-2">Assembly</a>
+      <a href="/tag/aws/" class="sidebar-tag tag-size-2">AWS</a>
+      <a href="/tag/big-data/" class="sidebar-tag tag-size-3">big data</a>
+      <a href="/tag/blogging/" class="sidebar-tag tag-size-3">blogging</a>
+      <a href="/tag/c/" class="sidebar-tag tag-size-2">C</a>
+      <a href="/tag/clojure/" class="sidebar-tag tag-size-3">Clojure</a>
+      <a href="/tag/compilers/" class="sidebar-tag tag-size-2">compilers</a>
+      <a href="/tag/concurrent-programming/" class="sidebar-tag tag-size-2">concurrent programming</a>
+      <a href="/tag/cryptography/" class="sidebar-tag tag-size-2">cryptography</a>
+      <a href="/tag/decorators/" class="sidebar-tag tag-size-2">decorators</a>
+      <a href="/tag/design/" class="sidebar-tag tag-size-3">design</a>
+      <a href="/tag/devops/" class="sidebar-tag tag-size-2">devops</a>
+      <a href="/tag/distributed-systems/" class="sidebar-tag tag-size-3">distributed systems</a>
+      <a href="/tag/django/" class="sidebar-tag tag-size-2">Django</a>
+      <a href="/tag/docker/" class="sidebar-tag tag-size-2">Docker</a>
+      <a href="/tag/ed25519/" class="sidebar-tag tag-size-3">ed25519</a>
+      <a href="/tag/editor/" class="sidebar-tag tag-size-3">editor</a>
+      <a href="/tag/emacs/" class="sidebar-tag tag-size-3">Emacs</a>
+      <a href="/tag/erlang/" class="sidebar-tag tag-size-3">Erlang</a>
+      <a href="/tag/flask/" class="sidebar-tag tag-size-2">Flask</a>
+      <a href="/tag/functional-programming/" class="sidebar-tag tag-size-2">functional programming</a>
+      <a href="/tag/generators/" class="sidebar-tag tag-size-2">generators</a>
+      <a href="/tag/git/" class="sidebar-tag tag-size-3">Git</a>
+      <a href="/tag/html/" class="sidebar-tag tag-size-3">HTML</a>
+      <a href="/tag/http/" class="sidebar-tag tag-size-2">HTTP</a>
+      <a href="/tag/infrastructure/" class="sidebar-tag tag-size-2">infrastructure</a>
+      <a href="/tag/javascript/" class="sidebar-tag tag-size-3">JavaScript</a>
+      <a href="/tag/lambda/" class="sidebar-tag tag-size-3">Lambda</a>
+      <a href="/tag/m68000/" class="sidebar-tag tag-size-3">M68000</a>
+      <a href="/tag/markdown/" class="sidebar-tag tag-size-3">Markdown</a>
+      <a href="/tag/mau/" class="sidebar-tag tag-size-3">Mau</a>
+      <a href="/tag/metaclasses/" class="sidebar-tag tag-size-2">metaclasses</a>
+      <a href="/tag/metaprogramming/" class="sidebar-tag tag-size-2">metaprogramming</a>
+      <a href="/tag/networking/" class="sidebar-tag tag-size-3">networking</a>
+      <a href="/tag/oop/" class="sidebar-tag tag-size-1">OOP</a>
+      <a href="/tag/operating-systems/" class="sidebar-tag tag-size-2">operating systems</a>
+      <a href="/tag/pelican/" class="sidebar-tag tag-size-3">Pelican</a>
+      <a href="/tag/postgres/" class="sidebar-tag tag-size-2">Postgres</a>
+      <a href="/tag/pytest/" class="sidebar-tag tag-size-2">pytest</a>
+      <a href="/tag/python/" class="sidebar-tag tag-size-1">Python</a>
+      <a href="/tag/rabbitmq/" class="sidebar-tag tag-size-3">RabbitMQ</a>
+      <a href="/tag/refactoring/" class="sidebar-tag tag-size-2">refactoring</a>
+      <a href="/tag/rsa/" class="sidebar-tag tag-size-2">RSA</a>
+      <a href="/tag/rust/" class="sidebar-tag tag-size-2">Rust</a>
+      <a href="/tag/software-architecture/" class="sidebar-tag tag-size-2">software architecture</a>
+      <a href="/tag/ssh/" class="sidebar-tag tag-size-2">SSH</a>
+      <a href="/tag/ssl/" class="sidebar-tag tag-size-2">SSL</a>
+      <a href="/tag/tdd/" class="sidebar-tag tag-size-1">TDD</a>
+      <a href="/tag/terraform/" class="sidebar-tag tag-size-2">Terraform</a>
+      <a href="/tag/testing/" class="sidebar-tag tag-size-1">testing</a>
+      <a href="/tag/tools/" class="sidebar-tag tag-size-3">tools</a>
+      <a href="/tag/versioning/" class="sidebar-tag tag-size-3">versioning</a>
+      <a href="/tag/video/" class="sidebar-tag tag-size-3">video</a>
+      <a href="/tag/www/" class="sidebar-tag tag-size-2">WWW</a>
     </div>
-  </header>
-  
-  <div class="post-content">
-    <p>In <a href="https://www.thedigitalcatonline.com/blog/2015/05/13/python-oop-tdd-example-part1/">first part</a> of this small series I introduced you to TDD with Python by means of the powerful testing framework called Pytest. We developed together a simple library that provides a class <code>Binary</code> that is a bit more useful than the default binary representation that Python provides with the <code>bin()</code> builtin function.</p><p>In this part I&#x27;ll go on with the development of the library, discussing the implementation of a binary number with a fixed size, which is a very interesting and useful matter, being the foundation of the computer we are working with. Fixed-size binaries may also represent negative numbers with the two&#x27;s complement technique, and this will be an important point to test.</p><p>You may happen to dislike some decisions about the interface or the behaviour of the resulting class. Since this post is just a way to show you a concrete TDD session you are totally free to change the tests and to come up with a better solution than mine. Feel free to get in touch and submit better ideas, I&#x27;m always looking for something new to learn.</p><p>As already suggested in the first instalment try to follow the post up to the section where I write the tests. Then move on implementing your own class and try to make it pass all the tests: this is the best way for you to learn TDD, actually applying it.</p><h2 id="fixed-size-binaries-42fb">Fixed-size binaries<a class="headerlink" href="#fixed-size-binaries-42fb" title="Permanent link">¶</a></h2><p>As soon as you build an electronic circuit to store information (a flip-flop, for example) you start dealing with binary numbers and with fixed-size quantities. Limiting the number of digits brings immediately the limitation of having a maximum number that can be represented and requires to decide what to do with bigger numbers. Another issue that arises is that of the representation of negative numbers. Since we can only use two symbols (one and zero) we have to decide a &quot;syntax&quot; for negative values.</p><p>You will find a lot of information about some of those issues in the following Wikipedia articles: <a href="https://en.wikipedia.org/wiki/Integer_overflow">Integer overflow</a> and <a href="https://en.wikipedia.org/wiki/Signed_number_representations">signed number representations</a>. Check also this page on <a href="https://en.wikipedia.org/wiki/Bitwise_operation">bitwise operations</a> as some of them will be implemented.</p><h2 id="object-interface-2046">Object interface<a class="headerlink" href="#object-interface-2046" title="Permanent link">¶</a></h2><p>So we aim to create a class called <code>SizeBinary</code> that provides the following interface:</p><ul><li>Can be instantiated giving a size in bits and a value. The value is optional, if not specified is 0.</li><li>The value can be set after instantiation with a <code>set()</code> method.</li><li>If instantiated or set with a value greater than the maximum representable one the <code>overflow</code> attribute of the object becomes <code>True</code>.</li><li>May be initialised with all the data types supported by the <code>Binary</code> class developed in the first post.</li><li>Just like the <code>Binary</code> class may be converted into an integer (e.g. <code>42</code>, a binary string (e.g. <code>0b101010</code>, an hexadecimal string (<code>0x2a</code>) and a bit string (<code>101010</code>). May also be converted to a <code>Binary</code> without size limitations.</li><li>Support binary logic operations such as: NOT, AND, OR, XOR, shift left and right (without carry).</li><li>Can be splitted in two arbitrary sized <code>SizeBinary</code> objects.</li><li>Can be negated with both one&#x27;s complement and two&#x27;s complement techniques.</li></ul><p>So now, following the TDD methodology, I will write some tests that exploit these features. After this I&#x27;m going to develop an object that makes all test pass. Like we did in the previous post you may follow along as I write te tests and then write your own class.</p><h3 id="initialization-dd09">Initialization</h3><p>The <code>SizeBinary</code> object shall support all the initialization options supported by <code>Binary</code>, but its main interface is different because when creating a <code>SizeBinary</code> we must be allowed to specify the size. The first tests are though pretty straightforward.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_size_binary_init_int</span><span class="p">():</span>
+  </div>
+
+</aside>
+    <div class="site-content">
+
+
+      <main class="site-main">
+<div class="row justify-content-center mx-0">
+  <div class="col-12 col-md-10 col-lg-8 col-xl-6 site-post-content">
+
+    <header class="post-header">
+      <h1 class="post-title">A simple example of Python OOP development (with TDD) - Part 2 </h1>
+      <div class="post-meta">
+        <span><i class="fas fa-user fa-fw me-1"></i>Leonardo Giordani</span>
+        <span><i class="fas fa-calendar-alt fa-fw me-1"></i>Sep 10, 2015</span>
+        <span><i class="fas fa-edit fa-fw me-1"></i>Updated on Nov 26, 2022</span>
+      </div>
+      <div class="post-card-tags mb-2">
+        <a href="https://www.thedigitalcatonline.com/category/programming/" class="post-tag">Programming</a>
+        <a href="https://www.thedigitalcatonline.com/tag/oop/" class="post-tag">OOP</a>
+        <a href="https://www.thedigitalcatonline.com/tag/python/" class="post-tag">Python</a>
+        <a href="https://www.thedigitalcatonline.com/tag/tdd/" class="post-tag">TDD</a>
+        <a href="https://www.thedigitalcatonline.com/tag/testing/" class="post-tag">testing</a>
+      </div>
+<div class="post-share">
+  <span class="post-share-label">Share:</span>
+  <a href="https://twitter.com/intent/tweet?text=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202&url=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/&hashtags=oop,python,tdd,testing" class="post-share-link" title="Share on X / Twitter" target="_blank">
+    <i class="fab fa-x-twitter"></i>
+  </a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/&title=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202&summary=The%20development%20of%20a%20simple%20Python%20module%20from%20scratch%20using%20TDD&source=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/" class="post-share-link" title="Share on LinkedIn" target="_blank">
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <a href="https://news.ycombinator.com/submitlink?t=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202&u=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/" class="post-share-link" title="Share on Hacker News" target="_blank">
+    <i class="fab fa-hacker-news"></i>
+  </a>
+  <a href="https://www.reddit.com/submit?url=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/&title=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202" class="post-share-link" title="Share on Reddit" target="_blank">
+    <i class="fab fa-reddit"></i>
+  </a>
+  <a href="mailto:?subject=A%20simple%20example%20of%20Python%20OOP%20development%20%28with%20TDD%29%20-%20Part%202&amp;body=https%3A//www.thedigitalcatonline.com/blog/2015/09/10/python-oop-tdd-example-part2/" class="post-share-link" title="Share via Email">
+    <i class="fas fa-envelope"></i>
+  </a>
+</div>    </header>
+
+    <div class="post-body">
+      <p>In <a href="https://www.thedigitalcatonline.com/blog/2015/05/13/python-oop-tdd-example-part1/">first part</a> of this small series I introduced you to TDD with Python by means of the powerful testing framework called Pytest. We developed together a simple library that provides a class <code>Binary</code> that is a bit more useful than the default binary representation that Python provides with the <code>bin()</code> builtin function.</p>
+<p>In this part I&#x27;ll go on with the development of the library, discussing the implementation of a binary number with a fixed size, which is a very interesting and useful matter, being the foundation of the computer we are working with. Fixed-size binaries may also represent negative numbers with the two&#x27;s complement technique, and this will be an important point to test.</p>
+<p>You may happen to dislike some decisions about the interface or the behaviour of the resulting class. Since this post is just a way to show you a concrete TDD session you are totally free to change the tests and to come up with a better solution than mine. Feel free to get in touch and submit better ideas, I&#x27;m always looking for something new to learn.</p>
+<p>As already suggested in the first instalment try to follow the post up to the section where I write the tests. Then move on implementing your own class and try to make it pass all the tests: this is the best way for you to learn TDD, actually applying it.</p>
+<h2 id="fixed-size-binaries-42fb">Fixed-size binaries<a class="headerlink" href="#fixed-size-binaries-42fb" title="Permanent link">¶</a></h2>
+<p>As soon as you build an electronic circuit to store information (a flip-flop, for example) you start dealing with binary numbers and with fixed-size quantities. Limiting the number of digits brings immediately the limitation of having a maximum number that can be represented and requires to decide what to do with bigger numbers. Another issue that arises is that of the representation of negative numbers. Since we can only use two symbols (one and zero) we have to decide a &quot;syntax&quot; for negative values.</p>
+<p>You will find a lot of information about some of those issues in the following Wikipedia articles: <a href="https://en.wikipedia.org/wiki/Integer_overflow">Integer overflow</a> and <a href="https://en.wikipedia.org/wiki/Signed_number_representations">signed number representations</a>. Check also this page on <a href="https://en.wikipedia.org/wiki/Bitwise_operation">bitwise operations</a> as some of them will be implemented.</p>
+<h2 id="object-interface-2046">Object interface<a class="headerlink" href="#object-interface-2046" title="Permanent link">¶</a></h2>
+<p>So we aim to create a class called <code>SizeBinary</code> that provides the following interface:</p>
+<ul><li>Can be instantiated giving a size in bits and a value. The value is optional, if not specified is 0.</li><li>The value can be set after instantiation with a <code>set()</code> method.</li><li>If instantiated or set with a value greater than the maximum representable one the <code>overflow</code> attribute of the object becomes <code>True</code>.</li><li>May be initialised with all the data types supported by the <code>Binary</code> class developed in the first post.</li><li>Just like the <code>Binary</code> class may be converted into an integer (e.g. <code>42</code>, a binary string (e.g. <code>0b101010</code>, an hexadecimal string (<code>0x2a</code>) and a bit string (<code>101010</code>). May also be converted to a <code>Binary</code> without size limitations.</li><li>Support binary logic operations such as: NOT, AND, OR, XOR, shift left and right (without carry).</li><li>Can be splitted in two arbitrary sized <code>SizeBinary</code> objects.</li><li>Can be negated with both one&#x27;s complement and two&#x27;s complement techniques.</li></ul>
+<p>So now, following the TDD methodology, I will write some tests that exploit these features. After this I&#x27;m going to develop an object that makes all test pass. Like we did in the previous post you may follow along as I write te tests and then write your own class.</p>
+<h3 id="initialization-dd09">Initialization</h3>
+<p>The <code>SizeBinary</code> object shall support all the initialization options supported by <code>Binary</code>, but its main interface is different because when creating a <code>SizeBinary</code> we must be allowed to specify the size. The first tests are though pretty straightforward.</p>
+<div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_size_binary_init_int</span><span class="p">():</span>
     <span class="n">size_binary</span> <span class="o">=</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">size_binary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span>
 
@@ -539,8 +210,11 @@
     <span class="n">size_binary</span> <span class="o">=</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">size_binary</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">size_binary</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;00000000&quot;</span>
-    <span class="k">assert</span> <span class="n">size_binary</span><span class="o">.</span><span class="n">overflow</span> <span class="o">==</span> <span class="kc">True</span>
-</pre></div></div></div><p>I will cover all the cases already covered for the <code>Binary</code> class. As you can see, I&#x27;m specifying the bit size when instantiating the object and testing the overflow condition. Other initialization and conversion tests are very similar to their <code>Binary</code> counterpart and I will not copy them here, as you can find them in the source code.</p><h2 id="splitting-a7c7">Splitting<a class="headerlink" href="#splitting-a7c7" title="Permanent link">¶</a></h2><p>One of the requirements is to provide a method to split a <code>SizeBinary</code> object into two arbitrarily sized <code>Binary</code> objects. The tests are</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_size_binary_split</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">size_binary</span><span class="o">.</span><span class="n">overflow</span> <span class="o">==</span> <span class="kc">True</span></pre></div></div></div>
+<p>I will cover all the cases already covered for the <code>Binary</code> class. As you can see, I&#x27;m specifying the bit size when instantiating the object and testing the overflow condition. Other initialization and conversion tests are very similar to their <code>Binary</code> counterpart and I will not copy them here, as you can find them in the source code.</p>
+<h2 id="splitting-a7c7">Splitting<a class="headerlink" href="#splitting-a7c7" title="Permanent link">¶</a></h2>
+<p>One of the requirements is to provide a method to split a <code>SizeBinary</code> object into two arbitrarily sized <code>Binary</code> objects. The tests are</p>
+<div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_size_binary_split</span><span class="p">():</span>
     <span class="n">size_binary8</span> <span class="o">=</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;01010110&quot;</span><span class="p">)</span>
     <span class="n">size_binary4u</span><span class="p">,</span> <span class="n">size_binary4l</span> <span class="o">=</span> <span class="n">size_binary8</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
     <span class="k">assert</span> <span class="p">(</span><span class="n">size_binary4u</span><span class="p">,</span> <span class="n">size_binary4l</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span>
@@ -555,8 +229,11 @@
     <span class="k">assert</span> <span class="p">(</span><span class="n">size_binary9u</span><span class="p">,</span> <span class="n">size_binary3l</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span>
         <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;000001010&quot;</span><span class="p">),</span>
         <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;110&quot;</span><span class="p">),</span>
-    <span class="p">)</span>
-</pre></div></div></div><p>As you can see the split shall be able to pad the resulting values if the number of bits exceedes that of the available ones.</p><h2 id="negative-numbers-0d82">Negative numbers<a class="headerlink" href="#negative-numbers-0d82" title="Permanent link">¶</a></h2><p>There are many techniques to represent negative numbers with binary digits, and there is no way to tell from a binary number neither if it is positive or negative nor which technique has been used. It is a matter of conventions into the system in use. We want to implement <a href="https://en.wikipedia.org/wiki/Ones'_complement">one&#x27;s complement</a> and <a href="https://en.wikipedia.org/wiki/Two's_complement">two&#x27;s complement</a>, which are described in detail in the linked Wikipedia articles. The tests to check the correct behaviour are</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_size_binary_OC</span><span class="p">():</span>
+    <span class="p">)</span></pre></div></div></div>
+<p>As you can see the split shall be able to pad the resulting values if the number of bits exceedes that of the available ones.</p>
+<h2 id="negative-numbers-0d82">Negative numbers<a class="headerlink" href="#negative-numbers-0d82" title="Permanent link">¶</a></h2>
+<p>There are many techniques to represent negative numbers with binary digits, and there is no way to tell from a binary number neither if it is positive or negative nor which technique has been used. It is a matter of conventions into the system in use. We want to implement <a href="https://en.wikipedia.org/wiki/Ones'_complement">one&#x27;s complement</a> and <a href="https://en.wikipedia.org/wiki/Two's_complement">two&#x27;s complement</a>, which are described in detail in the linked Wikipedia articles. The tests to check the correct behaviour are</p>
+<div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_size_binary_OC</span><span class="p">():</span>
     <span class="c1"># 6 = 0b00000110 -&gt; 0b11111001</span>
     <span class="n">size_binary</span> <span class="o">=</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">size_binary</span><span class="o">.</span><span class="n">oc</span><span class="p">()</span> <span class="o">==</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;11111001&quot;</span><span class="p">)</span>
@@ -589,8 +266,10 @@
 
     <span class="c1"># 15 = 0b0000000000001111 -&gt; 0b1111111111110001</span>
     <span class="n">size_binary</span> <span class="o">=</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">size_binary</span><span class="o">.</span><span class="n">tc</span><span class="p">()</span> <span class="o">==</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;1111111111110001&quot;</span><span class="p">)</span>
-</pre></div></div></div><h2 id="mathematics-indexing-and-slicing-0ec3">Mathematics, indexing and slicing<a class="headerlink" href="#mathematics-indexing-and-slicing-0ec3" title="Permanent link">¶</a></h2><p>The basic mathematical and logical operations are the same implemented for the <code>Binary</code> class. Some tests have been added to check what happens when performing operations between two <code>SizeBinary</code> with a different size. We expect the result to have the size of the bigger of the two operands.</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_binary_addition_int</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">size_binary</span><span class="o">.</span><span class="n">tc</span><span class="p">()</span> <span class="o">==</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;1111111111110001&quot;</span><span class="p">)</span></pre></div></div></div>
+<h2 id="mathematics-indexing-and-slicing-0ec3">Mathematics, indexing and slicing<a class="headerlink" href="#mathematics-indexing-and-slicing-0ec3" title="Permanent link">¶</a></h2>
+<p>The basic mathematical and logical operations are the same implemented for the <code>Binary</code> class. Some tests have been added to check what happens when performing operations between two <code>SizeBinary</code> with a different size. We expect the result to have the size of the bigger of the two operands.</p>
+<div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_binary_addition_int</span><span class="p">():</span>
     <span class="k">assert</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
 
@@ -599,17 +278,30 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">test_binary_addition_binary_different_size</span><span class="p">():</span>
-    <span class="k">assert</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
-</pre></div></div></div><p>Being very straightforward, I do not copy here all the tests written to cover this part, you will find them in the source code.</p><p>Even the shift left operation now drops bits if there is not enough space for them, while the <code>Binary</code> class did it only for the shift right operation. For simplicity&#x27;s sake I didn&#x27;t implement a carry flag, i.e. there is no way to retrieve the bits shifted outside the available space. You are free to try and implement it, it&#x27;s a good exercise but remember to write tests first!</p><p>The indexing and slicing operations are basically the same as in the <code>Binary</code> case. The slicing operation produces a new <code>SizeBinary</code> with the correct size.</p><p>You can find all tests in <a href="https://github.com/TheDigitalCatOnline/python-oop-tdd-example/blob/main/tests/test_sizebinary.py">tests/test_sizebinary.py</a>.</p><h2 id="implementation-time-533d">Implementation time!<a class="headerlink" href="#implementation-time-533d" title="Permanent link">¶</a></h2><p>Now be a good OOP programmer and go, write a class that passes all the tests that I wrote for you. Just an advice, before you start headlong: being a <code>SizeBinary</code> mostly a <code>Binary</code> object with some new features it is recommended to use inheritance as the key delegation technique.</p><p>Also keep in mind that TDD assumes you write one test at a time and change the code to make it pass. Don&#x27;t add all tests in one go, as it might be very difficult to understand where to start.</p><h2 id="my-solution-977d">My solution<a class="headerlink" href="#my-solution-977d" title="Permanent link">¶</a></h2><p>Following my own advice my <code>SizeBinary</code> class inherits from <code>Binary</code></p><div class="code"><div class="content"><div class="highlight"><pre><span class="kn">from</span><span class="w"> </span><span class="nn">binary</span><span class="w"> </span><span class="kn">import</span> <span class="n">Binary</span>
+    <span class="k">assert</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span></pre></div></div></div>
+<p>Being very straightforward, I do not copy here all the tests written to cover this part, you will find them in the source code.</p>
+<p>Even the shift left operation now drops bits if there is not enough space for them, while the <code>Binary</code> class did it only for the shift right operation. For simplicity&#x27;s sake I didn&#x27;t implement a carry flag, i.e. there is no way to retrieve the bits shifted outside the available space. You are free to try and implement it, it&#x27;s a good exercise but remember to write tests first!</p>
+<p>The indexing and slicing operations are basically the same as in the <code>Binary</code> case. The slicing operation produces a new <code>SizeBinary</code> with the correct size.</p>
+<p>You can find all tests in <a href="https://github.com/TheDigitalCatOnline/python-oop-tdd-example/blob/main/tests/test_sizebinary.py">tests/test_sizebinary.py</a>.</p>
+<h2 id="implementation-time-533d">Implementation time!<a class="headerlink" href="#implementation-time-533d" title="Permanent link">¶</a></h2>
+<p>Now be a good OOP programmer and go, write a class that passes all the tests that I wrote for you. Just an advice, before you start headlong: being a <code>SizeBinary</code> mostly a <code>Binary</code> object with some new features it is recommended to use inheritance as the key delegation technique.</p>
+<p>Also keep in mind that TDD assumes you write one test at a time and change the code to make it pass. Don&#x27;t add all tests in one go, as it might be very difficult to understand where to start.</p>
+<h2 id="my-solution-977d">My solution<a class="headerlink" href="#my-solution-977d" title="Permanent link">¶</a></h2>
+<p>Following my own advice my <code>SizeBinary</code> class inherits from <code>Binary</code></p>
+<div class="code"><div class="content"><div class="highlight"><pre><span class="kn">from</span><span class="w"> </span><span class="nn">binary</span><span class="w"> </span><span class="kn">import</span> <span class="n">Binary</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">SizeBinary</span><span class="p">(</span><span class="n">Binary</span><span class="p">):</span>
-    <span class="k">pass</span>
-</pre></div></div></div><p>and with this simple declaration I get 1 test passed and still 50 to go. We obviously may also create a new object that does not inherit from <code>Binary</code> but we would have to explicitly delegate a lot of functions to the latter class. So, in this case, better to stick to an automatic delegation mechanism like inheritance. To get a review of those two concepts read <a href="https://www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/">this post</a>.</p><p>Composition could be another viable solution, with a <code>Binary</code> value stored internally and accessed whenever we call <code>super()</code> in the inheritance version. In this case, however, inheritance and composition lead to very similar results, with the latter being somehow counter-intuitive and thus not the best choice.</p><p>We need to reimplement many of the special methods already implemented in the <code>Binary</code> class. This because Python resolves magic methods through a dedicated channel that avoids the <code>__getattr__()</code> and <code>__getattribute__()</code> methods, making the whole thing faster. This makes impossible to automatically delegate magic methods, except by means of metaclasses, which are however too complex to be a useful addition to this post.</p><p>The initialization function shall store the bit length and initialize a flag to signal the overflow condition. Since I also want to have a <code>set()</code> function that changes the value I implement it and call it in the <code>__init__()</code> method.</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">pass</span></pre></div></div></div>
+<p>and with this simple declaration I get 1 test passed and still 50 to go. We obviously may also create a new object that does not inherit from <code>Binary</code> but we would have to explicitly delegate a lot of functions to the latter class. So, in this case, better to stick to an automatic delegation mechanism like inheritance. To get a review of those two concepts read <a href="https://www.thedigitalcatonline.com/blog/2014/08/20/python-3-oop-part-3-delegation-composition-and-inheritance/">this post</a>.</p>
+<p>Composition could be another viable solution, with a <code>Binary</code> value stored internally and accessed whenever we call <code>super()</code> in the inheritance version. In this case, however, inheritance and composition lead to very similar results, with the latter being somehow counter-intuitive and thus not the best choice.</p>
+<p>We need to reimplement many of the special methods already implemented in the <code>Binary</code> class. This because Python resolves magic methods through a dedicated channel that avoids the <code>__getattr__()</code> and <code>__getattribute__()</code> methods, making the whole thing faster. This makes impossible to automatically delegate magic methods, except by means of metaclasses, which are however too complex to be a useful addition to this post.</p>
+<p>The initialization function shall store the bit length and initialize a flag to signal the overflow condition. Since I also want to have a <code>set()</code> function that changes the value I implement it and call it in the <code>__init__()</code> method.</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bits</span> <span class="o">=</span> <span class="n">bits</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">overflow</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -619,27 +311,44 @@
         <span class="k">if</span> <span class="n">upper</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">overflow</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">Binary</span><span class="p">(</span><span class="n">lower</span><span class="p">)</span><span class="o">.</span><span class="n">_value</span>
-</pre></div></div></div><p>I&#x27;m not that happy to poke into the <code>Binary</code> class implementation setting the <code>_value</code> attribute, but this is the only way to change the value of the underlying <code>Binary</code> class. If the <code>Binary</code> class had a <code>set()</code> method we could call it through <code>super()</code>, and I cannot directly set it through <code>__init__()</code> because I need to check the overflow condition.</p><p>With this code I get a surprising result of 37 passed tests, while 14 still refuse to let me call it a day. This is however misleading, as many tests assume the <code>SizeBinary</code> object correctly performs comparison, which is not the case, as shown by the failure of the <code>test_binary_equality_checks_bits</code> test.</p><p>This was done on purpose, to show you that writing tests is not something that automatically guarantees you to have correct code. As a matter of fact, in this case tests like</p><div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_binary_addition_int</span><span class="p">():</span>
-    <span class="k">assert</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-</pre></div></div></div><p>do not fail, even if the result of the addition is a <code>Binary</code> and not a <code>SizeBinary</code>.</p><p>Let us check why this happens. The <code>SizeBinary</code> object is also a <code>Binary</code> object, and its <code>__add__()</code> method returns a <code>Binary</code>. The subsequent comparison is made using the <code>__eq__()</code> method of the <code>Binary</code> class, since the <code>SizeBinary</code> one does not provide its own version of the comparison. Since <code>Binary</code> classes just compare their value the test ends successfully.</p><p>Let us add some code to implement the correct comparision</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">bits</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">bits</span>
-</pre></div></div></div><p>which adds a check on the number of bits to the check already made by the <code>Binary</code> class. This results in 35 failed tests and 16 passed, showing that the previous result was biased by &quot;inaccurate&quot; tests. As a matter of fact, the presence of a test that shows if the comparison is correct or not makes perfectly reasonable to have tests that take it for granted.</p><p>One simple thing to add is the right padding with zeros that shall be provided for input values that are shorter than the given number of bits</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">Binary</span><span class="p">(</span><span class="n">lower</span><span class="p">)</span><span class="o">.</span><span class="n">_value</span></pre></div></div></div>
+<p>I&#x27;m not that happy to poke into the <code>Binary</code> class implementation setting the <code>_value</code> attribute, but this is the only way to change the value of the underlying <code>Binary</code> class. If the <code>Binary</code> class had a <code>set()</code> method we could call it through <code>super()</code>, and I cannot directly set it through <code>__init__()</code> because I need to check the overflow condition.</p>
+<p>With this code I get a surprising result of 37 passed tests, while 14 still refuse to let me call it a day. This is however misleading, as many tests assume the <code>SizeBinary</code> object correctly performs comparison, which is not the case, as shown by the failure of the <code>test_binary_equality_checks_bits</code> test.</p>
+<p>This was done on purpose, to show you that writing tests is not something that automatically guarantees you to have correct code. As a matter of fact, in this case tests like</p>
+<div class="code"><div class="content"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">test_binary_addition_int</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span></pre></div></div></div>
+<p>do not fail, even if the result of the addition is a <code>Binary</code> and not a <code>SizeBinary</code>.</p>
+<p>Let us check why this happens. The <code>SizeBinary</code> object is also a <code>Binary</code> object, and its <code>__add__()</code> method returns a <code>Binary</code>. The subsequent comparison is made using the <code>__eq__()</code> method of the <code>Binary</code> class, since the <code>SizeBinary</code> one does not provide its own version of the comparison. Since <code>Binary</code> classes just compare their value the test ends successfully.</p>
+<p>Let us add some code to implement the correct comparision</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">bits</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">bits</span></pre></div></div></div>
+<p>which adds a check on the number of bits to the check already made by the <code>Binary</code> class. This results in 35 failed tests and 16 passed, showing that the previous result was biased by &quot;inaccurate&quot; tests. As a matter of fact, the presence of a test that shows if the comparison is correct or not makes perfectly reasonable to have tests that take it for granted.</p>
+<p>One simple thing to add is the right padding with zeros that shall be provided for input values that are shorter than the given number of bits</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
-</pre></div></div></div><p>And this simple addition lowers the count of failed tests from 35 to 30. Another small addition that satisfies 2 more tests is the splitting function, which shall return <code>SizeBinary</code> objects instead of <code>Binary</code> ones</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">upper_bits</span><span class="p">,</span> <span class="n">lower_bits</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span></pre></div></div></div>
+<p>And this simple addition lowers the count of failed tests from 35 to 30. Another small addition that satisfies 2 more tests is the splitting function, which shall return <code>SizeBinary</code> objects instead of <code>Binary</code> ones</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">upper_bits</span><span class="p">,</span> <span class="n">lower_bits</span><span class="p">):</span>
         <span class="n">upper</span><span class="p">,</span> <span class="n">lower</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">lower_bits</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">upper_bits</span><span class="p">,</span> <span class="n">upper</span><span class="p">),</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">lower_bits</span><span class="p">,</span> <span class="n">lower</span><span class="p">)</span>
-</pre></div></div></div><p>As already explained we want to get the negative version of the number both with the one&#x27;s complement and the two&#x27;s complement techniques. For starters, let&#x27;s deal with one&#x27;s complement.</p><p>A very smart way to reverse all the n bits of a value x is to compute <code>(1 &lt;&lt; n) - x - 1</code>. An example will show you that this works, avoiding long and boring mathematical explanations. We want to negate the number 1 represented as 8 bits (&#x27;00000001&#x27;). First we compute <code>1 &lt;&lt; 8</code> which returns <code>100000000</code>, then we subtract the value 1 of the number which returns <code>1111111</code> and finally we subtract the constant 1, which returns <code>11111110</code>. Look and behold! So this is exactly what I will implement for my <code>oc()</code> function</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">oc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-</pre></div></div></div><p>From the same boring mathematics tomes we may discover that the two&#x27;s complement representation of a number is its one&#x27;s complement version plus 1. So the implementation of <code>tc()</code> is straightforward</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">tc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">oc</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
-</pre></div></div></div><p>As a matter of fact this function doesn&#x27;t make the relative test (<code>test_size_binary_TC</code>) pass, because it depends on the correct implementation of the sum operation, which is still not implemented. So now the updated battle report is: 27 failed, 24 passed.</p><p>Right and left shifts are the same of the <code>Binary</code> class, except that the result shall fit into the given bits. So we may delegate them to the <code>Binary</code> class implementation</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__lshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">upper_bits</span><span class="p">,</span> <span class="n">upper</span><span class="p">),</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">lower_bits</span><span class="p">,</span> <span class="n">lower</span><span class="p">)</span></pre></div></div></div>
+<p>As already explained we want to get the negative version of the number both with the one&#x27;s complement and the two&#x27;s complement techniques. For starters, let&#x27;s deal with one&#x27;s complement.</p>
+<p>A very smart way to reverse all the n bits of a value x is to compute <code>(1 &lt;&lt; n) - x - 1</code>. An example will show you that this works, avoiding long and boring mathematical explanations. We want to negate the number 1 represented as 8 bits (&#x27;00000001&#x27;). First we compute <code>1 &lt;&lt; 8</code> which returns <code>100000000</code>, then we subtract the value 1 of the number which returns <code>1111111</code> and finally we subtract the constant 1, which returns <code>11111110</code>. Look and behold! So this is exactly what I will implement for my <code>oc()</code> function</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">oc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></pre></div></div></div>
+<p>From the same boring mathematics tomes we may discover that the two&#x27;s complement representation of a number is its one&#x27;s complement version plus 1. So the implementation of <code>tc()</code> is straightforward</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">tc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">oc</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span></pre></div></div></div>
+<p>As a matter of fact this function doesn&#x27;t make the relative test (<code>test_size_binary_TC</code>) pass, because it depends on the correct implementation of the sum operation, which is still not implemented. So now the updated battle report is: 27 failed, 24 passed.</p>
+<p>Right and left shifts are the same of the <code>Binary</code> class, except that the result shall fit into the given bits. So we may delegate them to the <code>Binary</code> class implementation</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__lshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__lshift__</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__rshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__rshift__</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
-</pre></div></div></div><p>And this is enough to make the 5 related tests pass.</p><p>Now it&#x27;s time for some arithmetic and logic functions. Since the internal representation of our value is always in base 10, as already done with the arithmetic functions of the <code>Binary</code> class we may go back to the base-10 world, perform the requested operation, and go back to the base-2 representation.</p><p>The problem with those functions is that if we mix binaries with different sizes we want to &quot;promote&quot; the smaller one, to that the result has the size of the bigger. To handle this situation I isolated some code in a helper function called <code>_max_and_convert()</code></p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">_max_and_convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__rshift__</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span></pre></div></div></div>
+<p>And this is enough to make the 5 related tests pass.</p>
+<p>Now it&#x27;s time for some arithmetic and logic functions. Since the internal representation of our value is always in base 10, as already done with the arithmetic functions of the <code>Binary</code> class we may go back to the base-10 world, perform the requested operation, and go back to the base-2 representation.</p>
+<p>The problem with those functions is that if we mix binaries with different sizes we want to &quot;promote&quot; the smaller one, to that the result has the size of the bigger. To handle this situation I isolated some code in a helper function called <code>_max_and_convert()</code></p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">_max_and_convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">other_bits</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">bits</span>
             <span class="n">sb_other</span> <span class="o">=</span> <span class="n">other</span>
@@ -647,260 +356,170 @@
             <span class="n">other_bits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bits</span>
             <span class="n">sb_other</span> <span class="o">=</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">other_bits</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="n">other_bits</span><span class="p">),</span> <span class="n">sb_other</span>
-</pre></div></div></div><p>It checks if the <code>other</code> argument has a <code>bits</code> attribute, otherwise converts it into a <code>SizeBinary</code>. Then it returns the converted argument and the greatest length between the latter and <code>self</code>. Using this function I can then implement some magic methods such as</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="n">other_bits</span><span class="p">),</span> <span class="n">sb_other</span></pre></div></div></div>
+<p>It checks if the <code>other</code> argument has a <code>bits</code> attribute, otherwise converts it into a <code>SizeBinary</code>. Then it returns the converted argument and the greatest length between the latter and <code>self</code>. Using this function I can then implement some magic methods such as</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="n">bits</span><span class="p">,</span> <span class="n">sb_other</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_and_convert</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">bits</span><span class="p">,</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">sb_other</span><span class="p">))</span>
-</pre></div></div></div><p>This template is used to implement <code>__add__()</code>, <code>__sub__()</code>, <code>__mul__()</code>, <code>__truediv__()</code>, <code>__and__()</code>, <code>__or__()</code>, <code>__xor__()</code>. The <code>__invert__()</code> method is simpler, missing the second argument</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__invert__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__invert__</span><span class="p">())</span>
-</pre></div></div></div><p>With those functions I now have 49 successful tests and 2 still failing, namely <code>test_size_binary_to_binary</code> and <code>test_binary_slice</code>. The first one depends on the missing <code>to_binary()</code> method</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Binary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</pre></div></div></div><p>The second needs some consideration: slicing depends on the <code>__getitem__()</code> magic method, which is used also for the simple indexing, tested by <code>test_binary_get_bit</code> and <code>test_binary_negative_index</code>, for example. The requested behaviour of the <code>SizeBinary</code> class is to return a single character when indexing a single bit and a <code>SizeBinary</code> or the correct length when slicing. The following code handles both situations</p><div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">bits</span><span class="p">,</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">sb_other</span><span class="p">))</span></pre></div></div></div>
+<p>This template is used to implement <code>__add__()</code>, <code>__sub__()</code>, <code>__mul__()</code>, <code>__truediv__()</code>, <code>__and__()</code>, <code>__or__()</code>, <code>__xor__()</code>. The <code>__invert__()</code> method is simpler, missing the second argument</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__invert__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__invert__</span><span class="p">())</span></pre></div></div></div>
+<p>With those functions I now have 49 successful tests and 2 still failing, namely <code>test_size_binary_to_binary</code> and <code>test_binary_slice</code>. The first one depends on the missing <code>to_binary()</code> method</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Binary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></pre></div></div></div>
+<p>The second needs some consideration: slicing depends on the <code>__getitem__()</code> magic method, which is used also for the simple indexing, tested by <code>test_binary_get_bit</code> and <code>test_binary_negative_index</code>, for example. The requested behaviour of the <code>SizeBinary</code> class is to return a single character when indexing a single bit and a <code>SizeBinary</code> or the correct length when slicing. The following code handles both situations</p>
+<div class="code"><div class="content"><div class="highlight"><pre>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="n">bits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">bits</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">SizeBinary</span><span class="p">(</span><span class="n">bits</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">res</span>
-</pre></div></div></div><p>First of all I use the slicing function of the underlying <code>Binary</code> object which was already tested and correctly working. Then I compute the length of that result and act depending on the result.</p><p>The full implementation of the class is in the GitHub repository, you can see it at</p><ul><li>Tests: <a href="https://github.com/TheDigitalCatOnline/python-oop-tdd-example/blob/main/tests/test_sizebinary.py">tests/test_sizebinary.py</a></li><li>Code: <a href="https://github.com/TheDigitalCatOnline/python-oop-tdd-example/blob/main/src/sizebinary.py">src/sizebinary.py</a></li></ul><h2 id="resources-edc5">Resources<a class="headerlink" href="#resources-edc5" title="Permanent link">¶</a></h2><ul><li>Wikipedia entries on <a href="https://en.wikipedia.org/wiki/Integer_overflow">integer overflow</a>, <a href="https://en.wikipedia.org/wiki/Signed_number_representations">signed number representations</a>, and <a href="https://en.wikipedia.org/wiki/Bitwise_operation">bitwise operations</a>.</li></ul><h2 id="final-words-9803">Final words<a class="headerlink" href="#final-words-9803" title="Permanent link">¶</a></h2><p>Well, I hope this was interesting and useful. TDD is a powerful technique, and when you apply it correctly and without unnecessary rigidity it can truly boost your productivity and the quality of your code. And, which is the most important thing, making coding fun.</p><h2 id="feedback-d845">Feedback<a class="headerlink" href="#feedback-d845" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+            <span class="k">return</span> <span class="n">res</span></pre></div></div></div>
+<p>First of all I use the slicing function of the underlying <code>Binary</code> object which was already tested and correctly working. Then I compute the length of that result and act depending on the result.</p>
+<p>The full implementation of the class is in the GitHub repository, you can see it at</p>
+<ul><li>Tests: <a href="https://github.com/TheDigitalCatOnline/python-oop-tdd-example/blob/main/tests/test_sizebinary.py">tests/test_sizebinary.py</a></li><li>Code: <a href="https://github.com/TheDigitalCatOnline/python-oop-tdd-example/blob/main/src/sizebinary.py">src/sizebinary.py</a></li></ul>
+<h2 id="resources-edc5">Resources<a class="headerlink" href="#resources-edc5" title="Permanent link">¶</a></h2>
+<ul><li>Wikipedia entries on <a href="https://en.wikipedia.org/wiki/Integer_overflow">integer overflow</a>, <a href="https://en.wikipedia.org/wiki/Signed_number_representations">signed number representations</a>, and <a href="https://en.wikipedia.org/wiki/Bitwise_operation">bitwise operations</a>.</li></ul>
+<h2 id="final-words-9803">Final words<a class="headerlink" href="#final-words-9803" title="Permanent link">¶</a></h2>
+<p>Well, I hope this was interesting and useful. TDD is a powerful technique, and when you apply it correctly and without unnecessary rigidity it can truly boost your productivity and the quality of your code. And, which is the most important thing, making coding fun.</p>
+<h2 id="feedback-d845">Feedback<a class="headerlink" href="#feedback-d845" title="Permanent link">¶</a></h2><p>Feel free to reach me on <a href="https://twitter.com/thedigicat">Twitter</a> if you have questions. The <a href="https://github.com/TheDigitalCatOnline/blog_source/issues">GitHub issues</a> page is the best place to submit corrections.</p>
+    </div>
+
+    <section class="post-related post-series">
+      <h2 class="post-related-title">
+        Part 2 of the Python OOP and TDD series
+      </h2>
+      <div class="row g-2">
+        <div class="col-12">
+          <h3 class="h6 mt-2">Previous articles</h3>
+          <ul>
+            <li><a href="https://www.thedigitalcatonline.com/blog/2015/05/13/python-oop-tdd-example-part1/">A simple example of Python OOP development (with TDD) - Part 1</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+<section class="post-related">
+  <h2 class="post-related-title">Related Posts</h2>
+  <div class="row g-2">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="related-card">
+        <div class="related-card-img">
+          <img src="https://www.thedigitalcatonline.com/images/tdd-in-python-with-pytest-part-5.jpg"
+               alt="" />
+        </div>
+        <div class="related-card-body">
+          <a href="https://www.thedigitalcatonline.com/blog/2020/09/21/tdd-in-python-with-pytest-part-5/" class="related-card-title stretched-link">TDD in Python with pytest - Part 5</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="related-card">
+        <div class="related-card-img">
+          <img src="https://www.thedigitalcatonline.com/images/tdd-in-python-with-pytest-part-4.jpg"
+               alt="" />
+        </div>
+        <div class="related-card-body">
+          <a href="https://www.thedigitalcatonline.com/blog/2020/09/17/tdd-in-python-with-pytest-part-4/" class="related-card-title stretched-link">TDD in Python with pytest - Part 4</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="related-card">
+        <div class="related-card-img">
+          <img src="https://www.thedigitalcatonline.com/images/tdd-in-python-with-pytest-part-3.jpg"
+               alt="" />
+        </div>
+        <div class="related-card-body">
+          <a href="https://www.thedigitalcatonline.com/blog/2020/09/15/tdd-in-python-with-pytest-part-3/" class="related-card-title stretched-link">TDD in Python with pytest - Part 3</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="related-card">
+        <div class="related-card-img">
+          <img src="https://www.thedigitalcatonline.com/images/tdd-in-python-with-pytest-part-2.jpg"
+               alt="" />
+        </div>
+        <div class="related-card-body">
+          <a href="https://www.thedigitalcatonline.com/blog/2020/09/11/tdd-in-python-with-pytest-part-2/" class="related-card-title stretched-link">TDD in Python with pytest - Part 2</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="related-card">
+        <div class="related-card-img">
+          <img src="https://www.thedigitalcatonline.com/images/tdd-in-python-with-pytest-part-1.jpg"
+               alt="" />
+        </div>
+        <div class="related-card-body">
+          <a href="https://www.thedigitalcatonline.com/blog/2020/09/10/tdd-in-python-with-pytest-part-1/" class="related-card-title stretched-link">TDD in Python with pytest - Part 1</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="related-card">
+        <div class="related-card-img">
+          <img src="https://www.thedigitalcatonline.com/images/refactoring-with-tests-in-python.jpg"
+               alt="" />
+        </div>
+        <div class="related-card-body">
+          <a href="https://www.thedigitalcatonline.com/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/" class="related-card-title stretched-link">Refactoring with tests in Python: a practical example</a>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <section class="links">
-    <header>
-      <h2>Part 2 of the Python OOP and TDD series</h2>
-    </header>
-    <div>
-      <h3>Previous articles</h3>
-      <ul>
-        <li><a href="/blog/2015/05/13/python-oop-tdd-example-part1/">A simple example of Python OOP development (with TDD) - Part 1</a></li>
-      </ul>
-      
-    </div>
-  </section>
-
-  <section>
-    <header>
-      <h2>Related Posts</h2>
-    </header>
-    <div class="paginated-posts">
-      <div class="posts">
-	<article class="card">
-          <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/">
-            <img src="/images/tdd-in-python-with-pytest-part-5.jpg" alt="tdd-in-python-with-pytest-part-5" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/21/tdd-in-python-with-pytest-part-5/"><h2>TDD in Python with pytest - Part 5</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-21T10:30:00+02:00">Sep 21, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-03-06T19:00:00+00:00">Mar 6, 2021</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/">
-            <img src="/images/tdd-in-python-with-pytest-part-4.jpg" alt="tdd-in-python-with-pytest-part-4" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/17/tdd-in-python-with-pytest-part-4/"><h2>TDD in Python with pytest - Part 4</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-17T11:30:00+02:00">Sep 17, 2020</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/">
-            <img src="/images/tdd-in-python-with-pytest-part-3.jpg" alt="tdd-in-python-with-pytest-part-3" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/15/tdd-in-python-with-pytest-part-3/"><h2>TDD in Python with pytest - Part 3</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-15T08:00:00+02:00">Sep 15, 2020</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/">
-            <img src="/images/tdd-in-python-with-pytest-part-2.jpg" alt="tdd-in-python-with-pytest-part-2" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/11/tdd-in-python-with-pytest-part-2/"><h2>TDD in Python with pytest - Part 2</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-11T10:30:00+02:00">Sep 11, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2023-09-03T19:00:00+02:00">Sep 3, 2023</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/">
-            <img src="/images/tdd-in-python-with-pytest-part-1.jpg" alt="tdd-in-python-with-pytest-part-1" />
-          </a>
-          <div class="body">
-            <a href="/blog/2020/09/10/tdd-in-python-with-pytest-part-1/"><h2>TDD in Python with pytest - Part 1</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2020-09-10T10:30:00+02:00">Sep 10, 2020</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2023-09-03T19:00:00+02:00">Sep 3, 2023</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2018/12/20/cabook/">
-            <img src="/images/cabook.jpg" alt="cabook" />
-          </a>
-          <div class="body">
-            <a href="/blog/2018/12/20/cabook/"><h2>Clean Architectures in Python: the book</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python2/" class="tag">Python2</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-		<a href="/categories/software-architecture/" class="tag">software architecture</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2018-12-20T08:00:00+01:00">Dec 20, 2018</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2021-08-22T08:00:00+00:00">Aug 22, 2021</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/">
-            <img src="/images/refactoring-with-tests-in-python.jpg" alt="refactoring-with-tests-in-python" />
-          </a>
-          <div class="body">
-            <a href="/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/"><h2>Refactoring with tests in Python: a practical example</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/refactoring/" class="tag">refactoring</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2017-07-21T09:30:00+01:00">Jul 21, 2017</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/">
-            <img src="/images/python-mocks.jpg" alt="python-mocks" />
-          </a>
-          <div class="body">
-            <a href="/blog/2016/09/27/python-mocks-a-gentle-introduction-part-2/"><h2>Python Mocks: a gentle introduction - Part 2</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/decorators/" class="tag">decorators</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python2/" class="tag">Python2</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-09-27T09:00:00+00:00">Sep 27, 2016</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/">
-            <img src="/images/python-mocks.jpg" alt="python-mocks" />
-          </a>
-          <div class="body">
-            <a href="/blog/2016/03/06/python-mocks-a-gentle-introduction-part-1/"><h2>Python Mocks: a gentle introduction - Part 1</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/decorators/" class="tag">decorators</a>
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python2/" class="tag">Python2</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2016-03-06T18:00:00+01:00">Mar 6, 2016</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2019-02-27T23:30:00+00:00">Feb 27, 2019</time></p>
-	    </div>
-          </div>
-	</article>
-	<article class="card">
-          <a href="/blog/2015/05/13/python-oop-tdd-example-part1/">
-            <img src="/images/python-oop-tdd.jpg" alt="python-oop-tdd" />
-          </a>
-          <div class="body">
-            <a href="/blog/2015/05/13/python-oop-tdd-example-part1/"><h2>A simple example of Python OOP development (with TDD) - Part 1</h2></a>
-	    <div class="info">
-	      <p class="tags">
-		<a href="/categories/oop/" class="tag">OOP</a>
-		<a href="/categories/pytest/" class="tag">pytest</a>
-		<a href="/categories/python/" class="tag">Python</a>
-		<a href="/categories/python3/" class="tag">Python3</a>
-		<a href="/categories/tdd/" class="tag">TDD</a>
-		<a href="/categories/testing/" class="tag">testing</a>
-              </p>
-	      <p><i class="fas fa-calendar-alt"></i> <time datetime="2015-05-13T17:00:00+01:00">May 13, 2015</time></p>
-	      <p><i class="fas fa-edit"></i> Updated on <time datetime="2022-11-26T16:00:00+00:00">Nov 26, 2022</time></p>
-	    </div>
-          </div>
-	</article>
-      </div>
-    </div>
-  </section>
-  
+  </div>
 </div>
+      </main>
 
-      </div>
+
     </div>
-    <script src="/theme/js/packed.js?46a8f903"></script>
+
+
+    <!-- MDB JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+
+    <!-- Inject settings for JS -->
+    <script>
+      const BANNER_IMAGES = {"img1": {"author": "Pacto Visual", "file": "images/banner1.jpg", "url": "https://unsplash.com/photos/close-up-photo-of-tabby-cat-cWOzOnSoh6Q"}, "img2": {"author": "Ayako", "file": "images/banner2.jpg", "url": "https://unsplash.com/photos/a-cat-sitting-on-top-of-a-bed-next-to-a-pillow-h7Dw2hF4e0A"}, "img3": {"author": "Jonathan Cooper", "file": "images/banner3.jpg", "url": "https://unsplash.com/photos/black-and-brown-tabby-cat-on-white-textile-ZSBz8rr178o"}, "img4": {"author": "Sven Mieke", "file": "images/banner4.jpg", "url": "https://unsplash.com/photos/brown-tabby-cat-lying-on-white-textile-G-8B32scqMc"}};
+      const QUOTES = [{"source": "Blade Runner, 1982", "text": "I\u0027ve seen things you people wouldn\u0027t believe. Attack ships on fire off the shoulder of Orion. I watched C-beams glitter in the dark near the Tannh\u00e4user Gate. All those moments will be lost in time, like tears in rain. Time to die."}, {"source": "Raiders of the Lost Ark, 1981", "text": "Look at this. It\u2019s worthless \u2014 ten dollars from a vendor in the street. But I take it, I bury it in the sand for a thousand years, it becomes priceless."}, {"source": "Back to the Future, 1985", "text": "Roads? Where we\u0027re going, we don\u0027t need... roads."}];
+    </script>
+
+    <!-- Site JS -->
+    <script src="https://www.thedigitalcatonline.com/theme/js/main.js"></script>
+
+    <!-- Sidebar toggle -->
+    <script>
+      (function () {
+        const toggle  = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('siteSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (!toggle) return;
+
+        function openSidebar() {
+          sidebar.classList.add('show');
+          overlay.classList.add('show');
+          toggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeSidebar() {
+          sidebar.classList.remove('show');
+          overlay.classList.remove('show');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        toggle.addEventListener('click', function () {
+          sidebar.classList.contains('show') ? closeSidebar() : openSidebar();
+        });
+
+        overlay.addEventListener('click', closeSidebar);
+      })();
+    </script>
+
 
   </body>
 </html>
